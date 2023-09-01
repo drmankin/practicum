@@ -5,3 +5,7 @@
 .httr-oauth
 .DS_Store
 .quarto
+tutorials/index
+tutorials/workbooks
+archive/
+
