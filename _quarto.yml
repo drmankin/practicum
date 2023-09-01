@@ -1,21 +1,28 @@
 project:
   type: website
   pre-render: scripts/gen_index.R #not currently working automatically (but seems okay manually!)
+  render: 
+    - "*.qmd"
+    - "!tutorials/psychrlogy/drafts/" #don't attempt to render the drafts folder
 
 website:
   title: R Training
   navbar:
     # Sussex Flint
     background: "#003b49"
+    search: true
     left:
       - text: "Home"
         file: index.qmd
       - text: "Tutorials"
         file: tutorials.qmd
-      - text: "Other"
-        file: other.qmd
+      - text: "Workshops"
+        file: Workshops.qmd
       - href: https://canvas.sussex.ac.uk/courses/29761
         text: "Canvas"
+    right: 
+      - text: "About"
+        file: about.qmd
 
   sidebar: 
     - title: "Tutorials"
@@ -34,9 +41,9 @@ website:
         - section: "ImprovRs"
           contents:
             - auto: tutorials/psychrlogy/03_improvRs/*
-    - title: "Other"
+    - title: "Workshops"
       contents:
-        - other.qmd
+        - Workshops.qmd
 
 
 format:

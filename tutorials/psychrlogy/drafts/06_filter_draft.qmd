@@ -1,0 +1,228 @@
+---
+title: "06: Filter and Select"
+---
+
+## Overview
+
+This tutorial covers two important `dplyr` functions: `filter()` and `select()`. Easy to confuse, `filter()` uses logical assertations to return a subset of rows (cases) in a dataset, while `select()` returns a subset of the columns (variables) in the dataset.
+
+::: callout-tip
+To remember which does which:
+
+-   `filter()` works on **r**ows, which starts with "r", so it contains the letter "r".
+-   `select()` works on **c**olumns, which starts with "c", so it contains the letter "c".
+:::
+
+### Setting Up
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+#| echo: false
+
+peng <- palmerpenguins::penguins
+```
+
+## Filter
+
+The `filter()` function's primary job is to easily and transparently **subset the rows** within a dataset - in particular, a `tibble`. `filter()` takes one or more logical assertions and returns only the rows for which the assertion is `TRUE`. Columns are not affected by `filter`()\`, only rows.
+
+### Basic Structure
+
+To make a single, straightforward change to a tibble, use the general format:
+
+```{r}
+#| eval: false
+
+my_tibble |>
+  dplyr::filter(
+    logical_assertion
+  )
+
+```
+
+#### Usage
+
+`logical_assertion` is a statement that returns logical values, just like the assertions we saw in [the first tutorial](..\01_fundRmentals\01_02_intro.qmd). The rows where the assertion returns `TRUE` will be included in the output; those that return `FALSE` will not. Inside the `filter()` command, use the names of the variable in the piped dataset to create the logical assertions.
+
+#### Examples
+
+To include:
+
+-   Numerical comparisons, `dplyr::between()`
+-   `%in%`, `grepl()`
+-   TASK: Filter on some example
+
+```{r}
+#| eval: false
+
+
+```
+
+1.  
+
+### Multiple Conditions
+
+-   OR `|` and AND `&`
+-   Comma defaults to AND
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+
+```
+:::
+:::
+
+### Data Cleaning
+
+-   Keeping only people who consented
+-   Filtering by age
+-   Dealing with missing data
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+
+```
+:::
+:::
+
+## Select
+
+The `select()` function is probably the most straightforward of the core {dplyr} functions. Its primary job is to easily and transparently **subset the columns** within a dataset - in particular, a `tibble`. Rows are not affected by `select()`, only columns.
+
+### Basic Structure
+
+To subset a tibble, use the general format:
+
+```{r}
+#| eval: false
+
+my_tibble |>
+  dplyr::select(
+    variable_to_keep, !variable_to_drop, 
+    keep_this_one:through_this_one,
+    rename_variable = old_name,
+    variable_number
+  )
+
+```
+
+#### Usage
+
+-   `variable_to_keep`: Choose a variable to include in the output by including its name. Multiple variables can be selected separated by commas.
+-   `!variable_to_drop`: Drop a variable from the output by putting an exclamation mark (`!`) or a minus sign (`-`) in front of its name. Multiple variables can be dropped, separated by commas with a `!` (or `-`) before each.
+-   `keep_this_one:through_this_one`: Choose a range of variables to include in the output with a colon (`:`). All the variables between and including the two named will be selected (or dropped, with `!(drop_this_one:through_this_one)`)
+-   `rename_variable`: Choose a variable to include in the output, but give it a new name.
+-   `variable_number`: Choose a variable to include in the output by where it appears in the dataset, numbered left to right. For example, "2" will select the second column in the original dataset.
+
+Columns will appear in the output in the order they are selected in `select()`, so this function can also be used to reorder columns.
+
+### `<tidyselect>`
+
+The real power in `select()`, and in many other {tidyverse} functions, is in a system of helper functions and notations collectively called `<tidyselect>`. The overall goal of "`<tidyselect>` semantics" is to make selecting variables easy, efficient, and clear.
+
+These helper functions can be combined with the selection methods above in any combination. Some very convenient options include:
+
+-   `everything()` for all columns
+-   `starts_with()`, `ends_with()`, and `contains()` for selecting columns by name
+-   `num_range()` for selecting columns with a shared prefix and numerical range, e.g. `item_1`, `item_2`, `item_3` etc.
+-   `all_of()` and `any_of()` for selecting using character vectors
+-   `where()` for [selecting with a function](06_filter.qmd#using-functions)
+-   `matches()` for selecting with [regular expressions](https://ladal.edu.au/regex.html) (not covered in this tutorial)
+
+Rather than list examples of all the helper functions here, it's best to just try them out for yourself!s
+
+::: {.callout-note appearance="minimal" title="Exercises"}
+Open the help documentation by running `?dplyr::select` in the Console to see examples of how to use all of the `<tidyselect>` helper functions.
+
+Select the columns that start with
+
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+
+```
+:::
+
+Select all of the columns that contain a score
+
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+
+```
+:::
+
+Select the first ten items of the C and D subscales
+
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+
+```
+:::
+
+Redo the exercise from the previous section using `<tidyselect>` helpers.
+
+```{r}
+
+```
+:::
+
+#### Using Functions
+
+Let's say we want to create a summary table of all of the numeric variables in our dataset. Before we can [create our summary in the next tutorial](07_changes.qmd#summarise), we may first want to produce a subset of our dataset that only contains numeric variables.
+
+To do this, we can use the `<tidyselect>` helper function `where()`. This helper function lets us use *any* function that returns `TRUE` and `FALSE` to select columns. Essentially, we don't have to select columns by name - we can use any criteria we want, as long as we have (or can create!) a function that expresses that criteria.
+
+Especially helpful here is the `is.*()` family of functions in base R. This group of functions all have the same format, where the `*` is a stand-in for any type of data or object, e.g. `is.logical()`, `is.numeric()`, `is.factor()` etc. (The very useful `is.na()` that we've seen above is also a member of this family.) These functions work like a question about whatever you put into them - for example, `is.numeric()` can be read as, "Is (whatever's in the brackets) numeric?"
+
+::: callout-tip
+You can quickly find all of the functions in this family by typing `is.` in the Console and pressing Tab.
+:::
+
+Putting these two together, we could accomplish the task of selecting only numeric variables as follows:
+
+```{r}
+#| eval: false
+
+my_tibble |> 
+  dplyr::select(
+    where(is.numeric)
+  )
+```
+
+This command evaluates each column and determines whether they contain numeric data (`TRUE`) or not (`FALSE`), and only returns the columns that return `TRUE`.
+
+::: callout-warning
+The following material in this section isn't covered in the Practicum live workshops. It's included here for reference because it's extremely useful in real R analysis workflows, but it won't be essential for any of the Practicum tasks.
+:::
+
+The function in `where()` that determines which columns to keep doesn't have to be an existing named function. Another option is to use a "purrr-style lambda" or formula (a phrase you may see in help documentation) to write our own criteria on the spot. What we are essentially doing is writing an ad-hoc function.
+
+For example, let's select all of the numeric variables that have a minimum value of 3:
+
+```{r}
+#| eval: false
+
+my_tibble |> 
+  dplyr::select(
+    where(is.numeric & ~ min(.x, na.rm = TRUE) >= 3)
+  )
+```
+
+The second of these criteria is one of these "purrr-style" formulae. Is has two components:
+
+-   The `~` (apparently [pronounced "twiddle"!](https://adv-r.hadley.nz/functionals.html#purrr-shortcuts)) at the beginning, which is a shortcut for the longer `function(x) ...` notation for creating functions.
+-   The `.x`, which is a placeholder for each of the variables that the function will be applied to.
+
+So, this command can be read: "Take my tibble and select all the columns where the following is true: the data type is numeric and the minimum value in that column is greater than or equal to 3 (ignoring missing values)."
+
+::: {.callout-note appearance="minimal" title="Optional Exercises"}
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+
+```
+:::
+:::

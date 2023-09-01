@@ -82,7 +82,7 @@ summary(my_tibble)
 
 Here, for example, notice the `age` variable. This should be a numeric variable, but clearly something has gone pear-shaped, because it instead seems like a character variable. Compare this to, for example, OTHER EXAMPLE, which has some descriptive information about the distribution of values in the variable, which indicates that it *has* been successfully read as numeric.
 
-We will ignore the `age` issue for now until we cover how to make changes to the dataset [in Tutorial 5](..\02_essentials\05_changes.qmd#mutate)
+We will ignore the `age` issue for now until we cover how to make changes to the dataset [in Tutorial 5](..\02_essentials\07_changes.qmd#mutate)
 
 #### {datawizard}
 

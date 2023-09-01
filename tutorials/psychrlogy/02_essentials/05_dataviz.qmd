@@ -2,6 +2,8 @@
 title: "05: Visualisations"
 ---
 
-```{r}
+::: {.callout-caution title="Under Construction"}
 
-```
+This tutorial is still under construction. Check back another time!
+
+:::

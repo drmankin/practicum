@@ -1,9 +1,21 @@
 ---
-title: "About"
+title: "Jennifer Mankin"
+about:
+  template: solana
+  links:
+    - icon: github
+      text: Github
+      href: https://github.com/drmankin/
+    - icon: building-fill
+      text: UoS Profile
+      href: https://profiles.sussex.ac.uk/p351056-jennifer-mankin
 ---
 
-About this site
+Dr. Mankin is a senior teaching-focused lecturer in Psychology at the University of Sussex. She is particularly interested in making statistics and coding accessible, enjoyable, and engaging, particularly for learners who aren't that enthusiastic about the whole endeavour.
 
-```{r}
-1 + 1
-```
+Dr. Mankin began teaching at the University of Sussex, originally teaching cognitive psychology and research methods and statistics with SPSS. In the 2019/2020 academic year, Psychology at Sussex switched to R for undergraduate methods and statistics teaching[^covid]. Since then, Dr. Mankin has been just [on the bright side of being hell-bent](https://www.youtube.com/watch?v=RcohgARJTWQ) on helping anyone who will sit still long enough experience the joy of R.
+
+[^covid]: Yep, the timing was just about as bad as it could have been!
+
+The materials on this website are an attempt to do that: to share some of the hard-won skills and knowledge to support others to get excited about the potential of coding in R.
+

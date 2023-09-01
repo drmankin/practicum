@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>R Training - Tutorials</title>
+<title>R Training - 03: Datasets</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -18,6 +18,40 @@ ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
 width: 0.8em;
 margin: 0 0.8em 0.2em -1em;  vertical-align: middle;
+}
+
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+}
+pre.numberSource { margin-left: 3em; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -1469,7 +1503,7 @@ function fuseSearch(query, fuse, fuseOptions) {
   });
 }
 </script>
-<meta name="quarto:offset" content="./">
+<meta name="quarto:offset" content="../../../">
 <script>const sectionChanged = new CustomEvent("quarto-sectionChanged", {
   detail: {},
   bubbles: true,
@@ -4451,7 +4485,7 @@ vertical-align: -.125em;
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../../index.html">
     <span class="navbar-title">R Training</span>
     </a>
   </div>
@@ -4462,15 +4496,15 @@ vertical-align: -.125em;
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html" rel target>
+    <a class="nav-link" href="../../../index.html" rel target>
  <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./tutorials.html" rel target aria-current="page">
+    <a class="nav-link active" href="../../../tutorials.html" rel target aria-current="page">
  <span class="menu-text">Tutorials</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./Workshops.qmd" rel target>
+    <a class="nav-link" href="../../../Workshops.qmd" rel target>
  <span class="menu-text">Workshops</span></a>
   </li>  
   <li class="nav-item">
@@ -4480,7 +4514,7 @@ vertical-align: -.125em;
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html" rel target>
+    <a class="nav-link" href="../../../about.html" rel target>
  <span class="menu-text">About</span></a>
   </li>  
 </ul>
@@ -4495,7 +4529,7 @@ vertical-align: -.125em;
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./tutorials.html">Tutorials</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../tutorials/psychrlogy/01_fundRmentals/01_02_intro.html">FundRmentals</a></li><li class="breadcrumb-item"><a href="../../../tutorials/psychrlogy/01_fundRmentals/03_datasets.html">03: Datasets</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
     </div>
@@ -4509,13 +4543,13 @@ vertical-align: -.125em;
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./tutorials.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../../tutorials.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Tutorials</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./quick_ref.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../quick_ref.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Quick Reference</span></a>
   </div>
 </li>
@@ -4530,19 +4564,19 @@ vertical-align: -.125em;
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./tutorials/psychrlogy/01_fundRmentals/01_02_intro.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../tutorials/psychrlogy/01_fundRmentals/01_02_intro.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">01/02: IntRoduction</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./tutorials/psychrlogy/01_fundRmentals/03_datasets.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../tutorials/psychrlogy/01_fundRmentals/03_datasets.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">03: Datasets</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./tutorials/psychrlogy/01_fundRmentals/04_lm.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../tutorials/psychrlogy/01_fundRmentals/04_lm.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">04: Reporting Linear Models with Quarto</span></a>
   </div>
 </li>
@@ -4559,25 +4593,25 @@ vertical-align: -.125em;
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./tutorials/psychrlogy/02_essentials/05_dataviz.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../tutorials/psychrlogy/02_essentials/05_dataviz.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">05: Visualisations</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./tutorials/psychrlogy/02_essentials/06_filter.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../tutorials/psychrlogy/02_essentials/06_filter.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">06: Filter and Select</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./tutorials/psychrlogy/02_essentials/07_changes.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../tutorials/psychrlogy/02_essentials/07_changes.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">07: Mutate and Summarise</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./tutorials/psychrlogy/02_essentials/08_analysis.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../tutorials/psychrlogy/02_essentials/08_analysis.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">08: Analysis</span></a>
   </div>
 </li>
@@ -4594,19 +4628,19 @@ vertical-align: -.125em;
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./tutorials/psychrlogy/03_improvRs/09_qnaires.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../tutorials/psychrlogy/03_improvRs/09_qnaires.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">09: Questionnaires</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./tutorials/psychrlogy/03_improvRs/10_reshape.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../tutorials/psychrlogy/03_improvRs/10_reshape.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">10: Reshaping and Merging</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./tutorials/psychrlogy/03_improvRs/11_fx.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../tutorials/psychrlogy/03_improvRs/11_fx.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">11: Functions</span></a>
   </div>
 </li>
@@ -4622,19 +4656,25 @@ vertical-align: -.125em;
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#using-the-tutorials" id="toc-using-the-tutorials" class="nav-link active" data-scroll-target="#using-the-tutorials">Using the Tutorials</a>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#the-pipe" id="toc-the-pipe" class="nav-link" data-scroll-target="#the-pipe">The Pipe</a></li>
+  <li><a href="#datasets" id="toc-datasets" class="nav-link" data-scroll-target="#datasets">Datasets</a>
   <ul>
-  <li><a href="#opening-the-tutorials" id="toc-opening-the-tutorials" class="nav-link" data-scroll-target="#opening-the-tutorials">Opening the Tutorials</a></li>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a>
+  <li><a href="#reading-in" id="toc-reading-in" class="nav-link" data-scroll-target="#reading-in">Reading In</a></li>
+  <li><a href="#viewing" id="toc-viewing" class="nav-link" data-scroll-target="#viewing">Viewing</a></li>
+  <li><a href="#arranging" id="toc-arranging" class="nav-link" data-scroll-target="#arranging">Arranging</a></li>
+  <li><a href="#overall-summaries" id="toc-overall-summaries" class="nav-link" data-scroll-target="#overall-summaries">Overall Summaries</a>
   <ul class="collapse">
-  <li><a href="#challenges" id="toc-challenges" class="nav-link" data-scroll-target="#challenges">Challenges</a></li>
+  <li><a href="#base-r" id="toc-base-r" class="nav-link" data-scroll-target="#base-r">Base R</a></li>
+  <li><a href="#datawizard" id="toc-datawizard" class="nav-link" data-scroll-target="#datawizard">{datawizard}</a></li>
   </ul></li>
+  <li><a href="#variables" id="toc-variables" class="nav-link" data-scroll-target="#variables">Variables</a>
+  <ul class="collapse">
+  <li><a href="#subsetting" id="toc-subsetting" class="nav-link" data-scroll-target="#subsetting">Subsetting</a></li>
+  <li><a href="#counting" id="toc-counting" class="nav-link" data-scroll-target="#counting">Counting</a></li>
+  <li><a href="#descriptives" id="toc-descriptives" class="nav-link" data-scroll-target="#descriptives">Descriptives</a></li>
+  <li><a href="#visualisations" id="toc-visualisations" class="nav-link" data-scroll-target="#visualisations">Visualisations</a></li>
   </ul></li>
-  <li><a href="#content" id="toc-content" class="nav-link" data-scroll-target="#content">Content</a>
-  <ul>
-  <li><a href="#fundrmentals" id="toc-fundrmentals" class="nav-link" data-scroll-target="#fundrmentals">FundRmentals</a></li>
-  <li><a href="#essentials" id="toc-essentials" class="nav-link" data-scroll-target="#essentials">Essentials</a></li>
-  <li><a href="#improvrs" id="toc-improvrs" class="nav-link" data-scroll-target="#improvrs">ImprovRs</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -4644,7 +4684,7 @@ vertical-align: -.125em;
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Tutorials</h1>
+<h1 class="title">03: Datasets</h1>
 </div>
 
 
@@ -4659,66 +4699,145 @@ vertical-align: -.125em;
 
 </header>
 
-<section id="using-the-tutorials" class="level2">
-<h2 class="anchored" data-anchor-id="using-the-tutorials">Using the Tutorials</h2>
-<p>These tutorials are designed to accompany live training sessions, but they also serve as quick-reference guides for all the material covered in those sessions.</p>
-<section id="opening-the-tutorials" class="level3">
-<h3 class="anchored" data-anchor-id="opening-the-tutorials">Opening the Tutorials</h3>
-<p>In live sessions, it is recommended to open the corresponding tutorial in the Viewer pane in Posit Cloud so that solutions and explanations are easily available. The workbook documents provided for each week will already contain the code to do this.</p>
-<p>However, the tutorials can also be easily accessed at any time through this website, so it isn’t necessary to open Posit Cloud to view them - simply use the sidebar to jump to the tutorial you want!</p>
-</section>
-<section id="exercises" class="level3">
-<h3 class="anchored" data-anchor-id="exercises">Exercises</h3>
-<p>The exercises are strongly recommended to build your skills in R. All data and workbooks will be provided on Posit Cloud for completing the exercises.</p>
-<p>Solutions to all exercises are provided in the tutorial as well.</p>
-<section id="challenges" class="level4">
-<h4 class="anchored" data-anchor-id="challenges">Challenges</h4>
-<p>Some exercises will be clearly labeled as “Challenges”. These exercises are <strong>optional</strong> and are meant to go beyond the core tutorial material. However, if you skip them, you will still be able to understand everything that follows; you won’t need to complete them in order to proceed.</p>
-</section>
-</section>
-</section>
-<section id="content" class="level2">
-<h2 class="anchored" data-anchor-id="content">Content</h2>
-<p>Tutorials are divided into three sections.</p>
-<section id="fundrmentals" class="level3">
-<h3 class="anchored" data-anchor-id="fundrmentals">FundRmentals</h3>
-<p>The three-part FundRmentals series covers essential basic skills in R, and is designed for absolute beginners who have never seen R before and who have little to no coding experience of any kind.</p>
-<p>By the end of this series, you will be able to:</p>
 <ul>
-<li>Navigate the RStudio IDE</li>
-<li>Create and work with different types of data</li>
-<li>Work with objects and functions</li>
-<li>Perform calculations and logical tests on single values and vectors</li>
-<li>Read in data from a .csv file into a tibble</li>
-<li>View, summarise, and arrange the order of a tibble</li>
-<li>Create and render Quarto documents</li>
-<li>Perform and report <em>t</em>-test and linear model analyses</li>
+<li>Libraries</li>
+<li>Reading in, viewing and summarising datasets</li>
+<li>Subsetting with `$`, `pull()`</li>
+<li>Useful verbs: count, tally, mean, sd, min, max, etc.</li>
+<li>Quarto: chunk options, inline code, automatic numbering, rendering</li>
+<li>Base R visualisations</li>
+</ul>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>This tutorial is focused on working with datasets, and on writing up the findings from those datasets using Quarto documents. The tutorial covers key functions and tips for reading in, viewing, summarising, and working with datasets, and then walks through the process of setting up and producing a Quarto report, including how to dynamically report results and render a final document to a variety of formats.</p>
+<p>To kick off, however, we’ll start with an essential piece of R code: the pipe.</p>
+</section>
+<section id="the-pipe" class="level2">
+<h2 class="anchored" data-anchor-id="the-pipe">The Pipe</h2>
+<p>In the previous tutorial, we saw some examples of “nested” code - functions within functions, as below:</p>
+<p>For one or two levels of nesting, this is still legible, but can quickly become very difficult to track. One solution is to use the <strong>pipe operator, |&gt;</strong>. The pipe “chains” commands one after the other by taking the output of the preceding command and “piping it into” the next command, allowing a much more natural and readable sequence of steps. The pipe version of the above might look like this:</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Definition: Pipe">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition: Pipe
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The pipe operator may appear in two formats.</p>
+<ul>
+<li><strong>The native pipe, |&gt;</strong>. This is the pipe we will use throughout these tutorials. It is called the “native” pipe because it is inbuilt into R and doesn’t require any specific package to use.</li>
+<li><strong>The {magrittr} pipe, %&gt;%</strong>. This pipe comes from {tidyverse}, and in particular requires the {magrittr} package to use. You will very commonly see this pipe in scripts, Stack Overflow posts, from ChatGPT, etc. as the native pipe was only introduced to R in 2022.</li>
+</ul>
+<p>In most use-cases, including almost all of the code we will learn in these tutorials, the two pipes are interchangeable and will result in the same output.</p>
+<p>Conceptually, the pipe works by putting whatever is put into it into the first argument of whatever comes after it. Many functions - both packages and functions from the {tidyverse} and not - are already set up so that the first argument is the data, and {tidyverse} functions are explicitly designed this way in order to work best with the pipe. For functions where this is not the case, you can explicitly determine where the piped-in object should go using a “placeholder”.The most noticeable difference is that the native pipe placeholder is <code>_</code>, while the magrittr pipe placeholder is <code>.</code>.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Pipe Example">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Pipe Example
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Imagine we wanted to bake a Victoria sponge cake using R. Translating the steps into R, we might get something like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>ingredients <span class="sc">|&gt;</span> </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mix</span>(<span class="at">order =</span> <span class="fu">c</span>(<span class="st">&quot;wet&quot;</span>, <span class="st">&quot;dry&quot;</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pour</span>(<span class="at">shape =</span> <span class="st">&quot;round&quot;</span>, <span class="at">number =</span> <span class="dv">2</span>, <span class="at">lining =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bake</span>(<span class="at">temp =</span> <span class="dv">190</span>, <span class="at">time =</span> <span class="dv">20</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cool</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">assemble</span>(<span class="at">filling =</span> <span class="fu">c</span>(<span class="st">&quot;buttercream&quot;</span>, <span class="st">&quot;jam&quot;</span>), <span class="at">topping =</span> <span class="st">&quot;icing_sugar&quot;</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">devour</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in devour(assemble(cool(bake(pour(mix(ingredients, order = c(&quot;wet&quot;, : could not find function &quot;devour&quot;</code></pre>
+</div>
+</div>
+<p>At each step, <code>|&gt;</code> takes whatever the previous step produces and passes it on to the next step. So, we begin with <code>ingredients</code> - presumably an object that contains our flour, sugar, eggs, etc - which is “piped into” the <code>mix()</code> function. The output of that function might be all our ingredients mixed together in a bowl, which is then piped into the <code>pour()</code> function, and so on.</p>
+<p>Notice for example, the function <code>cool()</code>, which doesn’t appear to have anything in it. It actually does: the <code>cool()</code> function would apply to whatever the output of the <code>bake()</code> function was above it.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="datasets" class="level2">
+<h2 class="anchored" data-anchor-id="datasets">Datasets</h2>
+<section id="reading-in" class="level3">
+<h3 class="anchored" data-anchor-id="reading-in">Reading In</h3>
+<p>The first step in any data analysis process will be getting a hold of some data! This can be a complex procedure, so to keep it as streamlined as possible, we will always recommend the following steps:</p>
+<ul>
+<li>Always use a project file.</li>
+<li>Always use the same folder structure.</li>
+<li></li>
 </ul>
 </section>
-<section id="essentials" class="level3">
-<h3 class="anchored" data-anchor-id="essentials">Essentials</h3>
-<p>The four-part Essentials series is designed for novices with some basic skills in R, and follows on from the FundRmentals series. It covers the core data wrangling and analysis skills that we teach throughout the first year of the undergraduate Psychology course at Sussex, along with extra tips and techniques for efficient and transparent analysis to support dissertation supervisors to help their students.</p>
-<p>By the end of this series, you will be able to:</p>
-<ul>
-<li>Filter cases and select variables, including efficient <code>&lt;tidyselect&gt;</code> semantics</li>
-<li>Create new variables in a dataset, or change/recode existing ones</li>
-<li>Create a variety of customised data visualisations</li>
-<li>Perform and efficiently report the results of <em>t</em>-tests, chi-squared tests, correlations, and simple and hierarchical linear models</li>
-</ul>
+<section id="viewing" class="level3">
+<h3 class="anchored" data-anchor-id="viewing">Viewing</h3>
 </section>
-<section id="improvrs" class="level3">
-<h3 class="anchored" data-anchor-id="improvrs">ImprovRs</h3>
-<p>The four-part ImprovRs series is designed for those with a strong foundation in R who want to move to using R in part or entirely for their data management and analysis process, and follows on from the Essentials series. It covers specific skills in working with questionnaire data, advanced data wrangling, and an introduction to writing functions, with the aim of building a diverse toolbox of R skills.</p>
-<p>By the end of this series, you will be able to:</p>
-<ul>
-<li>Work with labelled Qualtrics data and factors</li>
-<li>Create standardised subscale scores</li>
-<li>Generate automatic codebooks for Qualtrics datasets</li>
-<li>Reshape (wide/long format) and merge/separate datasets</li>
-<li>Write custom anonymous and named functions</li>
-</ul>
+<section id="arranging" class="level3">
+<h3 class="anchored" data-anchor-id="arranging">Arranging</h3>
+</section>
+<section id="overall-summaries" class="level3">
+<h3 class="anchored" data-anchor-id="overall-summaries">Overall Summaries</h3>
+<section id="base-r" class="level4">
+<h4 class="anchored" data-anchor-id="base-r">Base R</h4>
+<p>The quickest and easiest check for a whole dataset is the base R function <code>summary()</code>. This function doesn’t do anything fancy (<em>at all</em>) but it does give you a very quick look at how all the variables have been read in, and an early indication if there’s anything wonky going on.</p>
+<section id="example" class="level5">
+<h5 class="anchored" data-anchor-id="example">Example</h5>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(my_tibble)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Here, for example, notice the <code>age</code> variable. This should be a numeric variable, but clearly something has gone pear-shaped, because it instead seems like a character variable. Compare this to, for example, OTHER EXAMPLE, which has some descriptive information about the distribution of values in the variable, which indicates that it <em>has</em> been successfully read as numeric.</p>
+<p>We will ignore the <code>age</code> issue for now until we cover how to make changes to the dataset <a href="../../../tutorials/psychrlogy/02_essentials/07_changes.html#mutate">in Tutorial 5</a></p>
+</section>
+</section>
+<section id="datawizard" class="level4">
+<h4 class="anchored" data-anchor-id="datawizard">{datawizard}</h4>
+<p>Besides the basic summary, there are many ready-made options in various packages to quickly produce summary tables. At the UG level, students are introduced <code>datawizard::describe_distribution()</code>, which is one such function. To use it, simply put the name of the dataset object inside the brackets.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Besides its default settings, the output can be further customised to add or remove particular statistics; see the help documentation.</p>
+</div>
+</div>
+<section id="example-1" class="level5">
+<h5 class="anchored" data-anchor-id="example-1">Example</h5>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>datawizard<span class="sc">::</span><span class="fu">describe_distribution</span>(my_tibble)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="variables" class="level3">
+<h3 class="anchored" data-anchor-id="variables">Variables</h3>
+<p>Once we’ve had a look at the whole dataset, it’s time to drill down into individual variables. We may want to calculate quick descriptives or investigate what’s going on with particular variables that seem to have issues (as we saw with <code>age</code> above). For any of these tasks, we’ll look at variables one at a time by subsetting or otherwise pulling them out of the dataset, then calculating some information about them.</p>
+<section id="subsetting" class="level4">
+<h4 class="anchored" data-anchor-id="subsetting">Subsetting</h4>
+</section>
+<section id="counting" class="level4">
+<h4 class="anchored" data-anchor-id="counting">Counting</h4>
+</section>
+<section id="descriptives" class="level4">
+<h4 class="anchored" data-anchor-id="descriptives">Descriptives</h4>
+</section>
+<section id="visualisations" class="level4">
+<h4 class="anchored" data-anchor-id="visualisations">Visualisations</h4>
 
 
+</section>
 </section>
 </section>
 

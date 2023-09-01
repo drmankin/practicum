@@ -144,7 +144,7 @@ The `anova()` function will only work for model comparison for particular models
 
 2.  **All models must be fit to the same dataset.** If, for example, your first predictor has no missing values, but your second predictor had one, the model with using the second predictor would have been fit to a dataset of a different size than the model using only the first, and the `anova()` function will throw an error to this effect.
 
-If you encounter this issue, you may need to [inspect and clean your dataset](..\02_essentials\04_filter.qmd) before you proceed with analysis!
+If you encounter this issue, you may need to [inspect and clean your dataset](..\02_essentials\06_filter.qmd) before you proceed with analysis!
 :::
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
@@ -211,11 +211,11 @@ If you're wondering what's up with `which`, the `plot()` function that `autoplot
 :::
 :::
 
-If you want to customise the theme or look of these plots further, they are built with {ggplot2} so you can add or change anything about them using that package. We will come round to a detailed exploration of data visualisations with {ggplot2} in [Tutorial 06]().
+If you want to customise the theme or look of these plots further, they are built with {ggplot2} so you can add or change anything about them using that package. We will come round later to [a detailed exploration of data visualisations with {ggplot2}](..\02_essentials\05_dataviz.qmd).
 
 #### Distribution of Standardised Residuals
 
-In the UG core statistics modules at Sussex, we teach that normality is the least important of the assumptions of the linear model - the most important being additivity and linearity - so we do not generally worry too much about normally distributed standardised residuals, especially in large sample sizes. However, we do teach them how to evaluate the proportion of standardised residuals with values above \$\pm\$1.96 (approximately 5%), \$\pm\$2.56 (approximately 1%), and above \$\pm\$3 (likely an outlier). For details on how to use `broom::augment()` to obtain standardised residuals and other model diagnostic measures like Cook's distance, see the `discovr_08` tutorial.
+In the UG core statistics modules at Sussex, we teach that normality is the least important of the assumptions of the linear model - the most important being additivity and linearity - so we do not generally worry too much about normally distributed standardised residuals, especially in large sample sizes. However, we do teach them how to evaluate the proportion of standardised residuals with values above &plusmn;1.96 (approximately 5%), &plusmn;2.56 (approximately 1%), and above &plusmn;3 (likely an outlier). For details on how to use `broom::augment()` to obtain standardised residuals and other model diagnostic measures like Cook's distance, see the `discovr_08` tutorial.
 
 #### Robust Models
 
@@ -307,11 +307,11 @@ Then, click "Create".
 
 By default, your new Quarto document will already have some settings and content to demonstrate how it works. Most importantly, you can see that there are three main types of information in this document:
 
-1.  The [**YAML header**](03_lm.qmd#global-options) at the top, delineated by `---`s, which contains information about how the document will be *rendered*
-2.  The [**body text**](03_lm.qmd#headings-and-text), which contains regular (i.e. non-code) text
-3.  The [**code chunks**](03_lm.qmd#code-chunks), which contain code - in this case, specifically, R.
+1.  The [**YAML header**](04_lm.qmd#global-options) at the top, delineated by `---`s, which contains information about how the document will be *rendered*
+2.  The [**body text**](04_lm.qmd#headings-and-text), which contains regular (i.e. non-code) text
+3.  The [**code chunks**](04_lm.qmd#code-chunks), which contain code - in this case, specifically, R.
 
-![](..\images\quarto_anatomy.png){fig-alt="A screenshot of the default Quarto document, with the YAML, text, and code chunks each circled and labelled in a different colour." fig-align="center"}
+![](..\..\images\quarto_anatomy.png){fig-alt="A screenshot of the default Quarto document, with the YAML, text, and code chunks each circled and labelled in a different colour." fig-align="center"}
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
 To complete our setup, take the following steps:
@@ -339,7 +339,7 @@ Which you use is entirely personal preference - I toggle regularly between them 
 
 To prepare for our analysis, we will need a place to load packages and read in the data. Any executable code - that is, code that you want to run and do something - must be written in a code chunk and NOT in the body text[^2].
 
-[^2]: Mostly true, except for [inline code](03_lm.qmd#inline-code)!
+[^2]: Mostly true, except for [inline code](04_lm.qmd#inline-code)!
 
 ::: {.callout-tip title="Inserting Code Chunks"}
 There are several ways to insert a new code chunk.
@@ -356,7 +356,7 @@ Create a new code chunk and code that does the following:
 
 -   Load all the packages we used in the previous Linear Model section
 -   Read in the dataset located in the `data` folder of your project into an object called `teach_tib`
--   Create the two objects containing the linear models with [one predictor](03_lm.qmd#one-predictor) and with [two predictors](03_lm.qmd#hierarchical-models).
+-   Create the two objects containing the linear models with [one predictor](04_lm.qmd#one-predictor) and with [two predictors](04_lm.qmd#hierarchical-models).
 
 Then, run the code chunk.
 
@@ -372,7 +372,7 @@ In the previous section, we used the following packages:
 
 **Read in the data**:
 
-In the Posit Cloud project workspace for this tutorial, there is a `teaching.csv` object. Look back on [Tutorial 02](02_datasets.qmd) for more detail about how to read in datasets.
+In the Posit Cloud project workspace for this tutorial, there is a `teaching.csv` object. Look back on [Tutorial 02](03_datasets.qmd) for more detail about how to read in datasets.
 
 **Create the models**:
 
@@ -403,7 +403,7 @@ Run the code chunk by clicking the green "play" arrow, or by pressing Ctrl/Cmd +
 To begin, we'll use headings to map out our document. Properly formatted headings are strongly recommended for any documents you write, for a variety of reasons:
 
 -   They automatically create the outline (to the right) and navigation menu (to the bottom) of your document for easy navigation
--   They can be automatically converted into a [table of contents](03_lm.qmd#table-of-contents)
+-   They can be automatically converted into a [table of contents](04_lm.qmd#table-of-contents)
 -   They are a crucial accessibility feature for navigating the document via keyboard/screenreader, as well as providing clear visual structure.
 
 ::: {.callout-tip title="Inserting Headings"}
@@ -452,7 +452,7 @@ That last sentence should report which of the two models was better, based on th
 Our first option is to use inline code to report the numbers. In order to do this, we first need to know what information we have available in the test output, so we can make use of it.
 
 ::: callout-tip
-This section will make extensive use of `$` subsetting, which was covered in [Tutorial 02](02_datasets.qmd), and `[]` subsetting, which was covered in [Tutorial 01](01_intro.qmd).
+This section will make extensive use of `$` subsetting, which was covered in [Tutorial 02](03_datasets.qmd), and `[]` subsetting, which was covered in [Tutorial 01](01_02_intro.qmd).
 :::
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
@@ -473,7 +473,7 @@ tidy_f
 :::
 :::
 
-The tibble we get here is quite different from [the "Analysis of Variance Table" text output](03_lm.qmd#comparing-models) that we saw earlier when we printed out the results of the `anova()` function on its own. We now have all the values we need to report these results in a conveniently subsettable tibble with nice R-friendly names.
+The tibble we get here is quite different from [the "Analysis of Variance Table" text output](04_lm.qmd#comparing-models) that we saw earlier when we printed out the results of the `anova()` function on its own. We now have all the values we need to report these results in a conveniently subsettable tibble with nice R-friendly names.
 
 So, let's have a go getting at some of those values.
 
@@ -493,7 +493,7 @@ This returns a vector of two values, `NA` and `r tidy_f$statistic[2]`. To index 
 tidy_f$statistic[2]
 ```
 
-Finally, we can [use the `round()` function](01_intro.qmd#using-functions) to round to two decimal places.
+Finally, we can [use the `round()` function](01_02_intro.qmd#using-functions) to round to two decimal places.
 
 ```{r}
 round(tidy_f$statistic[2], 2)

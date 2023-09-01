@@ -195,7 +195,7 @@ You may have tried something like this:
 
 As you can see from the markers, this is three separate commands, because the numbered indices start over from `[1]` each time. However, we want all those numbers *in a single command*. To do this, I'm going to use a **function** called `c()`.
 
-This is our first contact with functions in R, and [we'll explore how they work more later on](01_introqmd#functions). To use this one, type it out, then inside the brackets, put the numbers you want to **c**ollect (or **c**oncatenate, or **c**ombine), with different groups separated by commas.
+This is our first contact with functions in R, and [we'll explore how they work more later on](01_02_intro.qmd#functions). To use this one, type it out, then inside the brackets, put the numbers you want to **c**ollect (or **c**oncatenate, or **c**ombine), with different groups separated by commas.
 
 ```{r}
 c(12:30, 23:55, 36)
@@ -350,7 +350,7 @@ Use a single command to ask R whether the numbers 2 through 10 are less than or 
 :::
 :::
 
-Here R prints out a value of `TRUE` or `FALSE` for each comparison it's asked to make. So, the first element in the output (`TRUE`) corresponds to the statement `2 <= 6`, the second to `3 <= 6`, and so on. This is a vectorised calculation again, as we saw with numeric data before. These vectorised assertions will be absolutely essential to [selecting and filtering data](..\02_essentials\04_filter.qmd) that meet particular requirements, or checking our data to find problems.
+Here R prints out a value of `TRUE` or `FALSE` for each comparison it's asked to make. So, the first element in the output (`TRUE`) corresponds to the statement `2 <= 6`, the second to `3 <= 6`, and so on. This is a vectorised calculation again, as we saw with numeric data before. These vectorised assertions will be absolutely essential to [selecting and filtering data](..\02_essentials\06_filter.qmd) that meet particular requirements, or checking our data to find problems.
 
 ## Class and Coercion
 
@@ -440,7 +440,7 @@ At the moment your Environment should be empty. As a reminder, Environment is by
 
 If this window is blank except for "Environment is empty", you're ready to go. If for some reason it isn't empty, click the broom icon to clear everything from your Environment before you get started, as indicted in the image below. (There will be a very ominous-sounding "Are you sure?" pop-up, but just click "Yes".)
 
-![](..\images\clear_env.png){fig-alt="A screenshot of the Environment pane in RStudio, with the 'Clear objects from workspace' broom icon circled, along with the 'Yes' button on the subsequent pop-up."}
+![](..\..\images\clear_env.png){fig-alt="A screenshot of the Environment pane in RStudio, with the 'Clear objects from workspace' broom icon circled, along with the 'Yes' button on the subsequent pop-up."}
 :::
 
 First, let's look at the foundational structure of almost everything you will do in R:

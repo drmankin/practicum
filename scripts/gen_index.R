@@ -39,6 +39,7 @@ get_calls <- function(filepath) {
 
 all_qmds <- list.files(path = "tutorials/psychrlogy", pattern = "qmd", recursive = TRUE)
 
+all_qmds_path <- "tutorials/psychrlogy"
 
 # Create Functions Index --------------------------------------------------
 
@@ -46,9 +47,15 @@ all_qmds <- list.files(path = "tutorials/psychrlogy", pattern = "qmd", recursive
 
 ### Put function index files in fx folder!
 
+path_fx_index <- file.path(getwd(), "tutorials/index/fx")
+
+if(!dir.exists(path_fx_index)){
+  dir.create(path_fx_index)
+}
+
 purrr::map(
-  .x = file.path("tutorials/psychrlogy", all_qmds),
-  .f = ~knitr::purl(.x, output = file.path(getwd(), "tutorials/index/fx", 
+  .x = file.path(all_qmds_path, all_qmds),
+  .f = ~knitr::purl(.x, output = file.path(path_fx_index, 
                                            gsub(".*/(.*)", "\\1", gsub("qmd", "R", .x))))
 )
 
@@ -72,7 +79,7 @@ clean_code <- function(this_file){
 }
 
 purrr::map(
-  .x = list.files(path = "tutorials/index/fx", pattern = ".R$", recursive = TRUE, full.names = TRUE),
+  .x = list.files(path = path_fx_index, pattern = ".R$", recursive = TRUE, full.names = TRUE),
   .f = clean_code
 )
 
@@ -83,9 +90,9 @@ get_title <- function(file_path){
   gsub('title: \\\"(.*)\\\"', "\\1", grep("title:", text, value = TRUE)[1])
 }
 
-all_fxs <- list.files(path = "tutorials/index/fx", pattern = ".R$", 
+all_fxs <- list.files(path = path_fx_index, pattern = ".R$", 
            recursive = TRUE, full.names = TRUE) %>% 
-  purrr::set_names(nm = unlist(purrr::map(file.path("tutorials/psychrlogy", all_qmds), get_title))) |> 
+  purrr::set_names(nm = unlist(purrr::map(file.path(all_qmds_path, all_qmds), get_title))) |> 
   purrr::map(
   .x = _,
   .f = get_calls
@@ -94,6 +101,10 @@ all_fxs <- list.files(path = "tutorials/index/fx", pattern = ".R$",
     .x = _,
     .f = sort
   )
+
+## DELETES all the .R files (otherwise if the file names change the whole thing breaks)
+unlink(list.files(path = path_fx_index, pattern = ".R$",
+                  recursive = TRUE, full.names = TRUE))
 
 all_fxs_tib <- all_fxs |> tibble::enframe() |> tidyr::unnest(cols = value)
 
@@ -153,10 +164,16 @@ fxs_tab <- fxs_tib_wide |>
 
 # Create Topics Index -----------------------------------------------------
 
+path_topics_index <- file.path(getwd(), "tutorials/index/topics")
+
+if(!dir.exists(path_topics_index)){
+  dir.create(path_topics_index)
+}
+
 purrr::map(
-  .x = file.path("tutorials/psychrlogy", all_qmds),
+  .x = file.path(all_qmds_path, all_qmds),
   .f = ~knitr::purl(.x, documentation =2,
-                    output = file.path(getwd(), "tutorials/index/topics", 
+                    output = file.path(path_topics_index, 
                                            gsub(".*/(.*)", "\\1", gsub(".qmd", "_topics.R", .x))))
 )
       
@@ -176,11 +193,11 @@ clean_topics <- function(this_file){
   # gsub("#' #{1,} (.*)", "\\1", this_code[grepl("#' #{2,3} ", this_code)])
 }
 
-titles_key <- list.files(path = "tutorials/psychrlogy", pattern = ".qmd$", 
+titles_key <- list.files(path = all_qmds_path, pattern = ".qmd$", 
                          recursive = TRUE, full.names = TRUE) |> 
-  purrr::set_names(nm = unlist(purrr::map(file.path("tutorials/psychrlogy", all_qmds), get_title)))
+  purrr::set_names(nm = unlist(purrr::map(file.path(all_qmds_path, all_qmds), get_title)))
 
-topics <- list.files(path = "tutorials/index/topics", pattern = "_topics.R$", recursive = TRUE, full.names = TRUE) |> 
+topics <- list.files(path = path_topics_index, pattern = "_topics.R$", recursive = TRUE, full.names = TRUE) |> 
   purrr::set_names(nm = all_qmds) |> 
   purrr::map(
     .x = _,
@@ -189,8 +206,12 @@ topics <- list.files(path = "tutorials/index/topics", pattern = "_topics.R$", re
   tibble::enframe() |> 
   tidyr::unnest(cols = value)
 
+## DELETES all the .R files (otherwise if the file names change the whole thing breaks)
+unlink(list.files(path = path_topics_index, pattern = ".R$",
+                  recursive = TRUE, full.names = TRUE))
+
 topics_tab <- topics |> 
-  dplyr::filter(!(heading_text %in% c("Overview", "Basic Structure"))) |> 
+  dplyr::filter(!(heading_text %in% c("Overview", "Basic Structure", "Setting Up", "Next Steps"))) |> 
   dplyr::mutate(
     link = paste0("[", heading_text, "](tutorials/psychrlogy/", name, "#", gsub(" ", "-", tolower(heading_text)),")")
   ) |> 
@@ -201,17 +222,22 @@ topics_tab <- topics |>
 
 topics_indents <- which(topics_tab$heading_level > 2)
 
-topics_kbl <- topics_tab |> 
+topics_pack <- topics_tab |> 
   dplyr::select(tut, link) |> 
+  dplyr::group_by(tut) |> 
+  dplyr::summarise(n = dplyr::n()) |> 
+  tibble::deframe()
+
+topics_kbl <- topics_tab |> 
+  dplyr::select(link) |> 
   kableExtra::kbl(
-    col.names = c("Tutorial", "Jump to Section"),
+    col.names = c("Jump to Topic"),
     format = "html"
   )
 
 topics_kbl <- topics_kbl |> 
-  kableExtra::add_indent(positions = topics_indents, target_cols = 2) |> 
-  kableExtra::collapse_rows(columns = 1, valign = "middle") |> 
-  kableExtra::kable_styling()
+  kableExtra::add_indent(positions = topics_indents, target_cols = 1) |> 
+  kableExtra::pack_rows(index = topics_pack)
 
 # Create Index Page -------------------------------------------------------
 
