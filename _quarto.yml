@@ -1,0 +1,54 @@
+project:
+  type: website
+  pre-render: scripts/gen_index.R #not currently working automatically (but seems okay manually!)
+
+website:
+  title: R Training
+  navbar:
+    # Sussex Flint
+    background: "#003b49"
+    left:
+      - text: "Home"
+        file: index.qmd
+      - text: "Tutorials"
+        file: tutorials.qmd
+      - text: "Other"
+        file: other.qmd
+      - href: https://canvas.sussex.ac.uk/courses/29761
+        text: "Canvas"
+
+  sidebar: 
+    - title: "Tutorials"
+      style: "docked"
+      # Sussex Cool Grey
+      background: "#d0d3d4"
+      contents: 
+        - tutorials.qmd
+        - quick_ref.qmd
+        - section: "FundRmentals"
+          contents:
+            - auto: tutorials/psychrlogy/01_fundRmentals/*
+        - section: "Essentials"
+          contents:
+            - auto: tutorials/psychrlogy/02_essentials/*
+        - section: "ImprovRs"
+          contents:
+            - auto: tutorials/psychrlogy/03_improvRs/*
+    - title: "Other"
+      contents:
+        - other.qmd
+
+
+format:
+  html:
+    theme: 
+      light: [flatly, theme-flatly.scss]
+      # https://quarto.org/docs/output-formats/html-themes.html#theme-options
+      dark: [darkly, theme-darkly.scss]
+    css: styles.css
+    toc: true
+    toc-depth: 4
+    self-contained: true
+
+editor: visual
+

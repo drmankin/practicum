@@ -1,0 +1,32 @@
+---
+title: "R Training at Sussex"
+format:
+  html:
+    toc: false
+---
+
+## Welcome!
+
+This is the website for training courses in the programming language R, run by the Methods Teaching Team in the School of Psychology, University of Sussex.
+
+### Joining Training
+
+At the moment, our training sessions are only open to members of staff in the School of Psychology at Sussex, or by invitation.
+
+If you fit that description, DO X
+
+If you do *not* fit that description but are interested in joining a training course in the future, please [register your interest here]() and we will get in touch when/if there are open sessions available.
+
+## Materials
+
+### Tutorials
+
+The [Tutorials](tutorials.qmd) section of the site contains tutorial documents designed to accompany live training sessions. They provide explanations, examples, and exercises designed for complete beginners through improvers.
+
+### Worksheets
+
+Worksheets are hosted on the Posit Cloud workspace for the training course. You can [join the workspace via Canvas](https://canvas.sussex.ac.uk/courses/29761/pages/posit-cloud).
+
+### Recordings
+
+Live sessions are recorded and made available, with automatically-generated captions, as soon as possible after the sessions are complete. [View session recordings on Canvas](https://canvas.sussex.ac.uk/courses/29761/external_tools/3491).

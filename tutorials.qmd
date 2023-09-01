@@ -1,0 +1,66 @@
+---
+title: "Tutorials"
+---
+
+
+## Using the Tutorials
+
+These tutorials are designed to accompany live training sessions, but they also serve as quick-reference guides for all the material covered in those sessions.
+
+### Opening the Tutorials
+
+In live sessions, it is recommended to open the corresponding tutorial in the Viewer pane in Posit Cloud so that solutions and explanations are easily available. The workbook documents provided for each week will already contain the code to do this.
+
+However, the tutorials can also be easily accessed at any time through this website, so it isn't necessary to open Posit Cloud to view them - simply use the sidebar to jump to the tutorial you want!
+
+### Exercises
+
+The exercises are strongly recommended to build your skills in R. All data and workbooks will be provided on Posit Cloud for completing the exercises.
+
+Solutions to all exercises are provided in the tutorial as well.
+
+#### Challenges
+
+Some exercises will be clearly labeled as "Challenges". These exercises are **optional** and are meant to go beyond the core tutorial material. However, if you skip them, you will still be able to understand everything that follows; you won't need to complete them in order to proceed.
+
+## Content
+
+Tutorials are divided into three sections.
+
+### FundRmentals
+
+The three-part FundRmentals series covers essential basic skills in R, and is designed for absolute beginners who have never seen R before and who have little to no coding experience of any kind.
+
+By the end of this series, you will be able to:
+
+-   Navigate the RStudio IDE
+-   Create and work with different types of data
+-   Work with objects and functions
+-   Perform calculations and logical tests on single values and vectors
+-   Read in data from a .csv file into a tibble
+-   View, summarise, and arrange the order of a tibble
+-   Create and render Quarto documents
+-   Perform and report *t*-test and linear model analyses
+
+### Essentials
+
+The four-part Essentials series is designed for novices with some basic skills in R, and follows on from the FundRmentals series. It covers the core data wrangling and analysis skills that we teach throughout the first year of the undergraduate Psychology course at Sussex, along with extra tips and techniques for efficient and transparent analysis to support dissertation supervisors to help their students.
+
+By the end of this series, you will be able to:
+
+-   Filter cases and select variables, including efficient `<tidyselect>` semantics
+-   Create new variables in a dataset, or change/recode existing ones
+-   Create a variety of customised data visualisations
+-   Perform and efficiently report the results of *t*-tests, chi-squared tests, correlations, and simple and hierarchical linear models
+
+### ImprovRs
+
+The four-part ImprovRs series is designed for those with a strong foundation in R who want to move to using R in part or entirely for their data management and analysis process, and follows on from the Essentials series. It covers specific skills in working with questionnaire data, advanced data wrangling, and an introduction to writing functions, with the aim of building a diverse toolbox of R skills.
+
+By the end of this series, you will be able to:
+
+-   Work with labelled Qualtrics data and factors
+-   Create standardised subscale scores
+-   Generate automatic codebooks for Qualtrics datasets
+-   Reshape (wide/long format) and merge/separate datasets
+-   Write custom anonymous and named functions

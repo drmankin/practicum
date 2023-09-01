@@ -1,0 +1,362 @@
+---
+title: 'Quick Reference'
+---
+
+## Index of Functions
+
+Looking for a function you can't quite remember how to use? You're in the right place!
+The table below is arranged alphabetically by function name, and the linked full name (including relevant package calls) will take you to the help documentation.
+<table class="table" style="margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Function Name </th>
+   <th style="text-align:left;"> Link to Help Documentation </th>
+   <th style="text-align:left;"> Used In... </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> across() </td>
+   <td style="text-align:left;"> <a href="https://dplyr.tidyverse.org/reference/across.html">dplyr::across()</a> </td>
+   <td style="text-align:left;"> 05: Mutate and Summarise </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> anova() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/stats/anova.html">anova()</a> </td>
+   <td style="text-align:left;"> 03: Reporting Linear Models with Quarto </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> apa_print() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/pkg/papaja/man/apa_print.html">papaja::apa_print()</a> </td>
+   <td style="text-align:left;"> 03: Reporting Linear Models with Quarto </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> apa_table() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/pkg/papaja/man/apa_table.html">papaja::apa_table()</a> </td>
+   <td style="text-align:left;"> 03: Reporting Linear Models with Quarto </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> autoplot() </td>
+   <td style="text-align:left;"> <a href="https://ggplot2.tidyverse.org/reference/autoplot.html">ggplot2::autoplot()</a> </td>
+   <td style="text-align:left;"> 03: Reporting Linear Models with Quarto </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> c() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/c.html">c()</a> </td>
+   <td style="text-align:left;"> 01: IntRoductions I<br>03: Reporting Linear Models with Quarto<br>05: Mutate and Summarise </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> class() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/class.html">class()</a> </td>
+   <td style="text-align:left;"> 01: IntRoductions I </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> contains() </td>
+   <td style="text-align:left;"> <a href="https://tidyselect.r-lib.org/reference/starts_with.html">dplyr::contains()</a> </td>
+   <td style="text-align:left;"> 05: Mutate and Summarise </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> data() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/utils/data.html">data()</a> </td>
+   <td style="text-align:left;"> 03: Reporting Linear Models with Quarto </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> glance() </td>
+   <td style="text-align:left;"> <a href="https://generics.r-lib.org/reference/glance.html">broom::glance()</a> </td>
+   <td style="text-align:left;"> 03: Reporting Linear Models with Quarto </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> library() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/library.html">library()</a> </td>
+   <td style="text-align:left;"> 03: Reporting Linear Models with Quarto<br>04: Filter and Select<br>05: Mutate and Summarise </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> lm() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/stats/lm.html">lm()</a> </td>
+   <td style="text-align:left;"> 03: Reporting Linear Models with Quarto </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> lmRob() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/pkg/robust/man/lmRob.html">robust::lmRob()</a> </td>
+   <td style="text-align:left;"> 03: Reporting Linear Models with Quarto </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> mean() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/mean.html">mean()</a> </td>
+   <td style="text-align:left;"> 01: IntRoductions I<br>05: Mutate and Summarise </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> model_parameters() </td>
+   <td style="text-align:left;"> <a href="https://easystats.github.io/parameters/reference/model_parameters.html">parameters::model_parameters()</a> </td>
+   <td style="text-align:left;"> 03: Reporting Linear Models with Quarto </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> nice_table() </td>
+   <td style="text-align:left;"> <a href="https://rempsyc.remi-theriault.com/reference/nice_table.html">rempsyc::nice_table()</a> </td>
+   <td style="text-align:left;"> 03: Reporting Linear Models with Quarto </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> pick() </td>
+   <td style="text-align:left;"> <a href="https://dplyr.tidyverse.org/reference/pick.html">dplyr::pick()</a> </td>
+   <td style="text-align:left;"> 05: Mutate and Summarise </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> round() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/Round.html">round()</a> </td>
+   <td style="text-align:left;"> 01: IntRoductions I<br>03: Reporting Linear Models with Quarto </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> rowMeans() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/colSums.html">rowMeans()</a> </td>
+   <td style="text-align:left;"> 05: Mutate and Summarise </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> sd() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/stats/sd.html">sd()</a> </td>
+   <td style="text-align:left;"> 05: Mutate and Summarise </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> select() </td>
+   <td style="text-align:left;"> <a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select()</a> </td>
+   <td style="text-align:left;"> 05: Mutate and Summarise </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> t.test() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/stats/t.test.html">t.test()</a> </td>
+   <td style="text-align:left;"> 01: IntRoductions I </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> tidy() </td>
+   <td style="text-align:left;"> <a href="https://generics.r-lib.org/reference/tidy.html">broom::tidy()</a> </td>
+   <td style="text-align:left;"> 03: Reporting Linear Models with Quarto </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> where() </td>
+   <td style="text-align:left;"> <a href="https://tidyselect.r-lib.org/reference/where.html">dplyr::where()</a> </td>
+   <td style="text-align:left;"> 05: Mutate and Summarise </td>
+  </tr>
+</tbody>
+</table>
+
+## Index of Topics
+
+If you're looking for a particular section of a tutorial, use this handy summary to jump straight to the section you want.
+
+<table class="table" style="margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Tutorial </th>
+   <th style="text-align:left;"> Jump to Section </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;vertical-align: middle !important;" rowspan="18"> 01: IntRoductions I </td>
+   <td style="text-align:left;"> [Making Mistakes](tutorials/psychrlogy/01_fundRmentals/01_intro.qmd#making-mistakes) </td>
+  </tr>
+  <tr>
+   
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [GlossoRlia](tutorials/psychrlogy/01_fundRmentals/01_intro.qmd#glossorlia) </td>
+  </tr>
+  <tr>
+   
+   <td style="text-align:left;"> [Types of Data](tutorials/psychrlogy/01_fundRmentals/01_intro.qmd#types-of-data) </td>
+  </tr>
+  <tr>
+   
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Numeric](tutorials/psychrlogy/01_fundRmentals/01_intro.qmd#numeric) </td>
+  </tr>
+  <tr>
+   
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Character](tutorials/psychrlogy/01_fundRmentals/01_intro.qmd#character) </td>
+  </tr>
+  <tr>
+   
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Logical](tutorials/psychrlogy/01_fundRmentals/01_intro.qmd#logical) </td>
+  </tr>
+  <tr>
+   
+   <td style="text-align:left;"> [Class and Coercion](tutorials/psychrlogy/01_fundRmentals/01_intro.qmd#class-and-coercion) </td>
+  </tr>
+  <tr>
+   
+   <td style="text-align:left;"> [Objects](tutorials/psychrlogy/01_fundRmentals/01_intro.qmd#objects) </td>
+  </tr>
+  <tr>
+   
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Creating an Object](tutorials/psychrlogy/01_fundRmentals/01_intro.qmd#creating-an-object) </td>
+  </tr>
+  <tr>
+   
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Calling an Object](tutorials/psychrlogy/01_fundRmentals/01_intro.qmd#calling-an-object) </td>
+  </tr>
+  <tr>
+   
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Using Objects](tutorials/psychrlogy/01_fundRmentals/01_intro.qmd#using-objects) </td>
+  </tr>
+  <tr>
+   
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Important: Overwriting Objects](tutorials/psychrlogy/01_fundRmentals/01_intro.qmd#important:-overwriting-objects) </td>
+  </tr>
+  <tr>
+   
+   <td style="text-align:left;"> [Functions](tutorials/psychrlogy/01_fundRmentals/01_intro.qmd#functions) </td>
+  </tr>
+  <tr>
+   
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Basics and Help](tutorials/psychrlogy/01_fundRmentals/01_intro.qmd#basics-and-help) </td>
+  </tr>
+  <tr>
+   
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Arguments](tutorials/psychrlogy/01_fundRmentals/01_intro.qmd#arguments) </td>
+  </tr>
+  <tr>
+   
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Using Functions](tutorials/psychrlogy/01_fundRmentals/01_intro.qmd#using-functions) </td>
+  </tr>
+  <tr>
+   
+   <td style="text-align:left;"> [Let's Get Testing](tutorials/psychrlogy/01_fundRmentals/01_intro.qmd#let's-get-testing) </td>
+  </tr>
+  <tr>
+   
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Comparing Groups with *t*-test](tutorials/psychrlogy/01_fundRmentals/01_intro.qmd#comparing-groups-with-*t*-test) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;vertical-align: middle !important;" rowspan="7"> 02: Datasets </td>
+   <td style="text-align:left;"> [The Pipe](tutorials/psychrlogy/01_fundRmentals/02_datasets.qmd#the-pipe) </td>
+  </tr>
+  <tr>
+   
+   <td style="text-align:left;"> [Datasets](tutorials/psychrlogy/01_fundRmentals/02_datasets.qmd#datasets) </td>
+  </tr>
+  <tr>
+   
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Reading In](tutorials/psychrlogy/01_fundRmentals/02_datasets.qmd#reading-in) </td>
+  </tr>
+  <tr>
+   
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Viewing](tutorials/psychrlogy/01_fundRmentals/02_datasets.qmd#viewing) </td>
+  </tr>
+  <tr>
+   
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Arranging](tutorials/psychrlogy/01_fundRmentals/02_datasets.qmd#arranging) </td>
+  </tr>
+  <tr>
+   
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Overall Summaries](tutorials/psychrlogy/01_fundRmentals/02_datasets.qmd#overall-summaries) </td>
+  </tr>
+  <tr>
+   
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Variables](tutorials/psychrlogy/01_fundRmentals/02_datasets.qmd#variables) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;vertical-align: middle !important;" rowspan="12"> 03: Reporting Linear Models with Quarto </td>
+   <td style="text-align:left;"> [The Linear Model](tutorials/psychrlogy/01_fundRmentals/03_lm.qmd#the-linear-model) </td>
+  </tr>
+  <tr>
+   
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Data and Codebook](tutorials/psychrlogy/01_fundRmentals/03_lm.qmd#data-and-codebook) </td>
+  </tr>
+  <tr>
+   
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [One Predictor](tutorials/psychrlogy/01_fundRmentals/03_lm.qmd#one-predictor) </td>
+  </tr>
+  <tr>
+   
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Hierarchial Models](tutorials/psychrlogy/01_fundRmentals/03_lm.qmd#hierarchial-models) </td>
+  </tr>
+  <tr>
+   
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Assumptions Checks](tutorials/psychrlogy/01_fundRmentals/03_lm.qmd#assumptions-checks) </td>
+  </tr>
+  <tr>
+   
+   <td style="text-align:left;"> [Quarto](tutorials/psychrlogy/01_fundRmentals/03_lm.qmd#quarto) </td>
+  </tr>
+  <tr>
+   
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Getting Started](tutorials/psychrlogy/01_fundRmentals/03_lm.qmd#getting-started) </td>
+  </tr>
+  <tr>
+   
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Creating a Code Chunk](tutorials/psychrlogy/01_fundRmentals/03_lm.qmd#creating-a-code-chunk) </td>
+  </tr>
+  <tr>
+   
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Headings and Text](tutorials/psychrlogy/01_fundRmentals/03_lm.qmd#headings-and-text) </td>
+  </tr>
+  <tr>
+   
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Dynamic Reporting](tutorials/psychrlogy/01_fundRmentals/03_lm.qmd#dynamic-reporting) </td>
+  </tr>
+  <tr>
+   
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Rendering](tutorials/psychrlogy/01_fundRmentals/03_lm.qmd#rendering) </td>
+  </tr>
+  <tr>
+   
+   <td style="text-align:left;"> [Well done!](tutorials/psychrlogy/01_fundRmentals/03_lm.qmd#well-done!) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;vertical-align: middle !important;" rowspan="6"> 04: Filter and Select </td>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Setting Up](tutorials/psychrlogy/02_essentials/04_filter.qmd#setting-up) </td>
+  </tr>
+  <tr>
+   
+   <td style="text-align:left;"> [Filter](tutorials/psychrlogy/02_essentials/04_filter.qmd#filter) </td>
+  </tr>
+  <tr>
+   
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Multiple Conditions](tutorials/psychrlogy/02_essentials/04_filter.qmd#multiple-conditions) </td>
+  </tr>
+  <tr>
+   
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Data Cleaning](tutorials/psychrlogy/02_essentials/04_filter.qmd#data-cleaning) </td>
+  </tr>
+  <tr>
+   
+   <td style="text-align:left;"> [Select](tutorials/psychrlogy/02_essentials/04_filter.qmd#select) </td>
+  </tr>
+  <tr>
+   
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [`&lt;tidyselect&gt;`](tutorials/psychrlogy/02_essentials/04_filter.qmd#`&lt;tidyselect&gt;`) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;vertical-align: middle !important;" rowspan="9"> 05: Mutate and Summarise </td>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Setting Up](tutorials/psychrlogy/02_essentials/05_changes.qmd#setting-up) </td>
+  </tr>
+  <tr>
+   
+   <td style="text-align:left;"> [Mutate](tutorials/psychrlogy/02_essentials/05_changes.qmd#mutate) </td>
+  </tr>
+  <tr>
+   
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Composite Scores](tutorials/psychrlogy/02_essentials/05_changes.qmd#composite-scores) </td>
+  </tr>
+  <tr>
+   
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Conditionals](tutorials/psychrlogy/02_essentials/05_changes.qmd#conditionals) </td>
+  </tr>
+  <tr>
+   
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Iteration](tutorials/psychrlogy/02_essentials/05_changes.qmd#iteration) </td>
+  </tr>
+  <tr>
+   
+   <td style="text-align:left;"> [Summarise](tutorials/psychrlogy/02_essentials/05_changes.qmd#summarise) </td>
+  </tr>
+  <tr>
+   
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [By Group](tutorials/psychrlogy/02_essentials/05_changes.qmd#by-group) </td>
+  </tr>
+  <tr>
+   
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Iteration](tutorials/psychrlogy/02_essentials/05_changes.qmd#iteration) </td>
+  </tr>
+  <tr>
+   
+   <td style="text-align:left;"> [Next Steps](tutorials/psychrlogy/02_essentials/05_changes.qmd#next-steps) </td>
+  </tr>
+</tbody>
+</table>

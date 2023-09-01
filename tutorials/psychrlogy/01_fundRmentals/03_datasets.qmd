@@ -1,0 +1,113 @@
+---
+title: "03: Datasets"
+execute:
+  error: true
+---
+
+-   Libraries
+-   Reading in, viewing and summarising datasets
+-   Subsetting with \`\$\`, \`pull()\`
+-   Useful verbs: count, tally, mean, sd, min, max, etc.
+-   Quarto: chunk options, inline code, automatic numbering, rendering
+-   Base R visualisations
+
+## Overview
+
+This tutorial is focused on working with datasets, and on writing up the findings from those datasets using Quarto documents. The tutorial covers key functions and tips for reading in, viewing, summarising, and working with datasets, and then walks through the process of setting up and producing a Quarto report, including how to dynamically report results and render a final document to a variety of formats.
+
+To kick off, however, we'll start with an essential piece of R code: the pipe.
+
+## The Pipe
+
+In the previous tutorial, we saw some examples of "nested" code - functions within functions, as below:
+
+For one or two levels of nesting, this is still legible, but can quickly become very difficult to track. One solution is to use the **pipe operator, \|\>**. The pipe "chains" commands one after the other by taking the output of the preceding command and "piping it into" the next command, allowing a much more natural and readable sequence of steps. The pipe version of the above might look like this:
+
+::: {.callout-tip title="Definition: Pipe"}
+The pipe operator may appear in two formats.
+
+-   **The native pipe, \|\>**. This is the pipe we will use throughout these tutorials. It is called the "native" pipe because it is inbuilt into R and doesn't require any specific package to use.
+-   **The {magrittr} pipe, %\>%**. This pipe comes from {tidyverse}, and in particular requires the {magrittr} package to use. You will very commonly see this pipe in scripts, Stack Overflow posts, from ChatGPT, etc. as the native pipe was only introduced to R in 2022.
+
+In most use-cases, including almost all of the code we will learn in these tutorials, the two pipes are interchangeable and will result in the same output.
+
+Conceptually, the pipe works by putting whatever is put into it into the first argument of whatever comes after it. Many functions - both packages and functions from the {tidyverse} and not - are already set up so that the first argument is the data, and {tidyverse} functions are explicitly designed this way in order to work best with the pipe. For functions where this is not the case, you can explicitly determine where the piped-in object should go using a "placeholder".The most noticeable difference is that the native pipe placeholder is `_`, while the magrittr pipe placeholder is `.`.
+
+::: {.callout-tip title="Pipe Example" collapse="true"}
+Imagine we wanted to bake a Victoria sponge cake using R. Translating the steps into R, we might get something like this:
+
+```{r}
+ingredients |> 
+  mix(order = c("wet", "dry")) |> 
+  pour(shape = "round", number = 2, lining = TRUE) |> 
+  bake(temp = 190, time = 20) |> 
+  cool() |> 
+  assemble(filling = c("buttercream", "jam"), topping = "icing_sugar") |> 
+  devour()
+```
+
+At each step, `|>` takes whatever the previous step produces and passes it on to the next step. So, we begin with `ingredients` - presumably an object that contains our flour, sugar, eggs, etc - which is "piped into" the `mix()` function. The output of that function might be all our ingredients mixed together in a bowl, which is then piped into the `pour()` function, and so on.
+
+Notice for example, the function `cool()`, which doesn't appear to have anything in it. It actually does: the `cool()` function would apply to whatever the output of the `bake()` function was above it.
+:::
+:::
+
+## Datasets
+
+### Reading In
+
+The first step in any data analysis process will be getting a hold of some data! This can be a complex procedure, so to keep it as streamlined as possible, we will always recommend the following steps:
+
+-   Always use a project file.
+-   Always use the same folder structure.
+-   
+
+### Viewing
+
+### Arranging
+
+### Overall Summaries
+
+#### Base R
+
+The quickest and easiest check for a whole dataset is the base R function `summary()`. This function doesn't do anything fancy (*at all*) but it does give you a very quick look at how all the variables have been read in, and an early indication if there's anything wonky going on.
+
+##### Example
+
+```{r}
+#| eval: false
+
+summary(my_tibble)
+```
+
+Here, for example, notice the `age` variable. This should be a numeric variable, but clearly something has gone pear-shaped, because it instead seems like a character variable. Compare this to, for example, OTHER EXAMPLE, which has some descriptive information about the distribution of values in the variable, which indicates that it *has* been successfully read as numeric.
+
+We will ignore the `age` issue for now until we cover how to make changes to the dataset [in Tutorial 5](..\02_essentials\05_changes.qmd#mutate)
+
+#### {datawizard}
+
+Besides the basic summary, there are many ready-made options in various packages to quickly produce summary tables. At the UG level, students are introduced `datawizard::describe_distribution()`, which is one such function. To use it, simply put the name of the dataset object inside the brackets.
+
+::: callout-tip
+Besides its default settings, the output can be further customised to add or remove particular statistics; see the help documentation.
+:::
+
+##### Example
+
+```{r}
+#| eval: false
+
+datawizard::describe_distribution(my_tibble)
+```
+
+### Variables
+
+Once we've had a look at the whole dataset, it's time to drill down into individual variables. We may want to calculate quick descriptives or investigate what's going on with particular variables that seem to have issues (as we saw with `age` above). For any of these tasks, we'll look at variables one at a time by subsetting or otherwise pulling them out of the dataset, then calculating some information about them.
+
+#### Subsetting
+
+#### Counting
+
+#### Descriptives
+
+#### Visualisations
