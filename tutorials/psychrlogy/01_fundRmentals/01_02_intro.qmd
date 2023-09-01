@@ -440,7 +440,7 @@ At the moment your Environment should be empty. As a reminder, Environment is by
 
 If this window is blank except for "Environment is empty", you're ready to go. If for some reason it isn't empty, click the broom icon to clear everything from your Environment before you get started, as indicted in the image below. (There will be a very ominous-sounding "Are you sure?" pop-up, but just click "Yes".)
 
-![](..\..\images\clear_env.png){fig-alt="A screenshot of the Environment pane in RStudio, with the 'Clear objects from workspace' broom icon circled, along with the 'Yes' button on the subsequent pop-up."}
+![](/images/clear_env.png){fig-alt="A screenshot of the Environment pane in RStudio, with the 'Clear objects from workspace' broom icon circled, along with the 'Yes' button on the subsequent pop-up."}
 :::
 
 First, let's look at the foundational structure of almost everything you will do in R:

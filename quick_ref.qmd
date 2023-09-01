@@ -16,11 +16,6 @@ The table below is arranged alphabetically by function name, and the linked full
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:left;"> across() </td>
-   <td style="text-align:left;"> <a href="https://dplyr.tidyverse.org/reference/across.html">dplyr::across()</a> </td>
-   <td style="text-align:left;"> 10: Reshaping and Merging </td>
-  </tr>
-  <tr>
    <td style="text-align:left;"> anova() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/stats/anova.html">anova()</a> </td>
    <td style="text-align:left;"> 04: Reporting Linear Models with Quarto </td>
@@ -43,17 +38,12 @@ The table below is arranged alphabetically by function name, and the linked full
   <tr>
    <td style="text-align:left;"> c() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/base/c.html">c()</a> </td>
-   <td style="text-align:left;"> 01/02: IntRoduction<br>04: Reporting Linear Models with Quarto<br>10: Reshaping and Merging </td>
+   <td style="text-align:left;"> 01/02: IntRoduction<br>04: Reporting Linear Models with Quarto </td>
   </tr>
   <tr>
    <td style="text-align:left;"> class() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/base/class.html">class()</a> </td>
    <td style="text-align:left;"> 01/02: IntRoduction </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> contains() </td>
-   <td style="text-align:left;"> <a href="https://tidyselect.r-lib.org/reference/starts_with.html">dplyr::contains()</a> </td>
-   <td style="text-align:left;"> 10: Reshaping and Merging </td>
   </tr>
   <tr>
    <td style="text-align:left;"> data() </td>
@@ -68,7 +58,7 @@ The table below is arranged alphabetically by function name, and the linked full
   <tr>
    <td style="text-align:left;"> library() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/base/library.html">library()</a> </td>
-   <td style="text-align:left;"> 04: Reporting Linear Models with Quarto<br>08: Analysis<br>10: Reshaping and Merging </td>
+   <td style="text-align:left;"> 04: Reporting Linear Models with Quarto </td>
   </tr>
   <tr>
    <td style="text-align:left;"> lm() </td>
@@ -83,7 +73,7 @@ The table below is arranged alphabetically by function name, and the linked full
   <tr>
    <td style="text-align:left;"> mean() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/base/mean.html">mean()</a> </td>
-   <td style="text-align:left;"> 01/02: IntRoduction<br>10: Reshaping and Merging </td>
+   <td style="text-align:left;"> 01/02: IntRoduction </td>
   </tr>
   <tr>
    <td style="text-align:left;"> model_parameters() </td>
@@ -96,29 +86,9 @@ The table below is arranged alphabetically by function name, and the linked full
    <td style="text-align:left;"> 04: Reporting Linear Models with Quarto </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> pick() </td>
-   <td style="text-align:left;"> <a href="https://dplyr.tidyverse.org/reference/pick.html">dplyr::pick()</a> </td>
-   <td style="text-align:left;"> 10: Reshaping and Merging </td>
-  </tr>
-  <tr>
    <td style="text-align:left;"> round() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/base/Round.html">round()</a> </td>
    <td style="text-align:left;"> 01/02: IntRoduction<br>04: Reporting Linear Models with Quarto </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> rowMeans() </td>
-   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/colSums.html">rowMeans()</a> </td>
-   <td style="text-align:left;"> 10: Reshaping and Merging </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> sd() </td>
-   <td style="text-align:left;"> <a href="https://rdrr.io/r/stats/sd.html">sd()</a> </td>
-   <td style="text-align:left;"> 10: Reshaping and Merging </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> select() </td>
-   <td style="text-align:left;"> <a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select()</a> </td>
-   <td style="text-align:left;"> 10: Reshaping and Merging </td>
   </tr>
   <tr>
    <td style="text-align:left;"> t.test() </td>
@@ -129,11 +99,6 @@ The table below is arranged alphabetically by function name, and the linked full
    <td style="text-align:left;"> tidy() </td>
    <td style="text-align:left;"> <a href="https://generics.r-lib.org/reference/tidy.html">broom::tidy()</a> </td>
    <td style="text-align:left;"> 04: Reporting Linear Models with Quarto </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> where() </td>
-   <td style="text-align:left;"> <a href="https://tidyselect.r-lib.org/reference/where.html">dplyr::where()</a> </td>
-   <td style="text-align:left;"> 10: Reshaping and Merging </td>
   </tr>
 </tbody>
 </table>
@@ -262,44 +227,6 @@ If you're looking for a particular section of a tutorial, use this handy summary
   </tr>
   <tr>
    <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Well done!](tutorials/psychrlogy/01_fundRmentals/04_lm.qmd#well-done!) </td>
-  </tr>
-  <tr grouplength="5"><td colspan="1" style="border-bottom: 1px solid;"><strong>07: Mutate and Summarise</strong></td></tr>
-<tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Filter](tutorials/psychrlogy/02_essentials/07_changes.qmd#filter) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 4em;" indentlevel="2"> [Multiple Conditions](tutorials/psychrlogy/02_essentials/07_changes.qmd#multiple-conditions) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 4em;" indentlevel="2"> [Data Cleaning](tutorials/psychrlogy/02_essentials/07_changes.qmd#data-cleaning) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Select](tutorials/psychrlogy/02_essentials/07_changes.qmd#select) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 4em;" indentlevel="2"> [`&lt;tidyselect&gt;`](tutorials/psychrlogy/02_essentials/07_changes.qmd#`&lt;tidyselect&gt;`) </td>
-  </tr>
-  <tr grouplength="7"><td colspan="1" style="border-bottom: 1px solid;"><strong>09: Questionnaires</strong></td></tr>
-<tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Mutate](tutorials/psychrlogy/03_improvRs/09_qnaires.qmd#mutate) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 4em;" indentlevel="2"> [Composite Scores](tutorials/psychrlogy/03_improvRs/09_qnaires.qmd#composite-scores) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 4em;" indentlevel="2"> [Conditionals](tutorials/psychrlogy/03_improvRs/09_qnaires.qmd#conditionals) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 4em;" indentlevel="2"> [Iteration](tutorials/psychrlogy/03_improvRs/09_qnaires.qmd#iteration) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Summarise](tutorials/psychrlogy/03_improvRs/09_qnaires.qmd#summarise) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 4em;" indentlevel="2"> [By Group](tutorials/psychrlogy/03_improvRs/09_qnaires.qmd#by-group) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 4em;" indentlevel="2"> [Iteration](tutorials/psychrlogy/03_improvRs/09_qnaires.qmd#iteration) </td>
   </tr>
 </tbody>
 </table>

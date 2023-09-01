@@ -6,6 +6,10 @@
 # Setup -------------------------------------------------------------------
 
 
+if (!nzchar(Sys.getenv("QUARTO_PROJECT_RENDER_ALL"))) {
+  quit()
+}
+
 library(magrittr)
 
 #https://community.rstudio.com/t/is-there-a-way-to-extract-the-names-of-all-functions-in-an-r-script/51905
@@ -37,9 +41,8 @@ get_calls <- function(filepath) {
 
 ## Get file paths to all qmds in tutorials folder and onward
 
-all_qmds <- list.files(path = "tutorials/psychrlogy", pattern = "qmd", recursive = TRUE)
-
 all_qmds_path <- "tutorials/psychrlogy"
+all_qmds <- list.files(path = all_qmds_path, pattern = "qmd", recursive = TRUE)
 
 # Create Functions Index --------------------------------------------------
 
@@ -210,8 +213,10 @@ topics <- list.files(path = path_topics_index, pattern = "_topics.R$", recursive
 unlink(list.files(path = path_topics_index, pattern = ".R$",
                   recursive = TRUE, full.names = TRUE))
 
+exclude_headings <- c("Overview", "Basic Structure", "Setting Up", "Next Steps")
+
 topics_tab <- topics |> 
-  dplyr::filter(!(heading_text %in% c("Overview", "Basic Structure", "Setting Up", "Next Steps"))) |> 
+  dplyr::filter(!(heading_text %in% exclude_headings)) |> 
   dplyr::mutate(
     link = paste0("[", heading_text, "](tutorials/psychrlogy/", name, "#", gsub(" ", "-", tolower(heading_text)),")")
   ) |> 

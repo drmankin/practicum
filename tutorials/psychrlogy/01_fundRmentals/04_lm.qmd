@@ -311,7 +311,7 @@ By default, your new Quarto document will already have some settings and content
 2.  The [**body text**](04_lm.qmd#headings-and-text), which contains regular (i.e. non-code) text
 3.  The [**code chunks**](04_lm.qmd#code-chunks), which contain code - in this case, specifically, R.
 
-![](..\..\images\quarto_anatomy.png){fig-alt="A screenshot of the default Quarto document, with the YAML, text, and code chunks each circled and labelled in a different colour." fig-align="center"}
+![](/images/quarto_anatomy.png){fig-alt="A screenshot of the default Quarto document, with the YAML, text, and code chunks each circled and labelled in a different colour." fig-align="center"}
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
 To complete our setup, take the following steps:
