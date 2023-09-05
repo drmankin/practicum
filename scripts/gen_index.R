@@ -175,11 +175,11 @@ if(!dir.exists(path_topics_index)){
 
 purrr::map(
   .x = file.path(all_qmds_path, all_qmds),
-  .f = ~knitr::purl(.x, documentation =2,
+  .f = ~knitr::purl(.x, documentation = 2,
                     output = file.path(path_topics_index, 
                                            gsub(".*/(.*)", "\\1", gsub(".qmd", "_topics.R", .x))))
 )
-      
+
 clean_topics <- function(this_file){
   
   this_code <- readLines(this_file)

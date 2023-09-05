@@ -28,6 +28,7 @@ website:
     - title: "Tutorials"
       style: "docked"
       # Sussex Cool Grey
+      # https://www.sussex.ac.uk/brand/designers/colour
       background: "#d0d3d4"
       contents: 
         - tutorials.qmd
@@ -56,6 +57,12 @@ format:
     toc: true
     toc-depth: 4
     self-contained: true
+    code-overflow: wrap
+    code-block-bg: true
+    #code-block-border-left: "#be84a3"
+    highlight-style: 
+      light: tomorrow
+      dark: cobalt
 
 editor: visual
 

@@ -2,6 +2,11 @@
 title: "Tutorials"
 ---
 
+::: {.callout-caution title="Under Construction"}
+
+Many of the tutorials are still incomplete or under construction. If you encounter a banner like this, just check back another time!
+
+:::
 
 ## Using the Tutorials
 
@@ -15,9 +20,15 @@ However, the tutorials can also be easily accessed at any time through this webs
 
 ### Exercises
 
-The exercises are strongly recommended to build your skills in R. All data and workbooks will be provided on Posit Cloud for completing the exercises.
+The exercises are designed to build your skills in R. Some will ask you to try something you might not know how to do. Just give it your best shot, and if you get stuck, solutions and explanations are always provided!
 
-Solutions to all exercises are provided in the tutorial as well.
+::: {.callout-important title="Don't Skip the Exercises!"}
+
+It is **strongly** recommended that you don't skip the exercises. Try each one, even if it seems completely trivial, or too hard. You will learn R much faster and more thoroughly by getting your hands dirty.
+
+:::
+
+All data and workbooks will be provided on Posit Cloud for completing the exercises.
 
 #### Challenges
 

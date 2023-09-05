@@ -7,5 +7,6 @@
 .quarto
 tutorials/index
 tutorials/workbooks
+_site/tutorials/workbooks
 archive/
 

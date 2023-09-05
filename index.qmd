@@ -11,11 +11,9 @@ This is the website for training courses in the programming language R, run by t
 
 ### Joining Training
 
-At the moment, our training sessions are only open to members of staff in the School of Psychology at Sussex, or by invitation.
+At the moment, our training sessions are only open to members of staff in the School of Psychology at Sussex, or by invitation. 
 
-If you fit that description, DO X
-
-If you do *not* fit that description but are interested in joining a training course in the future, please [register your interest here]() and we will get in touch when/if there are open sessions available.
+If you are staff in the School of Psychology, see the School Bulletin for how to join the Canvas site and live sessions. Otherwise, you can email [the training lead](about.qmd), but be aware that places are only available a case-by-case, exceptional basis for University of Sussex staff (academic or Professional Services) and only if there is space in the planned sessions.
 
 ## Materials
 
