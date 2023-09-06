@@ -1,29 +1,3 @@
-# 
-# file_path <- file.path(getwd(), "tutorials", "01_fundRmentals", "03_lm.qmd")
-# 
-# text <- readLines(file_path)
-# 
-# ind_divs <- grep("^:::", text)
-# 
-# ind_ex <- grep("callout-note.*?Exercise", text)
-# 
-# start_ind <- ind_ex + 1
-# end_ind <- ind_divs[which(ind_divs %in% ind_ex) + 1] -1
-# 
-# # text[start_ind:end_ind]
-# 
-# # purrr::pmap(
-# #   .l = list(
-# #     start_ind,
-# #     end_ind,
-# #     text),
-# #   .f = ~ text[start_ind:end_ind]
-# #   )
-# 
-# # http://adv-r.had.co.nz/Subsetting.html#subassignment
-
-library(magrittr)
-
 ## Get file paths to all qmds in tutorials folder and onward
 
 all_qmds_path <- "tutorials/psychrlogy"
@@ -116,11 +90,31 @@ qmd_lines <- qmd_lines |>
 
 View(qmd_lines)
 
-qmd_lines |> 
+this_page <- sub(".qmd", "", this_file)
+
+viewer_text <- c("## Open the Tutorial\n\nUse the following code chunks to open the accompanying tutorial.",
+                 paste0("### Open in RStudio Viewer\n\n```{r}\nrstudioapi::viewer('https://r-training.netlify.app/", this_page, "')\n```", collapse = ""),
+                 paste0("### Open in a New Browser Tab\n\n```{r}\nutils::browseURL('https://r-training.netlify.app/", this_page, "')\n```", collapse = "")
+) |> 
+  paste0(collapse="\n\n")
+
+qmd_lines <- qmd_lines |> 
   dplyr::filter(!is_code) |> 
   dplyr::filter(is_heading | is_yaml | is_ex_text) |> 
-  dplyr::pull(lines) |> 
-  writeLines(file.path(path_wkbk, "workbook_text.qmd"))
+  dplyr::mutate(
+    lines = dplyr::case_when(
+    is_heading ~ paste0("\n", lines, "\n"),
+    cumsum(is_yaml) == sum(is_yaml) ~ paste0("embed-resources: true\n---\n\n", viewer_text, "\n\n"),
+    .default = lines)
+  ) |>  
+  dplyr::group_by(ex_index) |> 
+  dplyr::mutate(
+    lines = dplyr::case_when(
+      ex_index != 0 & dplyr::row_number() == length(ex_index) ~ paste0(lines, "\n```{r}\n\n```\n\n"),
+      .default = lines
+    )
+  ) |> 
+  dplyr::ungroup()
 
-## Add new lines before/after headings
-## Add code chunks after text
+qmd_lines |>  dplyr::pull(lines) |>
+  writeLines(file.path("../workbooks/workbook_test.qmd"))
