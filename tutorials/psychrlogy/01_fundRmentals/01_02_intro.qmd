@@ -8,21 +8,95 @@ execute:
   error: true
 ---
 
-::: {.callout-caution title="Under Construction"}
-This tutorial is still under construction, so will be updated in the future.
+\ 
+
+## Orientation
+
+Welcome to the first PsychRlogy tutorial! Let's jump right in and get started.
+
+This tutorial is designed to accompany a "Workbook" document, which is already available for you on the Posit Cloud workspace for this course. To access it, navigate to [Posit Cloud](https://posit.cloud) and open the course workspace. If you haven't joined the workspace yet, use the join link on the [Posit Cloud page on Canvas](https://canvas.sussex.ac.uk/courses/29761/pages/posit-cloud).
+
+In the workspace, you will see a list of **projects** available. These will have an "ASSIGNMENT" banner next to them. When you click on these projects, a new copy of the project will be generated for you to work in.
+
+:::: {.callout-note appearance="minimal"}
+Click on the project with the same name as this tutorial: "01/02 IntRoduction".
+::::
+
+### The RStudio Interface
+
+You are now looking at the RStudio IDE itself. It is possible to use R directly with minimal interface, but using an integrated development environment like [RStudio](https://posit.co/products/open-source/rstudio/) comes with a lot of additional convenience to make working with R smoother, easier, and more efficient.
+
+::: callout-important
+It's beyond the scope of this tutorial to cover all of the options and tools available in RStudio. Here we'll focus only on the minimum to get started and build outward from there. 
+
+For a more complete tour, try this [playlist of Andy Field's RStudio tutorials](https://www.youtube.com/watch?v=ZvPFKfNHBNQ&list=PLEzw67WWDg83weG3idsgy4wuOIJAashA2).
+
 :::
 
-## Navigating RStudio
+Before anything else, open up the workbook for this tutorial. If you're a little shaky on where this is, skip down to the screenshot below!
 
-### The Console
+:::: {.callout-note appearance="minimal"}
+Find the document named "01_02_intro_workbook.qmd" in the Files window. Click on it to open it.
+::::
 
-The Console is deceptively simple: just the `>` symbol with a flashing cursor after it, waiting for you to type something. However, the Console is the heart of R, where anything you want to do actually happens. Every command that you type, anything you want R to do, goes through here.
+You should now be looking at a dashboard-like interface with four main windows, each with a bunch of tabs across the top, like pictured below. We'll refer to each window by these names, which come from the most important or commonly used tab in each window.
 
-### Code Chunks
+![](/images/posit_rstudio_windows.jpg){fig-alt="A screenshot of the RStudio IDE on Posit Cloud. The four main windows are each outlined in a different colour and labeled (top row then bottom), 'Source Window', 'Environment Window', 'Console Window', and 'Files/Viewer Window', with arrows pointing at the relevant tabs."}
 
-[Coming Soon!]
+We will eventually work with all four of these windows, but if you've opened the workbook, you can **ignore the Environment and Files windows** for now. We'll be focusing only on the other two: Source and Console.
 
-So - let's get cracking.
+#### Source
+
+The Source window is where any documents you want to create or work on will open up. What you have open now is a **Quarto document**, a type of document that integrates regular text and code. A Quarto document has three main elements: the YAML header, body text, and code chunks. 
+
+![](/images/quarto_anatomy.png){fig-alt="A screenshot of the default Quarto document, with the YAML, text, and code chunks each circled and labelled in a different colour." fig-align="center"}
+
+Ignore the YAML header for now; we'll come back to Quarto documents, including the YAML, in depth [in Tutorial 03](04_lm.qmd#quarto).
+
+You can use the body text portion of a Quarto document more or less like you would a document in Word (or your word processor of choice). In the body of the document, you can write and format any text you want - notes, questions, thoughts, ideas, comments, etc. This workbook already contains all the headings from this tutorial to help you get organised, but please do delete or edit as you see fit.
+
+The last element is the **code chunk**, which is where all R code should be written. Code chunks have a contrasting background colour, an `{r}` in the upper left corner, and two green buttons in the upper right. The one that looks like a green "play" button will run all the code in that chunk. Code chunks will NOT handle any non-code text, unless it's a comment (i.e. preceded by one or more `#`s.)
+
+#### Console
+
+The Console is deceptively simple: just some stuff about the R version and acknowledgements, and the `>` symbol with a flashing cursor after it, waiting for you to type something. However, the Console is the heart of R, where anything you want to do actually happens. Every command that you type, anything you want R to do, goes through here.
+
+So, already we have two places we could write R code: in a code chunk or in the Console. How do we know where to start?
+
+::: {.callout-tip title="Code Chunk or Console?"}
+
+**For the purposes of learning**, by default, it's best that you write **all** code into the workbook code chunks, so you have a detailed record of everything you've tried - even if it doesn't work!
+
+Outside of these sessions, whether to write a bit of R code in a code chunk in Quarto, or in the Console, largely depends on a single question: do you want to use this same line of code again in the future?
+
+If **yes**, write the code in a **code chunk**. By adding the code to a document like Quarto, we are creating a record of all the steps we've taken in whatever task we are working on. Assuming we want to be able to use and refer to that code again in the future, it should go into a document.
+
+If **no**, write the code in the **Console**. Code written directly in the Console isn't saved or documented anywhere[^hist]. Some common uses of the Console are:
+
+1. [Installing/updating packages](03_datasets.qmd)
+1. Drafting or testing code to go into a document.
+
+[^hist]: This isn't *technically* true - have a look at the "History" tab in the Environment window. However, the commands stored here can't be run or used - they have to be copied into the Console or Source windows in order to run. The History tab provides an exhaustive record of of the things you've typed, not a cohesive or meaningful series of steps.
+
+So, I often use the Console to test my code, building it up bit by bit, until it does what I want it to do. Then, when I've puzzled out the solution, I add it into a code chunk.
+
+::: {.callout-tip title="Still Confused? How About a Convoluted Analogy?" collapse="true"}
+
+Imagine that working in R is like [cooking](https://rc2e.com/), and writing a sequence of commands to, for example, clean a new dataset is like developing a new recipe.
+
+If you're developing a recipe, you likely wouldn't just sit down and write down the final version if you've never tried the recipe before. Instead, you might experiment a bit with each step to see what works and what doesn't. 
+
+Along the way, you may write notes to yourself: "Maybe try cumin?", "Buy more kefir", "This time was 2 tsp salt, too salty!" Those notes are a part of the development process, relevant to what you're doing *now* and helpful to try out or note down ideas, but they wouldn't go in your final recipe. Those behind-the-scenes and under-development bits are the code you'd write in the Console.
+
+When you find a technique or temperature or seasoning that works, you might add it as a step in your recipe. That final recipe, the steps that actually work the way you want, are the code in your code chunks.
+:::
+:::
+
+If that seems like a lot to remember, don't worry - we'll practice both and let you know clearly if it should be one or the other.
+
+Right, enough orientation - let's get cracking!
+
+\ 
 
 ## Making Mistakes
 
@@ -66,6 +140,8 @@ Just like learning any other language, learning to communicate with R takes time
 
 Although it certainly is complex, and occasionally quite frustrating, R is just a system for doing computational and analytical tasks. It's powerful, and the very fact that you can do so much with it also means there's a lot to learn. But it *is* comprehensible, and ultimately it's just a tool to help you do your work well.
 :::
+
+\ 
 
 ## Types of Data
 
@@ -336,6 +412,8 @@ Use a single command to ask R whether the numbers 2 through 10 are less than or 
 
 Here R prints out a value of `TRUE` or `FALSE` for each comparison it's asked to make. So, the first element in the output (`TRUE`) corresponds to the statement `2 <= 6`, the second to `3 <= 6`, and so on. This is a vectorised calculation again, as we saw with numeric data before. These vectorised assertions will be absolutely essential to [selecting and filtering data](..\02_essentials\06_filter.qmd) that meet particular requirements, or checking our data to find problems.
 
+\ 
+
 ## Class and Coercion
 
 With these short examples, it may be obvious just by looking that `25` is a number and `porcupine` is a word. However, this isn't always so straightforward, and there are some situations - such as data checking/cleaning, or debugging - where we might want to check what type of data a certain thing is. To do this, we'll need another new function, `class()`. This function will print out, as a character, the name of the data type of whatever is put into the brackets.
@@ -424,6 +502,8 @@ What we have asked in this command is for three pieces of data to be coerced to 
 
 [^1]: Well, not in the single command we're using here. We can certainly get out the age `36`, but it will take a bit more work. We'll come back to this problem in the Essentials section of the course.
 
+\ 
+
 ## Objects
 
 R is a programming language, but (being created by speakers of natural language) it has many features similar or analogous to natural languages. In this section, we'll cover the basic "grammar" of R, including how R understands what you ask it to do.
@@ -491,7 +571,7 @@ nope this is bad <- "a"
 :::
 :::
 
-::: {.callout-note appearance="minimal" title="Exercise"} {#create-objects}
+::: {.callout-note appearance="minimal" title="Exercise"}
 Think of a research scenario familiar to you with two independent groups. You're welcome to draw from your own research or expertise, but you should choose something with numerical scores. Some ideas include:
 
 1.  Reaction times on a button-pressing task from a control and an experimental group
@@ -633,7 +713,7 @@ Our last major point to cover with objects - for now - is how to change what an 
 
 :::: {.callout-note appearance="minimal" title="Exercise"}
 
-First, let's imagine we get three new participants in each condition of our previous study. Update [the same two objects you created previously](01_02_intro.qmd#create-objects) with three new scores each.
+First, let's imagine we get three new participants in each condition of our previous study. Update the same two objects you created previously with three new scores each.
 
 ::: {.callout-note collapse="true" title="Solution"}
 
@@ -643,25 +723,24 @@ One way - the longer way round - is to type in all the same numbers again from b
 #| eval: false
 
 ## Example with just one
-quiz_9am <- c(75, 58, 62, 14, 33, 67, 55, 89, 60, 79)
+quiz_9am <- c(75, 58, 62, 14, 33, 67, 55, 89, 100, 79)
 ```
 
 However, this is tedious, repetitive, and prone to error. Wherever possible, it's better to rely on R to do calculations or repetitions for you. So, we could instead just embed the previous `quiz_9am` object - which already contains the first seven numbers - into a `c()` along with the three new numbers.
 
 ```{r}
-quiz_9am <- c(quiz_9am, 89, 60, 79)
+quiz_9am <- c(quiz_9am, 89, 100, 79)
 quiz_9am
 
-quiz_6pm <- c(quiz_6pm, 38, 75, 54)
+quiz_6pm <- c(quiz_6pm, 38, 42, 54)
 quiz_6pm
 ```
 
 :::
 ::::
 
+\ 
 
-
-::: callout-important
 The command we've just written for the task above demonstrates some extremely important properties of how assignment and functions work in R. 
 
 **Overwriting objects is accomplished by assigning new output to an existing object name.** If you have a look in your Environment, you will see that the previous version of `quiz_9am`, containing only seven values, has been replaced with the new one containing ten values.
@@ -673,10 +752,10 @@ This is why it is so important to keep track of all of the commands and changes 
 **Overwriting objects can be done recursively.** In the command we saw above, we took the current `quiz_9am` object, combined it with some new values, and then overwrote the `quiz_9am` object with the new values. If we were to run this exact same code again, this means that each time we would add three new values to `quiz_9am`, over and over and over:
 
 ```{r}
-quiz_9am <- c(quiz_9am, 89, 60, 79)
+quiz_9am <- c(quiz_9am, 89, 100, 79)
 quiz_9am
 
-quiz_9am <- c(quiz_9am, 89, 60, 79)
+quiz_9am <- c(quiz_9am, 89, 100, 79)
 quiz_9am
 ```
 
@@ -686,10 +765,10 @@ This is one reason why the decision to overwrite an existing object, vs creating
 ## Recreating the original version of quiz_9am so things don't get out of hand!
 quiz_9am <- c(75, 58, 62, 14, 33, 67, 55)
 
-quiz_9am_full <- c(quiz_9am, 89, 60, 79)
+quiz_9am_full <- c(quiz_9am, 89, 100, 79)
 quiz_9am_full
 
-quiz_9am_full <- c(quiz_9am, 89, 60, 79)
+quiz_9am_full <- c(quiz_9am, 89, 100, 79)
 quiz_9am_full
 ```
 
@@ -745,7 +824,8 @@ a <- a + 1
 a
 ```
 :::
-:::
+
+\ 
 
 ## Functions
 
@@ -753,7 +833,7 @@ Functions are like verbs in the R language - they're how R *does* anything. In o
 
 ### Basics and Help
 
-Let's look at an example of how this translation might work. For this example, I'm going to use a number I generated earlier: the mean of the `quiz_6pm` group, which was `r mean(quiz_6pm)`, which I'd like to round to two decimal places - a common task for reporting results in APA style.
+Let's look at an example of how this translation might work. For this example, I'm going to use a number I generated earlier: the mean of the `quiz_9am` group, which was `r mean(quiz_9am)`, which I'd like to round to two decimal places - a common task for reporting results in APA style.
 
 If we want R to do this for us, we have to write this command in a way that R can understand. First, we need to know what function corresponds to the English verb "round" - that is, what function will do the same action that we want R to perform. We're lucky in this case: the function in R is also called `round()`.
 
@@ -771,7 +851,7 @@ Unsurprisingly, R has given us an error. This is an **informative** error, thoug
 :::
 :::
 
-What we want to do, "Round the number `r mean(quiz_6pm)` to two decimal places", has two more important pieces of information that we need to tell R: what number we want to round (`r mean(quiz_6pm)`) and how many decimal places we want to round it to (2). So, how do we say this in R? To find out, let's look at the help documentation.
+What we want to do, "Round the number `r mean(quiz_9am)` to two decimal places", has two more important pieces of information that we need to tell R: what number we want to round (`r mean(quiz_9am)`) and how many decimal places we want to round it to (2). So, how do we say this in R? To find out, let's look at the help documentation.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
 Open the help documentation for the `round()` function by running `?round()` or `help(round)` in the Console.
@@ -809,20 +889,20 @@ Default values of arguments are really useful, because the default is often the 
 
 ### Using Functions
 
-Now that we know what both of these arguments mean, we can change them to actually translate the sentence "Round the number `r mean(quiz_6pm)` to two decimal places" into a command that R can work with. We'll explicitly write out each argument so we know what they are doing.
+Now that we know what both of these arguments mean, we can change them to actually translate the sentence "Round the number `r mean(quiz_9am)` to two decimal places" into a command that R can work with. We'll explicitly write out each argument so we know what they are doing.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-Use the `round()` function to round `r mean(quiz_6pm)` to two decimal places.
+Use the `round()` function to round 69.23077 to two decimal places.
 
 If you prefer, you can do this with one of the means you calculated for your own scores earlier.
 
 ::: {.callout-note collapse="true" title="Solution"}
 ```{r}
 ## Using the actual value from my earlier calculation
-round(55.76923, 2)
+round(69.23077, 2)
 
 ## Using a nested function - that is, calculating the mean and then rounding it!
-round(mean(quiz_6pm), 2)
+round(mean(quiz_9am), 2)
 ```
 :::
 :::
@@ -831,27 +911,27 @@ round(mean(quiz_6pm), 2)
 If you want to, you can achieve the same result by changing the order of the arguments. Because we have written the names of both arguments, R can still do what we want it to do:
 
 ```{r}
-round(digits = 2, x = 55.76923)
+round(digits = 2, x = 69.23077)
 ```
 
 We can also, to some degree, drop the names of the arguments, as long as R can still understand what we're trying to do:
 
 ```{r}
-round(digits = 2, 55.76923)
+round(digits = 2, 69.23077)
 ```
 
 Here I left out the `x =`. R can still understand this because `round()` only takes two arguments, and we explicitly told it what value belongs to `digits`, so it assumes the second number must be `x`.
 
 ```{r}
-round(55.76923, 2)
+round(69.23077, 2)
 ```
 
-This time I dropped both argument names. R can still understand this because when you don't specify which input goes with which argument, R will assume they should go in the default order given in the help documentation. So, R has automatically assigned 55.76923 to `x` and 2 to `digits`, which is what we wanted.
+This time I dropped both argument names. R can still understand this because when you don't specify which input goes with which argument, R will assume they should go in the default order given in the help documentation. So, R has automatically assigned 69.23077 to `x` and 2 to `digits`, which is what we wanted.
 
 As I use R more and more, I find that I name arguments more consistently, even though I know how the function works and dropping them is more efficient (at least in terms of typing). That's because when I come back from lunch, or the next day, or six months later to revisit the same code, it's much easier to recall what it all means when it's well-annotated. So, I strongly recommend getting in the habit of including argument names in your code as a favour to your future self, and to avoid situations like this:
 
 ```{r}
-round(2, 55.76923)
+round(2, 69.23077)
 ```
 
 Here, since we didn't specify, R assumed that 2 was the number we wanted to round. This isn't what we wanted - but R has no way of knowing this. It always assumes that what we typed was precisely what we intended to ask R to do.
@@ -859,10 +939,10 @@ Here, since we didn't specify, R assumed that 2 was the number we wanted to roun
 
 #### Passing Multiple Values to Arguments
 
-A last important aspect of using functions is to remember that each argument in a function can only take a single object or value as input. For example, we saw above that we put the single value 55.76923 into the `x` argument of `round()`. But what if we wanted to round more than one number? We don't want to have to write a new `round()` command for every number, even though we could do this if we particularly enjoyed doing a lot of tedious and repetitive typing:
+A last important aspect of using functions is to remember that each argument in a function can only take a single object or value as input. For example, we saw above that we put the single value 69.23077 into the `x` argument of `round()`. But what if we wanted to round more than one number? We don't want to have to write a new `round()` command for every number, even though we could do this if we particularly enjoyed doing a lot of tedious and repetitive typing:
 
 ```{r}
-round(55.76923, 2)
+round(69.23077, 2)
 ## ughhhh
 round(59.54, 2)
 ## noooooo :(
@@ -879,21 +959,21 @@ Before you go on, have a go using a single `round()` command to round all three 
 So what happens if we try to put all of those numbers into `round()`? We might first try this:
 
 ```{r}
-round(55.76923, 59.54, 0.198, 2)
+round(69.23077, 59.54, 0.198, 2)
 ```
 
-Once again, R tells us that this doesn't work by throwing an error. R has tried to do what we wanted, but the `round()` function only allows a max of two arguments, and we've given it four. Behind the scenes, R has tried to run `round(x = 55.76923, digits = 59.54...` and can't proceed from there because it doesn't know what to do with the last two numbers. So, what we need to do is find a way to put all three numbers that we want to round into the first `x` argument together. If only there was a way to **c**oncatenate them together...
+Once again, R tells us that this doesn't work by throwing an error. R has tried to do what we wanted, but the `round()` function only allows a max of two arguments, and we've given it four. Behind the scenes, R has tried to run `round(x = 69.23077, digits = 59.54...` and can't proceed from there because it doesn't know what to do with the last two numbers. So, what we need to do is find a way to put all three numbers that we want to round into the first `x` argument together. If only there was a way to **c**oncatenate them together...
 
 You may have guessed where this is going: one method we could use would be to put the three numbers we want to round into a single object, and then pass that object to `round()` as the `x` argument. We already saw that we can combine any number of things together into a single vector using the `c()` function.
 
 ::: {.callout-note title="Solution" collapse="true"}
 ```{r}
 ## Create an intermediate object to contain the numbers
-numbers <- c(55.76923, 59.54, 0.198)
+numbers <- c(69.23077, 59.54, 0.198)
 round(numbers, digits = 2)
 
 ## Put the vector of numbers into round() directly
-round(c(55.76923, 59.54, 0.198), digits = 2)
+round(c(69.23077, 59.54, 0.198), digits = 2)
 ```
 :::
 
@@ -907,15 +987,21 @@ Before we leave the `round()` function altogether, let's take a look at two more
 Finally, at the end of the documentation you can find the "Examples" section. If you are learning to use a new function, this section can give you a template for writing your own commands. You can also click the "Run examples" link, which will run the code in the Examples section for you so you can see what the function will do.
 :::
 
-## Let's Get Testing
+\ 
+
+## Quick Test: *t*-test
 
 Let's put all of this together and have a look at what we can already do with the skills in this tutorial. R has many, many uses, but one of its core purposes is statistical analysis - and we already know more than enough to do this.
 
-### Comparing Groups with *t*-test
+::: {.callout-warning appearance="minimal"}
+If we run out of time in the live session, you can attempt this last bit as an optional challenge task. Don't worry if you get stuck - we will come back to *t*-tests later on in the Essentials section of the course.
 
-We've created two objects that contain scores from two different groups - scores we made up, but we will get to real data soon (in the next tutorial!). For now, one common statistical test we could run on data like this is a *t*-test, which is a hypothesis test essentially quantifying whether scores come from the same or different populations.
+In case you're not familiar with *t*-tests, you can find a lecture recording on the [Analysing Data 22/23 Canvas site](https://sussex.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=26671aaa-5909-4bef-8617-afb001299757).
+:::
 
-The function to run a *t*-test in R is `t.test()`, so let's have a go!
+We've created two objects that contain scores from two different groups - scores we made up, but we will get to real data soon (in the next tutorial!). For now, one common statistical test we could run on data like this is a *t*-test, which is a hypothesis test essentially evaluating whether sets of scores come from the same or different populations.
+
+Helpfully, the function we want is called `t.test()`.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
 Bring up the help documentation for `t.test()` and use it to run a *t*-test comparing your two sets of scores.
@@ -929,13 +1015,22 @@ t.test(quiz_9am, quiz_6pm)
 
 There are a lot of options in the `t.test()` function, which can be used, through different arguments, to run almost any variety of *t*-test you can think of. In this case, though, the code is quite simple, because we want all the default settings (for a two-sample, independent test), so we only need to provide `x` and `y`, our two numeric vectors.
 
-Note that the output mentions "Welch Two Sample t-test", which is a robust version of the test that does **not** assume equal variances. This is the version that is taught to undergraduates, because we have not at this point introduced the process of assumption testing. If you definitely know that the variances *are* equal and you definitely want Student's *t*-test, you can instead change the default setting:
+Note that the output mentions "Welch Two Sample t-test", which is a robust version of the test that does **not** assume equal variances. This is the version that is taught to undergraduates, because we have not at this point introduced the process of assumption testing. If you definitely know that the variances *are* equal and you definitely want Student's *t*-test, you can instead change the default setting.
+
+:::: {.callout-note appearance="minimal" title="Exercise"}
+
+Using the help documentation, re-run the *t*-test with equal variances assumed.
+
+::: {.callout-note collapse="true" title="Solution"}
 
 ```{r}
 t.test(quiz_9am, quiz_6pm, var.equal = TRUE)
 ```
 
-In the next tutorial, we'll see how to turn this rather ugly R output automatically into beautifully formatted reporting like this:
+:::
+::::
+
+In future tutorial, we'll see how to turn this rather ugly R output automatically into beautifully formatted reporting like this:
 
 ```{r}
 #| echo: false
@@ -944,3 +1039,11 @@ quiz_t <- t.test(quiz_9am, quiz_6pm, var.equal = TRUE)
 ```
 
 > We compared mean scores between two groups, one who took the quiz in a 9am practical session (*M* = `r round(quiz_t$estimate[1], 2)`) and the other who took the quiz in a 6pm practical session (*M* =`r round(quiz_t$estimate[2], 2)`, *M*~diff~ = `r round(quiz_t$estimate[1] - quiz_t$estimate[2], 2)`). There was no statistically significant difference in scores between timing groups (*t*(`r round(quiz_t$parameter, 2)`) = `r round(quiz_t$statistic, 2)`, *p* = `r round(quiz_t$p.value, 3)`, 95% CI \[`r round(quiz_t$conf.int[1], 2)`, `r round(quiz_t$conf.int[2], 2)`\]).
+
+\ 
+
+\ 
+
+::: {.callout-warning appearance="minimal" title="Well Done!"}
+That's the end of the first tutorial. Very well done on all your hard work!
+:::
