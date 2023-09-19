@@ -20,9 +20,9 @@ This tutorial is focused on working with datasets. It covers key functions and t
 In each session, we will always follow the same steps to set up. We'll walk through the key elements here in detail and then provide a brief summary in future tutorials.
 
 ::: {.callout-tip title="Setup Steps"}
-1. Create or open a [project in RStudio](03_datasets.qmd#projects)
-1. Create or open a [document to work in](03_datasets.qmd#creating-documents)
-1. [Load the necessary packages](03_datasets.qmd#loading-packages)
+1.  Create or open a [project in RStudio](03_datasets.qmd#projects)
+2.  Create or open a [document to work in](03_datasets.qmd#creating-documents)
+3.  [Load the necessary packages](03_datasets.qmd#loading-packages)
 :::
 
 ### Projects
@@ -32,18 +32,16 @@ Projects are the main way that RStudio organises related files and information. 
 It is **highly recommended** that you create a new project for each separate thing you want to work on in R. Among other advantages, it makes navigating folders much easier (see [Reading In](03_datasets.qmd#reading-in)), allows you to easily pick up work from where you left off, and retain all the settings and options you have set each time you work on the same project.
 
 ::: {.callout-tip title="Creating a Project" collapse="false"}
-
 On Posit Cloud, you don't really have a choice in the matter - you must create or open a project in the Cloud workspace in order to do anything.
 
 On a desktop installation, you can create a new directory as a project or associate a project file with an existing directory.
 
 See [Posit's Using RStudio Projects](https://support.posit.co/hc/en-us/articles/200526207-Using-RStudio-Projects) guide or Andy Field's [video guide to RStudio Desktop](https://www.youtube.com/watch?v=EA7JW2SfKSY) for more information.
-
 :::
 
 ### Creating Documents
 
-As we discussed [in the previous tutorial](01_02_intro.qmd), one of the key strengths of doing your work using R (or any other programming language) is reproducibility - in other words, every step of the process from raw file to output is documented and replicable. However, this is only the case if you do in fact write your code down somewhere! To do that, you'll need to create some kind of document to record your code. There are two main types of documents you might consider using: a script or a Quarto document. 
+As we discussed [in the previous tutorial](01_02_intro.qmd), one of the key strengths of doing your work using R (or any other programming language) is reproducibility - in other words, every step of the process from raw file to output is documented and replicable. However, this is only the case if you do in fact write your code down somewhere! To do that, you'll need to create some kind of document to record your code. There are two main types of documents you might consider using: a script or a Quarto document.
 
 #### Quarto documents
 
@@ -56,70 +54,265 @@ We will investigate the options for Quarto documents in depth in [the next tutor
 Scripts are text files that RStudio knows to read as R code. They have a .R file extension and can ONLY contain code. They are very useful for running code behind the scenes, so to speak, but not great for reviewing or presenting results.
 
 ::: {.callout-tip title="Quarto or Script?"}
-
 When deciding what kind of document to create, think about what you want to do with the output of your work.
 
-- Use **Quarto** if the document needs to contain any amount of text, or will be used to share the output of your code in a presentable way, such as notes for yourself, reports, articles, websites, etc.
-- Use a **script** if the document only needs to contain code and has a solely functional purpose, such as cleaning a dataset, manipulating files, defining new functions, etc.
+-   Use **Quarto** if the document needs to contain any amount of text, or will be used to share the output of your code in a presentable way, such as notes for yourself, reports, articles, websites, etc.
+-   Use a **script** if the document only needs to contain code and has a solely functional purpose, such as cleaning a dataset, manipulating files, defining new functions, etc.
 
 In this series, we will almost always use Quarto documents, but scripts are an essential part of the development side of R.
 :::
 
 ### Installing and Loading Packages
 
-[In the previous tutorial](01_02_intro.qmd#functions), we saw how the main way that R does anything is via functions. All functions belong to a package, which are extensions to the R language. Packages can contain functions, documentation for those functions, datasets, sample code, and more. Some packages, like the {base} and {stats} packages that contain the `mean()` and `t.test()` functions that we saw previously, are included by default when R starts. However, you will often want to use functions from packages that aren't included by default, so you must do this explicitly.
+[In the previous tutorial](01_02_intro.qmd#functions), we saw how the main way that R does anything is via functions. All functions belong to a package, which are extensions to the R language. Packages can contain functions, documentation for those functions, datasets, sample code, and more. Some packages, like the {base} and {stats} packages that contain the `mean()` and `t.test()` functions that we saw previously, are included by default with R. However, you will often want to use functions from packages that aren't included by default, so you must do this explicitly.
 
 In order to utilise the functions in a package, you must do two things:
 
-1. Install the package (only **once** per device, or to update the package) using `install.packages("package_name")` **in the Console**
-1. Load the package (every time you want to use it) using `library(package_name)` **at the beginning of each new document**
+1.  Install the package (only **once** per device, or to update the package) using `install.packages("package_name")` **in the Console**
+2.  Load the package (every time you want to use it) using `library(package_name)` **at the beginning of each new document**
 
-:::{.callout-important}
+::: callout-important
 If you are working on these tutorials on the Posit Cloud workspace, **all of the packages you need have been installed already**. Please do not try to install any packages, as this could cause unexpected conflicts or errors.
 :::
 
-:::{.callout-tip title="More About Installing vs Loading Packages" collapse="true"}
+::: {.callout-tip title="More About Installing vs Loading Packages" collapse="true"}
+When you install R and RStudio for the first time on a device, this is like buying a new mobile phone. When you get a new phone, it comes with some apps pre-installed, like a messaging app, a camera, a calculator, etc. If you only ever wanted to take pictures and do basic maths with your phone, you could probably leave it at that. Most likely, though, you want to use other apps that don't come with the phone - like WhatsApp, or Facebook. Let's say you've just got a new phone and you want to use WhatsApp. To do this, you'll need to:
 
-When you install R and RStudio for the first time on a device, this is like buying a new mobile phone. When you get a new phone, it comes with some apps pre-installed, like a messaging app, a camera, a calculator, etc. If you only ever wanted to take pictures and do basic maths with your phone, you could probably leave it at that. Most likely, though, you want to use other apps that don’t come with the phone - like WhatsApp, or Facebook. Let’s say you’ve just got a new phone and you want to use WhatsApp. To do this, you’ll need to:
+1.  Go to your phone's app store and download WhatsApp (only **once** per device, or to update the app)
+2.  Open the app (every time you want to use it)
 
-1. Go to your phone’s app store and download WhatsApp (only **once** per device, or to update the app)
-1. Open the app (every time you want to use it)
-
-As you can see, these steps correspond almost exactly to the installing vs loading steps described above. In order to use a package that doesn’t come pre-installed with R, you have to do both of these things.
+As you can see, these steps correspond almost exactly to the installing vs loading steps described above. In order to use a package that doesn't come pre-installed with R, you have to do both of these things.
 :::
 
-:::: {.callout-note appearance="minimal" title="Exercise"}
-
+::: {.callout-note appearance="minimal" title="Exercise"}
 Load the {tidyverse} package in your Quarto document.
 
 ::: {.callout-note collapse="true" title="Solution"}
-
 ```{r}
 library(tidyverse)
 ```
+:::
+:::
+
+## Reading In
+
+Now that we've completed our core setup, we're ready to get stuck in working with datasets. For the purposes of practicing, we're going to use some real, open-source data from a real paper by [Mealor et al. from their (2016) paper](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0155483) developing the Sussex Cognitive Styles Questionnaire (SCSQ). The SCSQ is a six-factor cognitive styles questionnaire validated by comparing responses from people with and without synaesthesia.
+
+So, we need some data to work with. We're going to start by importing, or "reading in", some data from an outside source. The first job is to work out how that data is stored: the file format that it's in, and the location we need to give to R to look for it.
+
+For the purposes of these tutorials, we'll primarily make use of .csv file types when reading in. CSV (Comma-Separated Values) is a common, programme-agnostic file type without any fancy formatting, just plain text. To practice this, we'll use the `read_csv()` function from the {readr} package (part of {tidyverse}).
+
+::: {.callout-tip title="Reading Other Filetypes" collapse="true"}
+If you have data stored in other types of files, you may need other functions from other packages to read them in. It will depend substantially on what's in the file and how the data are structured, so you will likely need to do some experimentation to find the best option.
+
+Here are some possibilities to get you started. All of them (except the last) output a tibble.
+
+- Excel (xlsx): `readxl::read_xlsx()`
+- SPSS (.sav): `haven::read_sav()`
+- SAS (.sas): `haven::read_sas()`
+- JSON: `rjson::fromJSON()`
+:::
+
+One advantage of `readr::read_csv()` is that it will output a special kind of dataset, called a **tibble**. Tibbles are a fundamental component of {tidyverse}. They are a sort of embellished dataframe with some extra bells and whistles for convenience. We'll discover their features as we go, but you can get a [quick overview of tibbles here](https://cran.r-project.org/web/packages/tibble/vignettes/tibble.html).
+
+<!-- Our next job is to figure out where the data is stored. For the purposes of practice, we'll look at two possibilities. First, that the data is hosted online somewhere, accessible via URL; and second, that the data is stored in a local file on your computer. -->
+
+<!-- #### Reading from URL -->
+
+<!-- If the data is hosted somewhere online, you can give the hosting URL to R as a string. Assuming you have an Internet connection (!), R will go to that URL and parse the data. -->
+
+<!-- ::: {.callout-note appearance="minimal" title="Exercise"} -->
+
+<!-- Read the CSV file hosted at <https://r-training.netlify.app/data/harm_data.csv> and print it out in your Quarto document. -->
+
+<!-- ::: {.callout-note collapse="true" title="Solution"} -->
+<!-- ```{r} -->
+<!-- readr::read_csv("https://r-training.netlify.app/data/syn_data.csv") -->
+<!-- ``` -->
+<!-- ::: -->
+<!-- ::: -->
+
+### Reading from File
+
+The scenario you are most likely to encounter is that you have some data in a folder on your computer, and you'd like to import, or "read in", this data to R so you can work with it. To practice this, in your Posit Cloud project there is a folder named "data" that contains a file called "syn_data.csv".
+
+```{r}
+#| echo: false
+
+syn_data <- readr::read_csv(here::here("data/syn_data.csv"))
+```
+
+In order to use the `read_csv()` function, we need to give it the file path as a string (i.e. in `"quotes"`). Let's make this easier by using a helper function: `here::here()`.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Run the `here::here()` function to see what it does.
+:::
+
+What you should get is a string - a file path to the **project** you are currently in. On Posit Cloud, this will always be "/cloud/project" (unless you change it). In any case, it will always point to the location of the .Rproj file that denotes your current project.
+
+Why is this useful? Instead of having to write out long file paths ("C/Users/my_folder/What Was It called-again?/..."), or trying to figure out where your current file is relative to the data (or image, or whatever) that you are trying to find, `here::here()` uses the project file as a fixed point. So, all file paths can be written starting from the same point.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Use `here::here()` to generate a file path to the `syn_data` data file.
+
+Then, use `readr::read_csv()` to read in the `syn_data.csv` file and store the result in an object called `syn_data`.
+
+::: {.callout-note collapse="true" title="Solution"}
+
+Assuming you are on the Cloud, your `here::here()` command should look like this. The first part of the file path will be generated by `here::here()` up to the project file; from there, we look in the `data` folder, in which we can find the `syn_data.csv` file. (Don't forget the .csv file extension!)
+
+```{r}
+#| eval: false
+
+here::here("data/syn_data.csv")
+```
+
+To read in the file, we add two things. First, we put the `here::here()` command - which outputs the file path - into `readr::read_csv()`, which actually imports the data at that file path into a tibble. Then, we save that tibble into an object called `syn_data` using the assignment operator, `<-`.
+
+```{r}
+#| eval: false
+
+syn_data <- readr::read_csv(here::here("data/syn_data.csv"))
+```
+:::
+:::
+
+## Viewing
+
+We've now got some data to work with! Before we jump into doing anything with it, though, we should take a look at it. This is always a good idea to check that our data has read in correctly without any parsing errors. But our data is tucked away in an object! How can we take a look at it?
+
+### Call the Object
+
+Our first option is to call the object that contains our data. This is *almost* always an easy and straightforward way to get an instant look at what's in our data.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Call the `syn_data` object to see what it contains.
+
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+syn_data
+```
+:::
+:::
+
+You may notice a few of those "bells and whistles" I mentioned earlier here.
+
+- By default, tibbles like this one only print out up to the first ten rows at a time, and as many columns as conveniently fit in your current window size. 
+- You can scroll through this printout by clicking the numbers at the bottom (to move through rows) or the left and right arrows at the top (to scroll through columns).
+- Each column has a little tag underneath it to tell you what kind of data is currently stored in it, for example `<dbl>` for numeric/double and `<chr>` for character.
+- In the top left, the little box tells you what it is ("A tibble") and the size of the dataset ("`r nrow(syn_data)` x `r ncol(syn_data)`").
+
+::: callout-warning
+There's a big caveat here: this works great with tibbles. For data stored in other formats, like matrices, there's no preset formatting like this. If you accidentally call the name of an object that contains thousands of rows, R will try to print them all, which can lead to crashes. So, avoid calling very large objects directly like this if they aren't tibbles.
+:::
+
+### View Mode
+
+Calling a tibble is a great way to get a snapshot or do a quick check, but for larger datasets, it's less useful. Instead, we can have a look at the whole dataset more easily - and interact with it to some degree - by viewing it, which opens a copy of the dataset in the Source window to look through. We can do this with the `View()` function (note the capital "V"!).
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Open the `syn_data` dataset using the `View()` function.
+
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+#| eval: false
+
+View(syn_data)
+```
+:::
+:::
+
+This View mode has a few very handy features. Take a moment now to explore and work out how to do the following.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Using **only** View mode, figure out the following:
+
+1. What is the range of the variable `gc_score`?
+1. How can you arrange the dataset by score in `scsq_imagery`?
+1. How many participants had "Yes" in the variable `syn_graph_col`?
+1. Which `gender` category had more participants?
+1. Of the participants who said "Yes" to `syn_seq_space`, what was the highest SCSQ technical-spatial score?
+
+::: {.callout-note collapse="true" title="Solution"}
+
+1. Hover your mouse over the variable label `gc_score` to see a tooltip reporting the range.
+1. Use the small up/down arrows next to each variable label to reorder the dataset by the values in that variable.
+1. Click on the "Filter" button in the top left to open filter view. Then, click on the text box under `syn_graph_col` and type "Yes". You can now see a dataset with only the Yes responses.
+1. In filter view, click on the text box under `gender` to open a histogram of the values in this variable.
+1. In filter view, click on the text box under `syn_seq_space` and type "Yes". Then, use the up and down buttons to arrange in descending order for the variable `scsq_techspace`.
 
 :::
-::::
+:::
 
-## Datasets
+These features are really useful to have a quick poke around the data or check that everything is in order. However, keep in mind an important point: **None of the changes made in View mode affect the data**. View mode is essentially read-only; there's no way to actually change the dataset or extract the values (like the range or max value). We'll have to use R to work with the data in order to do that.
 
-Now that we've completed our core setup, we're ready to get stuck in working with datasets. For the purposes of practicing, we're going to use some real, open-source data 
+::: {.callout-important title="No Touching"}
+If you are used to programmes like SPSS or Excel, where you can directly edit or work with the data in the spreadsheet, switching to R can be quite a frustrating change. Even though View mode looks similar, it's like the dataset is behind glass - you can't affect it directly. As we start working with the data via objects and functions, it may feel a bit like you are trying to work blindfolded - you can't actually "see" what you are doing as you do it.
 
-### Reading In
+If you feel that way, be reassured that it's normal. Working with objects rather than with spreadsheets or data directly takes some getting used to. Use `View()` freely to check your work - I do!
+:::
 
-- here::here()
-- readr::read_csv()
+## Overall Summaries
 
-### Viewing
+We've now gained some confidence that our data looks like data should. We got a look at some summary information in View mode, but although this might have been useful for us in our initial checks, we can't easily record or reproduce that information. Next, we're going to look at some options for getting summary information about the whole dataset.
 
+### Basic Summary
 
+The quickest and easiest check for a whole dataset is the base R function `summary()`. This function doesn't do anything fancy (*at all*) but it does give you a very quick look at how all the variables have been read in, and an early indication if there's anything wonky going on.
 
-### Arranging
+::: {.callout-note appearance="minimal" title="Exercise"}
 
-#### Arranging Manually
+Print out a summary of `syn_data` using the `summary()` function.
 
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+summary(syn_data)
+```
+:::
+:::
 
-#### Arranging with Code
+Here, for example, notice the `gender` variable. This is intended to be a categorical variable, but clearly something has gone pear-shaped, because it has read in as a numeric variable. We have a related, but different issue with the `syn_*` variables, which also should be categorical ("Yes" and "No"), but instead have been read as numeric. Our other variables, `gc_score` and the `scsq` variables, should contain numeric information and it appears they do; for them, we get some helpful information and measures of central tendancy.
+
+We will ignore the categorical issue for now until we cover how to make changes to the dataset [in Tutorial 7](..\02_essentials\07_changes.qmd#mutate).
+
+`summary()` is quick, and because it's a base-R function, it doesn't need any package installations to work. However, it's also of limited use: its output is ugly and not suitable for reporting, and it would be pretty difficult to get any of those values out of that output for reporting!
+
+### Other Summaries
+
+Besides the basic summary, there are many ready-made options in various packages to quickly produce summary tables. At the UG level, students are introduced `datawizard::describe_distribution()`, which is one such function. To use it, simply put the name of the dataset object inside the brackets.
+
+::: callout-tip
+Besides its default settings, the output can be further customised to add or remove particular statistics; see the help documentation.
+:::
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Print out a summary of `syn_data` using the `datawizard::describe_distribution()` function.
+
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+datawizard::describe_distribution(syn_data)
+```
+:::
+:::
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+**CHALLENGE**: There are some variables missing from this output. What are they? Why aren't they included?
+
+::: {.callout-note collapse="true" title="Solution"}
+The two character variables, `syn_seq_space` and `syn_graph_col`, are missing from the output. Under Details, the help documentation says: "If x is a data frame, only numeric variables are kept and will be displayed in the summary." Since these are not numeric variables, they've been dropped.
+:::
+:::
+
+<!-- ## Arranging -->
+
+<!-- ### Arranging Manually -->
+
+<!-- ### Arranging with Code -->
 
 ## The Pipe
 
@@ -144,7 +337,7 @@ For functions where this is not the case, you can explicitly determine where the
 ::: {.callout-tip title="Pipe Example" collapse="true"}
 Imagine we wanted to bake a Victoria sponge cake using R. Translating the steps into R, we might get something like this:
 
-```{r}
+```{{r}}
 ingredients |> 
   mix(order = c("wet", "dry")) |> 
   pour(shape = "round", number = 2, lining = TRUE) |> 
@@ -157,51 +350,135 @@ ingredients |>
 At each step, `|>` takes whatever the previous step produces and passes it on to the next step. So, we begin with `ingredients` - presumably an object that contains our flour, sugar, eggs, etc - which is "piped into" the `mix()` function. The output of that function might be all our ingredients mixed together in a bowl, which is then piped into the `pour()` function, and so on.
 
 Notice for example, the function `cool()`, which doesn't appear to have anything in it. It actually does: the `cool()` function would work with whatever the output of the `bake()` function was above it.
-:::
-:::
 
-## Overall Summaries
+Without the pipe, our command might look something like this, which must be read from the inside out rather from top to bottom:
 
-### Base R
-
-The quickest and easiest check for a whole dataset is the base R function `summary()`. This function doesn't do anything fancy (*at all*) but it does give you a very quick look at how all the variables have been read in, and an early indication if there's anything wonky going on.
-
-#### Example
-
-```{r}
-#| eval: false
-
-summary(my_tibble)
+```{[r]}
+devour(
+  assemble(
+      cool(
+        bake(
+          pour(
+            mix(ingredients, 
+                order = c("wet", "dry")),
+            shape = "round", number = 2, lining = TRUE),
+          temp = 190, time = 20)
+      ),
+    filling = c("buttercream", "jam"), topping = "icing_sugar"
+  )
+)
 ```
 
-Here, for example, notice the `age` variable. This should be a numeric variable, but clearly something has gone pear-shaped, because it instead seems like a character variable. Compare this to, for example, OTHER EXAMPLE, which has some descriptive information about the distribution of values in the variable, which indicates that it *has* been successfully read as numeric.
+This is, I am sure you will agree, illegible and absolutely horrifying.
 
-We will ignore the `age` issue for now until we cover how to make changes to the dataset [in Tutorial 5](..\02_essentials\07_changes.qmd#mutate)
-
-### {datawizard}
-
-Besides the basic summary, there are many ready-made options in various packages to quickly produce summary tables. At the UG level, students are introduced `datawizard::describe_distribution()`, which is one such function. To use it, simply put the name of the dataset object inside the brackets.
-
-::: callout-tip
-Besides its default settings, the output can be further customised to add or remove particular statistics; see the help documentation.
+:::
 :::
 
-#### Example
+From this point forward, we'll start working with the native pipe. The following sections will have specific examples on using the pipe to practice.
 
+## Dataset Descriptives
+
+To start, we'll work again with the whole dataset and look at some helpful functions that are often important for validating our data processing.
+
+- `nrow()`: Returns the **n**umber of **row**s as a numeric value.
+- `ncol()`: Returns the **n**umber of **column**s as a numeric value.
+- `names()`: Returns a vector of the names of the columns of a dataset.
+
+If your dataset is structured like this one is - with a single participant per row - then `nrow()` is a common stand-in for counting participants.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Using the native pipe, print out the number of columns and the names of those columns in the `syn_data` dataset.
+
+*Hint*: This will be two separate commands!
+
+::: {.callout-note collapse="true" title="Solution"}
 ```{r}
-#| eval: false
+syn_data |> 
+  ncol()
 
-datawizard::describe_distribution(my_tibble)
+syn_data |> 
+  names()
 ```
 
-## Variables
+The new line after the pipe isn't essential (it will run exactly the same way) but it is highly recommended. Although it doesn't make much of a difference here, we will shortly get to longer commands where the new line for each new function will make a big difference to legibility!
+:::
+:::
 
-Once we've had a look at the whole dataset, it's time to drill down into individual variables. We may want to calculate quick descriptives or investigate what's going on with particular variables that seem to have issues (as we saw with `age` above). For any of these tasks, we'll look at variables one at a time by subsetting or otherwise pulling them out of the dataset, then calculating some information about them.
+::: {.callout-tip title="What's Going On With the Pipe?" collapse="true"}
+If a command like `syn_data |> names()` looks a bit strange, let's take a closer look at it.
 
-#### Subsetting
+This command is equivalent to `names(syn_data)`, which might look a bit more familiar based on what we've done so far. The pipe takes whatever comes before it - in this case, the dataset `syn_data` - and pipes it into the first argument of the function that comes after it. The `names()` function only accepts one object as input, so `syn_data` is passed to `names()` as that single object. It *looks* like the `names()` function is empty, because there's nothing in the brackets, but that's because the dataset is being "piped in" from above.
 
-#### Counting
+We can make this a bit more explicit using the placeholder:
 
-#### Descriptives
+```{r}
+syn_data |> 
+  names(x = _)
+```
 
-#### Visualisations
+The underscore is the "placeholder" for the native pipe; in other words, it explicitly indicates where the object should be placed that is being piped in. You can think of it as the "bucket" that catches whatever comes out of the pipe! This makes it a bit clearer to see that the object `syn_data` is going into the `names()` function, and specifically the `x` argument.
+
+:::
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Using the native pipe, save the number of participants in the `syn_data` dataset in a new object of your choice.
+
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+px_initial <- syn_data |> 
+  nrow()
+```
+
+This format takes a bit of getting used to. The new object, which I've called `px_initial`[^px], is created at the first line of the command by the `<-`. However, this object *contains* whatever the final output of this pipe is at the end.
+
+[^px]: You can call this object anything you like; I use "px" as shorthand for "participant."
+:::
+:::
+
+## Variable Descriptives
+
+Once we've had a look at the whole dataset, it's time to drill down into individual variables. We may want to calculate quick descriptives or investigate what's going on with particular variables that seem to have issues. For any of these tasks, we'll look at variables one at a time by subsetting or otherwise pulling them out of the dataset, then calculating some information about them.
+
+### Subsetting
+
+To work with individual variables, we need to get them out of the dataset. Specifically, for many of the functions we're about to use, we will need the values stored in those variables as vectors. We can do this in two ways: `$` notation, or the function `dplyr::pull()`[^pull].
+
+[^pull]: This function always makes me think of one of those arcade [claw machines](https://www.youtube.com/watch?v=N-Esh4W3dfI) reaching into the dataset to grab the values you want!
+
+Subsetting with `$` is the base-R method. `dataset_name$variable_to_subset`. 
+
+```{r R.options=list(max.print=10)}
+
+
+syn_data |> 
+  dplyr::pull(gc_score)
+```
+
+::: {.callout-tip title="What's Going On With the Pipe?" collapse="true"}
+
+### Counting
+
+```{r}
+syn_data |> 
+  dplyr::count(syn_graph_col)
+```
+
+
+### Descriptives
+
+mean, median, mode, min, max, range
+
+```{r}
+syn_data |> 
+  dplyr::pull(scsq_imagery) |> 
+  range()
+```
+
+
+### Visualisations
+
+https://rstudio-pubs-static.s3.amazonaws.com/7953_4e3efd5b9415444ca065b1167862c349.html
+
+hist, boxplot, plot, barplot
