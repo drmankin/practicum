@@ -1,0 +1,13 @@
+﻿Variable Name,Type,Description
+id_code,factor,Participant ID number
+gender,factor,"Participant gender, 0 = female, 1 = male"
+gc_score,numeric,"Score on the grapheme-colour test of the Synesthesia Battery (Eagleman et al., 2007). Scores of 1.43 or lower indicate genuine synaesthesia (Rothen et al., 2013)"
+syn,factor,"Whether the participant is a synaesthete (Yes) or not (No), regardless of type of synaesthesia"
+syn_graph_col,factor,Whether the participant has grapheme-colour synaethesia (Yes) or not (No)
+syn_seq_space,factor,Whether the participant has sequence-space synaethesia (Yes) or not (No)
+scsq_imagery,numeric,Mean score on the Imagery Abilitysubscale of the SCSQ
+scsq_techspace,numeric,Mean score on the Technical/Spatial subscale of the SCSQ
+scsq_language,numeric,Mean score on the Language and Word Forms subscale of the SCSQ
+scsq_organise,numeric,Mean score on the Organisation subscale of the SCSQ
+scsq_global,numeric,Mean score on the Global Bias subscale of the SCSQ
+scsq_system,numeric,Mean score on the Systemising Tendency subscale of the SCSQ

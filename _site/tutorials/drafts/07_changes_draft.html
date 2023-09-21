@@ -4635,7 +4635,7 @@ vertical-align: -.125em;
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="1,2" data-code-cell="annotated-cell-3" data-code-annotation="1">Take the dataset</span>
+<span data-code-cell="annotated-cell-3" data-code-annotation="1" data-code-lines="1,2">Take the dataset</span>
 </dd>
 </dl>
 </div>
@@ -4699,19 +4699,19 @@ Important
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-4" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="1" data-code-cell="annotated-cell-4" data-code-annotation="1">Take the dataset, and then -</span>
+<span data-code-cell="annotated-cell-4" data-code-annotation="1" data-code-lines="1">Take the dataset, and then -</span>
 </dd>
 <dt data-target-cell="annotated-cell-4" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="2" data-code-cell="annotated-cell-4" data-code-annotation="2">Group the dataset by row. This means that any subsequent calculations will be done for each row separately.</span>
+<span data-code-cell="annotated-cell-4" data-code-annotation="2" data-code-lines="2">Group the dataset by row. This means that any subsequent calculations will be done for each row separately.</span>
 </dd>
 <dt data-target-cell="annotated-cell-4" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-lines="3,4,5,6" data-code-cell="annotated-cell-4" data-code-annotation="3">Create the new <code>anxiety_mean</code> variable. The new function <code>c_across()</code> works quite similar to <code>c()</code> - namely, creating a vector of variables for <code>mean()</code> to take the mean of. However, it has the advantage of allowing <code>&lt;tidyselect&gt;</code> for choosing the variables, instead of having to type them out one by one.</span>
+<span data-code-cell="annotated-cell-4" data-code-annotation="3" data-code-lines="3,4,5,6">Create the new <code>anxiety_mean</code> variable. The new function <code>c_across()</code> works quite similar to <code>c()</code> - namely, creating a vector of variables for <code>mean()</code> to take the mean of. However, it has the advantage of allowing <code>&lt;tidyselect&gt;</code> for choosing the variables, instead of having to type them out one by one.</span>
 </dd>
 <dt data-target-cell="annotated-cell-4" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-lines="7" data-code-cell="annotated-cell-4" data-code-annotation="4">Remove the by-row grouping that was created by <code>rowwise()</code>. Otherwise, all other subsequent operations on this dataset will continue to be performed within each row. (This isn’t typically the desired behaviour for this task, but it can be quite useful in other scenarios!)</span>
+<span data-code-cell="annotated-cell-4" data-code-annotation="4" data-code-lines="7">Remove the by-row grouping that was created by <code>rowwise()</code>. Otherwise, all other subsequent operations on this dataset will continue to be performed within each row. (This isn’t typically the desired behaviour for this task, but it can be quite useful in other scenarios!)</span>
 </dd>
 </dl>
 </div>
@@ -4887,31 +4887,31 @@ Testing Assertions
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-6" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="1" data-code-cell="annotated-cell-6" data-code-annotation="1">Create a new object, <code>anxiety_cutoff</code>, containing the threshold value for separating clinical from non-clinical anxiety. This one is from REFERENCE.</span>
+<span data-code-cell="annotated-cell-6" data-code-annotation="1" data-code-lines="1">Create a new object, <code>anxiety_cutoff</code>, containing the threshold value for separating clinical from non-clinical anxiety. This one is from REFERENCE.</span>
 </dd>
 <dt data-target-cell="annotated-cell-6" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="3" data-code-cell="annotated-cell-6" data-code-annotation="2">Take the dataset, and then…</span>
+<span data-code-cell="annotated-cell-6" data-code-annotation="2" data-code-lines="3">Take the dataset, and then…</span>
 </dd>
 <dt data-target-cell="annotated-cell-6" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-lines="4" data-code-cell="annotated-cell-6" data-code-annotation="3">Make a change to it by…</span>
+<span data-code-cell="annotated-cell-6" data-code-annotation="3" data-code-lines="4">Make a change to it by…</span>
 </dd>
 <dt data-target-cell="annotated-cell-6" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-lines="5" data-code-cell="annotated-cell-6" data-code-annotation="4">Creating a new variable, <code>anxiety_cat</code>, by applying the following rules:</span>
+<span data-code-cell="annotated-cell-6" data-code-annotation="4" data-code-lines="5">Creating a new variable, <code>anxiety_cat</code>, by applying the following rules:</span>
 </dd>
 <dt data-target-cell="annotated-cell-6" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-lines="6" data-code-cell="annotated-cell-6" data-code-annotation="5">For cases where the value of <code>anxiety_mean</code> is greater than or equal to <code>anxiety_cutoff</code>, assign the value “anx” to <code>anxiety_cat</code></span>
+<span data-code-cell="annotated-cell-6" data-code-annotation="5" data-code-lines="6">For cases where the value of <code>anxiety_mean</code> is greater than or equal to <code>anxiety_cutoff</code>, assign the value “anx” to <code>anxiety_cat</code></span>
 </dd>
 <dt data-target-cell="annotated-cell-6" data-target-annotation="6">6</dt>
 <dd>
-<span data-code-lines="7" data-code-cell="annotated-cell-6" data-code-annotation="6">For cases where the value of <code>anxiety_mean</code> is less than <code>anxiety_cutoff</code>, assign the value “control” to <code>anxiety_cat</code></span>
+<span data-code-cell="annotated-cell-6" data-code-annotation="6" data-code-lines="7">For cases where the value of <code>anxiety_mean</code> is less than <code>anxiety_cutoff</code>, assign the value “control” to <code>anxiety_cat</code></span>
 </dd>
 <dt data-target-cell="annotated-cell-6" data-target-annotation="7">7</dt>
 <dd>
-<span data-code-lines="8" data-code-cell="annotated-cell-6" data-code-annotation="7">For cases that don’t match any of the preceding criteria, assign <code>NA</code> to <code>anxiety_cat</code></span>
+<span data-code-cell="annotated-cell-6" data-code-annotation="7" data-code-lines="8">For cases that don’t match any of the preceding criteria, assign <code>NA</code> to <code>anxiety_cat</code></span>
 </dd>
 </dl>
 </div>
@@ -4958,31 +4958,31 @@ Why the new <code>anxiety_cutoff</code> object?
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-7" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="1,2,3" data-code-cell="annotated-cell-7" data-code-annotation="1">Take the dataset <code>my_tibble</code> and make a change to it by a creating a new variable, <code>remove</code>, by applying the following rules</span>
+<span data-code-cell="annotated-cell-7" data-code-annotation="1" data-code-lines="1,2,3">Take the dataset <code>my_tibble</code> and make a change to it by a creating a new variable, <code>remove</code>, by applying the following rules</span>
 </dd>
 <dt data-target-cell="annotated-cell-7" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="4" data-code-cell="annotated-cell-7" data-code-annotation="2">For cases where the <code>distribution</code> variable contains exactly and only “Preview”, assign the value <code>&quot;preview&quot;</code>. This is a common task for Qualtrics surveys to remove practice runs.</span>
+<span data-code-cell="annotated-cell-7" data-code-annotation="2" data-code-lines="4">For cases where the <code>distribution</code> variable contains exactly and only “Preview”, assign the value <code>&quot;preview&quot;</code>. This is a common task for Qualtrics surveys to remove practice runs.</span>
 </dd>
 <dt data-target-cell="annotated-cell-7" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-lines="5" data-code-cell="annotated-cell-7" data-code-annotation="3">For cases where the <code>info_consent</code> variable does NOT contain exactly and only the value “Yes”, assign the value <code>&quot;no_consent&quot;</code>. This includes anyone who did not actively consent - both people who chose options OTHER than “Yes” (e.g. “No”), and people who did not respond.</span>
+<span data-code-cell="annotated-cell-7" data-code-annotation="3" data-code-lines="5">For cases where the <code>info_consent</code> variable does NOT contain exactly and only the value “Yes”, assign the value <code>&quot;no_consent&quot;</code>. This includes anyone who did not actively consent - both people who chose options OTHER than “Yes” (e.g. “No”), and people who did not respond.</span>
 </dd>
 <dt data-target-cell="annotated-cell-7" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-lines="6" data-code-cell="annotated-cell-7" data-code-annotation="4">For cases where the numerical value in <code>age</code> is less than 18, assign the value <code>&quot;age_young&quot;</code>.</span>
+<span data-code-cell="annotated-cell-7" data-code-annotation="4" data-code-lines="6">For cases where the numerical value in <code>age</code> is less than 18, assign the value <code>&quot;age_young&quot;</code>.</span>
 </dd>
 <dt data-target-cell="annotated-cell-7" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-lines="7" data-code-cell="annotated-cell-7" data-code-annotation="5">For cases where the value is <code>age</code> is <code>NA</code>, or is greater than 100, assign the value <code>&quot;age_bad&quot;</code>.</span>
+<span data-code-cell="annotated-cell-7" data-code-annotation="5" data-code-lines="7">For cases where the value is <code>age</code> is <code>NA</code>, or is greater than 100, assign the value <code>&quot;age_bad&quot;</code>.</span>
 </dd>
 <dt data-target-cell="annotated-cell-7" data-target-annotation="6">6</dt>
 <dd>
-<span data-code-lines="8" data-code-cell="annotated-cell-7" data-code-annotation="6">For cases where the value in <code>fluent_lang</code>, once converted to lowercase, does NOT contain the letters “engl”, assign the value <code>&quot;english_no&quot;</code>. This searches open text responses to a question like “What languages do you speak fluently?” for the string “engl”.</span>
+<span data-code-cell="annotated-cell-7" data-code-annotation="6" data-code-lines="8">For cases where the value in <code>fluent_lang</code>, once converted to lowercase, does NOT contain the letters “engl”, assign the value <code>&quot;english_no&quot;</code>. This searches open text responses to a question like “What languages do you speak fluently?” for the string “engl”.</span>
 </dd>
 <dt data-target-cell="annotated-cell-7" data-target-annotation="7">7</dt>
 <dd>
-<span data-code-lines="9" data-code-cell="annotated-cell-7" data-code-annotation="7">For cases that don’t match any of the preceding criteria, assign the value <code>&quot;keep&quot;</code>.</span>
+<span data-code-cell="annotated-cell-7" data-code-annotation="7" data-code-lines="9">For cases that don’t match any of the preceding criteria, assign the value <code>&quot;keep&quot;</code>.</span>
 </dd>
 </dl>
 </div>
@@ -4999,11 +4999,11 @@ Why the new <code>anxiety_cutoff</code> object?
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-8" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="1,2" data-code-cell="annotated-cell-8" data-code-annotation="1">Take <code>my_tibble</code> and count the number of times each unique value occurs in the <code>remove</code> variable.</span>
+<span data-code-cell="annotated-cell-8" data-code-annotation="1" data-code-lines="1,2">Take <code>my_tibble</code> and count the number of times each unique value occurs in the <code>remove</code> variable.</span>
 </dd>
 <dt data-target-cell="annotated-cell-8" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="4,5" data-code-cell="annotated-cell-8" data-code-annotation="2">Create a new object, <code>final_tibble</code>, by taking <code>my_tibble</code> and then retaining only the cases for which the <code>remove</code> variable has only and exactly the value <code>&quot;keep&quot;</code> - effectively dropping all other cases.</span>
+<span data-code-cell="annotated-cell-8" data-code-annotation="2" data-code-lines="4,5">Create a new object, <code>final_tibble</code>, by taking <code>my_tibble</code> and then retaining only the cases for which the <code>remove</code> variable has only and exactly the value <code>&quot;keep&quot;</code> - effectively dropping all other cases.</span>
 </dd>
 </dl>
 </div>
@@ -5114,15 +5114,15 @@ Important
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-12" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="1,2" data-code-cell="annotated-cell-12" data-code-annotation="1">Take the dataset, and then group by the values in the <code>anxiety_cat</code> <a href="07_changes.qmd#one-variable-input">variable that we created earlier</a>.</span>
+<span data-code-cell="annotated-cell-12" data-code-annotation="1" data-code-lines="1,2">Take the dataset, and then group by the values in the <code>anxiety_cat</code> <a href="07_changes.qmd#one-variable-input">variable that we created earlier</a>.</span>
 </dd>
 <dt data-target-cell="annotated-cell-12" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="3,4,5,6" data-code-cell="annotated-cell-12" data-code-annotation="2">Produce a summary table of the mean and <em>SD</em> of the <code>anxiety_mean</code> variable. Compare this to the ungrouped summary in the previous section - it’s the same columns, but a new row for each group.</span>
+<span data-code-cell="annotated-cell-12" data-code-annotation="2" data-code-lines="3,4,5,6">Produce a summary table of the mean and <em>SD</em> of the <code>anxiety_mean</code> variable. Compare this to the ungrouped summary in the previous section - it’s the same columns, but a new row for each group.</span>
 </dd>
 <dt data-target-cell="annotated-cell-12" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-lines="9" data-code-cell="annotated-cell-12" data-code-annotation="3">Group by multiple grouping variables, separated by a comma.</span>
+<span data-code-cell="annotated-cell-12" data-code-annotation="3" data-code-lines="9">Group by multiple grouping variables, separated by a comma.</span>
 </dd>
 </dl>
 </div>
@@ -5278,15 +5278,15 @@ Tip
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-14" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="1" data-code-cell="annotated-cell-14" data-code-annotation="1">To begin, create a new object containing a list. I’ve called mine <code>fxs</code>, short for “functions”, but you can of course call it anything you like.</span>
+<span data-code-cell="annotated-cell-14" data-code-annotation="1" data-code-lines="1">To begin, create a new object containing a list. I’ve called mine <code>fxs</code>, short for “functions”, but you can of course call it anything you like.</span>
 </dd>
 <dt data-target-cell="annotated-cell-14" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="2,3" data-code-cell="annotated-cell-14" data-code-annotation="2">The elements inside the list have a special format. The first bit, e.g. <code>mean =</code>, gives each element a name. This name will be appended to the relevant column in the <code>summarise()</code> output, so choose something informative. The second bit, e.g. <code>~ mean(.x, na.rm = TRUE)</code>, is the function we want to apply to each variable. The two things to note are the <code>~</code>, which denotes “this is a function to apply”, and <code>.x</code>, which is a placeholder for each of the variables that the function will be applied to.</span>
+<span data-code-cell="annotated-cell-14" data-code-annotation="2" data-code-lines="2,3">The elements inside the list have a special format. The first bit, e.g. <code>mean =</code>, gives each element a name. This name will be appended to the relevant column in the <code>summarise()</code> output, so choose something informative. The second bit, e.g. <code>~ mean(.x, na.rm = TRUE)</code>, is the function we want to apply to each variable. The two things to note are the <code>~</code>, which denotes “this is a function to apply”, and <code>.x</code>, which is a placeholder for each of the variables that the function will be applied to.</span>
 </dd>
 <dt data-target-cell="annotated-cell-14" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-lines="9" data-code-cell="annotated-cell-14" data-code-annotation="3">Instead of using the familiar <code>name = instructions</code> format, we’re instead using <code>across()</code>. Generally, <code>across()</code> has two arguments. The first selects which variables to use using <code>&lt;tidyselect&gt;</code>; in this case, I’ve selected all of the numeric-type variables in the dataset (since it will be difficult to calculate the mean and <em>SD</em> otherwise!). The second provides a list of function(s) to apply to all of the selected variables. So, I’ve put in the list I made in the previous steps that contains all the functions I want to use.</span>
+<span data-code-cell="annotated-cell-14" data-code-annotation="3" data-code-lines="9">Instead of using the familiar <code>name = instructions</code> format, we’re instead using <code>across()</code>. Generally, <code>across()</code> has two arguments. The first selects which variables to use using <code>&lt;tidyselect&gt;</code>; in this case, I’ve selected all of the numeric-type variables in the dataset (since it will be difficult to calculate the mean and <em>SD</em> otherwise!). The second provides a list of function(s) to apply to all of the selected variables. So, I’ve put in the list I made in the previous steps that contains all the functions I want to use.</span>
 </dd>
 </dl>
 </div>
@@ -5359,7 +5359,6 @@ For more on…
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 344 × 9
-# Rowwise: 
    species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
    &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;
  1 Adelie  Torgersen           39.1          18.7               181        3750

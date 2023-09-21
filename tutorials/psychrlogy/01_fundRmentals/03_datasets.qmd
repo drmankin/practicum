@@ -4,16 +4,9 @@ execute:
   error: true
 ---
 
--   Libraries
--   Reading in, viewing and summarising datasets
--   Subsetting with \`\$\`, \`pull()\`
--   Useful verbs: count, tally, mean, sd, min, max, etc.
--   Quarto: chunk options, inline code, automatic numbering, rendering
--   Base R visualisations
-
 ## Overview
 
-This tutorial is focused on working with datasets. It covers key functions and tips for reading in, viewing, summarising, and working with datasets, and then walks through the process of setting up and producing a Quarto report, including how to dynamically report results and render a final document to a variety of formats.
+This tutorial is focused on working with datasets. It covers key functions and tips for reading in, viewing, and summarising datasets. It also introduces the pipe operator and a variety of common descriptive functions for investigating both whole datasets and individual variables, and concludes with a brief look at data visualisations with base R.
 
 ## Setup
 
@@ -39,7 +32,7 @@ On a desktop installation, you can create a new directory as a project or associ
 See [Posit's Using RStudio Projects](https://support.posit.co/hc/en-us/articles/200526207-Using-RStudio-Projects) guide or Andy Field's [video guide to RStudio Desktop](https://www.youtube.com/watch?v=EA7JW2SfKSY) for more information.
 :::
 
-### Creating Documents
+### Documents
 
 As we discussed [in the previous tutorial](01_02_intro.qmd), one of the key strengths of doing your work using R (or any other programming language) is reproducibility - in other words, every step of the process from raw file to output is documented and replicable. However, this is only the case if you do in fact write your code down somewhere! To do that, you'll need to create some kind of document to record your code. There are two main types of documents you might consider using: a script or a Quarto document.
 
@@ -98,7 +91,7 @@ library(tidyverse)
 
 Now that we've completed our core setup, we're ready to get stuck in working with datasets. For the purposes of practicing, we're going to use some real, open-source data from a real paper by [Mealor et al. from their (2016) paper](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0155483) developing the Sussex Cognitive Styles Questionnaire (SCSQ). The SCSQ is a six-factor cognitive styles questionnaire validated by comparing responses from people with and without synaesthesia.
 
-So, we need some data to work with. We're going to start by importing, or "reading in", some data from an outside source. The first job is to work out how that data is stored: the file format that it's in, and the location we need to give to R to look for it.
+We're going to start by importing, or "reading in", the data from a location outside of R. The first job is to work out how that data is stored: the file format that it's in, and the location we need to give to R to look for it.
 
 For the purposes of these tutorials, we'll primarily make use of .csv file types when reading in. CSV (Comma-Separated Values) is a common, programme-agnostic file type without any fancy formatting, just plain text. To practice this, we'll use the `read_csv()` function from the {readr} package (part of {tidyverse}).
 
@@ -177,6 +170,29 @@ syn_data <- readr::read_csv(here::here("data/syn_data.csv"))
 ```
 :::
 :::
+
+## Codebook
+
+As this dataset is likely unfamiliar, the codebook below explains what the variables in this dataset represent.
+
+::: {.callout-tip title="More About Synaesthesia" collapse="true"}
+This dataset focuses on cognitive styles, particularly in people with and without a neuropsychological condition called *synaesthesia*. Synaesthesia is colloquially referred to as a "mixing of the senses" that can manifest in many different ways. For example, some people with synaesthesia may percieve colours associated with letters or words, or see shapes when they hear music. These additional perceptions are typically automatic and consistent across time.
+
+This particular study focused on two different types of synaesthesia: grapheme-colour and sequence-space. People with *grapheme-colour synaesthesia* experience colour associated with written language, i.e. graphemes. For instance, the letter "Q" may be purple, or the word "cactus" may be red (or a combination of colours).
+
+People with *sequence-space synaesthesia* associate sequences, such as numbers, days of the week, or months of the year, with particular locations in physical space. For instance, Monday may be located up and to the right, or July near the hip. Sequence-space synaesthetes can often precisely describe and point to the specific location of each element of the sequence.
+
+There are also a variety of qualities associated with having synaesthesia of any type, so this dataset also includes a variable coding for having either (or both) types.
+:::
+
+```{r}
+#| echo: false
+
+readr::read_csv(here::here("data/syn_codebook.csv")) |> 
+  kableExtra::kbl() |> 
+  kableExtra::kable_styling()
+```
+
 
 ## Viewing
 
@@ -329,15 +345,48 @@ The pipe operator may appear in two formats.
 -   **The {magrittr} pipe, %\>%**. This pipe comes from {tidyverse}, and in particular requires the {magrittr} package to use. You will very commonly see this pipe in scripts, Stack Overflow posts, from ChatGPT, etc. as until the native pipe was introduced to R in 2022, the {magrittr} pipe was "the pipe" for R.
 
 In most use-cases, including almost all of the code we will learn in these tutorials, the two pipes are interchangeable and will result in the same output.
+:::
 
 Conceptually, the pipe works by putting whatever is put into it into the first argument of whatever comes after it. Many functions - both packages and functions from the {tidyverse} and not - are already set up so that the first argument is the data, and {tidyverse} functions are explicitly designed this way in order to work best with the pipe.
 
-For functions where this is not the case, you can explicitly determine where the piped-in object should go using a "placeholder".The most noticeable difference is that the native pipe placeholder is `_`, while the magrittr pipe placeholder is `.`.
+For functions where this is not the case, you can explicitly determine where the piped-in object should go using a "placeholder".The most noticeable difference is that the native pipe placeholder is `_`, while the magrittr pipe placeholder is `.`. We'll look at examples of this as we go.
 
-::: {.callout-tip title="Pipe Example" collapse="true"}
+From this point forward, we'll start working with the native pipe. The following sections will have specific examples on using the pipe to practice. Working with the pipe is also a good chance to practice "translating" R code into English, which we'll do as we go. To give you an idea, here's an example of how we can read the following code.
+
+```{r}
+some_numbers <- c(3.52, 7.03, 9.2, 10.11, 2) #<1>
+
+some_numbers |> #<2>
+  mean() |> #<3>
+  round(2) #<4>
+```
+
+1. Create a new object, `some_numbers`, that contains a vector of some numbers.
+2. Take `some_numbers`, *and then...*
+3. Calculate the mean of those numbers, *and then...*
+4. Round that mean to two decimal places, which outputs:
+
+So, we'll typically read `|>` as "and then", taking the output of whatever the preceding line produces and passing it on to the next line. To illustrate this more clearly, here's the same code explicitly including the placeholders to indicate where the piped-in information goes:
+
+```{r}
+some_numbers <- c(3.52, 7.03, 9.2, 10.11, 2)
+
+some_numbers |>
+  mean(x = _) |>
+  round(x = _, 2)
+```
+
+Think of the placeholder like a bucket or landing pad, where the information coming in from the pipe falls. In this example, the placeholders aren't necessary, because at each step, we already want the piped-in information to go into the first argument, but it helps to see what's going on.
+
+To make this fully explicit, this illustration shows the progress of information through the same pipe. The orange arrows show how the piped-in information is passed from one function to the next. The teal arrows show what is produced at each step of the pipe - which is what is passed on to the next function via the orange arrows/pipe.
+
+![](../../../images/pipe_arrows.jpg){fig-alt="A screenshot of the same code as above, with orange arrows starting at the end of each pipe and pointing into the placeholder in the following function, and teal arrows pointing to snippets of output for each step of the pipe."}
+
+::: {.callout-tip title="A Sweet Pipe Example" collapse="true"}
+
 Imagine we wanted to bake a Victoria sponge cake using R. Translating the steps into R, we might get something like this:
 
-```{{r}}
+```r
 ingredients |> 
   mix(order = c("wet", "dry")) |> 
   pour(shape = "round", number = 2, lining = TRUE) |> 
@@ -369,19 +418,16 @@ devour(
 )
 ```
 
-This is, I am sure you will agree, illegible and absolutely horrifying.
+This is, I am sure you will agree, is as absolutely horrifying as a soggy bottom on a cake.
 
 :::
-:::
 
-From this point forward, we'll start working with the native pipe. The following sections will have specific examples on using the pipe to practice.
-
-## Dataset Descriptives
+## Describing Datasets
 
 To start, we'll work again with the whole dataset and look at some helpful functions that are often important for validating our data processing.
 
 - `nrow()`: Returns the **n**umber of **row**s as a numeric value.
-- `ncol()`: Returns the **n**umber of **column**s as a numeric value.
+- `ncol()`: Returns the **n**umber of **col**umns as a numeric value.
 - `names()`: Returns a vector of the names of the columns of a dataset.
 
 If your dataset is structured like this one is - with a single participant per row - then `nrow()` is a common stand-in for counting participants.
@@ -417,7 +463,7 @@ syn_data |>
   names(x = _)
 ```
 
-The underscore is the "placeholder" for the native pipe; in other words, it explicitly indicates where the object should be placed that is being piped in. You can think of it as the "bucket" that catches whatever comes out of the pipe! This makes it a bit clearer to see that the object `syn_data` is going into the `names()` function, and specifically the `x` argument.
+The underscore is the "placeholder" for the native pipe; in other words, it explicitly indicates where the object should be placed that is being piped in, like a "bucket" that catches whatever comes out of the pipe! This makes it a bit clearer to see that the object `syn_data` is going into the `names()` function, and specifically the `x` argument.
 
 :::
 
@@ -431,15 +477,52 @@ px_initial <- syn_data |>
   nrow()
 ```
 
-This format takes a bit of getting used to. The new object, which I've called `px_initial`[^px], is created at the first line of the command by the `<-`. However, this object *contains* whatever the final output of this pipe is at the end.
+This format takes a bit of getting used to. The new object, which I've called `px_initial`[^px], is created at the first line of the command by the `<-`. However, this object *contains* whatever the final output of this pipe is at the end - in this case, the number of rows as a numeric value produced by `nrow()`.
 
 [^px]: You can call this object anything you like; I use "px" as shorthand for "participant."
+
 :::
 :::
 
-## Variable Descriptives
+## Describing Variables
 
-Once we've had a look at the whole dataset, it's time to drill down into individual variables. We may want to calculate quick descriptives or investigate what's going on with particular variables that seem to have issues. For any of these tasks, we'll look at variables one at a time by subsetting or otherwise pulling them out of the dataset, then calculating some information about them.
+Once we've had a look at the whole dataset, it's time to drill down into individual variables. We may want to calculate quick descriptives or investigate what's going on with particular variables that seem to have issues.
+
+To do this, we'll start working quite a bit with [the {dplyr} package](https://dplyr.tidyverse.org/). {dplyr} is a core part of the {tidyverse}, and the package generally is focused on user-friendly and easily readable tools for data manipulation. The essential {dplyr} functions will be the focus of Tutorials 6 and 7, when we really get into to working with data.
+
+### Counting
+
+We'll start by having a look at character or categorical variables. Here we'll meet our first {dplyr} function: `dplyr::count()`. This function is a friendly way to obtain (as you might expect!) counts of the number of times each unique value appears in a variable. As with just about everything in {dplyr}, it takes a tibble as input and produces a new tibble as output.
+
+Using the pipe structure we've seen previously, the general form is:
+
+```
+dataset_name |> 
+  dplyr::count(variable_to_count, optionally_another, ...)
+```
+Minimally you need to provide a single variable to count the values in, but you can add more, separated by commas, to further subdivide the counts.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Using the `syn_data` dataset, produce a tibble of counts of how many participants had any kind of synaesthesia. Then, produce a second tibble, adding in gender as well.
+
+*Hint*: Use the [codebook](03_datasets.qmd#codebook) to find the variables to use.
+
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+syn_data |> 
+  dplyr::count(syn)
+
+syn_data |> 
+  dplyr::count(syn, gender)
+```
+
+As you can see, the output from this function is a new summary tibble containing only the unique values in each variable, and a count, in the new "`n`" variable, of how many times that value (or combination of values) appeared.
+
+Note that this **does not** change or add anything to your original dataset! Instead, this function creates a brand-new tibble with the requested information.
+
+:::
+:::
 
 ### Subsetting
 
@@ -447,38 +530,202 @@ To work with individual variables, we need to get them out of the dataset. Speci
 
 [^pull]: This function always makes me think of one of those arcade [claw machines](https://www.youtube.com/watch?v=N-Esh4W3dfI) reaching into the dataset to grab the values you want!
 
-Subsetting with `$` is the base-R method. `dataset_name$variable_to_subset`. 
+Subsetting with `$` is the base-R method, and it takes the general form:
+
+```
+dataset_name$variable_to_subset
+```
+Subsetting with `dplyr::pull()` is a {tidyverse} method of accomplishing the same thing. Using the pipe structure we've seen previously, the general form is:
+
+```
+dataset_name |> 
+  dplyr::pull(variable_to_subset)
+```
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Subset `syn_data` using `$` to get out all the values stored in the `scsq_organise` variable.
+
+::: {.callout-note collapse="true" title="Solution"}
+
+To keep this tutorial legible, I've only printed out the first 10 values.
 
 ```{r R.options=list(max.print=10)}
+syn_data$scsq_organise
+```
+:::
+:::
 
+::: {.callout-note appearance="minimal" title="Exercise"}
 
+Subset `syn_data` using `dplyr::pull()` to get out all the values stored in the `gc_score` variable. How would you read this code?
+
+::: {.callout-note collapse="true" title="Solution"}
+
+Again, I've only printed out the first 10 values.
+
+```{r R.options=list(max.print=10)}
 syn_data |> 
   dplyr::pull(gc_score)
 ```
 
-::: {.callout-tip title="What's Going On With the Pipe?" collapse="true"}
+Your exact translation may vary, but one option is:
 
-### Counting
+> Take the `syn_data` dataset, *and then* pull out the `gc_score` variable.
 
-```{r}
-syn_data |> 
-  dplyr::count(syn_graph_col)
-```
+:::
+:::
 
+If you're wondering when to use `$` and when to use `dplyr::pull()`, the answer depends on what you want to do! We'll see some examples of both in just a moment.
 
 ### Descriptives
 
-mean, median, mode, min, max, range
+Next up, we can start working with these values in the dataset. The base-R {stats} package contains a wide variety of very sensibly-named functions that calculate common descriptive statistics. These include: 
+
+- `mean()` and `median()` (there is a function `mode()`, but it doesn't do what we'd like it to here!)
+- `min()` for minimum value, `max()` for maximum value
+- `range()` for both minimum and maximum value in a single vector
+- `sd()` for standard deviation
+
+A key feature of all of these functions is that, by default, they return `NA` if there are any `NA`s (missing values) present. (This is very sensible behaviour by default, but is frequently not the information we want when we use them.) So, they all have an argument, `na.rm =`, which determines whether `NA`s should be removed. By default this argument is set to `FALSE` (`NA`s should NOT be removed), but if you want to get the calculation ignoring any `NA`s, you can set this argument to `TRUE` instead.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Calculate the mean, standard deviation, and median of the SCSQ global subscale, and the range of the grapheme-colour synaesthesia score.
+
+Try using each subsetting method at least once.
+
+::: {.callout-note collapse="true" title="Solution"}
+
+We'll start by using `$` subsetting for the first bit, and `pull()` for the second. Not for any principled reason - feel free to try it either way.
+
+```{r}
+mean(syn_data$scsq_global)
+sd(syn_data$scsq_global)
+median(syn_data$scsq_global)
+```
+
+The `gc_score` variable has a large number of `NA`s. If we use the `range()` function without any other changes, we'll just get `NA`s back as output. To remove `NA`s and work only with the non-missing values, we have to include the argument `na.rm = TRUE`.
 
 ```{r}
 syn_data |> 
-  dplyr::pull(scsq_imagery) |> 
-  range()
+  dplyr::pull(gc_score) |> 
+  range(na.rm = TRUE)
 ```
 
+:::
+:::
+
+As a quick check to get an individual number, this method is quite useful. However, you may have noticed that if we wanted this information for lots of variables, this would be repetitive, laborious, and prone to error. We've already seen how to use [existing summary functions](03_datasets.qmd#overall-summaries), but we will also look at [creating custom summary tables](../02_essentials/07_changes.qmd) in a future tutorial.
 
 ### Visualisations
 
-https://rstudio-pubs-static.s3.amazonaws.com/7953_4e3efd5b9415444ca065b1167862c349.html
+The final piece we will look at today will be base-R data visualisations in the {graphics} package. These built-in graphics functions are particularly helpful for quick spot checks during data cleaning and manipulation. For high-quality, fully customisable, professional data visualisations, we will use the {ggplot2} package, covered in depth in the next tutorial.
 
-hist, boxplot, plot, barplot
+To get the idea, there are a few options for common plots:
+
+- `hist()` for histograms
+- `boxplot()` and `barplot()`
+- `plot()` for scatterplots
+
+For more help and examples with base R graphics, try [this quick guide](https://rstudio-pubs-static.s3.amazonaws.com/7953_4e3efd5b9415444ca065b1167862c349.html).
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Try making a histogram and a boxplot, using any of the variables in the `syn_data` dataset. Try using `$` and `pull()` once each.
+
+*Optionally*, if you feel so inclined, use the help documentation to spruce up your plots a bit, such as changing the title and axis labels.
+
+::: {.callout-note collapse="true" title="Solution"}
+
+#### Histogram
+
+```{r}
+#| layout-ncol: 2
+
+hist(syn_data$scsq_language)
+
+## With some minimal sprucing
+hist(syn_data$scsq_language,
+     main = "Histogram of the Language subscale of the SCSQ",
+     xlab = "SCSQ Language score")
+```
+
+#### Boxplot
+
+```{r}
+#| layout-ncol: 2
+
+syn_data |> 
+  dplyr::pull(gc_score) |> 
+  boxplot()
+
+## With again very minimal sprucing
+syn_data |> 
+  dplyr::pull(gc_score) |> 
+  boxplot(
+     main = "Boxplot of grapheme-colour score")
+```
+:::
+:::
+
+
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+**CHALLENGE**: Try making a barplot and a scatterplot.
+
+For the barplot, make a visualisation of how many people are synaesthetes or not (regardless of synaesthesia type).
+
+For the scatterplot, choose any two SCSQ measures.
+
+Both of these require some creative problem-solving using the help documentation and the skills and functions covered in this tutorial.
+
+
+::: {.callout-note collapse="true" title="Solution"}
+
+The following solutions are *options* - if you found another way to make the same or similar plots, well done!
+
+#### Barplot
+
+Barplots require two sets of values: a categorical one on the horizontal *x* axis and a continuous one on the vertical *y* axis. For something like frequency counts, then, we have to first do the counting, *then* pass those counts onto `barplot()`. Luckily we already know [how to count categorical variables](03_datasets.qmd#counting). 
+
+The help documentation is most helpful in the Examples section, where it shows actual examples of how the function works. There we can see an example of the formula method, `y ~ x`, which I've used below. Since we're piping in the data to an argument that is *not* the first, I've used the placeholder in the `data = _` argument to finish the command.
+
+```{r}
+
+syn_data |> #<1> 
+  dplyr::count(syn) |> #<2> 
+  barplot( #<3> 
+    n ~ syn, #<4> 
+    data = _) #<5> 
+
+```
+
+<!-- 1. Take the `syn_data` dataset, *and then...* -->
+<!-- 2. Count how many times each value occurs in the `syn` variable, producing a new tibble of those counts, *and then...* -->
+<!-- 3. Draw a barplot with... -->
+<!-- 4. Frequencies (`n`) predicted by (`~`) values in the `syn` variable (`syn`), -->
+<!-- 5. Using the data piped in from the previous step. -->
+
+#### Scatterplot
+
+There are a couple options here. We can either supply `x` and `y` separately using `$` subsetting, or use the same `y ~ x` formula we saw for barplots previously.
+
+```{r}
+#| layout-ncol: 2
+
+## Using subsetting
+plot(syn_data$scsq_techspace, syn_data$scsq_imagery)
+
+## Using a formula
+plot(scsq_imagery ~ scsq_techspace, data = syn_data)
+```
+:::
+:::
+
+\ 
+
+::: {.callout-warning appearance="minimal" title="Well Done!"}
+That's the end of this tutorial. Very well done on all your hard work!
+:::

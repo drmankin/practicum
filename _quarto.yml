@@ -63,6 +63,7 @@ format:
     highlight-style: 
       light: tomorrow
       dark: cobalt
+    df-print: tibble
 
 editor: visual
 

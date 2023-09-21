@@ -88,7 +88,7 @@ broom::glance(eval_lm)
 :::
 :::
 
-Helpfully, `broom::glance()` (and many other {tidyverse} functions) output tibbles, which means we can work with them as we already know how to do. In Tutorials 4 and 5, we'll also learn more about changing and filtering tibbles that will make this very more useful. For now, we can simply note the information we get out of this function for future use.
+Helpfully, `broom::glance()` (and many other {tidyverse} functions) output tibbles, which means we can work with them as we already know how to do. In future tutorials, we'll also learn more about changing and filtering tibbles that will make this very more useful. For now, we can simply note the information we get out of this function for future use.
 
 #### Model Parameters
 
@@ -215,7 +215,7 @@ If you want to customise the theme or look of these plots further, they are buil
 
 #### Distribution of Standardised Residuals
 
-In the UG core statistics modules at Sussex, we teach that normality is the least important of the assumptions of the linear model - the most important being additivity and linearity - so we do not generally worry too much about normally distributed standardised residuals, especially in large sample sizes. However, we do teach them how to evaluate the proportion of standardised residuals with values above &plusmn;1.96 (approximately 5%), &plusmn;2.56 (approximately 1%), and above &plusmn;3 (likely an outlier). For details on how to use `broom::augment()` to obtain standardised residuals and other model diagnostic measures like Cook's distance, see the `discovr_08` tutorial.
+In the UG core statistics modules at Sussex, we teach that normality is the least important of the assumptions of the linear model - the most important being additivity and linearity - so we do not generally worry too much about normally distributed standardised residuals, especially in large sample sizes. However, we do teach them how to evaluate the proportion of standardised residuals with values above ±1.96 (approximately 5%), ±2.56 (approximately 1%), and above ±3 (likely an outlier). For details on how to use `broom::augment()` to obtain standardised residuals and other model diagnostic measures like Cook's distance, see the `discovr_08` tutorial.
 
 #### Robust Models
 
@@ -308,7 +308,7 @@ Then, click "Create".
 By default, your new Quarto document will already have some settings and content to demonstrate how it works. Most importantly, you can see that there are three main types of information in this document:
 
 1.  The [**YAML header**](04_lm.qmd#global-options) at the top, delineated by `---`s, which contains information about how the document will be *rendered*
-2.  The [**body text**](04_lm.qmd#headings-and-text), which contains regular (i.e. non-code) text
+2.  The [**body text**](04_lm.qmd#body-text), which contains regular (i.e. non-code) text
 3.  The [**code chunks**](04_lm.qmd#code-chunks), which contain code - in this case, specifically, R.
 
 ![](/images/quarto_anatomy.png){fig-alt="A screenshot of the default Quarto document, with the YAML, text, and code chunks each circled and labelled in a different colour." fig-align="center"}
@@ -341,7 +341,6 @@ To prepare for our analysis, we will need a place to load packages and read in t
 
 [^2]: Mostly true, except for [inline code](04_lm.qmd#inline-code)!
 
-::: {.callout-tip title="Inserting Code Chunks"}
 There are several ways to insert a new code chunk.
 
 -   In Visual mode, by typing `/` and then Enter (since "R Code Chunk" is the first option)
@@ -349,7 +348,6 @@ There are several ways to insert a new code chunk.
     -   Clicking the green "insert code chunk" button in the top right
     -   Typing out the literal code fencing: ```` ```{r} ``` ````
     -   Using a keyboard shortcut.
-:::
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
 Create a new code chunk and code that does the following:
@@ -372,7 +370,7 @@ In the previous section, we used the following packages:
 
 **Read in the data**:
 
-In the Posit Cloud project workspace for this tutorial, there is a `teaching.csv` object. Look back on [Tutorial 02](03_datasets.qmd) for more detail about how to read in datasets.
+In the Posit Cloud project workspace for this tutorial, there is a `teaching.csv` object. Look back on [Tutorial 03](03_datasets.qmd) for more detail about how to read in datasets.
 
 **Create the models**:
 
@@ -386,7 +384,7 @@ library(ggfortify)
 library(parameters)
 library(robust)
 
-teach_tib <- readr::read_csv("data/teaching_ratings.csv")
+teach_tib <- readr::read_csv(here::here("data/teaching_ratings.csv"))
 
 eval_lm <- lm(eval ~ beauty, data = teach_tib)
 eval_full_lm <- lm(eval ~ beauty + gender, data = teach_tib)
@@ -396,42 +394,42 @@ Run the code chunk by clicking the green "play" arrow, or by pressing Ctrl/Cmd +
 :::
 :::
 
-### Headings and Text
+### Body Text
 
 #### Headings
 
-To begin, we'll use headings to map out our document. Properly formatted headings are strongly recommended for any documents you write, for a variety of reasons:
-
--   They automatically create the outline (to the right) and navigation menu (to the bottom) of your document for easy navigation
--   They can be automatically converted into a [table of contents](04_lm.qmd#table-of-contents)
--   They are a crucial accessibility feature for navigating the document via keyboard/screenreader, as well as providing clear visual structure.
-
-::: {.callout-tip title="Inserting Headings"}
-There are several ways to insert a new heading.
+To begin, we'll use headings to map out our document. There are several ways to insert a new heading.
 
 -   In Visual mode, by:
     -   Using the text formatting dropdown. Click on "Normal" and select the heading level.
     -   Using a keyboard shortcut, Ctrl + Alt + the number of the heading (e.g. 3 for a level 3 heading)
 -   In either mode, by:
     -   Typing hashes at the start of a new line, followed by a space (e.g. `###` creates a level 3 heading)
+
+::: {.callout-tip title="Why Use Headings?" collapse="true"}
+
+Properly formatted headings are strongly recommended for any documents you write, for a variety of reasons:
+
+-   They automatically create the outline (to the right) and navigation menu (to the bottom) of your document for easy navigation
+-   They can be automatically converted into a [table of contents](04_lm.qmd#table-of-contents)
+-   They are a crucial accessibility feature for navigating the document via keyboard/screenreader, as well as providing clear visual structure.
+
 :::
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
 Create 2-3 level 2 headings in your document for the brief report of the linear model. You can choose anything you like, but the three I will refer to will be called "Model Comparison" (constructing and comparing the two models), "Assumptions Checks", and "The Final Model" (reporting the final model in full).
 :::
 
-#### Body Text
+#### Text
 
 Any new-line text will automatically be plain text. This can be anything you like, although in our current document, we are writing a mock-formal results section.
 
-::: {.callout-tip title="Formatting Text"}
 How to format body text depends on the mode you are in.
 
 -   In Visual mode, by:
     -   Using familiar keyboard shortcuts (e.g. Ctrl/Cmd + B for **bold**, Ctrl/Cmd + I for *italics*, etc.)
     -   Using the formatting toolbar at the top of the document.
 -   In Source mode, by using [Markdown formatting](https://quarto.org/docs/authoring/markdown-basics.html).
-:::
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
 Under the first heading (which I have called "Model Comparison"), write a brief, journal-style description of the variables the two models contain.
@@ -445,18 +443,18 @@ If you aren't inclined to write your own, here's a brief sample text to use.
 
 ### Dynamic Reporting
 
-That last sentence should report which of the two models was better, based on the result of our *F*-test, rather than question marks. We *could* produce the output of this test, read it ourselves with our very own eyes/ears, and then type out the results by hand...but that is definitely *not* what we are going to do! Instead, we'll look at a couple options for reporting the results dynamically. (We'll come back to the model R^2^s in a moment.)
+The paragraph from the previous exercise was very clearly missing some key information: the actual statistical results of the linear model analysis. To start with, the last sentence should report which of the two models was better, based on the result of our *F*-test, rather than question marks. We *could* produce the output of this test, read it ourselves with our very own eyes/ears, and then type out the results by hand...but that is definitely *not* what we are going to do! Instead, we'll look at a couple options for reporting the results dynamically. (We'll come back to the model R^2^s in a moment.)
 
 #### Inline Code
 
 Our first option is to use inline code to report the numbers. In order to do this, we first need to know what information we have available in the test output, so we can make use of it.
 
 ::: callout-tip
-This section will make extensive use of `$` subsetting, which was covered in [Tutorial 02](03_datasets.qmd), and `[]` subsetting, which was covered in [Tutorial 01](01_02_intro.qmd).
+This section will make extensive use of `$` subsetting, which was covered in [Tutorial 03](03_datasets.qmd), and `[]` subsetting, which was covered in [Tutorial 01/02](01_02_intro.qmd).
 :::
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-In a **new code chunk**, use the `broom::tidy()` function to get a nice tibble of the `anova()` comparison between the two models, and save it in a new object called `tidy_f`. Then, print out this object **in the Console**.
+In your report document, in a **new code chunk**, use the `broom::tidy()` function to get a nice tibble of the `anova()` comparison between the two models, and save it in a new object called `tidy_f`. Then, print out this object **in the Console**.
 
 ::: {.callout-note collapse="true" title="Solution"}
 We are creating the `tidy_f` object in a code chunk because we will want to use it again in our report.
@@ -536,7 +534,9 @@ This will render as:
 
 > An ANOVA comparing the models indicated a significant improvement in model fit for the second model compared to the first (*F*(`r tidy_f$df[2]`, `r tidy_f$df.residual[2]`) = `r round(tidy_f$statistic[2], 2)`, *p* `r papaja::printp(tidy_f$p.value[2])`).
 :::
+:::
 
+::: {.callout-note appearance="minimal" title="Exercise"}
 **CHALLENGE**: Create a bit of inline code that will either report a significant or non-significant result depending on the value of *p*.
 
 *Hint*: You may need to check out the `ifelse()` function.
@@ -621,8 +621,10 @@ This command should go in a new code chunk, wherever you want the table to appea
 papaja::apa_table(eval_full_lm_out$table)
 ```
 :::
+:::
 
-**CHALLENGE**: {papaja} isn't the only package to provide easy formatting for commonly reported tests. Have a go creating this table again using the `nice_table()` function from the {rempsyc} package, which allows a bit more flexibility in
+::: {.callout-note appearance="minimal" title="Exercise"}
+**CHALLENGE**: {papaja} isn't the only package to provide easy formatting for commonly reported tests. Have a go creating this table again using the `nice_table()` function from the {rempsyc} package.
 
 ::: {.callout-note collapse="true" title="Solution"}
 The `nice_table()` function can be for tables generally, but it can apply specialised formatting for model tables created with `broom`, if we use the `broom =` argument to tell the function what formatting template to apply.
@@ -656,7 +658,7 @@ papaja::apa_table(eval_full_lm_out$table,
                   caption = "The final model predicting teaching evaluation ratings from instructor beauty and gender.")
 ```
 
-You can of course write whatever you like, or borrow the text below, but use "@tbl-final-model" (or whatever label your gave the table code chunk) to refer to the table.
+You can of course write whatever you like, or borrow the text below, but use whatever label your gave the table code chunk to refer to the table.
 
 > The final model with two predictors is presented in full in `@tbl-final-model`.
 
@@ -673,7 +675,9 @@ Altogether, it should render as follows:
 papaja::apa_table(eval_full_lm_out$table)
 ```
 :::
+:::
 
+::: {.callout-note appearance="minimal" title="Exercise"}
 **CHALLENGE**: Complete the final "Assumptions Checks" section summarising the checks and using figure cross-referencing to insert and refer to the diagnostic plots.
 
 *Hint*: To report the exact maximum value of Cook's distance, you will also need to refer to `discovr_08` for how to use `broom::augment()`.
@@ -744,7 +748,7 @@ execute: # <3>
 5.  Do not show any warnings produced by code.
 6.  Do not show any messages produced by code.
 
-The requirements for each document will change depending on its purpose, so you will likely find that
+The requirements for each document will change depending on its purpose.
 
 ::: callout-tip
 The [Quarto help documentation](https://quarto.org/docs/computations/execution-options.html), as usual, has a complete list of YAML options, including how to set default behaviour for figures and other settings.
