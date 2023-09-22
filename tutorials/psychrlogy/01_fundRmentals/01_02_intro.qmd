@@ -744,9 +744,9 @@ quiz_6pm
 
 The command we've just written for the task above demonstrates some extremely important properties of how assignment and functions work in R.
 
-**Overwriting objects is accomplished by assigning new output to an existing object name.** If you have a look in your Environment, you will see that the previous version of `quiz_9am`, containing only seven values, has been replaced with the new one containing ten values.
+**Overwriting objects is accomplished by assigning new output to an existing object name.** If you have a look in your Environment, you will see that the previous version of `quiz_9am`, containing only six values, has been replaced with the new one containing nine values.
 
-**Overwriting objects is silent.** Unlike, say, a word processer, that will give you a warning if you try to save two documents in the same folder with the same name, R won't ask you if you're sure you want to overwrite an existing object with new information - it will just **do it**. This can be a good thing, because you can easily update the information stored in an object with changes, edits, or new information. However, it also means that you can overwrite or replace data when you don't want to, if you use the same object name.
+**Overwriting objects is silent.** Unlike, say, a word processor, that will give you a warning if you try to save two documents in the same folder with the same name, R won't ask you if you're sure you want to overwrite an existing object with new information - it will just *do it*. This can be a good thing, because you can easily update the information stored in an object with changes, edits, or new information. However, it also means that you can overwrite or replace data when you don't want to, if you use the same object name.
 
 This is why it is so important to keep track of all of the commands and changes you make to your data. If you accidentally replace your dataset with, say, a single word, or number with an error in your code, you can easily retrace your steps and avoid redoing work.
 
@@ -843,7 +843,7 @@ In this section, we'll take a systematic look at the process of using a new func
 
 ### Basics and Help
 
-Let's look at an example of how this translation might work. For this example, I'm going to use a number I generated earlier: the mean of the `quiz_9am` group, which was `r mean(quiz_9am)`, which I'd like to round to two decimal places - a common task for reporting results in APA style.
+Let's look at an example of how this translation might work. For this example, I'm going to use a number I generated earlier: the mean of the `quiz_9am` group, `r mean(quiz_9am)`, which I'd like to round to two decimal places - a common task for reporting results in APA style.
 
 If we want R to do this for us, we have to write this command in a way that R can understand. First, we need to know what function corresponds to the English verb "round" - that is, what function will do the same action that we want R to perform. We're lucky in this case: the function in R is also called `round()`.
 
@@ -877,7 +877,7 @@ Let's scroll down to "Usage", which gives examples of what the function looks li
 
 ### Arguments
 
-The information inside a function's brackets to give it the information it needs to work are called **arguments**. Each argument in a function is separated by a comma, so we can see from `round(x, digits = 0)` that the `round()` function can take two arguments. How many arguments a function has depends on the function; some (like `Sys.Date()`) don't need any arguments to run. One of the most useful parts of a function's help documentation is the "Arguments" section, which tells you what each of the function's arguments are and how to use them.
+The information inside a function's brackets, which give it the information it needs to work, are called **arguments**. Each argument in a function is separated by a comma, so we can see from `round(x, digits = 0)` that the `round()` function can take two arguments. How many arguments a function has depends on the function; some (like `Sys.Date()`) don't need any arguments to run. One of the most useful parts of a function's help documentation is the "Arguments" section, which tells you what each of the function's arguments are and how to use them.
 
 There are two main types of arguments: named and unnamed arguments. Conveniently, the arguments of `round()` give us one example of each.
 
@@ -938,7 +938,7 @@ round(64.3333333, 2)
 
 This time I dropped both argument names. R can still understand this because when you don't specify which input goes with which argument, R will assume they should go in the default order given in the help documentation. So, R has automatically assigned 64.3333333 to `x` and 2 to `digits`, which is what we wanted.
 
-As I use R more and more, I find that I name arguments more consistently, even though I know how the function works and dropping them is more efficient (at least in terms of typing). That's because when I come back from lunch, or the next day, or six months later to revisit the same code, it's much easier to recall what it all means when it's well-annotated. So, I strongly recommend getting in the habit of including argument names in your code as a favour to your future self, and to avoid situations like this:
+As I use R more and more, I find that I name arguments *more* consistently, even though I know how the function works and dropping them is more efficient (at least in terms of typing). That's because when I come back from lunch, or the next day, or six months later to revisit the same code, it's much easier to recall what it all means when it's well-annotated. So, I strongly recommend getting in the habit of including argument names in your code as a favour to your future self, and to avoid situations like this:
 
 ```{r}
 round(2, 64.3333333)
@@ -961,7 +961,7 @@ round(0.198, 2)
 ```
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-Before you go on, have a go using a single `round()` command to round all three numbers at once.
+Before you go on, have a go using a single `round()` command to round 64.3333333, 59.5452, and 0.198 at once.
 
 *Hint*: Refer to [Vectors](#vectors).
 :::

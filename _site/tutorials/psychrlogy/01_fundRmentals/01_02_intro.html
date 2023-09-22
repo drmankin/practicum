@@ -4502,15 +4502,15 @@ vertical-align: -.125em;
  <span class="menu-text">Tutorials</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../Workshops.qmd" rel target>
+    <a class="nav-link" href="../../../workshops.html" rel target>
  <span class="menu-text">Workshops</span></a>
   </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
     <a class="nav-link" href="https://canvas.sussex.ac.uk/courses/29761" rel target>
  <span class="menu-text">Canvas</span></a>
   </li>  
-</ul>
-            <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
     <a class="nav-link" href="../../../about.html" rel target>
  <span class="menu-text">About</span></a>
@@ -6089,8 +6089,8 @@ Solution
 </div>
 <p> </p>
 <p>The command we’ve just written for the task above demonstrates some extremely important properties of how assignment and functions work in R.</p>
-<p><strong>Overwriting objects is accomplished by assigning new output to an existing object name.</strong> If you have a look in your Environment, you will see that the previous version of <code>quiz_9am</code>, containing only seven values, has been replaced with the new one containing ten values.</p>
-<p><strong>Overwriting objects is silent.</strong> Unlike, say, a word processer, that will give you a warning if you try to save two documents in the same folder with the same name, R won’t ask you if you’re sure you want to overwrite an existing object with new information - it will just <strong>do it</strong>. This can be a good thing, because you can easily update the information stored in an object with changes, edits, or new information. However, it also means that you can overwrite or replace data when you don’t want to, if you use the same object name.</p>
+<p><strong>Overwriting objects is accomplished by assigning new output to an existing object name.</strong> If you have a look in your Environment, you will see that the previous version of <code>quiz_9am</code>, containing only six values, has been replaced with the new one containing nine values.</p>
+<p><strong>Overwriting objects is silent.</strong> Unlike, say, a word processor, that will give you a warning if you try to save two documents in the same folder with the same name, R won’t ask you if you’re sure you want to overwrite an existing object with new information - it will just <em>do it</em>. This can be a good thing, because you can easily update the information stored in an object with changes, edits, or new information. However, it also means that you can overwrite or replace data when you don’t want to, if you use the same object name.</p>
 <p>This is why it is so important to keep track of all of the commands and changes you make to your data. If you accidentally replace your dataset with, say, a single word, or number with an error in your code, you can easily retrace your steps and avoid redoing work.</p>
 <p><strong>Overwriting objects can be done recursively.</strong> In the command we saw above, we took the current <code>quiz_9am</code> object, combined it with some new values, and then overwrote the <code>quiz_9am</code> object with the new values. If we were to run this exact same code again, this means that each time we would add three new values to <code>quiz_9am</code>, over and over and over:</p>
 <div class="cell">
@@ -6197,7 +6197,7 @@ Can you actually change an object?
 <p>In this section, we’ll take a systematic look at the process of using a new function - in particular, functions that take multiple inputs, or <em>arguments</em>. As we go, we’ll look at how to “translate” the command you want to give R into a verb (function) it can understand.</p>
 <section id="basics-and-help" class="level3">
 <h3 class="anchored" data-anchor-id="basics-and-help">Basics and Help</h3>
-<p>Let’s look at an example of how this translation might work. For this example, I’m going to use a number I generated earlier: the mean of the <code>quiz_9am</code> group, which was 64.3333333, which I’d like to round to two decimal places - a common task for reporting results in APA style.</p>
+<p>Let’s look at an example of how this translation might work. For this example, I’m going to use a number I generated earlier: the mean of the <code>quiz_9am</code> group, 64.3333333, which I’d like to round to two decimal places - a common task for reporting results in APA style.</p>
 <p>If we want R to do this for us, we have to write this command in a way that R can understand. First, we need to know what function corresponds to the English verb “round” - that is, what function will do the same action that we want R to perform. We’re lucky in this case: the function in R is also called <code>round()</code>.</p>
 <p>We know that we’re looking at a function in R because functions often have a name followed by brackets (and nothing else in R does). That is, they have the general form <code>function_name()</code>. Inside the brackets, we can add more information to the function to complete our command, although not all functions require any more information.</p>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
@@ -6267,7 +6267,7 @@ Help Documentation
 </section>
 <section id="arguments" class="level3">
 <h3 class="anchored" data-anchor-id="arguments">Arguments</h3>
-<p>The information inside a function’s brackets to give it the information it needs to work are called <strong>arguments</strong>. Each argument in a function is separated by a comma, so we can see from <code>round(x, digits = 0)</code> that the <code>round()</code> function can take two arguments. How many arguments a function has depends on the function; some (like <code>Sys.Date()</code>) don’t need any arguments to run. One of the most useful parts of a function’s help documentation is the “Arguments” section, which tells you what each of the function’s arguments are and how to use them.</p>
+<p>The information inside a function’s brackets, which give it the information it needs to work, are called <strong>arguments</strong>. Each argument in a function is separated by a comma, so we can see from <code>round(x, digits = 0)</code> that the <code>round()</code> function can take two arguments. How many arguments a function has depends on the function; some (like <code>Sys.Date()</code>) don’t need any arguments to run. One of the most useful parts of a function’s help documentation is the “Arguments” section, which tells you what each of the function’s arguments are and how to use them.</p>
 <p>There are two main types of arguments: named and unnamed arguments. Conveniently, the arguments of <code>round()</code> give us one example of each.</p>
 <section id="unnamed-arguments" class="level4">
 <h4 class="anchored" data-anchor-id="unnamed-arguments">Unnamed Arguments</h4>
@@ -6359,7 +6359,7 @@ Order of Arguments
 </div>
 </div>
 <p>This time I dropped both argument names. R can still understand this because when you don’t specify which input goes with which argument, R will assume they should go in the default order given in the help documentation. So, R has automatically assigned 64.3333333 to <code>x</code> and 2 to <code>digits</code>, which is what we wanted.</p>
-<p>As I use R more and more, I find that I name arguments more consistently, even though I know how the function works and dropping them is more efficient (at least in terms of typing). That’s because when I come back from lunch, or the next day, or six months later to revisit the same code, it’s much easier to recall what it all means when it’s well-annotated. So, I strongly recommend getting in the habit of including argument names in your code as a favour to your future self, and to avoid situations like this:</p>
+<p>As I use R more and more, I find that I name arguments <em>more</em> consistently, even though I know how the function works and dropping them is more efficient (at least in terms of typing). That’s because when I come back from lunch, or the next day, or six months later to revisit the same code, it’s much easier to recall what it all means when it’s well-annotated. So, I strongly recommend getting in the habit of including argument names in your code as a favour to your future self, and to avoid situations like this:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb143"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb143-1"><a href="#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="dv">2</span>, <span class="fl">64.3333333</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -6400,7 +6400,7 @@ Exercise
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Before you go on, have a go using a single <code>round()</code> command to round all three numbers at once.</p>
+<p>Before you go on, have a go using a single <code>round()</code> command to round 64.3333333, 59.5452, and 0.198 at once.</p>
 <p><em>Hint</em>: Refer to <a href="#vectors">Vectors</a>.</p>
 </div>
 </div>

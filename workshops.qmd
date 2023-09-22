@@ -6,6 +6,6 @@ title: "Workshops"
 This section is still under construction. Check back for more in the future!
 :::
 
-This will be the home of any materials for one-off workshops outside of the main PsychRlogy series. Workshops may focus on particular tasks, outputs, or analyses and will require some core skills in R (typically through the Essentials section of the [PsychRlogy series](tutorials.qmd)).
+This will be the home of any materials for one-off workshops outside of the PsychRlogy series. Workshops may focus on particular tasks, outputs, or analyses and will require some core skills in R (typically through the Essentials section of the [PsychRlogy series](tutorials.qmd)).
 
 If you have a suggestion for a workshop topic, you can drop it in the [Suggestion Box on Canvas](https://canvas.sussex.ac.uk/courses/29761/quizzes/40835).
