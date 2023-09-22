@@ -4853,10 +4853,10 @@ return!"\t\n\x0B\f\r                　\u2028\u2029
   <ul>
   <li><a href="#getting-started" id="toc-getting-started" class="nav-link" data-scroll-target="#getting-started">Getting Started</a></li>
   <li><a href="#creating-a-code-chunk" id="toc-creating-a-code-chunk" class="nav-link" data-scroll-target="#creating-a-code-chunk">Creating a Code Chunk</a></li>
-  <li><a href="#headings-and-text" id="toc-headings-and-text" class="nav-link" data-scroll-target="#headings-and-text">Headings and Text</a>
+  <li><a href="#body-text" id="toc-body-text" class="nav-link" data-scroll-target="#body-text">Body Text</a>
   <ul class="collapse">
   <li><a href="#headings" id="toc-headings" class="nav-link" data-scroll-target="#headings">Headings</a></li>
-  <li><a href="#body-text" id="toc-body-text" class="nav-link" data-scroll-target="#body-text">Body Text</a></li>
+  <li><a href="#text" id="toc-text" class="nav-link" data-scroll-target="#text">Text</a></li>
   </ul></li>
   <li><a href="#dynamic-reporting" id="toc-dynamic-reporting" class="nav-link" data-scroll-target="#dynamic-reporting">Dynamic Reporting</a>
   <ul class="collapse">
@@ -5019,7 +5019,7 @@ Solution
 </div>
 </div>
 </div>
-<p>Helpfully, <code>broom::glance()</code> (and many other {tidyverse} functions) output tibbles, which means we can work with them as we already know how to do. In Tutorials 4 and 5, we’ll also learn more about changing and filtering tibbles that will make this very more useful. For now, we can simply note the information we get out of this function for future use.</p>
+<p>Helpfully, <code>broom::glance()</code> (and many other {tidyverse} functions) output tibbles, which means we can work with them as we already know how to do. In future tutorials, we’ll also learn more about changing and filtering tibbles that will make this very more useful. For now, we can simply note the information we get out of this function for future use.</p>
 </section>
 <section id="model-parameters" class="level4">
 <h4 class="anchored" data-anchor-id="model-parameters">Model Parameters</h4>
@@ -5483,9 +5483,9 @@ Solution
 <pre><code># A tibble: 3 × 6
   Parameter    Coefficient    CI  CI_low CI_high     p
   &lt;chr&gt;              &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
-1 (Intercept)        4.08   0.95  4.02     4.14      0
-2 beauty             0.148  0.95  0.0845   0.211     0
-3 genderfemale      -0.198  0.95 -0.297   -0.105     0</code></pre>
+1 (Intercept)        4.08   0.95  4.02    4.15       0
+2 beauty             0.147  0.95  0.0817  0.209      0
+3 genderfemale      -0.202  0.95 -0.302  -0.0976     0</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(eval_full_lm, <span class="at">conf.int =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -5546,7 +5546,7 @@ Exercise
 <p>By default, your new Quarto document will already have some settings and content to demonstrate how it works. Most importantly, you can see that there are three main types of information in this document:</p>
 <ol type="1">
 <li>The <a href="../../../tutorials/psychrlogy/01_fundRmentals/04_lm.html#global-options"><strong>YAML header</strong></a> at the top, delineated by <code>---</code>s, which contains information about how the document will be <em>rendered</em></li>
-<li>The <a href="../../../tutorials/psychrlogy/01_fundRmentals/04_lm.html#headings-and-text"><strong>body text</strong></a>, which contains regular (i.e. non-code) text</li>
+<li>The <a href="../../../tutorials/psychrlogy/01_fundRmentals/04_lm.html#body-text"><strong>body text</strong></a>, which contains regular (i.e. non-code) text</li>
 <li>The <a href="../../../tutorials/psychrlogy/01_fundRmentals/04_lm.html#code-chunks"><strong>code chunks</strong></a>, which contain code - in this case, specifically, R.</li>
 </ol>
 <div class="quarto-figure quarto-figure-center">
@@ -5608,16 +5608,6 @@ Visual vs Source Mode
 <section id="creating-a-code-chunk" class="level3">
 <h3 class="anchored" data-anchor-id="creating-a-code-chunk">Creating a Code Chunk</h3>
 <p>To prepare for our analysis, we will need a place to load packages and read in the data. Any executable code - that is, code that you want to run and do something - must be written in a code chunk and NOT in the body text<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="Inserting Code Chunks">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Inserting Code Chunks
-</div>
-</div>
-<div class="callout-body-container callout-body">
 <p>There are several ways to insert a new code chunk.</p>
 <ul>
 <li>In Visual mode, by typing <code>/</code> and then Enter (since “R Code Chunk” is the first option)</li>
@@ -5628,8 +5618,6 @@ Inserting Code Chunks
 <li>Using a keyboard shortcut.</li>
 </ul></li>
 </ul>
-</div>
-</div>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -5648,7 +5636,7 @@ Exercise
 </ul>
 <p>Then, run the code chunk.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-33-contents" aria-controls="callout-33" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-32-contents" aria-controls="callout-32" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -5657,7 +5645,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-33" class="callout-33-contents callout-collapse collapse">
+<div id="callout-32" class="callout-32-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>Load packages</strong>:</p>
 <p>In the previous section, we used the following packages:</p>
@@ -5668,7 +5656,7 @@ Solution
 <li>{robust} for robust parameter estimates</li>
 </ul>
 <p><strong>Read in the data</strong>:</p>
-<p>In the Posit Cloud project workspace for this tutorial, there is a <code>teaching.csv</code> object. Look back on <a href="../../../tutorials/psychrlogy/01_fundRmentals/03_datasets.html">Tutorial 02</a> for more detail about how to read in datasets.</p>
+<p>In the Posit Cloud project workspace for this tutorial, there is a <code>teaching.csv</code> object. Look back on <a href="../../../tutorials/psychrlogy/01_fundRmentals/03_datasets.html">Tutorial 03</a> for more detail about how to read in datasets.</p>
 <p><strong>Create the models</strong>:</p>
 <p>Copy and paste the code from your workbook document, or from the previous sections of this tutorial. You can also find all of the commands you have run your History tab (next to Environment).</p>
 <p>Altogether, your new code chunk should look like this:</p>
@@ -5678,7 +5666,7 @@ Solution
 <span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(parameters)</span>
 <span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(robust)</span>
 <span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>teach_tib <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">&quot;data/teaching_ratings.csv&quot;</span>)</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>teach_tib <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">&quot;data/teaching_ratings.csv&quot;</span>))</span>
 <span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>eval_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(eval <span class="sc">~</span> beauty, <span class="at">data =</span> teach_tib)</span>
 <span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>eval_full_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(eval <span class="sc">~</span> beauty <span class="sc">+</span> gender, <span class="at">data =</span> teach_tib)</span>
@@ -5690,27 +5678,11 @@ Solution
 </div>
 </div>
 </section>
-<section id="headings-and-text" class="level3">
-<h3 class="anchored" data-anchor-id="headings-and-text">Headings and Text</h3>
+<section id="body-text" class="level3">
+<h3 class="anchored" data-anchor-id="body-text">Body Text</h3>
 <section id="headings" class="level4">
 <h4 class="anchored" data-anchor-id="headings">Headings</h4>
-<p>To begin, we’ll use headings to map out our document. Properly formatted headings are strongly recommended for any documents you write, for a variety of reasons:</p>
-<ul>
-<li>They automatically create the outline (to the right) and navigation menu (to the bottom) of your document for easy navigation</li>
-<li>They can be automatically converted into a <a href="../../../tutorials/psychrlogy/01_fundRmentals/04_lm.html#table-of-contents">table of contents</a></li>
-<li>They are a crucial accessibility feature for navigating the document via keyboard/screenreader, as well as providing clear visual structure.</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="Inserting Headings">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Inserting Headings
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>There are several ways to insert a new heading.</p>
+<p>To begin, we’ll use headings to map out our document. There are several ways to insert a new heading.</p>
 <ul>
 <li>In Visual mode, by:
 <ul>
@@ -5722,6 +5694,25 @@ Inserting Headings
 <li>Typing hashes at the start of a new line, followed by a space (e.g. <code>###</code> creates a level 3 heading)</li>
 </ul></li>
 </ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="Why Use Headings?">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-34-contents" aria-controls="callout-34" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Why Use Headings?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-34" class="callout-34-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Properly formatted headings are strongly recommended for any documents you write, for a variety of reasons:</p>
+<ul>
+<li>They automatically create the outline (to the right) and navigation menu (to the bottom) of your document for easy navigation</li>
+<li>They can be automatically converted into a <a href="../../../tutorials/psychrlogy/01_fundRmentals/04_lm.html#table-of-contents">table of contents</a></li>
+<li>They are a crucial accessibility feature for navigating the document via keyboard/screenreader, as well as providing clear visual structure.</li>
+</ul>
+</div>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
@@ -5738,19 +5729,9 @@ Exercise
 </div>
 </div>
 </section>
-<section id="body-text" class="level4">
-<h4 class="anchored" data-anchor-id="body-text">Body Text</h4>
+<section id="text" class="level4">
+<h4 class="anchored" data-anchor-id="text">Text</h4>
 <p>Any new-line text will automatically be plain text. This can be anything you like, although in our current document, we are writing a mock-formal results section.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="Formatting Text">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Formatting Text
-</div>
-</div>
-<div class="callout-body-container callout-body">
 <p>How to format body text depends on the mode you are in.</p>
 <ul>
 <li>In Visual mode, by:
@@ -5760,8 +5741,6 @@ Formatting Text
 </ul></li>
 <li>In Source mode, by using <a href="https://quarto.org/docs/authoring/markdown-basics.html">Markdown formatting</a>.</li>
 </ul>
-</div>
-</div>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -5774,7 +5753,7 @@ Exercise
 <div class="callout-body-container callout-body">
 <p>Under the first heading (which I have called “Model Comparison”), write a brief, journal-style description of the variables the two models contain.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-38-contents" aria-controls="callout-38" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-36-contents" aria-controls="callout-36" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -5783,7 +5762,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-38" class="callout-38-contents callout-collapse collapse">
+<div id="callout-36" class="callout-36-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>If you aren’t inclined to write your own, here’s a brief sample text to use.</p>
 <blockquote class="blockquote">
@@ -5798,7 +5777,7 @@ Solution
 </section>
 <section id="dynamic-reporting" class="level3">
 <h3 class="anchored">Dynamic Reporting</h3>
-<p>That last sentence should report which of the two models was better, based on the result of our <em>F</em>-test, rather than question marks. We <em>could</em> produce the output of this test, read it ourselves with our very own eyes/ears, and then type out the results by hand…but that is definitely <em>not</em> what we are going to do! Instead, we’ll look at a couple options for reporting the results dynamically. (We’ll come back to the model R<sup>2</sup>s in a moment.)</p>
+<p>The paragraph from the previous exercise was very clearly missing some key information: the actual statistical results of the linear model analysis. To start with, the last sentence should report which of the two models was better, based on the result of our <em>F</em>-test, rather than question marks. We <em>could</em> produce the output of this test, read it ourselves with our very own eyes/ears, and then type out the results by hand…but that is definitely <em>not</em> what we are going to do! Instead, we’ll look at a couple options for reporting the results dynamically. (We’ll come back to the model R<sup>2</sup>s in a moment.)</p>
 <section id="inline-code" class="level4">
 <h4 class="anchored" data-anchor-id="inline-code">Inline Code</h4>
 <p>Our first option is to use inline code to report the numbers. In order to do this, we first need to know what information we have available in the test output, so we can make use of it.</p>
@@ -5812,7 +5791,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This section will make extensive use of <code>$</code> subsetting, which was covered in <a href="../../../tutorials/psychrlogy/01_fundRmentals/03_datasets.html">Tutorial 02</a>, and <code>[]</code> subsetting, which was covered in <a href="../../../tutorials/psychrlogy/01_fundRmentals/01_02_intro.html">Tutorial 01</a>.</p>
+<p>This section will make extensive use of <code>$</code> subsetting, which was covered in <a href="../../../tutorials/psychrlogy/01_fundRmentals/03_datasets.html">Tutorial 03</a>, and <code>[]</code> subsetting, which was covered in <a href="../../../tutorials/psychrlogy/01_fundRmentals/01_02_intro.html">Tutorial 01/02</a>.</p>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
@@ -5825,9 +5804,9 @@ Exercise
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>In a <strong>new code chunk</strong>, use the <code>broom::tidy()</code> function to get a nice tibble of the <code>anova()</code> comparison between the two models, and save it in a new object called <code>tidy_f</code>. Then, print out this object <strong>in the Console</strong>.</p>
+<p>In your report document, in a <strong>new code chunk</strong>, use the <code>broom::tidy()</code> function to get a nice tibble of the <code>anova()</code> comparison between the two models, and save it in a new object called <code>tidy_f</code>. Then, print out this object <strong>in the Console</strong>.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-41-contents" aria-controls="callout-41" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-39-contents" aria-controls="callout-39" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -5836,7 +5815,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-41" class="callout-41-contents callout-collapse collapse">
+<div id="callout-39" class="callout-39-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>We are creating the <code>tidy_f</code> object in a code chunk because we will want to use it again in our report.</p>
 <p>We are calling this object in the Console because viewing its contents is only for our information/reference, and not something we want to appear or use directly in our finished document.</p>
@@ -5873,7 +5852,7 @@ Exercise
 <div class="callout-body-container callout-body">
 <p>Get out the <em>F</em>-ratio of 15.0554899 from this object, and round it to two decimal places.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-43-contents" aria-controls="callout-43" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-41-contents" aria-controls="callout-41" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -5882,7 +5861,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-43" class="callout-43-contents callout-collapse collapse">
+<div id="callout-41" class="callout-41-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>First, we need to get out the <code>statistic</code> variable, which we can do with <code>$</code>.</p>
 <div class="cell">
@@ -5934,7 +5913,7 @@ Exercise
 <p>Use inline code to replace all of the ???s in the <em>F</em>-test reporting to produce a final report in APA style.</p>
 <p><em>Hint</em>: Rounding <em>p</em>-values is a bit tricky. <a href="https://frederikaust.com/papaja_man/reporting.html">Check out the {papaja} package</a> to see if you can find a function besides <code>round()</code> that will produce the <em>p</em>-value with the correct formatting.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-45-contents" aria-controls="callout-45" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-43-contents" aria-controls="callout-43" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -5943,7 +5922,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-45" class="callout-45-contents callout-collapse collapse">
+<div id="callout-43" class="callout-43-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>All of the other numbers should be straightforward, except for the <em>p</em>-value. Rounding to three decimal places with <code>round()</code> will result in a value of 0, which is not what we want. Instead, since the <em>p</em>-value is below .001, we want “&lt; .001”.</p>
 <p>{papaja} has the <code>printp()</code> function, which will do this exactly was we like (as well as containing a lot of other useful functions for rounding and printing in APA style!)</p>
@@ -5959,10 +5938,22 @@ Solution
 </div>
 </div>
 </div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p><strong>CHALLENGE</strong>: Create a bit of inline code that will either report a significant or non-significant result depending on the value of <em>p</em>.</p>
 <p><em>Hint</em>: You may need to check out the <code>ifelse()</code> function.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-46-contents" aria-controls="callout-46" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-45-contents" aria-controls="callout-45" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -5971,7 +5962,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-46" class="callout-46-contents callout-collapse collapse">
+<div id="callout-45" class="callout-45-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>If we really want our reporting to be resilient, we want to remove or replace all the places where we have to manually remember to update the code if our results change. In this case, our reporting reads:</p>
 <blockquote class="blockquote">
@@ -5989,15 +5980,15 @@ Solution
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="2" data-code-annotation="1">The test: is the <em>p</em>-value for our <em>F</em>-test less than .05? (If you have a different <span class="math inline">\(\alpha\)</span>-threshold, you could hard-code it here or use an object you’ve defined previously for this comparison.)</span>
+<span data-code-annotation="1" data-code-cell="annotated-cell-1" data-code-lines="2">The test: is the <em>p</em>-value for our <em>F</em>-test less than .05? (If you have a different <span class="math inline">\(\alpha\)</span>-threshold, you could hard-code it here or use an object you’ve defined previously for this comparison.)</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="3" data-code-annotation="2">What to do if the test returns <code>TRUE</code>: print “significant”.</span>
+<span data-code-annotation="2" data-code-cell="annotated-cell-1" data-code-lines="3">What to do if the test returns <code>TRUE</code>: print “significant”.</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="4" data-code-annotation="3">What to do if the test returns <code>FALSE</code>: print “non-significant”.</span>
+<span data-code-annotation="3" data-code-cell="annotated-cell-1" data-code-lines="4">What to do if the test returns <code>FALSE</code>: print “non-significant”.</span>
 </dd>
 </dl>
 </div>
@@ -6033,7 +6024,7 @@ Exercise
 <p>Use <a href="https://frederikaust.com/papaja_man/reporting.html#statistical-models-and-tests">the {papaja} documentation</a> to fill in the statistical reporting for each of the linear models (i.e., R<sup>2</sup>, <em>F</em>, and <em>p</em>) using only <strong>one piece</strong> of inline code for each.</p>
 <p>When you’re done, render your document to see the results!</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-48-contents" aria-controls="callout-48" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-47-contents" aria-controls="callout-47" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -6042,7 +6033,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-48" class="callout-48-contents callout-collapse collapse">
+<div id="callout-47" class="callout-47-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The {papaja} documentation illustrates the process using <code>t.test()</code>, which works the same way as <code>lm()</code>. The key here is to use the original objects containing the models you want to report.</p>
 <p>Let’s have a look at the first of the two models and see what the <code>papaja::apa_print()</code> function gives us.</p>
@@ -6147,7 +6138,7 @@ Exercise
 <div class="callout-body-container callout-body">
 <p>Using <a href="https://frederikaust.com/papaja_man/reporting.html#reporting-models-and-tests-in-a-table">the {papaja} help documentation</a>, produce a nicely formatted table of the final model, presenting the parameter estimates, <em>p</em>-values etc. for each predictor under the third (“Final Model”) heading.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-50-contents" aria-controls="callout-50" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-49-contents" aria-controls="callout-49" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -6156,7 +6147,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-50" class="callout-50-contents callout-collapse collapse">
+<div id="callout-49" class="callout-49-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>We already have the necessary object, <code>eval_full_lm_out</code>, from the previous task. We just need to subset it as described in the help documentation.</p>
 <p>This command should go in a new code chunk, wherever you want the table to appear in your document.</p>
@@ -6212,7 +6203,19 @@ Solution
 </div>
 </div>
 </div>
-<p><strong>CHALLENGE</strong>: {papaja} isn’t the only package to provide easy formatting for commonly reported tests. Have a go creating this table again using the <code>nice_table()</code> function from the {rempsyc} package, which allows a bit more flexibility in</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>CHALLENGE</strong>: {papaja} isn’t the only package to provide easy formatting for commonly reported tests. Have a go creating this table again using the <code>nice_table()</code> function from the {rempsyc} package.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-51-contents" aria-controls="callout-51" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -6230,7 +6233,7 @@ Solution
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>rempsyc<span class="sc">::</span><span class="fu">nice_table</span>(broom<span class="sc">::</span><span class="fu">tidy</span>(eval_full_lm, <span class="at">conf.int =</span> <span class="cn">TRUE</span>), <span class="at">broom =</span> <span class="st">&quot;lm&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div class="tabwid"><style>.cl-0182d98c{table-layout:auto;}.cl-0175740e{font-family:'Times New Roman';font-size:12pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-0175749a{font-family:'Times New Roman';font-size:12pt;font-weight:normal;font-style:italic;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-017adcd2{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 2;background-color:transparent;}.cl-017adce6{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 2;background-color:transparent;}.cl-017afcee{background-color:transparent;vertical-align: middle;border-bottom: 0.5pt solid rgba(0, 0, 0, 1.00);border-top: 0.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-017afcf8{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-017afcf9{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-017afd02{background-color:transparent;vertical-align: middle;border-bottom: 0.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-017afd03{background-color:transparent;vertical-align: middle;border-bottom: 0.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-0182d98c"><thead><tr style="overflow-wrap:break-word;"><th class="cl-017afcee"><p class="cl-017adcd2"><span class="cl-0175740e">Term</span></p></th><th class="cl-017afcee"><p class="cl-017adcd2"><span class="cl-0175749a">b</span></p></th><th class="cl-017afcee"><p class="cl-017adcd2"><span class="cl-0175749a">SE</span></p></th><th class="cl-017afcee"><p class="cl-017adcd2"><span class="cl-0175749a">t</span></p></th><th class="cl-017afcee"><p class="cl-017adcd2"><span class="cl-0175749a">p</span></p></th><th class="cl-017afcee"><p class="cl-017adcd2"><span class="cl-0175740e">95% CI</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-017afcf8"><p class="cl-017adce6"><span class="cl-0175740e">(Intercept)</span></p></td><td class="cl-017afcf9"><p class="cl-017adcd2"><span class="cl-0175740e">4.08</span></p></td><td class="cl-017afcf9"><p class="cl-017adcd2"><span class="cl-0175740e">0.03</span></p></td><td class="cl-017afcf9"><p class="cl-017adcd2"><span class="cl-0175740e">123.94</span></p></td><td class="cl-017afcf9"><p class="cl-017adcd2"><span class="cl-0175740e">&lt; .001***</span></p></td><td class="cl-017afcf9"><p class="cl-017adcd2"><span class="cl-0175740e">[4.02, 4.15]</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-017afcf8"><p class="cl-017adce6"><span class="cl-0175740e">beauty</span></p></td><td class="cl-017afcf9"><p class="cl-017adcd2"><span class="cl-0175740e">0.15</span></p></td><td class="cl-017afcf9"><p class="cl-017adcd2"><span class="cl-0175740e">0.03</span></p></td><td class="cl-017afcf9"><p class="cl-017adcd2"><span class="cl-0175740e">4.65</span></p></td><td class="cl-017afcf9"><p class="cl-017adcd2"><span class="cl-0175740e">&lt; .001***</span></p></td><td class="cl-017afcf9"><p class="cl-017adcd2"><span class="cl-0175740e">[0.09, 0.21]</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-017afd02"><p class="cl-017adce6"><span class="cl-0175740e">genderfemale</span></p></td><td class="cl-017afd03"><p class="cl-017adcd2"><span class="cl-0175740e">-0.20</span></p></td><td class="cl-017afd03"><p class="cl-017adcd2"><span class="cl-0175740e">0.05</span></p></td><td class="cl-017afd03"><p class="cl-017adcd2"><span class="cl-0175740e">-3.88</span></p></td><td class="cl-017afd03"><p class="cl-017adcd2"><span class="cl-0175740e">&lt; .001***</span></p></td><td class="cl-017afd03"><p class="cl-017adcd2"><span class="cl-0175740e">[-0.30, -0.10]</span></p></td></tr></tbody></table></div>
+<div class="tabwid"><style>.cl-20765bf6{table-layout:auto;}.cl-2069454c{font-family:'Times New Roman';font-size:12pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-206945c4{font-family:'Times New Roman';font-size:12pt;font-weight:normal;font-style:italic;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-206e67c0{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 2;background-color:transparent;}.cl-206e67ca{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 2;background-color:transparent;}.cl-206e84bc{background-color:transparent;vertical-align: middle;border-bottom: 0.5pt solid rgba(0, 0, 0, 1.00);border-top: 0.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-206e84c6{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-206e84c7{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-206e84d0{background-color:transparent;vertical-align: middle;border-bottom: 0.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-206e84d1{background-color:transparent;vertical-align: middle;border-bottom: 0.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-20765bf6"><thead><tr style="overflow-wrap:break-word;"><th class="cl-206e84bc"><p class="cl-206e67c0"><span class="cl-2069454c">Term</span></p></th><th class="cl-206e84bc"><p class="cl-206e67c0"><span class="cl-206945c4">b</span></p></th><th class="cl-206e84bc"><p class="cl-206e67c0"><span class="cl-206945c4">SE</span></p></th><th class="cl-206e84bc"><p class="cl-206e67c0"><span class="cl-206945c4">t</span></p></th><th class="cl-206e84bc"><p class="cl-206e67c0"><span class="cl-206945c4">p</span></p></th><th class="cl-206e84bc"><p class="cl-206e67c0"><span class="cl-2069454c">95% CI</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-206e84c6"><p class="cl-206e67ca"><span class="cl-2069454c">(Intercept)</span></p></td><td class="cl-206e84c7"><p class="cl-206e67c0"><span class="cl-2069454c">4.08</span></p></td><td class="cl-206e84c7"><p class="cl-206e67c0"><span class="cl-2069454c">0.03</span></p></td><td class="cl-206e84c7"><p class="cl-206e67c0"><span class="cl-2069454c">123.94</span></p></td><td class="cl-206e84c7"><p class="cl-206e67c0"><span class="cl-2069454c">&lt; .001***</span></p></td><td class="cl-206e84c7"><p class="cl-206e67c0"><span class="cl-2069454c">[4.02, 4.15]</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-206e84c6"><p class="cl-206e67ca"><span class="cl-2069454c">beauty</span></p></td><td class="cl-206e84c7"><p class="cl-206e67c0"><span class="cl-2069454c">0.15</span></p></td><td class="cl-206e84c7"><p class="cl-206e67c0"><span class="cl-2069454c">0.03</span></p></td><td class="cl-206e84c7"><p class="cl-206e67c0"><span class="cl-2069454c">4.65</span></p></td><td class="cl-206e84c7"><p class="cl-206e67c0"><span class="cl-2069454c">&lt; .001***</span></p></td><td class="cl-206e84c7"><p class="cl-206e67c0"><span class="cl-2069454c">[0.09, 0.21]</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-206e84d0"><p class="cl-206e67ca"><span class="cl-2069454c">genderfemale</span></p></td><td class="cl-206e84d1"><p class="cl-206e67c0"><span class="cl-2069454c">-0.20</span></p></td><td class="cl-206e84d1"><p class="cl-206e67c0"><span class="cl-2069454c">0.05</span></p></td><td class="cl-206e84d1"><p class="cl-206e67c0"><span class="cl-2069454c">-3.88</span></p></td><td class="cl-206e84d1"><p class="cl-206e67c0"><span class="cl-2069454c">&lt; .001***</span></p></td><td class="cl-206e84d1"><p class="cl-206e67c0"><span class="cl-2069454c">[-0.30, -0.10]</span></p></td></tr></tbody></table></div>
 </div>
 </div>
 </div>
@@ -6278,7 +6281,7 @@ Solution
 <span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>papaja<span class="sc">::</span><span class="fu">apa_table</span>(eval_full_lm_out<span class="sc">$</span>table,</span>
 <span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>                  <span class="at">caption =</span> <span class="st">&quot;The final model predicting teaching evaluation ratings from instructor beauty and gender.&quot;</span>)</span>
 <span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>You can of course write whatever you like, or borrow the text below, but use “<a href="#tbl-final-model">Table 1</a>” (or whatever label your gave the table code chunk) to refer to the table.</p>
+<p>You can of course write whatever you like, or borrow the text below, but use whatever label your gave the table code chunk to refer to the table.</p>
 <blockquote class="blockquote">
 <p>The final model with two predictors is presented in full in <code>@tbl-final-model</code>.</p>
 </blockquote>
@@ -6342,10 +6345,22 @@ Solution
 </div>
 </div>
 </div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p><strong>CHALLENGE</strong>: Complete the final “Assumptions Checks” section summarising the checks and using figure cross-referencing to insert and refer to the diagnostic plots.</p>
 <p><em>Hint</em>: To report the exact maximum value of Cook’s distance, you will also need to refer to <code>discovr_08</code> for how to use <code>broom::augment()</code>.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-54-contents" aria-controls="callout-54" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-55-contents" aria-controls="callout-55" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -6354,7 +6369,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-54" class="callout-54-contents callout-collapse collapse">
+<div id="callout-55" class="callout-55-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>You can write whatever you like, but here’s a suggestion with the plot included.</p>
 <blockquote class="blockquote">
@@ -6417,32 +6432,32 @@ editor: visual
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-4" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-4" data-code-lines="5" data-code-annotation="1">Automatically produce a table of contents (ToC) from the document headings.</span>
+<span data-code-annotation="1" data-code-cell="annotated-cell-4" data-code-lines="5">Automatically produce a table of contents (ToC) from the document headings.</span>
 </dd>
 <dt data-target-cell="annotated-cell-4" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-4" data-code-lines="7" data-code-annotation="2">Combine all the files, images, stylesheets etc. into a single output document. Necessary if you want to send an HTML file to someone else and have it look as it should!</span>
+<span data-code-annotation="2" data-code-cell="annotated-cell-4" data-code-lines="7">Combine all the files, images, stylesheets etc. into a single output document. Necessary if you want to send an HTML file to someone else and have it look as it should!</span>
 </dd>
 <dt data-target-cell="annotated-cell-4" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="annotated-cell-4" data-code-lines="8" data-code-annotation="3">Set default behaviour for all code chunks as follows</span>
+<span data-code-annotation="3" data-code-cell="annotated-cell-4" data-code-lines="8">Set default behaviour for all code chunks as follows</span>
 </dd>
 <dt data-target-cell="annotated-cell-4" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-cell="annotated-cell-4" data-code-lines="9" data-code-annotation="4">Run code and show output, but do not show the code itself.</span>
+<span data-code-annotation="4" data-code-cell="annotated-cell-4" data-code-lines="9">Run code and show output, but do not show the code itself.</span>
 </dd>
 <dt data-target-cell="annotated-cell-4" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-cell="annotated-cell-4" data-code-lines="10" data-code-annotation="5">Do not show any warnings produced by code.</span>
+<span data-code-annotation="5" data-code-cell="annotated-cell-4" data-code-lines="10">Do not show any warnings produced by code.</span>
 </dd>
 <dt data-target-cell="annotated-cell-4" data-target-annotation="6">6</dt>
 <dd>
-<span data-code-cell="annotated-cell-4" data-code-lines="11" data-code-annotation="6">Do not show any messages produced by code.</span>
+<span data-code-annotation="6" data-code-cell="annotated-cell-4" data-code-lines="11">Do not show any messages produced by code.</span>
 </dd>
 </dl>
 </div>
 </div>
-<p>The requirements for each document will change depending on its purpose, so you will likely find that</p>
+<p>The requirements for each document will change depending on its purpose.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -6498,7 +6513,7 @@ Exercise
 <div class="callout-body-container callout-body">
 <p>Render your linear model report to a Word document.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-59-contents" aria-controls="callout-59" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-60-contents" aria-controls="callout-60" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -6507,7 +6522,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-59" class="callout-59-contents callout-collapse collapse">
+<div id="callout-60" class="callout-60-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Simply update the <code>format: html</code> YAML option to <code>format: docx</code> and render your document. Note that the <code>format</code> options are usually named after the file extension rather than the name of the programme necessarily.</p>
 </div>

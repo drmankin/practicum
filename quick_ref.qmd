@@ -344,7 +344,7 @@ If you're looking for a particular section of a tutorial, use this handy summary
    <td style="text-align:left;padding-left: 4em;" indentlevel="2"> [Creating a Code Chunk](tutorials/psychrlogy/01_fundRmentals/04_lm.qmd#creating-a-code-chunk) </td>
   </tr>
   <tr>
-   <td style="text-align:left;padding-left: 4em;" indentlevel="2"> [Headings and Text](tutorials/psychrlogy/01_fundRmentals/04_lm.qmd#headings-and-text) </td>
+   <td style="text-align:left;padding-left: 4em;" indentlevel="2"> [Body Text](tutorials/psychrlogy/01_fundRmentals/04_lm.qmd#body-text) </td>
   </tr>
   <tr>
    <td style="text-align:left;padding-left: 4em;" indentlevel="2"> [Dynamic Reporting](tutorials/psychrlogy/01_fundRmentals/04_lm.qmd#dynamic-reporting) </td>
