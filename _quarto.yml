@@ -3,7 +3,7 @@ project:
   pre-render: scripts/gen_index.R #not currently working automatically (but seems okay manually!)
   render: 
     - "*.qmd"
-    - "!tutorials/psychrlogy/drafts/" #don't attempt to render the drafts folder
+    - "!tutorials/drafts/" #don't attempt to render the drafts folder
 
 website:
   title: R Training
@@ -63,6 +63,7 @@ format:
     highlight-style: 
       light: tomorrow
       dark: cobalt
+    df-print: tibble
 
 editor: visual
 

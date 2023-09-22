@@ -4,7 +4,7 @@ title: "06: Filter and Select"
 
 ## Overview
 
-This tutorial covers two important `dplyr` functions: `filter()` and `select()`. Easy to confuse, `filter()` uses logical assertations to return a subset of rows (cases) in a dataset, while `select()` returns a subset of the columns (variables) in the dataset.
+This tutorial covers two important `dplyr` functions: `filter()` and `select()`. Easy to confuse, `filter()` uses logical assertions to return a subset of rows (cases) in a dataset, while `select()` returns a subset of the columns (variables) in the dataset.
 
 ::: callout-tip
 To remember which does which:
@@ -27,7 +27,7 @@ peng <- palmerpenguins::penguins
 
 ## Filter
 
-The `filter()` function's primary job is to easily and transparently **subset the rows** within a dataset - in particular, a `tibble`. `filter()` takes one or more logical assertions and returns only the rows for which the assertion is `TRUE`. Columns are not affected by `filter`()\`, only rows.
+The `filter()` function's primary job is to easily and transparently **subset the rows** within a dataset - in particular, a `tibble`. `filter()` takes one or more logical assertions and returns only the rows for which the assertion is `TRUE`. Columns are not affected by `filter()`, only rows.
 
 ### Basic Structure
 
@@ -45,7 +45,7 @@ my_tibble |>
 
 #### Usage
 
-`logical_assertion` is a statement that returns logical values, just like the assertions we saw in [the first tutorial](..\01_fundRmentals\01_02_intro.qmd). The rows where the assertion returns `TRUE` will be included in the output; those that return `FALSE` will not. Inside the `filter()` command, use the names of the variable in the piped dataset to create the logical assertions.
+`logical_assertion` is a statement about the variable(s) in `my_tibble` that returns logical values, just like the assertions we saw in [the first tutorial](..\01_fundRmentals\01_02_intro.qmd). The rows where the assertion returns `TRUE` will be included in the output; those that return `FALSE` will not. Inside the `filter()` command, use the names of the variable in the piped dataset to create the logical assertions.
 
 #### Examples
 
@@ -105,7 +105,7 @@ my_tibble |>
   dplyr::select(
     variable_to_keep, !variable_to_drop, 
     keep_this_one:through_this_one,
-    rename_variable = old_name,
+    new_name = variable_to_rename,
     variable_number
   )
 

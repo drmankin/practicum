@@ -213,7 +213,7 @@ topics <- list.files(path = path_topics_index, pattern = "_topics.R$", recursive
 unlink(list.files(path = path_topics_index, pattern = ".R$",
                   recursive = TRUE, full.names = TRUE))
 
-exclude_headings <- c("Overview", "Basic Structure", "Setting Up", "Next Steps")
+exclude_headings <- c("Overview", "Basic Structure", "Setting Up", "Next Steps", "Well Done!")
 
 topics_tab <- topics |> 
   dplyr::filter(!(heading_text %in% exclude_headings)) |> 
@@ -236,9 +236,9 @@ topics_pack <- topics_tab |>
 topics_kbl <- topics_tab |> 
   dplyr::select(link) |> 
   kableExtra::kbl(
-    col.names = c("Jump to Topic"),
     format = "html"
-  )
+  ) |> 
+  kableExtra::kable_styling(bootstrap_options = "condensed")
 
 topics_kbl <- topics_kbl |> 
   kableExtra::add_indent(positions = topics_indents, target_cols = 1) |> 

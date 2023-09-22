@@ -2,6 +2,75 @@
 title: "05: Visualisations"
 ---
 
-```{r}
+- Mapping + geom + tweaks
+- Histogram, barplot, raincloud plot, scatterplot with LM line
 
+## Overview
+
+This tutorial focuses on creating data visualisations using the {ggplot2} package. It covers the conceptual grammar of {ggplot} and a variety of examples of common plots and tweaks. 
+
+## Setup
+
+### Packages
+
+We will be relying heavily on the {ggplot2} package, naturally, which is part of {tidyverse}. You can load {ggplot2} by itself, but since we will also make use of some other {tidyverse} functions, it's probably most efficient to simply load {tidyverse}.
+
+We will also be using two other packages: {GGally} for some snazzy correlation visualisations, and {ggrain} for raincloud plots.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Load the {tidyverse}, {GGally}, and {ggrain} packages.
+
+::: {.callout-note collapse="true" title="Solution"}
+
+```{r}
+library(tidyverse)
+library(GGally)
+library(ggrain)
 ```
+:::
+:::
+
+### Data and Codebook
+
+For these examples, the exercises and solutions will again make use of the Sussex Cognitive Styles Questionnaire (SCSQ) data using people with and without synaesthesia, which was first introduced in [Tutorial 3](../psychrlogy/01_fundRmentals/03_datasets.qmd#codebook). This data is available in the `data` folder in your Posit Cloud project, and the codebook is included below as well. 
+
+If you have some experience with R, you are welcome to instead use another dataset that you are familiar with or are keen to explore. However, remember that anything you upload to Posit Cloud is visible to all workspace admins, so keep GDPR in mind.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Read in the `syn_data.csv` file and store the result in an object called `syn_data`. 
+
+Alternatively, read in a dataset of your choice.
+
+*Hint*: Use `here::here()` to generate a file path to the `syn_data` data file, and `readr::read_csv()` to parse the file.
+
+::: {.callout-note collapse="true" title="Solution"}
+
+```{r}
+#| echo: false
+
+syn_data <- readr::read_csv(here::here("data/syn_data.csv"))
+```
+:::
+:::
+
+## Grammar of Graphics
+
+THe {ggplot} package is a bit of a universe in its own right. Like R itself, it's extremely powerful and versatile, and that also means there are a near-endless variety of things you could do and different ways to do them.
+
+What we'll cover in this tutorial is the core structure of building data visualisations in {ggplot2}, so that you have a solid base to build your own designs on. No matter what you're trying to do, there's nearly always a blog post, help document, or Stack Overflow post titled "How to do [whatever] in ggplot" to point you in the right direction!
+
+::: {.callout-tip title="}
+
+If you're really keen on data visualation with {ggplot2}, check out Tidy Tuesdays. Each week, there's a new dataset released, and people build and share beautiful visualisations, along with the code and frequently their process!
+
+:::
+
+### Layers
+
+Plots in {ggplot2} are built in layers. Each layer is a function that is added to the plot, building it up piece by piece. 
+
+### Geoms
+
+### 
