@@ -17,10 +17,10 @@ website:
       - text: "Tutorials"
         file: tutorials.qmd
       - text: "Workshops"
-        file: Workshops.qmd
+        file: workshops.qmd
+    right:
       - href: https://canvas.sussex.ac.uk/courses/29761
         text: "Canvas"
-    right: 
       - text: "About"
         file: about.qmd
 
