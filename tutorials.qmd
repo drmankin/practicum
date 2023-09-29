@@ -36,6 +36,12 @@ Some exercises will be clearly labeled as "Challenges". These exercises are **op
 
 ## Content
 
+::: callout-tip
+
+Looking for a particular topic or function? Use the [Quick Reference](quick_ref.qmd) to find what you need!
+
+:::
+
 Tutorials are divided into three sections.
 
 ### FundRmentals

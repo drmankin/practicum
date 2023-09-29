@@ -131,11 +131,6 @@ The table below is arranged alphabetically by function name, and the linked full
    <td style="text-align:left;"> 03: Datasets </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> nice_table() </td>
-   <td style="text-align:left;"> <a href="https://rempsyc.remi-theriault.com/reference/nice_table.html">rempsyc::nice_table()</a> </td>
-   <td style="text-align:left;"> 04: Reporting Linear Models with Quarto </td>
-  </tr>
-  <tr>
    <td style="text-align:left;"> nrow() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/base/nrow.html">nrow()</a> </td>
    <td style="text-align:left;"> 03: Datasets </td>
@@ -192,168 +187,88 @@ The table below is arranged alphabetically by function name, and the linked full
 
 If you're looking for a particular section of a tutorial, use this handy summary to jump straight to the section you want.
 
-<table class="table table-condensed" style="margin-left: auto; margin-right: auto;">
+<table class="table table-condensed table" style="margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
  <thead>
   <tr>
-   <th style="text-align:left;"> link </th>
+   <th style="text-align:left;text-align: center;"> Topic </th>
+   <th style="text-align:left;text-align: center;"> Sub-Topic </th>
   </tr>
  </thead>
 <tbody>
-  <tr grouplength="19"><td colspan="1" style="border-bottom: 1px solid;"><strong>01/02: IntRoduction</strong></td></tr>
+  <tr grouplength="7"><td colspan="2" style="border-bottom: 1px solid;"><strong>01/02: IntRoduction</strong></td></tr>
 <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Orientation](tutorials/psychrlogy/01_fundRmentals/01_02_intro.qmd#orientation) </td>
+   <td style="text-align:left; padding-left:  2em;" indentlevel="1"> [Orientation](tutorials/psychrlogy/01_fundRmentals/01_02_intro.qmd#orientation) </td>
+   <td style="text-align:left;"> [The RStudio Interface](tutorials/psychrlogy/01_fundRmentals/01_02_intro.qmd#the-rstudio-interface) </td>
   </tr>
   <tr>
-   <td style="text-align:left;padding-left: 4em;" indentlevel="2"> [The RStudio Interface](tutorials/psychrlogy/01_fundRmentals/01_02_intro.qmd#the-rstudio-interface) </td>
+   <td style="text-align:left; padding-left:  2em;" indentlevel="1"> [Making Mistakes](tutorials/psychrlogy/01_fundRmentals/01_02_intro.qmd#making-mistakes) </td>
+   <td style="text-align:left;"> [GlossoRlia](tutorials/psychrlogy/01_fundRmentals/01_02_intro.qmd#glossorlia) </td>
   </tr>
   <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Making Mistakes](tutorials/psychrlogy/01_fundRmentals/01_02_intro.qmd#making-mistakes) </td>
+   <td style="text-align:left; padding-left:  2em;" indentlevel="1"> [Types of Data](tutorials/psychrlogy/01_fundRmentals/01_02_intro.qmd#types-of-data) </td>
+   <td style="text-align:left;"> [Numeric Data](tutorials/psychrlogy/01_fundRmentals/01_02_intro.qmd#numeric-data), [Character Data](tutorials/psychrlogy/01_fundRmentals/01_02_intro.qmd#character-data), [Logical Data](tutorials/psychrlogy/01_fundRmentals/01_02_intro.qmd#logical-data) </td>
   </tr>
   <tr>
-   <td style="text-align:left;padding-left: 4em;" indentlevel="2"> [GlossoRlia](tutorials/psychrlogy/01_fundRmentals/01_02_intro.qmd#glossorlia) </td>
+   <td style="text-align:left; padding-left:  2em;" indentlevel="1"> [Class and Coercion](tutorials/psychrlogy/01_fundRmentals/01_02_intro.qmd#class-and-coercion) </td>
+   <td style="text-align:left;">  </td>
   </tr>
   <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Types of Data](tutorials/psychrlogy/01_fundRmentals/01_02_intro.qmd#types-of-data) </td>
+   <td style="text-align:left; padding-left:  2em;" indentlevel="1"> [Objects](tutorials/psychrlogy/01_fundRmentals/01_02_intro.qmd#objects) </td>
+   <td style="text-align:left;"> [Creating an Object](tutorials/psychrlogy/01_fundRmentals/01_02_intro.qmd#creating-an-object), [Calling an Object](tutorials/psychrlogy/01_fundRmentals/01_02_intro.qmd#calling-an-object), [Using Objects](tutorials/psychrlogy/01_fundRmentals/01_02_intro.qmd#using-objects), [Overwriting Objects](tutorials/psychrlogy/01_fundRmentals/01_02_intro.qmd#overwriting-objects) </td>
   </tr>
   <tr>
-   <td style="text-align:left;padding-left: 4em;" indentlevel="2"> [Numeric Data](tutorials/psychrlogy/01_fundRmentals/01_02_intro.qmd#numeric-data) </td>
+   <td style="text-align:left; padding-left:  2em;" indentlevel="1"> [Functions](tutorials/psychrlogy/01_fundRmentals/01_02_intro.qmd#functions) </td>
+   <td style="text-align:left;"> [Basics and Help](tutorials/psychrlogy/01_fundRmentals/01_02_intro.qmd#basics-and-help), [Arguments](tutorials/psychrlogy/01_fundRmentals/01_02_intro.qmd#arguments), [Using Functions](tutorials/psychrlogy/01_fundRmentals/01_02_intro.qmd#using-functions) </td>
   </tr>
   <tr>
-   <td style="text-align:left;padding-left: 4em;" indentlevel="2"> [Character Data](tutorials/psychrlogy/01_fundRmentals/01_02_intro.qmd#character-data) </td>
+   <td style="text-align:left; padding-left:  2em;" indentlevel="1"> [Quick Test: *t*-test](tutorials/psychrlogy/01_fundRmentals/01_02_intro.qmd#quick-test:-*t*-test) </td>
+   <td style="text-align:left;">  </td>
   </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 4em;" indentlevel="2"> [Logical Data](tutorials/psychrlogy/01_fundRmentals/01_02_intro.qmd#logical-data) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Class and Coercion](tutorials/psychrlogy/01_fundRmentals/01_02_intro.qmd#class-and-coercion) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Objects](tutorials/psychrlogy/01_fundRmentals/01_02_intro.qmd#objects) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 4em;" indentlevel="2"> [Creating an Object](tutorials/psychrlogy/01_fundRmentals/01_02_intro.qmd#creating-an-object) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 4em;" indentlevel="2"> [Calling an Object](tutorials/psychrlogy/01_fundRmentals/01_02_intro.qmd#calling-an-object) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 4em;" indentlevel="2"> [Using Objects](tutorials/psychrlogy/01_fundRmentals/01_02_intro.qmd#using-objects) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 4em;" indentlevel="2"> [Overwriting Objects](tutorials/psychrlogy/01_fundRmentals/01_02_intro.qmd#overwriting-objects) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Functions](tutorials/psychrlogy/01_fundRmentals/01_02_intro.qmd#functions) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 4em;" indentlevel="2"> [Basics and Help](tutorials/psychrlogy/01_fundRmentals/01_02_intro.qmd#basics-and-help) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 4em;" indentlevel="2"> [Arguments](tutorials/psychrlogy/01_fundRmentals/01_02_intro.qmd#arguments) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 4em;" indentlevel="2"> [Using Functions](tutorials/psychrlogy/01_fundRmentals/01_02_intro.qmd#using-functions) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Quick Test: *t*-test](tutorials/psychrlogy/01_fundRmentals/01_02_intro.qmd#quick-test:-*t*-test) </td>
-  </tr>
-  <tr grouplength="20"><td colspan="1" style="border-bottom: 1px solid;"><strong>03: Datasets</strong></td></tr>
+  <tr grouplength="8"><td colspan="2" style="border-bottom: 1px solid;"><strong>03: Datasets</strong></td></tr>
 <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Setup](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#setup) </td>
+   <td style="text-align:left; padding-left:  2em;" indentlevel="1"> [Setup](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#setup) </td>
+   <td style="text-align:left;"> [Projects](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#projects), [Documents](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#documents), [Installing and Loading Packages](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#installing-and-loading-packages) </td>
   </tr>
   <tr>
-   <td style="text-align:left;padding-left: 4em;" indentlevel="2"> [Projects](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#projects) </td>
+   <td style="text-align:left; padding-left:  2em;" indentlevel="1"> [Reading In](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#reading-in) </td>
+   <td style="text-align:left;"> [Reading from File](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#reading-from-file) </td>
   </tr>
   <tr>
-   <td style="text-align:left;padding-left: 4em;" indentlevel="2"> [Documents](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#documents) </td>
+   <td style="text-align:left; padding-left:  2em;" indentlevel="1"> [Codebook](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#codebook) </td>
+   <td style="text-align:left;">  </td>
   </tr>
   <tr>
-   <td style="text-align:left;padding-left: 4em;" indentlevel="2"> [Installing and Loading Packages](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#installing-and-loading-packages) </td>
+   <td style="text-align:left; padding-left:  2em;" indentlevel="1"> [Viewing](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#viewing) </td>
+   <td style="text-align:left;"> [Call the Object](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#call-the-object), [View Mode](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#view-mode) </td>
   </tr>
   <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Reading In](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#reading-in) </td>
+   <td style="text-align:left; padding-left:  2em;" indentlevel="1"> [Overall Summaries](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#overall-summaries) </td>
+   <td style="text-align:left;"> [Basic Summary](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#basic-summary), [Other Summaries](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#other-summaries) </td>
   </tr>
   <tr>
-   <td style="text-align:left;padding-left: 4em;" indentlevel="2"> [Reading from File](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#reading-from-file) </td>
+   <td style="text-align:left; padding-left:  2em;" indentlevel="1"> [The Pipe](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#the-pipe) </td>
+   <td style="text-align:left;">  </td>
   </tr>
   <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Codebook](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#codebook) </td>
+   <td style="text-align:left; padding-left:  2em;" indentlevel="1"> [Describing Datasets](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#describing-datasets) </td>
+   <td style="text-align:left;">  </td>
   </tr>
   <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Viewing](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#viewing) </td>
+   <td style="text-align:left; padding-left:  2em;" indentlevel="1"> [Describing Variables](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#describing-variables) </td>
+   <td style="text-align:left;"> [Counting](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#counting), [Subsetting](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#subsetting), [Descriptives](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#descriptives), [Visualisations](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#visualisations) </td>
   </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 4em;" indentlevel="2"> [Call the Object](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#call-the-object) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 4em;" indentlevel="2"> [View Mode](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#view-mode) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Overall Summaries](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#overall-summaries) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 4em;" indentlevel="2"> [Basic Summary](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#basic-summary) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 4em;" indentlevel="2"> [Other Summaries](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#other-summaries) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [The Pipe](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#the-pipe) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Describing Datasets](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#describing-datasets) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Describing Variables](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#describing-variables) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 4em;" indentlevel="2"> [Counting](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#counting) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 4em;" indentlevel="2"> [Subsetting](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#subsetting) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 4em;" indentlevel="2"> [Descriptives](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#descriptives) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 4em;" indentlevel="2"> [Visualisations](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#visualisations) </td>
-  </tr>
-  <tr grouplength="12"><td colspan="1" style="border-bottom: 1px solid;"><strong>04: Reporting Linear Models with Quarto</strong></td></tr>
+  <tr grouplength="3"><td colspan="2" style="border-bottom: 1px solid;"><strong>04: Reporting Linear Models with Quarto</strong></td></tr>
 <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [The Linear Model](tutorials/psychrlogy/01_fundRmentals/04_lm.qmd#the-linear-model) </td>
+   <td style="text-align:left; padding-left:  2em;" indentlevel="1"> [The Linear Model](tutorials/psychrlogy/01_fundRmentals/04_lm.qmd#the-linear-model) </td>
+   <td style="text-align:left;"> [Data and Codebook](tutorials/psychrlogy/01_fundRmentals/04_lm.qmd#data-and-codebook), [One Predictor](tutorials/psychrlogy/01_fundRmentals/04_lm.qmd#one-predictor), [Hierarchial Models](tutorials/psychrlogy/01_fundRmentals/04_lm.qmd#hierarchial-models), [Assumptions Checks](tutorials/psychrlogy/01_fundRmentals/04_lm.qmd#assumptions-checks) </td>
   </tr>
   <tr>
-   <td style="text-align:left;padding-left: 4em;" indentlevel="2"> [Data and Codebook](tutorials/psychrlogy/01_fundRmentals/04_lm.qmd#data-and-codebook) </td>
+   <td style="text-align:left; padding-left:  2em;" indentlevel="1"> [Quarto](tutorials/psychrlogy/01_fundRmentals/04_lm.qmd#quarto) </td>
+   <td style="text-align:left;"> [Getting Started](tutorials/psychrlogy/01_fundRmentals/04_lm.qmd#getting-started), [Creating a Code Chunk](tutorials/psychrlogy/01_fundRmentals/04_lm.qmd#creating-a-code-chunk), [Body Text](tutorials/psychrlogy/01_fundRmentals/04_lm.qmd#body-text), [Dynamic Reporting](tutorials/psychrlogy/01_fundRmentals/04_lm.qmd#dynamic-reporting), [Rendering](tutorials/psychrlogy/01_fundRmentals/04_lm.qmd#rendering) </td>
   </tr>
   <tr>
-   <td style="text-align:left;padding-left: 4em;" indentlevel="2"> [One Predictor](tutorials/psychrlogy/01_fundRmentals/04_lm.qmd#one-predictor) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 4em;" indentlevel="2"> [Hierarchial Models](tutorials/psychrlogy/01_fundRmentals/04_lm.qmd#hierarchial-models) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 4em;" indentlevel="2"> [Assumptions Checks](tutorials/psychrlogy/01_fundRmentals/04_lm.qmd#assumptions-checks) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Quarto](tutorials/psychrlogy/01_fundRmentals/04_lm.qmd#quarto) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 4em;" indentlevel="2"> [Getting Started](tutorials/psychrlogy/01_fundRmentals/04_lm.qmd#getting-started) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 4em;" indentlevel="2"> [Creating a Code Chunk](tutorials/psychrlogy/01_fundRmentals/04_lm.qmd#creating-a-code-chunk) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 4em;" indentlevel="2"> [Body Text](tutorials/psychrlogy/01_fundRmentals/04_lm.qmd#body-text) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 4em;" indentlevel="2"> [Dynamic Reporting](tutorials/psychrlogy/01_fundRmentals/04_lm.qmd#dynamic-reporting) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 4em;" indentlevel="2"> [Rendering](tutorials/psychrlogy/01_fundRmentals/04_lm.qmd#rendering) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Well done!](tutorials/psychrlogy/01_fundRmentals/04_lm.qmd#well-done!) </td>
+   <td style="text-align:left; padding-left:  2em;" indentlevel="1"> [Well done!](tutorials/psychrlogy/01_fundRmentals/04_lm.qmd#well-done!) </td>
+   <td style="text-align:left;">  </td>
   </tr>
 </tbody>
 </table>

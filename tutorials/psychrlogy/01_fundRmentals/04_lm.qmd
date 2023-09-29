@@ -792,7 +792,7 @@ Simply update the `format: html` YAML option to `format: docx` and render your d
 :::
 :::
 
-## Well done!
+\ 
 
 And there we have it! You now have a complete example of a linear model report, rendered into both HTML and Word, to refer to. It's amazing how much you're able to do after just a few weeks!
 
