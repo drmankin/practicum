@@ -50,7 +50,9 @@ Scripts are text files that RStudio knows to read as R code. They have a .R file
 When deciding what kind of document to create, think about what you want to do with the output of your work.
 
 -   Use **Quarto** if the document needs to contain any amount of text, or will be used to share the output of your code in a presentable way, such as notes for yourself, reports, articles, websites, etc.
+  -   The page you're reading now is (or was!) a Quarto document.
 -   Use a **script** if the document only needs to contain code and has a solely functional purpose, such as cleaning a dataset, manipulating files, defining new functions, etc.
+  -   I use a script to process all of the tutorial documents and generate the [Quick Reference](quick_ref.qmd) page.
 
 In this series, we will almost always use Quarto documents, but scripts are an essential part of the development side of R.
 :::
@@ -82,9 +84,49 @@ Load the {tidyverse} package in your Quarto document.
 
 ::: {.callout-note collapse="true" title="Solution"}
 ```{r}
+#| message: true
 library(tidyverse)
 ```
 :::
+:::
+
+When you load {tidyverse} for the first time, quite a lot of extra stuff gets printed along with it. All this output looks alarming, but these aren't errors or warnings - they're just *messages*. Messages are like warnings, but neutral: they just contain information that you might find helpful.
+
+The usual {tidyverse} message contains two parts:
+
+- **`Attaching core tidyverse packages`** tells you which packages have just been loaded. Essentially, `library(tidyverse)` is a shortcut for loading all of these packages individually. Somewhat confusingly, installing {tidyverse} *installs* more packages than are in this list (for example, {magrittr} and {rlang}), many of which other {tidyverse} packages rely on to function. If you want to load them, you can use `library()` to do this - but you don't need to unless you're using those packages explicitly. For our purposes now, just the default {tidyverse} packages are fine.
+
+- **`Conflicts`** tells you about any package conflicts as a result of loading the packages. If you're curious, conflicts are explained further in the callout box below.
+
+::: {.callout-tip title="Conflicts" collapse="true"}
+
+There are lots and *lots* of packages for R. At the time of this writing, CRAN (the repository for R packages) contains [just shy of 20,000](https://cran.r-project.org/web/packages/) R packages, with many, many more on Github and elsewhere. Although people generally try to avoid it, it is necessarily the case then that sometimes, people give the same name to two different functions from two different packages. 
+
+So, if you have those packages both loaded, how does R know which one to use? This situation is called a *conflict*, and is resolved in a few different methods.
+
+**Method 1: Recency**
+
+In the absence of any other information, R will use the function from the package that was loaded most recently. This is exactly what's happening in the {tidyverse} message above.
+
+There are two conflicts mentioned. one of which reads:
+
+```
+x dplyr::filter() masks stats::filter()
+```
+
+{stats}, you might remember, is a package that is always installed with R and is loaded by default. So, the {stats} package has a function called `filter()` that is already loaded to begin with. When we loaded {tidyverse}, one of the new packages, {dplyr}, also contains a function called `filter()`. Because {dplyr} has been loaded more recently, if you write a bit of code using `filter()`, the one you will get is `dplyr::filter()`[^pkgfx]. In other words, the more recently loaded `dplyr::filter()` covers over, steps in front of, or (in R terminology) "masks" `stats::filter()`.
+
+[^pkgfx]: You can read this notation as "the filter function from the dplyr package", or just "dplyr filter". As for how to pronounce "dplyr", the [official pronunciation](https://twitter.com/hadleywickham/status/925313165554012160?s=20) is "dee-ply-er", with "plier" like the tool [for which it's named](https://dplyr.tidyverse.org/). I have heard other people say "dipler". Since code is always a bit tricky to read aloud, just go with whatever sounds good to you.
+
+Now, what if you actually want to use `filter()` from {stats} instead? Well, in that case you might want to use...
+
+**Method 2: Explicit style**
+
+Above we saw several examples of the `package::function()` notation, called "explicit" or "verbose" coding style. With explicit style, there isn't actually a conflict between `stats::filter()` and `dplyr::filter()` anymore, because their package calls are clearly stated so R doesn't have to guess which `filter()` you want. So, if you had loaded {tidyverse}, you could write `stats::filter()` in your code, and you would still get the function from the {stats} package even with {dplyr} loaded.
+
+Another, secret benefit of explicit style is that as long as you have a package *installed*, you can use a function from that package without having to load it. Imagine I start a new project (so I have `stats::filter()` already loaded by default). If I only want to quickly use `dplyr::filter()`, I can use explicit style to to use that function without having to run `library(tidyverse)`.
+
+The style you'll see in these tutorials is a pretty devotedly explicit style. I like explicit style because I never have to deal with package conflicts; I rarely have to load packages; and it helps me understand better how my code works. You don't have to use it, and most of the time it won't make *that* much difference, so do what makes sense to you. Just to be safe, though, we'll load {tidyverse} regularly.
 :::
 
 ## Reading In
@@ -94,6 +136,8 @@ Now that we've completed our core setup, we're ready to get stuck in working wit
 We're going to start by importing, or "reading in", the data from a location outside of R. The first job is to work out how that data is stored: the file format that it's in, and the location we need to give to R to look for it.
 
 For the purposes of these tutorials, we'll primarily make use of .csv file types when reading in. CSV (Comma-Separated Values) is a common, programme-agnostic file type without any fancy formatting, just plain text. To practice this, we'll use the `read_csv()` function from the {readr} package (part of {tidyverse}).
+
+One advantage of `readr::read_csv()` is that it will output a special kind of dataset, called a **tibble**. Tibbles are a fundamental component of {tidyverse}. They are a sort of embellished dataframe or table ("table" > "tbl" > "tibble") with some extra bells and whistles for convenience. We'll discover their features as we go, but you can get a [quick overview of tibbles here](https://cran.r-project.org/web/packages/tibble/vignettes/tibble.html).
 
 ::: {.callout-tip title="Reading Other Filetypes" collapse="true"}
 If you have data stored in other types of files, you may need other functions from other packages to read them in. It will depend substantially on what's in the file and how the data are structured, so you will likely need to do some experimentation to find the best option.
@@ -105,8 +149,6 @@ Here are some possibilities to get you started. All of them (except the last) ou
 - SAS (.sas): `haven::read_sas()`
 - JSON: `rjson::fromJSON()`
 :::
-
-One advantage of `readr::read_csv()` is that it will output a special kind of dataset, called a **tibble**. Tibbles are a fundamental component of {tidyverse}. They are a sort of embellished dataframe with some extra bells and whistles for convenience. We'll discover their features as we go, but you can get a [quick overview of tibbles here](https://cran.r-project.org/web/packages/tibble/vignettes/tibble.html).
 
 <!-- Our next job is to figure out where the data is stored. For the purposes of practice, we'll look at two possibilities. First, that the data is hosted online somewhere, accessible via URL; and second, that the data is stored in a local file on your computer. -->
 
@@ -226,7 +268,7 @@ There's a big caveat here: this works great with tibbles. For data stored in oth
 
 ### View Mode
 
-Calling a tibble is a great way to get a snapshot or do a quick check, but for larger datasets, it's less useful. Instead, we can have a look at the whole dataset more easily - and interact with it to some degree - by viewing it, which opens a copy of the dataset in the Source window to look through. We can do this with the `View()` function (note the capital "V"!).
+Calling a tibble is a great way to get a snapshot or do a quick check, but for larger datasets, it's less useful - too much clicking and scrolling. Instead, we can have a look at the whole dataset more easily - and interact with it to some degree - by viewing it, which opens a copy of the dataset in the Source window to look through. We can do this with the `View()` function (note the capital "V"!).
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
 Open the `syn_data` dataset using the `View()` function.
@@ -263,12 +305,14 @@ Using **only** View mode, figure out the following:
 :::
 :::
 
-These features are really useful to have a quick poke around the data or check that everything is in order. However, keep in mind an important point: **None of the changes made in View mode affect the data**. View mode is essentially read-only; there's no way to actually change the dataset or extract the values (like the range or max value). We'll have to use R to work with the data in order to do that.
+These features are really useful to have a quick poke around the data or check that everything is in order. However, keep in mind an important point: **None of the changes made in View mode affect the data**. View mode is essentially read-only; there's no way to actually change the dataset or extract the values (like the range or max value) outside of copying them down by hand[^by_hand]. We'll have to use R to work with the data in order to do that.
+
+[^by_hand]: ![]("https://media.giphy.com/media/12XMGIWtrHBl5e/giphy.gif", fig-alt="A gif of Michael from the Office (US) shouting "Oh God no! Please no! NOOOOO")
 
 ::: {.callout-important title="No Touching"}
 If you are used to programmes like SPSS or Excel, where you can directly edit or work with the data in the spreadsheet, switching to R can be quite a frustrating change. Even though View mode looks similar, it's like the dataset is behind glass - you can't affect it directly. As we start working with the data via objects and functions, it may feel a bit like you are trying to work blindfolded - you can't actually "see" what you are doing as you do it.
 
-If you feel that way, be reassured that it's normal. Working with objects rather than with spreadsheets or data directly takes some getting used to. Use `View()` freely to check your work - I do!
+If you feel that way, be reassured that it's normal. Working with objects rather than with spreadsheets or data directly takes some getting used to, and it will get easier with practice. Use `View()` freely to check your work - I do!
 :::
 
 ## Overall Summaries
@@ -277,7 +321,7 @@ We've now gained some confidence that our data looks like data should. We got a 
 
 ### Basic Summary
 
-The quickest and easiest check for a whole dataset is the base R function `summary()`. This function doesn't do anything fancy (*at all*) but it does give you a very quick look at how all the variables have been read in, and an early indication if there's anything wonky going on.
+The quickest and easiest check for a whole dataset is the base R function `summary()`. This function doesn't do anything fancy (*at all*) but it does give you a very quick look at how all the variables have been read in, and an early indication if there's anything ~~exciting~~ wonky going on.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
 
@@ -334,9 +378,21 @@ The two character variables, `syn_seq_space` and `syn_graph_col`, are missing fr
 
 In this and the previous tutorial, we've seen some examples of "nested" code - functions nested within functions, as below.
 
-To read this code, you have to start at the innermost level of nesting and work outwards. For one or two levels of nesting, this is still legible, but can quickly become very difficult to track.
+```r
+round(mean(quiz_9am), digits = 2)
+```
+
+To read this code, you have to start at the innermost level of nesting and work outwards. So, first R gets the `quiz_9am` object; then calculates the mean using `mean()`; then the output of `mean()` is the input to `round()`. For one or two levels of nesting, this is still legible, but can quickly become very difficult to track.
 
 One solution is to use the **pipe operator, \|\>**. The pipe "chains" commands one after the other by taking the output of the preceding command and "piping it into" the next command, allowing a much more natural and readable sequence of steps - sequentially, rather than nested. The pipe version of the above might look like this:
+
+```r
+quiz_9am |> 
+  mean() |> 
+  round(digits = 2)
+```
+
+This style maps on a lot more naturally to how we would read or understand the steps in this command in natural language.
 
 ::: {.callout-tip title="Definition: Pipe"}
 The pipe operator may appear in two formats.
@@ -344,12 +400,12 @@ The pipe operator may appear in two formats.
 -   **The native pipe, \|\>**. This is the pipe we will use throughout these tutorials. It is called the "native" pipe because it is inbuilt into R and doesn't require any specific package to use.
 -   **The {magrittr} pipe, %\>%**. This pipe comes from {tidyverse}, and in particular requires the {magrittr} package to use. You will very commonly see this pipe in scripts, Stack Overflow posts, from ChatGPT, etc. as until the native pipe was introduced to R in 2022, the {magrittr} pipe was "the pipe" for R.
 
-In most use-cases, including almost all of the code we will learn in these tutorials, the two pipes are interchangeable and will result in the same output.
+In most cases, including almost all of the code we will learn in these tutorials, the two pipes are interchangeable and will result in the same output.
 :::
 
 Conceptually, the pipe works by putting whatever is put into it into the first argument of whatever comes after it. Many functions - both packages and functions from the {tidyverse} and not - are already set up so that the first argument is the data, and {tidyverse} functions are explicitly designed this way in order to work best with the pipe.
 
-For functions where this is not the case, you can explicitly determine where the piped-in object should go using a "placeholder".The most noticeable difference is that the native pipe placeholder is `_`, while the magrittr pipe placeholder is `.`. We'll look at examples of this as we go.
+For functions where this is not the case, you can explicitly determine where the piped-in object should go using a "placeholder". The most noticeable difference is that the native pipe placeholder is `_`, while the magrittr pipe placeholder is `.` - there's an example of this below to help make this clearer.
 
 From this point forward, we'll start working with the native pipe. The following sections will have specific examples on using the pipe to practice. Working with the pipe is also a good chance to practice "translating" R code into English, which we'll do as we go. To give you an idea, here's an example of how we can read the following code.
 
@@ -376,7 +432,7 @@ some_numbers |>
   round(x = _, 2)
 ```
 
-Think of the placeholder like a bucket or landing pad, where the information coming in from the pipe falls. In this example, the placeholders aren't necessary, because at each step, we already want the piped-in information to go into the first argument, but it helps to see what's going on.
+Think of the placeholder like a bucket or landing pad, where the information coming in from the pipe falls. In this example, the placeholders aren't necessary, because at each step, we already want the piped-in information to go into the first argument; but including the placeholders  helps to see what's going on.
 
 To make this fully explicit, this illustration shows the progress of information through the same pipe. The orange arrows show how the piped-in information is passed from one function to the next. The teal arrows show what is produced at each step of the pipe - which is what is passed on to the next function via the orange arrows/pipe.
 

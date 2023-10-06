@@ -41,7 +41,7 @@ If you have some experience with R, you are welcome to instead use another datas
 
 Read in the `syn_data.csv` file and store the result in an object called `syn_data`. 
 
-Alternatively, read in a dataset of your choice.
+Alternatively, read in a dataset of your choice (but I'll refer to `syn_data` and its variables from here on out.)
 
 *Hint*: Use `here::here()` to generate a file path to the `syn_data` data file, and `readr::read_csv()` to parse the file.
 
@@ -63,13 +63,13 @@ What we'll cover in this tutorial is the core structure of building data visuali
 
 ::: {.callout-tip title="}
 
-If you're really keen on data visualation with {ggplot2}, check out Tidy Tuesdays. Each week, there's a new dataset released, and people build and share beautiful visualisations, along with the code and frequently their process!
+If you're really keen on data visualisation with {ggplot2}, check out [Tidy Tuesdays](https://www.tidytuesday.com/). Each week, there's a new dataset released, and people build and share beautiful visualisations, along with the code and frequently their process!
 
 :::
 
 ### Layers
 
-Plots in {ggplot2} are built in layers. Each layer is a function that is added to the plot, building it up piece by piece. 
+Plots in {ggplot2} are built in layers. Think of each layer as a sheet of paper in [layered paper art](https://www.youtube.com/watch?v=yxI6SkdrgC4), or  Each layer is a function that is added to the plot, building it up piece by piece. 
 
 ### Geoms
 
