@@ -100,7 +100,7 @@ The usual {tidyverse} message contains two parts:
 
 ::: {.callout-tip title="Conflicts" collapse="true"}
 
-There are lots and *lots* of packages for R. At the time of this writing, CRAN (the repository for R packages) contains [just shy of 20,000](https://cran.r-project.org/web/packages/) R packages, with many, many more on Github and elsewhere. Although people generally try to avoid it, it is necessarily the case then that sometimes, people give the same name to two different functions from two different packages. 
+There are lots and *lots* of packages for R. At the time of this writing, CRAN (the repository for R packages) contains [just shy of 20,000](https://cran.r-project.org/web/packages/) R packages, with many, many more on Github and elsewhere. Although people generally try to avoid it, it is necessarily the case that sometimes, people give the same name to two different functions from two different packages. 
 
 So, if you have those packages both loaded, how does R know which one to use? This situation is called a *conflict*, and is resolved in a few different methods.
 
@@ -124,10 +124,15 @@ Now, what if you actually want to use `filter()` from {stats} instead? Well, in 
 
 Above we saw several examples of the `package::function()` notation, called "explicit" or "verbose" coding style. With explicit style, there isn't actually a conflict between `stats::filter()` and `dplyr::filter()` anymore, because their package calls are clearly stated so R doesn't have to guess which `filter()` you want. So, if you had loaded {tidyverse}, you could write `stats::filter()` in your code, and you would still get the function from the {stats} package even with {dplyr} loaded.
 
-Another, secret benefit of explicit style is that as long as you have a package *installed*, you can use a function from that package without having to load it. Imagine I start a new project (so I have `stats::filter()` already loaded by default). If I only want to quickly use `dplyr::filter()`, I can use explicit style to to use that function without having to run `library(tidyverse)`.
-
-The style you'll see in these tutorials is a pretty devotedly explicit style. I like explicit style because I never have to deal with package conflicts; I rarely have to load packages; and it helps me understand better how my code works. You don't have to use it, and most of the time it won't make *that* much difference, so do what makes sense to you. Just to be safe, though, we'll load {tidyverse} regularly.
+Another, secret benefit of explicit style is that as long as you have a package *installed*, you can use a function from that package without having to load it. Imagine I start a new project (so I have `stats::filter()` already loaded by default). If I only want to quickly use `dplyr::filter()`, I can use explicit style to use that function without having to run `library(tidyverse)`.
 :::
+
+The style you'll see in these tutorials is a pretty devotedly explicit style: that is, I'll always write `dplyr::filter()` instead of just `filter()`. I only leave out the package name in a few situations:
+
+1. When the function is from a default-loaded package, like {base} or {stats} (so I write `mean()` instead of `base::mean()`). This is mostly just convenience!
+1. When there are lots of functions from the same package in row, all of which have very distinctive names, that would make reading the code very difficult and writing the code very repetitive. This is the case, for example, with {ggplot2}, which we will encounter in the next section of the course. For cases like this, I make sure to explicitly load the relevant package and then leave off the package name.
+
+I like explicit style because I never have to deal with package conflicts; I rarely have to load packages; and it helps me understand better how my code works. You don't have to use it, and most of the time it won't make *that* much difference, so do what makes sense to you. Just to be safe, though, we'll load {tidyverse} regularly.
 
 ## Reading In
 
@@ -150,26 +155,11 @@ Here are some possibilities to get you started. All of them (except the last) ou
 - JSON: `rjson::fromJSON()`
 :::
 
-<!-- Our next job is to figure out where the data is stored. For the purposes of practice, we'll look at two possibilities. First, that the data is hosted online somewhere, accessible via URL; and second, that the data is stored in a local file on your computer. -->
-
-<!-- #### Reading from URL -->
-
-<!-- If the data is hosted somewhere online, you can give the hosting URL to R as a string. Assuming you have an Internet connection (!), R will go to that URL and parse the data. -->
-
-<!-- ::: {.callout-note appearance="minimal" title="Exercise"} -->
-
-<!-- Read the CSV file hosted at <https://r-training.netlify.app/data/harm_data.csv> and print it out in your Quarto document. -->
-
-<!-- ::: {.callout-note collapse="true" title="Solution"} -->
-<!-- ```{r} -->
-<!-- readr::read_csv("https://r-training.netlify.app/data/syn_data.csv") -->
-<!-- ``` -->
-<!-- ::: -->
-<!-- ::: -->
+Our next job is to figure out where the data is stored. For the purposes of practice, we'll look at two possibilities. First, that the data is stored in a local file on your computer;  and second, that the data is hosted online somewhere, accessible via URL.
 
 ### Reading from File
 
-The scenario you are most likely to encounter is that you have some data in a folder on your computer, and you'd like to import, or "read in", this data to R so you can work with it. To practice this, in your Posit Cloud project there is a folder named "data" that contains a file called "syn_data.csv".
+The scenario you are most likely to encounter is that you have some data in a folder on your computer, and you'd like to import, or "read in", this data to R so you can work with it. To practice this, in your Posit Cloud project there is a folder named "data" that contains a file called "syn_data.csv". (If you are not on the Cloud, skip down to the next section.)
 
 ```{r}
 #| echo: false
@@ -213,12 +203,28 @@ syn_data <- readr::read_csv(here::here("data/syn_data.csv"))
 :::
 :::
 
+#### Reading from URL
+
+If the data is hosted somewhere online, you can give the hosting URL to R as a string. Assuming you have an Internet connection (!), R will go to that URL and parse the data.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Read the CSV file hosted at <https://raw.githubusercontent.com/drmankin/practicum/master/data/syn_data.csv> and save it to the object name `syn_data`.
+
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+syn_data <- readr::read_csv("https://raw.githubusercontent.com/drmankin/practicum/master/data/syn_data.csv")
+```
+:::
+:::
+
 ## Codebook
 
 As this dataset is likely unfamiliar, the codebook below explains what the variables in this dataset represent.
 
 ::: {.callout-tip title="More About Synaesthesia" collapse="true"}
-This dataset focuses on cognitive styles, particularly in people with and without a neuropsychological condition called *synaesthesia*. Synaesthesia is colloquially referred to as a "mixing of the senses" that can manifest in many different ways. For example, some people with synaesthesia may percieve colours associated with letters or words, or see shapes when they hear music. These additional perceptions are typically automatic and consistent across time.
+
+This dataset focuses on cognitive styles, particularly in people with and without a neuropsychological condition called *synaesthesia*. Synaesthesia is colloquially referred to as a "blurring of the senses" that can manifest in many different ways. For example, some people with synaesthesia may percieve colours associated with letters or words, or see shapes when they hear music. These additional perceptions are typically automatic and consistent across time.
 
 This particular study focused on two different types of synaesthesia: grapheme-colour and sequence-space. People with *grapheme-colour synaesthesia* experience colour associated with written language, i.e. graphemes. For instance, the letter "Q" may be purple, or the word "cactus" may be red (or a combination of colours).
 
@@ -266,12 +272,31 @@ You may notice a few of those "bells and whistles" I mentioned earlier here.
 There's a big caveat here: this works great with tibbles. For data stored in other formats, like matrices, there's no preset formatting like this. If you accidentally call the name of an object that contains thousands of rows, R will try to print them all, which can lead to crashes. So, avoid calling very large objects directly like this if they aren't tibbles.
 :::
 
-### View Mode
+### A Glimpse of the Data
 
-Calling a tibble is a great way to get a snapshot or do a quick check, but for larger datasets, it's less useful - too much clicking and scrolling. Instead, we can have a look at the whole dataset more easily - and interact with it to some degree - by viewing it, which opens a copy of the dataset in the Source window to look through. We can do this with the `View()` function (note the capital "V"!).
+As mentioned above, just calling the dataset isn't always super helpful - it depends on the size of your screen and even the width of your current window! As the next step, let's get an overview of this dataset using the `glimpse()` function from the {dplyr} package.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-Open the `syn_data` dataset using the `View()` function.
+
+Use `dplyr::glimpse()` to get a glimpse of your dataset.
+
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+dplyr::glimpse(syn_data)
+```
+:::
+:::
+
+This gives us a nice overview of all the variables we have in the data (each preceded by `$`, which we'll come back to in the second half); what kind of data they are (e.g. `<chr>`, `<dbl>`, and so on); and a look at the first few values in each variable. This is a great way to check that all the variables you expect to be there are there, and that they contain (more or less) what you thought they should.
+
+But what if we really want to get a look at the *entire* dataset? For that we need...
+
+### View Mode
+
+We can have a look at the whole dataset more easily - and interact with it to some degree - by viewing it, which opens a copy of the dataset in the Source window to look through. We can do this with the `View()` function (note the capital "V"!).
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Open the `syn_data` dataset using the `View()` function **in the Console**.
 
 ::: {.callout-note collapse="true" title="Solution"}
 ```{r}
@@ -338,7 +363,7 @@ Here, for example, notice the `gender` variable. This is intended to be a catego
 
 We will ignore the categorical issue for now until we cover how to make changes to the dataset [in Tutorial 7](..\02_essentials\07_changes.qmd#mutate).
 
-`summary()` is quick, and because it's a base-R function, it doesn't need any package installations to work. However, it's also of limited use: its output is ugly and not suitable for reporting, and it would be pretty difficult to get any of those values out of that output for reporting!
+`summary()` is quick, and because it's a base-R function, it doesn't need any package installations to work. However, it's also of limited use: its output is ugly, and it would be pretty difficult to get any of those values out of that output for reporting!
 
 ### Other Summaries
 
@@ -368,13 +393,9 @@ The two character variables, `syn_seq_space` and `syn_graph_col`, are missing fr
 :::
 :::
 
-<!-- ## Arranging -->
-
-<!-- ### Arranging Manually -->
-
-<!-- ### Arranging with Code -->
-
 ## The Pipe
+
+Before we go on, we're going to meet a new operator that will form the core of our coding style from this point onwards: the pipe. We'll begin working with it a bit today, so let's first explore why it's so useful.
 
 In this and the previous tutorial, we've seen some examples of "nested" code - functions nested within functions, as below.
 
@@ -403,9 +424,9 @@ The pipe operator may appear in two formats.
 In most cases, including almost all of the code we will learn in these tutorials, the two pipes are interchangeable and will result in the same output.
 :::
 
-Conceptually, the pipe works by putting whatever is put into it into the first argument of whatever comes after it. Many functions - both packages and functions from the {tidyverse} and not - are already set up so that the first argument is the data, and {tidyverse} functions are explicitly designed this way in order to work best with the pipe.
+Conceptually, the pipe works taking the output of the code on the left and passing it into the first argument of whatever comes after it on the right. Many functions - both from the {tidyverse} and not - are already set up so that the first argument is the data, and {tidyverse} functions are explicitly designed this way in order to work best with the pipe.
 
-For functions where this is not the case, you can explicitly determine where the piped-in object should go using a "placeholder". The most noticeable difference is that the native pipe placeholder is `_`, while the magrittr pipe placeholder is `.` - there's an example of this below to help make this clearer.
+For functions where this is not the case, you can determine where the piped-in information should go using a "placeholder". The most noticeable difference is that the native pipe placeholder is `_`, while the magrittr pipe placeholder is `.` There's an example using placeholders below to help make this clearer.
 
 From this point forward, we'll start working with the native pipe. The following sections will have specific examples on using the pipe to practice. Working with the pipe is also a good chance to practice "translating" R code into English, which we'll do as we go. To give you an idea, here's an example of how we can read the following code.
 
@@ -425,6 +446,8 @@ some_numbers |> #<2>
 So, we'll typically read `|>` as "and then", taking the output of whatever the preceding line produces and passing it on to the next line. To illustrate this more clearly, here's the same code explicitly including the placeholders to indicate where the piped-in information goes:
 
 ```{r}
+#| eval: false
+
 some_numbers <- c(3.52, 7.03, 9.2, 10.11, 2)
 
 some_numbers |>
@@ -432,7 +455,7 @@ some_numbers |>
   round(x = _, 2)
 ```
 
-Think of the placeholder like a bucket or landing pad, where the information coming in from the pipe falls. In this example, the placeholders aren't necessary, because at each step, we already want the piped-in information to go into the first argument; but including the placeholders  helps to see what's going on.
+Think of the placeholder like a bucket or landing pad, where the information coming in from the pipe falls. In this example, the placeholders aren't necessary, because at each step, we already want the piped-in information to go into the first argument; but including the placeholders helps to see what's going on.
 
 To make this fully explicit, this illustration shows the progress of information through the same pipe. The orange arrows show how the piped-in information is passed from one function to the next. The teal arrows show what is produced at each step of the pipe - which is what is passed on to the next function via the orange arrows/pipe.
 
@@ -474,7 +497,7 @@ devour(
 )
 ```
 
-This is, I am sure you will agree, is as absolutely horrifying as a soggy bottom on a cake.
+This is, I am sure you will agree, as absolutely horrifying as a soggy bottom on a cake.
 
 :::
 
@@ -484,7 +507,7 @@ To start, we'll work again with the whole dataset and look at some helpful funct
 
 - `nrow()`: Returns the **n**umber of **row**s as a numeric value.
 - `ncol()`: Returns the **n**umber of **col**umns as a numeric value.
-- `names()`: Returns a vector of the names of the columns of a dataset.
+- `names()`: Returns a character vector of the names of the columns of a dataset (and also the names of elements for other types of input).
 
 If your dataset is structured like this one is - with a single participant per row - then `nrow()` is a common stand-in for counting participants.
 
@@ -544,7 +567,7 @@ This format takes a bit of getting used to. The new object, which I've called `p
 
 Once we've had a look at the whole dataset, it's time to drill down into individual variables. We may want to calculate quick descriptives or investigate what's going on with particular variables that seem to have issues.
 
-To do this, we'll start working quite a bit with [the {dplyr} package](https://dplyr.tidyverse.org/). {dplyr} is a core part of the {tidyverse}, and the package generally is focused on user-friendly and easily readable tools for data manipulation. The essential {dplyr} functions will be the focus of Tutorials 6 and 7, when we really get into to working with data.
+To do this, we'll start working quite a bit with [the {dplyr} package](https://dplyr.tidyverse.org/). {dplyr} is a core part of the {tidyverse}, and the package generally is focused on user-friendly and easily readable tools for data manipulation. The essential {dplyr} functions will form a core part of the Essentials part of the course, when we really get into to working with data.
 
 ### Counting
 
@@ -552,7 +575,7 @@ We'll start by having a look at character or categorical variables. Here we'll m
 
 Using the pipe structure we've seen previously, the general form is:
 
-```
+```r
 dataset_name |> 
   dplyr::count(variable_to_count, optionally_another, ...)
 ```
@@ -627,7 +650,7 @@ syn_data |>
 
 Your exact translation may vary, but one option is:
 
-> Take the `syn_data` dataset, *and then* pull out the `gc_score` variable.
+> Take the `syn_data` dataset, *and then* pull out all the values in the `gc_score` variable.
 
 :::
 :::
@@ -672,11 +695,11 @@ syn_data |>
 :::
 :::
 
-As a quick check to get an individual number, this method is quite useful. However, you may have noticed that if we wanted this information for lots of variables, this would be repetitive, laborious, and prone to error. We've already seen how to use [existing summary functions](03_datasets.qmd#overall-summaries), but we will also look at [creating custom summary tables](../02_essentials/07_changes.qmd) in a future tutorial.
+As a quick check to get an individual number, this method is quite useful. However, you may have noticed that if we wanted this information for lots of variables, this would be repetitive, laborious, and prone to error. We've already seen how to use [existing summary functions](03_datasets.qmd#overall-summaries), but we will also look at [creating custom summary tables](../02_essentials/06_changes.qmd) in a future tutorial.
 
 ### Visualisations
 
-The final piece we will look at today will be base-R data visualisations in the {graphics} package. These built-in graphics functions are particularly helpful for quick spot checks during data cleaning and manipulation. For high-quality, fully customisable, professional data visualisations, we will use the {ggplot2} package, covered in depth in the next tutorial.
+The final piece we will look at today will be base-R data visualisations in the {graphics} package. These built-in graphics functions are particularly helpful for quick spot checks during data cleaning and manipulation. For high-quality, fully customisable, professional data visualisations, we will use the {ggplot2} package, covered in depth in the next section of the course.
 
 To get the idea, there are a few options for common plots:
 
@@ -694,20 +717,19 @@ Try making a histogram and a boxplot, using any of the variables in the `syn_dat
 
 ::: {.callout-note collapse="true" title="Solution"}
 
-#### Histogram
+Histogram:
 
 ```{r}
 #| layout-ncol: 2
 
 hist(syn_data$scsq_language)
 
-## With some minimal sprucing
 hist(syn_data$scsq_language,
      main = "Histogram of the Language subscale of the SCSQ",
      xlab = "SCSQ Language score")
 ```
 
-#### Boxplot
+Boxplot:
 
 ```{r}
 #| layout-ncol: 2
@@ -716,7 +738,6 @@ syn_data |>
   dplyr::pull(gc_score) |> 
   boxplot()
 
-## With again very minimal sprucing
 syn_data |> 
   dplyr::pull(gc_score) |> 
   boxplot(
@@ -724,8 +745,6 @@ syn_data |>
 ```
 :::
 :::
-
-
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
 
@@ -737,12 +756,9 @@ For the scatterplot, choose any two SCSQ measures.
 
 Both of these require some creative problem-solving using the help documentation and the skills and functions covered in this tutorial.
 
-
 ::: {.callout-note collapse="true" title="Solution"}
 
 The following solutions are *options* - if you found another way to make the same or similar plots, well done!
-
-#### Barplot
 
 Barplots require two sets of values: a categorical one on the horizontal *x* axis and a continuous one on the vertical *y* axis. For something like frequency counts, then, we have to first do the counting, *then* pass those counts onto `barplot()`. Luckily we already know [how to count categorical variables](03_datasets.qmd#counting). 
 
@@ -764,9 +780,7 @@ syn_data |> #<1>
 <!-- 4. Frequencies (`n`) predicted by (`~`) values in the `syn` variable (`syn`), -->
 <!-- 5. Using the data piped in from the previous step. -->
 
-#### Scatterplot
-
-There are a couple options here. We can either supply `x` and `y` separately using `$` subsetting, or use the same `y ~ x` formula we saw for barplots previously.
+For the scatterplot, there are a couple of options. We can either supply `x` and `y` separately using `$` subsetting, or use the same `y ~ x` formula we saw for barplots previously.
 
 ```{r}
 #| layout-ncol: 2
@@ -775,7 +789,8 @@ There are a couple options here. We can either supply `x` and `y` separately usi
 plot(syn_data$scsq_techspace, syn_data$scsq_imagery)
 
 ## Using a formula
-plot(scsq_imagery ~ scsq_techspace, data = syn_data)
+syn_data |> 
+  plot(scsq_imagery ~ scsq_techspace, data = _)
 ```
 :::
 :::

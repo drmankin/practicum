@@ -46,7 +46,6 @@ website:
       contents:
         - Workshops.qmd
 
-
 format:
   html:
     theme: 
@@ -66,6 +65,8 @@ format:
     df-print: tibble
 
 editor: visual
+body-footer: |
+  &copy; Jennifer Mankin 2023
 
 execute:
   warning: false

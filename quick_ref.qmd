@@ -257,7 +257,7 @@ If you're looking for a particular section of a tutorial, use this handy summary
    <td style="text-align:left; padding-left:  2em;" indentlevel="1"> [Describing Variables](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#describing-variables) </td>
    <td style="text-align:left;"> [Counting](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#counting), [Subsetting](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#subsetting), [Descriptives](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#descriptives), [Visualisations](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#visualisations) </td>
   </tr>
-  <tr grouplength="3"><td colspan="2" style="border-bottom: 1px solid;"><strong>04: Reporting Linear Models with Quarto</strong></td></tr>
+  <tr grouplength="2"><td colspan="2" style="border-bottom: 1px solid;"><strong>04: Reporting Linear Models with Quarto</strong></td></tr>
 <tr>
    <td style="text-align:left; padding-left:  2em;" indentlevel="1"> [The Linear Model](tutorials/psychrlogy/01_fundRmentals/04_lm.qmd#the-linear-model) </td>
    <td style="text-align:left;"> [Data and Codebook](tutorials/psychrlogy/01_fundRmentals/04_lm.qmd#data-and-codebook), [One Predictor](tutorials/psychrlogy/01_fundRmentals/04_lm.qmd#one-predictor), [Hierarchial Models](tutorials/psychrlogy/01_fundRmentals/04_lm.qmd#hierarchial-models), [Assumptions Checks](tutorials/psychrlogy/01_fundRmentals/04_lm.qmd#assumptions-checks) </td>
@@ -265,10 +265,6 @@ If you're looking for a particular section of a tutorial, use this handy summary
   <tr>
    <td style="text-align:left; padding-left:  2em;" indentlevel="1"> [Quarto](tutorials/psychrlogy/01_fundRmentals/04_lm.qmd#quarto) </td>
    <td style="text-align:left;"> [Getting Started](tutorials/psychrlogy/01_fundRmentals/04_lm.qmd#getting-started), [Creating a Code Chunk](tutorials/psychrlogy/01_fundRmentals/04_lm.qmd#creating-a-code-chunk), [Body Text](tutorials/psychrlogy/01_fundRmentals/04_lm.qmd#body-text), [Dynamic Reporting](tutorials/psychrlogy/01_fundRmentals/04_lm.qmd#dynamic-reporting), [Rendering](tutorials/psychrlogy/01_fundRmentals/04_lm.qmd#rendering) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left; padding-left:  2em;" indentlevel="1"> [Well done!](tutorials/psychrlogy/01_fundRmentals/04_lm.qmd#well-done!) </td>
-   <td style="text-align:left;">  </td>
   </tr>
 </tbody>
 </table>
