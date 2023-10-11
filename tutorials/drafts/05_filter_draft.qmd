@@ -19,7 +19,7 @@ To remember which does which:
 
 We will be focusing on {dplyr} today, which contains both the `filter()` and `select()` functions. You can either load {dplyr} alone, or all of {tidyverse} - it won't make a difference, but you only need one or the other.
 
-We will also make use of the {GGally} package later on for some snazzy visualisations.
+We will also make use of the {GGally} package later on for some snazzy visualisations and {correlation} for...well, I'll give you three guesses!
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
 Load the necessary packages.
@@ -33,6 +33,7 @@ library(dplyr)
 library(tidyverse)
 
 library(GGally)
+library(correlation)
 ```
 :::
 :::
@@ -100,9 +101,9 @@ dataset_name |> #<1>
   )
 ```
 
-1. Take the dataset `dataset_name`, *and then*
-1. Filter it keeping only the cases where the following assertion is true:
-1. A logical assertion about the variable(s) in `dataset_name` that returns logical (`TRUE` or `FALSE`) values.
+1.  Take the dataset `dataset_name`, *and then*
+2.  Filter it keeping only the cases where the following assertion is true:
+3.  A logical assertion about the variable(s) in `dataset_name` that returns logical (`TRUE` or `FALSE`) values.
 
 ### Filtering with Assertions
 
@@ -201,8 +202,7 @@ peng_dat |> #<1>
 2.  Filter it keeping only the cases where the following assertion is true:
 3.  The value in the `island` variable matches any of the values "Dream" or "Biscoe".
 
-::: {.callout-tip title="Why not `==`?"} 
-
+::: {.callout-tip title="Why not `==`?"}
 What follows here is a rabbit hole that gets into some gritty detail. If you're happy to take my word for it that you absolutely, definitely needed `%in%` and not `==` in the previous exercise, you can skip the explanation below. If you're keen to understand all the nuance, click to expand and read on!
 
 ::: {.callout-warning title="The Danger of `==` vs `%in%`" collapse="true"}
@@ -294,7 +294,7 @@ expected_n == nrow(peng_dat_bd)
 
 Now we know for sure there's a problem and can investigate what happened more thoroughly.
 
-As a final stop on this *incredibly* lengthy detour (are you still here? 👋), you might wonder whether the check above would give me the wrong answer, because I used `island != "Torgersen"` to in my checks, and the whole point of this goose chase is how to accomplish that exact filtering task. Let's look at a few possibilities:
+As a final stop on this *incredibly* lengthy detour (are you still here? 👋), you might wonder whether the check above would give me the wrong answer, because I used `island != "Torgersen"` in my checks, and the whole point of this goose chase is how to accomplish that exact filtering task. Let's look at a few possibilities:
 
 First, for this particular case there are three values in `island`. If I try `island == c("Biscoe", "Dream")` here, I get a warning that the length of one of the vector I'm trying to match (3) doesn't correspond to a multiple of the other (2 or 4). BUT, the filtering still works!!
 
@@ -314,10 +314,9 @@ peng_dat |>
   dplyr::filter(island == c("Dream", "Biscoe"))
 ```
 :::
+:::
 
 [^2]: I did try to think of a snazzy acronym here, but all I came up with is AEC (yikes). I'll keep thinking and try to update this with something better, and I welcome suggestions if you've made it this far!
-
-:::
 
 ### Multiple Conditions
 
@@ -343,13 +342,13 @@ First, let's start with a few straightforward logical assertions:
 
 Next, let's look at how they combine.
 
-Two true statements, combined with `&`, return `TRUE`, because it is true that **all** of these assertions are true. (Fun huh?)
+Two true statements, combined with `&`, return `TRUE`, because it is true that **all** of these assertions are true.
 
 ```{r}
 "apple" == "apple" & 23 > 12
 ```
 
-Two true statements, combined with `|`, also return `TRUE`, because it true that **at least one** of these assertions are true.
+Two true statements, combined with `|`, also return `TRUE`, because it true that **at least one** of these assertions is true.
 
 ```{r}
 "apple" == "apple" | 23 > 12
@@ -408,6 +407,8 @@ For the first solution, we must use `&` "AND" to ensure that both these conditio
 For the second solution, the `dplyr::between()` function does the same operation, without having to worry about getting AND vs OR right.
 
 ```{r}
+#| eval: false
+
 peng_dat |> 
   dplyr::filter(
     bill_depth_mm >= 15 & bill_depth_mm <= 20
@@ -430,7 +431,7 @@ Filtering is absolutely invaluable in the process of data cleaning. Penguins are
 As a part of complete and transparent reporting, we will want to report all of the reasons we excluded cases from our dataset, along with the number excluded. We can build this counting process into our workflow so that at the end, we have a record of each exclusion along with initial and final numbers.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-Follow along with the following steps, trying them out in a code chunk for yourself as you go. You'll need them at the end!
+Follow along with the following data cleaning steps, trying them out in a code chunk for yourself as you go. You'll need them at the end!
 :::
 
 To begin, we will count the initial number of cases before any exclusions.
@@ -444,9 +445,9 @@ n_initial <- nrow(peng_dat)
 For each check below, our recording process will have two steps:
 
 1.  Produce a dataset of the cases you will **exclude**, and count the number of rows (cases).
-2.  Remove the cases and overwrite the old dataset with the new one\[\^overwrite\].
+2.  Remove the cases and overwrite the old dataset with the new one.
 
-In my process, I'm going to keep `peng_dat` as the original, "raw" version of the dataset. So, I'll create a copy in a new dataset object to use while "processing" that I will update as I go.
+In my process, I'm going to keep `peng_dat` as the original, "raw" version of the dataset. So, I'll create a copy in a new dataset object to use while "*proc*essing" that I will update as I go.
 
 ```{r}
 peng_dat_proc <- peng_dat
@@ -454,14 +455,16 @@ peng_dat_proc <- peng_dat
 
 #### Consent
 
-If you have done a study online, you would likely have a variable with responses from your participants about informed consent. How you filter this depends on what that variable contains, of course. However, we've already seen examples of this kind of operation earlier in this tutorial, and it would probably look something like `consent == "Yes"`. As we saw before, this would discard cases that answered "No" (along with any other value not exactly matching "Yes") *and* cases with `NA`s from people who didn't answer.
+For many datasets, you would likely have a variable with responses from your participants about informed consent. How you filter this depends on what that variable contains, of course. However, we've already seen examples of this kind of operation earlier in this tutorial, and it would probably look something like `consent == "Yes"`. As we saw before, this would discard cases that answered "No" (along with any other value not exactly matching "Yes") *and* cases with `NA`s from people who didn't answer.
 
-For our penguins, we will begin the process by saying that only Adelie penguins consented to participate. So, following the two-step process, we first produce a dataset of all penguins EXCEPT Adelies, and count how many we are about to exclude by saving the resulting number in a new object
+For our penguins, we will begin the process by saying that only Adelie penguins consented to participate. So, following the two-step process, we first produce a dataset of all penguins EXCEPT Adelies, and count how many we are about to exclude by saving the resulting number in a new object.
 
 ```{r}
 n_no_consent <- peng_dat_proc |> 
   dplyr::filter(species != "Adelie") |> 
   nrow()
+
+n_no_consent
 ```
 
 Then, we remove all non-Adelie penguins and assign the resulting dataset to the same name, overwriting the previous version.
@@ -482,6 +485,7 @@ Our penguins aren't on quite the same scale, but we can approximate it by saying
 n_too_young <- peng_dat_proc |> 
   dplyr::filter(year > 2008) |> 
   nrow()
+n_too_young
 
 ## Remove them
 peng_dat_proc <- peng_dat_proc |> 
@@ -492,7 +496,7 @@ peng_dat_proc <- peng_dat_proc |>
 
 #### Missing Values
 
-Finally (for now), just about any study will have to decide how to deal with missing values. The possibilities for your own work are too complex for me to have a guess at here\[\^encourage\], so for now we'll only look at how to identify and remove missing values.
+Finally (for now), just about any study will have to decide how to deal with missing values. The possibilities for your own work are too complex for me to have a guess at here, so for now we'll only look at how to identify and remove missing values.
 
 ##### Single Variable
 
@@ -518,6 +522,8 @@ n_sex_missing <- peng_dat_proc |> #<1>
   dplyr::filter( #<2>
     is.na(sex) #<3>
   )
+
+n_sex_missing
 ```
 
 Next, we need to actually exclude these cases. This time, we want to retain the inverse of the previous filtering requirement: that is, we only want to keep the cases that are NOT missing a value in sex, the opposite of what we got from `is.na(sex)`. You may recognise "the inverse" or "not-x" as something we've seen before with `!=`, "not-equals". For anything that returns `TRUE` and `FALSE`, you can get the inverse by putting an `!` before it. (Try running `!TRUE`, for example!)
@@ -533,13 +539,14 @@ peng_dat_final <- peng_dat_proc |> #<1>
   )
 
 n_final <- nrow(peng_dat_final)
+n_final
 ```
 
-##### The Whole Dataset
+##### All Variables
 
 Removing `NA`s is a tricky process, but if you're sure that you want to drop *all* cases with missing values in your dataset, there are few helper functions to make this easy.
 
-For this, we're going to leave `filter()` for a moment at look at a different function, `tidyr::drop_na()`. This function takes a tibble as input, and returns the same tibble as output with any rows that had missing values removed.
+For this, we're going to leave `filter()` for a moment at look at a different function, `tidyr::drop_na()`. This function takes a tibble as input, and returns the same tibble as output, but with any rows that had missing values removed.
 
 ::: callout-warning
 This is a pretty major step and should be used with caution!
@@ -552,7 +559,7 @@ peng_dat_proc |>
   tidyr::drop_na()
 ```
 
-This makes the counting a bit tricky, so I'm not going to include it as a step in the data cleaning sequence above; but it's useful to know about sometimes.
+This makes the counting a bit tricky, so I'm not going to include it as a step in the data cleaning sequence above; but it's useful to know about in case you need it.
 
 #### Reporting
 
@@ -600,13 +607,13 @@ dataset_name |> #<1>
 
 ```
 
-1. Take the dataset `dataset_name`, *and then*
-2. Select the following variables:
-3. The name of a variable to be included in the output. Multiple variables can be selected separated by commas.
+1.  Take the dataset `dataset_name`, *and then*
+2.  Select the following variables:
+3.  The name of a variable to be included in the output. Multiple variables can be selected separated by commas.
 4.  The name of a variable to be excluded from the output. Use either an exclamation mark (`!`) or a minus sign (`-`) in front of each variable to exclude. Multiple variables can be dropped, separated by commas with a `!` (or `-`) before each.
-5. A range of variables to include in the output. All the variables between and including the two named will be selected (or dropped, with `!(drop_this_one:through_this_one)`).
-6. Include `variable_to_rename` in the output, but call it `new_name`.
-7. Include a variable in the output by where it appears in the dataset, numbered left to right. For example, "2" will select the second column in the original dataset.
+5.  A range of variables to include in the output. All the variables between and including the two named will be selected (or dropped, with `!(drop_this_one:through_this_one)`).
+6.  Include `variable_to_rename` in the output, but call it `new_name`.
+7.  Include a variable in the output by where it appears in the dataset, numbered left to right. For example, "2" will select the second column in the original dataset.
 
 Columns will appear in the output in the order they are selected in `select()`, so this function can also be used to reorder columns.
 
@@ -615,15 +622,13 @@ Columns will appear in the output in the order they are selected in `select()`, 
 The best way to get the hang of this will be to give it a go, so let's [dive on in](https://media.giphy.com/media/2cehTmp8rASyunE10R/giphy.gif)!
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
 Create a subset of `peng_dat` that contains the following variables:
 
-- The penguin's sex
-- The first variable in the original dataset
-- `bill_length_mm` through `body_mass_g`
+-   The penguin's sex
+-   The first variable in the original dataset
+-   `bill_length_mm` through `body_mass_g`
 
 ::: {.callout-note collapse="true" title="Solution"}
-
 ```{r}
 peng_dat |> 
   dplyr::select(
@@ -635,14 +640,12 @@ peng_dat |>
 :::
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
 Create a subset of `peng_dat` that contains the following variables:
 
-- All of the original variables but NOT `island`
-- `year` renamed `calendar_year`
+-   All of the original variables but NOT `island`
+-   `year` renamed `calendar_year`
 
 ::: {.callout-note collapse="true" title="Solution"}
-
 ```{r}
 peng_dat |> 
   dplyr::select(
@@ -655,27 +658,25 @@ peng_dat |>
 
 That's really all there is to it!
 
-...*Or is it?*[^lol]
+...*Or is it?*[^3]
 
-[^lol]: Have you seen the size of this thing?? Of course it isn't!
+[^3]: Have you seen the size of this tutorial?? Of course it isn't!
 
-### Using tidyselect
+### Using {tidyselect}
 
 The real power in `select()`, and in many other {tidyverse} functions, is in a system of helper functions and notations collectively called `<tidyselect>`. The overall goal of "`<tidyselect>` semantics" (as you will see it referred to in help documentation) is to make selecting variables easy, efficient, and clear.
 
 ::: {.callout-warning title="New to UGs"}
-
 At UG level at Sussex, students are not taught about `<tidyselect>` in core modules. However, `<tidyselect>` is desperately useful and makes complex data wrangling/cleaning a lot faster and more efficient, especially (for instance) for questionnaires with similarly-named subscales, so would make for a great collaborative activity with supervisors.
 
 `<tidyselect>` will really come into its own in the last part of this course, when we focus on large, messy Qualtrics datasets with multiple measures and sub-measures.
-
 :::
 
 These helper functions can be combined with the selection methods above in any combination. Some very convenient options include:
 
 -   `everything()` for all columns
 -   `starts_with()`, `ends_with()`, and `contains()` for selecting columns by shared name elements
--   `where()` for [selecting with a function](06_filter.qmd#using-functions), described below.
+-   `where()` for [selecting with a function](06_filter.qmd#using-functions), described in the next section
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
 Open the help documentation by running `?dplyr::select` in the Console to see examples of how to use all of the `<tidyselect>` helper functions.
@@ -698,7 +699,6 @@ peng_dat |>
 :::
 
 ::: {.callout-note appearance="minimal" title="Exercises"}
-
 Select the variables in `peng_dat` that do NOT contain measurements in mm.
 
 ::: {.callout-note collapse="true" title="Solution"}
@@ -717,27 +717,30 @@ peng_dat |>
 **CHALLENGE**: Without using any commas, select `species`, `island`, `sex`, and `year` only, leaving out the four measurement variables.
 
 ::: {.callout-note collapse="true" title="Solution"}
-
 The key to this task is figuring out what the excluded variables have in common in comparison to the included ones. There are a few options; here's a couple that worked for me.
 
 ```{r}
+#| eval: false
+
 peng_dat |> 
   dplyr::select(!contains("_"))
+```
 
+```{r}
 peng_dat |> 
   dplyr::select(!contains(c("mm", "_g")))
 ```
 :::
 
-\ 
+ 
 
-### Using Functions
+#### Using Functions
 
 Let's say we want to create a summary table of all of the numeric variables in our dataset. Before we can [create our summary in the next tutorial](06_changes.qmd#summarise), we may first want to produce a subset of our dataset that only contains numeric variables.
 
 To do this, we can use the `<tidyselect>` helper function `where()`. This helper function lets us use *any* function that returns `TRUE` and `FALSE` to select columns. Essentially, we don't have to select columns using name or position - we can use any criteria we want, as long as we have (or can create...!) a function that expresses that criteria.
 
-Especially helpful here is the `is.*()` family of functions in base R. This group of functions all have the same format, where the `*` is a stand-in for any type of data or object, e.g. `is.logical()`, `is.numeric()`, `is.factor()` etc. (The very useful `is.na()` that we've seen with `filter()` above is also a member of this family.) These functions work like a question about whatever you put into them - for example, `is.numeric()` can be read as, "Is (whatever's in the brackets) numeric?"
+Especially helpful here is the `is.*()` family of functions in base R. This group of functions all have the same format, where the `*` is a stand-in for any type of data or object, e.g. `is.logical()`, `is.numeric()`, `is.factor()` etc. (The very useful `is.na()` that we've seen with `filter()` above is also a member of this family.) These functions work like a question about whatever you put into them - for example, `is.numeric()` can be read as, "Is (whatever's in the brackets) numeric data?"
 
 ::: callout-tip
 You can quickly find all of the functions in this family by typing `is.` in the Console and pressing Tab.
@@ -756,43 +759,82 @@ peng_dat |>
 
 This command evaluates each column and determines whether they contain numeric data (`TRUE`) or not (`FALSE`), and only returns the columns that return `TRUE`.
 
-#### Using Anonymous Functions
+#### Using Custom Functions
 
 ::: {.callout-warning title="Here There Be Lambdas"}
 The following material in this section isn't covered in the live workshops. It's included here for reference because it's extremely useful in real R analysis workflows, but it won't be essential for any of the workshop tasks.
 :::
 
-The function in `where()` that determines which columns to keep doesn't have to be an existing named function. Another option is to use a "purrr-style lambda" or formula (a phrase you may see in help documentation) to write our own criteria on the spot. What we are essentially doing is writing an ad-hoc, or "anonymous" function - that is, a function that doesn't have a set name.
+The function in `where()` that determines which columns to keep doesn't have to be an existing named function. Another option is to use a "purrr-style lambda" or formula (a phrase you may see in help documentation) to write our own criteria on the spot.
 
-For example, let's select all of the numeric variables that have a minimum value of 3:
+For example, let's select all of the numeric variables that have a minimum value of 200:
 
 ```{r}
 #| eval: false
 
 peng_dat |> 
   dplyr::select(
-    where(is.numeric & ~ min(.x, na.rm = TRUE) >= 3)
+    where(~ is.numeric(.x) & (mean(.x, na.rm = TRUE) >= 200))
   )
 ```
 
-The second of these criteria is one of these "purrr-style" formulae. Is has two components:
+Instead of just the name of a function, as we had before, we now have a formula. This formula has a few key characteristics:
 
 -   The `~` (apparently [pronounced "twiddle"!](https://adv-r.hadley.nz/functionals.html#purrr-shortcuts)) at the beginning, which is a shortcut for the longer `function(x) ...` notation for creating functions.
 -   The `.x`, which is a placeholder for each of the variables that the function will be applied to.
 
-So, this command can be read: "Take my tibble and select all the columns where the following is true: the data type is numeric and the minimum value in that column is greater than or equal to 3 (ignoring missing values)."
+So, this command can be read: "Take my tibble and select all the columns where the following is true: the data type is numeric AND the minimum value in that column is greater than or equal to 200 (ignoring missing values)."
 
-::: {.callout-note appearance="minimal" title="Optional Exercises"}
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+**CHALLENGE:** Select the variables in `peng_dat` that are factors, or that do NOT contain any missing values.
+
+*Hint*: You may need to use function(s) that we haven't covered in the tutorials so far to solve this.
+
 ::: {.callout-note collapse="true" title="Solution"}
-```{r}
 
+This one is a doozy! Very well done if you worked it out, either using your own solution or one like this, or if you got partway there. 
+
+```{r}
+peng_dat |> 
+  dplyr::select(
+    where(~ is.factor(.x) | all(!is.na(.x)))
+  )
 ```
+
+Here's the process to understand/solve this using this particular solution.
+
+The first half of the formula in `where()` should be okay - we haven't looked at factors in depth, but you may have noticed the `<fctr>` label in the tibble output and/or guessed that there might be an `is.*()` function for this purpose.
+
+The second half is a bit rough. You may have tried `!is.na(.x)` and got an error, namely: `Predicate must return TRUE or FALSE, not a logical vector.` In other words, this has to return a SINGLE logical value, and `is.na()` will return a vector containing logical values for each individual value in the variable.
+
+To solve this - at least the way I've done - you need the {base} function `all()`, which answers the question, "Are **all** of these values `TRUE`?" It also has a (non-identical) twin `any()`, which (as you might guess) answers the question, "Are **any** of these values `TRUE`?" So, `all()` does a similar job as AND, and `any()` a similar job as OR.
+
+To see what I mean, let's just try it out:
+
+```{r}
+all(TRUE, TRUE)
+all(TRUE, FALSE)
+all(FALSE, FALSE)
+
+any(TRUE, TRUE)
+any(TRUE, FALSE)
+any(FALSE, FALSE)
+```
+
+Like AND and OR, `all()` and `any()` only give different responses when there are a mix of `TRUE`s and `FALSE`s. For this task, we only wanted to retain variables where ALL of the values produced by `!is.na(x)` were `TRUE` - that is, it was true that ALL of the values in that variable do NOT contain `NA`s. So, we wanted `all()`. This returns a single `TRUE` or `FALSE` value for each variable that `dplyr::select()` can use.
 :::
 :::
 
 ## Quick Test: Correlation
 
+Whew! Had enough logical assertions to last a lifetime? Great - let's cool down with a some snazzy plots and a nice gentle correlation analysis.
+
+This bit is meant to be quick, so we'll only look briefly at what we teach in UG at Sussex. If you want more correlation fun, check out `discovr` tutorials 07 and 18.
+
 ### Visualisation
+
+
 
 ```{r}
 #| warning: false
@@ -811,24 +853,11 @@ If we wanted to perform and report a detailed correlation analysis on a single p
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
 
-Open the help documentation for `cor.test()`.
+Using the help documentation for `cor.test()`, perform a correlation analysis between any two numeric variables of your choice in the `peng_dat` dataset. The solution will use the formula option, but if you get it to run, you're doing good!
 
 ::: {.callout-note collapse="true" title="Solution"}
 
-Run `?cor.test` in the Console.
-
-:::
-:::
-
-Both `t.test()` and `cor.test()` offer the option to specify the analysis you want to perform as a **formula**. This is exactly like the formula we saw previously with `lm()`. The format is slightly different but the idea is the same, so let's give it a try.
-
-::: {.callout-note appearance="minimal" title="Exercise"}
-
-Use the formula option for the `cor.test()` function to perform a correlation analysis between any two numeric variables of your choice in the `peng_dat` dataset.
-
-*Hint*: See the "Arguments" section of the help documentation for help with the formula.
-
-::: {.callout-note collapse="true" title="Solution"}
+Run `?cor.test` in the Console. 
 
 I chose bill length and flipper length, but whatever you chose is fine!
 
@@ -839,7 +868,6 @@ cor.test(~ bill_length_mm + flipper_length_mm, data = peng_dat)
 :::
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
 **CHALLENGE**: Using what we learned in the last tutorial, report the results of this analysis without typing any of the results out by hand.
 
 ::: {.callout-note collapse="true" title="Solution"}
@@ -854,6 +882,28 @@ peng_cor_out <- papaja::apa_print(peng_cor)
 Which will render as:
 
 > A Pearson's pairwise correlation between bill length and flipper length indicated a very strong, significant positive correlation between the two measurements (`r peng_cor_out$full_result`).
+:::
+:::
 
+In second year, UGs are also introduced to the (slightly more {tidyverse}-friendly) function `correlation::correlation()`.
+
+On the good side, this function scales up to pairwise tests between as many variables as you give it. This means if you want, for instance, multiple pairwise correlations within a dataset, this is the way to go, since it will apply a familywise error rate correction by default (Holm, to be precise). On the other hand, it's a right pain to type and doesn't play ball with {papaja}, so pick your poison I guess 🤷[^ugh]
+
+[^ugh]: Look, I like my basic {stats} functions. They all look the same and work the same way. They all contain the same things. They all play nicely with {papaja} or custom functions for easy reporting. You don't have to install anything new - if you're using R, they're there. I love an `htest` object, me! But you gotta find the functions that do what you need them to do. You won't necessary always use one or the other - just use the one that makes sense to you and works for the task at hand.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Select at least three variables from `peng_dat`, including the ones you used with `cor.test()` above, and get pairwise correlations between all of them with `correlation::correlation()`.
+
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+peng_dat |> 
+  dplyr::select(where(is.numeric), -year) |> 
+  correlation::correlation()
+```
 :::
 :::
+
+\ 
+
+We made it to the end, if you can believe it!
