@@ -16,14 +16,24 @@ The table below is arranged alphabetically by function name, and the linked full
  </thead>
 <tbody>
   <tr>
+   <td style="text-align:left;"> all() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/all.html">all()</a> </td>
+   <td style="text-align:left;"> 05: Filter and Select </td>
+  </tr>
+  <tr>
    <td style="text-align:left;"> anova() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/stats/anova.html">anova()</a> </td>
    <td style="text-align:left;"> 04: Reporting Linear Models with Quarto </td>
   </tr>
   <tr>
+   <td style="text-align:left;"> any() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/any.html">any()</a> </td>
+   <td style="text-align:left;"> 05: Filter and Select </td>
+  </tr>
+  <tr>
    <td style="text-align:left;"> apa_print() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/pkg/papaja/man/apa_print.html">papaja::apa_print()</a> </td>
-   <td style="text-align:left;"> 04: Reporting Linear Models with Quarto </td>
+   <td style="text-align:left;"> 04: Reporting Linear Models with Quarto<br>05: Filter and Select </td>
   </tr>
   <tr>
    <td style="text-align:left;"> apa_table() </td>
@@ -48,7 +58,7 @@ The table below is arranged alphabetically by function name, and the linked full
   <tr>
    <td style="text-align:left;"> c() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/base/c.html">c()</a> </td>
-   <td style="text-align:left;"> 01/02: IntRoduction<br>03: Datasets<br>04: Reporting Linear Models with Quarto </td>
+   <td style="text-align:left;"> 01/02: IntRoduction<br>03: Datasets<br>04: Reporting Linear Models with Quarto<br>05: Filter and Select </td>
   </tr>
   <tr>
    <td style="text-align:left;"> class() </td>
@@ -56,9 +66,24 @@ The table below is arranged alphabetically by function name, and the linked full
    <td style="text-align:left;"> 01/02: IntRoduction </td>
   </tr>
   <tr>
+   <td style="text-align:left;"> contains() </td>
+   <td style="text-align:left;"> <a href="https://tidyselect.r-lib.org/reference/starts_with.html">dplyr::contains()</a> </td>
+   <td style="text-align:left;"> 05: Filter and Select </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> cor.test() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/stats/cor.test.html">cor.test()</a> </td>
+   <td style="text-align:left;"> 05: Filter and Select </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> correlation() </td>
+   <td style="text-align:left;"> <a href="https://easystats.github.io/correlation/reference/correlation.html">correlation::correlation()</a> </td>
+   <td style="text-align:left;"> 05: Filter and Select </td>
+  </tr>
+  <tr>
    <td style="text-align:left;"> count() </td>
    <td style="text-align:left;"> <a href="https://dplyr.tidyverse.org/reference/count.html">dplyr::count()</a> </td>
-   <td style="text-align:left;"> 03: Datasets </td>
+   <td style="text-align:left;"> 03: Datasets<br>05: Filter and Select </td>
   </tr>
   <tr>
    <td style="text-align:left;"> data() </td>
@@ -71,9 +96,29 @@ The table below is arranged alphabetically by function name, and the linked full
    <td style="text-align:left;"> 03: Datasets </td>
   </tr>
   <tr>
+   <td style="text-align:left;"> filter() </td>
+   <td style="text-align:left;"> <a href="https://dplyr.tidyverse.org/reference/filter.html">dplyr::filter()</a> </td>
+   <td style="text-align:left;"> 05: Filter and Select </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ggpairs() </td>
+   <td style="text-align:left;"> <a href="https://ggobi.github.io/ggally/reference/ggpairs.html">GGally::ggpairs()</a> </td>
+   <td style="text-align:left;"> 05: Filter and Select </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ggscatmat() </td>
+   <td style="text-align:left;"> <a href="https://ggobi.github.io/ggally/reference/ggscatmat.html">GGally::ggscatmat()</a> </td>
+   <td style="text-align:left;"> 05: Filter and Select </td>
+  </tr>
+  <tr>
    <td style="text-align:left;"> glance() </td>
    <td style="text-align:left;"> <a href="https://generics.r-lib.org/reference/glance.html">broom::glance()</a> </td>
    <td style="text-align:left;"> 04: Reporting Linear Models with Quarto </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> glimpse() </td>
+   <td style="text-align:left;"> <a href="https://dplyr.tidyverse.org/reference/glimpse.html">dplyr::glimpse()</a> </td>
+   <td style="text-align:left;"> 03: Datasets<br>05: Filter and Select </td>
   </tr>
   <tr>
    <td style="text-align:left;"> here() </td>
@@ -86,6 +131,16 @@ The table below is arranged alphabetically by function name, and the linked full
    <td style="text-align:left;"> 03: Datasets </td>
   </tr>
   <tr>
+   <td style="text-align:left;"> is.factor() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/factor.html">is.factor()</a> </td>
+   <td style="text-align:left;"> 05: Filter and Select </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> is.na() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/NA.html">is.na()</a> </td>
+   <td style="text-align:left;"> 05: Filter and Select </td>
+  </tr>
+  <tr>
    <td style="text-align:left;"> kable_styling() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kableExtra::kable_styling()</a> </td>
    <td style="text-align:left;"> 03: Datasets </td>
@@ -93,7 +148,7 @@ The table below is arranged alphabetically by function name, and the linked full
   <tr>
    <td style="text-align:left;"> library() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/base/library.html">library()</a> </td>
-   <td style="text-align:left;"> 03: Datasets<br>04: Reporting Linear Models with Quarto </td>
+   <td style="text-align:left;"> 03: Datasets<br>04: Reporting Linear Models with Quarto<br>05: Filter and Select </td>
   </tr>
   <tr>
    <td style="text-align:left;"> lm() </td>
@@ -108,12 +163,12 @@ The table below is arranged alphabetically by function name, and the linked full
   <tr>
    <td style="text-align:left;"> mean() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/base/mean.html">mean()</a> </td>
-   <td style="text-align:left;"> 01/02: IntRoduction<br>03: Datasets </td>
+   <td style="text-align:left;"> 01/02: IntRoduction<br>03: Datasets<br>05: Filter and Select </td>
   </tr>
   <tr>
    <td style="text-align:left;"> median() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/stats/median.html">median()</a> </td>
-   <td style="text-align:left;"> 03: Datasets </td>
+   <td style="text-align:left;"> 03: Datasets<br>05: Filter and Select </td>
   </tr>
   <tr>
    <td style="text-align:left;"> model_parameters() </td>
@@ -131,14 +186,24 @@ The table below is arranged alphabetically by function name, and the linked full
    <td style="text-align:left;"> 03: Datasets </td>
   </tr>
   <tr>
+   <td style="text-align:left;"> nice_table() </td>
+   <td style="text-align:left;"> <a href="https://rempsyc.remi-theriault.com/reference/nice_table.html">rempsyc::nice_table()</a> </td>
+   <td style="text-align:left;"> 04: Reporting Linear Models with Quarto </td>
+  </tr>
+  <tr>
    <td style="text-align:left;"> nrow() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/base/nrow.html">nrow()</a> </td>
-   <td style="text-align:left;"> 03: Datasets </td>
+   <td style="text-align:left;"> 03: Datasets<br>05: Filter and Select </td>
   </tr>
   <tr>
    <td style="text-align:left;"> plot() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a> </td>
    <td style="text-align:left;"> 03: Datasets </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> print() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/print.html">print()</a> </td>
+   <td style="text-align:left;"> 05: Filter and Select </td>
   </tr>
   <tr>
    <td style="text-align:left;"> pull() </td>
@@ -166,6 +231,21 @@ The table below is arranged alphabetically by function name, and the linked full
    <td style="text-align:left;"> 03: Datasets </td>
   </tr>
   <tr>
+   <td style="text-align:left;"> select() </td>
+   <td style="text-align:left;"> <a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select()</a> </td>
+   <td style="text-align:left;"> 05: Filter and Select </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> starts_with() </td>
+   <td style="text-align:left;"> <a href="https://tidyselect.r-lib.org/reference/starts_with.html">dplyr::starts_with()</a> </td>
+   <td style="text-align:left;"> 05: Filter and Select </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> sum() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/sum.html">sum()</a> </td>
+   <td style="text-align:left;"> 05: Filter and Select </td>
+  </tr>
+  <tr>
    <td style="text-align:left;"> summary() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/base/summary.html">summary()</a> </td>
    <td style="text-align:left;"> 03: Datasets </td>
@@ -179,6 +259,11 @@ The table below is arranged alphabetically by function name, and the linked full
    <td style="text-align:left;"> tidy() </td>
    <td style="text-align:left;"> <a href="https://generics.r-lib.org/reference/tidy.html">broom::tidy()</a> </td>
    <td style="text-align:left;"> 04: Reporting Linear Models with Quarto </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> where() </td>
+   <td style="text-align:left;"> <a href="https://tidyselect.r-lib.org/reference/where.html">dplyr::where()</a> </td>
+   <td style="text-align:left;"> 05: Filter and Select </td>
   </tr>
 </tbody>
 </table>
@@ -201,8 +286,8 @@ If you're looking for a particular section of a tutorial, use this handy summary
    <td style="text-align:left;"> [The RStudio Interface](tutorials/psychrlogy/01_fundRmentals/01_02_intro.qmd#the-rstudio-interface) </td>
   </tr>
   <tr>
-   <td style="text-align:left; padding-left:  2em;" indentlevel="1"> [Making Mistakes](tutorials/psychrlogy/01_fundRmentals/01_02_intro.qmd#making-mistakes) </td>
-   <td style="text-align:left;"> [GlossoRlia](tutorials/psychrlogy/01_fundRmentals/01_02_intro.qmd#glossorlia) </td>
+   <td style="text-align:left; padding-left:  2em;" indentlevel="1"> [Errors](tutorials/psychrlogy/01_fundRmentals/01_02_intro.qmd#errors) </td>
+   <td style="text-align:left;"> [GlossoRlia: the Language of Errors](tutorials/psychrlogy/01_fundRmentals/01_02_intro.qmd#glossorlia:-the-language-of-errors) </td>
   </tr>
   <tr>
    <td style="text-align:left; padding-left:  2em;" indentlevel="1"> [Types of Data](tutorials/psychrlogy/01_fundRmentals/01_02_intro.qmd#types-of-data) </td>
@@ -239,7 +324,7 @@ If you're looking for a particular section of a tutorial, use this handy summary
   </tr>
   <tr>
    <td style="text-align:left; padding-left:  2em;" indentlevel="1"> [Viewing](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#viewing) </td>
-   <td style="text-align:left;"> [Call the Object](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#call-the-object), [View Mode](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#view-mode) </td>
+   <td style="text-align:left;"> [Call the Object](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#call-the-object), [A Glimpse of the Data](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#a-glimpse-of-the-data), [View Mode](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#view-mode) </td>
   </tr>
   <tr>
    <td style="text-align:left; padding-left:  2em;" indentlevel="1"> [Overall Summaries](tutorials/psychrlogy/01_fundRmentals/03_datasets.qmd#overall-summaries) </td>
@@ -265,6 +350,23 @@ If you're looking for a particular section of a tutorial, use this handy summary
   <tr>
    <td style="text-align:left; padding-left:  2em;" indentlevel="1"> [Quarto](tutorials/psychrlogy/01_fundRmentals/04_lm.qmd#quarto) </td>
    <td style="text-align:left;"> [Getting Started](tutorials/psychrlogy/01_fundRmentals/04_lm.qmd#getting-started), [Creating a Code Chunk](tutorials/psychrlogy/01_fundRmentals/04_lm.qmd#creating-a-code-chunk), [Body Text](tutorials/psychrlogy/01_fundRmentals/04_lm.qmd#body-text), [Dynamic Reporting](tutorials/psychrlogy/01_fundRmentals/04_lm.qmd#dynamic-reporting), [Rendering](tutorials/psychrlogy/01_fundRmentals/04_lm.qmd#rendering) </td>
+  </tr>
+  <tr grouplength="4"><td colspan="2" style="border-bottom: 1px solid;"><strong>05: Filter and Select</strong></td></tr>
+<tr>
+   <td style="text-align:left; padding-left:  2em;" indentlevel="1"> [Setup](tutorials/psychrlogy/02_essentials/05_filter.qmd#setup) </td>
+   <td style="text-align:left;"> [Packages](tutorials/psychrlogy/02_essentials/05_filter.qmd#packages), [Data](tutorials/psychrlogy/02_essentials/05_filter.qmd#data) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left; padding-left:  2em;" indentlevel="1"> [Filter](tutorials/psychrlogy/02_essentials/05_filter.qmd#filter) </td>
+   <td style="text-align:left;"> [General Format](tutorials/psychrlogy/02_essentials/05_filter.qmd#general-format), [Filtering with Assertions](tutorials/psychrlogy/02_essentials/05_filter.qmd#filtering-with-assertions), [Multiple Conditions](tutorials/psychrlogy/02_essentials/05_filter.qmd#multiple-conditions), [Data Cleaning](tutorials/psychrlogy/02_essentials/05_filter.qmd#data-cleaning) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left; padding-left:  2em;" indentlevel="1"> [Select](tutorials/psychrlogy/02_essentials/05_filter.qmd#select) </td>
+   <td style="text-align:left;"> [General Format](tutorials/psychrlogy/02_essentials/05_filter.qmd#general-format), [Selecting Directly](tutorials/psychrlogy/02_essentials/05_filter.qmd#selecting-directly), [Using {tidyselect}](tutorials/psychrlogy/02_essentials/05_filter.qmd#using-{tidyselect}) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left; padding-left:  2em;" indentlevel="1"> [Quick Test: Correlation](tutorials/psychrlogy/02_essentials/05_filter.qmd#quick-test:-correlation) </td>
+   <td style="text-align:left;"> [Visualisation](tutorials/psychrlogy/02_essentials/05_filter.qmd#visualisation), [Testing Correlation](tutorials/psychrlogy/02_essentials/05_filter.qmd#testing-correlation) </td>
   </tr>
 </tbody>
 </table>

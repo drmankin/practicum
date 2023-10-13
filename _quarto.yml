@@ -45,7 +45,10 @@ website:
     - title: "Workshops"
       contents:
         - Workshops.qmd
-
+  page-footer: 
+    center: "&copy; Jennifer Mankin 2023"
+    background: "#003b49"
+    
 format:
   html:
     theme: 
@@ -65,8 +68,6 @@ format:
     df-print: tibble
 
 editor: visual
-body-footer: |
-  &copy; Jennifer Mankin 2023
 
 execute:
   warning: false
