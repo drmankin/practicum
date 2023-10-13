@@ -50,7 +50,7 @@ all_qmds <- list.files(path = all_qmds_path, pattern = "qmd", recursive = TRUE)
 
 ### Put function index files in fx folder!
 
-path_fx_index <- file.path(getwd(), "tutorials/index/fx")
+path_fx_index <- file.path(getwd(), "tutorials/index")
 
 if(!dir.exists(path_fx_index)){
   dir.create(path_fx_index)
@@ -167,7 +167,7 @@ fxs_tab <- fxs_tib_wide |>
 
 # Create Topics Index -----------------------------------------------------
 
-path_topics_index <- file.path(getwd(), "tutorials/index/topics")
+path_topics_index <- file.path(getwd(), "tutorials/index")
 
 if(!dir.exists(path_topics_index)){
   dir.create(path_topics_index)
@@ -225,24 +225,49 @@ topics_tab <- topics |>
     tut = unique(names(titles_key[which(grepl(name, titles_key))]))
     )
 
-topics_indents <- which(topics_tab$heading_level > 2)
+## Restructure
+
+topics_tab <- topics_tab |> 
+  dplyr::ungroup() |> 
+  dplyr::mutate(
+    heading_group = dplyr::if_else(heading_level == 2,
+                                   1, 0),
+    heading_group = cumsum(heading_group)
+  ) |> 
+  tidyr::pivot_wider(
+    names_from = heading_level, values_from = link, id_cols = c(tut, heading_group),
+    values_fn = ~ paste0(.x, collapse = ", ")
+  ) |> 
+  ## Remove and keep in two columns; replace NAs with ""
+  # dplyr::mutate(
+  #   link = paste0(`2`, ": ", `3`)
+  # ) |> 
+  dplyr::select(tut, `2`, `3`) |> 
+  dplyr::rename_with(~c("tut", "topic", "sub_topic")) |> 
+  dplyr::mutate(
+    sub_topic = tidyr::replace_na(sub_topic, "")
+  )
+
+# topics_indents <- which(topics_tab$heading_level > 2)
 
 topics_pack <- topics_tab |> 
-  dplyr::select(tut, link) |> 
-  dplyr::group_by(tut) |> 
-  dplyr::summarise(n = dplyr::n()) |> 
+  dplyr::count(tut) |> 
   tibble::deframe()
 
 topics_kbl <- topics_tab |> 
-  dplyr::select(link) |> 
+  dplyr::select(topic, sub_topic) %>%
   kableExtra::kbl(
-    format = "html"
-  ) |> 
-  kableExtra::kable_styling(bootstrap_options = "condensed")
+    format = "html",
+    col.names = stringr::str_to_title(gsub("_", "-", colnames(.))),
+    booktabs = TRUE
+  )
 
 topics_kbl <- topics_kbl |> 
-  kableExtra::add_indent(positions = topics_indents, target_cols = 1) |> 
-  kableExtra::pack_rows(index = topics_pack)
+  # kableExtra::add_indent(positions = topics_indents) |> 
+  kableExtra::pack_rows(index = topics_pack)  |> 
+  kableExtra::kable_styling(bootstrap_options = "condensed") |> 
+  kableExtra::row_spec(row = 0, align = "c") |> 
+  kableExtra::kable_styling()
 
 # Create Index Page -------------------------------------------------------
 

@@ -8,51 +8,77 @@ This tutorial covers how to run, inspect, and report a linear model in R. For th
 
 ## The Linear Model
 
-In this section, we will walk through the process of fitting, comparing, and reporting hierarchical linear models in R. This is not a statistics tutorial, so there will be minimal detail about how to understand or interpret the output of these commands. Instead, refer to Prof Andy Field's `discovr` tutorials, which are the primary teaching materials for the same content in UG teaching. All of the code and interpretation in the following section is from `discovr_08`, the GLM.
+In this section, we will walk through the process of fitting, comparing, and reporting hierarchical linear models in R. This is not a statistics tutorial, so there will be minimal detail about how to understand or interpret the output of these commands. Instead, refer to [Prof Andy Field's {discovr} tutorials](https://github.com/profandyfield/discovr), which are the primary teaching materials for the same content in UG teaching at Sussex. All of the code and interpretation in the following section is from `discovr_08`, the GLM.
 
-::: {.callout-imporant title="Which Tutorial?"}
 There are two key goals for this linear model walkthrough:
 
 -   Create a detailed "cheatsheet" for a linear model analysis for future reference
--   Get familiar with the `discovr` tutorials
+-   Get familiar with the {discovr} tutorials
 
-Of the two, the first is more important. I'd strongly recommend you **open** the relevant `discovr` tutorial and skim through it as you go so you're familiar with what it contains. However, the following sections of this tutorial will present the same code and information with very abbreviated text, to serve as a quick reference.
+Of the two, the first is more important. I'd strongly recommend you **open** the relevant {discovr} tutorial and skim through it as you go so you're familiar with what it contains. However, the following sections of this tutorial will present the same code and information with very abbreviated text, to serve as a quick reference.
 
 You can also have them both open at once and refer to each!
+
+:::{.callout-tip title="Installing {discovr}" collapse="true"}
+If you are working in the Posit Cloud workspace, the tutorials have already been installed. **Please do NOT reinstall them!**
+
+If working elsewhere, use the following code to install the necessary packages **in the Console**:
+
+```{r}
+#| eval: false
+
+if(!require(remotes)){
+  install.packages('remotes')
+}
+
+remotes::install_github("profandyfield/discovr")
+```
+
+Note that there's no need to call `library(discovr)` at the start of your document, since the tutorials don't work *in* the document, but rather in RStudio itself.
 :::
 
-::: {.callout-tip title="Using the `discovr` tutorials" collapse="true"}
-Prof Andy Field's `discovr` tutorials provide detailed walkthroughs of both the R code and the statistical concepts of a variety of statistical analyses. They are a good place to look first to understand what your UG supervisees or advisees have been taught on a particular topic.
+::: {.callout-tip title="Using the {discovr} tutorials" collapse="true"}
+Prof Andy Field's {discovr} tutorials provide detailed walkthroughs of both the R code and the statistical concepts of a variety of statistical analyses. They are a good place to look first to understand what your UG supervisees or advisees have been taught on a particular topic.
 
-The tutorials are built in {learnr}, an interactive platform for learning and running R code. So, unlike the tutorial you're currently reading, they must be run inside an R session. We have already installed all of the tutorials in your Posit Cloud workspace.
+The tutorials are built in {learnr}, an interactive platform for learning and running R code. So, unlike the tutorial you're currently reading, they must be run inside an R session. 
 
-To open a tutorial, open any project and click on the Tutorial tab in the Environment pane. You can run any tutorial from here, but the relevant one for the linear modelling we are working on now is `discovr_08`, "the GLM". Scroll down to this tutorial and click the "Start Tutorial ▶️" button to load the tutorial.
+To start a tutorial, open any project and click on the Tutorial tab in the Environment pane. You can run any tutorial from here, but the relevant one for the linear modelling we are working on now is `discovr_08`, "the GLM". Scroll down to this tutorial and click the "Start Tutorial ▶️" button to load the tutorial.
 
-Because `discovr` tutorials run within R, you don't need to use any external documents; you can write and run R code within the tutorial itself. However, I *strongly* recommend that whenever you work with these tutorials, you write and run your code in a separate document, otherwise you will have no record of the code and output.
+Because {discovr} tutorials run within R, you don't need to use any external documents; you can write and run R code within the tutorial itself. However, I *strongly* recommend that whenever you work with these tutorials, you write and run your code in a separate document, otherwise you will have no record of the code and output.
 :::
 
 ### Data and Codebook
 
-Today's data is a truncated version of the `TeachingRatings` dataset from the {AER} package. You can load the codebook in the Help viewer by running the following in the Console:
-
-```         
-?AER::TeachingRatings
-```
+Today's data is the `TeachingRatings` dataset from the {AER} package. This dataset is built into the package, so you don't need to read it in from anywhere. Instead, use the code below to get the data and rename it `teach_tib` (not necessary, just easier to type!).
 
 ```{r}
-#| include: false
-
 data("TeachingRatings", package = "AER")
 teach_tib <- TeachingRatings
+```
+
+::: {.callout-tip title="Installing {AER}" collapse="true"} 
+As usual, no need to install anything on the Cloud, but elsewhere install {AER} first in the Console:
+
+```r
+install.packages("AER")
+```
+:::
+
+You can load the codebook in the Help viewer by running the following in the Console:
+
+```r         
+?AER::TeachingRatings
 ```
 
 ### One Predictor
 
 Now that we have some data, we can fit our first model with a single predictor. We will do this with the very hardworking `lm()` function in R, standing for "linear model".
 
+#### General Format
+
 The `lm()` function has *a lot* of options (as you might expect, given the versatility and ubiquity of linear models!), but its basic format to fit a linear model with a single predictor is very simple:
 
-```         
+```r         
 lm(outcome ~ predictor, data = our_dataset)
 ```
 
@@ -144,7 +170,7 @@ The `anova()` function will only work for model comparison for particular models
 
 2.  **All models must be fit to the same dataset.** If, for example, your first predictor has no missing values, but your second predictor had one, the model with using the second predictor would have been fit to a dataset of a different size than the model using only the first, and the `anova()` function will throw an error to this effect.
 
-If you encounter this issue, you may need to [inspect and clean your dataset](..\02_essentials\06_filter.qmd) before you proceed with analysis!
+If you encounter this issue, you may need to [inspect and clean your dataset](..\02_essentials\05_filter.qmd) before you proceed with analysis!
 :::
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
@@ -211,7 +237,7 @@ If you're wondering what's up with `which`, the `plot()` function that `autoplot
 :::
 :::
 
-If you want to customise the theme or look of these plots further, they are built with {ggplot2} so you can add or change anything about them using that package. We will come round later to [a detailed exploration of data visualisations with {ggplot2}](..\02_essentials\05_dataviz.qmd).
+If you want to customise the theme or look of these plots further, they are built with {ggplot2} so you can add or change anything about them using that package. We will come round later to [a detailed exploration of data visualisations with {ggplot2}](..\02_essentials\07_dataviz.qmd).
 
 #### Distribution of Standardised Residuals
 
@@ -245,7 +271,7 @@ Comparing the values of the two versions of the model, we can see that the param
 
 ##### Robust CIs and *p*-values
 
-To test and adjust for heteroscedastic residuals, we can re-estimate the standard error using a robust method. To do this, we'll use the `parameters::model_parameters()` function with the argument `vcov = "HC4"` as recommended in the `discovr` tutorial. To do this, use the unadjusted model object `eval_full_lm` as the first argument.
+To test and adjust for heteroscedastic residuals, we can re-estimate the standard error using a robust method. To do this, we'll use the `parameters::model_parameters()` function with the argument `vcov = "HC4"` as recommended in the {discovr} tutorial. To do this, use the unadjusted model object `eval_full_lm` as the first argument.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
 Use `parameters::model_parameters()` to re-estimate the *SE*s, CIs, and *p*-values, and compare the results to the unadjusted model.
@@ -792,7 +818,7 @@ Simply update the `format: html` YAML option to `format: docx` and render your d
 :::
 :::
 
-## Well done!
+\ 
 
 And there we have it! You now have a complete example of a linear model report, rendered into both HTML and Word, to refer to. It's amazing how much you're able to do after just a few weeks!
 
