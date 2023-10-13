@@ -332,7 +332,7 @@ Using **only** View mode, figure out the following:
 
 These features are really useful to have a quick poke around the data or check that everything is in order. However, keep in mind an important point: **None of the changes made in View mode affect the data**. View mode is essentially read-only; there's no way to actually change the dataset or extract the values (like the range or max value) outside of copying them down by hand[^by_hand]. We'll have to use R to work with the data in order to do that.
 
-[^by_hand]: ![]("https://media.giphy.com/media/12XMGIWtrHBl5e/giphy.gif", fig-alt="A gif of Michael from the Office (US) shouting "Oh God no! Please no! NOOOOO")
+[^by_hand]: ![](https://media.giphy.com/media/12XMGIWtrHBl5e/giphy.gif, fig-alt='A gif of Michael from the Office (US) shouting "Oh God no! Please no! NOOOOO"')
 
 ::: {.callout-important title="No Touching"}
 If you are used to programmes like SPSS or Excel, where you can directly edit or work with the data in the spreadsheet, switching to R can be quite a frustrating change. Even though View mode looks similar, it's like the dataset is behind glass - you can't affect it directly. As we start working with the data via objects and functions, it may feel a bit like you are trying to work blindfolded - you can't actually "see" what you are doing as you do it.

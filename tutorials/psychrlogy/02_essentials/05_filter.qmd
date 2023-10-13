@@ -1,7 +1,5 @@
 ---
 title: "05: Filter and Select"
-aliases:
-  - tutorials\psychrlogy\02_essentials\06_filter.html
 ---
 
 ## Overview
@@ -92,14 +90,14 @@ The `filter()` function's primary job is to easily and transparently **subset th
 
 ### General Format
 
-```r
-dataset_name |>
-  dplyr::filter
-    logical_assertion
+``` {r}
+#| eval: false
+
+dataset_name |> #<1>
+  dplyr::filter #<12>
+    logical_assertion #<3>
   )
 ```
-
-We can read these three lines as follows:
 
 1.  Take the dataset `dataset_name`, *and then*
 2.  Filter it keeping only the cases where the following assertion is true:
@@ -193,6 +191,8 @@ As a final example, let's consider a situation where we want to retain only peng
 There are few ways to do this. If you have only three categories - as we do here - we can just drop the one we don't want, as we did above.
 
 ```{r}
+#| eval: false
+
 peng_dat |> 
   dplyr::filter(island != "Torgersen")
 ```
@@ -200,6 +200,8 @@ peng_dat |>
 However, if we *did* have more than three total categories, we'd face the same issue: namely, we want to compare a single value (whatever is in `island`) to more than one possible match (`"Biscoe"` or `"Dream"`), and get `TRUE` if it matches any of them. To do this, we need a new operator: `%in%`, which God knows I just pronounce as "in" (try saying "percent-in-percent" three times fast!). This looks for any matches with any of the elements that come after it:
 
 ```{r}
+#| eval: false
+
 peng_dat |> #<1>
   dplyr::filter( #<2>
     island %in% c("Dream", "Biscoe") #<3>
@@ -326,7 +328,7 @@ peng_dat |>
 
 [^2]: I did try to think of a snazzy acronym here, but all I came up with is AEC (yikes). I'll keep thinking and try to update this with something better, and I welcome suggestions if you've made it this far!
 
-### Multiple Conditions
+### Multiple Assertions
 
 Logical assertions can also be combined to specify exactly the cases you want to retain. The two most important operators are:
 
@@ -390,6 +392,8 @@ To see how this works, let's filter `peng_dat` to keep only cases that are from 
 This requires two separate statements, combined with `|` "OR". In other words, we want to keep heftier penguins from Biscoe and Torgersen islands, and all of the penguins from Dream Island regardless of weight.
 
 ```{r}
+#| eval: false
+
 peng_dat |> #<1>
   dplyr::filter( #<2>
     island == "Dream" | #<3>
@@ -511,6 +515,8 @@ Let's say our study focuses on sex differences in penguins. So, we must drop any
 You can think of `is.na()` as a question about whatever is in its brackets: "Is (this) `NA`?" If the value IS an `NA`, R will return `TRUE`; if it's anything else at all, R will return `FALSE`. Let's see this in action:
 
 ```{r}
+#| eval: false
+
 peng_dat_proc |> #<1>
   dplyr::filter( #<2>
     is.na(sex) #<3>
@@ -685,7 +691,7 @@ These helper functions can be combined with the selection methods above in any c
 
 -   `everything()` for all columns
 -   `starts_with()`, `ends_with()`, and `contains()` for selecting columns by shared name elements
--   `where()` for [selecting with a function](06_filter.qmd#using-functions), described in the next section
+-   `where()` for [selecting with a function](05_filter.qmd#using-functions), described in the next section
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
 Open the help documentation by running `?dplyr::select` in the Console to see examples of how to use all of the `<tidyselect>` helper functions.
@@ -705,6 +711,7 @@ peng_dat |>
     starts_with("bill")
   )
 ```
+:::
 :::
 
 ::: {.callout-note appearance="minimal" title="Exercises"}
@@ -739,6 +746,7 @@ peng_dat |>
 peng_dat |> 
   dplyr::select(!contains(c("mm", "_g")))
 ```
+:::
 :::
 
  
@@ -795,14 +803,12 @@ Instead of just the name of a function, as we had before, we now have a formula.
 So, this command can be read: "Take my tibble and select all the columns where the following is true: the data type is numeric AND the minimum value in that column is greater than or equal to 200 (ignoring missing values)."
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
 **CHALLENGE:** Select the variables in `peng_dat` that are factors, or that do NOT contain any missing values.
 
 *Hint*: You may need to use function(s) that we haven't covered in the tutorials so far to solve this.
 
 ::: {.callout-note collapse="true" title="Solution"}
-
-This one is a doozy! Very well done if you worked it out, either using your own solution or one like this, or if you got partway there. 
+This one is a doozy! Very well done if you worked it out, either using your own solution or one like this, or if you got partway there.
 
 ```{r}
 peng_dat |> 
@@ -846,29 +852,24 @@ This bit is meant to be quick, so we'll only look briefly at what we teach in UG
 In first year, we teach the function `GGally::ggscatmat()`, which is a quick way to generate a complex plot with lots of useful info, relatively painlessly. However, `ggscatmat()` (if you're wondering, that's G-G-scat-mat, like "scatterplot matrix") will only work on numeric variables, so we'll need to `select()` the ones we want first.
 
 ::: callout-tip
-
 Functions like `ggscatmat()` output a special kind of plot created with {ggplot2}, another core {tidyverse} package. The lovely thing about ggplot-creating functions like this is that they do a lot of the heavy lifting of plot creation for you - getting a bunch of the complicated structure and setup out of the way - and then you can customise the plot further using {ggplot2}.
 
 If you haven't used {ggplot2} before, we'll work through it systematically in an upcoming tutorial. If you can't wait, check out:
 
-- `discovr_05` on data visualisation with {ggplot2}
-- [R for Data Science chapter 3](https://r4ds.had.co.nz/data-visualisation.html)
-- This [list of {ggplot2} resources](https://sites.northwestern.edu/researchcomputing/2020/04/13/online-learning-resources-r-ggplot2/)
-
+-   `discovr_05` on data visualisation with {ggplot2}
+-   [R for Data Science chapter 3](https://r4ds.had.co.nz/data-visualisation.html)
+-   This [list of {ggplot2} resources](https://sites.northwestern.edu/researchcomputing/2020/04/13/online-learning-resources-r-ggplot2/)
 :::
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
 Select at least three numeric variables from `peng_dat` and pipe into `ggscatmat()`.
 
 ::: {.callout-note collapse="true" title="Solution"}
-
 ```{r}
 peng_dat |> 
   dplyr::select(where(is.numeric), -year) |> 
   GGally::ggscatmat()
 ```
-
 :::
 :::
 
@@ -877,13 +878,11 @@ So, this single function gets a pretty complex plot: a matrix containing all of 
 This is the only {GGally} function we teach in UG at Sussex, but to go a bit further, there's another example that might be useful in the future.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
 **CHALLENGE**: Use `GGally::ggpairs()` on the same numeric variables, but split up all the plots by `species` as well.
 
 *Hint*: The {palmerpenguins} intro has this code!
 
 ::: {.callout-note collapse="true" title="Solution"}
-
 The `tidyr::drop_na()` line isn't *essential*, but there will be a lot of howling and gnashing of teeth about missing data and non-finite values if you don't include it.
 
 ```{r}
@@ -906,8 +905,8 @@ cool_plot <- peng_dat |>
 
 print(cool_plot, progress = FALSE)
 ```
-The example of this in the {palmerpenguins} intro document also changes the default colours, which is something we'll look at when we take a tour through {ggplot2} ourselves.
 
+The example of this in the {palmerpenguins} intro document also changes the default colours, which is something we'll look at when we take a tour through {ggplot2} ourselves.
 :::
 :::
 
@@ -916,12 +915,10 @@ The example of this in the {palmerpenguins} intro document also changes the defa
 If we wanted to perform and report a detailed correlation analysis on a single pair of variables, the easiest function to use is `cor.test()`. Like `t.test()` (which we encountered in Tutorial 01/02), this is a {stats} package that works in a very similar way.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
 Using the help documentation for `cor.test()`, perform a correlation analysis between any two numeric variables of your choice in the `peng_dat` dataset. The solution will use the formula option, but if you get it to run, you're doing good!
 
 ::: {.callout-note collapse="true" title="Solution"}
-
-Run `?cor.test` in the Console. 
+Run `?cor.test` in the Console.
 
 I chose bill length and flipper length, but whatever you chose is fine!
 
@@ -951,14 +948,13 @@ Which will render as:
 
 In second year, UGs are also introduced to the (more {tidyverse}-friendly) function `correlation::correlation()`.
 
-Why would you use this one vs `cor.test()`? On the good side, this function scales up to pairwise tests between as many variables as you give it. This means if you want, for instance, multiple pairwise correlations within a dataset, this is the way to go, since it will apply a familywise error rate correction by default (Holm, to be precise). 
+Why would you use this one vs `cor.test()`? On the good side, this function scales up to pairwise tests between as many variables as you give it. This means if you want, for instance, multiple pairwise correlations within a dataset, this is the way to go, since it will apply a familywise error rate correction by default (Holm, to be precise).
 
-On the other hand, it's a right pain to type and doesn't play ball with {papaja}. The family of packages that {correlation} belongs to, [collectively called {easystats}](https://easystats.github.io/easystats/), has its own reporting package, appropriately called {report} - so pick your poison I guess 🤷[^ugh]
+On the other hand, it's a right pain to type and doesn't play ball with {papaja}. The family of packages that {correlation} belongs to, [collectively called {easystats}](https://easystats.github.io/easystats/), has its own reporting package, appropriately called {report} - so pick your poison I guess 🤷[^4]
 
-[^ugh]: Look, I like my basic {stats} functions. They all look the same and work the same way, don't require extra installations or loading, and can be reported nicely with {papaja} or custom functions. I love an `htest` object, me! **BUT**, you gotta find the functions that do what you need them to do. You won't always use one or the other - just use the one that makes sense to you and works for the task at hand.
+[^4]: Look, I like my basic {stats} functions. They all look the same and work the same way, don't require extra installations or loading, and can be reported nicely with {papaja} or custom functions. I love an `htest` object, me! **BUT**, you gotta find the functions that do what you need them to do. You won't always use one or the other - just use the one that makes sense to you and works for the task at hand.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
 Select at least three variables from `peng_dat`, including the ones you used with `cor.test()` above, and get pairwise correlations between all of them with `correlation::correlation()`.
 
 ::: {.callout-note collapse="true" title="Solution"}
@@ -970,6 +966,6 @@ peng_dat |>
 :::
 :::
 
-\ 
+ 
 
 We made it to the end, if you can believe it!

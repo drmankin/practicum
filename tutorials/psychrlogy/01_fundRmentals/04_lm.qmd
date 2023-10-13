@@ -170,7 +170,7 @@ The `anova()` function will only work for model comparison for particular models
 
 2.  **All models must be fit to the same dataset.** If, for example, your first predictor has no missing values, but your second predictor had one, the model with using the second predictor would have been fit to a dataset of a different size than the model using only the first, and the `anova()` function will throw an error to this effect.
 
-If you encounter this issue, you may need to [inspect and clean your dataset](..\02_essentials\06_filter.qmd) before you proceed with analysis!
+If you encounter this issue, you may need to [inspect and clean your dataset](..\02_essentials\05_filter.qmd) before you proceed with analysis!
 :::
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
@@ -237,7 +237,7 @@ If you're wondering what's up with `which`, the `plot()` function that `autoplot
 :::
 :::
 
-If you want to customise the theme or look of these plots further, they are built with {ggplot2} so you can add or change anything about them using that package. We will come round later to [a detailed exploration of data visualisations with {ggplot2}](..\02_essentials\05_dataviz.qmd).
+If you want to customise the theme or look of these plots further, they are built with {ggplot2} so you can add or change anything about them using that package. We will come round later to [a detailed exploration of data visualisations with {ggplot2}](..\02_essentials\07_dataviz.qmd).
 
 #### Distribution of Standardised Residuals
 

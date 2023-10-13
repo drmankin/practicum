@@ -72,8 +72,8 @@ If **yes**, write the code in a **code chunk**. By adding the code to a document
 If **no**, write the code in the **Console**. Code written directly in the Console isn't saved or documented anywhere[^1]. Some common uses of the Console are:
 
 1.  [Installing/updating packages](03_datasets.qmd)
-1.  Opening help documentation
-1.  Drafting or testing code to go into a document.
+2.  Opening help documentation
+3.  Drafting or testing code to go into a document.
 
 So, I often use the Console to test my code, building it up bit by bit, until it does what I want it to do. Then, when I've puzzled out the solution, I add it into a code chunk.
 
@@ -136,25 +136,26 @@ Just like learning any other language, learning to communicate with R takes time
 ::: callout-important
 ### GlossoRlia: the Language of Errors
 
-Very often, R communicates with you via errors. Unlike many other computer programmes you might be familiar with, an "error" in R doesn't (usually!) mean a catastrophic failure and/or potential loss of hours of work[^fatal]. Rather, whatever you've asked R to do, it's essentially replied, "[Sorry, I can't do that.](https://youtu.be/7qnd-hdmgfk?feature=shared)" Two of the most important skills you can develop early on with R is to **treat errors as feedback**, and to **learn to read and recognise errors**.
-
-[^fatal]: Don't get me wrong - crashes do happen! But they often look like a "fatal error" popup message, the programme freezing, or other obvious breakdowns of the programme itself. "Errors" in code as we're seeing here are just a part of the normal functioning of R and don't usually mean anything particularly horrific is occurring.
+Very often, R communicates with you via errors. Unlike many other computer programmes you might be familiar with, an "error" in R doesn't (usually!) mean a catastrophic failure and/or potential loss of hours of work[^2]. Rather, whatever you've asked R to do, it's essentially replied, "[Sorry, I can't do that.](https://youtu.be/7qnd-hdmgfk?feature=shared)" Two of the most important skills you can develop early on with R is to **treat errors as feedback**, and to **learn to read and recognise errors**.
 
 *Treat errors as feedback*: Errors aren't (just) an annoyance, although running into lots of errors, usually just when you don't want them the most!, can be incredibly frustrating. However, errors are just R's way of telling you that it can't do what you've asked it to do. If you're trying to work out how to get R to do something, then the "no" of an error rules out whatever you've just tried. Rather than setting out to avoid errors, and thinking of an error as a "failure" to "do it right", it's much better to expect errors, and make use of them as part of the code-writing process.
 
 *Learn to read and recognise errors*: Errors often contain useful information about what's gone wrong and how to fix it. At minimum, errors usually contain the following information:
 
-- Where in the document the error occurred, or which command/bit of code produced the error
-- Some sort of message about what went wrong.
+-   Where in the document the error occurred, or which command/bit of code produced the error
+-   Some sort of message about what went wrong.
 
 Errors vary wildly in understandability and helpfulness, from highly technical jargon to friendly and conversational with suggestions for fixing common problems. Even the obtuse ones, though, will become familiar with time.
 :::
+
+[^2]: Don't get me wrong - crashes do happen! But they often look like a "fatal error" popup message, the programme freezing, or other obvious breakdowns of the programme itself. "Errors" in code as we're seeing here are just a part of the normal functioning of R and don't usually mean anything particularly horrific is occurring.
 
 Let's take a look at how we might interpret the error we produced above.
 
 ```{r}
 aslavb;lj aew aljvb
 ```
+
 Here R doesn't need to tell us where the error is, because there's only one thing it's trying to run. We do have the text of the error, though: `object 'aslavb' not found`. We'll come to objects [later on in this tutorial](01_02_intro.qmd#Objects), but in short R is looking for some information labeled `aslavb` and can't find it (because it's just a keysmash!). This is an example of an error that comes up *all the time* - often when you've made a typo, or forgotten to create or store information in an object properly. For me at this point, as someone who forgets or mistypes things on the reg, this error is a familiar friend!
 
  
@@ -407,7 +408,7 @@ Write the following assertions in R:
 ::: {.callout-tip title="Asserting Equivalence"}
 The last few statements above may have caused you some trouble if the notation is unfamiliar.
 
-For "less than or equal to", R won't recognise the $\le$ symbol. Instead, we combine two operators, "less than" `<` and "equal to" `=`, in the same order we'd normally read them aloud. The same goes for "greater than or equal to", `>=`. (It does have to be this way round; try `=<` and  `=>` to see what happens.)
+For "less than or equal to", R won't recognise the $\le$ symbol. Instead, we combine two operators, "less than" `<` and "equal to" `=`, in the same order we'd normally read them aloud. The same goes for "greater than or equal to", `>=`. (It does have to be this way round; try `=<` and `=>` to see what happens.)
 
 For "does not equal", `!` is common notation in R for "not", or the reverse of something. So `!=` can be read as "not-equals".
 
@@ -430,16 +431,14 @@ Use a single command to ask R whether the numbers 2 through 10 are less than or 
 :::
 :::
 
-Here R prints out a value of `TRUE` or `FALSE` for each comparison it's asked to make. So, the first element in the output (`TRUE`) corresponds to the statement `2 <= 6`, the second to `3 <= 6`, and so on. This is a vectorised calculation again, as we saw with numeric data before. These vectorised assertions will be absolutely essential to [selecting and filtering data](..\02_essentials\06_filter.qmd) that meet particular requirements, or checking our data to find problems.
+Here R prints out a value of `TRUE` or `FALSE` for each comparison it's asked to make. So, the first element in the output (`TRUE`) corresponds to the statement `2 <= 6`, the second to `3 <= 6`, and so on. This is a vectorised calculation again, as we saw with numeric data before. These vectorised assertions will be absolutely essential to [selecting and filtering data](..\02_essentials\05_filter.qmd) that meet particular requirements, or checking our data to find problems.
 
 ::: {.callout-tip title="SPSS Data Types" collapse="true"}
-
 If you're a regular SPSS user, you might recognise many of these data types from SPSS. See page 7 of [this SPSS user guide](https://public.dhe.ibm.com/software/analytics/spss/documentation/statistics/26.0/en/client/Manuals/IBM_SPSS_Statistics_Brief_Guide.pdf) for a reminder of these types.
 
 So far, what we've called "numeric" in R is also (broadly) "scale/numeric" in SPSS. What we've called "character" in R is "string" in SPSS. As far as I know, SPSS doesn't have an equivalent of "logical", but would probably be a "nominal/string" type.
 
 We haven't thus far talked about a few common data types that you might be used to using in SPSS. Ordinal and Nominal data types in SPSS correspond (more or less) to *factors* in R, which we will come to in a later tutorial. R also has date-time data, which is not covered in this series, but if you need to use it, [check out the {lubridate} package](https://lubridate.tidyverse.org/).
-
 :::
 
  
@@ -528,9 +527,9 @@ as.numeric(c(20, "42", "36 years old"))
 
 Here for the first time we see an example of a **warning**. Warnings are not errors, even though they get printed out in the same (usually alarming) colour and the same (often unfriendly) curt tone. The key difference is **whether the code runs or not**. With errors, the code cannot be executed as written, and the error is returned at the point where the execution failed. With warnings, the code CAN be (and has been) executed as written, but R is telling you that it has done something that you might not have expected or wanted along the way.
 
-What we have asked in this command is for three pieces of data to be coerced to numeric type. The first, `20`, is already numeric type, so presents no issue. The second, `"42"`, is character type (because of the quotes), but is also parsable as a number so similarly presents no issue. The problem is `"36 years old"`, which cannot be turned into a number[^2]. Instead of throwing an error, though, R instead replaces `"36 years old"` in the output vector with `NA`, and prints a warning to let you know it's done this. If this is what you wanted (and sometimes it might be), you can ignore it, but if you thought that all these ages were already numbers, this warning would be an important flag to investigate your data a bit more thoroughly.
+What we have asked in this command is for three pieces of data to be coerced to numeric type. The first, `20`, is already numeric type, so presents no issue. The second, `"42"`, is character type (because of the quotes), but is also parsable as a number so similarly presents no issue. The problem is `"36 years old"`, which cannot be turned into a number[^3]. Instead of throwing an error, though, R instead replaces `"36 years old"` in the output vector with `NA`, and prints a warning to let you know it's done this. If this is what you wanted (and sometimes it might be), you can ignore it, but if you thought that all these ages were already numbers, this warning would be an important flag to investigate your data a bit more thoroughly.
 
-[^2]: Well, not in the single command we're using here. We can certainly get out the age `36`, but it will take a bit more work. We'll come back to this problem in the Essentials section of the course.
+[^3]: Well, not in the single command we're using here. We can certainly get out the age `36`, but it will take a bit more work. We'll come back to this problem in the Essentials section of the course.
 
  
 
@@ -538,9 +537,9 @@ What we have asked in this command is for three pieces of data to be coerced to 
 
 R is a programming language, but (being created by speakers of natural language) it has many features similar or analogous to natural languages. In this section, we'll cover the basic "grammar" of R, including how R understands what you ask it to do.
 
-In a similar way that the basic unit of many languages is the word[^3], the basic unit of the R programming language is the **object**. This section will explore the basics of what an object is and some of their key features in R.
+In a similar way that the basic unit of many languages is the word[^4], the basic unit of the R programming language is the **object**. This section will explore the basics of what an object is and some of their key features in R.
 
-[^3]: As a linguist I have to note, one, [words don't exist](https://amazingakita.tumblr.com/post/181685581034/people-who-dont-even-care-about-language-how-can), and two, the closest linguistic term for what an object is is probably "lexeme". "Word" will get you in the right vicinity, though, conceptually. If you'd like to dive down this rabbit hole (rabbit-hole?) [this Crash Course video on morphology](https://www.youtube.com/watch?v=93sK4jTGrss) is a good place to start.
+[^4]: As a linguist I have to note, one, [words don't exist](https://amazingakita.tumblr.com/post/181685581034/people-who-dont-even-care-about-language-how-can), and two, the closest linguistic term for what an object is is probably "lexeme". "Word" will get you in the right vicinity, though, conceptually. If you'd like to dive down this rabbit hole (rabbit-hole?) [this Crash Course video on morphology](https://www.youtube.com/watch?v=93sK4jTGrss) is a good place to start.
 
 ::: {.callout-tip title="Definition: Objects"}
 Objects are the basic elements that R is built around - the equivalent of words. An "object" in R is any bit of information that is stored with a particular name. Objects can hold anything, from a single number or word to huge datasets with thousands of data points or complex graphs. These named objects are the main way you, the programmer, can store, retrieve, and interact with information in R.
@@ -580,6 +579,7 @@ Generally, you can name objects pretty freely in R. Object names must be a singl
 ## This doesn't work because it would frankly be bonkers if it did
 1285 <- "a"
 ```
+
 ```{r}
 ## Can't start with a number...
 1stletter <- "a"
@@ -607,6 +607,7 @@ It is actually possible to use unallowable symbols, like spaces and punctuation,
 
 nope this is bad <- "a"
 ```
+
 ```{r}
 `but this one works!` <- "a"
 `but this one works!`
@@ -632,13 +633,13 @@ quiz_9am <- c(75, 58, 62, 16, 33, 67)
 quiz_6pm <- c(45, 90, 27, 65, 39, 77)
 ```
 
-Let's have a look at these two commands. On the left side I've written the name I want my new object to have, which I've called `quiz_9am`[^4]. Next, the assignment operator `<-` assigns whatever comes after it to the object label `quiz_9am`. Finally, I've written instructions for what I want this object to contain: in this case, a vector of numbers that I've made up, but that reasonably look like quiz scores. The second command is the same as the first, but with a **different** object name and different numbers.
+Let's have a look at these two commands. On the left side I've written the name I want my new object to have, which I've called `quiz_9am`[^5]. Next, the assignment operator `<-` assigns whatever comes after it to the object label `quiz_9am`. Finally, I've written instructions for what I want this object to contain: in this case, a vector of numbers that I've made up, but that reasonably look like quiz scores. The second command is the same as the first, but with a **different** object name and different numbers.
 
 If you haven't done this yet, do so now, even if you've looked at the solution rather than trying it for yourself first. Once you've typed the command, there's a final step to actually create the object: you have to **run** the command in order for it to take effect. As a reminder, you can do this by clicking the green ▶️ button in the upper right corner of the code chunk, or by pressing Ctrl/Cmd + Enter when your cursor is blinking on the same line as the code you want to run.
 :::
 :::
 
-[^4]: Again, I could have called this object anything, like `the_first_example_of_an_object_InThisSection.so.far` or `made_upQuizScores.fornineamclass` or anything else that follows R's naming conventions. However, it's a good idea to name your objects something brief and obvious, so you can remember what they contain and work with them easily.
+[^5]: Again, I could have called this object anything, like `the_first_example_of_an_object_InThisSection.so.far` or `made_upQuizScores.fornineamclass` or anything else that follows R's naming conventions. However, it's a good idea to name your objects something brief and obvious, so you can remember what they contain and work with them easily.
 
 Assuming your code is valid, you should see a green bar appear along the left-hand side of the code chunk when you run the code, but you might notice that there's no printout that appears under the code chunk, as there was previously. In fact, if the code ran successfully, it might look like nothing happened at all. To find out what *did* happen, look your Environment pane. You should now see a new section, "Values", and underneath the name of your new objects and what they contain. Success!
 
@@ -664,12 +665,12 @@ This output looks just like what we saw earlier, when we just asked R to print o
 ::: {.callout-important title="Creating vs Calling"}
 These two actions are the essential basis of everything you will do in R. All of your code will, at base, either create an object, or call an object. (Changing an existing object, as we'll see shortly, is the exact same procedure as creating one from scratch.)
 
-When you **create** an object using the assignment operator (`<-`), the object is created but is **not** printed out. This is because R always does only and exactly what you ask it to do, and using the assignment operator only tells R to assign something to an object, not to print it out[^print].
-
-[^print]: There is a way to do this - you can enclose the entire expression in round brackets, e.g. `(object <- instructions)`, which will BOTH create the object AND print out what that object contains at the same time. I'm not using this method in these tutorials because I think it will be confusing, since it's primarily for demonstration purposes and not necessary the sort of thing you'd want to use in your own analysis code.
+When you **create** an object using the assignment operator (`<-`), the object is created but is **not** printed out. This is because R always does only and exactly what you ask it to do, and using the assignment operator only tells R to assign something to an object, not to print it out[^6].
 
 When you **call** an object, the current contents of that object are printed out, but that object is **not** changed - you only reproduce a copy of its contents for review. To create or change an object, you must use the assignment operator to assign the output to a new (or existing) object name.
 :::
+
+[^6]: There is a way to do this - you can enclose the entire expression in round brackets, e.g. `(object <- instructions)`, which will BOTH create the object AND print out what that object contains at the same time. I'm not using this method in these tutorials because I think it will be confusing, since it's primarily for demonstration purposes and not necessary the sort of thing you'd want to use in your own analysis code.
 
 Let's make all of this a bit more concrete by seeing how we can use objects effectively.
 
@@ -821,7 +822,6 @@ Finally, **overwriting objects only changes the overwritten objects, and NOT any
 quiz_9am <- c(75, 58, 62, 16, 33, 67, 89, 100, 79)
 ```
 
-
 ```{r}
 ## Value calculated previously
 quiz_diff
@@ -931,9 +931,9 @@ The second argument of `round()` is a named argument, `digits = 0`. You can thin
 
 The help documentation tells us that `digits` should be an "integer indicating the number of decimal places...to be used." We can also see in "Usage" that this argument has a default value, `digits = 0`. That means that if we don't explicitly include the argument `digits` when we use the function, by default the `round()` function will round the number you give it to 0 decimal places. Named arguments frequently, but not always, have a default, and it's important to check so the function doesn't quietly do something unexpected.
 
-Default values of arguments are really useful, because the default is often the most frequently used or safest[^safe] setting. It means you don't have to specify every single aspect of a function every time you use it, as long as you want the function to work according to its defaults. In our case, we actually wanted `round()` to round to two decimal places, not 0. So, in our command, we should change the `digits` setting from the default, `0`, to `2`.
+Default values of arguments are really useful, because the default is often the most frequently used or safest[^7] setting. It means you don't have to specify every single aspect of a function every time you use it, as long as you want the function to work according to its defaults. In our case, we actually wanted `round()` to round to two decimal places, not 0. So, in our command, we should change the `digits` setting from the default, `0`, to `2`.
 
-[^safe]: By "safest" setting, I mean that the function makes the fewest assumptions about what you intended.
+[^7]: By "safest" setting, I mean that the function makes the fewest assumptions about what you intended.
 
 ### Using Functions
 
