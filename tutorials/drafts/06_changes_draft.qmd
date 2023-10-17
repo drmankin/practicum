@@ -14,13 +14,11 @@ execute:
 
 ## Overview
 
-This tutorial covers three more essential `dplyr` functions: `group_by()`, `mutate()`, and `summarise()`. 
+This tutorial covers three more essential `dplyr` functions: `group_by()`, `mutate()`, and `summarise()`.
 
 The first, `group_by()`, is a helper function that allows new variables or summaries to be created within subgroups.
 
 Very similar in structure, the latter two functions primarily differ in output. `mutate()` makes changes within a given dataset by creating new variables (columns) whereas `summarise()` uses the information in a given dataset to create a new, separate summary dataset.
-
-
 
 ## Setup
 
@@ -46,7 +44,7 @@ library(AER)
 
 ### Data
 
-We'll once again make use of a dataset from the {AER} package. 
+We'll once again make use of a dataset from the {AER} package.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
 Use the `data()` function to read the `STAR` dataset from the {AER} package, and rename it `star_tib` (for consistency's sake!).
@@ -56,7 +54,6 @@ Use the `data()` function to read the `STAR` dataset from the {AER} package, and
 data("STAR", package = "AER")
 star_tib <- STAR
 ```
-
 :::
 :::
 
@@ -70,7 +67,6 @@ Open the codebook for the `STAR` dataset as help documentation.
 *Hint*: Use `?` and run this code **in the Console**.
 
 ::: {.callout-note collapse="true" title="Solution"}
-
 We've renamed this dataset for our own use (personally I hate typing caps!), but we'll need to use its original name in order to pull up the help documentation.
 
 ``` r
@@ -102,7 +98,7 @@ all(star_tib_gb == star_tib, na.rm = TRUE)
 
 So what's happened?
 
-If you look at the printout of the grouped tibble above, you might notice one new thing. Next to the box we've seen before, reading "A tibble: `r nrow(star_tib)` x `r ncol(star_tib)`", there's now a second box reading "Grouped: gender [3]". We can interpret this to mean this tibble is now grouped by the gender variable, which contains three different groups.
+If you look at the printout of the grouped tibble above, you might notice one new thing. Next to the box we've seen before, reading "A tibble: `r nrow(star_tib)` x `r ncol(star_tib)`", there's now a second box reading "Grouped: gender \[3\]". We can interpret this to mean this tibble is now grouped by the gender variable, which contains three different groups.
 
 What are those groups? We could use any method we covered in the previous tutorials to find out, but one option is to count them:
 
@@ -113,10 +109,9 @@ star_tib |>
 
 So, the three groups are "male", "female", and `NA` (missing).
 
-What's happened is that we've introduced a **structural** change to our dataset. Whatever calculations we ask R to perform after grouping, those calculations will take place *within the groups*. 
+What's happened is that we've introduced a **structural** change to our dataset. Whatever calculations we ask R to perform after grouping, those calculations will take place *within the groups*.
 
-To see what this means, let's have a look at 
-
+To see what this means, let's have a look at
 
 ## Mutate
 
@@ -158,7 +153,7 @@ my_tibble |> # <1>
 ```
 
 1.  Take the dataset and make the following changes:
-2. 
+2.  
 
 ::: callout-tip
 Although creating or modifying variables will likely be the most frequent way you use `mutate()`, it has other handy features such as:
@@ -213,7 +208,6 @@ For lots more details and examples on `rowwise()` and rowwise operations with `d
 :::
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
 What would the above code produce without the `rowwise()...ungroup()` steps (i.e. with only the `mutate()` command)? Make a prediction, then try it.
 
 ::: {.callout-note title="Solution" collapse="true"}
@@ -236,7 +230,6 @@ This code still runs successfully, but the result isn't what we wanted. Have a l
 :::
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
 **CHALLENGE:** The above code is definitely not the only way to obtain the same output. Try producing the the same `anxiety_mean` variable with the following methods. What are the benefits and drawbacks of each methods? *Hint:* Use `vignette("rowwise")` to help if you get stuck.
 
 1.  Using a dedicated by-row function, `rowMeans()`
@@ -595,12 +588,12 @@ peng |>
 ```
 
 1.  To begin, create a new object containing a list. I've called mine `fxs`, short for "functions", but you can of course call it anything you like.
-2.  The elements inside the list have a special format. 
-    1. The first bit, e.g. `mean =`, gives each element a name. This name will be appended to the relevant column in the `summarise()` output, so choose something informative and brief. 
-    2. The second bit, e.g. `~ mean(.x, na.rm = TRUE)`, is the function we want to apply to each variable. The two things to note are the `~`, which denotes "this is a function to apply", and `.x`, which is a placeholder for each of the variables that the function will be applied to.
-3.  Instead of using the familiar `name = instructions` format, we're instead using `dplyr::across()`. Generally, `across()` has two arguments. 
-    1. The first selects which variables to use using `<tidyselect>`; in this case, I've selected all of the numeric-type variables in the dataset (since it will be difficult to calculate the mean and *SD* otherwise!). 
-    2. The second provides a list of function(s) to apply to all of the selected variables. So, I've put in the list I made in the previous steps that contains all the functions I want to use.
+2.  The elements inside the list have a special format.
+    1.  The first bit, e.g. `mean =`, gives each element a name. This name will be appended to the relevant column in the `summarise()` output, so choose something informative and brief.
+    2.  The second bit, e.g. `~ mean(.x, na.rm = TRUE)`, is the function we want to apply to each variable. The two things to note are the `~`, which denotes "this is a function to apply", and `.x`, which is a placeholder for each of the variables that the function will be applied to.
+3.  Instead of using the familiar `name = instructions` format, we're instead using `dplyr::across()`. Generally, `across()` has two arguments.
+    1.  The first selects which variables to use using `<tidyselect>`; in this case, I've selected all of the numeric-type variables in the dataset (since it will be difficult to calculate the mean and *SD* otherwise!).
+    2.  The second provides a list of function(s) to apply to all of the selected variables. So, I've put in the list I made in the previous steps that contains all the functions I want to use.
 
 This function list + `across()` method is extremely versatile. If you are using a lesser-known statistical technique, or even functions of your own making, you can easily add them to your list of functions and apply them with `across()`.
 

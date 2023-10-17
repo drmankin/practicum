@@ -1,6 +1,6 @@
 
 ## Set up output folder
-out <- file.path("../workbooks")
+out <- here::here("workbooks")
 
 ## Create new folder
 if(!dir.exists(out)){
@@ -12,7 +12,9 @@ if(!dir.exists(out)){
 all_qmds_path <- "tutorials/psychrlogy"
 all_qmds <- list.files(path = all_qmds_path, pattern = "qmd", recursive = TRUE)
 
-this_file <- file.path(all_qmds_path, all_qmds[1])
+which_file <- "03_datasets"
+
+this_file <- file.path(all_qmds_path, grep(which_file, all_qmds, value = TRUE))
 
 gen_workbook <- function(this_file, out){
   
@@ -89,8 +91,9 @@ gen_workbook <- function(this_file, out){
     ) |>
     tidyr::fill(fence_index_start) |>
     tidyr::fill(fence_index_end, .direction = "up") |>
+    dplyr::group_by(fence_index_start) |> 
     dplyr::mutate(
-      code_chunk_index = dplyr::case_when(fence_index_start == fence_index_end ~ fence_index_start, TRUE ~ as.integer(0)),
+      code_chunk_index = dplyr::case_when(fence_index_end == min(fence_index_end, na.rm = TRUE) ~ fence_index_start, .default = as.integer(0)),
       is_code = dplyr::if_else(code_chunk_index == 0, FALSE, TRUE)
     )
   
@@ -103,7 +106,7 @@ gen_workbook <- function(this_file, out){
     paste0(collapse="\n\n")
   
   qmd_lines <- qmd_lines |> 
-    dplyr::filter(!is_code) |> 
+    dplyr::filter(!is_code | is.na(is_code)) |> 
     dplyr::filter(is_heading | is_yaml | is_ex_text) |> 
     dplyr::mutate(
       lines = dplyr::case_when(
@@ -124,4 +127,5 @@ gen_workbook <- function(this_file, out){
     writeLines(file.path(out, paste0(gsub(".*/(.*)", "\\1", this_page), "_workbook.qmd")))
 }
 
-# gen_workbook(this_file, out)
+## Generate a single workbook
+gen_workbook(this_file, out)

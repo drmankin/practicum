@@ -163,7 +163,7 @@ The table below is arranged alphabetically by function name, and the linked full
   <tr>
    <td style="text-align:left;"> mean() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/base/mean.html">mean()</a> </td>
-   <td style="text-align:left;"> 01/02: IntRoduction<br>03: Datasets<br>05: Filter and Select </td>
+   <td style="text-align:left;"> 01/02: IntRoduction<br>03: Datasets </td>
   </tr>
   <tr>
    <td style="text-align:left;"> median() </td>
@@ -358,7 +358,7 @@ If you're looking for a particular section of a tutorial, use this handy summary
   </tr>
   <tr>
    <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Filter](tutorials/psychrlogy/02_essentials/05_filter.qmd#filter) </td>
-   <td style="text-align:left;"> [General Format](tutorials/psychrlogy/02_essentials/05_filter.qmd#general-format), [Filtering with Assertions](tutorials/psychrlogy/02_essentials/05_filter.qmd#filtering-with-assertions), [Multiple Conditions](tutorials/psychrlogy/02_essentials/05_filter.qmd#multiple-conditions), [Data Cleaning](tutorials/psychrlogy/02_essentials/05_filter.qmd#data-cleaning) </td>
+   <td style="text-align:left;"> [General Format](tutorials/psychrlogy/02_essentials/05_filter.qmd#general-format), [Filtering with Assertions](tutorials/psychrlogy/02_essentials/05_filter.qmd#filtering-with-assertions), [Multiple Assertions](tutorials/psychrlogy/02_essentials/05_filter.qmd#multiple-assertions), [Data Cleaning](tutorials/psychrlogy/02_essentials/05_filter.qmd#data-cleaning) </td>
   </tr>
   <tr>
    <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Select](tutorials/psychrlogy/02_essentials/05_filter.qmd#select) </td>

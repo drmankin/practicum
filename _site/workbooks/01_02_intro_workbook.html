@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>R Training - Quick Reference</title>
+<title>R Training - 01/02: IntRoduction</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -18,6 +18,40 @@ ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
 width: 0.8em;
 margin: 0 0.8em 0.2em -1em;  vertical-align: middle;
+}
+
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+}
+pre.numberSource { margin-left: 3em; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -1469,7 +1503,7 @@ function fuseSearch(query, fuse, fuseOptions) {
   });
 }
 </script>
-<meta name="quarto:offset" content="./">
+<meta name="quarto:offset" content="../">
 <script>const sectionChanged = new CustomEvent("quarto-sectionChanged", {
   detail: {},
   bubbles: true,
@@ -4443,14 +4477,14 @@ vertical-align: -.125em;
 <style type="text/css">a {color: "#f2c75c";}</style>
 </head>
 
-<body class="nav-sidebar docked nav-fixed">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">R Training</span>
     </a>
   </div>
@@ -4461,15 +4495,15 @@ vertical-align: -.125em;
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html" rel target>
+    <a class="nav-link" href="../index.html" rel target>
  <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./tutorials.html" rel target aria-current="page">
+    <a class="nav-link" href="../tutorials.html" rel target>
  <span class="menu-text">Tutorials</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./workshops.html" rel target>
+    <a class="nav-link" href="../workshops.html" rel target>
  <span class="menu-text">Workshops</span></a>
   </li>  
 </ul>
@@ -4479,7 +4513,7 @@ vertical-align: -.125em;
  <span class="menu-text">Canvas</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html" rel target>
+    <a class="nav-link" href="../about.html" rel target>
  <span class="menu-text">About</span></a>
   </li>  
 </ul>
@@ -4489,140 +4523,68 @@ vertical-align: -.125em;
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-        <i class="bi bi-layout-text-sidebar-reverse"></i>
-      </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./quick_ref.html">Quick Reference</a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
-    </div>
-  </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
-    <div class="sidebar-menu-container"> 
-    <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./tutorials.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Tutorials</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./quick_ref.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Quick Reference</span></a>
-  </div>
-</li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
- <span class="menu-text">FundRmentals</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./tutorials/psychrlogy/01_fundRmentals/01_02_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">01/02: IntRoduction</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./tutorials/psychrlogy/01_fundRmentals/03_datasets.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">03: Datasets</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./tutorials/psychrlogy/01_fundRmentals/04_lm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">04: Reporting Linear Models with Quarto</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
- <span class="menu-text">Essentials</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./tutorials/psychrlogy/02_essentials/05_filter.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">05: Filter and Select</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./tutorials/psychrlogy/02_essentials/06_changes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">06: Mutate and Summarise</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./tutorials/psychrlogy/02_essentials/07_dataviz.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">07: Visualisations</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./tutorials/psychrlogy/02_essentials/08_analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">08: Analysis</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
- <span class="menu-text">ImprovRs</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./tutorials/psychrlogy/03_improvRs/09_qnaires.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">09: Questionnaires</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./tutorials/psychrlogy/03_improvRs/10_reshape.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">10: Reshaping and Merging</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./tutorials/psychrlogy/03_improvRs/11_fx.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">11: Functions</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-    </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#index-of-functions" id="toc-index-of-functions" class="nav-link active" data-scroll-target="#index-of-functions">Index of Functions</a></li>
-  <li><a href="#index-of-topics" id="toc-index-of-topics" class="nav-link" data-scroll-target="#index-of-topics">Index of Topics</a></li>
+  <li><a href="#open-the-tutorial" id="toc-open-the-tutorial" class="nav-link active" data-scroll-target="#open-the-tutorial">Open the Tutorial</a>
+  <ul>
+  <li><a href="#open-in-rstudio-viewer" id="toc-open-in-rstudio-viewer" class="nav-link" data-scroll-target="#open-in-rstudio-viewer">Open in RStudio Viewer</a></li>
+  <li><a href="#open-in-a-new-browser-tab" id="toc-open-in-a-new-browser-tab" class="nav-link" data-scroll-target="#open-in-a-new-browser-tab">Open in a New Browser Tab</a></li>
+  </ul></li>
+  <li><a href="#orientation" id="toc-orientation" class="nav-link" data-scroll-target="#orientation">Orientation</a>
+  <ul>
+  <li><a href="#the-rstudio-interface" id="toc-the-rstudio-interface" class="nav-link" data-scroll-target="#the-rstudio-interface">The RStudio Interface</a>
+  <ul class="collapse">
+  <li><a href="#source" id="toc-source" class="nav-link" data-scroll-target="#source">Source</a></li>
+  <li><a href="#console" id="toc-console" class="nav-link" data-scroll-target="#console">Console</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#errors" id="toc-errors" class="nav-link" data-scroll-target="#errors">Errors</a>
+  <ul>
+  <li><a href="#glossorlia-the-language-of-errors" id="toc-glossorlia-the-language-of-errors" class="nav-link" data-scroll-target="#glossorlia-the-language-of-errors">GlossoRlia: the Language of Errors</a></li>
+  </ul></li>
+  <li><a href="#types-of-data" id="toc-types-of-data" class="nav-link" data-scroll-target="#types-of-data">Types of Data</a>
+  <ul>
+  <li><a href="#numeric-data" id="toc-numeric-data" class="nav-link" data-scroll-target="#numeric-data">Numeric Data</a>
+  <ul class="collapse">
+  <li><a href="#vectors" id="toc-vectors" class="nav-link" data-scroll-target="#vectors">Vectors</a></li>
+  <li><a href="#vector-calculations" id="toc-vector-calculations" class="nav-link" data-scroll-target="#vector-calculations">Vector Calculations</a></li>
+  </ul></li>
+  <li><a href="#character-data" id="toc-character-data" class="nav-link" data-scroll-target="#character-data">Character Data</a></li>
+  <li><a href="#logical-data" id="toc-logical-data" class="nav-link" data-scroll-target="#logical-data">Logical Data</a></li>
+  </ul></li>
+  <li><a href="#class-and-coercion" id="toc-class-and-coercion" class="nav-link" data-scroll-target="#class-and-coercion">Class and Coercion</a></li>
+  <li><a href="#objects" id="toc-objects" class="nav-link" data-scroll-target="#objects">Objects</a>
+  <ul>
+  <li><a href="#creating-an-object" id="toc-creating-an-object" class="nav-link" data-scroll-target="#creating-an-object">Creating an Object</a>
+  <ul class="collapse">
+  <li><a href="#naming-objects" id="toc-naming-objects" class="nav-link" data-scroll-target="#naming-objects">Naming Objects</a></li>
+  </ul></li>
+  <li><a href="#calling-an-object" id="toc-calling-an-object" class="nav-link" data-scroll-target="#calling-an-object">Calling an Object</a></li>
+  <li><a href="#using-objects" id="toc-using-objects" class="nav-link" data-scroll-target="#using-objects">Using Objects</a></li>
+  <li><a href="#overwriting-objects" id="toc-overwriting-objects" class="nav-link" data-scroll-target="#overwriting-objects">Overwriting Objects</a></li>
+  </ul></li>
+  <li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions">Functions</a>
+  <ul>
+  <li><a href="#basics-and-help" id="toc-basics-and-help" class="nav-link" data-scroll-target="#basics-and-help">Basics and Help</a></li>
+  <li><a href="#arguments" id="toc-arguments" class="nav-link" data-scroll-target="#arguments">Arguments</a>
+  <ul class="collapse">
+  <li><a href="#unnamed-arguments" id="toc-unnamed-arguments" class="nav-link" data-scroll-target="#unnamed-arguments">Unnamed Arguments</a></li>
+  <li><a href="#named-arguments" id="toc-named-arguments" class="nav-link" data-scroll-target="#named-arguments">Named Arguments</a></li>
+  </ul></li>
+  <li><a href="#using-functions" id="toc-using-functions" class="nav-link" data-scroll-target="#using-functions">Using Functions</a>
+  <ul class="collapse">
+  <li><a href="#passing-multiple-values-to-arguments" id="toc-passing-multiple-values-to-arguments" class="nav-link" data-scroll-target="#passing-multiple-values-to-arguments">Passing Multiple Values to Arguments</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#quick-test-t-test" id="toc-quick-test-t-test" class="nav-link" data-scroll-target="#quick-test-t-test">Quick Test: <em>t</em>-test</a></li>
   </ul>
 </nav>
     </div>
@@ -4631,7 +4593,7 @@ vertical-align: -.125em;
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Quick Reference</h1>
+<h1 class="title">01/02: IntRoduction</h1>
 </div>
 
 
@@ -4646,781 +4608,147 @@ vertical-align: -.125em;
 
 </header>
 
-<section id="index-of-functions" class="level2">
-<h2 class="anchored" data-anchor-id="index-of-functions">Index of Functions</h2>
-Looking for a function you can’t quite remember how to use? You’re in the right place! The table below is arranged alphabetically by function name, and the linked full name (including relevant package calls) will take you to the help documentation.
-
-<table class="table" style="margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-Function Name
-</th>
-<th style="text-align:left;">
-Link to Help Documentation
-</th>
-<th style="text-align:left;">
-Used In…
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-all()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/base/all.html">all()</a>
-</td>
-<td style="text-align:left;">
-05: Filter and Select
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-anova()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/stats/anova.html">anova()</a>
-</td>
-<td style="text-align:left;">
-04: Reporting Linear Models with Quarto
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-any()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/base/any.html">any()</a>
-</td>
-<td style="text-align:left;">
-05: Filter and Select
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-apa_print()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/pkg/papaja/man/apa_print.html">papaja::apa_print()</a>
-</td>
-<td style="text-align:left;">
-04: Reporting Linear Models with Quarto<br>05: Filter and Select
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-apa_table()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/pkg/papaja/man/apa_table.html">papaja::apa_table()</a>
-</td>
-<td style="text-align:left;">
-04: Reporting Linear Models with Quarto
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-as.numeric()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/base/numeric.html">as.numeric()</a>
-</td>
-<td style="text-align:left;">
-01/02: IntRoduction
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-autoplot()
-</td>
-<td style="text-align:left;">
-<a href="https://ggplot2.tidyverse.org/reference/autoplot.html">ggplot2::autoplot()</a>
-</td>
-<td style="text-align:left;">
-04: Reporting Linear Models with Quarto
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-boxplot()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/graphics/boxplot.html">boxplot()</a>
-</td>
-<td style="text-align:left;">
-03: Datasets
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-c()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/base/c.html">c()</a>
-</td>
-<td style="text-align:left;">
-01/02: IntRoduction<br>03: Datasets<br>04: Reporting Linear Models with Quarto<br>05: Filter and Select
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-class()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/base/class.html">class()</a>
-</td>
-<td style="text-align:left;">
-01/02: IntRoduction
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-contains()
-</td>
-<td style="text-align:left;">
-<a href="https://tidyselect.r-lib.org/reference/starts_with.html">dplyr::contains()</a>
-</td>
-<td style="text-align:left;">
-05: Filter and Select
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-cor.test()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/stats/cor.test.html">cor.test()</a>
-</td>
-<td style="text-align:left;">
-05: Filter and Select
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-correlation()
-</td>
-<td style="text-align:left;">
-<a href="https://easystats.github.io/correlation/reference/correlation.html">correlation::correlation()</a>
-</td>
-<td style="text-align:left;">
-05: Filter and Select
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-count()
-</td>
-<td style="text-align:left;">
-<a href="https://dplyr.tidyverse.org/reference/count.html">dplyr::count()</a>
-</td>
-<td style="text-align:left;">
-03: Datasets<br>05: Filter and Select
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-data()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/utils/data.html">data()</a>
-</td>
-<td style="text-align:left;">
-04: Reporting Linear Models with Quarto
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-describe_distribution()
-</td>
-<td style="text-align:left;">
-<a href="https://easystats.github.io/datawizard/reference/describe_distribution.html">datawizard::describe_distribution()</a>
-</td>
-<td style="text-align:left;">
-03: Datasets
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-filter()
-</td>
-<td style="text-align:left;">
-<a href="https://dplyr.tidyverse.org/reference/filter.html">dplyr::filter()</a>
-</td>
-<td style="text-align:left;">
-05: Filter and Select
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-ggpairs()
-</td>
-<td style="text-align:left;">
-<a href="https://ggobi.github.io/ggally/reference/ggpairs.html">GGally::ggpairs()</a>
-</td>
-<td style="text-align:left;">
-05: Filter and Select
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-ggscatmat()
-</td>
-<td style="text-align:left;">
-<a href="https://ggobi.github.io/ggally/reference/ggscatmat.html">GGally::ggscatmat()</a>
-</td>
-<td style="text-align:left;">
-05: Filter and Select
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-glance()
-</td>
-<td style="text-align:left;">
-<a href="https://generics.r-lib.org/reference/glance.html">broom::glance()</a>
-</td>
-<td style="text-align:left;">
-04: Reporting Linear Models with Quarto
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-glimpse()
-</td>
-<td style="text-align:left;">
-<a href="https://pillar.r-lib.org/reference/glimpse.html">dplyr::glimpse()</a>
-</td>
-<td style="text-align:left;">
-03: Datasets<br>05: Filter and Select
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-here()
-</td>
-<td style="text-align:left;">
-<a href="https://here.r-lib.org//reference/here.html">here::here()</a>
-</td>
-<td style="text-align:left;">
-03: Datasets
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-hist()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/graphics/hist.html">hist()</a>
-</td>
-<td style="text-align:left;">
-03: Datasets
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-is.factor()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/base/factor.html">is.factor()</a>
-</td>
-<td style="text-align:left;">
-05: Filter and Select
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-is.na()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/base/NA.html">is.na()</a>
-</td>
-<td style="text-align:left;">
-05: Filter and Select
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-kable_styling()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kableExtra::kable_styling()</a>
-</td>
-<td style="text-align:left;">
-03: Datasets
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-library()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/base/library.html">library()</a>
-</td>
-<td style="text-align:left;">
-03: Datasets<br>04: Reporting Linear Models with Quarto<br>05: Filter and Select
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-lm()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/stats/lm.html">lm()</a>
-</td>
-<td style="text-align:left;">
-04: Reporting Linear Models with Quarto
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-lmRob()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/pkg/robust/man/lmRob.html">robust::lmRob()</a>
-</td>
-<td style="text-align:left;">
-04: Reporting Linear Models with Quarto
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-mean()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/base/mean.html">mean()</a>
-</td>
-<td style="text-align:left;">
-01/02: IntRoduction<br>03: Datasets
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-median()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/stats/median.html">median()</a>
-</td>
-<td style="text-align:left;">
-03: Datasets<br>05: Filter and Select
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-model_parameters()
-</td>
-<td style="text-align:left;">
-<a href="https://easystats.github.io/parameters/reference/model_parameters.html">parameters::model_parameters()</a>
-</td>
-<td style="text-align:left;">
-04: Reporting Linear Models with Quarto
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-names()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/base/names.html">names()</a>
-</td>
-<td style="text-align:left;">
-03: Datasets
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-ncol()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/base/nrow.html">ncol()</a>
-</td>
-<td style="text-align:left;">
-03: Datasets
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-nice_table()
-</td>
-<td style="text-align:left;">
-<a href="https://rempsyc.remi-theriault.com/reference/nice_table.html">rempsyc::nice_table()</a>
-</td>
-<td style="text-align:left;">
-04: Reporting Linear Models with Quarto
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-nrow()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/base/nrow.html">nrow()</a>
-</td>
-<td style="text-align:left;">
-03: Datasets<br>05: Filter and Select
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-plot()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a>
-</td>
-<td style="text-align:left;">
-03: Datasets
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-print()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/base/print.html">print()</a>
-</td>
-<td style="text-align:left;">
-05: Filter and Select
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-pull()
-</td>
-<td style="text-align:left;">
-<a href="https://dplyr.tidyverse.org/reference/pull.html">dplyr::pull()</a>
-</td>
-<td style="text-align:left;">
-03: Datasets
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-range()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/base/range.html">range()</a>
-</td>
-<td style="text-align:left;">
-03: Datasets
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-read_csv()
-</td>
-<td style="text-align:left;">
-<a href="https://readr.tidyverse.org/reference/read_delim.html">readr::read_csv()</a>
-</td>
-<td style="text-align:left;">
-03: Datasets
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-round()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/base/Round.html">round()</a>
-</td>
-<td style="text-align:left;">
-01/02: IntRoduction<br>03: Datasets<br>04: Reporting Linear Models with Quarto
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-sd()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/stats/sd.html">sd()</a>
-</td>
-<td style="text-align:left;">
-03: Datasets
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-select()
-</td>
-<td style="text-align:left;">
-<a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select()</a>
-</td>
-<td style="text-align:left;">
-05: Filter and Select
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-starts_with()
-</td>
-<td style="text-align:left;">
-<a href="https://tidyselect.r-lib.org/reference/starts_with.html">dplyr::starts_with()</a>
-</td>
-<td style="text-align:left;">
-05: Filter and Select
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-sum()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/base/sum.html">sum()</a>
-</td>
-<td style="text-align:left;">
-05: Filter and Select
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-summary()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/base/summary.html">summary()</a>
-</td>
-<td style="text-align:left;">
-03: Datasets
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-t.test()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/stats/t.test.html">t.test()</a>
-</td>
-<td style="text-align:left;">
-01/02: IntRoduction
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-tidy()
-</td>
-<td style="text-align:left;">
-<a href="https://generics.r-lib.org/reference/tidy.html">broom::tidy()</a>
-</td>
-<td style="text-align:left;">
-04: Reporting Linear Models with Quarto
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-where()
-</td>
-<td style="text-align:left;">
-<a href="https://tidyselect.r-lib.org/reference/where.html">dplyr::where()</a>
-</td>
-<td style="text-align:left;">
-05: Filter and Select
-</td>
-</tr>
-</tbody>
-
-</table>
+<section id="open-the-tutorial" class="level2">
+<h2 class="anchored" data-anchor-id="open-the-tutorial">Open the Tutorial</h2>
+<p>Use the following code chunks to open the accompanying tutorial.</p>
+<section id="open-in-rstudio-viewer" class="level3">
+<h3 class="anchored" data-anchor-id="open-in-rstudio-viewer">Open in RStudio Viewer</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>rstudioapi<span class="sc">::</span><span class="fu">viewer</span>(<span class="st">&#39;https://r-training.netlify.app/tutorials/psychrlogy/01_fundRmentals/01_02_intro&#39;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error: RStudio not running</code></pre>
+</div>
+</div>
 </section>
-<section id="index-of-topics" class="level2">
-<h2 class="anchored" data-anchor-id="index-of-topics">Index of Topics</h2>
-<p>If you’re looking for a particular section of a tutorial, use this handy summary to jump straight to the section you want.</p>
-
-<table class="table table-condensed table" style="margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;text-align: center;">
-Topic
-</th>
-<th style="text-align:left;text-align: center;">
-Sub-Topic
-</th>
-</tr>
-</thead>
-<tbody>
-<tr grouplength="7">
-<td colspan="2" style="border-bottom: 1px solid;">
-<strong>01/02: IntRoduction</strong>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-<a href="./tutorials/psychrlogy/01_fundRmentals/01_02_intro.html#orientation">Orientation</a>
-</td>
-<td style="text-align:left;">
-<a href="./tutorials/psychrlogy/01_fundRmentals/01_02_intro.html#the-rstudio-interface">The RStudio Interface</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-<a href="./tutorials/psychrlogy/01_fundRmentals/01_02_intro.html#errors">Errors</a>
-</td>
-<td style="text-align:left;">
-<a href="./tutorials/psychrlogy/01_fundRmentals/01_02_intro.html#glossorlia:-the-language-of-errors">GlossoRlia: the Language of Errors</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-<a href="./tutorials/psychrlogy/01_fundRmentals/01_02_intro.html#types-of-data">Types of Data</a>
-</td>
-<td style="text-align:left;">
-<a href="./tutorials/psychrlogy/01_fundRmentals/01_02_intro.html#numeric-data">Numeric Data</a>, <a href="./tutorials/psychrlogy/01_fundRmentals/01_02_intro.html#character-data">Character Data</a>, <a href="./tutorials/psychrlogy/01_fundRmentals/01_02_intro.html#logical-data">Logical Data</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-<a href="./tutorials/psychrlogy/01_fundRmentals/01_02_intro.html#class-and-coercion">Class and Coercion</a>
-</td>
-<td style="text-align:left;">
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-<a href="./tutorials/psychrlogy/01_fundRmentals/01_02_intro.html#objects">Objects</a>
-</td>
-<td style="text-align:left;">
-<a href="./tutorials/psychrlogy/01_fundRmentals/01_02_intro.html#creating-an-object">Creating an Object</a>, <a href="./tutorials/psychrlogy/01_fundRmentals/01_02_intro.html#calling-an-object">Calling an Object</a>, <a href="./tutorials/psychrlogy/01_fundRmentals/01_02_intro.html#using-objects">Using Objects</a>, <a href="./tutorials/psychrlogy/01_fundRmentals/01_02_intro.html#overwriting-objects">Overwriting Objects</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-<a href="./tutorials/psychrlogy/01_fundRmentals/01_02_intro.html#functions">Functions</a>
-</td>
-<td style="text-align:left;">
-<a href="./tutorials/psychrlogy/01_fundRmentals/01_02_intro.html#basics-and-help">Basics and Help</a>, <a href="./tutorials/psychrlogy/01_fundRmentals/01_02_intro.html#arguments">Arguments</a>, <a href="./tutorials/psychrlogy/01_fundRmentals/01_02_intro.html#using-functions">Using Functions</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-<a href="./tutorials/psychrlogy/01_fundRmentals/01_02_intro.html#quick-test:-*t*-test">Quick Test: <em>t</em>-test</a>
-</td>
-<td style="text-align:left;">
-</td>
-</tr>
-<tr grouplength="8">
-<td colspan="2" style="border-bottom: 1px solid;">
-<strong>03: Datasets</strong>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-<a href="./tutorials/psychrlogy/01_fundRmentals/03_datasets.html#setup">Setup</a>
-</td>
-<td style="text-align:left;">
-<a href="./tutorials/psychrlogy/01_fundRmentals/03_datasets.html#projects">Projects</a>, <a href="./tutorials/psychrlogy/01_fundRmentals/03_datasets.html#documents">Documents</a>, <a href="./tutorials/psychrlogy/01_fundRmentals/03_datasets.html#installing-and-loading-packages">Installing and Loading Packages</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-<a href="./tutorials/psychrlogy/01_fundRmentals/03_datasets.html#reading-in">Reading In</a>
-</td>
-<td style="text-align:left;">
-<a href="./tutorials/psychrlogy/01_fundRmentals/03_datasets.html#reading-from-file">Reading from File</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-<a href="./tutorials/psychrlogy/01_fundRmentals/03_datasets.html#codebook">Codebook</a>
-</td>
-<td style="text-align:left;">
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-<a href="./tutorials/psychrlogy/01_fundRmentals/03_datasets.html#viewing">Viewing</a>
-</td>
-<td style="text-align:left;">
-<a href="./tutorials/psychrlogy/01_fundRmentals/03_datasets.html#call-the-object">Call the Object</a>, <a href="./tutorials/psychrlogy/01_fundRmentals/03_datasets.html#a-glimpse-of-the-data">A Glimpse of the Data</a>, <a href="./tutorials/psychrlogy/01_fundRmentals/03_datasets.html#view-mode">View Mode</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-<a href="./tutorials/psychrlogy/01_fundRmentals/03_datasets.html#overall-summaries">Overall Summaries</a>
-</td>
-<td style="text-align:left;">
-<a href="./tutorials/psychrlogy/01_fundRmentals/03_datasets.html#basic-summary">Basic Summary</a>, <a href="./tutorials/psychrlogy/01_fundRmentals/03_datasets.html#other-summaries">Other Summaries</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-<a href="./tutorials/psychrlogy/01_fundRmentals/03_datasets.html#the-pipe">The Pipe</a>
-</td>
-<td style="text-align:left;">
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-<a href="./tutorials/psychrlogy/01_fundRmentals/03_datasets.html#describing-datasets">Describing Datasets</a>
-</td>
-<td style="text-align:left;">
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-<a href="./tutorials/psychrlogy/01_fundRmentals/03_datasets.html#describing-variables">Describing Variables</a>
-</td>
-<td style="text-align:left;">
-<a href="./tutorials/psychrlogy/01_fundRmentals/03_datasets.html#counting">Counting</a>, <a href="./tutorials/psychrlogy/01_fundRmentals/03_datasets.html#subsetting">Subsetting</a>, <a href="./tutorials/psychrlogy/01_fundRmentals/03_datasets.html#descriptives">Descriptives</a>, <a href="./tutorials/psychrlogy/01_fundRmentals/03_datasets.html#visualisations">Visualisations</a>
-</td>
-</tr>
-<tr grouplength="2">
-<td colspan="2" style="border-bottom: 1px solid;">
-<strong>04: Reporting Linear Models with Quarto</strong>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-<a href="./tutorials/psychrlogy/01_fundRmentals/04_lm.html#the-linear-model">The Linear Model</a>
-</td>
-<td style="text-align:left;">
-<a href="./tutorials/psychrlogy/01_fundRmentals/04_lm.html#data-and-codebook">Data and Codebook</a>, <a href="./tutorials/psychrlogy/01_fundRmentals/04_lm.html#one-predictor">One Predictor</a>, <a href="./tutorials/psychrlogy/01_fundRmentals/04_lm.html#hierarchial-models">Hierarchial Models</a>, <a href="./tutorials/psychrlogy/01_fundRmentals/04_lm.html#assumptions-checks">Assumptions Checks</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-<a href="./tutorials/psychrlogy/01_fundRmentals/04_lm.html#quarto">Quarto</a>
-</td>
-<td style="text-align:left;">
-<a href="./tutorials/psychrlogy/01_fundRmentals/04_lm.html#getting-started">Getting Started</a>, <a href="./tutorials/psychrlogy/01_fundRmentals/04_lm.html#creating-a-code-chunk">Creating a Code Chunk</a>, <a href="./tutorials/psychrlogy/01_fundRmentals/04_lm.html#body-text">Body Text</a>, <a href="./tutorials/psychrlogy/01_fundRmentals/04_lm.html#dynamic-reporting">Dynamic Reporting</a>, <a href="./tutorials/psychrlogy/01_fundRmentals/04_lm.html#rendering">Rendering</a>
-</td>
-</tr>
-<tr grouplength="4">
-<td colspan="2" style="border-bottom: 1px solid;">
-<strong>05: Filter and Select</strong>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-<a href="./tutorials/psychrlogy/02_essentials/05_filter.html#setup">Setup</a>
-</td>
-<td style="text-align:left;">
-<a href="./tutorials/psychrlogy/02_essentials/05_filter.html#packages">Packages</a>, <a href="./tutorials/psychrlogy/02_essentials/05_filter.html#data">Data</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-<a href="./tutorials/psychrlogy/02_essentials/05_filter.html#filter">Filter</a>
-</td>
-<td style="text-align:left;">
-<a href="./tutorials/psychrlogy/02_essentials/05_filter.html#general-format">General Format</a>, <a href="./tutorials/psychrlogy/02_essentials/05_filter.html#filtering-with-assertions">Filtering with Assertions</a>, <a href="./tutorials/psychrlogy/02_essentials/05_filter.html#multiple-assertions">Multiple Assertions</a>, <a href="./tutorials/psychrlogy/02_essentials/05_filter.html#data-cleaning">Data Cleaning</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-<a href="./tutorials/psychrlogy/02_essentials/05_filter.html#select">Select</a>
-</td>
-<td style="text-align:left;">
-<a href="./tutorials/psychrlogy/02_essentials/05_filter.html#general-format">General Format</a>, <a href="./tutorials/psychrlogy/02_essentials/05_filter.html#selecting-directly">Selecting Directly</a>, <a href="./tutorials/psychrlogy/02_essentials/05_filter.html#using-{tidyselect}">Using {tidyselect}</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-<a href="./tutorials/psychrlogy/02_essentials/05_filter.html#quick-test:-correlation">Quick Test: Correlation</a>
-</td>
-<td style="text-align:left;">
-<a href="./tutorials/psychrlogy/02_essentials/05_filter.html#visualisation">Visualisation</a>, <a href="./tutorials/psychrlogy/02_essentials/05_filter.html#testing-correlation">Testing Correlation</a>
-</td>
-</tr>
-</tbody>
-
-</table>
+<section id="open-in-a-new-browser-tab" class="level3">
+<h3 class="anchored" data-anchor-id="open-in-a-new-browser-tab">Open in a New Browser Tab</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>utils<span class="sc">::</span><span class="fu">browseURL</span>(<span class="st">&#39;https://r-training.netlify.app/tutorials/psychrlogy/01_fundRmentals/01_02_intro&#39;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="orientation" class="level2">
+<h2 class="anchored" data-anchor-id="orientation">Orientation</h2>
+<section id="the-rstudio-interface" class="level3">
+<h3 class="anchored" data-anchor-id="the-rstudio-interface">The RStudio Interface</h3>
+<section id="source" class="level4">
+<h4 class="anchored" data-anchor-id="source">Source</h4>
+</section>
+<section id="console" class="level4">
+<h4 class="anchored" data-anchor-id="console">Console</h4>
+</section>
+</section>
+</section>
+<section id="errors" class="level2">
+<h2 class="anchored" data-anchor-id="errors">Errors</h2>
+<p>Type literally any gibberish, words, keysmashes etc. into the code chunk in the workbook and press Run (or Ctrl/Cmd + Shift + Enter).</p>
+<section id="glossorlia-the-language-of-errors" class="level3">
+<h3 class="anchored" data-anchor-id="glossorlia-the-language-of-errors">GlossoRlia: the Language of Errors</h3>
+</section>
+</section>
+<section id="types-of-data" class="level2">
+<h2 class="anchored" data-anchor-id="types-of-data">Types of Data</h2>
+<section id="numeric-data" class="level3">
+<h3 class="anchored" data-anchor-id="numeric-data">Numeric Data</h3>
+<p>Type any single number and run the code.</p>
+<p>How does R handle commas within a number (e.g. to separate the thousands place from the hundreds)? How about full stops for decimals?</p>
+<p>Add together your shoe size and the number of windows in the room you’re currently in.</p>
+<p>Try subtracting, dividing, and multiplying the same two numbers.</p>
+<section id="vectors" class="level4">
+<h4 class="anchored" data-anchor-id="vectors">Vectors</h4>
+<p>Print out every whole number between 1 and 50.</p>
+<p>Print out all the numbers 12 through 30; all of the numbers 23 through 55; and 36, all in one command.</p>
+</section>
+<section id="vector-calculations" class="level4">
+<h4 class="anchored" data-anchor-id="vector-calculations">Vector Calculations</h4>
+<p>Create a vector of every whole number between 37 and 63, and subtract 7 from each element.</p>
+</section>
+</section>
+<section id="character-data" class="level3">
+<h3 class="anchored" data-anchor-id="character-data">Character Data</h3>
+<p>Create a vector containing the first five animals you think of, then print the 3rd one.</p>
+</section>
+<section id="logical-data" class="level3">
+<h3 class="anchored" data-anchor-id="logical-data">Logical Data</h3>
+<p>Write the following assertions in R:</p>
+<ul>
+<li>5 is greater than 10</li>
+<li>6 is less than 12</li>
+<li>27 is less than or equal to 27</li>
+<li>49 does not equal 93</li>
+<li>420 equals 42</li>
+</ul>
+<p>Use a single command to ask R whether the numbers 2 through 10 are less than or equal to 6.</p>
+</section>
+</section>
+<section id="class-and-coercion" class="level2">
+<h2 class="anchored" data-anchor-id="class-and-coercion">Class and Coercion</h2>
+<p>Use the <code>class()</code> function to get R to print the values <code>&quot;numeric&quot;</code>, <code>&quot;logical&quot;</code>, and <code>&quot;character&quot;</code>.</p>
+<p>What data type does R give you if you combine numbers and characters in <code>c()</code>?</p>
+<p>Use an <code>as.*()</code> function to convert the following vector of participant ages into numeric data: <code>c(20, &quot;42&quot;, &quot;36 years old&quot;)</code>. What do you think will happen to each element?</p>
+</section>
+<section id="objects" class="level2">
+<h2 class="anchored" data-anchor-id="objects">Objects</h2>
+<section id="creating-an-object" class="level3">
+<h3 class="anchored" data-anchor-id="creating-an-object">Creating an Object</h3>
+<section id="naming-objects" class="level4">
+<h4 class="anchored" data-anchor-id="naming-objects">Naming Objects</h4>
+<p>Think of a research scenario familiar to you with two independent groups. You’re welcome to draw from your own research or expertise, but you should choose something with numerical scores. Some ideas include:</p>
+<ol type="1">
+<li>Reaction times on a button-pressing task from a control and an experimental group</li>
+<li>Statistics anxiety scores from first and second year UG students</li>
+<li>Quiz marks from students with practicals scheduled 9am and students with practicals at 6pm</li>
+</ol>
+<p>Make a note of the scenario you chose. Then, create two new objects: one that contains a vector of six scores from the first of the two groups, and the second that has six different scores from the second group.</p>
+<p><em>Hint</em>: Just make up some numbers that sound plausible!</p>
+</section>
+</section>
+<section id="calling-an-object" class="level3">
+<h3 class="anchored" data-anchor-id="calling-an-object">Calling an Object</h3>
+<p>Call both of the objects you just created.</p>
+</section>
+<section id="using-objects" class="level3">
+<h3 class="anchored" data-anchor-id="using-objects">Using Objects</h3>
+<p>Calculate the mean of each of the two sets of scores you created.</p>
+<p>Calculate the <strong>difference</strong> in the mean of each of the two sets of scores, and save this difference in a new object called <code>quiz_diff</code>.</p>
+<p>What is the class of these objects?</p>
+</section>
+<section id="overwriting-objects" class="level3">
+<h3 class="anchored" data-anchor-id="overwriting-objects">Overwriting Objects</h3>
+<p>First, let’s imagine we get three new participants in each condition of our previous study. Update the same two objects you created previously with three new scores each.</p>
+</section>
+</section>
+<section id="functions" class="level2">
+<h2 class="anchored" data-anchor-id="functions">Functions</h2>
+<section id="basics-and-help" class="level3">
+<h3 class="anchored" data-anchor-id="basics-and-help">Basics and Help</h3>
+<p>Try running the <code>round()</code> function.</p>
+<p>Open the help documentation for the <code>round()</code> function by running <code>?round()</code> or <code>help(round)</code> in the Console.</p>
+</section>
+<section id="arguments" class="level3">
+<h3 class="anchored" data-anchor-id="arguments">Arguments</h3>
+<section id="unnamed-arguments" class="level4">
+<h4 class="anchored" data-anchor-id="unnamed-arguments">Unnamed Arguments</h4>
+</section>
+<section id="named-arguments" class="level4">
+<h4 class="anchored" data-anchor-id="named-arguments">Named Arguments</h4>
+</section>
+</section>
+<section id="using-functions" class="level3">
+<h3 class="anchored" data-anchor-id="using-functions">Using Functions</h3>
+<p>Use the <code>round()</code> function to round 64.3333333 to two decimal places.</p>
+<p>If you prefer, you can do this with one of the means you calculated for your own scores earlier.</p>
+<section id="passing-multiple-values-to-arguments" class="level4">
+<h4 class="anchored" data-anchor-id="passing-multiple-values-to-arguments">Passing Multiple Values to Arguments</h4>
+<p>Before you go on, have a go using a single <code>round()</code> command to round 64.3333333, 59.5452, and 0.198 at once.</p>
+<p><em>Hint</em>: Refer to <a href="#vectors">Vectors</a>.</p>
+</section>
+</section>
+</section>
+<section id="quick-test-t-test" class="level2">
+<h2 class="anchored" data-anchor-id="quick-test-t-test">Quick Test: <em>t</em>-test</h2>
+<p>Bring up the help documentation for <code>t.test()</code> and use it to run a <em>t</em>-test comparing your two sets of scores.</p>
+<p>Using the help documentation, re-run the <em>t</em>-test with equal variances assumed.</p>
 
 
 </section>

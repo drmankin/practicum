@@ -1,0 +1,269 @@
+---
+title: "03: Datasets"
+execute:
+  error: true
+embed-resources: true
+---
+
+## Open the Tutorial
+
+Use the following code chunks to open the accompanying tutorial.
+
+### Open in RStudio Viewer
+
+```{r}
+rstudioapi::viewer('https://r-training.netlify.app/tutorials/psychrlogy/01_fundRmentals/03_datasets')
+```
+
+### Open in a New Browser Tab
+
+```{r}
+utils::browseURL('https://r-training.netlify.app/tutorials/psychrlogy/01_fundRmentals/03_datasets')
+```
+
+
+
+## Overview
+
+
+## Setup
+
+
+### Projects
+
+
+### Documents
+
+
+#### Quarto documents
+
+
+#### Scripts
+
+
+### Installing and Loading Packages
+
+Load the {tidyverse} package in your Quarto document.
+
+```{r}
+
+```
+
+
+
+## Reading In
+
+
+### Reading from File
+
+Run the `here::here()` function to see what it does.
+```{r}
+
+```
+
+
+
+Use `here::here()` to generate a file path to the `syn_data` data file.
+
+Then, use `readr::read_csv()` to read in the `syn_data.csv` file and store the result in an object called `syn_data`.
+
+```{r}
+
+```
+
+
+
+#### Reading from URL
+
+
+Read the CSV file hosted at <https://raw.githubusercontent.com/drmankin/practicum/master/data/syn_data.csv> and save it to the object name `syn_data`.
+
+```{r}
+
+```
+
+
+
+## Codebook
+
+
+## Viewing
+
+
+### Call the Object
+
+
+Call the `syn_data` object to see what it contains.
+
+```{r}
+
+```
+
+
+
+### A Glimpse of the Data
+
+
+Use `dplyr::glimpse()` to get a glimpse of your dataset.
+
+```{r}
+
+```
+
+
+
+### View Mode
+
+Open the `syn_data` dataset using the `View()` function **in the Console**.
+
+```{r}
+
+```
+
+
+
+Using **only** View mode, figure out the following:
+
+1. What is the range of the variable `gc_score`?
+1. How can you arrange the dataset by score in `scsq_imagery`?
+1. How many participants had "Yes" in the variable `syn_graph_col`?
+1. Which `gender` category had more participants?
+1. Of the participants who said "Yes" to `syn_seq_space`, what was the highest SCSQ technical-spatial score?
+
+```{r}
+
+```
+
+
+
+## Overall Summaries
+
+
+### Basic Summary
+
+
+Print out a summary of `syn_data` using the `summary()` function.
+
+```{r}
+
+```
+
+
+
+### Other Summaries
+
+
+Print out a summary of `syn_data` using the `datawizard::describe_distribution()` function.
+
+```{r}
+
+```
+
+
+
+**CHALLENGE**: There are some variables missing from this output. What are they? Why aren't they included?
+
+```{r}
+
+```
+
+
+
+## The Pipe
+
+
+## Describing Datasets
+
+
+Using the native pipe, print out the number of columns and the names of those columns in the `syn_data` dataset.
+
+*Hint*: This will be two separate commands!
+
+```{r}
+
+```
+
+
+
+Using the native pipe, save the number of participants in the `syn_data` dataset in a new object of your choice.
+
+```{r}
+
+```
+
+
+
+## Describing Variables
+
+
+### Counting
+
+
+Using the `syn_data` dataset, produce a tibble of counts of how many participants had any kind of synaesthesia. Then, produce a second tibble, adding in gender as well.
+
+*Hint*: Use the [codebook](03_datasets.qmd#codebook) to find the variables to use.
+
+```{r}
+
+```
+
+
+
+### Subsetting
+
+
+Subset `syn_data` using `$` to get out all the values stored in the `scsq_organise` variable.
+
+```{r}
+
+```
+
+
+
+Subset `syn_data` using `dplyr::pull()` to get out all the values stored in the `gc_score` variable. How would you read this code?
+
+```{r}
+
+```
+
+
+
+### Descriptives
+
+
+Calculate the mean, standard deviation, and median of the SCSQ global subscale, and the range of the grapheme-colour synaesthesia score.
+
+Try using each subsetting method at least once.
+
+```{r}
+
+```
+
+
+
+### Visualisations
+
+
+Try making a histogram and a boxplot, using any of the variables in the `syn_data` dataset. Try using `$` and `pull()` once each.
+
+*Optionally*, if you feel so inclined, use the help documentation to spruce up your plots a bit, such as changing the title and axis labels.
+
+```{r}
+
+```
+
+
+
+**CHALLENGE**: Try making a barplot and a scatterplot.
+
+For the barplot, make a visualisation of how many people are synaesthetes or not (regardless of synaesthesia type).
+
+For the scatterplot, choose any two SCSQ measures.
+
+Both of these require some creative problem-solving using the help documentation and the skills and functions covered in this tutorial.
+
+```{r}
+
+```
+
+

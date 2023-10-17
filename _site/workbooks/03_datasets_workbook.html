@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>R Training - Quick Reference</title>
+<title>R Training - 03: Datasets</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -18,6 +18,40 @@ ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
 width: 0.8em;
 margin: 0 0.8em 0.2em -1em;  vertical-align: middle;
+}
+
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+}
+pre.numberSource { margin-left: 3em; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -1469,7 +1503,7 @@ function fuseSearch(query, fuse, fuseOptions) {
   });
 }
 </script>
-<meta name="quarto:offset" content="./">
+<meta name="quarto:offset" content="../">
 <script>const sectionChanged = new CustomEvent("quarto-sectionChanged", {
   detail: {},
   bubbles: true,
@@ -4443,14 +4477,14 @@ vertical-align: -.125em;
 <style type="text/css">a {color: "#f2c75c";}</style>
 </head>
 
-<body class="nav-sidebar docked nav-fixed">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">R Training</span>
     </a>
   </div>
@@ -4461,15 +4495,15 @@ vertical-align: -.125em;
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html" rel target>
+    <a class="nav-link" href="../index.html" rel target>
  <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./tutorials.html" rel target aria-current="page">
+    <a class="nav-link" href="../tutorials.html" rel target>
  <span class="menu-text">Tutorials</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./workshops.html" rel target>
+    <a class="nav-link" href="../workshops.html" rel target>
  <span class="menu-text">Workshops</span></a>
   </li>  
 </ul>
@@ -4479,7 +4513,7 @@ vertical-align: -.125em;
  <span class="menu-text">Canvas</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html" rel target>
+    <a class="nav-link" href="../about.html" rel target>
  <span class="menu-text">About</span></a>
   </li>  
 </ul>
@@ -4489,140 +4523,60 @@ vertical-align: -.125em;
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-        <i class="bi bi-layout-text-sidebar-reverse"></i>
-      </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./quick_ref.html">Quick Reference</a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
-    </div>
-  </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
-    <div class="sidebar-menu-container"> 
-    <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./tutorials.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Tutorials</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./quick_ref.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Quick Reference</span></a>
-  </div>
-</li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
- <span class="menu-text">FundRmentals</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./tutorials/psychrlogy/01_fundRmentals/01_02_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">01/02: IntRoduction</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./tutorials/psychrlogy/01_fundRmentals/03_datasets.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">03: Datasets</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./tutorials/psychrlogy/01_fundRmentals/04_lm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">04: Reporting Linear Models with Quarto</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
- <span class="menu-text">Essentials</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./tutorials/psychrlogy/02_essentials/05_filter.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">05: Filter and Select</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./tutorials/psychrlogy/02_essentials/06_changes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">06: Mutate and Summarise</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./tutorials/psychrlogy/02_essentials/07_dataviz.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">07: Visualisations</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./tutorials/psychrlogy/02_essentials/08_analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">08: Analysis</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
- <span class="menu-text">ImprovRs</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./tutorials/psychrlogy/03_improvRs/09_qnaires.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">09: Questionnaires</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./tutorials/psychrlogy/03_improvRs/10_reshape.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">10: Reshaping and Merging</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./tutorials/psychrlogy/03_improvRs/11_fx.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">11: Functions</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-    </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#index-of-functions" id="toc-index-of-functions" class="nav-link active" data-scroll-target="#index-of-functions">Index of Functions</a></li>
-  <li><a href="#index-of-topics" id="toc-index-of-topics" class="nav-link" data-scroll-target="#index-of-topics">Index of Topics</a></li>
+  <li><a href="#open-the-tutorial" id="toc-open-the-tutorial" class="nav-link active" data-scroll-target="#open-the-tutorial">Open the Tutorial</a>
+  <ul>
+  <li><a href="#open-in-rstudio-viewer" id="toc-open-in-rstudio-viewer" class="nav-link" data-scroll-target="#open-in-rstudio-viewer">Open in RStudio Viewer</a></li>
+  <li><a href="#open-in-a-new-browser-tab" id="toc-open-in-a-new-browser-tab" class="nav-link" data-scroll-target="#open-in-a-new-browser-tab">Open in a New Browser Tab</a></li>
+  </ul></li>
+  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup">Setup</a>
+  <ul>
+  <li><a href="#projects" id="toc-projects" class="nav-link" data-scroll-target="#projects">Projects</a></li>
+  <li><a href="#documents" id="toc-documents" class="nav-link" data-scroll-target="#documents">Documents</a>
+  <ul class="collapse">
+  <li><a href="#quarto-documents" id="toc-quarto-documents" class="nav-link" data-scroll-target="#quarto-documents">Quarto documents</a></li>
+  <li><a href="#scripts" id="toc-scripts" class="nav-link" data-scroll-target="#scripts">Scripts</a></li>
+  </ul></li>
+  <li><a href="#installing-and-loading-packages" id="toc-installing-and-loading-packages" class="nav-link" data-scroll-target="#installing-and-loading-packages">Installing and Loading Packages</a></li>
+  </ul></li>
+  <li><a href="#reading-in" id="toc-reading-in" class="nav-link" data-scroll-target="#reading-in">Reading In</a>
+  <ul>
+  <li><a href="#reading-from-file" id="toc-reading-from-file" class="nav-link" data-scroll-target="#reading-from-file">Reading from File</a>
+  <ul class="collapse">
+  <li><a href="#reading-from-url" id="toc-reading-from-url" class="nav-link" data-scroll-target="#reading-from-url">Reading from URL</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#codebook" id="toc-codebook" class="nav-link" data-scroll-target="#codebook">Codebook</a></li>
+  <li><a href="#viewing" id="toc-viewing" class="nav-link" data-scroll-target="#viewing">Viewing</a>
+  <ul>
+  <li><a href="#call-the-object" id="toc-call-the-object" class="nav-link" data-scroll-target="#call-the-object">Call the Object</a></li>
+  <li><a href="#a-glimpse-of-the-data" id="toc-a-glimpse-of-the-data" class="nav-link" data-scroll-target="#a-glimpse-of-the-data">A Glimpse of the Data</a></li>
+  <li><a href="#view-mode" id="toc-view-mode" class="nav-link" data-scroll-target="#view-mode">View Mode</a></li>
+  </ul></li>
+  <li><a href="#overall-summaries" id="toc-overall-summaries" class="nav-link" data-scroll-target="#overall-summaries">Overall Summaries</a>
+  <ul>
+  <li><a href="#basic-summary" id="toc-basic-summary" class="nav-link" data-scroll-target="#basic-summary">Basic Summary</a></li>
+  <li><a href="#other-summaries" id="toc-other-summaries" class="nav-link" data-scroll-target="#other-summaries">Other Summaries</a></li>
+  </ul></li>
+  <li><a href="#the-pipe" id="toc-the-pipe" class="nav-link" data-scroll-target="#the-pipe">The Pipe</a></li>
+  <li><a href="#describing-datasets" id="toc-describing-datasets" class="nav-link" data-scroll-target="#describing-datasets">Describing Datasets</a></li>
+  <li><a href="#describing-variables" id="toc-describing-variables" class="nav-link" data-scroll-target="#describing-variables">Describing Variables</a>
+  <ul>
+  <li><a href="#counting" id="toc-counting" class="nav-link" data-scroll-target="#counting">Counting</a></li>
+  <li><a href="#subsetting" id="toc-subsetting" class="nav-link" data-scroll-target="#subsetting">Subsetting</a></li>
+  <li><a href="#descriptives" id="toc-descriptives" class="nav-link" data-scroll-target="#descriptives">Descriptives</a></li>
+  <li><a href="#visualisations" id="toc-visualisations" class="nav-link" data-scroll-target="#visualisations">Visualisations</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -4631,7 +4585,7 @@ vertical-align: -.125em;
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Quick Reference</h1>
+<h1 class="title">03: Datasets</h1>
 </div>
 
 
@@ -4646,783 +4600,135 @@ vertical-align: -.125em;
 
 </header>
 
-<section id="index-of-functions" class="level2">
-<h2 class="anchored" data-anchor-id="index-of-functions">Index of Functions</h2>
-Looking for a function you can’t quite remember how to use? You’re in the right place! The table below is arranged alphabetically by function name, and the linked full name (including relevant package calls) will take you to the help documentation.
-
-<table class="table" style="margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-Function Name
-</th>
-<th style="text-align:left;">
-Link to Help Documentation
-</th>
-<th style="text-align:left;">
-Used In…
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-all()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/base/all.html">all()</a>
-</td>
-<td style="text-align:left;">
-05: Filter and Select
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-anova()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/stats/anova.html">anova()</a>
-</td>
-<td style="text-align:left;">
-04: Reporting Linear Models with Quarto
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-any()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/base/any.html">any()</a>
-</td>
-<td style="text-align:left;">
-05: Filter and Select
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-apa_print()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/pkg/papaja/man/apa_print.html">papaja::apa_print()</a>
-</td>
-<td style="text-align:left;">
-04: Reporting Linear Models with Quarto<br>05: Filter and Select
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-apa_table()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/pkg/papaja/man/apa_table.html">papaja::apa_table()</a>
-</td>
-<td style="text-align:left;">
-04: Reporting Linear Models with Quarto
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-as.numeric()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/base/numeric.html">as.numeric()</a>
-</td>
-<td style="text-align:left;">
-01/02: IntRoduction
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-autoplot()
-</td>
-<td style="text-align:left;">
-<a href="https://ggplot2.tidyverse.org/reference/autoplot.html">ggplot2::autoplot()</a>
-</td>
-<td style="text-align:left;">
-04: Reporting Linear Models with Quarto
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-boxplot()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/graphics/boxplot.html">boxplot()</a>
-</td>
-<td style="text-align:left;">
-03: Datasets
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-c()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/base/c.html">c()</a>
-</td>
-<td style="text-align:left;">
-01/02: IntRoduction<br>03: Datasets<br>04: Reporting Linear Models with Quarto<br>05: Filter and Select
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-class()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/base/class.html">class()</a>
-</td>
-<td style="text-align:left;">
-01/02: IntRoduction
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-contains()
-</td>
-<td style="text-align:left;">
-<a href="https://tidyselect.r-lib.org/reference/starts_with.html">dplyr::contains()</a>
-</td>
-<td style="text-align:left;">
-05: Filter and Select
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-cor.test()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/stats/cor.test.html">cor.test()</a>
-</td>
-<td style="text-align:left;">
-05: Filter and Select
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-correlation()
-</td>
-<td style="text-align:left;">
-<a href="https://easystats.github.io/correlation/reference/correlation.html">correlation::correlation()</a>
-</td>
-<td style="text-align:left;">
-05: Filter and Select
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-count()
-</td>
-<td style="text-align:left;">
-<a href="https://dplyr.tidyverse.org/reference/count.html">dplyr::count()</a>
-</td>
-<td style="text-align:left;">
-03: Datasets<br>05: Filter and Select
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-data()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/utils/data.html">data()</a>
-</td>
-<td style="text-align:left;">
-04: Reporting Linear Models with Quarto
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-describe_distribution()
-</td>
-<td style="text-align:left;">
-<a href="https://easystats.github.io/datawizard/reference/describe_distribution.html">datawizard::describe_distribution()</a>
-</td>
-<td style="text-align:left;">
-03: Datasets
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-filter()
-</td>
-<td style="text-align:left;">
-<a href="https://dplyr.tidyverse.org/reference/filter.html">dplyr::filter()</a>
-</td>
-<td style="text-align:left;">
-05: Filter and Select
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-ggpairs()
-</td>
-<td style="text-align:left;">
-<a href="https://ggobi.github.io/ggally/reference/ggpairs.html">GGally::ggpairs()</a>
-</td>
-<td style="text-align:left;">
-05: Filter and Select
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-ggscatmat()
-</td>
-<td style="text-align:left;">
-<a href="https://ggobi.github.io/ggally/reference/ggscatmat.html">GGally::ggscatmat()</a>
-</td>
-<td style="text-align:left;">
-05: Filter and Select
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-glance()
-</td>
-<td style="text-align:left;">
-<a href="https://generics.r-lib.org/reference/glance.html">broom::glance()</a>
-</td>
-<td style="text-align:left;">
-04: Reporting Linear Models with Quarto
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-glimpse()
-</td>
-<td style="text-align:left;">
-<a href="https://pillar.r-lib.org/reference/glimpse.html">dplyr::glimpse()</a>
-</td>
-<td style="text-align:left;">
-03: Datasets<br>05: Filter and Select
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-here()
-</td>
-<td style="text-align:left;">
-<a href="https://here.r-lib.org//reference/here.html">here::here()</a>
-</td>
-<td style="text-align:left;">
-03: Datasets
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-hist()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/graphics/hist.html">hist()</a>
-</td>
-<td style="text-align:left;">
-03: Datasets
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-is.factor()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/base/factor.html">is.factor()</a>
-</td>
-<td style="text-align:left;">
-05: Filter and Select
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-is.na()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/base/NA.html">is.na()</a>
-</td>
-<td style="text-align:left;">
-05: Filter and Select
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-kable_styling()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kableExtra::kable_styling()</a>
-</td>
-<td style="text-align:left;">
-03: Datasets
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-library()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/base/library.html">library()</a>
-</td>
-<td style="text-align:left;">
-03: Datasets<br>04: Reporting Linear Models with Quarto<br>05: Filter and Select
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-lm()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/stats/lm.html">lm()</a>
-</td>
-<td style="text-align:left;">
-04: Reporting Linear Models with Quarto
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-lmRob()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/pkg/robust/man/lmRob.html">robust::lmRob()</a>
-</td>
-<td style="text-align:left;">
-04: Reporting Linear Models with Quarto
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-mean()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/base/mean.html">mean()</a>
-</td>
-<td style="text-align:left;">
-01/02: IntRoduction<br>03: Datasets
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-median()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/stats/median.html">median()</a>
-</td>
-<td style="text-align:left;">
-03: Datasets<br>05: Filter and Select
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-model_parameters()
-</td>
-<td style="text-align:left;">
-<a href="https://easystats.github.io/parameters/reference/model_parameters.html">parameters::model_parameters()</a>
-</td>
-<td style="text-align:left;">
-04: Reporting Linear Models with Quarto
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-names()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/base/names.html">names()</a>
-</td>
-<td style="text-align:left;">
-03: Datasets
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-ncol()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/base/nrow.html">ncol()</a>
-</td>
-<td style="text-align:left;">
-03: Datasets
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-nice_table()
-</td>
-<td style="text-align:left;">
-<a href="https://rempsyc.remi-theriault.com/reference/nice_table.html">rempsyc::nice_table()</a>
-</td>
-<td style="text-align:left;">
-04: Reporting Linear Models with Quarto
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-nrow()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/base/nrow.html">nrow()</a>
-</td>
-<td style="text-align:left;">
-03: Datasets<br>05: Filter and Select
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-plot()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a>
-</td>
-<td style="text-align:left;">
-03: Datasets
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-print()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/base/print.html">print()</a>
-</td>
-<td style="text-align:left;">
-05: Filter and Select
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-pull()
-</td>
-<td style="text-align:left;">
-<a href="https://dplyr.tidyverse.org/reference/pull.html">dplyr::pull()</a>
-</td>
-<td style="text-align:left;">
-03: Datasets
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-range()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/base/range.html">range()</a>
-</td>
-<td style="text-align:left;">
-03: Datasets
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-read_csv()
-</td>
-<td style="text-align:left;">
-<a href="https://readr.tidyverse.org/reference/read_delim.html">readr::read_csv()</a>
-</td>
-<td style="text-align:left;">
-03: Datasets
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-round()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/base/Round.html">round()</a>
-</td>
-<td style="text-align:left;">
-01/02: IntRoduction<br>03: Datasets<br>04: Reporting Linear Models with Quarto
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-sd()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/stats/sd.html">sd()</a>
-</td>
-<td style="text-align:left;">
-03: Datasets
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-select()
-</td>
-<td style="text-align:left;">
-<a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select()</a>
-</td>
-<td style="text-align:left;">
-05: Filter and Select
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-starts_with()
-</td>
-<td style="text-align:left;">
-<a href="https://tidyselect.r-lib.org/reference/starts_with.html">dplyr::starts_with()</a>
-</td>
-<td style="text-align:left;">
-05: Filter and Select
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-sum()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/base/sum.html">sum()</a>
-</td>
-<td style="text-align:left;">
-05: Filter and Select
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-summary()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/base/summary.html">summary()</a>
-</td>
-<td style="text-align:left;">
-03: Datasets
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-t.test()
-</td>
-<td style="text-align:left;">
-<a href="https://rdrr.io/r/stats/t.test.html">t.test()</a>
-</td>
-<td style="text-align:left;">
-01/02: IntRoduction
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-tidy()
-</td>
-<td style="text-align:left;">
-<a href="https://generics.r-lib.org/reference/tidy.html">broom::tidy()</a>
-</td>
-<td style="text-align:left;">
-04: Reporting Linear Models with Quarto
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-where()
-</td>
-<td style="text-align:left;">
-<a href="https://tidyselect.r-lib.org/reference/where.html">dplyr::where()</a>
-</td>
-<td style="text-align:left;">
-05: Filter and Select
-</td>
-</tr>
-</tbody>
-
-</table>
+<section id="open-the-tutorial" class="level2">
+<h2 class="anchored" data-anchor-id="open-the-tutorial">Open the Tutorial</h2>
+<p>Use the following code chunks to open the accompanying tutorial.</p>
+<section id="open-in-rstudio-viewer" class="level3">
+<h3 class="anchored" data-anchor-id="open-in-rstudio-viewer">Open in RStudio Viewer</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>rstudioapi<span class="sc">::</span><span class="fu">viewer</span>(<span class="st">&#39;https://r-training.netlify.app/tutorials/psychrlogy/01_fundRmentals/03_datasets&#39;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error: RStudio not running</code></pre>
+</div>
+</div>
 </section>
-<section id="index-of-topics" class="level2">
-<h2 class="anchored" data-anchor-id="index-of-topics">Index of Topics</h2>
-<p>If you’re looking for a particular section of a tutorial, use this handy summary to jump straight to the section you want.</p>
-
-<table class="table table-condensed table" style="margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;text-align: center;">
-Topic
-</th>
-<th style="text-align:left;text-align: center;">
-Sub-Topic
-</th>
-</tr>
-</thead>
-<tbody>
-<tr grouplength="7">
-<td colspan="2" style="border-bottom: 1px solid;">
-<strong>01/02: IntRoduction</strong>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-<a href="./tutorials/psychrlogy/01_fundRmentals/01_02_intro.html#orientation">Orientation</a>
-</td>
-<td style="text-align:left;">
-<a href="./tutorials/psychrlogy/01_fundRmentals/01_02_intro.html#the-rstudio-interface">The RStudio Interface</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-<a href="./tutorials/psychrlogy/01_fundRmentals/01_02_intro.html#errors">Errors</a>
-</td>
-<td style="text-align:left;">
-<a href="./tutorials/psychrlogy/01_fundRmentals/01_02_intro.html#glossorlia:-the-language-of-errors">GlossoRlia: the Language of Errors</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-<a href="./tutorials/psychrlogy/01_fundRmentals/01_02_intro.html#types-of-data">Types of Data</a>
-</td>
-<td style="text-align:left;">
-<a href="./tutorials/psychrlogy/01_fundRmentals/01_02_intro.html#numeric-data">Numeric Data</a>, <a href="./tutorials/psychrlogy/01_fundRmentals/01_02_intro.html#character-data">Character Data</a>, <a href="./tutorials/psychrlogy/01_fundRmentals/01_02_intro.html#logical-data">Logical Data</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-<a href="./tutorials/psychrlogy/01_fundRmentals/01_02_intro.html#class-and-coercion">Class and Coercion</a>
-</td>
-<td style="text-align:left;">
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-<a href="./tutorials/psychrlogy/01_fundRmentals/01_02_intro.html#objects">Objects</a>
-</td>
-<td style="text-align:left;">
-<a href="./tutorials/psychrlogy/01_fundRmentals/01_02_intro.html#creating-an-object">Creating an Object</a>, <a href="./tutorials/psychrlogy/01_fundRmentals/01_02_intro.html#calling-an-object">Calling an Object</a>, <a href="./tutorials/psychrlogy/01_fundRmentals/01_02_intro.html#using-objects">Using Objects</a>, <a href="./tutorials/psychrlogy/01_fundRmentals/01_02_intro.html#overwriting-objects">Overwriting Objects</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-<a href="./tutorials/psychrlogy/01_fundRmentals/01_02_intro.html#functions">Functions</a>
-</td>
-<td style="text-align:left;">
-<a href="./tutorials/psychrlogy/01_fundRmentals/01_02_intro.html#basics-and-help">Basics and Help</a>, <a href="./tutorials/psychrlogy/01_fundRmentals/01_02_intro.html#arguments">Arguments</a>, <a href="./tutorials/psychrlogy/01_fundRmentals/01_02_intro.html#using-functions">Using Functions</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-<a href="./tutorials/psychrlogy/01_fundRmentals/01_02_intro.html#quick-test:-*t*-test">Quick Test: <em>t</em>-test</a>
-</td>
-<td style="text-align:left;">
-</td>
-</tr>
-<tr grouplength="8">
-<td colspan="2" style="border-bottom: 1px solid;">
-<strong>03: Datasets</strong>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-<a href="./tutorials/psychrlogy/01_fundRmentals/03_datasets.html#setup">Setup</a>
-</td>
-<td style="text-align:left;">
-<a href="./tutorials/psychrlogy/01_fundRmentals/03_datasets.html#projects">Projects</a>, <a href="./tutorials/psychrlogy/01_fundRmentals/03_datasets.html#documents">Documents</a>, <a href="./tutorials/psychrlogy/01_fundRmentals/03_datasets.html#installing-and-loading-packages">Installing and Loading Packages</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-<a href="./tutorials/psychrlogy/01_fundRmentals/03_datasets.html#reading-in">Reading In</a>
-</td>
-<td style="text-align:left;">
-<a href="./tutorials/psychrlogy/01_fundRmentals/03_datasets.html#reading-from-file">Reading from File</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-<a href="./tutorials/psychrlogy/01_fundRmentals/03_datasets.html#codebook">Codebook</a>
-</td>
-<td style="text-align:left;">
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-<a href="./tutorials/psychrlogy/01_fundRmentals/03_datasets.html#viewing">Viewing</a>
-</td>
-<td style="text-align:left;">
-<a href="./tutorials/psychrlogy/01_fundRmentals/03_datasets.html#call-the-object">Call the Object</a>, <a href="./tutorials/psychrlogy/01_fundRmentals/03_datasets.html#a-glimpse-of-the-data">A Glimpse of the Data</a>, <a href="./tutorials/psychrlogy/01_fundRmentals/03_datasets.html#view-mode">View Mode</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-<a href="./tutorials/psychrlogy/01_fundRmentals/03_datasets.html#overall-summaries">Overall Summaries</a>
-</td>
-<td style="text-align:left;">
-<a href="./tutorials/psychrlogy/01_fundRmentals/03_datasets.html#basic-summary">Basic Summary</a>, <a href="./tutorials/psychrlogy/01_fundRmentals/03_datasets.html#other-summaries">Other Summaries</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-<a href="./tutorials/psychrlogy/01_fundRmentals/03_datasets.html#the-pipe">The Pipe</a>
-</td>
-<td style="text-align:left;">
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-<a href="./tutorials/psychrlogy/01_fundRmentals/03_datasets.html#describing-datasets">Describing Datasets</a>
-</td>
-<td style="text-align:left;">
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-<a href="./tutorials/psychrlogy/01_fundRmentals/03_datasets.html#describing-variables">Describing Variables</a>
-</td>
-<td style="text-align:left;">
-<a href="./tutorials/psychrlogy/01_fundRmentals/03_datasets.html#counting">Counting</a>, <a href="./tutorials/psychrlogy/01_fundRmentals/03_datasets.html#subsetting">Subsetting</a>, <a href="./tutorials/psychrlogy/01_fundRmentals/03_datasets.html#descriptives">Descriptives</a>, <a href="./tutorials/psychrlogy/01_fundRmentals/03_datasets.html#visualisations">Visualisations</a>
-</td>
-</tr>
-<tr grouplength="2">
-<td colspan="2" style="border-bottom: 1px solid;">
-<strong>04: Reporting Linear Models with Quarto</strong>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-<a href="./tutorials/psychrlogy/01_fundRmentals/04_lm.html#the-linear-model">The Linear Model</a>
-</td>
-<td style="text-align:left;">
-<a href="./tutorials/psychrlogy/01_fundRmentals/04_lm.html#data-and-codebook">Data and Codebook</a>, <a href="./tutorials/psychrlogy/01_fundRmentals/04_lm.html#one-predictor">One Predictor</a>, <a href="./tutorials/psychrlogy/01_fundRmentals/04_lm.html#hierarchial-models">Hierarchial Models</a>, <a href="./tutorials/psychrlogy/01_fundRmentals/04_lm.html#assumptions-checks">Assumptions Checks</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-<a href="./tutorials/psychrlogy/01_fundRmentals/04_lm.html#quarto">Quarto</a>
-</td>
-<td style="text-align:left;">
-<a href="./tutorials/psychrlogy/01_fundRmentals/04_lm.html#getting-started">Getting Started</a>, <a href="./tutorials/psychrlogy/01_fundRmentals/04_lm.html#creating-a-code-chunk">Creating a Code Chunk</a>, <a href="./tutorials/psychrlogy/01_fundRmentals/04_lm.html#body-text">Body Text</a>, <a href="./tutorials/psychrlogy/01_fundRmentals/04_lm.html#dynamic-reporting">Dynamic Reporting</a>, <a href="./tutorials/psychrlogy/01_fundRmentals/04_lm.html#rendering">Rendering</a>
-</td>
-</tr>
-<tr grouplength="4">
-<td colspan="2" style="border-bottom: 1px solid;">
-<strong>05: Filter and Select</strong>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-<a href="./tutorials/psychrlogy/02_essentials/05_filter.html#setup">Setup</a>
-</td>
-<td style="text-align:left;">
-<a href="./tutorials/psychrlogy/02_essentials/05_filter.html#packages">Packages</a>, <a href="./tutorials/psychrlogy/02_essentials/05_filter.html#data">Data</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-<a href="./tutorials/psychrlogy/02_essentials/05_filter.html#filter">Filter</a>
-</td>
-<td style="text-align:left;">
-<a href="./tutorials/psychrlogy/02_essentials/05_filter.html#general-format">General Format</a>, <a href="./tutorials/psychrlogy/02_essentials/05_filter.html#filtering-with-assertions">Filtering with Assertions</a>, <a href="./tutorials/psychrlogy/02_essentials/05_filter.html#multiple-assertions">Multiple Assertions</a>, <a href="./tutorials/psychrlogy/02_essentials/05_filter.html#data-cleaning">Data Cleaning</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-<a href="./tutorials/psychrlogy/02_essentials/05_filter.html#select">Select</a>
-</td>
-<td style="text-align:left;">
-<a href="./tutorials/psychrlogy/02_essentials/05_filter.html#general-format">General Format</a>, <a href="./tutorials/psychrlogy/02_essentials/05_filter.html#selecting-directly">Selecting Directly</a>, <a href="./tutorials/psychrlogy/02_essentials/05_filter.html#using-{tidyselect}">Using {tidyselect}</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-<a href="./tutorials/psychrlogy/02_essentials/05_filter.html#quick-test:-correlation">Quick Test: Correlation</a>
-</td>
-<td style="text-align:left;">
-<a href="./tutorials/psychrlogy/02_essentials/05_filter.html#visualisation">Visualisation</a>, <a href="./tutorials/psychrlogy/02_essentials/05_filter.html#testing-correlation">Testing Correlation</a>
-</td>
-</tr>
-</tbody>
-
-</table>
+<section id="open-in-a-new-browser-tab" class="level3">
+<h3 class="anchored" data-anchor-id="open-in-a-new-browser-tab">Open in a New Browser Tab</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>utils<span class="sc">::</span><span class="fu">browseURL</span>(<span class="st">&#39;https://r-training.netlify.app/tutorials/psychrlogy/01_fundRmentals/03_datasets&#39;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+</section>
+<section id="setup" class="level2">
+<h2 class="anchored" data-anchor-id="setup">Setup</h2>
+<section id="projects" class="level3">
+<h3 class="anchored" data-anchor-id="projects">Projects</h3>
+</section>
+<section id="documents" class="level3">
+<h3 class="anchored" data-anchor-id="documents">Documents</h3>
+<section id="quarto-documents" class="level4">
+<h4 class="anchored" data-anchor-id="quarto-documents">Quarto documents</h4>
+</section>
+<section id="scripts" class="level4">
+<h4 class="anchored" data-anchor-id="scripts">Scripts</h4>
+</section>
+</section>
+<section id="installing-and-loading-packages" class="level3">
+<h3 class="anchored" data-anchor-id="installing-and-loading-packages">Installing and Loading Packages</h3>
+<p>Load the {tidyverse} package in your Quarto document.</p>
+</section>
+</section>
+<section id="reading-in" class="level2">
+<h2 class="anchored" data-anchor-id="reading-in">Reading In</h2>
+<section id="reading-from-file" class="level3">
+<h3 class="anchored" data-anchor-id="reading-from-file">Reading from File</h3>
+<p>Run the <code>here::here()</code> function to see what it does.</p>
+<p>Use <code>here::here()</code> to generate a file path to the <code>syn_data</code> data file.</p>
+<p>Then, use <code>readr::read_csv()</code> to read in the <code>syn_data.csv</code> file and store the result in an object called <code>syn_data</code>.</p>
+<section id="reading-from-url" class="level4">
+<h4 class="anchored" data-anchor-id="reading-from-url">Reading from URL</h4>
+<p>Read the CSV file hosted at <a href="https://raw.githubusercontent.com/drmankin/practicum/master/data/syn_data.csv" class="uri">https://raw.githubusercontent.com/drmankin/practicum/master/data/syn_data.csv</a> and save it to the object name <code>syn_data</code>.</p>
+</section>
+</section>
+</section>
+<section id="codebook" class="level2">
+<h2 class="anchored" data-anchor-id="codebook">Codebook</h2>
+</section>
+<section id="viewing" class="level2">
+<h2 class="anchored" data-anchor-id="viewing">Viewing</h2>
+<section id="call-the-object" class="level3">
+<h3 class="anchored" data-anchor-id="call-the-object">Call the Object</h3>
+<p>Call the <code>syn_data</code> object to see what it contains.</p>
+</section>
+<section id="a-glimpse-of-the-data" class="level3">
+<h3 class="anchored" data-anchor-id="a-glimpse-of-the-data">A Glimpse of the Data</h3>
+<p>Use <code>dplyr::glimpse()</code> to get a glimpse of your dataset.</p>
+</section>
+<section id="view-mode" class="level3">
+<h3 class="anchored" data-anchor-id="view-mode">View Mode</h3>
+<p>Open the <code>syn_data</code> dataset using the <code>View()</code> function <strong>in the Console</strong>.</p>
+<p>Using <strong>only</strong> View mode, figure out the following:</p>
+<ol type="1">
+<li>What is the range of the variable <code>gc_score</code>?</li>
+<li>How can you arrange the dataset by score in <code>scsq_imagery</code>?</li>
+<li>How many participants had “Yes” in the variable <code>syn_graph_col</code>?</li>
+<li>Which <code>gender</code> category had more participants?</li>
+<li>Of the participants who said “Yes” to <code>syn_seq_space</code>, what was the highest SCSQ technical-spatial score?</li>
+</ol>
+</section>
+</section>
+<section id="overall-summaries" class="level2">
+<h2 class="anchored" data-anchor-id="overall-summaries">Overall Summaries</h2>
+<section id="basic-summary" class="level3">
+<h3 class="anchored" data-anchor-id="basic-summary">Basic Summary</h3>
+<p>Print out a summary of <code>syn_data</code> using the <code>summary()</code> function.</p>
+</section>
+<section id="other-summaries" class="level3">
+<h3 class="anchored" data-anchor-id="other-summaries">Other Summaries</h3>
+<p>Print out a summary of <code>syn_data</code> using the <code>datawizard::describe_distribution()</code> function.</p>
+<p><strong>CHALLENGE</strong>: There are some variables missing from this output. What are they? Why aren’t they included?</p>
+</section>
+</section>
+<section id="the-pipe" class="level2">
+<h2 class="anchored" data-anchor-id="the-pipe">The Pipe</h2>
+</section>
+<section id="describing-datasets" class="level2">
+<h2 class="anchored" data-anchor-id="describing-datasets">Describing Datasets</h2>
+<p>Using the native pipe, print out the number of columns and the names of those columns in the <code>syn_data</code> dataset.</p>
+<p><em>Hint</em>: This will be two separate commands!</p>
+<p>Using the native pipe, save the number of participants in the <code>syn_data</code> dataset in a new object of your choice.</p>
+</section>
+<section id="describing-variables" class="level2">
+<h2 class="anchored" data-anchor-id="describing-variables">Describing Variables</h2>
+<section id="counting" class="level3">
+<h3 class="anchored" data-anchor-id="counting">Counting</h3>
+<p>Using the <code>syn_data</code> dataset, produce a tibble of counts of how many participants had any kind of synaesthesia. Then, produce a second tibble, adding in gender as well.</p>
+<p><em>Hint</em>: Use the <a href="03_datasets.qmd#codebook">codebook</a> to find the variables to use.</p>
+</section>
+<section id="subsetting" class="level3">
+<h3 class="anchored" data-anchor-id="subsetting">Subsetting</h3>
+<p>Subset <code>syn_data</code> using <code>$</code> to get out all the values stored in the <code>scsq_organise</code> variable.</p>
+<p>Subset <code>syn_data</code> using <code>dplyr::pull()</code> to get out all the values stored in the <code>gc_score</code> variable. How would you read this code?</p>
+</section>
+<section id="descriptives" class="level3">
+<h3 class="anchored" data-anchor-id="descriptives">Descriptives</h3>
+<p>Calculate the mean, standard deviation, and median of the SCSQ global subscale, and the range of the grapheme-colour synaesthesia score.</p>
+<p>Try using each subsetting method at least once.</p>
+</section>
+<section id="visualisations" class="level3">
+<h3 class="anchored" data-anchor-id="visualisations">Visualisations</h3>
+<p>Try making a histogram and a boxplot, using any of the variables in the <code>syn_data</code> dataset. Try using <code>$</code> and <code>pull()</code> once each.</p>
+<p><em>Optionally</em>, if you feel so inclined, use the help documentation to spruce up your plots a bit, such as changing the title and axis labels.</p>
+<p><strong>CHALLENGE</strong>: Try making a barplot and a scatterplot.</p>
+<p>For the barplot, make a visualisation of how many people are synaesthetes or not (regardless of synaesthesia type).</p>
+<p>For the scatterplot, choose any two SCSQ measures.</p>
+<p>Both of these require some creative problem-solving using the help documentation and the skills and functions covered in this tutorial.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

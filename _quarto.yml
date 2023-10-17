@@ -1,6 +1,6 @@
 project:
   type: website
-  pre-render: scripts/gen_index.R #not currently working automatically (but seems okay manually!)
+  pre-render: scripts/on_render
   render: 
     - "*.qmd"
     - "!tutorials/drafts/" #don't attempt to render the drafts folder
@@ -33,6 +33,7 @@ website:
       contents: 
         - tutorials.qmd
         - quick_ref.qmd
+        - data_workbooks.qmd
         - section: "FundRmentals"
           contents:
             - auto: tutorials/psychrlogy/01_fundRmentals/*
