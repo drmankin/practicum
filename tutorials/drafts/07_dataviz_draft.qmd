@@ -9,6 +9,14 @@ title: "07: Visualisations"
 
 This tutorial focuses on creating data visualisations using the {ggplot2} package. It covers the conceptual grammar of {ggplot} and a variety of examples of common plots and tweaks. 
 
+::: {.callout-tip title="Giddy for ggplot"}
+
+If you're really keen on data visualisation with {ggplot2}, check out [Tidy Tuesdays](https://www.tidytuesday.com/). Each week, there's a new dataset released, and people build and share beautiful visualisations, along with the code and frequently their process!
+
+There's also a fantastic how-to called [Data visualisation using R, for researchers who don’t use R](https://psyteachr.github.io/introdataviz/) from the fantastic team at PsychTeachR at Glasgow, that provides a very friendly, start-to-finish walkthrough of the whole process of data reading, manipulation, and plot-building.
+
+:::
+
 ## Setup
 
 ### Packages
@@ -61,16 +69,53 @@ THe {ggplot} package is a bit of a universe in its own right. Like R itself, it'
 
 What we'll cover in this tutorial is the core structure of building data visualisations in {ggplot2}, so that you have a solid base to build your own designs on. No matter what you're trying to do, there's nearly always a blog post, help document, or Stack Overflow post titled "How to do [whatever] in ggplot" to point you in the right direction!
 
-::: {.callout-tip title="}
-
-If you're really keen on data visualisation with {ggplot2}, check out [Tidy Tuesdays](https://www.tidytuesday.com/). Each week, there's a new dataset released, and people build and share beautiful visualisations, along with the code and frequently their process!
-
-:::
-
 ### Layers
 
-Plots in {ggplot2} are built in layers. Think of each layer as a sheet of paper in [layered paper art](https://www.youtube.com/watch?v=yxI6SkdrgC4), or  Each layer is a function that is added to the plot, building it up piece by piece. 
+Plots in {ggplot2} are built in layers. Each layer adds to or changes something about the plot; these can be big elements, like determining the type of plot to create, to small details like editing axis labels or changing colours. In {ggplot2}, each layer is a function.
+
+If it helps, you can think of layers like [different colours in a linocut print](https://www.instagram.com/reel/CpTb7oCJ5da/?utm_source=ig_web_button_share_sheet). Each additional layer of colour adds a bit more to the overall picture, building up from big blocks of colour to small details.
+
+To build a visualisation in {ggplot2}, it's a good idea to build your plot in the same way, from big picture to small detail. As we'll see, the plots layers are usually built like this:
+
+```r
+dataset |> 
+  choose_variables_to_visualise +
+  choose_type_of_plot +
+  add_more_elements +
+  edit_labels_or_colours +
+  apply_a_theme
+```
+These are guidelines[^rules], but the general => specific flow is for a good reason: **layers are evaluated from top to bottom**. So, it's best to get the big pieces in place first, then fine-tune, than to have those fiddly bits overwritten by a major change at the end of the code.
+
+[^rules]: ![](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExaHkyNWtraTM2dm5xY2J1bGYzb3hmMmhubHp4dWM1MXl6bmpxcnY3NCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/uXUmaREltwja1dEqXi/giphy.gif)
+
+Notice as well that **layers are added to a plot object with `+` and NOT with `|>`**. 
 
 ### Geoms
 
-### 
+
+
+## Visualisations
+
+### Univariate
+
+#### Histograms
+
+#### Density Plots
+
+#### Violin Plots
+
+#### Raincloud Plots
+
+#### Customisation
+
+- Adding colour
+- splitting on a grouping variable
+
+### Bivariate
+
+#### Scatterplots
+
+#### Heatmaps
+
+#### Interaction Plots

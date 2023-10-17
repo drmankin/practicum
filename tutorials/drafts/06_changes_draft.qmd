@@ -14,41 +14,129 @@ execute:
 
 ## Overview
 
-This tutorial covers two essential `dplyr` functions: `mutate()` and `summarise()`. Very similar in structure, the two functions primarily differ in output. `mutate()` makes changes within a given dataset, whereas `summarise()` uses the information in a given dataset to create a new, separate summary dataset.
+This tutorial covers three more essential `dplyr` functions: `group_by()`, `mutate()`, and `summarise()`. 
 
-### Setting Up
+The first, `group_by()`, is a helper function that allows new variables or summaries to be created within subgroups.
 
+Very similar in structure, the latter two functions primarily differ in output. `mutate()` makes changes within a given dataset by creating new variables (columns) whereas `summarise()` uses the information in a given dataset to create a new, separate summary dataset.
+
+
+
+## Setup
+
+### Packages
+
+We will again be focusing on {dplyr} today, which contains all three of our main functions. You can either load {dplyr} alone, or all of {tidyverse} - it won't make a difference, but you only need one or the other.
+
+We'll also need the {AER} package for data.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Load the necessary packages.
+
+::: {.callout-note collapse="true" title="Solution"}
 ```{r}
+library(dplyr)
+## OR
 library(tidyverse)
+
+library(AER)
 ```
+:::
+:::
+
+### Data
+
+We'll once again make use of a dataset from the {AER} package. 
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Use the `data()` function to read the `STAR` dataset from the {AER} package, and rename it `star_tib` (for consistency's sake!).
+
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+data("STAR", package = "AER")
+star_tib <- STAR
+```
+
+:::
+:::
+
+#### Codebook
+
+Because this dataset is from an R package, the codebook is stored as help documentation.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Open the codebook for the `STAR` dataset as help documentation.
+
+*Hint*: Use `?` and run this code **in the Console**.
+
+::: {.callout-note collapse="true" title="Solution"}
+
+We've renamed this dataset for our own use (personally I hate typing caps!), but we'll need to use its original name in order to pull up the help documentation.
+
+``` r
+?AER::STAR
+```
+:::
+:::
+
+## Group By
+
+The first of our three new functions is a bit different than the other two. It can be a bit confusing, actually, because it may look like it doesn't do anything at all by itself. Let's have a quick look grouping by a categorical variable - here, gender.
 
 ```{r}
-#| echo: false
-
-peng <- palmerpenguins::penguins
+star_tib |> 
+  dplyr::group_by(gender)
 ```
+
+It doesn't particularly look like anything interesting has happened at first. The dataset still contains the same number of rows and columns as it did before. We can even ask R if these datasets are identical:
+
+```{r}
+## Create a grouped dataset
+star_tib_gb <- star_tib |> 
+  dplyr::group_by(gender)
+
+## Ask R if the grouped dataset contains the same values
+## In the same places, ignoring missing values
+all(star_tib_gb == star_tib, na.rm = TRUE)
+```
+
+So what's happened?
+
+If you look at the printout of the grouped tibble above, you might notice one new thing. Next to the box we've seen before, reading "A tibble: `r nrow(star_tib)` x `r ncol(star_tib)`", there's now a second box reading "Grouped: gender [3]". We can interpret this to mean this tibble is now grouped by the gender variable, which contains three different groups.
+
+What are those groups? We could use any method we covered in the previous tutorials to find out, but one option is to count them:
+
+```{r}
+star_tib |> 
+  dplyr::count(gender)
+```
+
+So, the three groups are "male", "female", and `NA` (missing).
+
+What's happened is that we've introduced a **structural** change to our dataset. Whatever calculations we ask R to perform after grouping, those calculations will take place *within the groups*. 
+
+To see what this means, let's have a look at 
+
 
 ## Mutate
 
 The `mutate()` function is one of the most essential functions from the `dplyr` package. Its primary job is to easily and transparently make changes within a dataset - in particular, a `tibble`.
 
-### Basic Structure
+### General Format
 
 To make a single, straightforward change to a tibble, use the general format:
 
 ```{r}
 #| eval: false
 
-my_tibble |>
+dataset_name |>
   dplyr::mutate(
     variable_name = instructions_for_creating_the_variable
   )
 
 ```
 
-#### Usage
-
-`variable_name` is the name of the variable that will be changed by `mutate()`. This can be any name that follow's R's object naming rules. There are two main options for this name:
+`variable_name` is the name of the variable that will be changed by `mutate()`. This can be any name that follows R's object naming rules. There are two main options for this name:
 
 1.  If the dataset does **not** already contain a variable called `variable_name`, a new variable will be added to the dataset.
 2.  If the dataset **does** already contain a variable called `variable_name`, the new variable will silently[^1] replace (i.e. overwrite) the existing variable with the same name.
@@ -69,7 +157,8 @@ my_tibble |> # <1>
   )
 ```
 
-1.  Take the dataset
+1.  Take the dataset and make the following changes:
+2. 
 
 ::: callout-tip
 Although creating or modifying variables will likely be the most frequent way you use `mutate()`, it has other handy features such as:
@@ -123,8 +212,7 @@ my_tibble |> # <1>
 For lots more details and examples on `rowwise()` and rowwise operations with `dplyr` - including which other scenarios in which a row-wise dataset would be useful - run `vignette("rowwise")` in the Console.
 :::
 
-::: {.callout-note appearance="minimal"}
-#### Exercises
+::: {.callout-note appearance="minimal" title="Exercise"}
 
 What would the above code produce without the `rowwise()...ungroup()` steps (i.e. with only the `mutate()` command)? Make a prediction, then try it.
 
@@ -145,8 +233,11 @@ my_tibble |>
 
 This code still runs successfully, but the result isn't what we wanted. Have a look at the `anxiety_mean` variable: all the values are the same. Instead of calculating the mean for each person, this code instead calculated the *overall* mean of all of the anxiety variables, and then assigned that single value to the `anxiety_mean` variable. Not what we wanted in this case - but it could be useful in other scenarios!
 :::
+:::
 
-The above code is definitely not the only way to obtain the same output. Try producing the the same `anxiety_mean` variable with the following methods. What are the benefits and drawbacks of each methods? *Hint:* Use `vignette("rowwise")` to help if you get stuck.
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+**CHALLENGE:** The above code is definitely not the only way to obtain the same output. Try producing the the same `anxiety_mean` variable with the following methods. What are the benefits and drawbacks of each methods? *Hint:* Use `vignette("rowwise")` to help if you get stuck.
 
 1.  Using a dedicated by-row function, `rowMeans()`
 2.  Using the basic structure of `mutate()` only
@@ -156,9 +247,9 @@ If we wanted to avoid, or didn't remember, the `rowwise()...ungroup()` sequence,
 
 *1. Using `rowMeans`*
 
-The `base` function `rowMeans()` calculates the mean of each row without any additional jiggery pokery to worry about. The problem is specifying which variables to include, especially because we have ten in this example to work with.
+The {base} function `rowMeans()` calculates the mean of each row without any additional jiggery pokery to worry about. The problem is specifying which variables to include, especially because we have ten in this example to work with.
 
-However, `rowMeans()` is an independent function who doesn't need no `dplyr`, and as such does not work the same way, for instance, `mean()` does, with no straightforward workaround.
+However, `rowMeans()` is an independent function who don't need no {dplyr}, and as such does not work the same way, for instance, `mean()` does, with no straightforward workaround.
 
 ```{r}
 #| error: true
@@ -214,16 +305,16 @@ my_tibble |>
 
 This method, although very transparent, has some critical downsides.
 
--   **It's clunky and prone to error.** This style works best for 2-3 variables contributing to the composite. For more variables, we end up with a lot of repetitive typing, which also means increased likelihood of typos, accidental omissions, or other errors - especially with a large number of variables, as we have here.
+-   **It's clunky and prone to error.** This style works best for 2-3 variables contributing to the composite. For more variables, we end up with a lot of repetitive typing of variable names, which also means increased likelihood of typos, accidental omissions, or other errors - especially with a large number of variables, as we have here.
 -   **It's not robust.** Imagine that, on review of the anxiety scale, we find that `anxiety_9` is a badly worded/unreliable item and decide to drop it from our analysis. We then either have to (remember to) manually update our code both to remove `anxiety_9` *and* to change the denominator from 10 to 9 (not a good time), or debug the resulting error if we don't remember.
 
-We **do teach this method to UGs** specifically to reduce the number of functions they have to learn, but for real-life usage, in most cases, the `rowwise()` solution is likely preferable.
+We **do teach this method to UGs** specifically to reduce the number of functions they have to learn, but for real-life usage, in most cases, the `rowwise()` solution is your best bet for both readability and resilience.
 :::
 :::
 
 ### Conditionals
 
-There are many functions out there for recoding variables, but the following method, using `dplyr::case_when()`, is recommended because it is so versatile. It can be used to recode the values from one variable into new one, but it can also combine information across variables and handle multiple conditionals. It essentially allows a series of if-else statements without having to actually have lots of if-else statements.
+There are many functions out there for recoding variables (let's wave cheerfully at `dplyr::recode()` as we fly by it without stopping), but the following method, using `dplyr::case_when()`, is recommended because it is so versatile. It can be used to recode the values from one variable into new one, but it can also combine information across variables and handle multiple conditionals. It essentially allows a series of if-else statements without having to actually have lots of if-else statements.
 
 The generic format of `case_when()` can be stated as follows:
 
@@ -240,11 +331,9 @@ my_tibble |>
   )
 ```
 
-#### Usage
+`logical_assertion` is any R code that returns `TRUE` and `FALSE` values. These should be very familiar by now!
 
-`logical_assertion` is any R code that returns `TRUE` and `FALSE` values.
-
-`value` is the value to assign to `new_value` for the cases for which `logical_assertion` returns `TRUE`.
+`value` is the value to assign to `new_variable` for the cases for which `logical_assertion` returns `TRUE`.
 
 The assertions are evaluated sequentially (from first to last in the order they are written in the function), and the first match determines the value. This means that the assertions **must** be ordered from most specific to least specific.
 
@@ -254,7 +343,7 @@ The assertions for `case_when()` are the same as the ones we used previously in 
 
 Let's look at two examples of how `dplyr::case_when()` might come in handy.
 
-##### One-Variable Input
+#### One-Variable Input
 
 We've created our composite `anxiety_mean` variable previously, and now we may want to change this continuous score into a categorical variable indicating whether or not participants display clinical levels of anxiety. So, we can use `case_when()` to recode `anxiety_mean` into a new `anxiety_cat` variable.
 
@@ -292,7 +381,7 @@ This is a matter of style, since the output of this code would be entirely ident
 In short, it makes the code easier to navigate, more resilient to later updates, and more transparent in its meaning.
 :::
 
-##### Multi-Variable Input
+#### Multi-Variable Input
 
 We might also like to create a useful coding variable to help keep track of the number of cases we've removed, and for what reasons. We can draw on input from multiple variables to create this single new variable.
 
@@ -312,7 +401,7 @@ my_tibble |>  # <1>
   )
 ```
 
-1.  Take the dataset `my_tibble` and make a change to it by a creating a new variable, `remove`, by applying the following rules
+1.  Take the dataset `my_tibble` and make a change to it by a creating a new variable, `remove`, by applying the following rules:
 2.  For cases where the `distribution` variable contains exactly and only "Preview", assign the value `"preview"`. This is a common task for Qualtrics surveys to remove practice runs.
 3.  For cases where the `info_consent` variable does NOT contain exactly and only the value "Yes", assign the value `"no_consent"`. This includes anyone who did not actively consent - both people who chose options OTHER than "Yes" (e.g. "No"), and people who did not respond.
 4.  For cases where the numerical value in `age` is less than 18, assign the value `"age_young"`.
@@ -320,7 +409,7 @@ my_tibble |>  # <1>
 6.  For cases where the value in `fluent_lang`, once converted to lowercase, does NOT contain the letters "engl", assign the value `"english_no"`. This searches open text responses to a question like "What languages do you speak fluently?" for the string "engl".
 7.  For cases that don't match any of the preceding criteria, assign the value `"keep"`.
 
-Because the first match for each case is the value it is assigned, each case will receive only one value, even if they match multiple criteria. For example, if you had a participant who gave their age as 17 and their fluent languages as Finnish and German, they would be coded as `age_young` rather than `english_no` because the assertion about age comes before the assertion about language. (This is sensible behaviour, because being 18 or older is an ethical requirement, whereas speaking English fluently likely isn't.)
+Because the first match for each case is the value it is assigned, each case will receive only one value, even if they match multiple criteria. For example, if you had a participant who gave their age as 17 and their fluent languages as Finnish and German, they would be coded as `age_young` rather than `english_no` because the assertion about age comes before the assertion about language in the code. (This is sensible behaviour, because being 18 or older is an ethical requirement, whereas speaking English fluently likely isn't.)
 
 From here, you can easily use this variable to summarise exclusions, and to filter out excluded cases for your final dataset.
 
@@ -344,7 +433,7 @@ What about recoding or relabeling factors? For example, imagine a dataset where 
 ### Iteration
 
 ::: callout-warning
-This material isn't covered in the Practicum live workshops. It's included here for reference because it's extremely useful in real R analysis workflows, but it won't be essential for any of the Practicum tasks.
+This material isn't covered in the live workshops. It's included here for reference because it's extremely useful in real R analysis workflows, but it won't be essential for any of the live tasks.
 :::
 
 ```{r}
@@ -360,7 +449,7 @@ my_tibble |>
 
 The `summarise()` function looks almost exactly like `mutate`, with almost identical syntax. However, its primary job is to quickly generate summary tables from datasets.
 
-### Basic Structure
+### General Format
 
 ```{r}
 #| eval: false
@@ -375,11 +464,9 @@ my_tibble |>
 You may notice that the basic structure of summarise looks identical to the basic structure of mutate, above. The difference is that mutate creates or replaces variables within the **same** dataset, while summarise creates a **new** summary dataset without changing the original.
 :::
 
-#### Usage
-
 `variable_name` is the name of a variable that will created in the new summary tibble. This can be any name that follow's R's object naming rules.
 
-`instructions_for_creating_the_variable` tells the function how to create `variable_name`. The instrutions can refer to variables in the piped-in dataset, but should output a **single value**, rather than a vector of values (as we saw in `mutate()`).
+`instructions_for_creating_the_variable` tells the function how to create `variable_name`. The instructions can refer to variables in the piped-in dataset, but should output a **single value**, rather than a vector of values (as we saw in `mutate()`).
 
 #### Example
 
@@ -437,7 +524,7 @@ The second summary table, grouped by both anxiety diagnosis and gender, would li
 ### Iteration
 
 ::: callout-warning
-This material isn't covered in the Practicum live workshops. It's included here for reference because it's extremely useful in real R analysis workflows, but it won't be essential for any of the Practicum tasks.
+This material isn't covered in the live workshops. It's included here for reference because it's extremely useful in real R analysis workflows, but it won't be essential for any of the workshop tasks.
 :::
 
 Despite the versatility of `summarise()`, you may have already noticed that the code covered so far is very typing-intensive if you want information about more than one variable. This is neither efficient nor particularly enjoyable:
@@ -460,6 +547,8 @@ my_tibble |>
 
 If we wanted to also include, for instance, range and CIs, this code would quickly become unmanageably long and difficult to read, not to mention increasingly prone to errors.
 
+As a general rule of thumb, **if you copy/paste more than once, you should be using a function instead.**
+
 There are two main solutions to this issue, and which you choose depends on what you want the output to contain and how much work you want to put into reading the help documentation of various functions.
 
 #### Option 1: Use an Existing Function
@@ -474,7 +563,8 @@ As we saw in [Tutorial 03: Datasets](..\01_fundRmentals\03_datasets.qmd#summarie
 #### Option 2: Function List + `across()`
 
 ::: {.callout-important title="Choose this option if:"}
--   You want custom or complex summary information and/or you want grouped summaries
+-   You want custom or complex summary information
+-   You want grouped summaries
 -   Like me, you just want to do everything yourself so you know it's exactly right.
 :::
 
@@ -505,8 +595,12 @@ peng |>
 ```
 
 1.  To begin, create a new object containing a list. I've called mine `fxs`, short for "functions", but you can of course call it anything you like.
-2.  The elements inside the list have a special format. The first bit, e.g. `mean =`, gives each element a name. This name will be appended to the relevant column in the `summarise()` output, so choose something informative. The second bit, e.g. `~ mean(.x, na.rm = TRUE)`, is the function we want to apply to each variable. The two things to note are the `~`, which denotes "this is a function to apply", and `.x`, which is a placeholder for each of the variables that the function will be applied to.
-3.  Instead of using the familiar `name = instructions` format, we're instead using `across()`. Generally, `across()` has two arguments. The first selects which variables to use using `<tidyselect>`; in this case, I've selected all of the numeric-type variables in the dataset (since it will be difficult to calculate the mean and *SD* otherwise!). The second provides a list of function(s) to apply to all of the selected variables. So, I've put in the list I made in the previous steps that contains all the functions I want to use.
+2.  The elements inside the list have a special format. 
+    1. The first bit, e.g. `mean =`, gives each element a name. This name will be appended to the relevant column in the `summarise()` output, so choose something informative and brief. 
+    2. The second bit, e.g. `~ mean(.x, na.rm = TRUE)`, is the function we want to apply to each variable. The two things to note are the `~`, which denotes "this is a function to apply", and `.x`, which is a placeholder for each of the variables that the function will be applied to.
+3.  Instead of using the familiar `name = instructions` format, we're instead using `dplyr::across()`. Generally, `across()` has two arguments. 
+    1. The first selects which variables to use using `<tidyselect>`; in this case, I've selected all of the numeric-type variables in the dataset (since it will be difficult to calculate the mean and *SD* otherwise!). 
+    2. The second provides a list of function(s) to apply to all of the selected variables. So, I've put in the list I made in the previous steps that contains all the functions I want to use.
 
 This function list + `across()` method is extremely versatile. If you are using a lesser-known statistical technique, or even functions of your own making, you can easily add them to your list of functions and apply them with `across()`.
 
