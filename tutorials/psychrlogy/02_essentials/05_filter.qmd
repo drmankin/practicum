@@ -445,10 +445,17 @@ For data collected on platforms like Qualtrics, you can frequently test out your
 
 Your method may vary, but I wouldn't bother to document these cases as "exclusions" because they aren't real data. I would just drop them from the dataset - but of course make sure to record the code that does so!
 
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Remove any preview runs from the dataset, keeping only real data.
+
+::: {.callout-note collapse="true" title="Solution"}
 ```{r}
 anx_data <- anx_data |> 
   dplyr::filter(distribution == "anonymous")
 ```
+:::
+:::
 
 #### Recording Exclusions
 
@@ -525,52 +532,57 @@ anx_data_proc <- anx_data_proc |>
 
 Finally (for now), just about any study will have to decide how to deal with missing values. The possibilities for your own work are too complex for me to have a guess at here, so for now we'll only look at how to identify and remove missing values.
 
-PICK UP HERE
-
 ##### Single Variable
 
-Let's say our study focuses on sex differences in penguins. So, we must drop any penguins that don't have a sex recorded. The first thing you might think to try is to filter on `sex == NA`, but weirdly enough this doesn't work. Instead, we need to use a function from a family we met all the way back in tutorial 01, namely `is.na()`.
+Let's look at a single variable to begin with - for example, `sticsa_trait_3`. We can confirm that this variable has a/some `NA`s to consider by counting the unique values:
+
+```{r}
+anx_data |> 
+  dplyr::count(sticsa_trait_3)
+```
+
+The first thing you might think to try is to filter on `sticsa_trait_3 == NA`, but weirdly enough this doesn't work. Instead, we need to use a function from a family we met all the way back in Tutorial 01/02, namely `is.na()`.
 
 You can think of `is.na()` as a question about whatever is in its brackets: "Is (this) `NA`?" If the value IS an `NA`, R will return `TRUE`; if it's anything else at all, R will return `FALSE`. Let's see this in action:
 
 ```{r}
 #| eval: false
 
-anx_dat_proc |> #<1>
+anx_data_proc |> #<1>
   dplyr::filter( #<2>
-    is.na(sex) #<3>
+    is.na(sticsa_trait_3) #<3>
   )
 ```
 
 1.  Take the dataset `anx_dat_proc`, *and then*
 2.  Filter it keeping only the cases where the following assertion is true:
-3.  The value in the `sex` variable IS missing (is `NA`).
+3.  The value in the `sticsa_trait_3` variable IS missing (is `NA`).
 
 These are the cases we want to *remove*, so we count how many there are and assign that number to a useful object name, as we did before.
 
 ```{r}
-n_sex_missing <- anx_dat_proc |> #<1>
+n_sticsa_t3_missing <- anx_data_proc |> #<1>
   dplyr::filter( #<2>
-    is.na(sex) #<3>
+    is.na(sticsa_trait_3) #<3>
   ) |> 
   nrow()
 
-n_sex_missing
+n_sticsa_t3_missing
 ```
 
-Next, we need to actually exclude these cases. This time, we want to retain the inverse of the previous filtering requirement: that is, we only want to keep the cases that are NOT missing a value in sex, the opposite of what we got from `is.na(sex)`. You may recognise "the inverse" or "not-x" as something we've seen before with `!=`, "not-equals". For anything that returns `TRUE` and `FALSE`, you can get the inverse by putting an `!` before it. (Try running `!TRUE`, for example!)
+Next, we need to actually exclude these cases. This time, we want to retain the inverse of the previous filtering requirement: that is, we only want to keep the cases that are NOT missing a value in sex, the opposite of what we got from `is.na(sticsa_trait_3)`. You may recognise "the inverse" or "not-x" as something we've seen before with `!=`, "not-equals". For anything that returns `TRUE` and `FALSE`, you can get the inverse by putting an `!` before it. (Try running `!TRUE`, for example!)
 
-So, to create my clean `anx_dat_final` dataset, I can use the assertion `!is.na(sex)` to keep only the penguins who do **NOT** have `NA` in the `sex` variable.
+So, to create my clean `anx_data_final` dataset, I can use the assertion `!is.na(sticsa_trait_3)` to keep only the participants who answered this question - who do NOT have a missing value.
 
 Finally, I can store the actual number of usable cases, according to my cleaning requirements, in a final object to use when reporting.
 
 ```{r}
-anx_dat_final <- anx_dat_proc |> #<1>
+anx_data_final <- anx_data_proc |> #<1>
   dplyr::filter( #<2>
-    !is.na(sex) #<3>
+    !is.na(sticsa_trait_3) #<3>
   )
 
-n_final <- nrow(anx_dat_final)
+n_final <- nrow(anx_data_final)
 n_final
 ```
 
@@ -581,19 +593,45 @@ Removing `NA`s is a tricky process, but if you're sure that you want to drop *al
 For this, we're going to leave `filter()` for a moment at look at a different function, `tidyr::drop_na()`. This function takes a tibble as input, and returns the same tibble as output, but with any rows that had missing values removed.
 
 ::: callout-warning
-This is a pretty major step and should be used with caution!
-:::
+This is a pretty major step and should be used with caution! If we didn't check our data carefully, we could easily end up dropping a bunch of cases we didn't want to get rid of.
 
-So, that might look like:
+For example, if we apply it uncautiously here:
 
 ```{r}
 #| eval: false
 
-anx_dat_proc |> 
+anx_data_proc |> 
   tidyr::drop_na()
 ```
 
-This makes the counting a bit tricky, so I'm not going to include it as a step in the data cleaning sequence above; but it's useful to know about in case you need it.
+Well, there goes all our data!
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+**CHALLENGE**: Why has every single row in the dataset been dropped? Using any method you like, investigate what's happened.
+
+::: {.callout-note collapse="true" title="Solution"}
+
+This is something we could work out without any R whatsoever, just using [the codebook](05_filter.qmd#codebook) and a bit of View mode to confirm. The Codebook tells us that participants were in one of two independent conditions: `"maths"` or `"stats"`. Because of the wide format of the data, there are `mcq_maths` questions that are always `NA` for people in the statistics-MCQ condition, and vice versa for the `mcq_stats` questions and people in the maths-MCQ condition. So, every single participant - even those who answered every question - has *at least some* missing values, and dropping NAs without checking just bins the whole dataset.
+
+If I wanted to check this with R, I'd be hard pressed to do it with only what we've covered so far. Using the some extra challenge functions from the next tutorial, though, I'd do this:
+
+```{r}
+anx_data |> 
+  dplyr::mutate(
+    ## Create a new variable containing the number of missing values in each row
+    number_nas = rowSums(is.na(pick(everything())))
+  ) |> 
+  ## Count how many missing values there are
+  dplyr::count(number_nas)
+```
+
+So, there's at least 5 `NA`s in every single row, and when we call `tidyr::drop_na()`, every single row is dropped.
+
+:::
+
+:::
+:::
 
 #### Reporting
 
@@ -603,17 +641,19 @@ This makes the counting a bit tricky, so I'm not going to include it as a step i
 What is the benefit of taking the extra effort to store these counts in objects? Under what circumstances might this be (particularly) useful?
 
 ::: {.callout-note collapse="true" title="Solution"}
-You can write whatever you like, but here's an example using inline code. I've written this to be generic, rather than about penguins, in case you'd like to refer to it for non-penguin-related studies in the future.
+You can write whatever you like, but here's an example using inline code. 
 
-> The initial sample consisted of `` `r knitr::inline_expr("n_initial")` `` cases. We removed `` `r knitr::inline_expr("n_no_consent")` `` cases that did not consent, and `` `r knitr::inline_expr("n_too_young")` `` cases that reported an age below the ethical age of consent. Finally, we removed `` `r knitr::inline_expr("n_sex_missing")` `` cases with no recorded sex. This left us with a final sample of `` `r knitr::inline_expr("n_final")` `` cases.
+> The initial sample consisted of `` `r knitr::inline_expr("n_initial")` `` cases. We removed `` `r knitr::inline_expr("n_no_consent")` `` cases that did not consent, `` `r knitr::inline_expr("n_too_young")` `` cases that reported an age below the ethical age of consent, and `` `r knitr::inline_expr("n_too_old")` `` cases that reported improbable ages (100 years old or older). This left us with a final sample of `` `r knitr::inline_expr("n_final")` `` cases.
 
 When you render your document, this should come out as:
 
-> The initial sample consisted of `r n_initial` cases. We removed `r n_no_consent` cases that did not consent, and `r n_too_young` cases that reported an age below the ethical age of consent. Finally, we removed `r n_sex_missing` cases with no recorded sex. This left us with a final sample of `r n_final` cases.
+> The initial sample consisted of `r n_initial` cases. We removed `r n_no_consent` cases that did not consent, `r n_too_young` cases that reported an age below the ethical age of consent, and `r n_too_old` cases that reported improbable ages (100 years old or older). This left us with a final sample of `r n_final` cases.
 
-There's a huge advantage of this, namely *ease of change*. Imagine you had a collaborator join the study, with records from more Adelie penguins to use. In order to update all your numbers, all you have to do is update your initial `anx_dat` dataset with the new cases, and then re-run all your code as is. Because these objects count whatever is in the data, they will automatically contain and record the correct numbers for the data you put into them.
+There's a huge advantage of this, namely *ease of change*. Imagine you had [researchers from labs all over the world join the study](https://twitter.com/ProfAndyField/status/1326150839002664960) and add [a huge amount of new data to a massive collaborative dataset](https://openpsychologydata.metajnl.com/articles/10.5334/jopd.80). In order to update all your numbers, all you have to do is update your initial `anx_data` dataset with the new cases, and then re-run all your code as is. Because these objects count whatever is in the data, they will automatically contain and record the correct numbers for the data you put into them[^reality].
 
-There are other advantages too - like confidence that you, a human person who may occasionally make errors (sorry, no offence meant!), won't misread, mistype, or otherwise mistake the numbers, because at no point do you actually interact with a particular count directly.
+[^reality]: I'm sure Jenny would tell you there's a *little* more to it than that, especially with 12,570 students from 100 universities in 35 countries, collected in 21 languages! But that's both the dream and the general idea.
+
+There are other advantages too - like confidence that you, a human person who may occasionally make errors (sorry, no offence meant!), won't misread, mistype, or otherwise mistake the numbers, because at no point do you actually type a particular number yourself.
 
 Nifty, eh?
 :::
@@ -656,35 +696,35 @@ Columns will appear in the output in the order they are selected in `select()`, 
 The best way to get the hang of this will be to give it a go, so let's [dive on in](https://media.giphy.com/media/2cehTmp8rASyunE10R/giphy.gif)!
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-Create a subset of `anx_dat` that contains the following variables:
+Create a subset of `anx_data` that contains the following variables:
 
--   The penguin's sex
+-   The participant's age
 -   The first variable in the original dataset
--   `bill_length_mm` through `body_mass_g`
+-   All of the STARS variables
 
 ::: {.callout-note collapse="true" title="Solution"}
 ```{r}
 anx_dat |> 
   dplyr::select(
-    sex, 1,
-    bill_length_mm:body_mass_g
+    age, 1,
+    stars_test1:stars_help4
   )
 ```
 :::
 :::
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-Create a subset of `anx_dat` that contains the following variables:
+Create a subset of `anx_data` that contains the following variables:
 
--   All of the original variables but NOT `island`
--   `year` renamed `calendar_year`
+-   All of the original variables but NOT `distribution`
+-   `mcq` renamed `condition`
 
 ::: {.callout-note collapse="true" title="Solution"}
 ```{r}
 anx_dat |> 
   dplyr::select(
-    -island,
-    calendar_year = year
+    -distribution,
+    condition = mcq
   )
 ```
 :::
@@ -701,9 +741,7 @@ That's really all there is to it!
 The real power in `select()`, and in many other {tidyverse} functions, is in a system of helper functions and notations collectively called `<tidyselect>`. The overall goal of "`<tidyselect>` semantics" (as you will see it referred to in help documentation) is to make selecting variables easy, efficient, and clear.
 
 ::: {.callout-warning title="New to UGs"}
-At UG level at Sussex, students are not taught about `<tidyselect>` in core modules. However, `<tidyselect>` is desperately useful and makes complex data wrangling/cleaning a lot faster and more efficient, especially (for instance) for questionnaires with similarly-named subscales, so would make for a great collaborative activity with supervisors.
-
-`<tidyselect>` will really come into its own in the last part of this course, when we focus on large, messy Qualtrics datasets with multiple measures and sub-measures.
+At UG level at Sussex, students are not taught about `<tidyselect>` in core modules. However, `<tidyselect>` is desperately useful and makes complex data wrangling/cleaning a lot faster and more efficient, especially (for instance) for questionnaires with similarly-named subscales, so would make for a great collaborative activity with supervisors!
 :::
 
 These helper functions can be combined with the selection methods above in any combination. Some very convenient options include:
@@ -720,28 +758,27 @@ Rather than list examples of all the helper functions here, it's best to just tr
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
 
-Select the variables in `anx_dat` that have to do with bill measurements.
+Select the variables in `anx_data` that have to do with state anxiety.
 
 ::: {.callout-note collapse="true" title="Solution"}
 ```{r}
-anx_dat |> 
+anx_data |> 
   dplyr::select(
-    ## contains() also fine!
-    starts_with("bill")
+    contains("state")
   )
 ```
 :::
 :::
 
 ::: {.callout-note appearance="minimal" title="Exercises"}
-Select the variables in `anx_dat` that do NOT contain measurements in mm.
+Select all the variables in `anx_data` that are NOT the R-MARS, R-MARS-S, or STICSA.
 
 ::: {.callout-note collapse="true" title="Solution"}
 ```{r}
-anx_dat |> 
+anx_data |> 
   dplyr::select(
-    ## ends_with also fine!
-    !contains("mm")
+    ## contains() also fine (in this case)
+    !starts_with(c("rmars", "sticsa"))
   )
 ```
 :::
@@ -749,21 +786,16 @@ anx_dat |>
 
 ::: {.callout-note appearance="minimal" title="Exercises"}
 
-**CHALLENGE**: Without using any commas, select `species`, `island`, `sex`, and `year` only, leaving out the four measurement variables.
+**CHALLENGE**: Select all the `stars` variables but NOT the `stars_m` variables.
 
 ::: {.callout-note collapse="true" title="Solution"}
-The key to this task is figuring out what the excluded variables have in common in comparison to the included ones. There are a few options; here's a couple that worked for me.
+This one's a bit tricky because both `starts_with()` and `contains()` will return both types of STARS variables, because of the way the variables are named. We'll have to provide [multiple assertions](05_filter.qmd#multiple-assertions), like we did earlier with `filter()`.
 
 ```{r}
 #| eval: false
 
-anx_dat |> 
-  dplyr::select(!contains("_"))
-```
-
-```{r}
-anx_dat |> 
-  dplyr::select(!contains(c("mm", "_g")))
+anx_data |> 
+  dplyr::select(starts_with("stars") & !contains("_m_"))
 ```
 :::
 :::
@@ -772,22 +804,20 @@ anx_dat |>
 
 #### Using Functions
 
-Let's say we want to create a summary table of all of the numeric variables in our dataset. Before we can [create our summary in the next tutorial](06_changes.qmd#summarise), we may first want to produce a subset of our dataset that only contains numeric variables.
+Let's say we want to generate a summary table of the variables in our dataset. Before we can [create our summary in the next tutorial](06_changes.qmd#summarise), we may first want to produce a subset of our dataset that only contains numeric variables.
 
 To do this, we can use the `<tidyselect>` helper function `where()`. This helper function lets us use *any* function that returns `TRUE` and `FALSE` to select columns. Essentially, we don't have to select columns using name or position - we can use any criteria we want, as long as we have (or can create...!) a function that expresses that criteria.
 
 Especially helpful here is the `is.*()` family of functions in base R. This group of functions all have the same format, where the `*` is a stand-in for any type of data or object, e.g. `is.logical()`, `is.numeric()`, `is.factor()` etc. (The very useful `is.na()` that we've seen with `filter()` above is also a member of this family.) These functions work like a question about whatever you put into them - for example, `is.numeric()` can be read as, "Is (whatever's in the brackets) numeric data?"
 
 ::: callout-tip
-You can quickly find all of the functions in this family by typing `is.` in the Console and pressing Tab.
+You can quickly find all of the functions in this family by typing `is.` in a code chunk and pressing Tab.
 :::
 
 Putting these two together, we could accomplish the task of selecting only numeric variables as follows:
 
 ```{r}
-#| eval: false
-
-anx_dat |> 
+anx_data |> 
   dplyr::select(
     where(is.numeric)
   )
@@ -803,14 +833,14 @@ The following material in this section isn't covered in the live workshops. It's
 
 The function in `where()` that determines which columns to keep doesn't have to be an existing named function. Another option is to use a "purrr-style lambda" or formula (a phrase you may see in help documentation) to write our own criteria on the spot.
 
-For example, let's select all of the numeric variables that have a minimum value of 200:
+For example, let's select all of the numeric variables that had a mean of 3 or higher:
 
 ```{r}
 #| eval: false
 
-anx_dat |> 
+anx_data |>
   dplyr::select(
-    where(~ is.numeric(.x) & (mean(.x, na.rm = TRUE) >= 200))
+    where(~is.numeric(.x) & mean(.x, na.rm = TRUE) >= 3)
   )
 ```
 
@@ -819,10 +849,10 @@ Instead of just the name of a function, as we had before, we now have a formula.
 -   The `~` (apparently [pronounced "twiddle"!](https://adv-r.hadley.nz/functionals.html#purrr-shortcuts)) at the beginning, which is a shortcut for the longer `function(x) ...` notation for creating functions.
 -   The `.x`, which is a placeholder for each of the variables that the function will be applied to.
 
-So, this command can be read: "Take my tibble and select all the columns where the following is true: the data type is numeric AND the minimum value in that column is greater than or equal to 200 (ignoring missing values)."
+So, this command can be read: "Take my tibble and select all the columns where the following is true: the data type is numeric AND the mean value in that column is greater than or equal to 3 (ignoring missing values)."
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-**CHALLENGE:** Select the variables in `anx_dat` that are factors, or that do NOT contain any missing values.
+**CHALLENGE:** Select the variables in `anx_data` that are character type, or that do NOT contain any missing values.
 
 *Hint*: You may need to use function(s) that we haven't covered in the tutorials so far to solve this.
 
@@ -830,15 +860,15 @@ So, this command can be read: "Take my tibble and select all the columns where t
 This one is a doozy! Very well done if you worked it out, either using your own solution or one like this, or if you got partway there.
 
 ```{r}
-anx_dat |> 
+anx_data |> 
   dplyr::select(
-    where(~ is.factor(.x) | all(!is.na(.x)))
+    where(~ is.character(.x) | all(!is.na(.x)))
   )
 ```
 
 Here's the process to understand/solve this using this particular solution.
 
-The first half of the formula in `where()` should be okay - we haven't looked at factors in depth, but you may have noticed the `<fctr>` label in the tibble output and/or guessed that there might be an `is.*()` function for this purpose.
+The first half of the formula in `where()` should be okay - you may have noticed the `<chr>` label in the tibble output and/or guessed that there might be an `is.*()` function for this purpose.
 
 The second half is a bit rough. You may have tried `!is.na(.x)` and got an error, namely: `Predicate must return TRUE or FALSE, not a logical vector.` In other words, this has to return a SINGLE logical value, and `is.na()` will return a vector containing logical values for each individual value in the variable.
 
@@ -860,131 +890,6 @@ Like AND and OR, `all()` and `any()` only give different responses when there ar
 :::
 :::
 
-## Quick Test: Correlation
+## Quick Test: *t*-test and $\chi^2$
 
-Whew! Had enough logical assertions to last a lifetime? Great - let's cool down with a some snazzy plots and a nice gentle correlation analysis.
-
-This bit is meant to be quick, so we'll only look briefly at what we teach in UG at Sussex. If you want more correlation fun, check out `discovr` tutorials 07 and 18.
-
-### Visualisation
-
-In first year, we teach the function `GGally::ggscatmat()`, which is a quick way to generate a complex plot with lots of useful info, relatively painlessly. However, `ggscatmat()` (if you're wondering, that's G-G-scat-mat, like "scatterplot matrix") will only work on numeric variables, so we'll need to `select()` the ones we want first.
-
-::: callout-tip
-Functions like `ggscatmat()` output a special kind of plot created with {ggplot2}, another core {tidyverse} package. The lovely thing about ggplot-creating functions like this is that they do a lot of the heavy lifting of plot creation for you - getting a bunch of the complicated structure and setup out of the way - and then you can customise the plot further using {ggplot2}.
-
-If you haven't used {ggplot2} before, we'll work through it systematically in an upcoming tutorial. If you can't wait, check out:
-
--   `discovr_05` on data visualisation with {ggplot2}
--   [R for Data Science chapter 3](https://r4ds.had.co.nz/data-visualisation.html)
--   This [list of {ggplot2} resources](https://sites.northwestern.edu/researchcomputing/2020/04/13/online-learning-resources-r-ggplot2/)
-:::
-
-::: {.callout-note appearance="minimal" title="Exercise"}
-Select at least three numeric variables from `anx_dat` and pipe into `ggscatmat()`.
-
-::: {.callout-note collapse="true" title="Solution"}
-```{r}
-anx_dat |> 
-  dplyr::select(where(is.numeric), -year) |> 
-  GGally::ggscatmat()
-```
-:::
-:::
-
-So, this single function gets a pretty complex plot: a matrix containing all of our variables along the top and side, with density plots on the diagonal, scatterplots on one pairwise intersection, and correlation coefficients on the other.
-
-This is the only {GGally} function we teach in UG at Sussex, but to go a bit further, there's another example that might be useful in the future.
-
-::: {.callout-note appearance="minimal" title="Exercise"}
-**CHALLENGE**: Use `GGally::ggpairs()` on the same numeric variables, but split up all the plots by `species` as well.
-
-*Hint*: The {palmerpenguins} intro has this code!
-
-::: {.callout-note collapse="true" title="Solution"}
-The `tidyr::drop_na()` line isn't *essential*, but there will be a lot of howling and gnashing of teeth about missing data and non-finite values if you don't include it.
-
-```{r}
-#| eval: false
-
-anx_dat |> 
-  select(species, body_mass_g, ends_with("_mm")) |> 
-  tidyr::drop_na() |> 
-  GGally::ggpairs(aes(color = species))
-```
-
-```{r}
-#| warning: false
-#| echo: false
-
-cool_plot <- anx_dat |> 
-  dplyr::select(species, body_mass_g, ends_with("_mm")) |> 
-  tidyr::drop_na() |> 
-  GGally::ggpairs(aes(color = species))
-
-print(cool_plot, progress = FALSE)
-```
-
-The example of this in the {palmerpenguins} intro document also changes the default colours, which is something we'll look at when we take a tour through {ggplot2} ourselves.
-:::
-:::
-
-### Testing Correlation
-
-If we wanted to perform and report a detailed correlation analysis on a single pair of variables, the easiest function to use is `cor.test()`. Like `t.test()` (which we encountered in Tutorial 01/02), this is a {stats} package that works in a very similar way.
-
-::: {.callout-note appearance="minimal" title="Exercise"}
-Using the help documentation for `cor.test()`, perform a correlation analysis between any two numeric variables of your choice in the `anx_dat` dataset. The solution will use the formula option, but if you get it to run, you're doing good!
-
-::: {.callout-note collapse="true" title="Solution"}
-Run `?cor.test` in the Console.
-
-I chose bill length and flipper length, but whatever you chose is fine!
-
-```{r}
-cor.test(~ bill_length_mm + flipper_length_mm, data = anx_dat)
-```
-:::
-:::
-
-::: {.callout-note appearance="minimal" title="Exercise"}
-**CHALLENGE**: Using what we learned in the last tutorial, report the results of this analysis without typing any of the results out by hand.
-
-::: {.callout-note collapse="true" title="Solution"}
-```{r}
-peng_cor <- cor.test(~ bill_length_mm + flipper_length_mm, data = anx_dat)
-
-peng_cor_out <- papaja::apa_print(peng_cor)
-```
-
-> A Pearson's pairwise correlation between bill length and flipper length indicated a very strong, significant positive correlation between the two measurements (`` `r knitr::inline_expr("peng_cor_out$full_result")` ``).
-
-Which will render as:
-
-> A Pearson's pairwise correlation between bill length and flipper length indicated a very strong, significant positive correlation between the two measurements (`r peng_cor_out$full_result`).
-:::
-:::
-
-In second year, UGs are also introduced to the (more {tidyverse}-friendly) function `correlation::correlation()`.
-
-Why would you use this one vs `cor.test()`? On the good side, this function scales up to pairwise tests between as many variables as you give it. This means if you want, for instance, multiple pairwise correlations within a dataset, this is the way to go, since it will apply a familywise error rate correction by default (Holm, to be precise).
-
-On the other hand, it's a right pain to type and doesn't play ball with {papaja}. The family of packages that {correlation} belongs to, [collectively called {easystats}](https://easystats.github.io/easystats/), has its own reporting package, appropriately called {report} - so pick your poison I guess 🤷[^4]
-
-[^4]: Look, I like my basic {stats} functions. They all look the same and work the same way, don't require extra installations or loading, and can be reported nicely with {papaja} or custom functions. I love an `htest` object, me! **BUT**, you gotta find the functions that do what you need them to do. You won't always use one or the other - just use the one that makes sense to you and works for the task at hand.
-
-::: {.callout-note appearance="minimal" title="Exercise"}
-Select at least three variables from `anx_dat`, including the ones you used with `cor.test()` above, and get pairwise correlations between all of them with `correlation::correlation()`.
-
-::: {.callout-note collapse="true" title="Solution"}
-```{r}
-anx_dat |> 
-  dplyr::select(where(is.numeric), -year) |> 
-  correlation::correlation()
-```
-:::
-:::
-
- 
-
-We made it to the end, if you can believe it!
+For our quick tests today, we're going to revisit the *t*-test and also 

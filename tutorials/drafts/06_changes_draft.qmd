@@ -44,36 +44,58 @@ library(AER)
 
 ### Data
 
-We'll once again make use of a dataset from the {AER} package.
+Today we're continuing to work with the same dataset as last week. Courtesy of the fantastic Sussex colleague (Jenny Terry)[https://www.jennyterry.co.uk/], this dataset contains real data about statistics and maths anxiety. 
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-Use the `data()` function to read the `STAR` dataset from the {AER} package, and rename it `star_tib` (for consistency's sake!).
+Read in the dataset and save it in a new object, `anx_data`.
+
+On the Cloud, you can read in this dataset from the `data` folder using `here::here()`.
+
+Elsewhere, you can download or read in the dataset from this URL:
+
+```{r}
+#| eval: false
+https://raw.githubusercontent.com/drmankin/practicum/master/data/anx_data.csv
+```
 
 ::: {.callout-note collapse="true" title="Solution"}
+Read in from file:
 ```{r}
-data("STAR", package = "AER")
-star_tib <- STAR
+anx_data <- readr::read_csv(here::here("data/anx_data.csv"))
 ```
+
+Read in from URL:
+```{r}
+#| eval: false
+
+anx_data <- readr::read_csv("https://raw.githubusercontent.com/drmankin/practicum/master/data/anx_data.csv")
+```
+
 :::
 :::
 
 #### Codebook
 
-Because this dataset is from an R package, the codebook is stored as help documentation.
+There's quite a bit in this dataset, so you will need to refer to the codebook below for a description of all the variables.
 
-::: {.callout-note appearance="minimal" title="Exercise"}
-Open the codebook for the `STAR` dataset as help documentation.
+::: {.callout-tip title="Dataset Info Recap" collapse="true"}
+This study explored the difference between maths and statistics anxiety, widely assumed to be different constructs. Participants completed the Statistics Anxiety Rating Scale ([STARS](https://explore.bps.org.uk/content/bpsptr/24/2/101)) and Maths Anxiety Rating Scale - Revised ([R-MARS](https://journals.sagepub.com/doi/10.1177/001316448204200218)), as well as modified versions, the STARS-M and R-MARS-S. In the modified versions of the scales, references to statistics and maths were swapped; for example, the STARS item "Studying for an examination in a statistics course" became the STARS-M item "Studying for an examination in a maths course"; and the R-MARS item "Walking into a maths class" because the R-MARS-S item "Walking into a statistics class".
 
-*Hint*: Use `?` and run this code **in the Console**.
+Participants also completed the State-Trait Inventory for Cognitive and Somatic Anxiety ([STICSA](https://www.cambridge.org/core/journals/behavioural-and-cognitive-psychotherapy/article/abs/distinguishing-cognitive-and-somatic-dimensions-of-state-and-trait-anxiety-development-and-validation-of-the-statetrait-inventory-for-cognitive-and-somatic-anxiety-sticsa/78FDDC5BCDE9D4164434AC10E83DCEF3?utm_campaign=shareaholic&utm_medium=copy_link&utm_source=bookmark)). They completed the state anxiety items twice: once before, and once after, answering a set of five MCQ questions. These MCQ questions were either about maths, or about statistics; each participant only saw one of the two MCQ conditions.
+:::
 
-::: {.callout-note collapse="true" title="Solution"}
-We've renamed this dataset for our own use (personally I hate typing caps!), but we'll need to use its original name in order to pull up the help documentation.
+::: callout-important
+For learning purposes, I've randomly generated some additional variables to add to the dataset containing info on distribution channel, consent, gender, and age. Especially for the consent variable, don't worry: all the participants in this dataset did consent to the original study. I've simulated and added this variable in later to practice removing participants.
+:::
 
-``` r
-?AER::STAR
+```{r}
+readr::read_csv(here::here("data/anx_codebook.csv")) %>%
+  kableExtra::kbl(
+    col.names = stringr::str_to_title(names(.)),
+    html = TRUE
+  ) |> 
+  kableExtra::kable_styling()
 ```
-:::
-:::
 
 ## Group By
 
@@ -607,30 +629,134 @@ The [next tutorial](08_analysis.qmd) applies everything we've covered so far to 
 -   Row-wise and column-wise operations, run `vignette("rowwise")` and `vignette("colwise")` respectively in the Console.
 :::
 
+## Quick Test: Correlation
+
+Whew! Had enough logical assertions to last a lifetime? Great - let's cool down with a some snazzy plots and a nice gentle correlation analysis.
+
+This bit is meant to be quick, so we'll only look briefly at what we teach in UG at Sussex. If you want more correlation fun, check out `discovr` tutorials 07 and 18.
+
+### Visualisation
+
+In first year, we teach the function `GGally::ggscatmat()`, which is a quick way to generate a complex plot with lots of useful info, relatively painlessly. However, `ggscatmat()` (if you're wondering, that's G-G-scat-mat, like "scatterplot matrix") will only work on numeric variables, so we'll need to `select()` the ones we want first.
+
+::: callout-tip
+Functions like `ggscatmat()` output a special kind of plot created with {ggplot2}, another core {tidyverse} package. The lovely thing about ggplot-creating functions like this is that they do a lot of the heavy lifting of plot creation for you - getting a bunch of the complicated structure and setup out of the way - and then you can customise the plot further using {ggplot2}.
+
+If you haven't used {ggplot2} before, we'll work through it systematically in an upcoming tutorial. If you can't wait, check out:
+
+-   [The R Graph Gallery](https://r-graph-gallery.com/)
+-   `discovr_05` on data visualisation with {ggplot2}
+-   [R for Data Science chapter 3](https://r4ds.had.co.nz/data-visualisation.html)
+-   This [list of {ggplot2} resources](https://sites.northwestern.edu/researchcomputing/2020/04/13/online-learning-resources-r-ggplot2/)
+:::
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Select only the first five STICSA trait anxiety variables and pipe into `ggscatmat()`.
+
+::: {.callout-note collapse="true" title="Solution"}
+
+
 ```{r}
-# eval: false
-
-peng <- palmerpenguins::penguins
-
-peng |>
-  dplyr:: select(contains("bill")) |>
-  dplyr::mutate(
-    bill_mm_mean = mean(c(bill_length_mm, bill_depth_mm), na.rm = TRUE)
-  )
-
-peng |>
-  dplyr::rowwise() |>
-  dplyr::mutate(
-    bill_mm_mean = mean(pick(contains("bill")), na.rm = TRUE)
-  )
-
-peng |>
-  dplyr::mutate(
-    bill_mm_mean = rowMeans(dplyr::select(peng, bill_length_mm, bill_depth_mm))
-  )
-
-# peng |>
-#   dplyr::mutate(
-#     bill_mm_mean = mean(c_across(contains("bill")), )
-#   )
+anx_dat |> 
+  dplyr::select(num_range("sticsa_trait_", 1:5)) |> 
+  GGally::ggscatmat()
 ```
+:::
+:::
+
+So, this single function gets a pretty complex plot: a matrix containing all of our variables along the top and side, with density plots on the diagonal, scatterplots on one pairwise intersection, and correlation coefficients on the other.
+
+This is the only {GGally} function we teach in UG at Sussex, but to go a bit further, there's another example that might be useful in the future.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+**CHALLENGE**: Use `GGally::ggpairs()` on the same numeric variables, but split up all the plots by `species` as well.
+
+*Hint*: The {palmerpenguins} intro has this code!
+
+::: {.callout-note collapse="true" title="Solution"}
+The `tidyr::drop_na()` line isn't *essential*, but there will be a lot of howling and gnashing of teeth about missing data and non-finite values if you don't include it.
+
+```{r}
+#| eval: false
+
+anx_dat |> 
+  select(species, body_mass_g, ends_with("_mm")) |> 
+  tidyr::drop_na() |> 
+  GGally::ggpairs(aes(color = species))
+```
+
+```{r}
+#| warning: false
+#| echo: false
+
+cool_plot <- anx_dat |> 
+  dplyr::select(species, body_mass_g, ends_with("_mm")) |> 
+  tidyr::drop_na() |> 
+  GGally::ggpairs(aes(color = species))
+
+print(cool_plot, progress = FALSE)
+```
+
+The example of this in the {palmerpenguins} intro document also changes the default colours, which is something we'll look at when we take a tour through {ggplot2} ourselves.
+:::
+:::
+
+### Testing Correlation
+
+If we wanted to perform and report a detailed correlation analysis on a single pair of variables, the easiest function to use is `cor.test()`. Like `t.test()` (which we encountered in Tutorial 01/02), this is a {stats} package that works in a very similar way.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Using the help documentation for `cor.test()`, perform a correlation analysis between any two numeric variables of your choice in the `anx_dat` dataset. The solution will use the formula option, but if you get it to run, you're doing good!
+
+::: {.callout-note collapse="true" title="Solution"}
+Run `?cor.test` in the Console.
+
+I chose bill length and flipper length, but whatever you chose is fine!
+
+```{r}
+cor.test(~ bill_length_mm + flipper_length_mm, data = anx_dat)
+```
+:::
+:::
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+**CHALLENGE**: Using what we learned in the last tutorial, report the results of this analysis without typing any of the results out by hand.
+
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+peng_cor <- cor.test(~ bill_length_mm + flipper_length_mm, data = anx_dat)
+
+peng_cor_out <- papaja::apa_print(peng_cor)
+```
+
+> A Pearson's pairwise correlation between bill length and flipper length indicated a very strong, significant positive correlation between the two measurements (`` `r knitr::inline_expr("peng_cor_out$full_result")` ``).
+
+Which will render as:
+
+> A Pearson's pairwise correlation between bill length and flipper length indicated a very strong, significant positive correlation between the two measurements (`r peng_cor_out$full_result`).
+:::
+:::
+
+In second year, UGs are also introduced to the (more {tidyverse}-friendly) function `correlation::correlation()`.
+
+Why would you use this one vs `cor.test()`? On the good side, this function scales up to pairwise tests between as many variables as you give it. This means if you want, for instance, multiple pairwise correlations within a dataset, this is the way to go, since it will apply a familywise error rate correction by default (Holm, to be precise).
+
+On the other hand, it's a right pain to type and doesn't play ball with {papaja}. The family of packages that {correlation} belongs to, [collectively called {easystats}](https://easystats.github.io/easystats/), has its own reporting package, appropriately called {report} - so pick your poison I guess 🤷[^4]
+
+[^4]: Look, I like my basic {stats} functions. They all look the same and work the same way, don't require extra installations or loading, and can be reported nicely with {papaja} or custom functions. I love an `htest` object, me! **BUT**, you gotta find the functions that do what you need them to do. You won't always use one or the other - just use the one that makes sense to you and works for the task at hand.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Select at least three variables from `anx_dat`, including the ones you used with `cor.test()` above, and get pairwise correlations between all of them with `correlation::correlation()`.
+
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+anx_dat |> 
+  dplyr::select(where(is.numeric), -year) |> 
+  correlation::correlation()
+```
+:::
+:::
+
+ 
+
+We made it to the end, if you can believe it!
