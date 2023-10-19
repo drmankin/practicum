@@ -7,3 +7,321 @@ title: "08: Analysis"
 This tutorial is still under construction. Check back another time!
 
 :::
+
+## Categorical Predictors
+
+### Comparing Several Means
+
+::: {.callout-tip title=""}
+
+`discovr_11`
+
+:::
+
+#### Plots and Tables
+
+```{r}
+# Violin plot
+ggplot2::ggplot(puppy_tib, aes(dose, happiness)) + 
+  geom_violin() +
+  stat_summary(fun.data = "mean_cl_boot") +
+  labs(x = "Dose of puppies", y = "Happiness (0-10)") +
+  scale_y_continuous(breaks = 1:7) +
+  theme_minimal()
+
+### Means and CIs
+puppy_tib |> 
+  dplyr::group_by(dose) |> 
+  dplyr::summarize(
+    mean = mean(happiness, na.rm = TRUE),
+    `95% CI lower` = mean_cl_normal(happiness)$ymin,
+    `95% CI upper` = mean_cl_normal(happiness)$ymax
+  ) |> 
+  knitr::kable(digits = 3) # to round values
+```
+
+#### Fit the Model
+
+```{r}
+# Solution
+puppy_lm <- lm(happiness ~ dose, data = puppy_tib, na.action = na.exclude)
+
+anova(puppy_lm) |> 
+  parameters::model_parameters(effectsize_type = "omega") |> 
+  knitr::kable(digits = 3) # to round values
+
+broom::tidy(puppy_lm, conf.int = TRUE) |> 
+  knitr::kable(digits = 3) # to round values
+```
+
+#### Contrast Coding
+
+```{r}
+# Put it all together:
+puppy_vs_none <- c(-2/3, 1/3, 1/3)
+short_vs_long <- c(0, -1/2, 1/2)
+contrasts(puppy_tib$dose) <- cbind(puppy_vs_none, short_vs_long)
+contrasts(puppy_tib$dose) # This line prints the contrast weights so we can check them
+```
+
+```{r}
+puppy_lm <- lm(happiness ~ dose, data = puppy_tib)
+
+anova(puppy_lm) |> 
+  parameters::model_parameters(effectsize_type = "omega") |> 
+  knitr::kable(digits = 3)
+
+broom::tidy(puppy_lm, conf.int = TRUE) |> 
+  knitr::kable(digits = 3)
+```
+
+#### Post-Hoc Tests
+
+```{r}
+modelbased::estimate_contrasts(puppy_lm, contrast = "dose") |> 
+  knitr::kable(digits = 3) #to round values
+```
+
+### Comparing Adjusted Means
+
+`discovr_12`
+
+#### Visualisations
+
+```{r}
+ggplot2::ggplot(pupluv_tib, aes(x = puppy_love, y = happiness, colour = dose, fill = dose)) +
+  geom_point() + 
+  geom_smooth(method = "lm") +
+  coord_cartesian(ylim = c(0, 10)) +
+  scale_x_continuous(breaks = 0:7) +
+  scale_y_continuous(breaks = 0:10) +
+  labs(x = "Puppy love (0-7)", y = "Happiness (0-10)", colour = "Treatment", fill = "Treatment") +
+  theme_minimal()
+```
+
+#### Fit the Model
+
+```{r}
+lm(happiness ~ puppy_love + dose, data = pupluv_tib) |> 
+  broom::tidy(conf.int = TRUE) |> 
+  knitr::kable(digits = 3)
+```
+
+#### Independence of the Covariate
+
+```{r}
+luvdose_lm <- lm(puppy_love ~ dose, data = pupluv_tib) 
+anova(luvdose_lm) |> 
+  knitr::kable(digits = 3)
+```
+
+#### Set Contrasts
+
+```{r}
+puppy_vs_none <- c(-2/3, 1/3, 1/3)
+short_vs_long <- c(0, -1/2, 1/2)
+contrasts(pupluv_tib$dose) <- cbind(puppy_vs_none, short_vs_long)
+contrasts(pupluv_tib$dose) # This line prints the contrast weights so we can check them
+```
+
+#### Model and *F*
+
+```{r}
+# Solution:
+pupluv_lm <- lm(happiness ~ puppy_love + dose, data = pupluv_tib)
+car::Anova(pupluv_lm, type = 3) |> 
+  knitr::kable(digits = 3)
+```
+
+#### EMMs
+
+```{r}
+modelbased::estimate_means(pupluv_lm, fixed = "puppy_love") |> 
+  knitr::kable(digits = 3)
+```
+
+#### Parameter Estimates
+
+```{r}
+broom::tidy(pupluv_lm, conf.int = TRUE) |> 
+  knitr::kable(digits = 3)
+```
+
+#### Post-Hoc Tests
+
+```{r}
+modelbased::estimate_contrasts(pupluv_lm,
+                               contrast = "dose",
+                               fixed = "puppy_love",
+                               adjust = "bonferroni") |> 
+  knitr::kable(digits = 3)
+```
+
+#### Homogeneity of Slopes
+
+```{r}
+hors_lm <- lm(happiness ~ puppy_love*dose, data = pupluv_tib) 
+car::Anova(hors_lm, type = 3) |> 
+  knitr::kable(digits = 3)
+# or
+hors_lm <- update(pupluv_lm, .~. + dose:puppy_love)
+car::Anova(hors_lm, type = 3) |> 
+  knitr::kable(digits = 3)
+```
+
+```{r}
+pup_slopes <- modelbased::estimate_slopes(hors_lm,
+                                          trend = "puppy_love",
+                                          at = "dose",
+                                          ci = 0.95)
+pup_slopes |>
+  knitr::kable(digits = 3)
+```
+
+### Factorial Designs
+
+`discover_13`
+
+{afex}: analysis of factorial experiments
+
+#### Fit the Model
+
+```{r}
+# fit the model:
+goggles_afx <- afex::aov_4(attractiveness ~ facetype*alcohol + (1|id), data = goggles_tib)
+goggles_afx #this shows us the model
+```
+
+#### Interaction Plot
+
+```{r}
+# solution:
+afex::afex_plot(goggles_afx, "alcohol", "facetype") +
+  labs(x = "Alcohol consumption", y = "Attractiveness rating (0-10)") +
+  theme_minimal()
+```
+
+#### EMMs
+
+```{r}
+emmeans::emmeans(goggles_afx, c("alcohol", "facetype"))
+```
+
+#### Simple Effects
+
+```{r}
+# for the model created with afex
+emmeans::joint_tests(goggles_afx, "facetype") |> 
+  knitr::kable(digits = 3)
+
+emmeans::joint_tests(goggles_afx, "alcohol") |> 
+  knitr::kable(digits = 3)
+```
+
+### Mixed Designs
+
+`discovr_15`
+
+#### Fit the Model
+
+```{r}
+# fit the model:
+date_afx <- afex::aov_4(date ~ strategy*looks*personality + (looks*personality|id), data = date_tib)
+date_afx #this shows us the model
+
+```
+
+#### Main Effects
+
+```{r}
+emmeans::contrast(looks_emm, method = "trt.vs.ctrl", ref = 2, adjust = "holm")
+
+
+```
+
+#### Two-Way Interactions
+
+```{r}
+
+strat_looks_emm <- emmeans::emmeans(date_afx, c("strategy", "looks"), model = "multivariate")
+strat_looks_emm # shows us the means
+
+emmeans::contrast(
+  strat_looks_emm,
+  interaction = c(strategy = "trt.vs.ctrl", looks = "trt.vs.ctrl"),
+  ref = 2,
+  adjust = "holm"
+  )
+
+strat_pers_emm <- emmeans::emmeans(date_afx, c("strategy", "personality"), model = "multivariate")
+strat_pers_emm # display the means
+emmeans::contrast(strat_pers_emm, interaction = c(strategy = "trt.vs.ctrl", personality = "trt.vs.ctrl"), ref = 2, adjust = "holm")
+
+looks_pers_emm <- emmeans::emmeans(date_afx, c("looks", "personality"), model = "multivariate")
+looks_pers_emm # display the means
+emmeans::contrast(looks_pers_emm, interaction = c(looks = "trt.vs.ctrl", personality = "trt.vs.ctrl"), ref = 2, adjust = "holm")
+
+```
+
+#### Three-Way Interaction
+
+```{r}
+three_way_emm <- emmeans::emmeans(date_afx, c("strategy", "looks", "personality"), model = "multivariate")
+three_way_emm # shows us the means
+
+emmeans::contrast(
+  three_way_emm,
+  interaction = c(strategy = "trt.vs.ctrl", looks = "trt.vs.ctrl", personality = "trt.vs.ctrl"),
+  ref = 2,
+  adjust = "holm"
+  )
+```
+
+### Moderation
+
+#### Centring
+
+```{r}
+# Solution
+vids_tib <- vids_tib |> 
+  dplyr::mutate(
+    caunts_cent = caunts - mean(caunts, na.rm = TRUE),
+    vid_game_cent = vid_game - mean(vid_game, na.rm = TRUE)
+  )
+vids_tib
+```
+
+#### Fit the Model
+
+```{r}
+aggress_lm <- lm(aggress ~ caunts_cent*vid_game_cent, data = vids_tib)
+broom::tidy(aggress_lm, conf.int = TRUE)
+```
+
+#### Simple Slopes
+
+```{r}
+# Ask for confidence intervals (solution)
+interactions::sim_slopes(
+  aggress_lm,
+  pred = vid_game_cent,
+  modx = caunts_cent,
+  jnplot = TRUE,
+  robust = TRUE,
+  confint = TRUE
+  )
+
+# Label the legend (solution)
+interactions::interact_plot(
+  aggress_lm,
+  pred = vid_game_cent,
+  modx = caunts_cent,
+  interval = TRUE,
+  x.label = "Time playing video games per week (hours)",
+  y.label = "Predicted aggression",
+  legend.main = "Callous unemotional traits"
+  )
+```
+
+
+## Report
