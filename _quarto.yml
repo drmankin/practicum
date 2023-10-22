@@ -1,9 +1,10 @@
 project:
   type: website
-  pre-render: scripts/gen_index.R #not currently working automatically (but seems okay manually!)
+  pre-render: scripts/on_render/gen_index.R
   render: 
     - "*.qmd"
     - "!tutorials/drafts/" #don't attempt to render the drafts folder
+    - "!workbooks/" # don't attempt to render the workbooks
 
 website:
   title: R Training
@@ -33,6 +34,7 @@ website:
       contents: 
         - tutorials.qmd
         - quick_ref.qmd
+        - data_workbooks.qmd
         - section: "FundRmentals"
           contents:
             - auto: tutorials/psychrlogy/01_fundRmentals/*
@@ -65,7 +67,7 @@ format:
     highlight-style: 
       light: tomorrow
       dark: cobalt
-    df-print: tibble
+    df-print: paged
 
 editor: visual
 

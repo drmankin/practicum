@@ -1,0 +1,29 @@
+---
+title: 'Data and Workbooks'
+---
+
+## Datasets
+
+Download and save datasets to use for tutorial tasks here. Either copy the link to use in `readr::read_csv()`, or save the data at the link to a .csv file to read in.
+
++--------------+--------------------------------------------------------------------------------------------------+--------------------------------------+---------------------------------------------------------------------------------------+
+| Filename     | Citation/Source                                                                                  | Comments                             | URL                                                                                   |
++:=============+:=================================================================================================+:=====================================+:======================================================================================+
+| syn_data.csv | [Mealor et al., 2016](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0155483) | Dataset publicly available           | [Link](https://raw.githubusercontent.com/drmankin/practicum/master/data/syn_data.csv) |
++--------------+--------------------------------------------------------------------------------------------------+--------------------------------------+---------------------------------------------------------------------------------------+
+| anx_data.csv | [Terry, Lea, & Field (in prep)](https://osf.io/8jk5v/)                                           | Dataset shared for teaching purposes | [Link](https://raw.githubusercontent.com/drmankin/practicum/master/data/anx_data.csv) |
++--------------+--------------------------------------------------------------------------------------------------+--------------------------------------+---------------------------------------------------------------------------------------+
+
+## Workbooks
+
+Download and save workbook Qmd files to complete the tutorial tasks in.
+
++-----------------------------------------+-------------------------------------------------------------------------------------------------------------+
+| Tutorial                                | Download                                                                                                    |
++:========================================+:============================================================================================================+
+| 01/02: IntRoduction                     | [Download 01_02_intro_workbook.qmd](https://raw.githubusercontent.com/drmankin/practicum/master/workbooks/) |
++-----------------------------------------+-------------------------------------------------------------------------------------------------------------+
+| 03: Datasets                            | [Download 03_datasets_workbook.qmd](https://raw.githubusercontent.com/drmankin/practicum/master/workbooks/) |
++-----------------------------------------+-------------------------------------------------------------------------------------------------------------+
+| 04: Reporting Linear Models with Quarto | [Download 04_lm_workbook.qmd](https://raw.githubusercontent.com/drmankin/practicum/master/workbooks/)       |
++-----------------------------------------+-------------------------------------------------------------------------------------------------------------+

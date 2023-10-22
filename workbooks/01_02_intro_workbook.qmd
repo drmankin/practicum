@@ -1,0 +1,306 @@
+---
+title: "01/02: IntRoduction"
+format: html
+editor: visual
+execute:
+  warning: false
+  message: false
+  error: true
+embed-resources: true
+---
+
+## Open the Tutorial
+
+Use the following code chunks to open the accompanying tutorial.
+
+### Open in RStudio Viewer
+
+```{r}
+rstudioapi::viewer('https://r-training.netlify.app/tutorials/psychrlogy/01_fundRmentals/01_02_intro')
+```
+
+### Open in a New Browser Tab
+
+```{r}
+utils::browseURL('https://r-training.netlify.app/tutorials/psychrlogy/01_fundRmentals/01_02_intro')
+```
+
+
+
+## Orientation
+
+
+### The RStudio Interface
+
+
+#### Source
+
+
+#### Console
+
+
+## Errors
+
+Type literally any gibberish, words, keysmashes etc. into the code chunk in the workbook and press Run (or Ctrl/Cmd + Shift + Enter).
+
+```{r}
+
+```
+
+
+
+### GlossoRlia: the Language of Errors
+
+
+## Types of Data
+
+
+### Numeric Data
+
+Type any single number and run the code.
+
+```{r}
+
+```
+
+
+How does R handle commas within a number (e.g. to separate the thousands place from the hundreds)? How about full stops for decimals?
+
+```{r}
+
+```
+
+
+Add together your shoe size and the number of windows in the room you're currently in.
+
+```{r}
+
+```
+
+
+Try subtracting, dividing, and multiplying the same two numbers.
+
+```{r}
+
+```
+
+
+
+#### Vectors {#vectors}
+
+Print out every whole number between 1 and 50.
+
+```{r}
+
+```
+
+
+Print out all the numbers 12 through 30; all of the numbers 23 through 55; and 36, all in one command.
+```{r}
+
+```
+
+
+
+#### Vector Calculations
+
+Create a vector of every whole number between 37 and 63, and subtract 7 from each element.
+
+```{r}
+
+```
+
+
+
+### Character Data
+
+Create a vector containing the first five animals you think of, then print the 3rd one.
+
+```{r}
+
+```
+
+
+
+### Logical Data
+
+Write the following assertions in R:
+
+-   5 is greater than 10
+-   6 is less than 12
+-   27 is less than or equal to 27
+-   49 does not equal 93
+-   420 equals 42
+
+```{r}
+
+```
+
+
+Use a single command to ask R whether the numbers 2 through 10 are less than or equal to 6.
+
+```{r}
+
+```
+
+
+
+## Class and Coercion
+
+Use the `class()` function to get R to print the values `"numeric"`, `"logical"`, and `"character"`.
+
+```{r}
+
+```
+
+
+What data type does R give you if you combine numbers and characters in `c()`?
+
+```{r}
+
+```
+
+
+Use an `as.*()` function to convert the following vector of participant ages into numeric data: `c(20, "42", "36 years old")`. What do you think will happen to each element?
+
+```{r}
+
+```
+
+
+
+## Objects
+
+
+### Creating an Object
+
+
+#### Naming Objects
+
+Think of a research scenario familiar to you with two independent groups. You're welcome to draw from your own research or expertise, but you should choose something with numerical scores. Some ideas include:
+
+1.  Reaction times on a button-pressing task from a control and an experimental group
+2.  Statistics anxiety scores from first and second year UG students
+3.  Quiz marks from students with practicals scheduled 9am and students with practicals at 6pm
+
+Make a note of the scenario you chose. Then, create two new objects: one that contains a vector of six scores from the first of the two groups, and the second that has six different scores from the second group.
+
+*Hint*: Just make up some numbers that sound plausible!
+
+```{r}
+
+```
+
+
+
+### Calling an Object
+
+Call both of the objects you just created.
+
+```{r}
+
+```
+
+
+
+### Using Objects
+
+Calculate the mean of each of the two sets of scores you created.
+
+```{r}
+
+```
+
+
+Calculate the **difference** in the mean of each of the two sets of scores, and save this difference in a new object called `quiz_diff`.
+
+```{r}
+
+```
+
+
+What is the class of these objects?
+
+```{r}
+
+```
+
+
+
+### Overwriting Objects
+
+First, let's imagine we get three new participants in each condition of our previous study. Update the same two objects you created previously with three new scores each.
+
+```{r}
+
+```
+
+
+
+## Functions
+
+
+### Basics and Help
+
+Try running the `round()` function.
+
+```{r}
+
+```
+
+
+Open the help documentation for the `round()` function by running `?round()` or `help(round)` in the Console.
+```{r}
+
+```
+
+
+
+### Arguments
+
+
+#### Unnamed Arguments
+
+
+#### Named Arguments
+
+
+### Using Functions
+
+Use the `round()` function to round 64.3333333 to two decimal places.
+
+If you prefer, you can do this with one of the means you calculated for your own scores earlier.
+
+```{r}
+
+```
+
+
+
+#### Passing Multiple Values to Arguments
+
+Before you go on, have a go using a single `round()` command to round 64.3333333, 59.5452, and 0.198 at once.
+
+*Hint*: Refer to [Vectors](#vectors).
+```{r}
+
+```
+
+
+
+## Quick Test: *t*-test
+
+Bring up the help documentation for `t.test()` and use it to run a *t*-test comparing your two sets of scores.
+
+```{r}
+
+```
+
+
+Using the help documentation, re-run the *t*-test with equal variances assumed.
+
+```{r}
+
+```
+
+

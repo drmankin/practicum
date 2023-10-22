@@ -1,0 +1,51 @@
+---
+title: "Unused Penguins info"
+---
+
+### Data
+
+For today's data, we're going to be using the delightful `penguins` dataset from the {palmerpenguins} package. This dataset is widely used for constructing examples and demonstrations with R, so you're likely to come across it *in the wild* (so to speak).
+
+::: callout-tip
+For a complete description of the dataset, along with some absolutely adorable illustrations of the eponymous penguins, see the [introduction on illustrator Allison Horst's Github](https://allisonhorst.github.io/palmerpenguins/articles/intro.html#exploring-correlations).
+:::
+
+One of the great things about this dataset is that you don't have to have it saved anywhere. Rather, it's installed when you install the `palmerpenguins` package, and once you have it installed, you can always get access to it.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Create a new object, `peng_dat`, containing the dataset `palmerpenguins::penguins`. Have a quick look at the dataset to see what it contains.
+
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+peng_dat <- palmerpenguins::penguins
+
+dplyr::glimpse(peng_dat)
+```
+:::
+:::
+
+::: callout-important
+If you aren't working on the R Training Posit Cloud workspace, you may need to install the {palmerpenguins} package first **in the Console**:
+
+``` r
+install.packages("palmerpenguins")
+```
+:::
+
+#### Codebook
+
+Because this dataset is from an R package, the codebook is stored as help documentation.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Open the codebook for the `palmerpenguins::penguins` dataset as help documentation.
+
+*Hint*: Use `?` and run this code **in the Console**.
+
+::: {.callout-note collapse="true" title="Solution"}
+``` r
+?palmerpenguins::penguins
+```
+:::
+:::
+
+Right, let's get started with our first of two major functions for this tutorial: `flipper()`. Oops, I mean `filter()`! (Sorry, penguin joke 🐧)
