@@ -33,12 +33,17 @@ The table below is arranged alphabetically by function name, and the linked full
   <tr>
    <td style="text-align:left;"> apa_print() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/pkg/papaja/man/apa_print.html">papaja::apa_print()</a> </td>
-   <td style="text-align:left;"> 04: Reporting Linear Models with Quarto<br>05: Filter and Select </td>
+   <td style="text-align:left;"> 04: Reporting Linear Models with Quarto </td>
   </tr>
   <tr>
    <td style="text-align:left;"> apa_table() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/pkg/papaja/man/apa_table.html">papaja::apa_table()</a> </td>
    <td style="text-align:left;"> 04: Reporting Linear Models with Quarto </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> arrange() </td>
+   <td style="text-align:left;"> <a href="https://dplyr.tidyverse.org/reference/arrange.html">dplyr::arrange()</a> </td>
+   <td style="text-align:left;"> 05: Filter and Select </td>
   </tr>
   <tr>
    <td style="text-align:left;"> as.numeric() </td>
@@ -49,6 +54,11 @@ The table below is arranged alphabetically by function name, and the linked full
    <td style="text-align:left;"> autoplot() </td>
    <td style="text-align:left;"> <a href="https://ggplot2.tidyverse.org/reference/autoplot.html">ggplot2::autoplot()</a> </td>
    <td style="text-align:left;"> 04: Reporting Linear Models with Quarto </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> between() </td>
+   <td style="text-align:left;"> <a href="https://dplyr.tidyverse.org/reference/between.html">dplyr::between()</a> </td>
+   <td style="text-align:left;"> 05: Filter and Select </td>
   </tr>
   <tr>
    <td style="text-align:left;"> boxplot() </td>
@@ -71,16 +81,6 @@ The table below is arranged alphabetically by function name, and the linked full
    <td style="text-align:left;"> 05: Filter and Select </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> cor.test() </td>
-   <td style="text-align:left;"> <a href="https://rdrr.io/r/stats/cor.test.html">cor.test()</a> </td>
-   <td style="text-align:left;"> 05: Filter and Select </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> correlation() </td>
-   <td style="text-align:left;"> <a href="https://easystats.github.io/correlation/reference/correlation.html">correlation::correlation()</a> </td>
-   <td style="text-align:left;"> 05: Filter and Select </td>
-  </tr>
-  <tr>
    <td style="text-align:left;"> count() </td>
    <td style="text-align:left;"> <a href="https://dplyr.tidyverse.org/reference/count.html">dplyr::count()</a> </td>
    <td style="text-align:left;"> 03: Datasets<br>05: Filter and Select </td>
@@ -96,18 +96,13 @@ The table below is arranged alphabetically by function name, and the linked full
    <td style="text-align:left;"> 03: Datasets </td>
   </tr>
   <tr>
+   <td style="text-align:left;"> everything() </td>
+   <td style="text-align:left;"> <a href="https://tidyselect.r-lib.org/reference/everything.html">dplyr::everything()</a> </td>
+   <td style="text-align:left;"> 05: Filter and Select </td>
+  </tr>
+  <tr>
    <td style="text-align:left;"> filter() </td>
    <td style="text-align:left;"> <a href="https://dplyr.tidyverse.org/reference/filter.html">dplyr::filter()</a> </td>
-   <td style="text-align:left;"> 05: Filter and Select </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> ggpairs() </td>
-   <td style="text-align:left;"> <a href="https://ggobi.github.io/ggally/reference/ggpairs.html">GGally::ggpairs()</a> </td>
-   <td style="text-align:left;"> 05: Filter and Select </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> ggscatmat() </td>
-   <td style="text-align:left;"> <a href="https://ggobi.github.io/ggally/reference/ggscatmat.html">GGally::ggscatmat()</a> </td>
    <td style="text-align:left;"> 05: Filter and Select </td>
   </tr>
   <tr>
@@ -118,12 +113,12 @@ The table below is arranged alphabetically by function name, and the linked full
   <tr>
    <td style="text-align:left;"> glimpse() </td>
    <td style="text-align:left;"> <a href="https://pillar.r-lib.org/reference/glimpse.html">dplyr::glimpse()</a> </td>
-   <td style="text-align:left;"> 03: Datasets<br>05: Filter and Select </td>
+   <td style="text-align:left;"> 03: Datasets </td>
   </tr>
   <tr>
    <td style="text-align:left;"> here() </td>
    <td style="text-align:left;"> <a href="https://here.r-lib.org//reference/here.html">here::here()</a> </td>
-   <td style="text-align:left;"> 03: Datasets </td>
+   <td style="text-align:left;"> 03: Datasets<br>05: Filter and Select </td>
   </tr>
   <tr>
    <td style="text-align:left;"> hist() </td>
@@ -131,8 +126,8 @@ The table below is arranged alphabetically by function name, and the linked full
    <td style="text-align:left;"> 03: Datasets </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> is.factor() </td>
-   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/factor.html">is.factor()</a> </td>
+   <td style="text-align:left;"> is.character() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/character.html">is.character()</a> </td>
    <td style="text-align:left;"> 05: Filter and Select </td>
   </tr>
   <tr>
@@ -143,7 +138,7 @@ The table below is arranged alphabetically by function name, and the linked full
   <tr>
    <td style="text-align:left;"> kable_styling() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kableExtra::kable_styling()</a> </td>
-   <td style="text-align:left;"> 03: Datasets </td>
+   <td style="text-align:left;"> 03: Datasets<br>05: Filter and Select </td>
   </tr>
   <tr>
    <td style="text-align:left;"> library() </td>
@@ -196,14 +191,14 @@ The table below is arranged alphabetically by function name, and the linked full
    <td style="text-align:left;"> 03: Datasets<br>05: Filter and Select </td>
   </tr>
   <tr>
+   <td style="text-align:left;"> pick() </td>
+   <td style="text-align:left;"> <a href="https://dplyr.tidyverse.org/reference/pick.html">dplyr::pick()</a> </td>
+   <td style="text-align:left;"> 05: Filter and Select </td>
+  </tr>
+  <tr>
    <td style="text-align:left;"> plot() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a> </td>
    <td style="text-align:left;"> 03: Datasets </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> print() </td>
-   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/print.html">print()</a> </td>
-   <td style="text-align:left;"> 05: Filter and Select </td>
   </tr>
   <tr>
    <td style="text-align:left;"> pull() </td>
@@ -218,7 +213,7 @@ The table below is arranged alphabetically by function name, and the linked full
   <tr>
    <td style="text-align:left;"> read_csv() </td>
    <td style="text-align:left;"> <a href="https://readr.tidyverse.org/reference/read_delim.html">readr::read_csv()</a> </td>
-   <td style="text-align:left;"> 03: Datasets </td>
+   <td style="text-align:left;"> 03: Datasets<br>05: Filter and Select </td>
   </tr>
   <tr>
    <td style="text-align:left;"> round() </td>
@@ -226,14 +221,14 @@ The table below is arranged alphabetically by function name, and the linked full
    <td style="text-align:left;"> 01/02: IntRoduction<br>03: Datasets<br>04: Reporting Linear Models with Quarto </td>
   </tr>
   <tr>
+   <td style="text-align:left;"> rowSums() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/colSums.html">rowSums()</a> </td>
+   <td style="text-align:left;"> 05: Filter and Select </td>
+  </tr>
+  <tr>
    <td style="text-align:left;"> sd() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/stats/sd.html">sd()</a> </td>
    <td style="text-align:left;"> 03: Datasets </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> select() </td>
-   <td style="text-align:left;"> <a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select()</a> </td>
-   <td style="text-align:left;"> 05: Filter and Select </td>
   </tr>
   <tr>
    <td style="text-align:left;"> starts_with() </td>
@@ -248,7 +243,7 @@ The table below is arranged alphabetically by function name, and the linked full
   <tr>
    <td style="text-align:left;"> summary() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/base/summary.html">summary()</a> </td>
-   <td style="text-align:left;"> 03: Datasets </td>
+   <td style="text-align:left;"> 03: Datasets<br>04: Reporting Linear Models with Quarto </td>
   </tr>
   <tr>
    <td style="text-align:left;"> t.test() </td>
@@ -365,8 +360,8 @@ If you're looking for a particular section of a tutorial, use this handy summary
    <td style="text-align:left;"> [General Format](tutorials/psychrlogy/02_essentials/05_filter.qmd#general-format), [Selecting Directly](tutorials/psychrlogy/02_essentials/05_filter.qmd#selecting-directly), [Using {tidyselect}](tutorials/psychrlogy/02_essentials/05_filter.qmd#using-{tidyselect}) </td>
   </tr>
   <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Quick Test: Correlation](tutorials/psychrlogy/02_essentials/05_filter.qmd#quick-test:-correlation) </td>
-   <td style="text-align:left;"> [Visualisation](tutorials/psychrlogy/02_essentials/05_filter.qmd#visualisation), [Testing Correlation](tutorials/psychrlogy/02_essentials/05_filter.qmd#testing-correlation) </td>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Quick Test: *t*-test and $\chi^2$](tutorials/psychrlogy/02_essentials/05_filter.qmd#quick-test:-*t*-test-and-$\chi^2$) </td>
+   <td style="text-align:left;">  </td>
   </tr>
 </tbody>
 </table>

@@ -9,7 +9,7 @@ data_path <- here::here("data")
 data_info <- tibble::tribble(
   ~data_file, ~source, ~cite, ~notes,
   "syn_data.csv", "Mealor et al., 2016", "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0155483", "Dataset publicly available",
-  "anx_data.csv", "Terry, Lea, & Field (in prep)", "https://osf.io/8jk5v/", "Dataset shared for teaching purposes"
+  "anx_data.csv", "Terry, Lea, & Field (in prep)", "https://osf.io/8jk5v/", "Dataset shared for teaching purposes. Note that demographics in this dataset are SIMULATED FOR TEACHING PURPOSES and are NOT real data."
 ) |> 
   dplyr::mutate(
     cite_link = paste0("<a href='", cite, "'>", source, "</a>")
@@ -46,7 +46,7 @@ get_title <- function(file_path){
 
 wkbk_tab <- tibble::tibble(
   data_file = list.files(wkbk_path, pattern = "workbook.qmd"),
-  link = paste0("<a href='https://raw.githubusercontent.com/drmankin/practicum/master/workbooks/'", 
+  link = paste0("<a href='https://raw.githubusercontent.com/drmankin/practicum/master/workbooks/", 
                 data_file, "' download='", data_file, "'>Download ", data_file, "</a>"),
   full_path = list.files(path = here::here(), pattern = "workbook.qmd", 
                                  recursive = TRUE, full.names = TRUE)
@@ -80,7 +80,8 @@ writeLines(
     "\n",
     "## Workbooks",
     "",
-    "Download and save workbook Qmd files to complete the tutorial tasks in.",
+    "Right-click the link below and choose Save link as... to save as a .Qmd,",
+    "or click through to view the text and copy/paste into an empty .Qmd document.",
     "",
     wkbk_tab),
   file.path("data_workbooks.qmd")

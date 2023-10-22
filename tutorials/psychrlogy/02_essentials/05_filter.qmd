@@ -38,7 +38,7 @@ library(correlation)
 
 ### Data
 
-Today we're going to start working with a dataset that we're going to get familiar with over the next few weeks. Courtesy of fantastic Sussex colleague (Jenny Terry)[https://www.jennyterry.co.uk/], this dataset contains real data about statistics and maths anxiety. 
+Today we're going to start working with a dataset that we're going to get familiar with over the next few weeks. Courtesy of fantastic Sussex colleague [Jenny Terry](https://www.jennyterry.co.uk/), this dataset contains real data about statistics and maths anxiety. 
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
 Read in the dataset and save it in a new object, `anx_data`.
