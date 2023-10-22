@@ -482,23 +482,28 @@ To begin, we will count the initial number of cases before any exclusions.
 
 ```{r}
 n_initial <- nrow(anx_data_proc)
+n_initial
 ```
 
 (Remember that we can use `nrow()` because there is only one participant per row. If we had long-form data with observations from the same participant across multiple rows, we would have to do something a bit different!)
 
 #### Consent
 
-For many datasets, you would likely have a variable with responses from your participants about informed consent. How you filter this depends on what that variable contains, of course. However, we've already seen examples of this kind of operation earlier in this tutorial, and it would probably look something like `consent == "Yes"`. As we saw before, this would discard cases that answered "No" (along with any other value not exactly matching "Yes") *and* cases with `NA`s from people who didn't answer.
+For many datasets, you would likely have a variable with responses from your participants about informed consent. How you filter this depends on what that variable contains, of course. However, we've already seen examples of this kind of operation earlier in this tutorial. 
+
+For the first assertion, we capture any responses that don't match "Yes", but for the second, we need to use a function from a family we met all the way back in Tutorial 01/02, namely `is.na()`.
+
+You can think of `is.na()` as a question about whatever is in its brackets: "Is (this) `NA`?" If the value IS an `NA`, R will return `TRUE`; if it's anything else at all, R will return `FALSE`. So, to get an accurate count, we need to capture people who either answered something *other than* "Yes", or didn't answer at all.
 
 ```{r}
 n_no_consent <- anx_data_proc |> 
-  dplyr::filter(consent != "Yes") |> 
+  dplyr::filter(consent != "Yes" | is.na(consent)) |> 
   nrow()
 
 n_no_consent
 ```
 
-Then, we remove all participants who did not actively consent and assign the resulting dataset to the same name, overwriting the previous version.
+Then, we remove all participants who did not actively consent and assign the resulting dataset to the same name, overwriting the previous version. As we saw before, the below would discard cases that answered "No" (along with any other value not exactly matching "Yes") *and* cases with `NA`s from people who didn't answer.
 
 ```{r}
 anx_data_proc <- anx_data_proc |> 
@@ -543,9 +548,7 @@ anx_data |>
   dplyr::count(sticsa_trait_3)
 ```
 
-The first thing you might think to try is to filter on `sticsa_trait_3 == NA`, but weirdly enough this doesn't work. Instead, we need to use a function from a family we met all the way back in Tutorial 01/02, namely `is.na()`.
-
-You can think of `is.na()` as a question about whatever is in its brackets: "Is (this) `NA`?" If the value IS an `NA`, R will return `TRUE`; if it's anything else at all, R will return `FALSE`. Let's see this in action:
+The first thing you might think to try is to filter on `sticsa_trait_3 == NA`, but weirdly enough this doesn't work. Instead, we again need the increasingly versatile `is.na()`, which again, we can think of `is.na()` as a question about whatever is in its brackets: "Is (this) `NA`?" Let's see this in action:
 
 ```{r}
 #| eval: false
@@ -645,11 +648,11 @@ What is the benefit of taking the extra effort to store these counts in objects?
 ::: {.callout-note collapse="true" title="Solution"}
 You can write whatever you like, but here's an example using inline code. 
 
-> The initial sample consisted of `` `r knitr::inline_expr("n_initial")` `` cases. We removed `` `r knitr::inline_expr("n_no_consent")` `` cases that did not consent, `` `r knitr::inline_expr("n_too_young")` `` cases that reported an age below the ethical age of consent, and `` `r knitr::inline_expr("n_too_old")` `` cases that reported improbable ages (100 years old or older). This left us with a final sample of `` `r knitr::inline_expr("n_final")` `` cases.
+> The initial sample consisted of `` `r knitr::inline_expr("n_initial")` `` cases. We removed `` `r knitr::inline_expr("n_no_consent")` `` cases that did not consent, `` `r knitr::inline_expr("n_too_young")` `` cases that reported an age below the ethical age of consent, and `` `r knitr::inline_expr("n_too_old")` `` cases that reported improbable ages (100 years old or older). Finally, we removed `` `r knitr::inline_expr("n_sticsa_t3_missing")` `` cases with who had not responded to the third trait item on the STICSA.This left us with a final sample of `` `r knitr::inline_expr("n_final")` `` cases.
 
 When you render your document, this should come out as:
 
-> The initial sample consisted of `r n_initial` cases. We removed `r n_no_consent` cases that did not consent, `r n_too_young` cases that reported an age below the ethical age of consent, and `r n_too_old` cases that reported improbable ages (100 years old or older). This left us with a final sample of `r n_final` cases.
+> The initial sample consisted of `r n_initial` cases. We removed `r n_no_consent` cases that did not consent, `r n_too_young` cases that reported an age below the ethical age of consent, and `r n_too_old` cases that reported improbable ages (100 years old or older). Finally, we removed `r n_sticsa_t3_missing` cases with who had not responded to the third trait item on the STICSA. This left us with a final sample of `r n_final` cases.
 
 There's a huge advantage of this, namely *ease of change*. Imagine you had [researchers from labs all over the world join the study](https://twitter.com/ProfAndyField/status/1326150839002664960) and add [a huge amount of new data to a massive collaborative dataset](https://openpsychologydata.metajnl.com/articles/10.5334/jopd.80). In order to update all your numbers, all you have to do is update your initial `anx_data` dataset with the new cases, and then re-run all your code as is. Because these objects count whatever is in the data, they will automatically contain and record the correct numbers for the data you put into them[^reality].
 
