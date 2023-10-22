@@ -6,14 +6,27 @@ if (!nzchar(Sys.getenv("QUARTO_PROJECT_RENDER_ALL"))) {
 
 data_path <- here::here("data")
 
+data_info <- tibble::tribble(
+  ~data_file, ~source, ~cite, ~notes,
+  "syn_data.csv", "Mealor et al., 2016", "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0155483", "Dataset publicly available",
+  "anx_data.csv", "Terry, Lea, & Field (in prep)", "https://osf.io/8jk5v/", "Dataset shared for teaching purposes"
+) |> 
+  dplyr::mutate(
+    cite_link = paste0("<a href='", cite, "'>", source, "</a>")
+  ) |> 
+  dplyr::select(data_file, cite_link, notes)
+
 data_tab <- tibble::tibble(
   data_file =list.files(data_path, pattern = "data.csv"),
   link = paste0("<a href='https://raw.githubusercontent.com/drmankin/practicum/master/data/", 
-                data_file, "' download='", data_file, "'> Download ", data_file, " </a>")
+                data_file, "'>Link</a>")
   )|> 
-  dplyr::arrange(data_file) |> 
+  dplyr::arrange(data_file)
+
+data_tab <- data_info |>
+  dplyr::left_join(data_tab) |> 
   kableExtra::kbl(
-    col.names = c("Filename", "Download"),
+    col.names = c("Filename", "Citation/Source", "Comments", "URL"),
     format = "html",
     escape = FALSE
   ) |> 
@@ -61,6 +74,7 @@ writeLines(
     "## Datasets",
     "\n",
     "Download and save datasets to use for tutorial tasks here.",
+    "Either copy the link to use in `readr::read_csv()`, or save the data at the link to a .csv file to read in.",
     "\n",
     data_tab,
     "\n",

@@ -72,20 +72,21 @@ You can load the codebook in the Help viewer by running the following in the Con
 
 ### One Predictor
 
-Now that we have some data, we can fit our first model with a single predictor. We will do this with the very hardworking `lm()` function in R, standing for "linear model".
+Now that we have some data, we can fit our first model with a single predictor. We will do this with the very hardworking `lm()` function in R, standing for "**l**inear **m**
+odel".
 
 #### General Format
 
 The `lm()` function has *a lot* of options (as you might expect, given the versatility and ubiquity of linear models!), but its basic format to fit a linear model with a single predictor is very simple:
 
 ```r         
-lm(outcome ~ predictor, data = our_dataset)
+lm(outcome ~ predictor, data = dataset_name)
 ```
 
-In this function, `outcome ~ predictor` is a formula expressing a (simplified version of) the linear model equation. Here, `outcome` is the name of the variable in `our_dataset` that contains the outcome or dependent variable *y*, and `predictor` is the name of the variable that contains the predictor or independent variable *x*.
+In this function, `outcome ~ predictor` is a formula expressing a (simplified version of) the linear model equation. Here, `outcome` is the name of the variable in `dataset_name` that contains the outcome or dependent variable *y*, and `predictor` is the name of the variable that contains the predictor or independent variable *x*.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-Create a new code chunk and use the Codebook and the `lm()` function to fit a linear model predicting teaching evaluation score from beauty ratings. Save the resulting model in a new object called `eval_lm`.
+Use the Codebook and the `lm()` function to fit a linear model predicting teaching evaluation score from beauty ratings. Save the resulting model in a new object called `eval_lm`.
 
 ::: {.callout-note collapse="true" title="Solution"}
 ```{r}
@@ -96,32 +97,54 @@ That's it!
 :::
 :::
 
-#### Model Information
-
-Now we have a new object that contains all the information about our model. We could simply call the name of this object, but the output doesn't tell us anything besides the actual value of the *b* estimates. Instead, we'll use some useful functions from the {tidyverse} package {broom} to get the information we need.
+Now we have a new object that contains all the information about our model. We could simply call the name of this object, but the output doesn't tell us anything besides the actual value of the *b* estimates (try it if you like!). Instead, we'll use some useful functions from the {tidyverse} package {broom} to get the information we need.
 
 #### Model Fit
 
 To get some common measures of model fit, we can use the function `broom::glance()`. The output includes $R^2$, adjusted $R^2$, and *F* and accompanying statistics in comparison to the null model (the mean of the outcome alone).
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-In a new code chunk, put the `eval_lm` object into `broom::glance()` to get model fit statistics.
+Put the `eval_lm` object into `broom::glance()` to get model fit statistics.
 
 ::: {.callout-note collapse="true" title="Solution"}
 ```{r}
+#| df-print: paged
+
 broom::glance(eval_lm)
 ```
 :::
 :::
 
-Helpfully, `broom::glance()` (and many other {tidyverse} functions) output tibbles, which means we can work with them as we already know how to do. In future tutorials, we'll also learn more about changing and filtering tibbles that will make this very more useful. For now, we can simply note the information we get out of this function for future use.
+Helpfully, `broom::glance()` (and many other {tidyverse} functions) output tibbles, which means we can work with them as we already know how to do. In future tutorials, we'll also learn more about changing and filtering tibbles that will make this even more useful. For now, we can simply note the information we get out of this function for future use.
 
 #### Model Parameters
 
-To get information about the *b* estimates for individual predictors, we can use the function `broom::tidy()`. We could run this function without any other information, as we did with `glance()` above, but we'll change one argument here in order to get 95% confidence intervals for *b* in the output as well.
+The most common technique for getting a look at the details of the model is to use a function we've met before: `summary()`. The output isn't great, but it does let us get a whole bunch of useful information quickly and directly.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-In a new code chunk, put the `eval_lm` object into `broom::tidy()`. Use the argument `conf.int = TRUE` to obtain confidence intervals.
+Put the `eval_lm` object into `summary()` to produce the model summary output.
+
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+summary(eval_lm)
+```
+:::
+:::
+
+::: {.callout-tip title="Significance Codes" collapse="true"}
+The output from many base-R {stats} functions, like this `summary()` output, include a line labeled `Signif. codes` that provide a key for understanding the notation given for significance levels in *p*-values.
+
+Reading the key from left to right, we can see that a result is given three asterisks (`***`) when the *p*-value is between 0 and .001; two asterisks between .001 and .01; and so on.
+
+This can be a useful visual check, especially because *p*-values that are very, very small are frequently expressed in scientific notation, which can make them more difficult to spot.
+:::
+
+To get information about the *b* estimates for individual predictors, we can also use the function `broom::tidy()`. We could run this function without any other information, as we did with `glance()` above, but we'll change one argument here in order to get 95% confidence intervals for *b* in the output as well.
+
+The CIs are an improvement over `summary()`, and this information is a tibble rather than just text output, which will make it very handy for reporting in the future.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Put the `eval_lm` object into `broom::tidy()` and use the argument `conf.int = TRUE` to obtain confidence intervals.
 
 ::: {.callout-note collapse="true" title="Solution"}
 ```{r}
@@ -135,7 +158,7 @@ broom::tidy(eval_lm, conf.int = TRUE)
 Next, we may want to test the addition of further predictors in the model. We can then compare the more complex multi-predictor model to the single-predictor model.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-In a new code chunk, fit a linear model with teaching evaluations as the outcome, and both beauty ratings and gender as predictors. Save the model output in a new object called `eval_full_lm`.
+Fit a linear model with teaching evaluations as the outcome, and both beauty ratings and gender as predictors. Save the model output in a new object called `eval_full_lm`.
 
 Then, obtain model fit statistics and parameters as before.
 
@@ -145,8 +168,12 @@ Then, obtain model fit statistics and parameters as before.
 ```{r}
 eval_full_lm <- lm(eval ~ beauty + gender, data = teach_tib)
 
+## Simple output with summary
+summary(eval_full_lm)
+
+## Tibble output and CIs with broom
 broom::glance(eval_full_lm)
-broom::tidy(eval_full_lm)
+broom::tidy(eval_full_lm, conf.int = TRUE)
 ```
 :::
 :::
@@ -181,14 +208,6 @@ Put both model objects into the `anova()` function to find out which model to re
 anova(eval_lm, eval_full_lm)
 ```
 :::
-:::
-
-::: {.callout-tip title="Significance Codes" collapse="true"}
-The output from many base-R {stats} functions, like `anova()`, include a line labeled `Signif. codes` that provide a key for understanding the notation given for significance levels in *p*-values.
-
-Reading the key from left to right, we can see that a result is given three asterisks (`***`) when the *p*-value is between 0 and .001; two asterisks between .001 and .01; and so on.
-
-This can be a useful visual check, especially because *p*-values that are very, very small are frequently expressed in scientific notation, which can make them more difficult to spot.
 :::
 
 The *F*-test is significant, indicating that the more complex two-predictor model is a significant improvement over the one-predictor model, so we will proceed with the two-predictor model.
@@ -252,7 +271,7 @@ At UG level, we teach robust models for two purposes:
 
 ##### Robust Parameter Estimates
 
-Our first robust model re-estimates the parameter estimates using robust techniques withe the `robust::lmRob()` function. We can then compare the robust parameter estimates to the unadjusted ones obtained with `lm()` to find out if our estimates were biased, and report the robust parameter estimates if they were.
+Our first robust model re-estimates the parameter estimates using robust techniques with the `robust::lmRob()` function. We can then compare the robust parameter estimates to the unadjusted ones obtained with `lm()` to find out if our estimates were biased, and report the robust parameter estimates if they were.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
 Fit the same two-predictor model again with `robust::lmRob()` and compare the results to the unadjusted two-predictor model.
@@ -261,8 +280,10 @@ Fit the same two-predictor model again with `robust::lmRob()` and compare the re
 ```{r}
 eval_lm_rob <- robust::lmRob(eval ~ beauty + gender, data = teach_tib)
 
-eval_lm_rob
-eval_full_lm
+broom::tidy(eval_lm_rob, conf.int = TRUE)
+
+## Compare to the unadjusted model
+broom::tidy(eval_full_lm, conf.int = TRUE)
 ```
 
 Comparing the values of the two versions of the model, we can see that the parameter estimates have changed very little, so we might conclude that the unadjusted model was fine.
@@ -280,6 +301,7 @@ Use `parameters::model_parameters()` to re-estimate the *SE*s, CIs, and *p*-valu
 ```{r}
 parameters::model_parameters(eval_full_lm, vcov = "HC4")
 
+## Compare to the unadjusted model
 broom::tidy(eval_full_lm, conf.int = TRUE)
 ```
 
@@ -300,6 +322,7 @@ Produce bootstrapped confidence intervals for the two-predictor model and compar
 ```{r}
 parameters::model_parameters(eval_full_lm, bootstrap = TRUE)
 
+## Compare to the unadjusted model
 broom::tidy(eval_full_lm, conf.int = TRUE)
 ```
 
@@ -379,7 +402,7 @@ There are several ways to insert a new code chunk.
 Create a new code chunk and code that does the following:
 
 -   Load all the packages we used in the previous Linear Model section
--   Read in the dataset located in the `data` folder of your project into an object called `teach_tib`
+-   [Read in the dataset](04_lm.qmd#data-and-codebook)
 -   Create the two objects containing the linear models with [one predictor](04_lm.qmd#one-predictor) and with [two predictors](04_lm.qmd#hierarchical-models).
 
 Then, run the code chunk.
@@ -396,7 +419,7 @@ In the previous section, we used the following packages:
 
 **Read in the data**:
 
-In the Posit Cloud project workspace for this tutorial, there is a `teaching.csv` object. Look back on [Tutorial 03](03_datasets.qmd) for more detail about how to read in datasets.
+Use the code from the [Data and Codebook](04_lm.qmd#data-and-codebook) section of this tutorial to read in the dataset and rename it if you want.
 
 **Create the models**:
 
@@ -410,7 +433,8 @@ library(ggfortify)
 library(parameters)
 library(robust)
 
-teach_tib <- readr::read_csv(here::here("data/teaching_ratings.csv"))
+data("TeachingRatings", package = "AER")
+teach_tib <- TeachingRatings
 
 eval_lm <- lm(eval ~ beauty, data = teach_tib)
 eval_full_lm <- lm(eval ~ beauty + gender, data = teach_tib)
@@ -437,7 +461,7 @@ To begin, we'll use headings to map out our document. There are several ways to 
 Properly formatted headings are strongly recommended for any documents you write, for a variety of reasons:
 
 -   They automatically create the outline (to the right) and navigation menu (to the bottom) of your document for easy navigation
--   They can be automatically converted into a [table of contents](04_lm.qmd#table-of-contents)
+-   They can be automatically converted into a [table of contents](04_lm.qmd#rendering)
 -   They are a crucial accessibility feature for navigating the document via keyboard/screenreader, as well as providing clear visual structure.
 
 :::
@@ -458,7 +482,7 @@ How to format body text depends on the mode you are in.
 -   In Source mode, by using [Markdown formatting](https://quarto.org/docs/authoring/markdown-basics.html).
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-Under the first heading (which I have called "Model Comparison"), write a brief, journal-style description of the variables the two models contain.
+Under the first heading (which I have called "Model Comparison"), write a brief, journal-style description of the two models. Don't fill in any statistics, but leave placeholders where the statistical reporting will go.
 
 ::: {.callout-note collapse="true" title="Solution"}
 If you aren't inclined to write your own, here's a brief sample text to use.
@@ -469,7 +493,7 @@ If you aren't inclined to write your own, here's a brief sample text to use.
 
 ### Dynamic Reporting
 
-The paragraph from the previous exercise was very clearly missing some key information: the actual statistical results of the linear model analysis. To start with, the last sentence should report which of the two models was better, based on the result of our *F*-test, rather than question marks. We *could* produce the output of this test, read it ourselves with our very own eyes/ears, and then type out the results by hand...but that is definitely *not* what we are going to do! Instead, we'll look at a couple options for reporting the results dynamically. (We'll come back to the model R^2^s in a moment.)
+The paragraph from the previous exercise was very clearly missing some key information: the actual statistical results of the linear model analysis. To start with, the last sentence should report which of the two models was better, based on the result of our *F*-test, rather than question marks. We *could* produce the output of this test, read it ourselves with our very own eyes/ears, and then type out the results by hand...but that is definitely *not* what we are going to do! Instead, we'll look at a couple options for reporting the results dynamically. (We'll come back to the R^2^s and *F*s for each model in a moment.)
 
 #### Inline Code
 
@@ -529,7 +553,7 @@ We now have a bit of R code that produces a **single** number that we want to re
 
 [^3]: Generally, inline code should only ever produce a single value, otherwise the formatting can get *interesting*. This value, however, could longer than a single number, if you want to get creative with your dynamic reporting!
 
-The solution is *inline code*, a small bit of R code written in the body text ("inline") that will, when the document is rendered, automatically insert the right number. Inline code is written as follows, in the text: `` `r knitr::inline_expr("some_r_code")` ``
+The solution is *inline code*, a small bit of R code written in the body text ("inline") that will, when the document is rendered, automatically insert the right number. Inline code is written as follows, in the text: `` `r knitr::inline_expr("some_r_code")` ``. Note the backticks; these are NOT apostrophes, and are typically located on the top left of a UK keyboard to the lefter of the 1/! key.
 
 For our reporting, we will need to insert the inline code in exactly the spot where we would like the output of the code to appear. This particular bit of code produces the *F*-statistic, so we can replace the "???"s in our reporting where the value of the *F*-statistic should go:
 
@@ -598,7 +622,9 @@ Now we don't have to worry about getting this right: our document, when rendered
 
 #### Automatic Reporting
 
-As helpful as inline code is (and I would recommend reporting all values dynamically/automatically wherever possible, so it is *very* useful!), you may have noticed that there was a lot of repetitive typing that also made the text itself quite difficult to read, as well lots of opportunities make typos or mistakes. Surely there's a simpler way to do this sort of thing!
+As helpful as inline code is (and I would recommend reporting all values dynamically/automatically wherever possible, so it is *very* useful!), you may have noticed that there was a lot of repetitive typing that also made the text itself quite difficult to read, as well lots of opportunities make typos or mistakes. Surely there's a simpler way to do this sort of thing![^fx]
+
+[^fx]: Here we're going to briefly encounter a principle that will come up again and again, namely: If you have to copy and paste more than once, [use a function instead](https://r4ds.had.co.nz/functions.html#when-should-you-write-a-function).
 
 There are, in fact, many simpler ways to do common tasks like this, which take advantage of the fact that an object created by a particular function will *always* have the same structure. One option is to make further use of the {papaja} package, which is designed for just this purpose.
 
@@ -680,11 +706,10 @@ First, add a label and caption to the code chunk from the previous task that pro
 #| label: tbl-final-model
 #| tbl-cap: "The final model predicting teaching evaluation ratings from instructor beauty and gender."
 
-papaja::apa_table(eval_full_lm_out$table,
-                  caption = "The final model predicting teaching evaluation ratings from instructor beauty and gender.")
+papaja::apa_table(eval_full_lm_out$table)
 ```
 
-You can of course write whatever you like, or borrow the text below, but use whatever label your gave the table code chunk to refer to the table.
+You can of course write whatever you like, or borrow the text below, but use whatever label you gave the table code chunk to refer to the table.
 
 > The final model with two predictors is presented in full in `@tbl-final-model`.
 
@@ -790,7 +815,7 @@ Local code chunk options appear as "hashpipe" (`#|`) comments, as we have seen e
 
 For this example, we could set a local code chunk option `include: false` which will prevent the output from appearing in the document.[^5]
 
-[^5]: For writing tutorials, I make extensive use of `eval: false`, which includes the code in the output but does not attempt to run the code. This allows me to write all kinds of nonsense code without R getting stroppy and throwing errors all of the place!
+[^5]: For writing tutorials, I make extensive use of `eval: false`, which includes the code in the output but does not attempt to run the code. This allows me to write all kinds of nonsense code without R getting stroppy and throwing errors all over the place!
 
 ```{{r}}
 #| include: false
@@ -814,7 +839,7 @@ As per, the [Quarto guide on output formats](https://quarto.org/docs/output-form
 Render your linear model report to a Word document.
 
 ::: {.callout-note collapse="true" title="Solution"}
-Simply update the `format: html` YAML option to `format: docx` and render your document. Note that the `format` options are usually named after the file extension rather than the name of the programme necessarily.
+Simply update the `format: html` YAML option to `format: docx` and render your document. Note that the `format` options are usually named after the file extension rather than the name of the programme necessarily (e.g. `docx` rather than `word`.)
 :::
 :::
 

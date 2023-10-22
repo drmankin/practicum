@@ -1,9 +1,10 @@
 project:
   type: website
-  pre-render: scripts/on_render
+  pre-render: scripts/on_render/gen_index.R
   render: 
     - "*.qmd"
     - "!tutorials/drafts/" #don't attempt to render the drafts folder
+    - "!workbooks/" # don't attempt to render the workbooks
 
 website:
   title: R Training
@@ -66,7 +67,7 @@ format:
     highlight-style: 
       light: tomorrow
       dark: cobalt
-    df-print: tibble
+    df-print: paged
 
 editor: visual
 

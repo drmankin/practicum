@@ -147,7 +147,7 @@ Naturally, we can also filter on numeric values. If we wanted to keep only parti
 ```{r}
 #| output: false
 
-anx_dat |> #<1>
+anx_data |> #<1>
   dplyr::filter( #<2>
     age < 40 #<3>
     )
@@ -164,7 +164,7 @@ Produce a subset of `anx_data` that doesn't contain any male participants.
 ```{r}
 #| output: false
 
-anx_dat |> 
+anx_data |> 
   dplyr::filter(
     gender != "male"
   )
@@ -181,7 +181,7 @@ Here we can take advantage of the fact that we can use variable names as objects
 ```{r}
 #| output: false
 
-anx_dat |> 
+anx_data |> 
   dplyr::filter(
     age <= median(age, na.rm = TRUE)
   )
@@ -231,7 +231,7 @@ At a glance it looks like this produces the same output as the solution above - 
 To demonstrate what it *does* do, I need the `dplyr::mutate()` function [from the next tutorial](06_changes.qmd#mutate) to create some new variables. The first new variable, `double_equals`, contains `TRUE`s and `FALSE`s for each case using the assertion with `==`. The second is exactly the same, but reverses the order of the genders - something that should NOT make a difference to the matching! (We want either female OR male participants, regardless of which we happen to write first.) The third, `in_op`, contains the same again but this time with `%in%`. The final `arrange()` line sorts the dataset by gender to make the output easier to read.
 
 ```{r}
-anx_dat |> 
+anx_data |> 
   dplyr::mutate(
     double_equals = (gender == c("female", "male")),
     double_equals_rev = (gender == c("male", "female")),
@@ -265,7 +265,7 @@ First, I'll create a new dataset using the filtered data.
 
 ```{r}
 ## SERIOUSLY THIS IS BAD
-anx_data_bd <- anx_dat |> 
+anx_data_bd <- anx_data |> 
 ## DON'T USE THIS CODE FOR MATCHING
   dplyr::filter(gender == c("female", "male"))
 ## STOP OH GOD PLEASE JUST DON'T
@@ -313,7 +313,7 @@ For this particular case there are four values in `gender`. If I try `gender == 
 
 ```{r}
 #| warning: true
-anx_dat |> 
+anx_data |> 
   dplyr::count(gender) |> 
   dplyr::filter(gender == c("female", "male"))
 ```
@@ -322,7 +322,7 @@ If I happened to have had the genders the other way round, I would have got an e
 
 ```{r}
 #| warning: true
-anx_dat |> 
+anx_data |> 
   dplyr::count(gender) |> 
   dplyr::filter(gender == c("male", "female"))
 ```
@@ -499,7 +499,7 @@ n_no_consent
 Then, we remove all participants who did not actively consent and assign the resulting dataset to the same name, overwriting the previous version.
 
 ```{r}
-anx_dat_proc <- anx_dat_proc |> 
+anx_data_proc <- anx_data_proc |> 
   dplyr::filter(consent == "Yes")
 ```
 
@@ -554,7 +554,7 @@ anx_data_proc |> #<1>
   )
 ```
 
-1.  Take the dataset `anx_dat_proc`, *and then*
+1.  Take the dataset `anx_data_proc`, *and then*
 2.  Filter it keeping only the cases where the following assertion is true:
 3.  The value in the `sticsa_trait_3` variable IS missing (is `NA`).
 
@@ -704,7 +704,7 @@ Create a subset of `anx_data` that contains the following variables:
 
 ::: {.callout-note collapse="true" title="Solution"}
 ```{r}
-anx_dat |> 
+anx_data |> 
   dplyr::select(
     age, 1,
     stars_test1:stars_help4
@@ -721,7 +721,7 @@ Create a subset of `anx_data` that contains the following variables:
 
 ::: {.callout-note collapse="true" title="Solution"}
 ```{r}
-anx_dat |> 
+anx_data |> 
   dplyr::select(
     -distribution,
     condition = mcq

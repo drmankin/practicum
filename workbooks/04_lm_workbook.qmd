@@ -1,0 +1,276 @@
+---
+title: "04: Reporting Linear Models with Quarto"
+embed-resources: true
+---
+
+## Open the Tutorial
+
+Use the following code chunks to open the accompanying tutorial.
+
+### Open in RStudio Viewer
+
+```{r}
+rstudioapi::viewer('https://r-training.netlify.app/tutorials/psychrlogy/01_fundRmentals/04_lm')
+```
+
+### Open in a New Browser Tab
+
+```{r}
+utils::browseURL('https://r-training.netlify.app/tutorials/psychrlogy/01_fundRmentals/04_lm')
+```
+
+## Overview
+
+## The Linear Model
+
+### Data and Codebook
+
+### One Predictor
+
+#### General Format
+
+Use the Codebook and the `lm()` function to fit a linear model predicting teaching evaluation score from beauty ratings. Save the resulting model in a new object called `eval_lm`.
+
+```{r}
+
+```
+
+#### Model Fit
+
+Put the `eval_lm` object into `broom::glance()` to get model fit statistics.
+
+```{r}
+
+```
+
+#### Model Parameters
+
+Put the `eval_lm` object into `summary()` to produce the model summary output.
+
+```{r}
+
+```
+
+Put the `eval_lm` object into `broom::tidy()` and use the argument `conf.int = TRUE` to obtain confidence intervals.
+
+```{r}
+
+```
+
+### Hierarchial Models
+
+Fit a linear model with teaching evaluations as the outcome, and both beauty ratings and gender as predictors. Save the model output in a new object called `eval_full_lm`.
+
+Then, obtain model fit statistics and parameters as before.
+
+*Hint*: to add a new predictor, you will need to literally add it (`+`) to the formula.
+
+```{r}
+
+```
+
+#### Comparing Models
+
+Put both model objects into the `anova()` function to find out which model to retain.
+
+```{r}
+
+```
+
+#### Standardised *B*s
+
+Use the `standarize = "refit"` argument in the `parameters::model_parameters()` function to obtain standardised *B*s.
+
+Note the spelling of `standardize` with a "z"! Spelling it with an "s" will **not** rescale the parameter estimates.
+
+```{r}
+
+```
+
+### Assumptions Checks
+
+#### Residual Plots
+
+Load the {ggfortify} package and use the `autoplot()` function to generate residual plots for `eval_full_lm`. Set the `which` argument to `c(1, 3, 2, 4)`.
+
+```{r}
+
+```
+
+#### Distribution of Standardised Residuals
+
+#### Robust Models
+
+##### Robust Parameter Estimates
+
+Fit the same two-predictor model again with `robust::lmRob()` and compare the results to the unadjusted two-predictor model.
+
+```{r}
+
+```
+
+##### Robust CIs and *p*-values
+
+Use `parameters::model_parameters()` to re-estimate the *SE*s, CIs, and *p*-values, and compare the results to the unadjusted model.
+
+```{r}
+
+```
+
+##### Bootstrapping
+
+Produce bootstrapped confidence intervals for the two-predictor model and compare to the unadjusted confidence intervals.
+
+```{r}
+
+```
+
+## Quarto
+
+### Getting Started
+
+Create a new Quarto document via File \> New File \> Quarto Document.
+
+If you like, you can give it a title; you will be able to change this later.
+
+Then, click "Create".
+
+```{r}
+
+```
+
+To complete our setup, take the following steps:
+
+-   Delete everything in the new Quarto document except for the YAML header (i.e. all the text and code chunks).
+-   Clear your Environment by clicking the broom icon in the Environment tab.
+-   Restart your R session (via Session \> Restart R).
+
+Make sure you have completed and saved your worksheet with all of your code before you do this!
+
+```{r}
+
+```
+
+### Creating a Code Chunk
+
+Create a new code chunk and code that does the following:
+
+-   Load all the packages we used in the previous Linear Model section
+-   [Read in the dataset](04_lm.qmd#data-and-codebook)
+-   Create the two objects containing the linear models with [one predictor](04_lm.qmd#one-predictor) and with [two predictors](04_lm.qmd#hierarchical-models).
+
+Then, run the code chunk.
+
+```{r}
+
+```
+
+### Body Text
+
+#### Headings
+
+Create 2-3 level 2 headings in your document for the brief report of the linear model. You can choose anything you like, but the three I will refer to will be called "Model Comparison" (constructing and comparing the two models), "Assumptions Checks", and "The Final Model" (reporting the final model in full).
+
+```{r}
+
+```
+
+#### Text
+
+Under the first heading (which I have called "Model Comparison"), write a brief, journal-style description of the two models. Don't fill in any statistics, but leave placeholders where the statistical reporting will go.
+
+```{r}
+
+```
+
+### Dynamic Reporting
+
+#### Inline Code
+
+In your report document, in a **new code chunk**, use the `broom::tidy()` function to get a nice tibble of the `anova()` comparison between the two models, and save it in a new object called `tidy_f`. Then, print out this object **in the Console**.
+
+```{r}
+
+```
+
+Get out the *F*-ratio of `r tidy_f$statistic[2]` from this object, and round it to two decimal places.
+
+```{r}
+
+```
+
+Use inline code to replace all of the ???s in the *F*-test reporting to produce a final report in APA style.
+
+*Hint*: Rounding *p*-values is a bit tricky. [Check out the {papaja} package](https://frederikaust.com/papaja_man/reporting.html) to see if you can find a function besides `round()` that will produce the *p*-value with the correct formatting.
+
+```{r}
+
+```
+
+**CHALLENGE**: Create a bit of inline code that will either report a significant or non-significant result depending on the value of *p*.
+
+*Hint*: You may need to check out the `ifelse()` function.
+
+```{r}
+
+```
+
+#### Automatic Reporting
+
+Use [the {papaja} documentation](https://frederikaust.com/papaja_man/reporting.html#statistical-models-and-tests) to fill in the statistical reporting for each of the linear models (i.e., R^2^, *F*, and *p*) using only **one piece** of inline code for each.
+
+When you're done, render your document to see the results!
+
+```{r}
+
+```
+
+#### Table Formatting
+
+Using [the {papaja} help documentation](https://frederikaust.com/papaja_man/reporting.html#reporting-models-and-tests-in-a-table), produce a nicely formatted table of the final model, presenting the parameter estimates, *p*-values etc. for each predictor under the third ("Final Model") heading.
+
+```{r}
+
+```
+
+**CHALLENGE**: {papaja} isn't the only package to provide easy formatting for commonly reported tests. Have a go creating this table again using the `nice_table()` function from the {rempsyc} package.
+
+```{r}
+
+```
+
+#### Cross-Referencing
+
+Using [the Quarto help documentation](https://quarto.org/docs/authoring/cross-references.html#tables), write a short introductory sentence under the "Final Model" heading and refer to the final model table with a cross-reference.
+
+```{r}
+
+```
+
+**CHALLENGE**: Complete the final "Assumptions Checks" section summarising the checks and using figure cross-referencing to insert and refer to the diagnostic plots.
+
+*Hint*: To report the exact maximum value of Cook's distance, you will also need to refer to `discovr_08` for how to use `broom::augment()`.
+
+```{r}
+
+```
+
+### Rendering
+
+Render your report document using the "Render" button at the top of the document, or by using the keyboard shortcut Ctrl/Cmd + Shift + K\[\^4\].
+
+```{r}
+
+```
+
+#### Global Options
+
+#### Code Chunk Options
+
+#### Output Formats
+
+Render your linear model report to a Word document.
+
+```{r}
+
+```
