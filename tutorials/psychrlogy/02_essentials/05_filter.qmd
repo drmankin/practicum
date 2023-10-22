@@ -82,6 +82,8 @@ For learning purposes, I've randomly generated some additional variables to add 
 :::
 
 ```{r}
+#| echo: false
+
 readr::read_csv(here::here("data/anx_codebook.csv")) %>%
   kableExtra::kbl(
     col.names = stringr::str_to_title(names(.)),
@@ -606,6 +608,8 @@ anx_data_proc |>
 
 Well, there goes all our data!
 
+:::
+
 ::: {.callout-note appearance="minimal" title="Exercise"}
 
 **CHALLENGE**: Why has every single row in the dataset been dropped? Using any method you like, investigate what's happened.
@@ -627,8 +631,6 @@ anx_data |>
 ```
 
 So, there's at least 5 `NA`s in every single row, and when we call `tidyr::drop_na()`, every single row is dropped.
-
-:::
 
 :::
 :::
@@ -892,4 +894,6 @@ Like AND and OR, `all()` and `any()` only give different responses when there ar
 
 ## Quick Test: *t*-test and $\chi^2$
 
-For our quick tests today, we're going to revisit the *t*-test and also 
+::: {.callout-caution title="Under Construction"}
+This portion of the tutorial is still under construction. Check back another time!
+:::
