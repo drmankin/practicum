@@ -895,8 +895,81 @@ Like AND and OR, `all()` and `any()` only give different responses when there ar
 :::
 :::
 
-## Quick Test: *t*-test and $\chi^2$
+## Quick Test: *t*-test redux
 
-::: {.callout-caution title="Under Construction"}
-This portion of the tutorial is still under construction. Check back another time!
+In the very first of these tutorials, we ran a t-test using some vectors of made-up data. We're going to do the same thing again, but look at how we can use real data in a dataset instead.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Bring up the help documentation for `t.test()` and use it to run a *t*-test comparing responses for the first item of the STICSA post-test state anxiety scale between people who saw the maths MCQs vs the stats MCQs.
+
+*Hint*: Try using the formula notation, just like we did in the previous tutorial for `lm()`.
+
+::: {.callout-note collapse="true" title="Solution"}
+Call up the help documentation **in the Console**:
+
+```{r}
+#| eval: false
+
+?t.test
+help(t.test)
+```
+
+Run the test:
+
+```{r}
+## Pipe method
+anx_data |> 
+  t.test(sticsa_post_state_1 ~ mcq, data = _)
+
+## Single command method
+t.test(sticsa_post_state_1 ~ mcq, data = anx_data)
+```
 :::
+:::
+
+There are a lot of options in the `t.test()` function, which can be used, through different arguments, to run almost any variety of *t*-test you can think of. Here, the "stats" and "maths" groups are independent groups, so we can mostly go with the defaults. Just as we saw in Tutorial 04 with the `lm()` function, the formula takes the form `outcome ~ predictor`, where the predictor is the grouping variable.
+
+Note that the output mentions "Welch Two Sample t-test", which is a version of the test that does **not** assume equal variances. This is the version that is taught to undergraduates, because we have not at this point introduced the process of assumption testing. If you definitely know that the variances *are* equal and you definitely want Student's *t*-test, you can instead change the default setting.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+**CHALLENGE**: Using the help documentation, re-run the *t*-test with equal variances assumed.
+
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+t.test(sticsa_post_state_1 ~ mcq, 
+       data = anx_data, 
+       var.equal = TRUE)
+```
+:::
+:::
+
+Finally, we would like to turn this ugly analysis output into a nicely formatted report of the results. You now have all the skills to do this programmatically - without directly typing any of the numbers yourself.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+**CHALLENGE**: Using what you known about `papaja`, inline code, and Quarto, report the results of this *t*-test in full without typing any of the numerical results into the text directly.
+
+Then, render your workbook to see the results!
+
+::: {.callout-note collapse="true" title="Solution"}
+
+To begin, save the *t*-test output in a new object to work with. Then, generate the report output using `papaja` and store that in another new object.
+
+```{r}
+sticsa_t <- t.test(sticsa_post_state_1 ~ mcq, data = anx_data)
+sticsa_t_out <- papaja::apa_print(sticsa_t)
+```
+
+Next, write the text, and fill in the statistical reporting with inline code where necessary. Here's an example:
+
+> We compared mean scores on the STICSA state anxiety item 1 between two groups, who either saw the mathematics MCQ questions (*M* = `` `r knitr::inline_expr("round(sticsa_t$estimate[1], 2)")` ``) or the statistics MCQ questions (*M* =`` `r knitr::inline_expr(" round(sticsa_t$estimate[2], 2)")` ``). A Welsh's robust *t*-test revealed no statistically significant difference in scores between groups (`` `r knitr::inline_expr(" sticsa_t_out$full_result")` ``).
+
+Which should render as:
+
+> We compared mean scores on the STICSA state anxiety item 1 between two groups, who either saw the mathematics MCQ questions (*M* = `r round(sticsa_t$estimate[1], 2)`) or the statistics MCQ questions (*M* =`r round(sticsa_t$estimate[2], 2)`). A Welsh's robust *t*-test revealed no statistically significant difference in scores between groups (`r sticsa_t_out$full_result`).
+
+:::
+:::
+
+\ 
+
+Well done getting through all that! In the next tutorial, we will look at more {dplyr} powerhouses to round out your data wrangling toolkit.

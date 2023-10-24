@@ -642,7 +642,7 @@ anx_data |>
 
 The general rule of thumb is: if you have to copy/paste the same code more than once, use (or write!) a function instead. Essentially, we want to spot where our code is identical, and turn the identical bits into a function that does the repetitive part for us.
 
-Luckily we don't have to figure out how to do this iteration [from scratch]()[^scratch], because {dplyr} already has a built-in method for doing exactly this task. It's called `dplyr::across()` and it works like this:
+Luckily we don't have to figure out how to do this iteration [from scratch](https://purrr.tidyverse.org/)[^scratch], because {dplyr} already has a built-in method for doing exactly this task. It's called `dplyr::across()` and it works like this:
 
 [^scratch]: {purrr}, cats, scratch, get it?? I'm hilarious.
 
@@ -734,7 +734,7 @@ This time around, the original variables still exist untouched in the dataset, a
 
 ## Summarise
 
-The `summarise()` function looks almost exactly like `mutate`, with almost identical syntax. However, its primary job is to quickly generate summary information. 
+The `summarise()` function looks almost exactly like `mutate`. However, its primary job is to quickly generate summary information. 
 
 ### General Format
 
@@ -751,7 +751,7 @@ my_tibble |>
 You may notice that the basic structure of summarise looks identical to the basic structure of mutate, above. The difference is that mutate creates or replaces variables within the **same** dataset, while summarise creates a **new** summary dataset without changing the original.
 :::
 
-`variable_name` is the name of a variable that will created in the new summary tibble. This can be any name that follows R's object naming rules.
+`variable_name` is the name of a variable that will be created in the new summary tibble. This can be any name that follows R's object naming rules.
 
 `instructions_for_creating_the_variable` tells the function how to create `variable_name`. The instructions can refer to variables in the piped-in dataset, but should output a **single value**, rather than a vector of values (as we saw in `mutate()`).
 
@@ -790,7 +790,7 @@ anx_data |>
 
 Basic summary tables are fine, but the real power of `summarise()` is in combination with the helper function `dplyr::group_by()` to split up the summary calculations by the values of a grouping variable.
 
-Similar to [what we saw with `rowwise()`](07_changes.qmd#composite-scores), `group_by()` creates internal structure in the dataset - a new group for each unique value in the grouping variable. Any subsequent calculations done with the dataset are done within those groups.
+Similar to [what we saw with `rowwise()`](06_changes.qmd#composite-scores), `group_by()` creates internal structure in the dataset - a new group for each unique value in the grouping variable. Any subsequent calculations done with the dataset are done within those groups.
 
 ```{r}
 #| eval: false
@@ -849,7 +849,7 @@ anx_data |>   # <1>
 
 If we wanted to also include, for instance, range and CIs, this code would quickly become unmanageably long and difficult to read, not to mention increasingly prone to errors.
 
-As a general rule of thumb, **if you copy/paste more than once, you should be using a function instead.**
+Remember, if you have to copy/paste more than once, **use a function instead.**
 
 There are two main solutions to this issue, and which you choose depends on what you want the output to contain and how much work you want to put into reading the help documentation of various functions.
 
@@ -876,7 +876,7 @@ The big, inefficient multi-variable `summarise()` command above has two main iss
 2.  We had to manually type in each variable name we want to use. Instead, we're going to utilise `dplyr::across()` to **apply the list of functions** from the first step to variables selected with `<tidyselect>`.
 
 ::: callout-tip
-For more explanation about `dplyr::across()`, see the [section on iteration with `mutate()`](07_changes.qmd#iteration) earlier on. For a much more in-depth explanation, run `vignette("colwise")` in the Console.
+For more explanation about `dplyr::across()`, see the [section on iteration with `mutate()`](06_changes.qmd#iteration) earlier on. For a much more in-depth explanation, run `vignette("colwise")` in the Console.
 :::
 
 #### Example
@@ -899,12 +899,12 @@ peng |>
 1.  To begin, create a new object containing a list. I've called mine `fxs`, short for "functions", but you can of course call it anything you like.
 2.  The elements inside the list have a special format.
     1.  The first bit, e.g. `mean =`, gives each element a name. This name will be appended to the relevant column in the `summarise()` output, so choose something informative and brief.
-    2.  The second bit, e.g. `~ mean(.x, na.rm = TRUE)`, is the function we want to apply to each variable. The two things to note are the `~`, which denotes "this is a function to apply", and `.x`, which is a placeholder for each of the variables that the function will be applied to.
+    2.  The second bit, e.g. `~ mean(.x, na.rm = TRUE)`, is the function we want to apply to each variable. The two things to note are the "twiddle `~`, which denotes "this is a function to apply", and `.x`, which is a placeholder for each of the variables that the function will be applied to.
 3.  Instead of using the familiar `name = instructions` format, we're instead using `dplyr::across()`. Generally, `across()` has two arguments.
-    1.  The first selects which variables to use using `<tidyselect>`; in this case, I've selected all of the numeric-type variables in the dataset (since it will be difficult to calculate the mean and *SD* otherwise!).
+    1.  The first selects which variables to use using `<tidyselect>`. In this case, I've selected all of the numeric-type variables in the dataset (since it will be difficult to calculate the mean and *SD* otherwise!).
     2.  The second provides a list of function(s) to apply to all of the selected variables. So, I've put in the list I made in the previous steps that contains all the functions I want to use.
 
-This function list + `across()` method is extremely versatile. If you are using a lesser-known statistical technique, or even functions of your own making, you can easily add them to your list of functions and apply them with `across()`.
+This function list + `dplyr::across()` method is extremely versatile. If you are using a lesser-known statistical technique, or even functions of your own making, you can easily add them to your list of functions and apply them with `across()`.
 
 ## Next Steps
 
@@ -951,7 +951,7 @@ anx_dat |>
 :::
 :::
 
-So, this single function gets a pretty complex plot: a matrix containing all of our variables along the top and side, with density plots on the diagonal, scatterplots on one pairwise intersection, and correlation coefficients on the other.
+So, this single function gets us a pretty complex plot: a matrix containing all of our variables along the top and side, with density plots on the diagonal, scatterplots on one pairwise intersection, and correlation coefficients on the other.
 
 This is the only {GGally} function we teach in UG at Sussex, but to go a bit further, there's another example that might be useful in the future.
 
@@ -991,7 +991,7 @@ The example of this in the {palmerpenguins} intro document also changes the defa
 If we wanted to perform and report a detailed correlation analysis on a single pair of variables, the easiest function to use is `cor.test()`. Like `t.test()` (which we encountered in Tutorial 01/02), this is a {stats} package that works in a very similar way.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-Using the help documentation for `cor.test()`, perform a correlation analysis between any two numeric variables of your choice in the `anx_dat` dataset. The solution will use the formula option, but if you get it to run, you're doing good!
+Using the help documentation for `cor.test()`, perform a correlation analysis between any two numeric variables of your choice in the `anx_data` dataset. The solution will use the formula option, but if you get it to run, you're doing good!
 
 ::: {.callout-note collapse="true" title="Solution"}
 Run `?cor.test` in the Console.
