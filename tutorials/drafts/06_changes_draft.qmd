@@ -748,7 +748,7 @@ my_tibble |>
 ```
 
 ::: callout-important
-You may notice that the basic structure of summarise looks identical to the basic structure of mutate, above. The difference is that mutate creates or replaces variables within the **same** dataset, while summarise creates a **new** summary dataset without changing the original.
+You may notice that the basic structure of `summarise()` looks identical to the basic structure of `mutate()`, above. The difference is that `mutate()` creates or replaces variables within the **same** dataset, while `summarise()` creates a **new** summary dataset without changing the original.
 :::
 
 `variable_name` is the name of a variable that will be created in the new summary tibble. This can be any name that follows R's object naming rules.
@@ -757,10 +757,13 @@ You may notice that the basic structure of summarise looks identical to the basi
 
 Let's have a look at an example of this. Since we've previously created the overall trait anxiety variable `sticsa_trait_score`, we might want to get some info about this variable, such as the mean and standard deviation. To do this, we create a new variable for each descriptive value we want to create on the left side of the `=`, and instructions for creating that summary on the right.
 
+I'm also throwing in another new function (yay). Unassuming little `dplyr::n()` has one job: counting the number of cases. Right now it's not telling us much that's new...but that will change in a bit!
+
 ```{r}
 
 anx_data |> 
   dplyr::summarise(
+    n = dplyr::n(),
     sticsa_trait_mean = mean(sticsa_trait_score, na.rm = TRUE),
     sticsa_trait_sd = sd(sticsa_trait_score, na.rm = TRUE),
   )
@@ -768,66 +771,193 @@ anx_data |>
 
 ::: {.callout-note title="Exercise" appearance="minimal"}
 
-Add additional arguments to the `summarise()` code above to include the min, max, and standard error in the output.
+Add additional arguments to the `summarise()` code above to include the min and max in the output.
 
 ::: {.callout-note title="Solution" collapse="true"}
 
 ```{r}
 anx_data |> 
   dplyr::summarise(
+    dplyr::n(),
     sticsa_trait_mean = mean(sticsa_trait_score, na.rm = TRUE),
     sticsa_trait_sd = sd(sticsa_trait_score, na.rm = TRUE),
     sticsa_trait_min = min(sticsa_trait_score, na.rm = TRUE),    
-    sticsa_trait_max = max(sticsa_trait_score, na.rm = TRUE),
-    # sticsa_trait_se = sd(sticsa_trait_score, na.rm = TRUE),
+    sticsa_trait_max = max(sticsa_trait_score, na.rm = TRUE)
   )
 ```
 
 :::
 :::
 
+::: {.callout-note title="Exercise" appearance="minimal"}
+
+**CHALLENGE**: Add one more argument to the `summarise()` code above to include the standard error in the output.
+
+::: {.callout-note title="Solution" collapse="true"}
+
+Just for convenience's sake, I'm going to drop the other elements and just try to get the *SE*.
+
+First, if there's an `sd()` function, we might hope there's a corresponding `se()` function. No dice.
+
+```{r}
+#| error: true
+
+anx_data |> 
+  dplyr::summarise(
+    sticsa_trait_se = se(sticsa_trait_score, na.rm = TRUE)
+  )
+```
+
+Next, we can try the help documentation. Besides searching for a particular function in the Console, we can actually search the help documentation generally for a word or phrase. If I go to the "Help" tab and type "standard error", I'll get a list of vignettes and functions that might be relevant. The one that looks the most promising (and straightfoward) is `plotrix::std.error()`, which looks to work just like the other {stats} functions. Let's try it:
+
+```{r}
+anx_data |> 
+  dplyr::summarise(
+    sticsa_trait_se = plotrix::std.error(sticsa_trait_score, na.rm = TRUE)
+  )
+```
+Hurrah! Job done.
+
+Okay. Great. *BUT*. A whole different package? A function with a totally different name? I don't know about you but I *hate* that. If you don't, feel free to stop here, because this is really going to go off the deep end a bit.
+
+So, I know that the standard error is just the standard deviation divided by the square root of *N*[^se]. That's fine then - we've just created a variable that contains the *SD*, and we have the dataset and we know how to count the number of cases so, let's just do it by hand.
+
+[^se]: I know this because I teach first year undergraduate statistics and therefore have to, not because it's, like, particularly obvious on the face of it.
+
+```{r}
+anx_data |> 
+  dplyr::summarise(
+    sticsa_trait_sd = sd(sticsa_trait_score, na.rm = TRUE),
+    ## Calculate SE taking the SD we just created 
+    ## and divide by the square root of the number of cases in anx_data
+    sticsa_trait_se = sticsa_trait_sd/sqrt(nrow(anx_data))
+  )
+```
+Snazzy. *BUT*. This code is a bit dangerous because if I decide to rename `anx_data`, or use this code again in the same document with a different dataset, I have remember to update it in *two* places, one of which (within the `sqrt(nrow())` command) is quite hard to spot. I'm piping in the data, can't I just.....use the dataset itself for this?
+
+The reason I might think this is that with the {magrittr} pipe, this sort of thing was easy to do. Let's have a look:
+
+```{r}
+library(magrittr)
+
+## Notice the magrittr pipe %>% here instead of |>
+anx_data %>%
+  dplyr::summarise(
+    sticsa_trait_sd = sd(sticsa_trait_score, na.rm = TRUE),
+    sticsa_trait_se = sticsa_trait_sd/sqrt(nrow(.))
+  )
+```
+
+Nice, right? We just use the {magrittr} placeholder `.` to refer to the dataset within the `summarise()` command. Cool, so let's do the same, just changing out `%>%` for `|>` and `.` for `_`:
+
+```{r}
+#| error: true
+
+anx_data |>
+  dplyr::summarise(
+    sticsa_trait_sd = sd(sticsa_trait_score, na.rm = TRUE),
+    sticsa_trait_se = sticsa_trait_sd/sqrt(nrow(_))
+  )
+```
+
+Well...shit.
+
+This is one of those fringe cases where the {magrittr} pipe and the native pipe don't work quite the same way. It's very annoying especially if you're used to writing code with `%>%` that does this effortlessly. So, can we get something similar to work with the native pipe instead?
+
+The answer is yes, but not with `nrow()`. Instead we need our new friend `dplyr::n()` that does the same as `nrow()` - just counts the number of rows - but is pipe-friendly. We don't need a placeholder here, and in fact it doesn't work if you try to add one.
+
+```{r}
+anx_data |>
+  dplyr::summarise(
+    sticsa_trait_sd = sd(sticsa_trait_score, na.rm = TRUE),
+    sticsa_trait_se = sticsa_trait_sd/sqrt(dplyr::n())
+  )
+```
+So a weird little detour, but at least I have accomplished my primary goal of having as few unusual details remember as possible (no {plotrix} and no updating-dataset-names-at-multiple-points), and as honestly there's more than enough weird details to remember already just using R normally, I don't need that kind of negativity in my life. This comes at the not-insubstantial cost of having to remember to use a different function for getting *N*, but we were already using `dplyr::n()` so that's alright - for me. You'll find as you go that you develop your own preferences for how to write code that makes the most sense to you and aligns with the kind of things you can remember, spot, or update easily.
+:::
+:::
+
 ### By Group
 
-Basic summary tables are fine, but the real power of `summarise()` is in combination with the helper function `dplyr::group_by()` to split up the summary calculations by the values of a grouping variable.
+Next, let's combine `summarise()` with the helper function `dplyr::group_by()` to split up the summary calculations by the values of a grouping variable.
 
 Similar to [what we saw with `rowwise()`](06_changes.qmd#composite-scores), `group_by()` creates internal structure in the dataset - a new group for each unique value in the grouping variable. Any subsequent calculations done with the dataset are done within those groups.
 
 ```{r}
-#| eval: false
 
 anx_data |>   # <1>
   dplyr::group_by(mcq) |>   # <2>
   dplyr::summarise(  # <3>
+    n = dplyr::n(), #<4>
     sticsa_trait_mean = mean(sticsa_trait_score, na.rm = TRUE),   # <4>
     sticsa_trait_sd = sd(sticsa_trait_score, na.rm = TRUE),  # <4>
     sticsa_trait_min = min(sticsa_trait_score, na.rm = TRUE),    # <4>  
     sticsa_trait_max = max(sticsa_trait_score, na.rm = TRUE)  # <4>
-    # sticsa_trait_se = sd(sticsa_trait_score, na.rm = TRUE),
   )
 ```
 
 1.  Take the dataset, *and then*
 2.  Group by the values in the `mcq` variable, *and then*
 3.  Produce a summary table with the following variables:
-4. Mean, *SD*, minimum, and maximum values ofthe `sticsa_trait_score` variable. 
+4. Number of cases, and mean, *SD*, minimum, and maximum values of the `sticsa_trait_score` variable. 
 
 Compare this to the ungrouped summary in the previous section - it's the same columns, but a new row for each group.
 
 ::: {.callout-tip title="Reshaping Summary Tables" collapse="\"true"}
-The second summary table, grouped by both anxiety diagnosis and gender, would likely be easier to read with one variable on separate rows and the other in separate columns. To learn how to reshape a summary table, [see Tutorial 10](..\03_improvRs\10_reshape.qmd).
+The second summary table, grouped by both anxiety diagnosis and gender, would likely be easier to read with one variable on separate rows and the other in separate columns. We'll have a look at reshaping in the last section of this course, but if you want to get a head start, run `vignette("pivot")` in the Console.
 :::
 
 ::: {.callout-note title="Exercise" appearance="minimal"}
 
+Add to the already-grouped `summarise()` code to further split up the output by gender as well as MCQ group.
 
 ::: {.callout-note title="Solution" collapse="true"}
+All we have to do is add more grouping variables into `group_by()`, separated by commas.
+
+```{r}
+
+anx_data |>   # <1>
+  dplyr::group_by(mcq) |>   # <2>
+  dplyr::summarise(  # <3>
+    n = dplyr::n(), #<4>
+    sticsa_trait_mean = mean(sticsa_trait_score, na.rm = TRUE),   # <4>
+    sticsa_trait_sd = sd(sticsa_trait_score, na.rm = TRUE),  # <4>
+    sticsa_trait_min = min(sticsa_trait_score, na.rm = TRUE),    # <4>  
+    sticsa_trait_max = max(sticsa_trait_score, na.rm = TRUE)  # <4>
+  )
+```
+:::
+:::
+
+::: {.callout-note title="Exercise" appearance="minimal"}
+
+**CHALLENGE**: Split up this `summarise()` output by an assertion re:mutate.
+
+::: {.callout-note title="Solution" collapse="true"}
+
+You could have solved this in (at least) two ways. The first is to have an intermediate `mutate()` command to create the grouping variable, which doesn't yet exist in the dataset.
+
+The second is to create that grouping variable ad-hoc within `group_by()`. That is, the variable you want to group by doesn't have to already exist - you can create it on the fly within `group_by()`!
+
+```{r}
+
+anx_data |>   # <1>
+  dplyr::group_by(stars_high = stars_test1>=3) |>   # <2>
+  dplyr::summarise(  # <3>
+    n = dplyr::n(), #<4>
+    sticsa_trait_mean = mean(sticsa_trait_score, na.rm = TRUE),   # <4>
+    sticsa_trait_sd = sd(sticsa_trait_score, na.rm = TRUE),  # <4>
+    sticsa_trait_min = min(sticsa_trait_score, na.rm = TRUE),    # <4>  
+    sticsa_trait_max = max(sticsa_trait_score, na.rm = TRUE)  # <4>
+  )
+```
 :::
 :::
 
 ### Iteration
 
 ::: callout-warning
-This material isn't covered in the live workshops. It's included here for reference because it's extremely useful in real R analysis workflows, but it won't be essential for any of the workshop tasks.
+This material may not covered in the live workshops, depending on time. It's included here for reference because it's extremely useful in real R analysis workflows, but it won't be essential for any of the workshop tasks.
 :::
 
 Despite the versatility of `summarise()`, you may have already noticed that the code covered so far is very typing-intensive if you want information about more than one variable. This is neither efficient nor particularly enjoyable:
@@ -843,7 +973,6 @@ anx_data |>   # <1>
     sticsa_trait_sd = sd(sticsa_trait_score, na.rm = TRUE),  # <4>
     sticsa_trait_min = min(sticsa_trait_score, na.rm = TRUE),    # <4>  
     sticsa_trait_max = max(sticsa_trait_score, na.rm = TRUE)  # <4>
-    # sticsa_trait_se = sd(sticsa_trait_score, na.rm = TRUE),
   )
 ```
 
@@ -853,7 +982,7 @@ Remember, if you have to copy/paste more than once, **use a function instead.**
 
 There are two main solutions to this issue, and which you choose depends on what you want the output to contain and how much work you want to put into reading the help documentation of various functions.
 
-#### Option 1: Use an Existing Function
+#### Use an Existing Function
 
 ::: {.callout-important title="Choose this option if:"}
 -   You just want the basic descriptives and don't need grouped summaries
@@ -862,7 +991,7 @@ There are two main solutions to this issue, and which you choose depends on what
 
 As we saw in [Tutorial 03: Datasets](..\01_fundRmentals\03_datasets.qmd#overall-summaries), there are existing functions that output pre-made summaries across multiple variables. If you revisit `datawizard::describe_distribution()`, you will find in the help documentation that it can utilise `<tidyselect>` syntax to select the variables you want, and the output can even be forced into a tibble for further wrangling.
 
-#### Option 2: Function List + `across()`
+#### Function List + `across()`
 
 ::: {.callout-important title="Choose this option if:"}
 -   You want custom or complex summary information
@@ -879,8 +1008,6 @@ The big, inefficient multi-variable `summarise()` command above has two main iss
 For more explanation about `dplyr::across()`, see the [section on iteration with `mutate()`](06_changes.qmd#iteration) earlier on. For a much more in-depth explanation, run `vignette("colwise")` in the Console.
 :::
 
-#### Example
-
 ```{r}
 #| echo: true 
 #| 
@@ -896,10 +1023,10 @@ peng |>
   )
 ```
 
-1.  To begin, create a new object containing a list. I've called mine `fxs`, short for "functions", but you can of course call it anything you like.
+1.  To begin, create a new object containing a list. I've called mine `fxs`, short for "functions".
 2.  The elements inside the list have a special format.
     1.  The first bit, e.g. `mean =`, gives each element a name. This name will be appended to the relevant column in the `summarise()` output, so choose something informative and brief.
-    2.  The second bit, e.g. `~ mean(.x, na.rm = TRUE)`, is the function we want to apply to each variable. The two things to note are the "twiddle `~`, which denotes "this is a function to apply", and `.x`, which is a placeholder for each of the variables that the function will be applied to.
+    2.  The second bit, e.g. `~ mean(.x, na.rm = TRUE)`, is the function we want to apply to each variable. The two things to note are the "twiddle" `~`, which denotes "this is a function to apply", and `.x`, which is a placeholder for each of the variables that the function will be applied to.
 3.  Instead of using the familiar `name = instructions` format, we're instead using `dplyr::across()`. Generally, `across()` has two arguments.
     1.  The first selects which variables to use using `<tidyselect>`. In this case, I've selected all of the numeric-type variables in the dataset (since it will be difficult to calculate the mean and *SD* otherwise!).
     2.  The second provides a list of function(s) to apply to all of the selected variables. So, I've put in the list I made in the previous steps that contains all the functions I want to use.

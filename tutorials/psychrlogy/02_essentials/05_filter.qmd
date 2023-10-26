@@ -103,7 +103,7 @@ The `filter()` function's primary job is to easily and transparently **subset th
 #| eval: false
 
 dataset_name |> #<1>
-  dplyr::filter #<12>
+  dplyr::filter #<2>
     logical_assertion #<3>
   )
 ```
@@ -512,7 +512,7 @@ anx_data_proc <- anx_data_proc |>
 
 #### Age
 
-For low-risk ethics applications, you may want to exclude people who reported an age below the age of informed consent (typically 18). This may look like `age >= 18` or similar in your dataset. However, it's also important to check for errors or improbable ages, or to remove any participants that are too old if your study has an upper age limit. In this case, my hypothetical study didn't have an upper age limit, but I'll designate any ages as 100 or above as unlikely to be genuine responses
+For low-risk ethics applications, you may want to exclude people who reported an age below the age of informed consent (typically 18). This may look like `age >= 18` or similar in your dataset. However, it's also important to check for errors or improbable ages, or to remove any participants that are too old if your study has an upper age limit. In this case, my hypothetical study didn't have an upper age limit, but I'll designate any ages as 100 or above as unlikely to be genuine responses.
 
 Since these are removed for two different reasons, I'll save them as two separate objects.
 
@@ -548,7 +548,7 @@ anx_data |>
   dplyr::count(sticsa_trait_3)
 ```
 
-The first thing you might think to try is to filter on `sticsa_trait_3 == NA`, but weirdly enough this doesn't work. Instead, we again need the increasingly versatile `is.na()`, which again, we can think of `is.na()` as a question about whatever is in its brackets: "Is (this) `NA`?" Let's see this in action:
+The first thing you might think to try is to filter on `sticsa_trait_3 == NA`, but weirdly enough this doesn't work. Instead, we again need the increasingly versatile `is.na()`, which again, we can think of as a question about whatever is in its brackets: "Is (this) `NA`?" Let's see this in action:
 
 ```{r}
 #| eval: false
@@ -575,7 +575,7 @@ n_sticsa_t3_missing <- anx_data_proc |> #<1>
 n_sticsa_t3_missing
 ```
 
-Next, we need to actually exclude these cases. This time, we want to retain the inverse of the previous filtering requirement: that is, we only want to keep the cases that are NOT missing a value in sex, the opposite of what we got from `is.na(sticsa_trait_3)`. You may recognise "the inverse" or "not-x" as something we've seen before with `!=`, "not-equals". For anything that returns `TRUE` and `FALSE`, you can get the inverse by putting an `!` before it. (Try running `!TRUE`, for example!)
+Next, we need to actually exclude these cases. This time, we want to retain the inverse of the previous filtering requirement: that is, we only want to keep the cases that are NOT missing a value, the opposite of what we got from `is.na(sticsa_trait_3)`. You may recognise "the inverse" or "not-x" as something we've seen before with `!=`, "not-equals". For anything that returns `TRUE` and `FALSE`, you can get the inverse by putting an `!` before it. (Try running `!TRUE`, for example!)
 
 So, to create my clean `anx_data_final` dataset, I can use the assertion `!is.na(sticsa_trait_3)` to keep only the participants who answered this question - who do NOT have a missing value.
 
@@ -600,18 +600,17 @@ For this, we're going to leave `filter()` for a moment at look at a different fu
 ::: callout-warning
 This is a pretty major step and should be used with caution! If we didn't check our data carefully, we could easily end up dropping a bunch of cases we didn't want to get rid of.
 
+:::
+
 For example, if we apply it uncautiously here:
 
 ```{r}
-#| eval: false
-
 anx_data_proc |> 
   tidyr::drop_na()
 ```
 
 Well, there goes all our data!
 
-:::
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
 
