@@ -45,12 +45,7 @@ Read in the dataset and save it in a new object, `anx_data`.
 
 On the Cloud, you can read in this dataset from the `data` folder using `here::here()`.
 
-Elsewhere, you can download or read in the dataset from this URL:
-
-```{r}
-#| eval: false
-https://raw.githubusercontent.com/drmankin/practicum/master/data/anx_data.csv
-```
+Elsewhere, you can download the dataset, or copy the dataset URL, from the [Data and Workbooks page](../../../data_workbooks.qmd).
 
 ::: {.callout-note collapse="true" title="Solution"}
 Read in from file:

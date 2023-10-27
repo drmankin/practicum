@@ -1,0 +1,253 @@
+---
+title: "05: Filter and Select"
+embed-resources: true
+---
+
+## Open the Tutorial
+
+Use the following code chunks to open the accompanying tutorial.
+
+### Open in RStudio Viewer
+
+```{r}
+rstudioapi::viewer('https://r-training.netlify.app/tutorials/psychrlogy/02_essentials/05_filter')
+```
+
+### Open in a New Browser Tab
+
+```{r}
+utils::browseURL('https://r-training.netlify.app/tutorials/psychrlogy/02_essentials/05_filter')
+```
+
+
+
+## Overview
+
+
+## Setup
+
+
+### Packages
+
+Load the necessary packages.
+
+```{r}
+
+```
+
+
+
+### Data
+
+Read in the dataset and save it in a new object, `anx_data`.
+
+On the Cloud, you can read in this dataset from the `data` folder using `here::here()`.
+
+Elsewhere, you can download the dataset, or copy the dataset URL, from the [Data and Workbooks page](../../../data_workbooks.qmd).
+
+```{r}
+
+```
+
+
+
+#### Codebook
+
+
+## Filter
+
+
+### General Format
+
+
+### Filtering with Assertions
+
+Produce a subset of `anx_data` that doesn't contain any male participants.
+
+```{r}
+
+```
+
+
+Produce a subset of `anx_data` that contains only participants as old as the median age, or younger.
+
+```{r}
+
+```
+
+
+
+### Multiple Assertions
+
+Filter `anx_data` to keep only cases where the value of `rmars_s_test2` is between 2 and 4.
+
+*Hint*: You can use two separate assertions to do this, or check out `dplyr::between()`.
+
+```{r}
+
+```
+
+
+
+### Data Cleaning
+
+
+#### Pre-Exclusions
+
+
+Remove any preview runs from the dataset, keeping only real data.
+
+```{r}
+
+```
+
+
+
+#### Recording Exclusions
+
+Follow along with the following data cleaning steps, trying them out in a code chunk for yourself as you go. You'll need them at the end!
+```{r}
+
+```
+
+
+
+#### Consent
+
+
+#### Age
+
+
+#### Missing Values
+
+
+##### Single Variable
+
+
+##### All Variables
+
+
+**CHALLENGE**: Why has every single row in the dataset been dropped? Using any method you like, investigate what's happened.
+
+```{r}
+
+```
+
+
+
+#### Reporting
+
+**CHALLENGE**: Using the objects counting intial, final, and excluded cases and what we covered last time about inline code, write a brief journal-style description of your exclusion process.
+
+What is the benefit of taking the extra effort to store these counts in objects? Under what circumstances might this be (particularly) useful?
+
+```{r}
+
+```
+
+
+
+## Select
+
+
+### General Format
+
+
+### Selecting Directly
+
+Create a subset of `anx_data` that contains the following variables:
+
+-   The participant's age
+-   The first variable in the original dataset
+-   All of the STARS variables
+
+```{r}
+
+```
+
+
+Create a subset of `anx_data` that contains the following variables:
+
+-   All of the original variables but NOT `distribution`
+-   `mcq` renamed `condition`
+
+```{r}
+
+```
+
+
+
+### Using {tidyselect}
+
+Open the help documentation by running `?dplyr::select` in the Console to see examples of how to use all of the `<tidyselect>` helper functions.
+```{r}
+
+```
+
+
+
+Select the variables in `anx_data` that have to do with state anxiety.
+
+```{r}
+
+```
+
+
+Select all the variables in `anx_data` that are NOT the R-MARS, R-MARS-S, or STICSA.
+
+```{r}
+
+```
+
+
+
+**CHALLENGE**: Select all the `stars` variables but NOT the `stars_m` variables.
+
+```{r}
+
+```
+
+
+
+#### Using Functions
+
+
+#### Using Custom Functions
+
+**CHALLENGE:** Select the variables in `anx_data` that are character type, or that do NOT contain any missing values.
+
+*Hint*: You may need to use function(s) that we haven't covered in the tutorials so far to solve this.
+
+```{r}
+
+```
+
+
+
+## Quick Test: *t*-test redux
+
+Bring up the help documentation for `t.test()` and use it to run a *t*-test comparing responses for the first item of the STICSA post-test state anxiety scale between people who saw the maths MCQs vs the stats MCQs.
+
+*Hint*: Try using the formula notation, just like we did in the previous tutorial for `lm()`.
+
+```{r}
+
+```
+
+
+**CHALLENGE**: Using the help documentation, re-run the *t*-test with equal variances assumed.
+
+```{r}
+
+```
+
+
+**CHALLENGE**: Using what you known about `papaja`, inline code, and Quarto, report the results of this *t*-test in full without typing any of the numerical results into the text directly.
+
+Then, render your workbook to see the results!
+
+```{r}
+
+```
+
+

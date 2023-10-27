@@ -12,7 +12,7 @@ if(!dir.exists(out)){
 all_qmds_path <- "tutorials/psychrlogy"
 all_qmds <- list.files(path = all_qmds_path, pattern = "qmd", recursive = TRUE)
 
-which_file <- "04_lm"
+which_file <- "05_filter"
 
 this_file <- file.path(all_qmds_path, grep(which_file, all_qmds, value = TRUE))
 
