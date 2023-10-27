@@ -14,7 +14,7 @@ execute:
 
 ## Overview
 
-This tutorial covers three more essential `dplyr` functions: `group_by()`, `mutate()`, and `summarise()`.
+This tutorial covers three more essential {dplyr} functions: `group_by()`, `mutate()`, and `summarise()`.
 
 The first, `group_by()`, is a helper function that allows new variables or summaries to be created within subgroups.
 
@@ -133,20 +133,17 @@ To see what this means, let's have a look at
 
 ## Mutate
 
-The `mutate()` function is one of the most essential functions from the `dplyr` package. Its primary job is to easily and transparently make changes within a dataset - in particular, a `tibble`.
+The `mutate()` function is one of the most essential functions from the {dplyr} package. Its primary job is to easily and transparently make changes within a dataset - in particular, a `tibble`.
 
 ### General Format
 
 To make a single, straightforward change to a tibble, use the general format:
 
-```{r}
-#| eval: false
-
+```r
 dataset_name |>
   dplyr::mutate(
     variable_name = instructions_for_creating_the_variable
   )
-
 ```
 
 `variable_name` is the name of the variable that will be changed by `mutate()`. This can be any name that follows R's object naming rules. There are two main options for this name:
@@ -172,8 +169,6 @@ See the help documentation for more by running `help(mutate)` or `?mutate` in th
 
 Let's have a look at how these two operations work in `mutate()`. 
 
-For ease of reading the output, I'm using the `.keep = "used"` argument, which only outputs variables that have been used in the preceeding operation. This is for **demonstration purposes** and is great for checking your changes are correct, but make sure you remove this argument if you use this code yourself.
-
 First, let's see how to add new variables. Imagine we have found some collaborators to work with and we want to combine our datasets. To keep track of where the data came from, we want to add a `lab` variable at the start of our existing dataset containing the name of the university before we add more data.
 
 ```{r}
@@ -184,7 +179,7 @@ anx_data |> # <1>
   )
 ```
 
-1.  Take the dataset and make the following changes:
+1. Take the dataset and make the following changes:
 2. Create a new variable, `lab`, that contains the value `"Sussex"`
 3. Put this variable before the first variable in the existing dataset.
 
@@ -199,11 +194,14 @@ anx_data |> # <1>
     .before = 1 # <3>
   )
 ```
+
 In this case I might need `rep()` (for creating vectors of repeating values), `sample()` (for creating random subsamples), or another helper function to generate the vector to add.
 
 :::
 
 Next, let's look at changing existing variables. For example, I know that `gender` and `mcq` are meant to be **factors** (also called "categorical data" in SPSS and elsewhere). So, let's convert each of these two variables into factor data type.
+
+For ease of reading the output, I'm using the `.keep = "used"` argument, which only outputs variables that have been used in the preceding operation. This is for **demonstration purposes** and is great for checking your changes are correct, but make sure you remove this argument if you use this code yourself.
 
 ```{r}
 #| eval: false
@@ -277,7 +275,8 @@ anx_data |>
 
 ### Composite Scores
 
-> Row-wise magic is good magic. -Hadley Wickham
+> Row-wise magic is good magic. 
+        -Hadley Wickham
 
 A very common `mutate()` task is to create a composite score from multiple variables - for example, an overall trait anxiety score from our `sticsa_trait` items. Let's create an overall score that contains the mean of the ratings[^mean_likert] on each of the STICSA trait anxiety items, for each participant.
 
@@ -300,7 +299,7 @@ If your data is tidy with observations from the same participants on multiple ro
 ```{r}
 #| output: false
 
-anx_data <- anx_data |> # <1>
+anx_data |> # <1>
   dplyr::rowwise() |> # <2>
   dplyr::mutate( # <3>
     sticsa_trait_score = mean(c_across(starts_with("sticsa_trait")), # <3>
@@ -316,7 +315,7 @@ anx_data <- anx_data |> # <1>
 4.  Remove the by-row grouping that was created by `rowwise()` to output an ungrouped dataset.
 
 ::: callout-tip
-For lots more details and examples on `rowwise()` and rowwise operations with `dplyr` - including which other scenarios in which a row-wise dataset would be useful - run `vignette("rowwise")` in the Console.
+For lots more details and examples on `rowwise()` and rowwise operations with {dplyr} - including which other scenarios in which a row-wise dataset would be useful - run `vignette("rowwise")` in the Console.
 :::
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
@@ -336,14 +335,12 @@ anx_data <- anx_data |>
     stars_test_score = mean(c_across(starts_with("stars_test")),
                         na.rm = TRUE),
     stars_int_score = mean(c_across(starts_with("stars_int")),
-                        na.rm = TRUE),
-    .keep = "used"
-    
-  ) |>  # <3>
+                        na.rm = TRUE)
+  ) |>
   dplyr::ungroup()
 ```
 
-Although this is reasonably efficient, I *hate* copy and pasting. The rule of thumb is: [if you have to copy and paste more than once, write a function instead](https://r4ds.had.co.nz/functions.html#when-should-you-write-a-function). We might come back to this later...
+Although this is reasonably efficient, I *hate* copy and pasting. The rule of thumb is: [if you have to copy and paste more than once, use a function instead](https://r4ds.had.co.nz/functions.html#when-should-you-write-a-function). We might come back to this later...
 
 :::
 :::
@@ -368,7 +365,7 @@ anx_data |>
   # dplyr::rowwise() |> 
   dplyr::mutate(
     sticsa_trait_score = mean(c_across(starts_with("sticsa_trait")), 
-                              na.rm = TRUE)
+                              na.rm = TRUE),
   ) |> 
   # dplyr::ungroup() |> 
   dplyr::select(sticsa_trait_score)
@@ -390,7 +387,7 @@ This code still runs successfully, but the result isn't what we wanted. Have a l
 ::: {.callout-note title="Solution" collapse="true"}
 If we wanted to avoid, or didn't remember, the `rowwise()...ungroup()` sequence, there are other options to produce the same result, but neither are easier to read or implement. (They aren't necessarily harder, either! This really is down to preference.)
 
-*1. Using `rowMeans`*
+*1. Using `rowMeans()`*
 
 The {base} function `rowMeans()` calculates the mean of each row without any additional jiggery pokery to worry about. The problem is specifying which variables to include, especially because we have `r anx_data |> dplyr::select(contains("sticsa_trait") & !contains("score")) |> ncol()` in this example to work with.
 
@@ -405,6 +402,7 @@ anx_data |>
     sticsa_trait_score = rowMeans(c(sticsa_trait_1, sticsa_trait_2, sticsa_trait_3, ..., sticsa_trait_21))
   )
 ```
+
 ```{r}
 #| error: true
 
@@ -442,9 +440,9 @@ anx_data |>
   )
 ```
 
-...which didn't seem fair because we haven't talked about `pick()`, and also defeats the purpose of using `rowMeans()` to avoid having to learn new `dplyr` functions. So, `dplyr` wins this one either way.
+...which didn't seem fair because we haven't talked about `pick()`, and also defeats the purpose of using `rowMeans()` to avoid having to learn new {dplyr} functions. So, {dplyr} wins this one either way.
 
-If you're keen to never have to learn a jot more `dplyr` than absolutely necessary (I bet you are *not* having a good time so far!), [this Stack Overflow post](https://stackoverflow.com/questions/33401788/dplyr-using-mutate-like-rowmeans) offers some other, non-`dplyr` solutions...that also depend on using the magrittr pipe `%>%`! Sorry.
+If you're keen to never have to learn a jot more {dplyr} than absolutely necessary (I bet you are *not* having a good time so far!), [this Stack Overflow post](https://stackoverflow.com/questions/33401788/dplyr-using-mutate-like-rowmeans) offers some other, non-{dplyr} solutions...that also depend on using the magrittr pipe `%>%`! Sorry.
 
 *2. Use basic `mutate()`*
 
@@ -505,21 +503,26 @@ Let's look at two examples of how `dplyr::case_when()` might come in handy.
 We've created our composite `sticsa_trait_score` variable previously, and now we may want to change this continuous score into a categorical variable indicating whether or not participants display clinical levels of anxiety. So, we can use `case_when()` to recode `sticsa_trait_score` into a new `sticsa_trait_cat` variable.
 
 ```{r}
-#| eval: false
+#| include: false
 
-anx_data |> 
-  dplyr::rowwise() |> 
-  dplyr::mutate(
-    sticsa_trait_score = sum(c_across(contains("sticsa_trait")), na.rm = TRUE)
-  ) |> 
-  dplyr::pull(sticsa_trait_score) |> 
-  summary()
+anx_data <- anx_data |> # <1>
+  dplyr::rowwise() |> # <2>
+  dplyr::mutate( # <3>
+    sticsa_trait_score = mean(c_across(starts_with("sticsa_trait")), # <3>
+                        na.rm = TRUE) # <3>
+  ) |>  # <3>
+  dplyr::ungroup() 
+```
+
+
+```{r}
+#| eval: false
 
 anxiety_cutoff <- 2.047619 # <1>
 
-anx_data |> # <2>
+anx_data <- anx_data |> # <2>
   dplyr::mutate( # <3>
-    sticsa_trait_score = dplyr::case_when( # <4>
+    sticsa_trait_cat = dplyr::case_when( # <4>
       sticsa_trait_score >= anxiety_cutoff ~ "anx", # <5>
       sticsa_trait_score < anxiety_cutoff ~ "control", # <6>
       .default = NA # <7>
@@ -527,18 +530,18 @@ anx_data |> # <2>
   )
 ```
 
-1.  Create a new object, `anxiety_cutoff`, containing the threshold value for separating clinical from non-clinical anxiety. This one is from REFERENCE.
-2.  Take the dataset, and then...
+1.  Create a new object, `anxiety_cutoff`, containing the threshold value for separating clinical from non-clinical anxiety. This one is from [Van Dam et al., 2013](https://pubmed.ncbi.nlm.nih.gov/22091946/).
+2.  Take the dataset, *and then*...
 3.  Make a change to it by...
 4.  Creating a new variable, `anxiety_cat`, by applying the following rules:
-5.  For cases where the value of `sticsa_trait_score` is greater than or equal to `anxiety_cutoff`, assign the value "anx" to `anxiety_cat`
-6.  For cases where the value of `sticsa_trait_score` is less than `anxiety_cutoff`, assign the value "control" to `anxiety_cat`
-7.  For cases that don't match any of the preceding criteria, assign `NA` to `anxiety_cat`
+5.  For cases where the value of `sticsa_trait_score` is greater than or equal to `anxiety_cutoff`, assign the value "anx" to `sticsa_trait_cat`
+6.  For cases where the value of `sticsa_trait_score` is less than `anxiety_cutoff`, assign the value "control" to `sticsa_trait_cat`
+7.  For cases that don't match any of the preceding criteria, assign `NA` to `sticsa_trait_cat`
 
 ::: {.callout-tip title="Why the new `anxiety_cutoff` object?" collapse="true"}
 In the code above, the cutoff value is stored in a new object, `anxiety_cutoff`, which is then used in the subsequent `case_when()` conditions. Why take this extra step?
 
-This is a matter of style, since the output of this code would be entirely identical if I wrote the cutoff value into the `case_when()` assertions directly (e.g. `sticsa_trait_score >= 35`). I have done it this way for a few reasons:
+This is a matter of style, since the output of this code would be entirely identical if I wrote the cutoff value into the `case_when()` assertions directly (e.g. `sticsa_trait_score >= 2.047619`). I have done it this way for a few reasons:
 
 1.  The threshold value is easy to find, in case I need to remind myself which one I used, and it's clearly named, so I know what it represents.
 2.  Most importantly, it's easy to change, in case I need to update it later. I would only have to change the value in the object once, at the beginning of the code chunk, and all of the subsequent code using that object would be similarly updated.
@@ -556,33 +559,30 @@ We might also like to create a useful coding variable to help keep track of the 
 anx_data |>  # <1>
   dplyr::mutate(  # <1>
     remove = dplyr::case_when( # <1>
-      distribution == "Preview" ~ "preview", # <2>
-      .default = "keep" # <7>
+      distribution == "preview" ~ "preview", # <2>
+      consent != "Yes" ~ "no_consent", # <3>
+      .default = "keep" # <4>
     )
   )
 ```
 
-<!-- 1.  Take the dataset `my_tibble` and make a change to it by a creating a new variable, `remove`, by applying the following rules: -->
-<!-- 2.  For cases where the `distribution` variable contains exactly and only "Preview", assign the value `"preview"`. This is a common task for Qualtrics surveys to remove practice runs. -->
-<!-- 3.  For cases where the `info_consent` variable does NOT contain exactly and only the value "Yes", assign the value `"no_consent"`. This includes anyone who did not actively consent - both people who chose options OTHER than "Yes" (e.g. "No"), and people who did not respond. -->
-<!-- 4.  For cases where the numerical value in `age` is less than 18, assign the value `"age_young"`. -->
-<!-- 5.  For cases where the value is `age` is `NA`, or is greater than 100, assign the value `"age_bad"`. -->
-<!-- 6.  For cases where the value in `fluent_lang`, once converted to lowercase, does NOT contain the letters "engl", assign the value `"english_no"`. This searches open text responses to a question like "What languages do you speak fluently?" for the string "engl". -->
-<!-- 7.  For cases that don't match any of the preceding criteria, assign the value `"keep"`. -->
+1.  Take the dataset `anx_data` *and then* make a change to it by a creating a new variable, `remove`, by applying the following rules:
+2.  For cases where the `distribution` variable contains exactly and only `"preview"`, assign the value `"preview"`. This is a common task for Qualtrics surveys to remove practice runs.
+3.  For cases where the `consent` variable does not contain exactly and only `"Yes"`, assign the value `"no_consent"`
+4.  For cases that don't match any of the preceding criteria, assign the value `"keep"`.
+
+Note that for this variable, each assertion is designed to identify the cases that we do NOT want to keep. The `.default = "keep"` line assigns the value `"keep"` for any case that doesn't match any of the exclusion criteria - i.e., unless there's a reason to drop a particular case, we keep it by default.
 
 ::: {.callout-note title="Exercise" appearance="minimal"}
 
-Adapt the code above to create a `remove` variable that includes all of the possible reasons for exclusion that we covered in the last tutorial: 
+Adapt the code above to finish creating a `remove` variable that includes the possible reasons for exclusion that we covered in the last tutorial: 
 
-- Preview trial
-- Didn't consent
 - Below ethical age of consent
-- Age missing or improbably high.
+- Age missing or improbably high (e.g. 100 or above)
 
 ::: {.callout-note title="Solution" collapse="true"}
 
 ```{r}
-#| eval: false
 
 anx_data <- anx_data |>  # <1>
   dplyr::mutate(  # <1>
@@ -598,7 +598,7 @@ anx_data <- anx_data |>  # <1>
 :::
 :::
 
-Because the first match for each case is the value it is assigned, each case will receive only one value, even if they match multiple criteria. For example, if you had a participant who didn't consent and their age as 17, they would be coded as `no_consent` rather than `age_young` because the assertion about consent comes before the assertion about age in the code.
+Because the first match for each case is the value it is assigned, each case will receive only one value, even if they match multiple criteria. For example, if you had a participant who didn't consent and their age as 17, they would be coded as `"no_consent"` rather than `"age_young"` because the assertion about consent comes before the assertion about age in the code.
 
 From here, you can easily use this variable to summarise exclusions, and to filter out excluded cases for your final dataset.
 
@@ -646,10 +646,8 @@ Luckily we don't have to figure out how to do this iteration [from scratch](http
 
 [^scratch]: {purrr}, cats, scratch, get it?? I'm hilarious.
 
-```{r}
-#| eval: false
-
-my_tibble |> 
+```r
+dataset_name |> 
   dplyr::mutate(
     dplyr::across(<tidyselect>, function_to_apply)
   )
@@ -682,30 +680,29 @@ Use `dplyr::across()` to choose all the items on the statistics version of the M
 ```{r}
 anx_data |> 
   dplyr::mutate(
-    dplyr::across(contains("_S_"),
+    dplyr::across(contains("_s_"),
                   ~.x + 10),
     ## For tutorial demo purposes only!
     .keep = "used"
   )
 ```
 
-
 :::
 :::
 
 ::: {.callout-note title="Exercise" appearance="minimal"}
 
-**CHALLENGE**: You might notice that there's no `variable_name =` bit of the command to rename the transformed variables, so `across()` by default overwrites those variables, rather than creates new ones. However, the help documentation for `across()` describes a method for creating new output variables. Using this info, do the same task as above, but create new all-caps versions of the variable names so the originals are not overwritten.
+**CHALLENGE**: You might notice that there's no `variable_name =` bit of the command to rename the transformed variables, so `across()` by default overwrites those variables, rather than creating new ones. However, the help documentation for `across()` describes a method for creating new output variables. Using this info, do the same task as above, but create new all-caps versions of the variable names so the originals are not overwritten.
+
+*Hint*: Look in the Examples, under `# Using an external vector of names`
 
 ::: {.callout-note title="Solution" collapse="true"}
-
-If you want to follow along in the help documentation, we're under the heading "# Using an external vector of names".
 
 The help documentation starts by creating a new object of the variable names to work with "by hand". Once again, typing out the names of all 20 R-MARS-S items would be a right pain and violate the Function Commandment, so instead we're going to be cheeky and get the names from the data.
 
 ```{r}
 these_cols <- anx_data |> 
-  dplyr::select(contains("_S_")) |> 
+  dplyr::select(contains("_s_")) |> 
   names()
 these_cols
 ```
@@ -732,16 +729,16 @@ This time around, the original variables still exist untouched in the dataset, a
 :::
 :::
 
+\ 
+
 ## Summarise
 
 The `summarise()` function looks almost exactly like `mutate`. However, its primary job is to quickly generate summary information. 
 
 ### General Format
 
-```{r}
-#| eval: false
-
-my_tibble |> 
+```r
+dataset_name |> 
   dplyr::summarise(
     variable_name = instructions_for_creating_the_variable
   )
@@ -772,6 +769,8 @@ Add additional arguments to the `summarise()` code above to include the min, max
 
 ::: {.callout-note title="Solution" collapse="true"}
 
+We've seen all of these before except the last for standard error, which is from the built-in {Plotrix} package.
+
 ```{r}
 anx_data |> 
   dplyr::summarise(
@@ -779,8 +778,8 @@ anx_data |>
     sticsa_trait_sd = sd(sticsa_trait_score, na.rm = TRUE),
     sticsa_trait_min = min(sticsa_trait_score, na.rm = TRUE),    
     sticsa_trait_max = max(sticsa_trait_score, na.rm = TRUE),
-    # sticsa_trait_se = sd(sticsa_trait_score, na.rm = TRUE),
-  )
+    sticsa_trait_se = sticsa_trait_sd/dplyr::count()
+    )
 ```
 
 :::
