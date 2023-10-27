@@ -60,7 +60,7 @@ format:
     css: styles.css
     toc: true
     toc-depth: 4
-    self-contained: true
+    embed-resources: true
     code-overflow: wrap
     code-block-bg: true
     #code-block-border-left: "#be84a3"
