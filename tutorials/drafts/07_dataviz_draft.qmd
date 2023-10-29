@@ -13,7 +13,7 @@ This tutorial focuses on creating data visualisations using the {ggplot2} packag
 
 If you're really keen on data visualisation with {ggplot2}, check out [Tidy Tuesdays](https://www.tidytuesday.com/). Each week, there's a new dataset released, and people build and share beautiful visualisations, along with the code and frequently their process!
 
-There's also a fantastic how-to called [Data visualisation using R, for researchers who don’t use R](https://psyteachr.github.io/introdataviz/) from the fantastic team at PsychTeachR at Glasgow, that provides a very friendly, start-to-finish walkthrough of the whole process of data reading, manipulation, and plot-building.
+There's also a fantastic how-to called [Data visualisation using R, for researchers who don’t use R](https://psyteachr.github.io/introdataviz/) from the brilliant team at PsychTeachR at Glasgow, that provides a very friendly, start-to-finish walkthrough of the whole process of data reading, manipulation, and plot-building.
 
 :::
 
@@ -39,29 +39,60 @@ library(ggrain)
 :::
 :::
 
-### Data and Codebook
+### Data
 
-For these examples, the exercises and solutions will again make use of the Sussex Cognitive Styles Questionnaire (SCSQ) data using people with and without synaesthesia, which was first introduced in [Tutorial 3](../psychrlogy/01_fundRmentals/03_datasets.qmd#codebook). This data is available in the `data` folder in your Posit Cloud project, and the codebook is included below as well. 
-
-If you have some experience with R, you are welcome to instead use another dataset that you are familiar with or are keen to explore. However, remember that anything you upload to Posit Cloud is visible to all workspace admins, so keep GDPR in mind.
+Today we're continuing to work with the dataset courtesy of fantastic Sussex colleague [Jenny Terry](https://www.jennyterry.co.uk/). This dataset contains real data about statistics and maths anxiety. For these latter two tutorials, I've created averaged scores for each overall scale and subscale, and dropped the individual items.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
+Read in the dataset and save it in a new object, `anx_score_data`.
 
-Read in the `syn_data.csv` file and store the result in an object called `syn_data`. 
+On the Cloud, you can read in this dataset from the `data` folder using `here::here()`.
 
-Alternatively, read in a dataset of your choice (but I'll refer to `syn_data` and its variables from here on out.)
-
-*Hint*: Use `here::here()` to generate a file path to the `syn_data` data file, and `readr::read_csv()` to parse the file.
+Elsewhere, you can download the dataset, or copy the dataset URL, from the [Data and Workbooks page](../../../data_workbooks.qmd).
 
 ::: {.callout-note collapse="true" title="Solution"}
+Read in from file:
+
+```{r}
+anx_scores_data <- readr::read_csv(here::here("data/anx_scores_data.csv"))
+```
+
+Read in from URL:
+
+```{r}
+#| eval: false
+
+anx_data <- readr::read_csv("https://raw.githubusercontent.com/drmankin/practicum/master/data/anx_scores_data.csv")
+```
+:::
+:::
+
+#### Codebook
+
+There's quite a bit in this dataset, so you will need to refer to the codebook below for a description of all the variables.
+
+::: {.callout-tip title="Dataset Info Recap" collapse="true"}
+This study explored the difference between maths and statistics anxiety, widely assumed to be different constructs. Participants completed the Statistics Anxiety Rating Scale ([STARS](https://explore.bps.org.uk/content/bpsptr/24/2/101)) and Maths Anxiety Rating Scale - Revised ([R-MARS](https://journals.sagepub.com/doi/10.1177/001316448204200218)), as well as modified versions, the STARS-M and R-MARS-S. In the modified versions of the scales, references to statistics and maths were swapped; for example, the STARS item "Studying for an examination in a statistics course" became the STARS-M item "Studying for an examination in a maths course"; and the R-MARS item "Walking into a maths class" because the R-MARS-S item "Walking into a statistics class".
+
+Participants also completed the State-Trait Inventory for Cognitive and Somatic Anxiety ([STICSA](https://www.cambridge.org/core/journals/behavioural-and-cognitive-psychotherapy/article/abs/distinguishing-cognitive-and-somatic-dimensions-of-state-and-trait-anxiety-development-and-validation-of-the-statetrait-inventory-for-cognitive-and-somatic-anxiety-sticsa/78FDDC5BCDE9D4164434AC10E83DCEF3?utm_campaign=shareaholic&utm_medium=copy_link&utm_source=bookmark)). They completed the state anxiety items twice: once before, and once after, answering a set of five MCQ questions. These MCQ questions were either about maths, or about statistics; each participant only saw one of the two MCQ conditions.
+:::
+
+::: callout-important
+For learning purposes, I've randomly generated some additional variables to add to the dataset containing info on distribution channel, consent, gender, and age. Especially for the consent variable, don't worry: all the participants in this dataset did consent to the original study. I've simulated and added this variable in later to practice removing participants.
+:::
 
 ```{r}
 #| echo: false
 
-syn_data <- readr::read_csv(here::here("data/syn_data.csv"))
+readr::read_csv(here::here("data/anx_scores_codebook.csv")) %>%
+  kableExtra::kbl(
+    col.names = stringr::str_to_title(names(.)),
+    html = TRUE
+  ) |> 
+  kableExtra::kable_styling()
 ```
-:::
-:::
+
+If you have some experience with R, you are welcome to instead use another dataset that you are familiar with or are keen to explore. However, remember that anything you upload to Posit Cloud is visible to all workspace admins, so keep GDPR in mind.
 
 ## Grammar of Graphics
 
