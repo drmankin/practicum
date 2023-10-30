@@ -136,6 +136,14 @@ Notice as well that **layers are added to a plot object with `+` and NOT with `|
 
 #### Violin Plots
 
+```{r}
+anx_scores_data |> 
+  ggplot2::ggplot(aes(x = gender, y = sticsa_trait_score)) + 
+  geom_violin() +
+  stat_summary(fun.data = "mean_cl_boot") +
+```
+
+
 #### Raincloud Plots
 
 #### Customisation

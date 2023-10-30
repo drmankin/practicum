@@ -8,175 +8,317 @@ This tutorial is still under construction. Check back another time!
 
 :::
 
-## Categorical Predictors
+## Overview
 
-### Comparing Several Means
+This tutorial is a speedrun of how to run and report a variety of analyses that are commonly used for undergraduate dissertation projects at the University of Sussex, based on a survey of supervisors in summer 2023.
 
-::: {.callout-tip title=""}
+::: {.callout-important}
 
-`discovr_11`
+**This is not a statistics tutorial**, so interpretation of the following models will be only cursory. For a complete explanation of the statistical concepts and interpretation, refer to the `discovr` tutorials that correspond to the following sections:
+
+- Categorical Predictors
+  - Comparing Several Means(One-Way ANOVA): `discovr_11`
+  - Factorical Designs: `discovr_13`
+  - Mixed Designs: `discovr_16`
+- Moderation: `discovr_10`
+- Mediation: `discovr_10`
 
 :::
 
-#### Plots and Tables
+::: {.callout-tip title="Using the {discovr} tutorials" collapse="true"}
+[Prof Andy Field's {discovr} tutorials](https://github.com/profandyfield/discovr) provide detailed walkthroughs of both the R code and the statistical concepts of a variety of statistical analyses. They are a good place to look first to understand what your UG supervisees or advisees have been taught on a particular topic.
+
+To install the tutorials, run the following **in the Console**. Note that this is **not necessary** for the live workshop Cloud workspaces, which already have the tutorials installed.
+
+```r
+if(!require(remotes)){
+  install.packages('remotes')
+}
+
+remotes::install_github("profandyfield/discovr")
+```
+
+The {discovr} tutorials are built in {learnr}, an interactive platform for learning and running R code. So, unlike the tutorial you're currently reading, they must be run inside an R session.
+
+To start a tutorial, open any project and click on the Tutorial tab in the Environment pane. Scroll down to the tutorial you want and click the "Start Tutorial ▶️" button to load the tutorial.
+
+Because {discovr} tutorials run within R, you don't need to use any external documents; you can write and run R code within the tutorial itself. However, I *strongly* recommend that whenever you work with these tutorials, you write and run your code in a separate document, otherwise you will have no record of the code and output.
+:::
+
+## Setup
+
+### Packages
+
+There are a *lot* of packages that we will make our way through today. 
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Load the {tidyverse} packages.
+
+::: {.callout-note collapse="true" title="Solution"}
 
 ```{r}
-# Violin plot
-ggplot2::ggplot(puppy_tib, aes(dose, happiness)) + 
+library(tidyverse)
+
+```
+:::
+:::
+
+### Data
+
+Today we're continuing to work with the dataset courtesy of fantastic Sussex colleague [Jenny Terry](https://www.jennyterry.co.uk/). This dataset contains real data about statistics and maths anxiety. For these latter two tutorials, I've created averaged scores for each overall scale and subscale, and dropped the individual items.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Read in the dataset and save it in a new object, `anx_score_data`.
+
+On the Cloud, you can read in this dataset from the `data` folder using `here::here()`.
+
+Elsewhere, you can download the dataset, or copy the dataset URL, from the [Data and Workbooks page](../../../data_workbooks.qmd).
+
+::: {.callout-note collapse="true" title="Solution"}
+Read in from file:
+
+```{r}
+anx_scores_data <- readr::read_csv(here::here("data/anx_scores_data.csv"))
+```
+
+Read in from URL:
+
+```{r}
+#| eval: false
+
+anx_data <- readr::read_csv("https://raw.githubusercontent.com/drmankin/practicum/master/data/anx_scores_data.csv")
+```
+:::
+:::
+
+#### Codebook
+
+There's quite a bit in this dataset, so you will need to refer to the codebook below for a description of all the variables.
+
+::: {.callout-tip title="Dataset Info Recap" collapse="true"}
+This study explored the difference between maths and statistics anxiety, widely assumed to be different constructs. Participants completed the Statistics Anxiety Rating Scale ([STARS](https://explore.bps.org.uk/content/bpsptr/24/2/101)) and Maths Anxiety Rating Scale - Revised ([R-MARS](https://journals.sagepub.com/doi/10.1177/001316448204200218)), as well as modified versions, the STARS-M and R-MARS-S. In the modified versions of the scales, references to statistics and maths were swapped; for example, the STARS item "Studying for an examination in a statistics course" became the STARS-M item "Studying for an examination in a maths course"; and the R-MARS item "Walking into a maths class" because the R-MARS-S item "Walking into a statistics class".
+
+Participants also completed the State-Trait Inventory for Cognitive and Somatic Anxiety ([STICSA](https://www.cambridge.org/core/journals/behavioural-and-cognitive-psychotherapy/article/abs/distinguishing-cognitive-and-somatic-dimensions-of-state-and-trait-anxiety-development-and-validation-of-the-statetrait-inventory-for-cognitive-and-somatic-anxiety-sticsa/78FDDC5BCDE9D4164434AC10E83DCEF3?utm_campaign=shareaholic&utm_medium=copy_link&utm_source=bookmark)). They completed the state anxiety items twice: once before, and once after, answering a set of five MCQ questions. These MCQ questions were either about maths, or about statistics; each participant only saw one of the two MCQ conditions.
+:::
+
+::: callout-important
+For learning purposes, I've randomly generated some additional variables to add to the dataset containing info on distribution channel, consent, gender, and age. Especially for the consent variable, don't worry: all the participants in this dataset did consent to the original study. I've simulated and added this variable in later to practice removing participants.
+:::
+
+```{r}
+#| echo: false
+
+readr::read_csv(here::here("data/anx_scores_codebook.csv")) %>%
+  kableExtra::kbl(
+    col.names = stringr::str_to_title(names(.)),
+    html = TRUE
+  ) |> 
+  kableExtra::kable_styling()
+```
+
+If you have some experience with R, you are welcome to instead use another dataset that you are familiar with or are keen to explore. However, remember that anything you upload to Posit Cloud is visible to all workspace admins, so keep GDPR in mind.
+
+## Categorical Predictors
+
+We'll begin by looking at several examples of models with categorical predictors. Traditionally, these are all different types of "ANOVA" (ANalysis Of VAriance), but research methods teaching at Sussex teaches all of these models in the framework of the general linear model.
+
+### Comparing Several Means
+
+Our first model will be linear model with a categorical predictor with more than two categories - traditionally a "one-way independent ANOVA". For our practice today, we'll look at the differences in the STARS Asking for Help subscore by gender.
+
+::: {.callout-tip}
+
+This section is derived from `discovr_11`, which also has more explanations and advanced techniques.
+
+:::
+
+#### Plot
+
+Let's start by visualising our variables. The `discovr` tutorial also includes code for a table of means and CIs, which we won't cover here.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Use what we covered in the last tutorial to create a violin plot with means and CIs. **Optionally**, spruce up your plot with labels and a theme.
+
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+anx_scores_data |> 
+  ggplot2::ggplot(aes(x = gender, y = stars_help_score)) + 
   geom_violin() +
   stat_summary(fun.data = "mean_cl_boot") +
-  labs(x = "Dose of puppies", y = "Happiness (0-10)") +
-  scale_y_continuous(breaks = 1:7) +
-  theme_minimal()
-
-### Means and CIs
-puppy_tib |> 
-  dplyr::group_by(dose) |> 
-  dplyr::summarize(
-    mean = mean(happiness, na.rm = TRUE),
-    `95% CI lower` = mean_cl_normal(happiness)$ymin,
-    `95% CI upper` = mean_cl_normal(happiness)$ymax
-  ) |> 
-  knitr::kable(digits = 3) # to round values
-```
-
-#### Fit the Model
-
-```{r}
-# Solution
-puppy_lm <- lm(happiness ~ dose, data = puppy_tib, na.action = na.exclude)
-
-anova(puppy_lm) |> 
-  parameters::model_parameters(effectsize_type = "omega") |> 
-  knitr::kable(digits = 3) # to round values
-
-broom::tidy(puppy_lm, conf.int = TRUE) |> 
-  knitr::kable(digits = 3) # to round values
-```
-
-#### Contrast Coding
-
-```{r}
-# Put it all together:
-puppy_vs_none <- c(-2/3, 1/3, 1/3)
-short_vs_long <- c(0, -1/2, 1/2)
-contrasts(puppy_tib$dose) <- cbind(puppy_vs_none, short_vs_long)
-contrasts(puppy_tib$dose) # This line prints the contrast weights so we can check them
-```
-
-```{r}
-puppy_lm <- lm(happiness ~ dose, data = puppy_tib)
-
-anova(puppy_lm) |> 
-  parameters::model_parameters(effectsize_type = "omega") |> 
-  knitr::kable(digits = 3)
-
-broom::tidy(puppy_lm, conf.int = TRUE) |> 
-  knitr::kable(digits = 3)
-```
-
-#### Post-Hoc Tests
-
-```{r}
-modelbased::estimate_contrasts(puppy_lm, contrast = "dose") |> 
-  knitr::kable(digits = 3) #to round values
-```
-
-### Comparing Adjusted Means
-
-`discovr_12`
-
-#### Visualisations
-
-```{r}
-ggplot2::ggplot(pupluv_tib, aes(x = puppy_love, y = happiness, colour = dose, fill = dose)) +
-  geom_point() + 
-  geom_smooth(method = "lm") +
-  coord_cartesian(ylim = c(0, 10)) +
-  scale_x_continuous(breaks = 0:7) +
-  scale_y_continuous(breaks = 0:10) +
-  labs(x = "Puppy love (0-7)", y = "Happiness (0-10)", colour = "Treatment", fill = "Treatment") +
+  ## here's the sprucing
+  labs(x = "Gender Identity", y = "Mean Trait Anxiety") +
   theme_minimal()
 ```
 
+:::
+:::
+
+
+
 #### Fit the Model
 
-```{r}
-lm(happiness ~ puppy_love + dose, data = pupluv_tib) |> 
-  broom::tidy(conf.int = TRUE) |> 
-  knitr::kable(digits = 3)
-```
+As mentioned above, this model is taught as a linear model with a categorical predictor. That's literal: we're going to use the `lm()` function to fit the model. It was a bit ago, but we covered the linear model and `lm()` function in more depth back in [Tutorial 04](../01_fundRmentals/04_lm.qmd).
 
-#### Independence of the Covariate
+::: {.callout-note appearance="minimal" title="Exercise"}
 
-```{r}
-luvdose_lm <- lm(puppy_love ~ dose, data = pupluv_tib) 
-anova(luvdose_lm) |> 
-  knitr::kable(digits = 3)
-```
+Fit a linear model with STARS Asking for Help subscale score as the outcome, and gender as the predictor, and save this model as `stars_lm`.
 
-#### Set Contrasts
+Then, obtain the *F*-ratio for this model. Does the overall model explain the variance in the outcome better than just using the overall mean of the outcome? **Optionally**, use the `discovr` tutorial to get an overall effect size as well.
+
+Finally, get a table of model parameters, including confidence intervals, using `broom::tidy()`. **Optionally**, print it out in a nice APA-style table.
+
+::: {.callout-note collapse="true" title="Solution"}
+
+First, let's fit the model and store it in `stars_lm`.
 
 ```{r}
-puppy_vs_none <- c(-2/3, 1/3, 1/3)
-short_vs_long <- c(0, -1/2, 1/2)
-contrasts(pupluv_tib$dose) <- cbind(puppy_vs_none, short_vs_long)
-contrasts(pupluv_tib$dose) # This line prints the contrast weights so we can check them
+stars_lm <- lm(stars_help_score ~ gender, data = anx_scores_data)
+
 ```
 
-#### Model and *F*
+We saw previously that we can get R^2^ and *F* for the model using `broom::glance()`:
 
 ```{r}
-# Solution:
-pupluv_lm <- lm(happiness ~ puppy_love + dose, data = pupluv_tib)
-car::Anova(pupluv_lm, type = 3) |> 
-  knitr::kable(digits = 3)
+broom::glance(stars_lm)
 ```
 
-#### EMMs
+In `discovr_11`, though, we see that we can use the `anova()` function as well. We used this previously to compare models, but given only one model, it will instead compare that model to the null model (i.e. the mean of the outcome). The tutorial also provides code to get an omega effect size.
 
 ```{r}
-modelbased::estimate_means(pupluv_lm, fixed = "puppy_love") |> 
-  knitr::kable(digits = 3)
+anova(stars_lm) |> 
+  parameters::model_parameters(effectsize_type = "omega")
 ```
 
-#### Parameter Estimates
+Finally, we can get the parameters table as a dataset, or format it nicely with {papaja}.
 
 ```{r}
-broom::tidy(pupluv_lm, conf.int = TRUE) |> 
-  knitr::kable(digits = 3)
+## Raw output
+broom::tidy(stars_lm, conf.int = TRUE)
+
+## Papaja table
+papaja::apa_table(papaja::apa_print(stars_lm)$table)
+```
+:::
+:::
+
+```{r}
+#| include: false
+
+str_to_oxford <- function(x, backticks = TRUE){
+  if(backticks){
+    x <- paste0("`", x, "`")
+  }
+  
+  x |> 
+    paste0(collapse = ", ") |> 
+    sub(pattern = ", ([^,]*)$", replacement = ", and \\1")
+}
+
+gender_oxford <- anx_scores_data |> 
+  dplyr::pull(gender) |> 
+  unique() |> 
+  str_to_oxford()
+
+params_oxford <- broom::tidy(stars_lm, conf.int = TRUE) |> 
+  dplyr::slice(-1) |> 
+  dplyr::pull(term) |> 
+  str_to_oxford(backticks = TRUE)
+  
 ```
 
+To read this output, we need to know a few things about how R deals with categorical predictors by default.
+
+Unless we specify comparisons/contracts, `lm()` will by default fit a model with the first category as the baseline. What do we mean by the "first"? Here, the first alphabetically. Our categories were `r gender_oxford`, so the first is "female". (You can see in the plot as well that the categories have been automatically ordered this way.) This means that **the intercept represents the mean of the outcome in the baseline group** - here, the mean Asking for Help anxiety score in female participants. 
+
+The three other three parameter estimates - `r params_oxford` - each represent the **difference in the mean of the outcome** between the baseline category and each other category. For example, the *b* estimate and the rest of the statistics on the `gendermale` row represent the difference in mean Asking for Help anxiety between female and male participants. The next, `gendernon-binary`, represents the difference in mean Asking for Help anxiety between female and non-binary participants, and so on. 
+
+#### Contrasts
+
+When they cover this week in second year, UGs are taught to manually write orthogonal contrast weights. We are *not* going to do that but the whole process is described in the {discovr} tutorial if that's something you want to do.
+
+Instead, we're going to use built-in contrasts. The structure generally looks like this:
+
+```r
+contrasts(dataset_name$variable_name) <- contr.*(...)
+```
+
+On the left side of this statement, we're using the `contrasts()` function to set the contrasts for a particular variable. Notice this is the variable *in the dataset*, which we're specifying using `$` notation as we've seen before. To do this, we assign a pre-set series of contrasts using one of the `contr.*()` family of functions. Here, the `*` represents one of a few options, such as `contr.sum()` (the one we'll use now), `contr.helmert()`, etc., and the `...` represents some more arguments you may need to add to this function, depending on which one you want. You can get information about all of them by pulling up the help documentation on any of them.
+
+For now, we're going to use `contr.sum()`, which requires that we also provide the number of levels (here, four: `r gender_oxford`). There's a catch, though - we can only set contrasts for *factors*, so we'll first need to do something about the `gender` variable.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+First, change the character `gender` variable into a factor. You can do this just for this variable, or **optionally** use some of the challenge functions from the last tutorials to change all of the character variables into factors together.
+
+Then, use `contr.sum()` to set the contrasts for the `gender` variable.
+
+::: {.callout-note collapse="true" title="Solution"}
+
+Without any fancy extras, we can just change `gender` into a factor directly - don't forget to assign the change back to the dataset.
+
+```{r}
+#| eval: false
+anx_scores_data <- anx_scores_data |> 
+  dplyr::mutate(
+    gender = factor(gender)
+  )
+```
+
+To make sure we don't have to deal with this again, we can change all of the character variables into factors with the `across()` + `where()` tag team from the last tutorial.
+
+```{r}
+anx_scores_data <- anx_scores_data |> 
+  dplyr::mutate(
+    across(where(is.character), factor)
+  )
+```
+
+Now that `gender` is a factor, we can set the contrasts.
+
+```{r}
+contrasts(anx_scores_data$gender) <- contr.sum(4)
+```
+
+:::
+:::
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Fit the model again and get the same parameters table as before.
+
+::: {.callout-note collapse="true" title="Solution"}
+Because the underlying `gender` variable has changed, all we need to do is rerun the *exact same code* as before, which will now produce output with contrasts.
+
+Just so I can compare them if I want to, I'm going to call this model something different.
+
+```{r}
+stars_contr_lm <- lm(stars_help_score ~ gender, data = anx_scores_data)
+
+papaja::apa_table(papaja::apa_print(stars_contr_lm)$table)
+```
+:::
+:::
+  
 #### Post-Hoc Tests
 
-```{r}
-modelbased::estimate_contrasts(pupluv_lm,
-                               contrast = "dose",
-                               fixed = "puppy_love",
-                               adjust = "bonferroni") |> 
-  knitr::kable(digits = 3)
-```
+If we didn't have an *a priori* prediction about the differences between groups, we may decide to instead run post-hoc tests.
 
-#### Homogeneity of Slopes
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Use the function `modelbased::estimate_contrasts()` to get post-hoc tests by putting in the original model 
+
+::: {.callout-note collapse="true" title="Solution"}
 
 ```{r}
-hors_lm <- lm(happiness ~ puppy_love*dose, data = pupluv_tib) 
-car::Anova(hors_lm, type = 3) |> 
-  knitr::kable(digits = 3)
-# or
-hors_lm <- update(pupluv_lm, .~. + dose:puppy_love)
-car::Anova(hors_lm, type = 3) |> 
-  knitr::kable(digits = 3)
+modelbased::estimate_contrasts(stars_lm, contrast = "gender")
 ```
 
-```{r}
-pup_slopes <- modelbased::estimate_slopes(hors_lm,
-                                          trend = "puppy_love",
-                                          at = "dose",
-                                          ci = 0.95)
-pup_slopes |>
-  knitr::kable(digits = 3)
-```
+:::
+:::
+  
+
 
 ### Factorial Designs
 
@@ -277,9 +419,9 @@ emmeans::contrast(
   )
 ```
 
-### Moderation
+## Moderation
 
-#### Centring
+### Centring
 
 ```{r}
 # Solution
@@ -291,14 +433,14 @@ vids_tib <- vids_tib |>
 vids_tib
 ```
 
-#### Fit the Model
+### Fit the Model
 
 ```{r}
 aggress_lm <- lm(aggress ~ caunts_cent*vid_game_cent, data = vids_tib)
 broom::tidy(aggress_lm, conf.int = TRUE)
 ```
 
-#### Simple Slopes
+### Simple Slopes
 
 ```{r}
 # Ask for confidence intervals (solution)
