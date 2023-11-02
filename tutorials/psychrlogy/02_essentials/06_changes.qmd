@@ -652,7 +652,7 @@ The task we wanted to do was convert all character variables to factors. So our 
 ```{r}
 anx_data |> 
   dplyr::mutate(
-    dplyr::across(is.character,
+    dplyr::across(where(is.character),
                   factor),
     ## For tutorial demo purposes only!
     .keep = "used"
@@ -960,6 +960,24 @@ anx_data |>   # <1>
 Here I've gone with a simplified version of `stars_test_cat` - just TRUE or FALSE - but if I wanted to I could use the entire `dplyr::case_when()` bit from the first `mutate()` command to get exactly the same result.
 :::
 :::
+
+### Pretty Summary Tables
+
+Once we have these lovely summary tables, it would be great to include them in a report or paper, but they definitely some formatting first. There are a couple options for this, one using the familiar {papaja} package, and the other with the new {kableExtra} package.
+
+```{r}
+anx_data |>
+  dplyr::group_by(mcq, gender) |>
+  dplyr::summarise(
+    n = dplyr::n(),
+    sticsa_trait_mean = mean(sticsa_trait_score, na.rm = TRUE),
+    sticsa_trait_sd = sd(sticsa_trait_score, na.rm = TRUE),
+    sticsa_trait_min = min(sticsa_trait_score, na.rm = TRUE), 
+    sticsa_trait_max = max(sticsa_trait_score, na.rm = TRUE)
+  ) |> 
+  papaja::apa_table()
+```
+
 
 ### Iteration
 
