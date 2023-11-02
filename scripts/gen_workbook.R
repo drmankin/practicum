@@ -47,7 +47,7 @@ gen_workbook <- function(this_file, out){
   
   qmd_lines <- qmd_lines |> 
     dplyr::mutate(
-      sol_start = grepl('title="Solution"', lines),
+      sol_start = grepl('title="Solution.*"', lines),
       sol_start_index = dplyr::if_else(sol_start, cumsum(sol_start), as.integer(NA)),
       co_end = grepl("^:{3,4}$", lines),
       co_end_index = dplyr::if_else(co_end, cumsum(co_end), as.integer(NA))
