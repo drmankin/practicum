@@ -154,8 +154,6 @@ Next, let's look at changing existing variables. For example, I know that `gende
 For ease of reading the output, I'm using the `.keep = "used"` argument, which only outputs variables that have been used in the preceding operation. This is for **demonstration purposes** and is great for checking your changes are correct, but make sure you remove this argument if you use this code yourself.
 
 ```{r}
-#| eval: false
-
 anx_data |> # <1>
   dplyr::mutate( # <1>
     gender = factor(gender), # <2>
@@ -264,15 +262,18 @@ For lots more details and examples on `rowwise()` and rowwise operations with {d
 :::
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-Create mean subscale scores for each of the three STARS subscales and save these changes to the dataset.
+Create mean subscale scores for each of the three STARS subscales and save these changes to the dataset. If you didn't do it already, make sure you create `sticsa_trait_score` as above also.
 
 ::: {.callout-note title="Solution" collapse="true"}
-This requires three separate arguments to `mutate()`, since we are creating three new variables. Remember to change the name of the new variable and the string in `starts_with()` each time!
+The three new STARS subscales require three separate arguments to `mutate()`. Remember to change the name of the new variable and the string in `starts_with()` each time!
 
 ```{r}
 anx_data <- anx_data |>
   dplyr::rowwise() |>
   dplyr::mutate( 
+    ## If you didn't create this already!
+    sticsa_trait_score = mean(c_across(starts_with("sticsa_trait")), 
+                        na.rm = TRUE),
     stars_help_score = mean(c_across(starts_with("stars_help")),
                         na.rm = TRUE),
     stars_test_score = mean(c_across(starts_with("stars_test")),
@@ -329,7 +330,7 @@ This code still runs successfully, but the result isn't what we wanted. Have a l
 ::: {.callout-note title="Solution" collapse="true"}
 If we wanted to avoid, or didn't remember, the `rowwise()...ungroup()` sequence, there are other options to produce the same result, but neither are easier to read or implement. (They aren't necessarily harder, either! This really is down to preference.)
 
-*1. Using `rowMeans()`*
+**1. Using `rowMeans()`**
 
 The {base} function `rowMeans()` calculates the mean of each row without any additional jiggery pokery to worry about. The problem is specifying which variables to include, especially because we have `r anx_data |> dplyr::select(contains("sticsa_trait") & !contains("score")) |> ncol()` in this example to work with.
 
@@ -386,7 +387,7 @@ anx_data |>
 
 If you're keen to never have to learn a jot more {dplyr} than absolutely necessary (I bet you are *not* having a good time so far!), [this Stack Overflow post](https://stackoverflow.com/questions/33401788/dplyr-using-mutate-like-rowmeans) offers some other, non-{dplyr} solutions...that also depend on using the magrittr pipe `%>%`! Sorry.
 
-*2. Use basic `mutate()`*
+**2. Use basic `mutate()`**
 
 The most straightforward method - although perhaps not the most obvious - is to express the calculation you want as arithmetic using the relevant variables. In this instance, to calculate a mean, we sum the scores together and then divide by the number of scores:
 
@@ -517,22 +518,27 @@ Adapt the code above to finish creating a `remove` variable that includes the po
 Then, assign this change back to your dataset.
 
 ::: {.callout-note title="Solution" collapse="true"}
+
+Start with the template above, then add more assertions and corresponding values.
+
 ```{r}
-anx_data <- anx_data |>  # <1>
-  dplyr::mutate(  # <1>
-    remove = dplyr::case_when( # <1>
-      distribution == "preview" ~ "preview", # <2>
-      consent != "Yes" ~ "no_consent", # <3>
-      age < 18 ~ "age_young", # <4>
-      is.na(age) | age >= 100 ~ "age_bad", # <5>
-      .default = "keep" # <7>
+#| echo: true
+
+anx_data <- anx_data |>
+  dplyr::mutate(
+    remove = dplyr::case_when(
+      distribution == "preview" ~ "preview",
+      consent != "Yes" ~ "no_consent",
+      age < 18 ~ "age_young",
+      is.na(age) | age >= 100 ~ "age_bad",
+      .default = "keep"
     )
   )
 ```
 :::
 :::
 
-Because the first match for each case is the value it is assigned, each case will receive only one value, even if they match multiple criteria. For example, if you had a participant who didn't consent and their age as 17, they would be coded as `"no_consent"` rather than `"age_young"` because the assertion about consent comes before the assertion about age in the code.
+Because the first match for each case is the value it is assigned, each case will receive only one value, even if they match multiple criteria. For example, if you had a participant who didn't consent and their age was 17, they would be coded as `"no_consent"` rather than `"age_young"` because the assertion about consent comes before the assertion about age in the code.
 
 From here, you can easily use this variable to summarise exclusions, and to filter out excluded cases for your final dataset.
 
@@ -547,7 +553,7 @@ anx_data_final <- anx_data |> # <3>
 ```
 
 1.  Take `anx_data` and count the number of times each unique value occurs in the `remove` variable, storing the output in a new object, `exclusions_summary`.
-2.  Print out the `exclusions_summary` object.
+2.  Print out the `exclusions_summary` object (see below!).
 3.  Create a new object, `anx_data_final`, by taking `anx_data` *and then* retaining only the cases for which the `remove` variable has only and exactly the value `"keep"` - effectively dropping all other cases.
 
 ::: {.callout-note title="Exercise" appearance="minimal"}
@@ -884,7 +890,7 @@ anx_data |>   # <1>
 3.  Produce a summary table with the following variables:
 4.  Number of cases, and mean, *SD*, minimum, and maximum values of the `sticsa_trait_score` variable.
 
-Compare this to the ungrouped summary in the previous section - it's the same columns, but a new row for each group.
+Compare this to the ungrouped summary in the previous section - it's the same columns, but a new row for each group. We also see here that little `dplyr::n()` is a bit more useful now - giving us counts within each group alongside the other summary information.
 
 ::: {.callout-note title="Exercise" appearance="minimal"}
 Add to the already-grouped `summarise()` code to further split up the output by gender as well as MCQ group.
@@ -952,23 +958,6 @@ anx_data |>   # <1>
 ```
 
 Here I've gone with a simplified version of `stars_test_cat` - just TRUE or FALSE - but if I wanted to I could use the entire `dplyr::case_when()` bit from the first `mutate()` command to get exactly the same result.
-
-```{r}
-
-anx_data |>   # <1>
-  dplyr::group_by(stars_test_cat = dplyr::case_when(
-      stars_test_score > median(stars_test_score, na.rm = TRUE) ~ "high",
-      stars_test_score <= median(stars_test_score, na.rm = TRUE) ~ "low",
-      .default = NA
-    )) |>   # <2>
-  dplyr::summarise(  # <3>
-    n = dplyr::n(), #<4>
-    sticsa_trait_mean = mean(sticsa_trait_score, na.rm = TRUE),   # <4>
-    sticsa_trait_sd = sd(sticsa_trait_score, na.rm = TRUE),  # <4>
-    sticsa_trait_min = min(sticsa_trait_score, na.rm = TRUE),    # <4>  
-    sticsa_trait_max = max(sticsa_trait_score, na.rm = TRUE)  # <4>
-  )
-```
 :::
 :::
 
