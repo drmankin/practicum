@@ -76,7 +76,8 @@ For learning purposes, I've randomly generated some additional variables to add 
 readr::read_csv(here::here("data/anx_codebook.csv")) %>%
   kableExtra::kbl(
     col.names = stringr::str_to_title(names(.)),
-    html = TRUE
+    format = "html",
+    escape = FALSE
   ) |> 
   kableExtra::kable_styling()
 ```

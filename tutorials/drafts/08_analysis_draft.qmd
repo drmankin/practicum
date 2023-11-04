@@ -262,7 +262,7 @@ anx_scores_data <- anx_scores_data |>
 Now that `gender` is a factor, we can set the contrasts.
 
 ```{r}
-contrasts(anx_scores_data$gender) <- contr.sum(4)
+contrasts(anx_scores_data$gender) <- contr.sum(3)
 ```
 :::
 :::
@@ -292,38 +292,61 @@ Use the function `modelbased::estimate_contrasts()` to get post-hoc tests by put
 
 ::: {.callout-note collapse="true" title="Solution"}
 ```{r}
-modelbased::estimate_contrasts(stars_lm, contrast = "gender")
+anx_scores_data |> 
+  dplyr::group_by(gender) |> 
+  dplyr::summarise(
+    n = dplyr::n()
+  )
+
+
+
+modelbased::estimate_contrasts(stars_lm, 
+                               contrast = "gender")
 ```
 :::
 :::
 
 ### Factorial Designs
 
-`discover_13`
+Our next analysis will be factorial design with two categorical predicts, traditionally called a 2x2 independent ANOVA. Although this can certainly be done using `lm()`, at this point the `lm()` route becomes a bit burdensome, so we will instead switch to using the {afex} package, which is designed especially for these types of analyses ("afex" stands for "analysis of factorial experiments"). The {discovr} tutorials for this and subsequent similar ANOVA-type analyses demonstrate both {afex} and `lm()` options, but students are only required to use {afex}.
 
-{afex}: analysis of factorial experiments
+For our practice today, we'll look at again at gender, but this time with male and female participants only, and we'll compare whether their post-MCQ state anxiety scores are different depending on whether they saw stats or maths MCQ questions.
+
+::: callout-tip
+This section is derived from `discovr_13`, which also has more explanations and advanced techniques.
+:::
 
 #### Fit the Model
 
 ```{r}
+anx_scores_data <- anx_scores_data |> 
+  dplyr::filter(gender %in% c("male", "female")) |> 
+  dplyr::mutate(
+    sticsa_cat = ifelse(sticsa_trait_score > 2, "anxious", "not anxious")
+  )
+```
+
+
+```{r}
 # fit the model:
-goggles_afx <- afex::aov_4(attractiveness ~ facetype*alcohol + (1|id), data = goggles_tib)
-goggles_afx #this shows us the model
+mcq_afx <- afex::aov_4(sticsa_post_state_score ~ sticsa_cat*mcq + (1|id), data = anx_scores_data)
+mcq_afx #this shows us the model
 ```
 
 #### Interaction Plot
 
 ```{r}
 # solution:
-afex::afex_plot(goggles_afx, "alcohol", "facetype") +
-  labs(x = "Alcohol consumption", y = "Attractiveness rating (0-10)") +
+afex::afex_plot(mcq_afx, "mcq", "sticsa_cat") +
+  labs(x = "Type of MCQ Test", y = "STICSA Post-Test State Anxiety") +
+  
   theme_minimal()
 ```
 
 #### EMMs
 
 ```{r}
-emmeans::emmeans(goggles_afx, c("alcohol", "facetype"))
+emmeans::emmeans(mcq_afx, c("mcq", "sticsa_cat"))
 ```
 
 #### Simple Effects
@@ -337,15 +360,29 @@ emmeans::joint_tests(goggles_afx, "alcohol") |>
   knitr::kable(digits = 3)
 ```
 
+
+
 ### Mixed Designs
 
-`discovr_15`
+`discovr_16`
+
+#### Detour: Reshaping
+
+```{r}
+anx_scores_data |> 
+  dplyr::select(id, contains(c("sticsa", "mcq"))) |> 
+  tidyr::pivot_longer(cols = contains("state"),
+                      names_to = "time",
+                      values_to = "sticsa_state",
+                      names_pattern = ".*?_(.*?)_.*")
+```
+
 
 #### Fit the Model
 
 ```{r}
 # fit the model:
-date_afx <- afex::aov_4(date ~ strategy*looks*personality + (looks*personality|id), data = date_tib)
+mcq_rep_afx <- afex::aov_4(date ~ strategy*looks*personality + (looks*personality|id), data = date_tib)
 date_afx #this shows us the model
 
 ```

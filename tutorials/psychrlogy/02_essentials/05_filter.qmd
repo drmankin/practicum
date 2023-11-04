@@ -19,8 +19,6 @@ To remember which does which:
 
 We will be focusing on {dplyr} today, which contains both the `filter()` and `select()` functions. You can either load {dplyr} alone, or all of {tidyverse} - it won't make a difference, but you only need one or the other.
 
-We will also make use of the {GGally} package later on for some snazzy visualisations and {correlation} for...well, I'll give you three guesses!
-
 ::: {.callout-note appearance="minimal" title="Exercise"}
 Load the necessary packages.
 
@@ -29,16 +27,13 @@ Load the necessary packages.
 library(dplyr)
 ## OR
 library(tidyverse)
-
-library(GGally)
-library(correlation)
 ```
 :::
 :::
 
 ### Data
 
-Today we're going to start working with a dataset that we're going to get familiar with over the next few weeks. Courtesy of fantastic Sussex colleague [Jenny Terry](https://www.jennyterry.co.uk/), this dataset contains real data about statistics and maths anxiety. 
+Today we're going to start working with a dataset that we're going to get familiar with over the next few weeks. Courtesy of fantastic Sussex colleague [Jenny Terry](https://www.jennyterry.co.uk/), this dataset contains real data about statistics and maths anxiety.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
 Read in the dataset and save it in a new object, `anx_data`.
@@ -49,18 +44,19 @@ Elsewhere, you can download the dataset, or copy the dataset URL, from the [Data
 
 ::: {.callout-note collapse="true" title="Solution"}
 Read in from file:
+
 ```{r}
 
 anx_data <- readr::read_csv(here::here("data/anx_data.csv"))
 ```
 
 Read in from URL:
+
 ```{r}
 #| eval: false
 
 anx_data <- readr::read_csv("https://raw.githubusercontent.com/drmankin/practicum/master/data/anx_data.csv")
 ```
-
 :::
 :::
 
@@ -82,11 +78,11 @@ For learning purposes, I've randomly generated some additional variables to add 
 readr::read_csv(here::here("data/anx_codebook.csv")) %>%
   kableExtra::kbl(
     col.names = stringr::str_to_title(names(.)),
-    html = TRUE
+    format = "html",
+    escape = FALSE
   ) |> 
   kableExtra::kable_styling()
 ```
-
 
 ## Filter
 
@@ -94,7 +90,7 @@ The `filter()` function's primary job is to easily and transparently **subset th
 
 ### General Format
 
-``` {r}
+```{r}
 #| eval: false
 
 dataset_name |> #<1>
@@ -190,9 +186,9 @@ If you mysteriously got an empty tibble, you may have missed out the `na.rm = TR
 
 [^1]: This incredibly useful property is called "data masking". If you want to know more, run `vignette("programming")` in the Console.
 
-As a final example, let's consider a situation where we want to retain only participants that gave a gender identity of either "male" or "female".[^gender]
+As a final example, let's consider a situation where we want to retain only participants that gave a gender identity of either "male" or "female".[^2]
 
-[^gender]: I'm not wild about this example - the experiences of non-binary and other genders are just as important! Unfortunately it's the only variable in the dataset with the right number of categories.
+[^2]: I'm not wild about this example - the experiences of non-binary and other genders are just as important! Unfortunately it's the only variable in the dataset with the right number of categories.
 
 To do this, we need a new operator: `%in%`, which God knows I just pronounce as "in" (try saying "percent-in-percent" three times fast!). This looks for any matches with any of the elements that come after it:
 
@@ -246,7 +242,7 @@ What's happening is that because the vector `c("female", "male")` contains two e
 
 This is a good example of what I think of as "dangerous" code. I don't mean "reckless" or "irresponsible" - R is just doing exactly what I asked it to do, and it's not the job of the language or package creators to make sure *my* code is right. I mean dangerous because it runs as expected, produces (what looks like) the right output, and even with some brief checking, would appear to contain the right cases - but would quietly result in a large chunk of the data being wrongly discarded. If you didn't know about `%in%`, or how to carefully double-check your work, you could easily carry on from here and think no more about it.
 
-So, how can we avoid a problem like this? Think of any coding task - especially new ones, where you're not completely familiar with the code or functions you're working with - as a three-step process[^2].
+So, how can we avoid a problem like this? Think of any coding task - especially new ones, where you're not completely familiar with the code or functions you're working with - as a three-step process[^3].
 
 -   **Anticipate.** Form a clear picture of the task you are trying to achieve with your code. What do you expect the output of the code to look like when it runs successfully?
 -   **Execute.** Develop and run the code to perform the task.
@@ -326,7 +322,7 @@ anx_data |>
 :::
 :::
 
-[^2]: I did try to think of a snazzy acronym here, but all I came up with is AEC (yikes). I'll keep thinking and try to update this with something better, and I welcome suggestions if you've made it this far!
+[^3]: I did try to think of a snazzy acronym here, but all I came up with is AEC (yikes). I'll keep thinking and try to update this with something better, and I welcome suggestions if you've made it this far!
 
 ### Multiple Assertions
 
@@ -443,7 +439,6 @@ For data collected on platforms like Qualtrics, you can frequently test out your
 Your method may vary, but I wouldn't bother to document these cases as "exclusions" because they aren't real data. I would just drop them from the dataset - but of course make sure to record the code that does so!
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
 Remove any preview runs from the dataset, keeping only real data.
 
 ::: {.callout-note collapse="true" title="Solution"}
@@ -484,7 +479,7 @@ n_initial
 
 #### Consent
 
-For many datasets, you would likely have a variable with responses from your participants about informed consent. How you filter this depends on what that variable contains, of course. However, we've already seen examples of this kind of operation earlier in this tutorial. 
+For many datasets, you would likely have a variable with responses from your participants about informed consent. How you filter this depends on what that variable contains, of course. However, we've already seen examples of this kind of operation earlier in this tutorial.
 
 For the first assertion, we capture any responses that don't match "Yes", but for the second, we need to use a function from a family we met all the way back in Tutorial 01/02, namely `is.na()`.
 
@@ -594,7 +589,6 @@ For this, we're going to leave `filter()` for a moment at look at a different fu
 
 ::: callout-warning
 This is a pretty major step and should be used with caution! If we didn't check our data carefully, we could easily end up dropping a bunch of cases we didn't want to get rid of.
-
 :::
 
 For example, if we apply it uncautiously here:
@@ -606,13 +600,10 @@ anx_data_proc |>
 
 Well, there goes all our data!
 
-
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
 **CHALLENGE**: Why has every single row in the dataset been dropped? Using any method you like, investigate what's happened.
 
 ::: {.callout-note collapse="true" title="Solution"}
-
 This is something we could work out without any R whatsoever, just using [the codebook](05_filter.qmd#codebook) and a bit of View mode to confirm. The Codebook tells us that participants were in one of two independent conditions: `"maths"` or `"stats"`. Because of the wide format of the data, there are `mcq_maths` questions that are always `NA` for people in the statistics-MCQ condition, and vice versa for the `mcq_stats` questions and people in the maths-MCQ condition. So, every single participant - even those who answered every question - has *at least some* missing values, and dropping NAs without checking just bins the whole dataset.
 
 If I wanted to check this with R, I'd be hard pressed to do it with only what we've covered so far. Using the some extra challenge functions from the next tutorial, though, I'd do this:
@@ -628,7 +619,6 @@ anx_data |>
 ```
 
 So, there's at least 5 `NA`s in every single row, and when we call `tidyr::drop_na()`, every single row is dropped.
-
 :::
 :::
 
@@ -640,7 +630,7 @@ So, there's at least 5 `NA`s in every single row, and when we call `tidyr::drop_
 What is the benefit of taking the extra effort to store these counts in objects? Under what circumstances might this be (particularly) useful?
 
 ::: {.callout-note collapse="true" title="Solution"}
-You can write whatever you like, but here's an example using inline code. 
+You can write whatever you like, but here's an example using inline code.
 
 > The initial sample consisted of `` `r knitr::inline_expr("n_initial")` `` cases. We removed `` `r knitr::inline_expr("n_no_consent")` `` cases that did not consent, `` `r knitr::inline_expr("n_too_young")` `` cases that reported an age below the ethical age of consent, and `` `r knitr::inline_expr("n_too_old")` `` cases that reported improbable ages (100 years old or older). Finally, we removed `` `r knitr::inline_expr("n_sticsa_t3_missing")` `` cases with who had not responded to the third trait item on the STICSA.This left us with a final sample of `` `r knitr::inline_expr("n_final")` `` cases.
 
@@ -648,15 +638,15 @@ When you render your document, this should come out as:
 
 > The initial sample consisted of `r n_initial` cases. We removed `r n_no_consent` cases that did not consent, `r n_too_young` cases that reported an age below the ethical age of consent, and `r n_too_old` cases that reported improbable ages (100 years old or older). Finally, we removed `r n_sticsa_t3_missing` cases with who had not responded to the third trait item on the STICSA. This left us with a final sample of `r n_final` cases.
 
-There's a huge advantage of this, namely *ease of change*. Imagine you had [researchers from labs all over the world join the study](https://twitter.com/ProfAndyField/status/1326150839002664960) and add [a huge amount of new data to a massive collaborative dataset](https://openpsychologydata.metajnl.com/articles/10.5334/jopd.80). In order to update all your numbers, all you have to do is update your initial `anx_data` dataset with the new cases, and then re-run all your code as is. Because these objects count whatever is in the data, they will automatically contain and record the correct numbers for the data you put into them[^reality].
-
-[^reality]: I'm sure Jenny would tell you there's a *little* more to it than that, especially with 12,570 students from 100 universities in 35 countries, collected in 21 languages! But that's both the dream and the general idea.
+There's a huge advantage of this, namely *ease of change*. Imagine you had [researchers from labs all over the world join the study](https://twitter.com/ProfAndyField/status/1326150839002664960) and add [a huge amount of new data to a massive collaborative dataset](https://openpsychologydata.metajnl.com/articles/10.5334/jopd.80). In order to update all your numbers, all you have to do is update your initial `anx_data` dataset with the new cases, and then re-run all your code as is. Because these objects count whatever is in the data, they will automatically contain and record the correct numbers for the data you put into them[^4].
 
 There are other advantages too - like confidence that you, a human person who may occasionally make errors (sorry, no offence meant!), won't misread, mistype, or otherwise mistake the numbers, because at no point do you actually type a particular number yourself.
 
 Nifty, eh?
 :::
 :::
+
+[^4]: I'm sure Jenny would tell you there's a *little* more to it than that, especially with 12,570 students from 100 universities in 35 countries, collected in 21 languages! But that's both the dream and the general idea.
 
 ## Select
 
@@ -731,9 +721,9 @@ anx_data |>
 
 That's really all there is to it!
 
-...*Or is it?*[^3]
+...*Or is it?*[^5]
 
-[^3]: Have you seen the size of this tutorial?? Of course it isn't!
+[^5]: Have you seen the size of this tutorial?? Of course it isn't!
 
 ### Using {tidyselect}
 
@@ -756,7 +746,6 @@ Open the help documentation by running `?dplyr::select` in the Console to see ex
 Rather than list examples of all the helper functions here, it's best to just try them out for yourself!
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
 Select the variables in `anx_data` that have to do with state anxiety.
 
 ::: {.callout-note collapse="true" title="Solution"}
@@ -784,7 +773,6 @@ anx_data |>
 :::
 
 ::: {.callout-note appearance="minimal" title="Exercises"}
-
 **CHALLENGE**: Select all the `stars` variables but NOT the `stars_m` variables.
 
 ::: {.callout-note collapse="true" title="Solution"}
@@ -827,7 +815,7 @@ This command evaluates each column and determines whether they contain numeric d
 #### Using Custom Functions
 
 ::: {.callout-warning title="Here There Be Lambdas"}
-The following material in this section isn't covered in the live workshops. It's included here for reference because it's extremely useful in real R analysis workflows, but it won't be essential for any of the workshop tasks.
+The material in this section isn't covered in the live workshops. It's included here for reference because it's extremely useful in real R analysis workflows, but it won't be essential for any of the workshop tasks.
 :::
 
 The function in `where()` that determines which columns to keep doesn't have to be an existing named function. Another option is to use a "purrr-style lambda" or formula (a phrase you may see in help documentation) to write our own criteria on the spot.
@@ -848,7 +836,7 @@ Instead of just the name of a function, as we had before, we now have a formula.
 -   The `~` (apparently [pronounced "twiddle"!](https://adv-r.hadley.nz/functionals.html#purrr-shortcuts)) at the beginning, which is a shortcut for the longer `function(x) ...` notation for creating functions.
 -   The `.x`, which is a placeholder for each of the variables that the function will be applied to.
 
-So, this command can be read: "Take my tibble and select all the columns where the following is true: the data type is numeric AND the mean value in that column is greater than or equal to 3 (ignoring missing values)."
+So, this command can be read: "Take the `anx_data` dataset and select all the columns where the following is true: the data type is numeric AND the mean value in that column is greater than or equal to 3 (ignoring missing values)."
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
 **CHALLENGE:** Select the variables in `anx_data` that are character type, or that do NOT contain any missing values.
@@ -945,7 +933,6 @@ Finally, we would like to turn this ugly analysis output into a nicely formatted
 Then, render your workbook to see the results!
 
 ::: {.callout-note collapse="true" title="Solution"}
-
 To begin, save the *t*-test output in a new object to work with. Then, generate the report output using `papaja` and store that in another new object.
 
 ```{r}
@@ -960,10 +947,9 @@ Next, write the text, and fill in the statistical reporting with inline code whe
 Which should render as:
 
 > We compared mean scores on the STICSA state anxiety item 1 between two groups, who either saw the mathematics MCQ questions (*M* = `r round(sticsa_t$estimate[1], 2)`) or the statistics MCQ questions (*M* =`r round(sticsa_t$estimate[2], 2)`). A Welsh's robust *t*-test revealed no statistically significant difference in scores between groups (`r sticsa_t_out$full_result`).
-
 :::
 :::
 
-\ 
+ 
 
 Well done getting through all that! In the next tutorial, we will look at more {dplyr} powerhouses to round out your data wrangling toolkit.
