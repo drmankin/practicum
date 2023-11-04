@@ -16,6 +16,8 @@ The last, `group_by()`, is a helper function that allows new variables or summar
 
 We will again be focusing on {dplyr} today, which contains all three of our main functions. You can either load {dplyr} alone, or all of {tidyverse} - it won't make a difference, but you only need one or the other.
 
+We'll also need {GGally} for correlograms, {correlation} for, well, I'll give you three guesses!, and {kableExtra} for table formatting.
+
 ::: {.callout-note appearance="minimal" title="Exercise"}
 Load the necessary packages.
 
@@ -24,6 +26,10 @@ Load the necessary packages.
 library(dplyr)
 ## OR
 library(tidyverse)
+
+library(GGally)
+library(correlation)
+library(kableExtra)
 ```
 :::
 :::
@@ -962,24 +968,6 @@ Here I've gone with a simplified version of `stars_test_cat` - just TRUE or FALS
 :::
 :::
 
-### Pretty Summary Tables
-
-Once we have these lovely summary tables, it would be great to include them in a report or paper, but they definitely some formatting first. There are a couple options for this, one using the familiar {papaja} package, and the other with the new {kableExtra} package.
-
-```{r}
-anx_data |>
-  dplyr::group_by(mcq, gender) |>
-  dplyr::summarise(
-    n = dplyr::n(),
-    sticsa_trait_mean = mean(sticsa_trait_score, na.rm = TRUE),
-    sticsa_trait_sd = sd(sticsa_trait_score, na.rm = TRUE),
-    sticsa_trait_min = min(sticsa_trait_score, na.rm = TRUE), 
-    sticsa_trait_max = max(sticsa_trait_score, na.rm = TRUE)
-  ) |> 
-  papaja::apa_table()
-```
-
-
 ### Iteration
 
 ::: callout-warning
@@ -1064,6 +1052,195 @@ As described briefly above, the elements in the `fxs` list have a special format
 Within `across()`, we are building on what we've seen before with this function. The first argument selects which variables to use using `<tidyselect>`. In this case, I've selected all of the variables that contain "score", which will be our subscale composites for the STICSA and the STARS. The second argument provides a list of function(s) to apply to all of the selected variables. So, I've put in the list I made in the previous step that contains all the functions I want to use.
 
 This function list + `dplyr::across()` method is extremely versatile. If you are using a lesser-known statistical technique, or even functions of your own making, you can easily add them to your list of functions and apply them with `across()`.
+
+## Formatting with `{kableExtra}`
+
+Once we have these lovely summary tables, it would be great to include them in a report or paper, but they definitely need some formatting first. We'll look at `kable` here, which is what we teach UGs. We'll be using a wrapper for the `knitr::kable()` function, `kableExtra::kbl()`, because {kableExtra} has a bunch of useful tools for customising the output. However, you may also want to check out [the {gt} package for powerful table formatting options](https://gt.rstudio.com/), and of course [{papaja} for some APA-like defaults](https://frederikaust.com/papaja_man/reporting.html#tables).
+
+::: callout-tip
+
+For all things kable, the [Create Awesome HTML Table vignette](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html) is my go-to for options and examples!
+
+:::
+
+### Core Formatting
+
+::: {.callout-note title="Exercise" appearance="minimal"}
+Follow along with the instructions below to create your own beautiful table.
+:::
+
+To begin, let's take the `summarise()` code grouped by `mcq` and save it in a new object. Then, pipe that new summary dataset object into the `kableExtra::kbl()` function, and then on again into the `kableExtra::kable_classic()` function. This one-two combo first creates a basic table out of the dataset (`kbl()`), then apply some APA-ish HTML formatting (`kable_classic()`).
+
+```{r}
+anx_mcq_sum <- anx_data |>
+  dplyr::group_by(mcq) |>
+  dplyr::summarise(
+    n = dplyr::n(),
+    sticsa_trait_mean = mean(sticsa_trait_score, na.rm = TRUE),
+    sticsa_trait_sd = sd(sticsa_trait_score, na.rm = TRUE),
+    sticsa_trait_min = min(sticsa_trait_score, na.rm = TRUE), 
+    sticsa_trait_max = max(sticsa_trait_score, na.rm = TRUE)
+  )
+
+anx_mcq_sum |> 
+  kableExtra::kbl() |> 
+  kableExtra::kable_classic()
+```
+
+So, already we have some basic formatting. There are a few things to do to make this table Look Nice:
+
+- Capitalise the values "maths" and "stats" in the first column
+- Format the column names
+- Round the values to two decimal places.
+- Align the columns in the center.
+- Add a caption (optional).
+
+For the first task, this is a matter of changing the values in the dataset - so we can do this with `mutate()` before we pass the dataset on to the table.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Capitalise the values "maths" and "stats" in the first column of this summary dataset.
+
+*Hint*: Check out the {stringr} package for working with character strings.
+
+::: {.callout-note collapse="true" title="Solution"}
+
+The {stringr} package has a few handy functions for converting strings into particular capitalisation patterns. Here `str_to_sentence()` (for sentence case, with the first letter of the string capitalised) or `str_to_title()` (for title case, with the first letter of each word in the string capitalised) will do the same job.
+
+```{r}
+anx_mcq_sum <- anx_mcq_sum |> 
+  dplyr::mutate(
+    mcq = stringr::str_to_title(mcq)
+  )
+
+anx_mcq_sum
+```
+
+::: {.callout-warning title="Using regex" collapse="true"}
+
+I'm a pretty dedicated regex fan, but for quick things like case changes, I find {stringr} easiest. If you happen to want to do this with base R regex instead, here's an option:
+
+```{r}
+anx_mcq_sum |> 
+  dplyr::mutate(
+    ## Substitute the first character in the string with uppercase
+    mcq = gsub("^(.)", "\\U\\1", mcq, perl = TRUE)
+  )
+```
+:::
+:::
+:::
+
+For the other changes, we can adjust these things in `kbl()`, which has `col.names`, `digits`, `align`, and `caption` arguments. For the caption, keep in mind if this table will be in a longer Quarto report, you might want to instead use [cross-referencing and table captions via Quarto code chunk options](../01_fundRmentals/04_lm.qmd/cross-referencing) instead of within `kbl()`.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Using the help documentation, update the `kbl()` function to have nicely formatted column names, digits rounded to two decimal places, centre-aligned columns, and a caption.
+
+::: {.callout-note collapse="true" title="Solution"}
+
+```{r}
+anx_mcq_sum |> 
+  kableExtra::kbl(
+    col.names = c("MCQ Type", "N", "M", "SD", "Min", "Max"),
+    digits = 2,
+    caption = "Descriptives for STICSA Trait Anxiety Score by MCQ Type",
+    align = "c"
+  ) |> 
+  kableExtra::kable_classic()
+```
+:::
+:::
+
+Finally, render your workbook document to see your hard work in all its glory!
+
+### Dynamic Formatting
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+**CHALLENGE**: It will shock you to learn that I didn't like writing out the column names in the `kbl()` function one by one. Can you figure out how to generate column names dynamically, instead of writing them out, and then use the "Awesome Tables" vignette to create the table below?
+
+```{r}
+#| echo: false
+
+anx_mcq_names <- gsub("sticsa_trait_", "", names(anx_mcq_sum)) |> 
+  ## Convert to title case
+  stringr::str_to_title() |> 
+  ## substitute all instances of either "Mcq" or "Sd" to uppercase
+  gsub(pattern = "(Mcq|Sd)", replacement = "\\U\\1", perl = TRUE)
+
+## Replace the values in anx_mcq_names that match either N or SD
+anx_mcq_names[which(anx_mcq_names %in% c("N", "SD"))] <-
+  ## with HTML italics formatting
+  paste(kableExtra::text_spec(
+         c("N", "SD"), italic = TRUE
+       ), sep = "")
+```
+
+```{r}
+#| echo: false
+
+anx_mcq_sum |> 
+  kableExtra::kbl(
+    col.names = anx_mcq_names,
+    digits = 2,
+    caption = "Descriptives for STICSA Trait Anxiety Score by MCQ Type",
+    align = "c",
+    escape = FALSE
+  ) |> 
+  kableExtra::add_header_above(c(" " = 2, "STICSA Trait Anxiety Score" = 4)) |> 
+  kableExtra::kable_classic()
+```
+
+::: {.callout-note collapse="true" title="Solution"}
+
+For the first bit - well, this is well beyond anything we've covered so far, including a good bit of base R and some jiggery-pokery to get only *N* and *SD* to be italicised. (Sorry.) The steps are annotated below, which together produce a vector of column names to pass to `kbl()`.
+
+```{r}
+## sub all instances of "sticsa_trait_" with an empty string
+## Which just effectively deletes them
+anx_mcq_names <- gsub("sticsa_trait_", "", names(anx_mcq_sum)) |> 
+  ## Convert to title case
+  stringr::str_to_title() |> 
+  ## substitute all instances of either "Mcq" or "Sd" to uppercase
+  gsub(pattern = "(Mcq|Sd)", replacement = "\\U\\1", perl = TRUE)
+
+## Check where we're at so far
+anx_mcq_names
+
+## Replace the values in anx_mcq_names that match either N or SD
+anx_mcq_names[which(anx_mcq_names %in% c("N", "SD"))] <-
+  ## with HTML italics formatting
+  paste(kableExtra::text_spec(
+         c("N", "SD"), italic = TRUE
+       ), sep = "")
+
+## View the final vector of column names
+anx_mcq_names
+```
+
+We can then replace the vector of names with the new vector we've just produced, adding `escape = FALSE` into the `kbl()` function so that the HTML formatting appears correctly.
+
+Using the "Grouped Columns/Rows" section of the Awesome Tables vignette, we can also find the function `add_header_above()`, which requires us to specify which header we want above which columns using numbers. So, I have six total columns in the `anx_mcq_sum` summary dataset; I don't want any header above the first two, but I do want a header above the last four.
+
+```{r}
+#| output: false
+#| 
+anx_mcq_sum |> 
+  kableExtra::kbl(
+    col.names = anx_mcq_names,
+    digits = 2,
+    caption = "Descriptives for STICSA Trait Anxiety Score by MCQ Type",
+    align = "c",
+    escape = FALSE
+  ) |> 
+  kableExtra::add_header_above(c(" " = 2, "STICSA Trait Anxiety Score" = 4)) |> 
+  kableExtra::kable_classic()
+```
+:::
+:::
+
+\ 
 
 ## Quick Test: Correlation
 
