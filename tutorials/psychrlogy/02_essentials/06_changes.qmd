@@ -423,7 +423,6 @@ We **do teach this method to UGs** specifically to reduce the number of function
 anx_data <- anx_data_scores
 ```
 
-
 ### Conditionals
 
 There are many functions out there for recoding variables (let's wave cheerfully at `dplyr::recode()` as we fly by it without stopping), but the following method, using `dplyr::case_when()`, is recommended because it is so versatile. It can be used to recode the values from one variable into new one, but it can also combine information across variables and handle multiple conditionals. It essentially allows a series of if-else statements without having to actually have lots of if-else statements.
@@ -525,7 +524,6 @@ Adapt the code above to finish creating a `remove` variable that includes the po
 Then, assign this change back to your dataset.
 
 ::: {.callout-note title="Solution" collapse="true"}
-
 Start with the template above, then add more assertions and corresponding values.
 
 ```{r}
@@ -1058,15 +1056,13 @@ This function list + `dplyr::across()` method is extremely versatile. If you are
 Once we have these lovely summary tables, it would be great to include them in a report or paper, but they definitely need some formatting first. We'll look at `kable` here, which is what we teach UGs. We'll be using a wrapper for the `knitr::kable()` function, `kableExtra::kbl()`, because {kableExtra} has a bunch of useful tools for customising the output. However, you may also want to check out [the {gt} package for powerful table formatting options](https://gt.rstudio.com/), and of course [{papaja} for some APA-like defaults](https://frederikaust.com/papaja_man/reporting.html#tables).
 
 ::: callout-tip
-
 For all things kable, the [Create Awesome HTML Table vignette](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html) is my go-to for options and examples!
-
 :::
 
-### Core Formatting
+### Essential Formatting
 
 ::: {.callout-note title="Exercise" appearance="minimal"}
-Follow along with the instructions below to create your own beautiful table.
+Follow along with the instructions to create your own beautiful table.
 :::
 
 To begin, let's take the `summarise()` code grouped by `mcq` and save it in a new object. Then, pipe that new summary dataset object into the `kableExtra::kbl()` function, and then on again into the `kableExtra::kable_classic()` function. This one-two combo first creates a basic table out of the dataset (`kbl()`), then apply some APA-ish HTML formatting (`kable_classic()`).
@@ -1089,22 +1085,20 @@ anx_mcq_sum |>
 
 So, already we have some basic formatting. There are a few things to do to make this table Look Nice:
 
-- Capitalise the values "maths" and "stats" in the first column
-- Format the column names
-- Round the values to two decimal places.
-- Align the columns in the center.
-- Add a caption (optional).
+-   Capitalise the values "maths" and "stats" in the first column
+-   Format the column names
+-   Round the values to two decimal places.
+-   Align the columns in the center.
+-   Add a caption (optional).
 
 For the first task, this is a matter of changing the values in the dataset - so we can do this with `mutate()` before we pass the dataset on to the table.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
 Capitalise the values "maths" and "stats" in the first column of this summary dataset.
 
 *Hint*: Check out the {stringr} package for working with character strings.
 
 ::: {.callout-note collapse="true" title="Solution"}
-
 The {stringr} package has a few handy functions for converting strings into particular capitalisation patterns. Here `str_to_sentence()` (for sentence case, with the first letter of the string capitalised) or `str_to_title()` (for title case, with the first letter of each word in the string capitalised) will do the same job.
 
 ```{r}
@@ -1117,7 +1111,6 @@ anx_mcq_sum
 ```
 
 ::: {.callout-warning title="Using regex" collapse="true"}
-
 I'm a pretty dedicated regex fan, but for quick things like case changes, I find {stringr} easiest. If you happen to want to do this with base R regex instead, here's an option:
 
 ```{r}
@@ -1134,11 +1127,9 @@ anx_mcq_sum |>
 For the other changes, we can adjust these things in `kbl()`, which has `col.names`, `digits`, `align`, and `caption` arguments. For the caption, keep in mind if this table will be in a longer Quarto report, you might want to instead use [cross-referencing and table captions via Quarto code chunk options](../01_fundRmentals/04_lm.qmd/cross-referencing) instead of within `kbl()`.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
 Using the help documentation, update the `kbl()` function to have nicely formatted column names, digits rounded to two decimal places, centre-aligned columns, and a caption.
 
 ::: {.callout-note collapse="true" title="Solution"}
-
 ```{r}
 anx_mcq_sum |> 
   kableExtra::kbl(
@@ -1157,7 +1148,6 @@ Finally, render your workbook document to see your hard work in all its glory!
 ### Dynamic Formatting
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
 **CHALLENGE**: It will shock you to learn that I didn't like writing out the column names in the `kbl()` function one by one. Can you figure out how to generate column names dynamically, instead of writing them out, and then use the "Awesome Tables" vignette to create the table below?
 
 ```{r}
@@ -1193,14 +1183,13 @@ anx_mcq_sum |>
 ```
 
 ::: {.callout-note collapse="true" title="Solution"}
-
 For the first bit - well, this is well beyond anything we've covered so far, including a good bit of base R and some jiggery-pokery to get only *N* and *SD* to be italicised. (Sorry.) The steps are annotated below, which together produce a vector of column names to pass to `kbl()`.
 
 ```{r}
 ## sub all instances of "sticsa_trait_" with an empty string
 ## Which just effectively deletes them
 anx_mcq_names <- gsub("sticsa_trait_", "", names(anx_mcq_sum)) |> 
-  ## Convert to title case
+  ## Then convert to title case
   stringr::str_to_title() |> 
   ## substitute all instances of either "Mcq" or "Sd" to uppercase
   gsub(pattern = "(Mcq|Sd)", replacement = "\\U\\1", perl = TRUE)
@@ -1221,7 +1210,7 @@ anx_mcq_names
 
 We can then replace the vector of names with the new vector we've just produced, adding `escape = FALSE` into the `kbl()` function so that the HTML formatting appears correctly.
 
-Using the "Grouped Columns/Rows" section of the Awesome Tables vignette, we can also find the function `add_header_above()`, which requires us to specify which header we want above which columns using numbers. So, I have six total columns in the `anx_mcq_sum` summary dataset; I don't want any header above the first two, but I do want a header above the last four.
+Using the "Grouped Columns/Rows" section of the Awesome Tables vignette, we can also find the function `add_header_above()`, which requires us to specify which header we want above which columns using numbers. So, I have six total columns in the `anx_mcq_sum` summary dataset; I don't want any header above the first two ("MCQ" and "N"), but I do want a header above the last four.
 
 ```{r}
 #| output: false
@@ -1240,7 +1229,7 @@ anx_mcq_sum |>
 :::
 :::
 
-\ 
+ 
 
 ## Quick Test: Correlation
 

@@ -1,0 +1,292 @@
+---
+title: "06: Mutate and Summarise"
+embed-resources: true
+---
+
+## Open the Tutorial
+
+Use the following code chunks to open the accompanying tutorial.
+
+### Open in RStudio Viewer
+
+```{r}
+rstudioapi::viewer('https://r-training.netlify.app/tutorials/psychrlogy/02_essentials/06_changes')
+```
+
+### Open in a New Browser Tab
+
+```{r}
+utils::browseURL('https://r-training.netlify.app/tutorials/psychrlogy/02_essentials/06_changes')
+```
+
+
+
+## Overview
+
+
+## Setup
+
+
+### Packages
+
+
+### Data
+
+Read in the dataset and save it in a new object, `anx_data`.
+
+On the Cloud, you can read in this dataset from the `data` folder using `here::here()`.
+
+Elsewhere, you can download the dataset, or copy the dataset URL, from the [Data and Workbooks page](../../../data_workbooks.qmd).
+
+```{r}
+
+```
+
+
+
+#### Codebook
+
+
+## Mutate
+
+
+### General Format
+
+
+### Adding and Changing Variables
+
+Make the above changes to the `anx_data` dataset and save the output to `anx_data`.
+
+```{r}
+
+```
+
+
+Imagine that item 17 on the STICSA State subscale is reversed and needs to be reverse-coded. Using the [Codebook](06_changes.qmd#codebook), replace the existing variable with the reversed version.
+
+In many multi-item measures, some items are reversed in the way that they capture a particular construct. In this particular example, items on the STICSA are worded so that a higher numerical response (closer to the "very much so" end of the scale) indicates *more* anxiety, such as item 4: "I think that others won't approve of me".
+
+However, reverse-coded items are intended to capture the same ideas, but in reverse. A reversed version of item 17 might read, "I can concentrate easily with no intrusive thoughts." In this case, a higher numerical response (closer to the "very much so" end of the scale) would indicate *less* anxiety. In order for these reversed items to be aligned with the other items on the scale, so that together they form a cohesive score, the coding of the response scale must be flipped: high becomes low, and low becomes high.
+
+If the response scale is a numerical integer sequence, as this one is, then the simplest way to reverse-code the responses is to subtract every response from the maximum possible response plus one. Here, the STICSA response scale is from 1 to 4; the maximum possible response is 4, plus one is 5. So, to reverse-code the responses, we need to subtract each rating on this item from 5. A high score (4) will be become a low score (5 - 4 = 1), and vice versa for a low score (5 - 1 = 4).
+```{r}
+
+```
+
+
+
+### Composite Scores
+
+Create mean subscale scores for each of the three STARS subscales and save these changes to the dataset. If you didn't do it already, make sure you create `sticsa_trait_score` as above also.
+
+```{r}
+
+```
+
+
+What would the above code creating `sticsa_trait_score` produce without the `rowwise()...ungroup()` steps (i.e. with only the `mutate()` command)? Make a prediction, then try it.
+
+```{r}
+
+```
+
+
+**CHALLENGE:** The `rowwise() |> c_across() |> ungroup()` code is definitely not the only way to obtain the same output. Try producing the the same `sticsa_trait_score` variable with the following methods. What are the benefits and drawbacks of each method?
+
+*Hint:* Use `vignette("rowwise")` to help if you get stuck.
+
+1.  Using a dedicated by-row function, `rowMeans()`
+2.  Using the basic structure of `mutate()` only
+
+```{r}
+
+```
+
+
+
+### Conditionals
+
+
+#### One-Variable Input
+
+
+#### Multi-Variable Input
+
+Adapt the code above to finish creating a `remove` variable that includes the possible reasons for exclusion that we covered in the last tutorial:
+
+-   Below ethical age of consent
+-   Age missing or improbably high (e.g. 100 or above)
+
+Then, assign this change back to your dataset.
+
+```{r}
+
+```
+
+
+**CHALLENGE**: Use `exclusion_summary` to write a report of all the exclusions from this dataset.
+
+```{r}
+
+```
+
+
+
+### Iteration
+
+**CHALLENGE**: Use `dplyr::across()` to choose all the items on the statistics version of the MARS, and add 10 to all the scores.
+
+(This probably isn't something you really want to do to your own data, but it's good for practice.)
+
+```{r}
+
+```
+
+
+**CHALLENGE**: You might notice that there's no `variable_name =` bit of the command to rename the transformed variables, so `across()` by default overwrites those variables, rather than creating new ones. However, the help documentation for `across()` describes a method for creating new output variables. Using this info, do the same task as above, but create new all-caps versions of the variable names so the originals are not overwritten.
+
+*Hint*: Look in the Examples, under `# Using an external vector of names`
+
+```{r}
+
+```
+
+
+
+## Summarise
+
+
+### General Format
+
+Add additional arguments to the `summarise()` code above to include the min and max in the output.
+
+```{r}
+
+```
+
+
+**CHALLENGE**: Add one more argument to the `summarise()` code above to include the standard error in the output.
+
+```{r}
+
+```
+
+
+
+### By Group
+
+Add to the already-grouped `summarise()` code to further split up the output by gender as well as MCQ group.
+
+```{r}
+
+```
+
+
+**CHALLENGE**: Split up this `summarise()` output by whether each case scored higher, or lower than/equal to, the median value of the STARS test anxiety score.
+
+```{r}
+
+```
+
+
+
+### Iteration
+
+
+#### Use an Existing Function
+
+
+#### Function List + `across()`
+
+
+## Formatting with `{kableExtra}`
+
+
+### Essential Formatting
+
+Follow along with the instructions to create your own beautiful table.
+```{r}
+
+```
+
+
+Capitalise the values "maths" and "stats" in the first column of this summary dataset.
+
+*Hint*: Check out the {stringr} package for working with character strings.
+
+```{r}
+
+```
+
+
+Using the help documentation, update the `kbl()` function to have nicely formatted column names, digits rounded to two decimal places, centre-aligned columns, and a caption.
+
+```{r}
+
+```
+
+
+
+### Dynamic Formatting
+
+**CHALLENGE**: It will shock you to learn that I didn't like writing out the column names in the `kbl()` function one by one. Can you figure out how to generate column names dynamically, instead of writing them out, and then use the "Awesome Tables" vignette to create the table below?
+
+
+
+```{r}
+
+```
+
+
+
+## Quick Test: Correlation
+
+
+### Visualisation
+
+Select the four "score" variables and pipe into `ggscatmat()`.
+
+```{r}
+
+```
+
+
+**CHALLENGE**: Use `GGally::ggpairs()` on the same numeric variables, but split up all the plots by `gender` as well.
+
+*Hint*: There's an example of this code in [the introduction documentation for the lovely `palmerpenguins::penguins` dataset](https://allisonhorst.github.io/palmerpenguins/articles/intro.html)!
+
+```{r}
+
+```
+
+
+
+### Testing Correlation
+
+
+#### Single Pairwise
+
+Using the help documentation for `cor.test()`, perform a correlation analysis between any two "score" variables of your choice in the `anx_data` dataset. The solution will use the formula option, but if you get it to run, you're doing good!
+
+```{r}
+
+```
+
+
+**CHALLENGE**: Using what we learned in the last tutorial, report the results of this analysis without typing any of the results out by hand.
+
+```{r}
+
+```
+
+
+
+#### Multiple Pairwise Adjusted
+
+Select all the "score" variables and get pairwise correlations between all of them with `correlation::correlation()`.
+
+```{r}
+
+```
+
+

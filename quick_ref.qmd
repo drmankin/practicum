@@ -151,6 +151,11 @@ The table below is arranged alphabetically by function name, and the linked full
    <td style="text-align:left;"> 03: Datasets </td>
   </tr>
   <tr>
+   <td style="text-align:left;"> gsub() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/grep.html">gsub()</a> </td>
+   <td style="text-align:left;"> 06: Mutate and Summarise </td>
+  </tr>
+  <tr>
    <td style="text-align:left;"> here() </td>
    <td style="text-align:left;"> <a href="https://here.r-lib.org//reference/here.html">here::here()</a> </td>
    <td style="text-align:left;"> 03: Datasets<br>05: Filter and Select<br>06: Mutate and Summarise </td>
@@ -169,6 +174,11 @@ The table below is arranged alphabetically by function name, and the linked full
    <td style="text-align:left;"> is.na() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/base/NA.html">is.na()</a> </td>
    <td style="text-align:left;"> 05: Filter and Select </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> kable_classic() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/pkg/kableExtra/man/kable_classic.html">kableExtra::kable_classic()</a> </td>
+   <td style="text-align:left;"> 06: Mutate and Summarise </td>
   </tr>
   <tr>
    <td style="text-align:left;"> kable_styling() </td>
@@ -299,6 +309,11 @@ The table below is arranged alphabetically by function name, and the linked full
    <td style="text-align:left;"> starts_with() </td>
    <td style="text-align:left;"> <a href="https://tidyselect.r-lib.org/reference/starts_with.html">dplyr::starts_with()</a> </td>
    <td style="text-align:left;"> 05: Filter and Select<br>06: Mutate and Summarise </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> str_to_title() </td>
+   <td style="text-align:left;"> <a href="https://stringr.tidyverse.org/reference/case.html">stringr::str_to_title()</a> </td>
+   <td style="text-align:left;"> 06: Mutate and Summarise </td>
   </tr>
   <tr>
    <td style="text-align:left;"> sum() </td>
@@ -438,7 +453,7 @@ If you're looking for a particular section of a tutorial, use this handy summary
    <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Quick Test: *t*-test redux](tutorials/psychrlogy/02_essentials/05_filter.qmd#quick-test:-*t*-test-redux) </td>
    <td style="text-align:left;">  </td>
   </tr>
-  <tr grouplength="4"><td colspan="2" style="border-bottom: 1px solid;"><strong>06: Mutate and Summarise</strong></td></tr>
+  <tr grouplength="5"><td colspan="2" style="border-bottom: 1px solid;"><strong>06: Mutate and Summarise</strong></td></tr>
 <tr>
    <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Setup](tutorials/psychrlogy/02_essentials/06_changes.qmd#setup) </td>
    <td style="text-align:left;"> [Packages](tutorials/psychrlogy/02_essentials/06_changes.qmd#packages), [Data](tutorials/psychrlogy/02_essentials/06_changes.qmd#data) </td>
@@ -450,6 +465,10 @@ If you're looking for a particular section of a tutorial, use this handy summary
   <tr>
    <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Summarise](tutorials/psychrlogy/02_essentials/06_changes.qmd#summarise) </td>
    <td style="text-align:left;"> [General Format](tutorials/psychrlogy/02_essentials/06_changes.qmd#general-format), [By Group](tutorials/psychrlogy/02_essentials/06_changes.qmd#by-group), [Iteration](tutorials/psychrlogy/02_essentials/06_changes.qmd#iteration) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Formatting with `{kableExtra}`](tutorials/psychrlogy/02_essentials/06_changes.qmd#formatting-with-`{kableextra}`) </td>
+   <td style="text-align:left;"> [Essential Formatting](tutorials/psychrlogy/02_essentials/06_changes.qmd#essential-formatting), [Dynamic Formatting](tutorials/psychrlogy/02_essentials/06_changes.qmd#dynamic-formatting) </td>
   </tr>
   <tr>
    <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Quick Test: Correlation](tutorials/psychrlogy/02_essentials/06_changes.qmd#quick-test:-correlation) </td>
