@@ -19,7 +19,7 @@ Of the two, the first is more important. I'd strongly recommend you **open** the
 
 You can also have them both open at once and refer to each!
 
-:::{.callout-tip title="Installing {discovr}" collapse="true"}
+::: {.callout-tip title="Installing {discovr}" collapse="true"}
 If you are working in the Posit Cloud workspace, the tutorials have already been installed. **Please do NOT reinstall them!**
 
 If working elsewhere, use the following code to install the necessary packages **in the Console**:
@@ -40,7 +40,7 @@ Note that there's no need to call `library(discovr)` at the start of your docume
 ::: {.callout-tip title="Using the {discovr} tutorials" collapse="true"}
 Prof Andy Field's {discovr} tutorials provide detailed walkthroughs of both the R code and the statistical concepts of a variety of statistical analyses. They are a good place to look first to understand what your UG supervisees or advisees have been taught on a particular topic.
 
-The tutorials are built in {learnr}, an interactive platform for learning and running R code. So, unlike the tutorial you're currently reading, they must be run inside an R session. 
+The tutorials are built in {learnr}, an interactive platform for learning and running R code. So, unlike the tutorial you're currently reading, they must be run inside an R session.
 
 To start a tutorial, open any project and click on the Tutorial tab in the Environment pane. You can run any tutorial from here, but the relevant one for the linear modelling we are working on now is `discovr_08`, "the GLM". Scroll down to this tutorial and click the "Start Tutorial ▶️" button to load the tutorial.
 
@@ -56,30 +56,29 @@ data("TeachingRatings", package = "AER")
 teach_tib <- TeachingRatings
 ```
 
-::: {.callout-tip title="Installing {AER}" collapse="true"} 
+::: {.callout-tip title="Installing {AER}" collapse="true"}
 As usual, no need to install anything on the Cloud, but elsewhere install {AER} first in the Console:
 
-```r
+``` r
 install.packages("AER")
 ```
 :::
 
 You can load the codebook in the Help viewer by running the following in the Console:
 
-```r         
+``` r
 ?AER::TeachingRatings
 ```
 
 ### One Predictor
 
-Now that we have some data, we can fit our first model with a single predictor. We will do this with the very hardworking `lm()` function in R, standing for "**l**inear **m**
-odel".
+Now that we have some data, we can fit our first model with a single predictor. We will do this with the very hardworking `lm()` function in R, standing for "**l**inear **m** odel".
 
 #### General Format
 
 The `lm()` function has *a lot* of options (as you might expect, given the versatility and ubiquity of linear models!), but its basic format to fit a linear model with a single predictor is very simple:
 
-```r         
+``` r
 lm(outcome ~ predictor, data = dataset_name)
 ```
 
@@ -457,13 +456,11 @@ To begin, we'll use headings to map out our document. There are several ways to 
     -   Typing hashes at the start of a new line, followed by a space (e.g. `###` creates a level 3 heading)
 
 ::: {.callout-tip title="Why Use Headings?" collapse="true"}
-
 Properly formatted headings are strongly recommended for any documents you write, for a variety of reasons:
 
 -   They automatically create the outline (to the right) and navigation menu (to the bottom) of your document for easy navigation
 -   They can be automatically converted into a [table of contents](04_lm.qmd#rendering)
 -   They are a crucial accessibility feature for navigating the document via keyboard/screenreader, as well as providing clear visual structure.
-
 :::
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
@@ -622,9 +619,9 @@ Now we don't have to worry about getting this right: our document, when rendered
 
 #### Automatic Reporting
 
-As helpful as inline code is (and I would recommend reporting all values dynamically/automatically wherever possible, so it is *very* useful!), you may have noticed that there was a lot of repetitive typing that also made the text itself quite difficult to read, as well lots of opportunities make typos or mistakes. Surely there's a simpler way to do this sort of thing![^fx]
+As helpful as inline code is (and I would recommend reporting all values dynamically/automatically wherever possible, so it is *very* useful!), you may have noticed that there was a lot of repetitive typing that also made the text itself quite difficult to read, as well lots of opportunities make typos or mistakes. Surely there's a simpler way to do this sort of thing![^4]
 
-[^fx]: Here we're going to briefly encounter a principle that will come up again and again, namely: If you have to copy and paste more than once, [use a function instead](https://r4ds.had.co.nz/functions.html#when-should-you-write-a-function).
+[^4]: Here we're going to briefly encounter a principle that will come up again and again, namely: If you have to copy and paste more than once, [use a function instead](https://r4ds.had.co.nz/functions.html#when-should-you-write-a-function).
 
 There are, in fact, many simpler ways to do common tasks like this, which take advantage of the fact that an object created by a particular function will *always* have the same structure. One option is to make further use of the {papaja} package, which is designed for just this purpose.
 
@@ -754,10 +751,10 @@ ggplot2::autoplot(eval_full_lm, which = c(1, 3, 2, 4))
 After all this work to analyse, interpret, and report, it's finally time to produce the final document. The process of turning a Quarto document into some output format - including running all the code and applying all the formatting - is called *rendering* (previously *knitting* with RMarkdown).
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-Render your report document using the "Render" button at the top of the document, or by using the keyboard shortcut Ctrl/Cmd + Shift + K[^4].
+Render your report document using the "Render" button at the top of the document, or by using the keyboard shortcut Ctrl/Cmd + Shift + K[^5].
 :::
 
-[^4]: It seems obvious that this should be R instead of K, but remember this made perfect sense when it was called "knitting"!
+[^5]: It seems obvious that this should be R instead of K, but remember this made perfect sense when it was called "knitting"!
 
 #### Global Options
 
@@ -813,9 +810,9 @@ For example, you may have a code chunk containing some processing code that you 
 
 Local code chunk options appear as "hashpipe" (`#|`) comments, as we have seen earlier with labels. They use the same syntax as YAML, but the settings only apply to individual code chunks. Any settings that aren't explicitly changed within the chunk are inherited from the YAML settings.
 
-For this example, we could set a local code chunk option `include: false` which will prevent the output from appearing in the document.[^5]
+For this example, we could set a local code chunk option `include: false` which will prevent the output from appearing in the document.[^6]
 
-[^5]: For writing tutorials, I make extensive use of `eval: false`, which includes the code in the output but does not attempt to run the code. This allows me to write all kinds of nonsense code without R getting stroppy and throwing errors all over the place!
+[^6]: For writing tutorials, I make extensive use of `eval: false`, which includes the code in the output but does not attempt to run the code. This allows me to write all kinds of nonsense code without R getting stroppy and throwing errors all over the place!
 
 ```{{r}}
 #| include: false
@@ -825,9 +822,9 @@ some_code_doing_cleaning_and_processing
 
 #### Output Formats
 
-For these tutorials, we will generally stick to HTML, as it's the most painless of the rendering options. However, you will likely find yourself wanting to produce some other type of document, which you can easily[^6] do from the same Quarto document.
+For these tutorials, we will generally stick to HTML, as it's the most painless of the rendering options. However, you will likely find yourself wanting to produce some other type of document, which you can easily[^7] do from the same Quarto document.
 
-[^6]: Depends crucially on what you consider to be "easy", especially when dealing with PDFs!
+[^7]: Depends crucially on what you consider to be "easy", especially when dealing with PDFs!
 
 To render to a different format, change the YAML `format:` setting to a different output.
 
@@ -843,7 +840,7 @@ Simply update the `format: html` YAML option to `format: docx` and render your d
 :::
 :::
 
-\ 
+ 
 
 And there we have it! You now have a complete example of a linear model report, rendered into both HTML and Word, to refer to. It's amazing how much you're able to do after just a few weeks!
 
