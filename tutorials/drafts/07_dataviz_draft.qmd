@@ -35,14 +35,12 @@ We will be relying heavily on the {ggplot2} package, naturally, which is part of
 We will also be using {ggrain} for raincloud plots.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-Load the {tidyverse}, {GGally}, and {ggrain} packages.
+Load the {tidyverse} and {ggrain} packages.
 
 ::: {.callout-note collapse="true" title="Solution"}
 ```{r}
 library(tidyverse)
 library(ggrain)
-library(heatmaply)
-library(rgl)
 ```
 :::
 :::
@@ -379,11 +377,128 @@ anx_scores_data |>
 
 ## Barplots
 
+With some key ideas for building plots under our belts, let's have a look at creating visualisations of categorical data. 
+
+To start with, we'll need some (preferably interesting) categorical data to work with. Let's begin by creating a categorical variable out of one of our continuous variables to practice what we covered in the previous tutorial. (This kind of operation is often not recommended for real analysis, but we're learning so, y'know, it's fine.)
+
 ::: {.callout-note appearance="minimal" title="Exercise"}
 
-Follow along with the instructions below to build your own plot as we go. Feel free to tweak details like colour and labels as you like.
+Create a new variable in the dataset, `stars_help_cat`, that contains either "low" for people who scored below 3 on the STARS Asking for Help subscale, or "high" for people who scored 3 or above. Make sure to save your changes back to the dataset.
+
+::: {.callout-note collapse="true" title="Solution"}
+
+First, let's use `case_when()` to create our variable, and check whether everything looks good using the `.keep = "used"` argument in `mutate()`.
+
+```{r}
+anx_scores_data |> 
+  dplyr::mutate(
+    stars_help_cat = dplyr::case_when(
+      stars_help_score < 3 ~ "low",
+      stars_help_score >= 3 ~ "high",
+      .default = NA
+    ),
+    .keep = "used"
+  )
+```
+That looks good to me, so let's assign that output back to the dataset, removing the `.keep` argument before we do.
+
+```{r}
+anx_scores_data <- anx_scores_data |> 
+  dplyr::mutate(
+    stars_help_cat = dplyr::case_when(
+      stars_help_score < 3 ~ "low",
+      stars_help_score >= 3 ~ "high",
+      .default = NA
+    )
+  )
+```
+:::
+:::
+  
+Now, let's get started on our barplot.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Follow along with the instructions to build your own plot as we go. Feel free to tweak details like colour and labels as you like.
 
 :::
+
+To keep this to a 2x2 comparison, let's compare our news STARS help category in male vs female participants. So, we'll need to filter before beginning the plot.
+
+To start, we'll put our variable of interest - here, `stars_help_cat` - on the *x*-axis. Remember that in plots like this, the *y*-axis is the number of responses, and as we saw with histograms just above, R can do that for us automatically. So, we'll skip the *y*-axis and instead add `gender` as a fill variable. Then, we'll ask R to draw the right kind of geom for us - the transparently named `geom_bar()` - and throw on a nice theme on the end for good measure.
+
+```{r}
+anx_scores_data |> 
+  dplyr::filter(gender %in% c("male","female")) |> 
+  ggplot(aes(x = stars_help_cat, fill = gender)) +
+  geom_bar() +
+  papaja::theme_apa(box = TRUE)
+```
+
+Hmm. This barplot is okay, but it's not easy to compare the gender categories directly. The bars are filled with different colours based on the `gender` variable, which we wanted, but they're stacked on top of each other!
+
+### Position Dodge
+
+To "fix" this (assuming it isn't what you want - it might be!), we can use the `position` argument in `geom_bar()` to move the bars side by side, instead of stacked on top of each other. This option is called "dodge", so let's see how it looks now:
+
+```{r}
+anx_scores_data |> 
+  dplyr::filter(gender %in% c("male","female")) |> 
+  ggplot(aes(x = stars_help_cat, fill = gender)) +
+  geom_bar(position = "dodge") +
+  papaja::theme_apa(box = TRUE)
+```
+
+Nice! Already that's much better, and looking more like we might expect a grouped barplot to look. We do need to do *something* about those awful colours, but first let's fix something that's bothering me: the order of the *x*-axis categories.
+
+### Reordering Categories
+
+The `stars_help_cat` variable on the *x*-axis has automatically ordered the categories in alphabetical order, "high" and then "low". As I am a native speaker of a language that reads left to right, I'd prefer to have "low" on the left and "high" on the right. So, how can I change the order of these categories?
+
+#### Option 1: Scale Labels
+
+We've seen the `scale_*()` functions already - this time, we have a discrete *x*-axis variable, so we need `scale_x_discrete()`. We've even already seen the `limits =` argument already to set the upper and lower bound of the plot. Here, we can use this argument to specify the order we want the order of the categories to be displayed in instead.
+
+```{r}
+anx_scores_data |> 
+  dplyr::filter(gender %in% c("male","female")) |> 
+  ggplot(aes(x = stars_help_cat, fill = gender)) +
+  geom_bar(position = "dodge") +
+  scale_x_discrete(limits = c("low", "high")) +
+  papaja::theme_apa(box = TRUE)
+```
+
+#### Option 2: Factor Levels
+
+We haven't covered factors much in this course so far; for our purposes, most of the time, R treats character data more or less the same way it would treat factors so it hasn't been a problem thus far. However, converting our `stars_help_cat` variable to a factor would let us specify an order of factor levels. 
+
+Let's see how that would work. Here I'm using `mutate()` to do the factor conversion before I pipe the data on into `ggplot()`. We've seen the `factor()` function before, just adding the `levels =` argument to reorder the levels in the order we wanted. The resulting plot then has the levels in the right order.
+
+```{r}
+anx_scores_data |> 
+  dplyr::filter(gender %in% c("male","female")) |> 
+  dplyr::mutate(stars_help_cat = factor(stars_help_cat, levels = c("low", "high"))) |> 
+  ggplot(aes(x = stars_help_cat, fill = gender)) +
+  geom_bar(position = "dodge") +
+  papaja::theme_apa(box = TRUE)
+```
+
+```{r}
+chi_tea |> 
+  ggplot(aes(x = actual_position, fill = believe_position)) +
+  geom_bar(position = "dodge") +
+  scale_x_discrete(name = "Actual Position of the Milk-First Tea",
+                   labels = c("Left", "Right")) +
+  scale_y_continuous(name = "Count",
+                     limits = c(0, 30),
+                     breaks = seq(0, 35, by = 5)) +
+  scale_fill_discrete(name = "Believed Position",
+                      labels = c("Left", "Right"),
+                      type = c("#36024d", "darkcyan")) + # AnD colours, heck yeah!!
+  theme_bw()
+```
+
+
 
 ## Raincloud and Violin Plots
 
