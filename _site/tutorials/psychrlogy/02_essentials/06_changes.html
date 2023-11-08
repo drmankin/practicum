@@ -6620,15 +6620,15 @@ Tip
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="1,2" data-code-cell="annotated-cell-2" data-code-annotation="1">Take the dataset and make the following changes:</span>
+<span data-code-lines="1,2" data-code-annotation="1" data-code-cell="annotated-cell-2">Take the dataset and make the following changes:</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="3" data-code-cell="annotated-cell-2" data-code-annotation="2">Create a new variable, <code>lab</code>, that contains the value <code>&quot;Sussex&quot;</code></span>
+<span data-code-lines="3" data-code-annotation="2" data-code-cell="annotated-cell-2">Create a new variable, <code>lab</code>, that contains the value <code>&quot;Sussex&quot;</code></span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-lines="4" data-code-cell="annotated-cell-2" data-code-annotation="3">Put this variable before the first variable in the existing dataset.</span>
+<span data-code-lines="4" data-code-annotation="3" data-code-cell="annotated-cell-2">Put this variable before the first variable in the existing dataset.</span>
 </dd>
 </dl>
 </div>
@@ -6685,15 +6685,15 @@ Caused by error:
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="1,2" data-code-cell="annotated-cell-3" data-code-annotation="1">Take the dataset and make the following changes:</span>
+<span data-code-lines="1,2" data-code-annotation="1" data-code-cell="annotated-cell-3">Take the dataset and make the following changes:</span>
 </dd>
 <dt data-target-cell="annotated-cell-3" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="3,4" data-code-cell="annotated-cell-3" data-code-annotation="2">For the <code>gender</code> and <code>mcq</code> variables, convert the existing variable into a factor and then replace the existing variable with the new one.</span>
+<span data-code-lines="3,4" data-code-annotation="2" data-code-cell="annotated-cell-3">For the <code>gender</code> and <code>mcq</code> variables, convert the existing variable into a factor and then replace the existing variable with the new one.</span>
 </dd>
 <dt data-target-cell="annotated-cell-3" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-lines="6" data-code-cell="annotated-cell-3" data-code-annotation="3">Only output the variables that were used or created in this operation.</span>
+<span data-code-lines="6" data-code-annotation="3" data-code-cell="annotated-cell-3">Only output the variables that were used or created in this operation.</span>
 </dd>
 </dl>
 </div>
@@ -6755,26 +6755,8 @@ Exercise
 </div>
 <div class="callout-body-container callout-body">
 <p>Imagine that item 17 on the STICSA State subscale is reversed and needs to be reverse-coded. Using the <a href="../../../tutorials/psychrlogy/02_essentials/06_changes.html#codebook">Codebook</a>, replace the existing variable with the reversed version.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="What is reverse-coding?">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-What is reverse-coding?
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-11" class="callout-11-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>In many multi-item measures, some items are reversed in the way that they capture a particular construct. In this particular example, items on the STICSA are worded so that a higher numerical response (closer to the “very much so” end of the scale) indicates <em>more</em> anxiety, such as item 4: “I think that others won’t approve of me”.</p>
-<p>However, reverse-coded items are intended to capture the same ideas, but in reverse. A reversed version of item 17 might read, “I can concentrate easily with no intrusive thoughts.” In this case, a higher numerical response (closer to the “very much so” end of the scale) would indicate <em>less</em> anxiety. In order for these reversed items to be aligned with the other items on the scale, so that together they form a cohesive score, the coding of the response scale must be flipped: high becomes low, and low becomes high.</p>
-<p>If the response scale is a numerical integer sequence, as this one is, then the simplest way to reverse-code the responses is to subtract every response from the maximum possible response plus one. Here, the STICSA response scale is from 1 to 4; the maximum possible response is 4, plus one is 5. So, to reverse-code the responses, we need to subtract each rating on this item from 5. A high score (4) will be become a low score (5 - 4 = 1), and vice versa for a low score (5 - 1 = 4).</p>
-</div>
-</div>
-</div>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -6783,7 +6765,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Don’t forget there are pre and post versions of this variable, so BOTH must be reversed!</p>
 <div class="cell">
@@ -6805,6 +6787,24 @@ Solution
 </div>
 </div>
 </div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="What is reverse-coding?">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+What is reverse-coding?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>In many multi-item measures, some items are reversed in the way that they capture a particular construct. In this particular example, items on the STICSA are worded so that a higher numerical response (closer to the “very much so” end of the scale) indicates <em>more</em> anxiety, such as item 4: “I think that others won’t approve of me”.</p>
+<p>However, reverse-coded items are intended to capture the same ideas, but in reverse. A reversed version of item 17 might read, “I can concentrate easily with no intrusive thoughts.” In this case, a higher numerical response (closer to the “very much so” end of the scale) would indicate <em>less</em> anxiety. In order for these reversed items to be aligned with the other items on the scale, so that together they form a cohesive score, the coding of the response scale must be flipped: high becomes low, and low becomes high.</p>
+<p>If the response scale is a numerical integer sequence, as this one is, then the simplest way to reverse-code the responses is to subtract every response from the maximum possible response plus one. Here, the STICSA response scale is from 1 to 4; the maximum possible response is 4, plus one is 5. So, to reverse-code the responses, we need to subtract each rating on this item from 5. A high score (4) will be become a low score (5 - 4 = 1), and vice versa for a low score (5 - 1 = 4).</p>
 </div>
 </div>
 </div>
@@ -6847,19 +6847,19 @@ Important
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-4" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="1" data-code-cell="annotated-cell-4" data-code-annotation="1">Overwrite the <code>anx_data</code> dataset with the following output: take the existing <code>anx_data</code> dataset, <em>and then</em></span>
+<span data-code-lines="1" data-code-annotation="1" data-code-cell="annotated-cell-4">Overwrite the <code>anx_data</code> dataset with the following output: take the existing <code>anx_data</code> dataset, <em>and then</em></span>
 </dd>
 <dt data-target-cell="annotated-cell-4" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="2" data-code-cell="annotated-cell-4" data-code-annotation="2">Group the dataset by row, so any subsequent calculations will be done for each row separately, <em>and then</em></span>
+<span data-code-lines="2" data-code-annotation="2" data-code-cell="annotated-cell-4">Group the dataset by row, so any subsequent calculations will be done for each row separately, <em>and then</em></span>
 </dd>
 <dt data-target-cell="annotated-cell-4" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-lines="3,4,5,6" data-code-cell="annotated-cell-4" data-code-annotation="3">Create the new <code>sticsa_trait_score</code> variable by taking the mean of all the values in variables that start with the string “sticsa_trait” (ignoring any missing values), <em>and then</em></span>
+<span data-code-lines="3,4,5,6" data-code-annotation="3" data-code-cell="annotated-cell-4">Create the new <code>sticsa_trait_score</code> variable by taking the mean of all the values in variables that start with the string “sticsa_trait” (ignoring any missing values), <em>and then</em></span>
 </dd>
 <dt data-target-cell="annotated-cell-4" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-lines="7" data-code-cell="annotated-cell-4" data-code-annotation="4">Remove the by-row grouping that was created by <code>rowwise()</code> to output an ungrouped dataset.</span>
+<span data-code-lines="7" data-code-annotation="4" data-code-cell="annotated-cell-4">Remove the by-row grouping that was created by <code>rowwise()</code> to output an ungrouped dataset.</span>
 </dd>
 </dl>
 </div>
@@ -7114,31 +7114,31 @@ Testing Assertions
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-6" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="1" data-code-cell="annotated-cell-6" data-code-annotation="1">Create a new object, <code>anxiety_cutoff</code>, containing the threshold value for separating clinical from non-clinical anxiety. This one is from <a href="https://pubmed.ncbi.nlm.nih.gov/22091946/">Van Dam et al., 2013</a>.</span>
+<span data-code-lines="1" data-code-annotation="1" data-code-cell="annotated-cell-6">Create a new object, <code>anxiety_cutoff</code>, containing the threshold value for separating clinical from non-clinical anxiety. This one is from <a href="https://pubmed.ncbi.nlm.nih.gov/22091946/">Van Dam et al., 2013</a>.</span>
 </dd>
 <dt data-target-cell="annotated-cell-6" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="3" data-code-cell="annotated-cell-6" data-code-annotation="2">Overwrite the <code>anx_data</code> object by taking the dataset, <em>and then</em>…</span>
+<span data-code-lines="3" data-code-annotation="2" data-code-cell="annotated-cell-6">Overwrite the <code>anx_data</code> object by taking the dataset, <em>and then</em>…</span>
 </dd>
 <dt data-target-cell="annotated-cell-6" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-lines="4" data-code-cell="annotated-cell-6" data-code-annotation="3">Making a change to it by…</span>
+<span data-code-lines="4" data-code-annotation="3" data-code-cell="annotated-cell-6">Making a change to it by…</span>
 </dd>
 <dt data-target-cell="annotated-cell-6" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-lines="5" data-code-cell="annotated-cell-6" data-code-annotation="4">Creating a new variable, <code>anxiety_cat</code>, by applying the following rules:</span>
+<span data-code-lines="5" data-code-annotation="4" data-code-cell="annotated-cell-6">Creating a new variable, <code>anxiety_cat</code>, by applying the following rules:</span>
 </dd>
 <dt data-target-cell="annotated-cell-6" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-lines="6" data-code-cell="annotated-cell-6" data-code-annotation="5">For cases where the value of <code>sticsa_trait_score</code> is greater than or equal to <code>anxiety_cutoff</code>, assign the value “clinical” to <code>sticsa_trait_cat</code></span>
+<span data-code-lines="6" data-code-annotation="5" data-code-cell="annotated-cell-6">For cases where the value of <code>sticsa_trait_score</code> is greater than or equal to <code>anxiety_cutoff</code>, assign the value “clinical” to <code>sticsa_trait_cat</code></span>
 </dd>
 <dt data-target-cell="annotated-cell-6" data-target-annotation="6">6</dt>
 <dd>
-<span data-code-lines="7" data-code-cell="annotated-cell-6" data-code-annotation="6">For cases where the value of <code>sticsa_trait_score</code> is less than <code>anxiety_cutoff</code>, assign the value “non-clinical” to <code>sticsa_trait_cat</code></span>
+<span data-code-lines="7" data-code-annotation="6" data-code-cell="annotated-cell-6">For cases where the value of <code>sticsa_trait_score</code> is less than <code>anxiety_cutoff</code>, assign the value “non-clinical” to <code>sticsa_trait_cat</code></span>
 </dd>
 <dt data-target-cell="annotated-cell-6" data-target-annotation="7">7</dt>
 <dd>
-<span data-code-lines="8" data-code-cell="annotated-cell-6" data-code-annotation="7">For cases that don’t match any of the preceding criteria, assign <code>NA</code> to <code>sticsa_trait_cat</code></span>
+<span data-code-lines="8" data-code-annotation="7" data-code-cell="annotated-cell-6">For cases that don’t match any of the preceding criteria, assign <code>NA</code> to <code>sticsa_trait_cat</code></span>
 </dd>
 </dl>
 </div>
@@ -7183,19 +7183,19 @@ Why the new <code>anxiety_cutoff</code> object?
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-7" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="1,2,3" data-code-cell="annotated-cell-7" data-code-annotation="1">Take the dataset <code>anx_data</code> <em>and then</em> make a change to it by a creating a new variable, <code>remove</code>, by applying the following rules:</span>
+<span data-code-lines="1,2,3" data-code-annotation="1" data-code-cell="annotated-cell-7">Take the dataset <code>anx_data</code> <em>and then</em> make a change to it by a creating a new variable, <code>remove</code>, by applying the following rules:</span>
 </dd>
 <dt data-target-cell="annotated-cell-7" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="4" data-code-cell="annotated-cell-7" data-code-annotation="2">For cases where the <code>distribution</code> variable contains exactly and only <code>&quot;preview&quot;</code>, assign the value <code>&quot;preview&quot;</code> to <code>remove</code>.</span>
+<span data-code-lines="4" data-code-annotation="2" data-code-cell="annotated-cell-7">For cases where the <code>distribution</code> variable contains exactly and only <code>&quot;preview&quot;</code>, assign the value <code>&quot;preview&quot;</code> to <code>remove</code>.</span>
 </dd>
 <dt data-target-cell="annotated-cell-7" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-lines="5" data-code-cell="annotated-cell-7" data-code-annotation="3">For cases where the <code>consent</code> variable does not contain exactly and only <code>&quot;Yes&quot;</code>, assign the value <code>&quot;no_consent&quot;</code> to <code>remove</code>.</span>
+<span data-code-lines="5" data-code-annotation="3" data-code-cell="annotated-cell-7">For cases where the <code>consent</code> variable does not contain exactly and only <code>&quot;Yes&quot;</code>, assign the value <code>&quot;no_consent&quot;</code> to <code>remove</code>.</span>
 </dd>
 <dt data-target-cell="annotated-cell-7" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-lines="6" data-code-cell="annotated-cell-7" data-code-annotation="4">For cases that don’t match any of the preceding criteria, assign the value <code>&quot;keep&quot;</code> to <code>remove</code>.</span>
+<span data-code-lines="6" data-code-annotation="4" data-code-cell="annotated-cell-7">For cases that don’t match any of the preceding criteria, assign the value <code>&quot;keep&quot;</code> to <code>remove</code>.</span>
 </dd>
 </dl>
 </div>
@@ -7260,15 +7260,15 @@ Solution
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-8" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="1,2" data-code-cell="annotated-cell-8" data-code-annotation="1">Take <code>anx_data</code> and count the number of times each unique value occurs in the <code>remove</code> variable, storing the output in a new object, <code>exclusions_summary</code>.</span>
+<span data-code-lines="1,2" data-code-annotation="1" data-code-cell="annotated-cell-8">Take <code>anx_data</code> and count the number of times each unique value occurs in the <code>remove</code> variable, storing the output in a new object, <code>exclusions_summary</code>.</span>
 </dd>
 <dt data-target-cell="annotated-cell-8" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="3" data-code-cell="annotated-cell-8" data-code-annotation="2">Print out the <code>exclusions_summary</code> object (see below!).</span>
+<span data-code-lines="3" data-code-annotation="2" data-code-cell="annotated-cell-8">Print out the <code>exclusions_summary</code> object (see below!).</span>
 </dd>
 <dt data-target-cell="annotated-cell-8" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-lines="5,6" data-code-cell="annotated-cell-8" data-code-annotation="3">Create a new object, <code>anx_data_final</code>, by taking <code>anx_data</code> <em>and then</em> retaining only the cases for which the <code>remove</code> variable has only and exactly the value <code>&quot;keep&quot;</code> - effectively dropping all other cases.</span>
+<span data-code-lines="5,6" data-code-annotation="3" data-code-cell="annotated-cell-8">Create a new object, <code>anx_data_final</code>, by taking <code>anx_data</code> <em>and then</em> retaining only the cases for which the <code>remove</code> variable has only and exactly the value <code>&quot;keep&quot;</code> - effectively dropping all other cases.</span>
 </dd>
 </dl>
 </div>
@@ -7324,15 +7324,15 @@ Solution
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="1" data-code-cell="annotated-cell-1" data-code-annotation="1">Create a new function, <code>rep_excl</code>, with the arguments <code>summary</code> and <code>value</code> that does the following:</span>
+<span data-code-lines="1" data-code-annotation="1" data-code-cell="annotated-cell-1">Create a new function, <code>rep_excl</code>, with the arguments <code>summary</code> and <code>value</code> that does the following:</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="2,3,4" data-code-cell="annotated-cell-1" data-code-annotation="2">Take the object <code>summary</code> <em>and then</em> filter it keeping only the cases where the value in the <code>remove</code> variable is only and exactly equal to the <code>value</code> argument, <em>and then</em> pull out the value in the <code>n</code> variable.</span>
+<span data-code-lines="2,3,4" data-code-annotation="2" data-code-cell="annotated-cell-1">Take the object <code>summary</code> <em>and then</em> filter it keeping only the cases where the value in the <code>remove</code> variable is only and exactly equal to the <code>value</code> argument, <em>and then</em> pull out the value in the <code>n</code> variable.</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-lines="7" data-code-cell="annotated-cell-1" data-code-annotation="3">Use the new <code>rep_excl</code> with the <code>exclusion_summary</code> object as the <code>summary</code> argument, and the string <code>&quot;no_consent&quot;</code> as the <code>value</code> argument.</span>
+<span data-code-lines="7" data-code-annotation="3" data-code-cell="annotated-cell-1">Use the new <code>rep_excl</code> with the <code>exclusion_summary</code> object as the <code>summary</code> argument, and the string <code>&quot;no_consent&quot;</code> as the <code>value</code> argument.</span>
 </dd>
 </dl>
 </div>
@@ -7782,19 +7782,19 @@ Caused by error in `se()`:
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-14" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="1" data-code-cell="annotated-cell-14" data-code-annotation="1">Take the dataset, <em>and then</em></span>
+<span data-code-lines="1" data-code-annotation="1" data-code-cell="annotated-cell-14">Take the dataset, <em>and then</em></span>
 </dd>
 <dt data-target-cell="annotated-cell-14" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="2" data-code-cell="annotated-cell-14" data-code-annotation="2">Group by the values in the <code>mcq</code> variable, <em>and then</em></span>
+<span data-code-lines="2" data-code-annotation="2" data-code-cell="annotated-cell-14">Group by the values in the <code>mcq</code> variable, <em>and then</em></span>
 </dd>
 <dt data-target-cell="annotated-cell-14" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-lines="3" data-code-cell="annotated-cell-14" data-code-annotation="3">Produce a summary table with the following variables:</span>
+<span data-code-lines="3" data-code-annotation="3" data-code-cell="annotated-cell-14">Produce a summary table with the following variables:</span>
 </dd>
 <dt data-target-cell="annotated-cell-14" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-lines="4,5,6,7,8" data-code-cell="annotated-cell-14" data-code-annotation="4">Number of cases, and mean, <em>SD</em>, minimum, and maximum values of the <code>sticsa_trait_score</code> variable.</span>
+<span data-code-lines="4,5,6,7,8" data-code-annotation="4" data-code-cell="annotated-cell-14">Number of cases, and mean, <em>SD</em>, minimum, and maximum values of the <code>sticsa_trait_score</code> variable.</span>
 </dd>
 </dl>
 </div>
@@ -8057,15 +8057,15 @@ Tip
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-16" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="1" data-code-cell="annotated-cell-16" data-code-annotation="1">To begin, create a new object containing a list. I’ve called mine <code>fxs</code>, short for “functions”.</span>
+<span data-code-lines="1" data-code-annotation="1" data-code-cell="annotated-cell-16">To begin, create a new object containing a list. I’ve called mine <code>fxs</code>, short for “functions”.</span>
 </dd>
 <dt data-target-cell="annotated-cell-16" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="2,3,4,5" data-code-cell="annotated-cell-16" data-code-annotation="2">Add named elements to the list, with the name on the left and the formula to the right of the <code>=</code>.</span>
+<span data-code-lines="2,3,4,5" data-code-annotation="2" data-code-cell="annotated-cell-16">Add named elements to the list, with the name on the left and the formula to the right of the <code>=</code>.</span>
 </dd>
 <dt data-target-cell="annotated-cell-16" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-lines="11" data-code-cell="annotated-cell-16" data-code-annotation="3">Instead of using the familiar <code>name = instructions</code> format, we’re instead use <code>dplyr::across()</code> with the list of functions instead of a single function.</span>
+<span data-code-lines="11" data-code-annotation="3" data-code-cell="annotated-cell-16">Instead of using the familiar <code>name = instructions</code> format, we’re instead use <code>dplyr::across()</code> with the list of functions instead of a single function.</span>
 </dd>
 </dl>
 </div>

@@ -202,14 +202,6 @@ anx_data <- anx_data |>
 ::: {.callout-note title="Exercise" appearance="minimal"}
 Imagine that item 17 on the STICSA State subscale is reversed and needs to be reverse-coded. Using the [Codebook](06_changes.qmd#codebook), replace the existing variable with the reversed version.
 
-::: {.callout-tip title="What is reverse-coding?" collapse="true"}
-In many multi-item measures, some items are reversed in the way that they capture a particular construct. In this particular example, items on the STICSA are worded so that a higher numerical response (closer to the "very much so" end of the scale) indicates *more* anxiety, such as item 4: "I think that others won't approve of me".
-
-However, reverse-coded items are intended to capture the same ideas, but in reverse. A reversed version of item 17 might read, "I can concentrate easily with no intrusive thoughts." In this case, a higher numerical response (closer to the "very much so" end of the scale) would indicate *less* anxiety. In order for these reversed items to be aligned with the other items on the scale, so that together they form a cohesive score, the coding of the response scale must be flipped: high becomes low, and low becomes high.
-
-If the response scale is a numerical integer sequence, as this one is, then the simplest way to reverse-code the responses is to subtract every response from the maximum possible response plus one. Here, the STICSA response scale is from 1 to 4; the maximum possible response is 4, plus one is 5. So, to reverse-code the responses, we need to subtract each rating on this item from 5. A high score (4) will be become a low score (5 - 4 = 1), and vice versa for a low score (5 - 1 = 4).
-:::
-
 ::: {.callout-note title="Solution" collapse="true"}
 Don't forget there are pre and post versions of this variable, so BOTH must be reversed!
 
@@ -223,6 +215,14 @@ anx_data |>
   )
 ```
 :::
+:::
+
+::: {.callout-tip title="What is reverse-coding?" collapse="true"}
+In many multi-item measures, some items are reversed in the way that they capture a particular construct. In this particular example, items on the STICSA are worded so that a higher numerical response (closer to the "very much so" end of the scale) indicates *more* anxiety, such as item 4: "I think that others won't approve of me".
+
+However, reverse-coded items are intended to capture the same ideas, but in reverse. A reversed version of item 17 might read, "I can concentrate easily with no intrusive thoughts." In this case, a higher numerical response (closer to the "very much so" end of the scale) would indicate *less* anxiety. In order for these reversed items to be aligned with the other items on the scale, so that together they form a cohesive score, the coding of the response scale must be flipped: high becomes low, and low becomes high.
+
+If the response scale is a numerical integer sequence, as this one is, then the simplest way to reverse-code the responses is to subtract every response from the maximum possible response plus one. Here, the STICSA response scale is from 1 to 4; the maximum possible response is 4, plus one is 5. So, to reverse-code the responses, we need to subtract each rating on this item from 5. A high score (4) will be become a low score (5 - 4 = 1), and vice versa for a low score (5 - 1 = 4).
 :::
 
 ### Composite Scores

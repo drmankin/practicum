@@ -19,16 +19,11 @@ rstudioapi::viewer('https://r-training.netlify.app/tutorials/psychrlogy/02_essen
 utils::browseURL('https://r-training.netlify.app/tutorials/psychrlogy/02_essentials/06_changes')
 ```
 
-
-
 ## Overview
-
 
 ## Setup
 
-
 ### Packages
-
 
 ### Data
 
@@ -42,16 +37,11 @@ Elsewhere, you can download the dataset, or copy the dataset URL, from the [Data
 
 ```
 
-
-
 #### Codebook
-
 
 ## Mutate
 
-
 ### General Format
-
 
 ### Adding and Changing Variables
 
@@ -61,19 +51,11 @@ Make the above changes to the `anx_data` dataset and save the output to `anx_dat
 
 ```
 
-
 Imagine that item 17 on the STICSA State subscale is reversed and needs to be reverse-coded. Using the [Codebook](06_changes.qmd#codebook), replace the existing variable with the reversed version.
 
-In many multi-item measures, some items are reversed in the way that they capture a particular construct. In this particular example, items on the STICSA are worded so that a higher numerical response (closer to the "very much so" end of the scale) indicates *more* anxiety, such as item 4: "I think that others won't approve of me".
-
-However, reverse-coded items are intended to capture the same ideas, but in reverse. A reversed version of item 17 might read, "I can concentrate easily with no intrusive thoughts." In this case, a higher numerical response (closer to the "very much so" end of the scale) would indicate *less* anxiety. In order for these reversed items to be aligned with the other items on the scale, so that together they form a cohesive score, the coding of the response scale must be flipped: high becomes low, and low becomes high.
-
-If the response scale is a numerical integer sequence, as this one is, then the simplest way to reverse-code the responses is to subtract every response from the maximum possible response plus one. Here, the STICSA response scale is from 1 to 4; the maximum possible response is 4, plus one is 5. So, to reverse-code the responses, we need to subtract each rating on this item from 5. A high score (4) will be become a low score (5 - 4 = 1), and vice versa for a low score (5 - 1 = 4).
 ```{r}
 
 ```
-
-
 
 ### Composite Scores
 
@@ -83,13 +65,11 @@ Create mean subscale scores for each of the three STARS subscales and save these
 
 ```
 
-
 What would the above code creating `sticsa_trait_score` produce without the `rowwise()...ungroup()` steps (i.e. with only the `mutate()` command)? Make a prediction, then try it.
 
 ```{r}
 
 ```
-
 
 **CHALLENGE:** The `rowwise() |> c_across() |> ungroup()` code is definitely not the only way to obtain the same output. Try producing the the same `sticsa_trait_score` variable with the following methods. What are the benefits and drawbacks of each method?
 
@@ -102,13 +82,9 @@ What would the above code creating `sticsa_trait_score` produce without the `row
 
 ```
 
-
-
 ### Conditionals
 
-
 #### One-Variable Input
-
 
 #### Multi-Variable Input
 
@@ -123,14 +99,11 @@ Then, assign this change back to your dataset.
 
 ```
 
-
 **CHALLENGE**: Use `exclusion_summary` to write a report of all the exclusions from this dataset.
 
 ```{r}
 
 ```
-
-
 
 ### Iteration
 
@@ -142,7 +115,6 @@ Then, assign this change back to your dataset.
 
 ```
 
-
 **CHALLENGE**: You might notice that there's no `variable_name =` bit of the command to rename the transformed variables, so `across()` by default overwrites those variables, rather than creating new ones. However, the help documentation for `across()` describes a method for creating new output variables. Using this info, do the same task as above, but create new all-caps versions of the variable names so the originals are not overwritten.
 
 *Hint*: Look in the Examples, under `# Using an external vector of names`
@@ -151,10 +123,7 @@ Then, assign this change back to your dataset.
 
 ```
 
-
-
 ## Summarise
-
 
 ### General Format
 
@@ -164,14 +133,11 @@ Add additional arguments to the `summarise()` code above to include the min and 
 
 ```
 
-
 **CHALLENGE**: Add one more argument to the `summarise()` code above to include the standard error in the output.
 
 ```{r}
 
 ```
-
-
 
 ### By Group
 
@@ -181,34 +147,27 @@ Add to the already-grouped `summarise()` code to further split up the output by 
 
 ```
 
-
 **CHALLENGE**: Split up this `summarise()` output by whether each case scored higher, or lower than/equal to, the median value of the STARS test anxiety score.
 
 ```{r}
 
 ```
 
-
-
 ### Iteration
-
 
 #### Use an Existing Function
 
-
 #### Function List + `across()`
 
-
 ## Formatting with `{kableExtra}`
-
 
 ### Essential Formatting
 
 Follow along with the instructions to create your own beautiful table.
+
 ```{r}
 
 ```
-
 
 Capitalise the values "maths" and "stats" in the first column of this summary dataset.
 
@@ -218,29 +177,21 @@ Capitalise the values "maths" and "stats" in the first column of this summary da
 
 ```
 
-
 Using the help documentation, update the `kbl()` function to have nicely formatted column names, digits rounded to two decimal places, centre-aligned columns, and a caption.
 
 ```{r}
 
 ```
 
-
-
 ### Dynamic Formatting
 
 **CHALLENGE**: It will shock you to learn that I didn't like writing out the column names in the `kbl()` function one by one. Can you figure out how to generate column names dynamically, instead of writing them out, and then use the "Awesome Tables" vignette to create the table below?
-
-
 
 ```{r}
 
 ```
 
-
-
 ## Quick Test: Correlation
-
 
 ### Visualisation
 
@@ -250,7 +201,6 @@ Select the four "score" variables and pipe into `ggscatmat()`.
 
 ```
 
-
 **CHALLENGE**: Use `GGally::ggpairs()` on the same numeric variables, but split up all the plots by `gender` as well.
 
 *Hint*: There's an example of this code in [the introduction documentation for the lovely `palmerpenguins::penguins` dataset](https://allisonhorst.github.io/palmerpenguins/articles/intro.html)!
@@ -259,10 +209,7 @@ Select the four "score" variables and pipe into `ggscatmat()`.
 
 ```
 
-
-
 ### Testing Correlation
-
 
 #### Single Pairwise
 
@@ -272,14 +219,11 @@ Using the help documentation for `cor.test()`, perform a correlation analysis be
 
 ```
 
-
 **CHALLENGE**: Using what we learned in the last tutorial, report the results of this analysis without typing any of the results out by hand.
 
 ```{r}
 
 ```
-
-
 
 #### Multiple Pairwise Adjusted
 
@@ -288,5 +232,3 @@ Select all the "score" variables and get pairwise correlations between all of th
 ```{r}
 
 ```
-
-

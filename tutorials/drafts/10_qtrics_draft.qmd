@@ -1,0 +1,150 @@
+---
+title: "10: Qualtrics and Labelled Data"
+---
+
+## Overview
+
+This tutorial will focus on efficient, transparent, and user-friendly techniques for working with data specifically gathered using the [Qualtrics survey platform](https://www.qualtrics.com/). We will cover how to import and work with labelled data from Qualtrics and how to reduce data management headaches down the line by setting up a well-structured and thoroughly labelled Qualtrics survey from the outset.
+
+### Acknowledgements
+
+This tutorial was co-conceived and co-created with two PhD researchers, Hanna Eldarwish and Josh Francis, who contributed invaluable input throughout the process of developing the tutorial.  This included collecting commonly asked questions and issues with Qualtrics data analysis; discussing the topics to cover and how best to cover them; and testing code and solutions. Hanna Eldarwish also provided the dataset, collected during her undergraduate dissertation at Sussex under the supervision of [Dr Vlad Costin](https://profiles.sussex.ac.uk/p323096-vlad-costin).
+
+## Setup
+
+### Packages
+
+As usual, we will be using {tidyverse}. When {tidyverse} is installed, it also installs the {haven} package, which we will use for data importing. However, {haven} isn't loaded as part of the core {tidyverse} group of packages, so let's load it separately. Finally, we will also need the {labelled} package to work with labelled data.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Load the packages.
+
+::: {.callout-note collapse="true" title="Solution"}
+
+```{r}
+library(tidyverse)
+library(haven)
+library(labelled)
+```
+
+:::
+:::
+
+## Qualtrics Data
+
+T
+
+### SAV Files
+
+The `.sav` file type is associated with [SPSS](https://www.ibm.com/products/spss-statistics), a widely used statistical analysis programme. So, why are we using SPSS files when working in R?
+
+Importing via .sav has two key advantages. First, it results in a much cleaner import format. If you try importing the same data via .csv file, you'll find that you need to do some very fiddly and pointless cleanup first. For instance, the .csv version of the same dataset will introduce some empty rows that have to be deleted with `dplyr::slice()` or similar. The .sav version of the dataset doesn't have any comparable formatting issues.
+
+Most importantly, however, importing `.sav` file types into R with particular packages like {haven} gets us a dataset with a special type of data: namely, labelled data. Labelled data has a number of features, all of which we will explore in depth throughout this tutorial:
+
+- [**Variable labels**](10_qtrics.qmd#variable-labels). The label associated with a whole variable will contain the text of the item that the participants responded to. This is analogous to the "Label" column of the Variable View in SPSS.
+
+- [**Value labels**](10_qtrics.qmd#value-labels). The label associated with individual values within a variable will contain the text associated with individual choices, for instance the points on a Likert scale. This is analogous to the "Values" column of the Variable View in SPSS.
+
+- [**Missing values**](10_qtrics.qmd#missing-values). Within value labels, you can designate particular values as indicative of missing responses, refusal to respond, etc. This is analogous to the "Missing" column of the Variable View in SPSS.
+
+We will explore the features of labelled data throughout this tutorial. In the next tutorial, we will look in more depth at a particularly useful application of labelled data, namely using it to automatically generate a codebook for your dataset.
+
+::: callout-important
+
+These features will work optimally *only* if you have set up your Qualtrics questionnaire appropriately. Make sure to refer to the [Setting Up Qualtrics](10_qtrics.qmd#setting-up-qualtrics) section of this tutorial to get the most out of your labelled data and save yourself data cleaning and wrangling headaches later.
+
+:::
+
+### Exporting from Qualtrics
+
+When you're ready to begin exploring your study data, you will need to export your data from Qualtrics first. To do this, open your Qualtrics survey and select the "Data & Analysis" tab along the top, just under the name of your survey.
+
+In the Data Table view, look to the right-hand side of the screen. Click on the drop-down menu labelled "Export & Import", then select the first option, "Export Data..."
+
+![](/images/qtrics_export.png){fig-alt="A screenshot the Qualtrics Data & Analysis screen with red boxes indicating the steps to take to export data: Data & Analysis tab, Export & Import menu, and Export Data... option."}
+
+In the "Download a data table" menu, choose "SPSS" from the choices along the top. Make sure "Download all fields" is ticked, then click "Download".
+
+![](/images/qtrics_spss.png){fig-alt="A screenshot the Qualtrics Download a Data Table screen with red boxes indicating the steps to take to export SPSS data: SPSS tab, Download button."}
+
+The dataset will download automatically to your computer's Downloads folder. From there, you should rename it to something sensible and move it into a `data` folder within your project folder.
+
+::: {.callout-tip title="Sensible Naming Conventions and Folder Structure" collapse="true"}
+
+I know it may not seem like something anyone should care about, but sensible file and folder names will make your life so much easier for working in R (and generally).
+
+For folder structure, make sure you do the following:
+
+- Always always *ALWAYS* use an R Project for working in R.
+- Have a consistent set of folders for each project: for example, `images`, `data`, and `docs`.
+- Use sub-folders where necessary, but consider using sensible naming conventions instead.
+
+For naming conventions, your file name should make it obvious what information it contains and when it was created, *especially* for datasets like this. Personally, I would prefer longer and more explicit file names over brevity; this is because I prefer to navigate files using R, and that's *much* easier using explicit file names than it is with file metadata.
+
+So, for a download like this, I'd probably name it something like `qtrics_diss_2023_11_08.sav`. The `qtrics` tells me it's a Qualtrics export, the `diss` tells me it's a dissertation project, and the last bit is the full date in easily machine-readable format. Imagine if I continue to recruit participants and download a new dataset later, say a month from now, and name it `qtrics_diss_2023_12_08.sav`. I could easily distinguish which dataset was which by the date, but also see that they are different versions of the same thing by their shared prefix.
+
+This is a much more reliable system than calling them, say, `Qualtrics output.sav` and `Dissertation FINAL REAL.sav`. This kind of naming "convention" contains no information about which is which or when they were exported, or even that they're two versions of the same study dataset! It might seem like a small detail at the time, but Future You trying to figure out which dataset to use weeks or months later will feel the difference.
+
+:::
+
+### Data
+
+#### Codebook
+
+The codebook below was **automatically generated** from the .sav dataset we have just imported. We don't have time for it today, but if you're interested in being able to (more or less) instantly generate a codebook from the dataset itself, we'll get into it next week!
+
+## Labelled Data
+
+::: {.callout-tip}
+
+Most of the following examples are drawn from the "Introduction to labelled" vignette from the {labelled} package. If you want to do something with labelled data that isn't covered here, that's a good place to start!
+
+:::
+
+### Variable Labels
+
+
+
+### Value Labels
+
+
+
+### Missing Values
+
+
+
+### Converting Variables
+
+
+
+#### Conversion to Numeric
+
+
+
+#### Conversion to Factor
+
+
+
+#### Conditional Conversion
+
+
+
+## Setting Up Qualtrics
+
+
+
+### Labelling Variables
+
+
+
+### Labelling Values
+
+
+
+### Other Considerations
+
+
+
+### Questionnaire Template
+
