@@ -1,0 +1,43 @@
+---
+title: "09: Test Flight"
+---
+
+## Setup
+
+### Packages
+
+
+
+### Data
+
+
+
+#### Codebook
+
+
+## Tips
+
+### Plan Your Process
+
+Develop an analysis plan, maybe in a quarto doc
+What are the steps you need to complete?
+
+### Be Consistent
+
+- Variable and object names
+- Packages and techniques
+- When to overwrite an object vs. create a new one
+
+### Keep a Record
+
+- Use comments
+- Keep ALL code, no matter how small, that contributed to your analysis process
+
+### 
+
+### Reduce Redundancies
+
+- Look for pinch points:
+  - Code repeated or copy-pasted
+  - Code not robust - could easily break or go wrong if e.g. you don't remember to update a value
+  - 

@@ -2,10 +2,6 @@
 title: "08: Analysis"
 ---
 
-::: {.callout-caution title="Under Construction"}
-This tutorial is still under construction. Check back another time!
-:::
-
 ## Overview
 
 This tutorial is a speedrun of how to run and report a variety of analyses that are commonly used for undergraduate dissertation projects at the University of Sussex, based on a survey of supervisors in summer 2023.
@@ -326,7 +322,6 @@ anx_scores_data <- anx_scores_data |>
   )
 ```
 
-
 ```{r}
 # fit the model:
 mcq_afx <- afex::aov_4(sticsa_post_state_score ~ sticsa_cat*mcq + (1|id), data = anx_scores_data)
@@ -360,8 +355,6 @@ emmeans::joint_tests(goggles_afx, "alcohol") |>
   knitr::kable(digits = 3)
 ```
 
-
-
 ### Mixed Designs
 
 `discovr_16`
@@ -376,7 +369,6 @@ anx_scores_data |>
                       values_to = "sticsa_state",
                       names_pattern = ".*?_(.*?)_.*")
 ```
-
 
 #### Fit the Model
 

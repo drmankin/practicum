@@ -1,0 +1,241 @@
+---
+title: "07: Visualisations"
+embed-resources: true
+---
+
+## Open the Tutorial
+
+Use the following code chunks to open the accompanying tutorial.
+
+### Open in RStudio Viewer
+
+```{r}
+rstudioapi::viewer('https://r-training.netlify.app/tutorials/psychrlogy/02_essentials/07_dataviz')
+```
+
+### Open in a New Browser Tab
+
+```{r}
+utils::browseURL('https://r-training.netlify.app/tutorials/psychrlogy/02_essentials/07_dataviz')
+```
+
+
+
+## Overview
+
+
+### What do UGs know?
+
+
+## Setup
+
+
+### Packages
+
+Load the packages.
+
+```{r}
+
+```
+
+
+
+### Data
+
+Read in the dataset and save it in a new object, `anx_score_data`.
+
+On the Cloud, you can read in this dataset from the `data` folder using `here::here()`.
+
+Elsewhere, you can download the dataset, or copy the dataset URL, from the [Data and Workbooks page](../../../data_workbooks.qmd).
+
+```{r}
+
+```
+
+
+
+#### Codebook
+
+
+## Grammar of Graphics
+
+
+### Layers
+
+
+### Mapping
+
+
+### Geoms, etc.
+
+
+## Histograms and Density Plots
+
+Follow along with the instructions below to build your own plot as we go. Feel free to tweak details like colour and labels as you like.
+```{r}
+
+```
+
+
+
+### Adjusting Binwidth
+
+
+### Colour and Fill Manual
+
+
+### Adjusting Axes with `scale_*()`
+
+
+### Adding a Theme
+
+Create a density plot of the `rmars_s_test_score` variable (or another continuous variable in the dataset of your choosing). For a finished plot, make sure you:
+
+-   Choose colours for your plot.
+-   Adjust the labels, breaks, and limits as necessary.
+-   Add a theme.
+
+```{r}
+
+```
+
+
+
+### Facet Wrap
+
+
+## Barplots
+
+Create a new variable in the dataset, `stars_help_cat`, that contains either "low" for people who scored below 3 on the STARS Asking for Help subscale, or "high" for people who scored 3 or above. Make sure to save your changes back to the dataset.
+
+```{r}
+
+```
+
+
+Follow along with the instructions to build your own plot as we go. Feel free to tweak details like colour and labels as you like.
+```{r}
+
+```
+
+
+
+### Position Dodge
+
+
+### Reordering Categories
+
+
+#### Option 1: Scale Labels
+
+
+#### Option 2: Factor Levels
+
+Finish up your plot by adjusting the following elements:
+
+-   Give a name to each axis
+-   Relabel discrete categories where appropriate
+-   Adjust continuous limits and breaks where appropriate
+-   Choose new colours!
+
+*Hint*: You'll have three axes to adjust. Use the help documentation for each if you get stuck.
+
+```{r}
+
+```
+
+
+
+## Quick Test: $\chi^2$
+
+
+Using the `chisq.test()` help documentation, perform a $\chi^2$ test of association for the `stars_help_cat` and `gender` variables.
+
+```{r}
+
+```
+
+
+
+**CHALLENGE**: Use a matrix to run this test, instead of two individual vectors.
+
+*Hint*: The way I've solved it, this requires reading the help documentation carefully and using a new function to create a `table()`.
+
+```{r}
+
+```
+
+
+
+**CHALLENGE**: Report the results of the $\chi^2$ test in full, including a check of whether the expected frequencies are all greater than 5.
+
+```{r}
+
+```
+
+
+
+## Raincloud and Violin Plots
+
+Follow along with the instructions below to build your own plot as we go. Feel free to tweak details like colour and labels as you like.
+```{r}
+
+```
+
+
+
+### Calculating Stats
+
+In second year, students are also introduced to violin plots. Adapt the code we've already written for raincloud plots to create a violin plot with means and CIs instead.
+
+```{r}
+
+```
+
+
+**CHALLENGE**: The raincloud plot we produced above was serviceable but not very *aesthetic*. See if you can adapt that code to reproduce the plot below.
+
+*Hints*: Run `vignette("ggrain")` in the Console for a friendly tour of the options for raincloud plots. The colours are all from the Sussex colour palette.
+
+
+```{r}
+
+```
+
+
+
+## Scatterplots
+
+Follow along with the instructions below to build your own plot as we go. Feel free to tweak details like colour and labels as you like.
+```{r}
+
+```
+
+
+
+### Line of Best Fit
+
+
+### Colour and Fill Palette
+
+**CHALLENGE**: In the code above, I had to repeat a lot of elements for both `fill` and `colour`. See if you can figure out how to remove the need to change the name and labels within the plotting code by making a change to the dataset beforehand.
+
+*Hint*: You might try a non-standard variable name with backticks!
+
+```{r}
+
+```
+
+
+
+### 3D Plots
+
+
+## Reporting with Quarto
+
+
+### Captions and Alt Text
+
+
+### Cross-Referencing
+

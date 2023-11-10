@@ -10,14 +10,12 @@ title: "07: Visualisations"
 This tutorial focuses on creating data visualisations using the {ggplot2} package. It covers the conceptual grammar of {ggplot} and a variety of examples of common plots and tweaks.
 
 ::: {.callout-tip title="{ggplot2} and Data Visualisation Resources"}
-
 Check out the following indispensible resources for building beautiful visualisations:
 
-- [From Data to Viz](https://www.data-to-viz.com/), a beautifully designed helper site to help you explore the options for visualising your data, with thorough links to...
-- [R Graph Gallery](https://r-graph-gallery.com/index.html), an archive of plots in R all with reproducible code and tutorials to build them yourself.
-- [Tidy Tuesdays](https://www.tidytuesday.com/), which releases a new dataset each week, and people build and share beautiful visualisations, along with the code and frequently their process.
-- [Data visualisation using R, for researchers who don't use R](https://psyteachr.github.io/introdataviz/), a fantastic how-to from the brilliant team at PsychTeachR at Glasgow, that provides a very friendly, start-to-finish walkthrough of the whole process of data reading, manipulation, and plot-building.
-
+-   [From Data to Viz](https://www.data-to-viz.com/), a beautifully designed helper site to help you explore the options for visualising your data, with thorough links to...
+-   [R Graph Gallery](https://r-graph-gallery.com/index.html), an archive of plots in R all with reproducible code and tutorials to build them yourself.
+-   [Tidy Tuesdays](https://www.tidytuesday.com/), which releases a new dataset each week, and people build and share beautiful visualisations, along with the code and frequently their process.
+-   [Data visualisation using R, for researchers who don't use R](https://psyteachr.github.io/introdataviz/), a fantastic how-to from the brilliant team at PsychTeachR at Glasgow, that provides a very friendly, start-to-finish walkthrough of the whole process of data reading, manipulation, and plot-building.
 :::
 
 ### What do UGs know?
@@ -35,14 +33,12 @@ We will be relying heavily on the {ggplot2} package, naturally, which is part of
 We will also be using {ggrain} for raincloud plots.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-Load the {tidyverse}, {GGally}, and {ggrain} packages.
+Load the {tidyverse} and {ggrain} packages.
 
 ::: {.callout-note collapse="true" title="Solution"}
 ```{r}
 library(tidyverse)
 library(ggrain)
-library(heatmaply)
-library(rgl)
 ```
 :::
 :::
@@ -120,7 +116,7 @@ If it helps, you can think of layers like [different colours in a linocut print]
 
 To build a visualisation in {ggplot2}, it's a good idea to build your plot in the same way, from big picture to small detail. As we'll see, I usually build plots layers like this:
 
-```r
+``` r
 dataset |> 
   choose_variables_to_visualise +
   choose_type_of_plot +
@@ -177,9 +173,7 @@ Right, the best way to get a handle on these functions is to start building plot
 Let's start with a histogram, a very common type of visualisation that represents the frequency of each value in a variable. We're going to first create a histogram of the `mcq_score` variable in the `anx_scores_data` dataset.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
 Follow along with the instructions below to build your own plot as we go. Feel free to tweak details like colour and labels as you like.
-
 :::
 
 For a basic histogram, we need three elements. First, pipe in the data; then, set the aesthetics; then, use `geom_histogram()` to draw the plot.
@@ -274,7 +268,7 @@ If you have a look at the argument to `breaks` and `limits`, you can see why we 
 
 I've also used a new function, `seq()`, to create the *y*-axis breaks. This handy little base-R function generates a *seq*uence of values, given the first and last values in the sequence and how much you want to increment by. I've asked it to start at 0, end at 120, and increment by 20 each time, instead of typing `c(0, 20, 40, ...)` myself.
 
-That's actually looking pretty snazzy at this point. The last thing we might want to do for now is to apply a theme. The default is `theme_grey()`, which I'm not a fan of. If you type `theme_` into a code chunk, you'll get a list of options to try out and find one you like. 
+That's actually looking pretty snazzy at this point. The last thing we might want to do for now is to apply a theme. The default is `theme_grey()`, which I'm not a fan of. If you type `theme_` into a code chunk, you'll get a list of options to try out and find one you like.
 
 However, I'm going to go straight the most extRa option, namely: [an inbuilt APA-style theme from the {papaja} package](https://frederikaust.com/papaja_man/reporting.html#r-generated-figures), `papaja::theme_apa()`. Because I like how it looks, I'll use the `box = TRUE` argument to draw a box around the whole plot. Teal (excuse me, *Deep Aquamarine*) isn't a particularly APA-standard colour, but I like it, so there.
 
@@ -339,7 +333,7 @@ anx_scores_data |>
 ```
 :::
 
-\ 
+ 
 
 How are you doing? That's a bunch of new information, so don't worry if you feel a bit overwhelmed. Honestly when I am constructing plots, a good portion of the time I spend to make them is either 1) digging back through my own previous documents to lift code I've already written or 2) searching online for help posts to figure out how to do things! I didn't know how to do basically any of the formatting for the facet-wrapped post above, and it took me about an hour of testing and searching to figure it out. I hope having these templates saves you a bit of time in the future.
 
@@ -379,22 +373,211 @@ anx_scores_data |>
 
 ## Barplots
 
+With some key ideas for building plots under our belts, let's have a look at creating visualisations of categorical data.
+
+To start with, we'll need some (preferably interesting) categorical data to work with. Let's begin by creating a categorical variable out of one of our continuous variables to practice what we covered in the previous tutorial. (This kind of operation is often not recommended for real analysis, but we're learning so, y'know, it's fine.)
+
 ::: {.callout-note appearance="minimal" title="Exercise"}
+Create a new variable in the dataset, `stars_help_cat`, that contains either "low" for people who scored below 3 on the STARS Asking for Help subscale, or "high" for people who scored 3 or above. Make sure to save your changes back to the dataset.
 
-Follow along with the instructions below to build your own plot as we go. Feel free to tweak details like colour and labels as you like.
+::: {.callout-note collapse="true" title="Solution"}
+First, let's use `case_when()` to create our variable, and check whether everything looks good using the `.keep = "used"` argument in `mutate()`.
 
+```{r}
+anx_scores_data |> 
+  dplyr::mutate(
+    stars_help_cat = dplyr::case_when(
+      stars_help_score < 3 ~ "low",
+      stars_help_score >= 3 ~ "high",
+      .default = NA
+    ),
+    .keep = "used"
+  )
+```
+
+That looks good to me, so let's assign that output back to the dataset, removing the `.keep` argument before we do.
+
+```{r}
+anx_scores_data <- anx_scores_data |> 
+  dplyr::mutate(
+    stars_help_cat = dplyr::case_when(
+      stars_help_score < 3 ~ "low",
+      stars_help_score >= 3 ~ "high",
+      .default = NA
+    )
+  )
+```
+:::
+:::
+
+Now, let's get started on our barplot.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Follow along with the instructions to build your own plot as we go. Feel free to tweak details like colour and labels as you like.
+:::
+
+To keep this to a 2x2 comparison, let's compare our news STARS help category in male vs female participants. So, we'll need to filter before beginning the plot.
+
+To start, we'll put our variable of interest - here, `stars_help_cat` - on the *x*-axis. Remember that in plots like this, the *y*-axis is the number of responses, and as we saw with histograms just above, R can do that for us automatically. So, we'll skip the *y*-axis and instead add `gender` as a fill variable. Then, we'll ask R to draw the right kind of geom for us - the transparently named `geom_bar()` - and throw on a nice theme on the end for good measure.
+
+```{r}
+anx_scores_data |> 
+  dplyr::filter(gender %in% c("male","female")) |> 
+  ggplot(aes(x = stars_help_cat, fill = gender)) +
+  geom_bar() +
+  papaja::theme_apa(box = TRUE)
+```
+
+Hmm. This barplot is okay, but it's not easy to compare the gender categories directly. The bars are filled with different colours based on the `gender` variable, which we wanted, but they're stacked on top of each other!
+
+### Position Dodge
+
+To "fix" this (assuming it isn't what you want - it might be!), we can use the `position` argument in `geom_bar()` to move the bars side by side, instead of stacked on top of each other. This option is called "dodge", so let's see how it looks now:
+
+```{r}
+anx_scores_data |> 
+  dplyr::filter(gender %in% c("male","female")) |> 
+  ggplot(aes(x = stars_help_cat, fill = gender)) +
+  geom_bar(position = "dodge") +
+  papaja::theme_apa(box = TRUE)
+```
+
+Nice! Already that's much better, and looking more like we might expect a grouped barplot to look. We do need to do *something* about those awful colours, but first let's fix something that's bothering me: the order of the *x*-axis categories.
+
+### Reordering Categories
+
+The `stars_help_cat` variable on the *x*-axis has automatically ordered the categories in alphabetical order, "high" and then "low". As I am a native speaker of a language that reads left to right, I'd prefer to have "low" on the left and "high" on the right[^snarc]. So, how can I change the order of these categories?
+
+[^snarc]: See e.g. [Shaki and Fischer, 2008](https://www.sciencedirect.com/science/article/pii/S0010027708000978?casa_token=6uU795RgZ4wAAAAA:NopLcy7IaTM1YyHXQZ7d3YSjDdV0-WOBJ208crznaivMxdR4AaUtXDMIgXvMZ0LvaRhwyTEBdg)
+
+#### Option 1: Scale Labels
+
+We've seen the `scale_*()` functions already - this time, we have a discrete *x*-axis variable, so we need `scale_x_discrete()`. We've even already seen the `limits =` argument already to set the upper and lower bound of the plot. Here, we can use this argument to specify the order we want the order of the categories to be displayed in instead.
+
+```{r}
+anx_scores_data |> 
+  dplyr::filter(gender %in% c("male","female")) |> 
+  ggplot(aes(x = stars_help_cat, fill = gender)) +
+  geom_bar(position = "dodge") +
+  scale_x_discrete(limits = c("low", "high")) +
+  papaja::theme_apa(box = TRUE)
+```
+
+#### Option 2: Factor Levels
+
+We haven't covered factors much in this course so far; for our purposes, most of the time, R treats character data more or less the same way it would treat factors so it hasn't been a problem thus far. However, converting our `stars_help_cat` variable to a factor would let us specify an order of factor levels.
+
+Let's see how that would work. Here I'm using `mutate()` to do the factor conversion before I pipe the data on into `ggplot()`. We've seen the `factor()` function before, just adding the `levels =` argument to reorder the levels in the order we wanted. The resulting plot then has the levels in the right order.
+
+```{r}
+anx_scores_data |> 
+  dplyr::filter(gender %in% c("male","female")) |> 
+  dplyr::mutate(stars_help_cat = factor(stars_help_cat, levels = c("low", "high"))) |> 
+  ggplot(aes(x = stars_help_cat, fill = gender)) +
+  geom_bar(position = "dodge") +
+  papaja::theme_apa(box = TRUE)
+```
+
+Which to prefer? If you are going to change your categorical variables into factors anyway, it might be a good idea to set any factor ordering at that point, so you don't need to bother with this later. Otherwise, it doesn't matter as long as your plot looks the way you want it at the end!
+
+Right, now that all the structural stuff is out of the way, let's finish up.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Finish up your plot by adjusting the following elements:
+
+-   Give a name to each axis
+-   Relabel discrete categories where appropriate
+-   Adjust continuous limits and breaks where appropriate
+-   Choose new colours!
+
+*Hint*: You'll have three axes to adjust. Use the help documentation for each if you get stuck.
+
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+anx_scores_data |> 
+  dplyr::filter(gender %in% c("male","female")) |> 
+  ggplot(aes(x = stars_help_cat, fill = gender)) +
+  geom_bar(position = "dodge") +
+  scale_x_discrete(name = "STARS Asking for Help Anxiety",
+                   ## This sets the order using the values in the variable
+                   limits = c("low", "high"),
+                   ## This sets the labels to appear in the plot
+                   labels = c("Low", "High")) +
+  ## I think this looks good but you can do what you like!
+  scale_y_continuous(name = "Count",
+                     limits = c(0, 175),
+                     breaks = seq(0, 175, by = 25))+
+  ## More Sussex colours :)
+  ## With a colourblind-friendly and greyscale-print-resilient colour scheme
+  scale_fill_discrete(name = "Gender",
+                      labels = c("Female", "Male"),
+                      type = c("#1b365d", "#f2c75c")) +
+  papaja::theme_apa(box = TRUE)
+```
+
+That's looking classy!
+
+:::
+:::
+
+::: {.callout-warning title="Check Order of Labels!" collapse="true"}
+
+Keep in mind that `ggplot()` is just applying the labels as strings on top of your plot. This means that if you, for instance, reorder your categories on the *x*-axis but then forget to update the order of axis labels in your code, R will not stop you! It's always important to double-check that the labels you add do in fact correspond correctly to the order of the categories in the plot to avoid mislabeling.
+
+As an example, the code below is identical to the solutiona above, except I've commented out the `limits` argument in `scale_x_discrete()` that reorders the categories on the *x*-axis. However, I've left in the `labels` argument that whacks on the axis labels in the reordered order. Comparing to the plot above, we can see by the sizes of the bars that the actual categories are in high-low order, despite what the nicely formatted labels say.
+
+```{r}
+anx_scores_data |> 
+  dplyr::filter(gender %in% c("male","female")) |> 
+  ggplot(aes(x = stars_help_cat, fill = gender)) +
+  geom_bar(position = "dodge") +
+  scale_x_discrete(name = "STARS Asking for Help Anxiety",
+                   ## This sets the order using the values in the variable
+                   ## limits = c("low", "high"),
+                   ## This sets the labels to appear in the plot
+                   labels = c("Low", "High")) +
+  ## I think this looks good but you can do what you like!
+  scale_y_continuous(name = "Count",
+                     limits = c(0, 175),
+                     breaks = seq(0, 175, by = 25))+
+  ## More Sussex colours :)
+  ## With a colourblind-friendly and greyscale-print-resilient colour scheme
+  scale_fill_discrete(name = "Gender",
+                      labels = c("Female", "Male"),
+                      type = c("#1b365d", "#f2c75c")) +
+  papaja::theme_apa(box = TRUE)
+```
+
+One method to avoid this is to add formatting outside of `ggplot()`. In essence, instead of pasting on the labels afterwards, you edit the data just before piping into `ggplot()` so that the labels are already correctly formatted and in the right order. For this current situation with one plot, it's much of a muchness whether the relabeling is in the data (via `mutate`) or in the axis labels. However, if you wanted to create *multiple* plots with these variables, relabeling the data just before plot creation would likely be more efficient than pasting in/checking the labels for each plot.
+
+```{r}
+anx_scores_data |> 
+  dplyr::filter(gender %in% c("male","female")) |> 
+  ## This backticked name is kind of an extreme step! But it's possible
+  dplyr::mutate(`STARS Asking for Help Anxiety` = factor(stars_help_cat, 
+                                        levels = c("low", "high"),
+                                        labels = c("Low", "High")),
+                Gender = factor (gender,
+                                 levels = c("female", "male"),
+                                 labels = c("Female", "Male"))) |> 
+  ggplot(aes(x = `STARS Asking for Help Anxiety`, fill = Gender)) +
+  geom_bar(position = "dodge") +
+  scale_y_continuous(name = "Count",
+                     limits = c(0, 175),
+                     breaks = seq(0, 175, by = 25))+
+  scale_fill_discrete(type = c("#1b365d", "#f2c75c")) +
+  papaja::theme_apa(box = TRUE)
+```
 :::
 
 ## Raincloud and Violin Plots
 
 For this section, we'll focus on making nice raincloud plots, which we teach repeatedly in UG year 1. For both of these plots, we're going to expand our {ggplot} vocab by explicitly including a *y*-axis variable.
 
-Raincloud plots are introduced in the second half of first year for Sussex UGs. I love them especially because they pack in so much useful information in a reasonably easy-to-read plot. We teach UGs to read them and practice them several times, including in an assessment. Despite their complexity, they are extremely easy to create thanks to the recently-released {ggrain} package that does most of the heavy lifting for you. 
+Raincloud plots are introduced in the second half of first year for Sussex UGs. I love them especially because they pack in so much useful information in a reasonably easy-to-read plot. We teach UGs to read them and practice them several times, including in an assessment. Despite their complexity, they are extremely easy to create thanks to the recently-released {ggrain} package that does most of the heavy lifting for you.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
 Follow along with the instructions below to build your own plot as we go. Feel free to tweak details like colour and labels as you like.
-
 :::
 
 Let's start by creating a basic raincloud plot of STARS Test subscale score split up by MCQ group. As we already covered above, I'm going to clean up the plot a bit with some scale formatting and a theme.
@@ -411,9 +594,8 @@ anx_scores_data |> # <1>
 1.  Take the dataset `anx_scores_data`, *and then*
 2.  Set up a plot, mapping `mcq` to the *x*-axis and `stars_test_score` to the *y*-axis, *plus*
 3.  Draw a raincloud plot, *plus*
-4.  Adjust the discrete *x* axis by giving it a name, and relabelling the group labels, *plus*
-5   Adjust the continuous *y* axis by giving it a name, *plus*
-6.  Add an APA-style theme.
+4.  Adjust the discrete *x* axis by giving it a name, and relabelling the group labels, *plus* 5 Adjust the continuous *y* axis by giving it a name, *plus*
+5.  Add an APA-style theme.
 
 The default plot has three parts. From left to right, they are: a scatter of the data points; a boxplot; and a density plot of the data, turned on its side. If you tilt your head to the right, you can see that this looks a bit like a (very lumpy) cloud with the data falling like rain underneath.
 
@@ -434,20 +616,18 @@ anx_scores_data |> # <1>
   stat_summary(fun.data = mean_cl_normal, colour = "red") + # <6>
   papaja::theme_apa(box = TRUE) # <7>
 ```
+
 1.  Take the dataset `anx_scores_data`, *and then*
 2.  Set up a plot, mapping `mcq` to the *x*-axis and `stars_test_score` to the *y*-axis, *plus*
 3.  Draw a raincloud plot, *plus*
-4.  Adjust the discrete *x* axis by giving it a name, and relabelling the group labels, *plus*
-5   Adjust the continuous *y* axis by giving it a name, *plus*
-6.  Calculate a summary of the data using the function `mean_cl_normal` for means and CIs, and add to the plot in red, *plus*
-7.  Add an APA-style theme.
+4.  Adjust the discrete *x* axis by giving it a name, and relabelling the group labels, *plus* 5 Adjust the continuous *y* axis by giving it a name, *plus*
+5.  Calculate a summary of the data using the function `mean_cl_normal` for means and CIs, and add to the plot in red, *plus*
+6.  Add an APA-style theme.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
 In second year, students are also introduced to violin plots. Adapt the code we've already written for raincloud plots to create a violin plot with means and CIs instead.
 
 ::: {.callout-note collapse="true" title="Solution"}
-
 This is literally only a case of changing `geom_rain()` to `geom_violin()` - everything else works as is. This helps illustrate the use of the `geom_*()` functions for determining the *kind* of plot you have.
 
 ```{r}
@@ -463,7 +643,6 @@ anx_scores_data |>
 :::
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
 **CHALLENGE**: The raincloud plot we produced above was serviceable but not very *aesthetic*. See if you can adapt that code to reproduce the plot below.
 
 *Hints*: Run `vignette("ggrain")` in the Console for a friendly tour of the options for raincloud plots. The colours are all from the Sussex colour palette.
@@ -484,8 +663,8 @@ anx_scores_data |>
   coord_flip() +
   papaja::theme_apa(box = TRUE)
 ```
-::: {.callout-note collapse="true" title="Solution"}
 
+::: {.callout-note collapse="true" title="Solution"}
 This would have involved quite a bit of experimentation. If you made something like this, well done.
 
 ```{r}
@@ -513,7 +692,6 @@ anx_scores_data |>
 :::
 
 ::: {.callout-tip title="What about Interaction Plots?" collapse="true"}
-
 You might be wondering about the classic interaction plot, very common in factorial and mixed designs, depicting the means in each combination of groups of a categorical variable, like this:
 
 ```{r}
@@ -521,7 +699,6 @@ You might be wondering about the classic interaction plot, very common in factor
 ```
 
 We will cover these plots, but in the next tutorial, when we will cover the analyses that these visualisations would typically accompany.
-
 :::
 
 ## Scatterplots
@@ -529,12 +706,10 @@ We will cover these plots, but in the next tutorial, when we will cover the anal
 Let's now turn to continuous variables only and produce a scatterplot to visualise a linear relationship.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
 Follow along with the instructions below to build your own plot as we go. Feel free to tweak details like colour and labels as you like.
-
 :::
 
-To start, let's set up a basic plot using 
+To start, let's set up a basic plot using
 
 ```{r}
 anx_scores_data |> # <1>
@@ -546,13 +721,12 @@ anx_scores_data |> # <1>
                     limits = c(1, 4)) + # <5>
   papaja::theme_apa(box = TRUE) # <6>
 ```
+
 1.  Take the dataset `anx_scores_data`, *and then*
 2.  Set up a plot, mapping `sticsa_pre_state_score` to the *x*-axis and `sticsa_post_state_score` to the *y*-axis, *plus*
 3.  Draw points, with 40% transparency and some random noise to separate them, *plus*
-4.  Adjust the continuous *x* axis by giving it a name, and setting the limits to 1 and 4, *plus*
-5   Adjust the continuous *x* axis by giving it a name, and setting the limits to 1 and 4, *plus*
-6.  Add an APA-style theme.
-
+4.  Adjust the continuous *x* axis by giving it a name, and setting the limits to 1 and 4, *plus* 5 Adjust the continuous *x* axis by giving it a name, and setting the limits to 1 and 4, *plus*
+5.  Add an APA-style theme.
 
 ### Line of Best Fit
 
@@ -568,21 +742,18 @@ anx_scores_data |> # <1>
   papaja::theme_apa(box = TRUE) # <7>
 ```
 
-
 ### Colour and Fill Auto
 
 In the [previous Colour and Fill section](07_dataviz.qmd#colour-and-fill-manual) we chose colours by name or hex code to add to a plot. However, there are a wide variety of pre-made colour palettes to make use of. So, instead of chosing individual colours, you can quickly apply existing colour palettes.
 
 ::: {.callout-tip title="Colour Palette Options"}
-
 Looking for the right colour scheme? Try these resources:
 
-- [This blog post on R colour palettes](https://www.datanovia.com/en/blog/top-r-color-palettes-to-know-for-great-data-visualization/#scientific-journal-color-palettes) is a great overview of some of the most popular options available, with lots of examples.
-- [The {paletteer} package] for quick access to any R colour palette and to an overview of all the palettes available
-
+-   [This blog post on R colour palettes](https://www.datanovia.com/en/blog/top-r-color-palettes-to-know-for-great-data-visualization/#scientific-journal-color-palettes) is a great overview of some of the most popular options available, with lots of examples.
+-   \[The {paletteer} package\] for quick access to any R colour palette and to an overview of all the palettes available
 :::
 
-A popular palette and the one we'll use for this task is [the lovely {viridis} colour palette](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html), designed to be pretty, print-friendly, and accessible (robust to colourblindness). 
+A popular palette and the one we'll use for this task is [the lovely {viridis} colour palette](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html), designed to be pretty, print-friendly, and accessible (robust to colourblindness).
 
 To use the palettes, we start out by dropping the `colour` and `fill` arguments from within `geom_smooth()`, and instead setting `colour` and `fill` arguments at the beginning of the plot, in the `aes()` function along with `x` and `y`. This will apply the same colour palette across all elements in the plot that can have colour - namely, the points from `geom_point()`, and the line of best fit from `geom_smooth()`. By setting them both to `mcq`, the colours will be consistent across MCQ types between all of these elements. Incidentally, doing this will also split our single LM line into two lines: one for each level of the `mcq` variable.
 
@@ -601,13 +772,13 @@ anx_scores_data |> # <1>
 
 A start - but let's do something about that horrible default colour palette!
 
-Just as we had `scale_x...` and `scale_y...` functions for specifying the `x` and `y` scales, we have `scale_colour...` and `scale_fill...` for specifying the details about the way the colour and fill appears. Here, I'm using viridis, which has its own dedicated functions, `scale_colour_viridis()` and `scale_fill_viridis()`[^vir]. Within those two new elements, we have the same two elements:
+Just as we had `scale_x...` and `scale_y...` functions for specifying the `x` and `y` scales, we have `scale_colour...` and `scale_fill...` for specifying the details about the way the colour and fill appears. Here, I'm using viridis, which has its own dedicated functions, `scale_colour_viridis()` and `scale_fill_viridis()`[^3]. Within those two new elements, we have the same two elements:
 
-[^vir]: Naturally, if you want to use palettes from a different package, you'll need to use the functions from that package instead! Those functions may also work a bit differently, so make sure you read the help documentation if you get stuck.
+[^3]: Naturally, if you want to use palettes from a different package, you'll need to use the functions from that package instead! Those functions may also work a bit differently, so make sure you read the help documentation if you get stuck.
 
-- `name`: gives a title for the colour/fill legend
-- `discrete`: tells {viridis} whether the variable to be coloured/filled is discrete or not. Here it is (it's `mcq`, a categorical variable), so we set this to `TRUE`.
-- `labels`: applies labels to the levels of the variables.
+-   `name`: gives a title for the colour/fill legend
+-   `discrete`: tells {viridis} whether the variable to be coloured/filled is discrete or not. Here it is (it's `mcq`, a categorical variable), so we set this to `TRUE`.
+-   `labels`: applies labels to the levels of the variables.
 
 ```{r}
 anx_scores_data |> # <1>
@@ -624,16 +795,14 @@ anx_scores_data |> # <1>
   papaja::theme_apa(box = TRUE) # <9>
 ```
 
-That's looking fairly nice now! 
+That's looking fairly nice now!
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
 **CHALLENGE**: In the code above, I had to repeat a lot of elements for both `fill` and `colour`. See if you can figure out how to remove the need to change the name and labels within the plotting code by making a change to the dataset beforehand.
 
 *Hint*: You might try a non-standard variable name with backticks!
 
 ::: {.callout-note collapse="true" title="Solution"}
-
 In order to remove some of the near-identical code above, I can first make a change to my dataset before I start the plot. Here, I'm using `mutate()` to create a new variable, `MCQ Type`. This variable contains exactly the same information as `mcq`, except that the values have a capitalised first letter. Essentially, I'm removing the need to reformat later by formatting the data before it's plotted.
 
 The only thing I then have to do is swap out `mcq` for `MCQ Type` as my colour and fill variables. Notice that the backticks are **essential** here, in both `mutate()` and `aes()`, otherwise the space in the variable name will throw an error.
@@ -702,7 +871,6 @@ rgl::plot3d(
 
 #rgl::rglwidget()
 ```
-
 :::
 
 <!-- ## Correlograms and Heatmaps -->
@@ -714,30 +882,39 @@ rgl::plot3d(
 <!-- ### Static Heatmaps -->
 
 <!-- ```{r} -->
-<!-- anx_scores_data |>  -->
-<!--   dplyr::select(contains("stars")) |>  -->
-<!--   correlation::correlation() |>  -->
-<!--   as.matrix() |>  -->
-<!--   heatmap(col = cm.colors(265)) -->
-<!-- ``` -->
 
+<!-- anx_scores_data |>  -->
+
+<!--   dplyr::select(contains("stars")) |>  -->
+
+<!--   correlation::correlation() |>  -->
+
+<!--   as.matrix() |>  -->
+
+<!--   heatmap(col = cm.colors(265)) -->
+
+<!-- ``` -->
 
 <!-- ### Interactive Heatmaps -->
 
 <!-- ```{r} -->
+
 <!-- anx_scores_data |>  -->
+
 <!--   dplyr::select(!age & where(is.numeric)) |>  -->
+
 <!--   correlation::correlation() |>  -->
+
 <!--   as.matrix() |>  -->
+
 <!--   heatmaply(dendrogram = "none") -->
+
 <!-- ``` -->
 
 ## Reporting with Quarto
 
 ::: callout-tip
-
-As ever, I strongly recommend referring to [the Quarto Guide](https://quarto.org/docs/authoring/figures.html) as the first stop for possibilities and/or problem-solving with Quarto. 
-
+As ever, I strongly recommend referring to [the Quarto Guide](https://quarto.org/docs/authoring/figures.html) as the first stop for possibilities and/or problem-solving with Quarto.
 :::
 
 In a previous section, we stored our lovely scatterplot as `mcq_lm_plot`. Let's see now how we could adjust the way that figure would appear in a Quarto document.
@@ -751,6 +928,7 @@ mcq_lm_plot
 To change or add settings for a specific plot, we will use *code chunk options*, which we previously encountered in Tutorial 04. These options let us determine the way the code chunk behaves. Here, we'll also see how we can use those code chunk options to style and format our plot.
 
 <!-- ::: {.callout-warning "Code Watch: YAML vs R"} -->
+
 <!-- You may notice some clear differences between R code, and the way we write code chunk options. This is because code chunk options are  -->
 
 <!-- ::: -->
@@ -782,8 +960,6 @@ We can add alt text to our figure using the `fig-alt` option:
 
 mcq_lm_plot
 ```
-
-
 
 ### Layout
 
@@ -894,11 +1070,11 @@ mcq_lm_plot
 
 Then, use this label with an `@` symbol in the text of the document to generate the cross-reference. For instance, I could write:
 
->  The result of this analysis is visualised in `@fig-mcq-lm`.
+> The result of this analysis is visualised in `@fig-mcq-lm`.
 
 Which would appear when rendered as below - notice the caption now has "Figure 1" added to it to correspond to the in-text numbering.
 
->  The result of this analysis is visualised in @fig-mcq-lm.
+> The result of this analysis is visualised in @fig-mcq-lm.
 
 ```{r}
 #| echo: false
