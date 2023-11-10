@@ -321,11 +321,6 @@ The table below is arranged alphabetically by function name, and the linked full
    <td style="text-align:left;"> 06: Mutate and Summarise<br>06: Mutate and Summarise </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> setupKnitr() </td>
-   <td style="text-align:left;"> <a href="https://dmurdoch.github.io/rgl/dev/reference/setupKnitr.html">rgl::setupKnitr()</a> </td>
-   <td style="text-align:left;"> 07: Visualisations </td>
-  </tr>
-  <tr>
    <td style="text-align:left;"> sqrt() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/base/MathFun.html">sqrt()</a> </td>
    <td style="text-align:left;"> 06: Mutate and Summarise </td>

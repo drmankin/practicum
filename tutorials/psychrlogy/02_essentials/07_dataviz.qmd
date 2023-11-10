@@ -339,7 +339,7 @@ anx_scores_data |>
 ### Facet Wrap
 
 ::: {.callout-warning}
-*Note*: This gets a bit into the weeds, so if you'd like to skip this section, feel free to skip down to [the next type of plot(07_dataviz.qmd#barplots).
+*Note*: This gets a bit into the weeds, so if you'd like to skip this section, feel free to skip down to [the next type of plot](07_dataviz.qmd#barplots).
 :::
 
 Before we move on, a useful option here would be to visualise the MCQ scores for the two MCQ groups side by side, since this was our independent manipulation. To do this, we can use the `facet_wrap()` function to split our single plot into two based on a grouping variable - here, `mcq`. I've also changed the settings on the *y*-axis to adjust to the new scale.
@@ -524,18 +524,18 @@ Finish up your plot by adjusting the following elements:
 ```{r}
 anx_scores_data |> # <1> 
   dplyr::filter(gender %in% c("male","female")) |> # <2> 
-  ggplot(aes(x = stars_help_cat, fill = gender)) +# <3> 
-  geom_bar(position = "dodge") +# <4> 
-  scale_x_discrete(name = "STARS Asking for Help Anxiety",# <5> 
-                   limits = c("low", "high"),# <5> 
-                   labels = c("Low", "High")) +# <5> 
-  scale_y_continuous(name = "Count",# <6> 
-                     limits = c(0, 175),# <6> 
-                     breaks = seq(0, 175, by = 25))+# <6> 
-  scale_fill_discrete(name = "Gender",# <7> 
-                      labels = c("Female", "Male"),# <7> 
-                      type = c("#1b365d", "#f2c75c")) +# <7> 
-  papaja::theme_apa(box = TRUE)# <8> 
+  ggplot(aes(x = stars_help_cat, fill = gender)) + # <3> 
+  geom_bar(position = "dodge") + # <4> 
+  scale_x_discrete(name = "STARS Asking for Help Anxiety", # <5> 
+                   limits = c("low", "high"), # <5> 
+                   labels = c("Low", "High")) + # <5> 
+  scale_y_continuous(name = "Count", # <6> 
+                     limits = c(0, 175), # <6> 
+                     breaks = seq(0, 175, by = 25))+ # <6> 
+  scale_fill_discrete(name = "Gender", # <7> 
+                      labels = c("Female", "Male"), # <7> 
+                      type = c("#1b365d", "#f2c75c")) + # <7> 
+  papaja::theme_apa(box = TRUE) # <8> 
 ```
 
 1. Take the dataset, *and then*
@@ -805,13 +805,15 @@ anx_scores_data |>
 This would have involved quite a bit of experimentation. If you made something like this, well done.
 
 ```{r}
+#| output: false
+
 anx_scores_data |>  # <1>
   ggplot(aes(x = mcq, y = stars_test_score, fill = mcq)) + # <2>
   geom_rain(point.args = list(alpha = .4, aes(colour = mcq))) + # <3>
   stat_summary(fun.data = mean_cl_normal, # <4>
                shape = 23) + # <4>
   scale_x_discrete(name = "MCQ Condition", labels = c("Maths", "Stats")) + # <5>
-  scale_y_continuous(name = "Mean STARS Test Score") + # 6>
+  scale_y_continuous(name = "Mean STARS Test Score") + # <6>
   scale_fill_manual(values = c("#f2c75c", "#007a78")) + # <7>
   scale_colour_manual(values = c("#dc582a", "#003b49")) + # <8>
   guides(fill = 'none', color = 'none') + # <9>
@@ -878,7 +880,9 @@ As we did with the histogram previously, we can add `colour` and `fill` argument
 anx_scores_data |>
   ggplot(aes(x = sticsa_pre_state_score, y = sticsa_post_state_score)) + # <2>
   geom_point(alpha = 0.4, position = "jitter") +  # <3>
-  geom_smooth(method = "lm", colour = "darkblue", fill = "darkcyan") + # <1>
+  geom_smooth(method = "lm",  # <1>
+              colour = "darkblue",  # <1>
+              fill = "darkcyan") + # <1>
   scale_x_continuous(name = "STICSA Pre-MCQ State Anxiety Score", # <5>
                     limits = c(1, 4)) + # <5>
   scale_y_continuous(name = "STICSA Post-MCQ State Anxiety Score", # <6>
@@ -938,8 +942,12 @@ anx_scores_data |>
                     limits = c(1, 4)) + # <5>
   scale_y_continuous(name = "STICSA Post-MCQ State Anxiety Score", # <6>
                     limits = c(1, 4)) + # <6>
-  scale_colour_viridis(name = "MCQ Type", discrete = TRUE, labels = c("Maths", "Stats")) + # <1
-  scale_fill_viridis(name = "MCQ Type", discrete = TRUE, labels = c("Maths", "Stats")) + # <1>
+  scale_colour_viridis(name = "MCQ Type",  # <1>
+                       discrete = TRUE,  # <1>
+                       labels = c("Maths", "Stats")) + # <1>
+  scale_fill_viridis(name = "MCQ Type",  # <1>
+                     discrete = TRUE,  # <1>
+                     labels = c("Maths", "Stats")) + # <1>
   papaja::theme_apa(box = TRUE) # <9>
 ```
 
@@ -991,8 +999,6 @@ In something of a departure for us, we're going to use a package *that isn't {gg
 #| echo: false
 
 library(rgl)
-
-rgl::setupKnitr(autoprint = TRUE)
 ```
 
 In order to have points coloured by MCQ type, I've created a new variable in the dataset assigning colours based on the values of the `mcq` variable. This and the rest of the code is borrowed straight from [R Graph Gallery's very helpful mini-tutorial on {rgl}](https://r-graph-gallery.com/3d_scatter_plot.html).
