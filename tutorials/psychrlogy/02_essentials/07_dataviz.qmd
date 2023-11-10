@@ -805,6 +805,8 @@ anx_scores_data |>
 This would have involved quite a bit of experimentation. If you made something like this, well done.
 
 ```{r}
+#| output: false
+
 anx_scores_data |>  # <1>
   ggplot(aes(x = mcq, y = stars_test_score, fill = mcq)) + # <2>
   geom_rain(point.args = list(alpha = .4, aes(colour = mcq))) + # <3>
@@ -819,17 +821,17 @@ anx_scores_data |>  # <1>
   papaja::theme_apa(box = TRUE) # <11>
 ```
 
-1.  Take the dataset `anx_scores_data`, *and then*
-2.  Set up a plot, mapping `mcq` to the *x*-axis, `stars_test_score` to the *y*-axis, and fill colour to `mcq`, *plus*
-3.  Draw a raincloud plot, setting the transparency of the points to 40% and the colour to differ based on `mcq`, *plus*
-4.  Calculate a summary of the data using the function `mean_cl_normal` for means and CIs, and add to the plot using a diamond shape, *plus*
-5.  Adjust the discrete *x* axis by giving it a name, and relabelling the group labels, *plus* 
-6.  Adjust the continuous *y* axis by giving it a name, *plus*
-7.  Adjust the fill to custom values, *plus*
-8.  Adjust the colour to custom values, *plus*
-9.  Remove the fill and colour legends, *plus*
-10. Flip the coordinates to reverse *x* and *y*, *plus*
-11.  Add an APA-style theme.
+<!-- 1.  Take the dataset `anx_scores_data`, *and then* -->
+<!-- 2.  Set up a plot, mapping `mcq` to the *x*-axis, `stars_test_score` to the *y*-axis, and fill colour to `mcq`, *plus* -->
+<!-- 3.  Draw a raincloud plot, setting the transparency of the points to 40% and the colour to differ based on `mcq`, *plus* -->
+<!-- 4.  Calculate a summary of the data using the function `mean_cl_normal` for means and CIs, and add to the plot using a diamond shape, *plus* -->
+<!-- 5.  Adjust the discrete *x* axis by giving it a name, and relabelling the group labels, *plus*  -->
+<!-- 6.  Adjust the continuous *y* axis by giving it a name, *plus* -->
+<!-- 7.  Adjust the fill to custom values, *plus* -->
+<!-- 8.  Adjust the colour to custom values, *plus* -->
+<!-- 9.  Remove the fill and colour legends, *plus* -->
+<!-- 10. Flip the coordinates to reverse *x* and *y*, *plus* -->
+<!-- 11.  Add an APA-style theme. -->
 
 :::
 :::
