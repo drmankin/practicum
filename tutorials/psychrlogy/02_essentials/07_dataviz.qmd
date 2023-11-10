@@ -805,8 +805,6 @@ anx_scores_data |>
 This would have involved quite a bit of experimentation. If you made something like this, well done.
 
 ```{r}
-#| output: false
-
 anx_scores_data |>  # <1>
   ggplot(aes(x = mcq, y = stars_test_score, fill = mcq)) + # <2>
   geom_rain(point.args = list(alpha = .4, aes(colour = mcq))) + # <3>
@@ -999,6 +997,8 @@ In something of a departure for us, we're going to use a package *that isn't {gg
 #| echo: false
 
 library(rgl)
+
+options(rgl.useNULL = TRUE)
 ```
 
 In order to have points coloured by MCQ type, I've created a new variable in the dataset assigning colours based on the values of the `mcq` variable. This and the rest of the code is borrowed straight from [R Graph Gallery's very helpful mini-tutorial on {rgl}](https://r-graph-gallery.com/3d_scatter_plot.html).
@@ -1028,6 +1028,13 @@ rgl::plot3d(
   xlab = "STICSA Trait", ylab = "STICSA Post State", zlab = "STICSA Pre State"
 )
 ```
+
+```{r}
+#| echo: false
+
+rglwidget()
+```
+
 
 \ 
 
