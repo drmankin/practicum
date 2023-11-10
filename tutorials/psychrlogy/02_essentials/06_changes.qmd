@@ -1026,7 +1026,7 @@ For more explanation about `dplyr::across()`, see the [section on iteration with
 
 ```{r}
 #| echo: true 
-#| 
+ 
 fxs <- list( # <1>
   mean = ~ mean(.x, na.rm = TRUE), # <2>
   sd = ~ sd(.x, na.rm = TRUE), # <2>
@@ -1143,12 +1143,35 @@ anx_mcq_sum |>
 :::
 :::
 
+::: {.callout-warning title: "Error Watch: dimnames not equal to array extent" collapse="true"}
+
+This error is unfortunately both very easy to generate and totally opaque. All it usually means is that the number of names ("dimnames") you have given `col.names` isn't the same as the number of columns in the dataset you're formatting (the "array extent").
+
+```{r}
+#| error: true
+
+anx_mcq_sum |> 
+  kableExtra::kbl(
+    ## if I forget to include a column name for the MCQ grouping variable
+    col.names = c("N", "M", "SD", "Min", "Max"),
+    digits = 2,
+    caption = "Descriptives for STICSA Trait Anxiety Score by MCQ Type",
+    align = "c"
+  ) |> 
+  kableExtra::kable_classic()
+```
+
+To fix it, just double-check the columns in the dataset and make sure that the `col.names` names contain a one-to-one match for each.
+:::
+
 Finally, render your workbook document to see your hard work in all its glory!
 
 ### Dynamic Formatting
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
 **CHALLENGE**: It will shock you to learn that I didn't like writing out the column names in the `kbl()` function one by one. Can you figure out how to generate column names dynamically, instead of writing them out, and then use the "Awesome Tables" vignette to create the table below?
+
+*Note*: This is included just to demonstrate that it can be done, but is definitely not within the skills covered in these tutorials!
 
 ```{r}
 #| echo: false
@@ -1183,7 +1206,9 @@ anx_mcq_sum |>
 ```
 
 ::: {.callout-note collapse="true" title="Solution"}
-For the first bit - well, this is well beyond anything we've covered so far, including a good bit of base R and some jiggery-pokery to get only *N* and *SD* to be italicised. (Sorry.) The steps are annotated below, which together produce a vector of column names to pass to `kbl()`.
+For the first bit - well, this is well beyond anything we've covered so far, including a good bit of base R and some jiggery-pokery to get only *N* and *SD* to be italicised. (Sorry.) This is the kind of puzzle that I find really useful for making myself learn things like regular expressions, but if this isn't your bag, don't worry!
+
+The steps are annotated below, which together produce a vector of column names to pass to `kbl()`.
 
 ```{r}
 ## sub all instances of "sticsa_trait_" with an empty string
@@ -1214,7 +1239,7 @@ Using the "Grouped Columns/Rows" section of the Awesome Tables vignette, we can 
 
 ```{r}
 #| output: false
-#| 
+ 
 anx_mcq_sum |> 
   kableExtra::kbl(
     col.names = anx_mcq_names,
@@ -1226,6 +1251,69 @@ anx_mcq_sum |>
   kableExtra::add_header_above(c(" " = 2, "STICSA Trait Anxiety Score" = 4)) |> 
   kableExtra::kable_classic()
 ```
+
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+**CHALLENGE**: The magic of this approach is that it can be expanded to apply to as many inputs as you give it. Take our iterated summary from the previous section. Turn the code editing the names into a function and then use that within `kbl()` to generate the column names.
+
+*Note*: This is quite a tough challenge that requires function writing, regular expressions/{stringr}, and conditionally manipulating string vectors. This is included just to demonstrate that it can be done, but is definitely not within the skills covered in these tutorials.
+
+::: {.callout-note collapse="true" title="Solution"}
+
+
+```{r}
+## Save the summary dataset as a new object 
+anx_score_sum <- anx_data |> 
+  dplyr::group_by(mcq) |> 
+  dplyr::summarise(
+    across(contains("score"), fxs)  # <3>
+  )
+
+## Write a custom function to automatically format column names
+
+format_kbl_colnames <- function(summary_data, all_caps = NULL, italics = c("N", "SD")){
+  
+## Get initial vector of column names
+kbl_colnames <- gsub(".*_(.*)", "\\1", names(summary_data)) |> 
+  stringr::str_to_title() |> 
+  gsub(pattern = "(Sd)", replacement = "\\U\\1", perl = TRUE) 
+
+## Identify which elements to convert to uppercase (if any) and do so
+## Could probably do this with stringr but honestly I just CBA
+capitalise_these <- kbl_colnames[which(tolower(kbl_colnames) %in% all_caps)]
+
+kbl_colnames[which(kbl_colnames %in% capitalise_these)] <- toupper(capitalise_these)
+
+## Identify which elements to convert to italics (if any) and do so
+
+italicise_these <- kbl_colnames[which(kbl_colnames %in% italics)]
+
+kbl_colnames[which(kbl_colnames %in% italics)] <-
+  paste(kableExtra::text_spec(
+         italicise_these, italic = TRUE
+       ), sep = "")
+
+return(kbl_colnames)
+}
+```
+
+As if all that weren't bad enough, this is one of those situations where the native pipe just doesn't cut it. Using the {magrittr} pipe, we can easily use our new custom function inside our `kbl()` code. 
+
+```{r}
+anx_score_sum %>%
+  kableExtra::kbl(
+    col.names = format_kbl_colnames(., all_caps = "mcq"),
+    digits = 2,
+    caption = "Descriptives for STICSA Trait Anxiety Score by MCQ Type",
+    align = "c",
+    escape = FALSE
+  ) |> 
+  kableExtra::add_header_above(c(" " = 1, "STICSA Trait Anxiety" = 4, "STARS Asking for Help" = 4, "STARS Test Anxiety" = 4, "STARS Interpretation Anxiety" = 4)) |> 
+  kableExtra::kable_classic()
+```
+
+You know what? I'm still not happy because I had to write out the header names in the `add_header_above()` function. If you've got this far and you're enjoying this kind of thing, see if you can work out how to automatically produce that as well! If you do, *please* email me and tell me.
+
 :::
 :::
 

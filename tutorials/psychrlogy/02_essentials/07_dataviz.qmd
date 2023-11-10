@@ -98,7 +98,7 @@ readr::read_csv(here::here("data/anx_scores_codebook.csv")) %>%
   kableExtra::kable_styling()
 ```
 
-If you have some experience with R, you are welcome to instead use another dataset that you are familiar with or are keen to explore. However, remember that anything you upload to Posit Cloud is visible to all workspace admins, so keep GDPR in mind.
+If you have some experience with R, you are welcome to instead use another dataset that you are familiar with or are keen to explore. However, remember that anything you upload to the training Posit Cloud workspace is visible to all workspace admins, so keep GDPR in mind.
 
 \ 
 
@@ -143,7 +143,7 @@ anx_scores_data |>
 
 ### Mapping
 
-As we saw in the error just above, mapping is created with `aes()`. This little function defines the *aes*thetics of the plot - in other words, this is how you tell R what data you want it to plot. I'll use the following general format to set up a plot:
+As we saw in the error just above, mapping is created with `aes()`. This little function defines the *aes*thetics of the plot - in other words, this is how you tell R what data you want it to plot. We'll use the following general format to set up a plot:
 
 ``` r
 dataset_name |> 
@@ -190,15 +190,16 @@ anx_scores_data |>
 
 Hooray! The downside is... that's pretty ugly. For a quick glance this isn't really any better than `hist()`. So - let's make it better by doing the following:
 
-1.  Adjusting the binwidth (and colours if necessary) to present the values more sensibly
-2.  Adjusting the axis labels and tick marks.
-3.  Applying a theme.
+1.  Adjusting the binwidth to present the values more sensibly
+2.  Adding colour and fill
+3.  Adjusting the axis labels and tick marks
+4.  Applying a theme.
 
 ::: callout-tip
 If you haven't yet, you might want to pull up the help documentation for `geom_histogram()` to get a look at the options available.
 :::
 
-#### Adjusting Binwidth
+### Adjusting Binwidth
 
 The message from the previous output gave us a helpful tip to deal with those weird bins:
 
@@ -216,7 +217,7 @@ anx_scores_data |>
 
 This is better, but now we've got some new problems: one, the automatically generated axis now only has 0, 2, and 4, when it would be better to have 0 - 5; and the histogram now looks like quite a shapeless lump. Let's work on the colour first.
 
-#### Colour and Fill Manual
+### Colour and Fill Manual
 
 It's not obvious from the help documentation unfortunately (just mentioned in passing under the `...` argument) but this function, and most `geom_*()` functions!, will take the arguments `colour` and `fill`. For this, we give each argument a string with a colour name in it. You can just guess at colour names until you find one you like, or you can refer to this [massive list of R colour names]() to pick one.
 
@@ -246,9 +247,11 @@ What we can see here is that the "colour" in this case is the outline of the bar
 
 With that sorted, let's move onto the axis and ticks.
 
+### Adjusting Axes with `scale_*()`
+
 You can use the `labs()` shortcut to adjust labels easily, but personally I prefer to go the long way round (surprise lol) and use the `scale_*()` family instead. These functions have specific names depending on which axis scale you want to adjust, and the way that data is measured. In this case I want to adjust the *x*-axis and the data is continuous[^2], so the function I need is `scale_x_continuous()`.
 
-[^2]: Yes, this is arguably not *technically* true because the values can only be whole numbers between 0 and 5, but what matters here is that *R* thinks this is continuous data.
+[^2]: Yes, this is not *technically* true because the values can only be whole numbers between 0 and 5, but what matters here is that *R* thinks this is continuous data.
 
 The advantage of going through the extra trouble to use the `scale_*()` functions is that they allow you to adjust everything about that scale at once. So, I can use the arguments for `scale_x_continuous()` to change the axis label with `name =`, the breaks with `breaks =`, the limits with `limits =` - well, I'm sure you get the idea!
 
@@ -273,6 +276,8 @@ If you have a look at the argument to `breaks` and `limits`, you can see why we 
 
 I've also used a new function, `seq()`, to create the *y*-axis breaks. This handy little base-R function generates a *seq*uence of values, given the first and last values in the sequence and how much you want to increment by. I've asked it to start at 0, end at 120, and increment by 20 each time, instead of typing `c(0, 20, 40, ...)` myself.
 
+### Adding a Theme
+
 That's actually looking pretty snazzy at this point. The last thing we might want to do for now is to apply a theme. The default is `theme_grey()`, which I'm not a fan of. If you type `theme_` into a code chunk, you'll get a list of options to try out and find one you like.
 
 However, I'm going to go straight the most extRa option, namely: [an inbuilt APA-style theme from the {papaja} package](https://frederikaust.com/papaja_man/reporting.html#r-generated-figures), `papaja::theme_apa()`. Because I like how it looks, I'll use the `box = TRUE` argument to draw a box around the whole plot. Teal (excuse me, *Deep Aquamarine*) isn't a particularly APA-standard colour, but I like it, so there.
@@ -295,10 +300,47 @@ anx_scores_data |>
 
 There you have it! That's looking pretty nice, I think.
 
+How are you doing? This is a bunch of new information, so don't worry if you feel a bit overwhelmed. Honestly when I am constructing plots, a good portion of the time I spend to make them is either 1) digging back through my own previous documents to lift code I've already written or 2) searching online for help posts to figure out how to do things! I didn't know how to do basically any of the formatting for the facet-wrapped plot above, and it took me about an hour of testing and searching to figure it out. I hope having these templates saves you a bit of time in the future.
+
+To lock it in, let's get some practice using these functions with a minimally different example.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Create a density plot of the `rmars_s_test_score` variable (or another continuous variable in the dataset of your choosing). For a finished plot, make sure you:
+
+-   Choose colours for your plot.
+-   Adjust the labels, breaks, and limits as necessary.
+-   Add a theme.
+
+::: {.callout-note collapse="true" title="Solution"}
+We can start the same way we did above, just switching out our previous variable in `aes()` for the new one and changing `geom_histogram()` to `geom_density()`. We can drop the `binwidth` argument since it isn't relevant anymore. I've left the colours in because they work the same way (and look nice!).
+
+```{r}
+anx_scores_data |> 
+  ggplot(aes(x = rmars_s_test_score)) +
+  geom_density(colour = "#003b49", fill = "#007a78")  +
+  papaja::theme_apa(box = TRUE)
+```
+
+From here we might want to do a bit more tweaking to get the axes right, using the same functions as we did for the histogram.
+
+```{r}
+anx_scores_data |> 
+  ggplot(aes(x = rmars_s_test_score)) +
+  geom_density(colour = "#003b49", fill = "#007a78") +
+  scale_x_continuous(name = "Mean Score on the R-MARS-S Test Subscale",
+                     breaks = c(0:5)) +
+  scale_y_continuous(name = "Probability Density",
+                     limits = c(0, .5)) +
+  papaja::theme_apa(box = TRUE)
+```
+:::
+:::
+
 ### Facet Wrap
 
 ::: {.callout-warning}
-*Note*: This gets a bit into the weeds, so if you'd like to skip this section, feel free to [jump ahead to barplots](07_dataviz.qmd#barplots).
+*Note*: This gets a bit into the weeds, so if you'd like to skip this section, feel free to skip down to [the next type of plot(07_dataviz.qmd#barplots).
+:::
 
 Before we move on, a useful option here would be to visualise the MCQ scores for the two MCQ groups side by side, since this was our independent manipulation. To do this, we can use the `facet_wrap()` function to split our single plot into two based on a grouping variable - here, `mcq`. I've also changed the settings on the *y*-axis to adjust to the new scale.
 
@@ -352,42 +394,6 @@ anx_scores_data |>
 ```
 
  
-
-How are you doing? This is a bunch of new information, so don't worry if you feel a bit overwhelmed. Honestly when I am constructing plots, a good portion of the time I spend to make them is either 1) digging back through my own previous documents to lift code I've already written or 2) searching online for help posts to figure out how to do things! I didn't know how to do basically any of the formatting for the facet-wrapped plot above, and it took me about an hour of testing and searching to figure it out. I hope having these templates saves you a bit of time in the future.
-
-To lock it in, let's get some practice using these functions with a minimally different example.
-
-::: {.callout-note appearance="minimal" title="Exercise"}
-Create a density plot of the `rmars_s_test_score` variable (or another continuous variable in the dataset of your choosing). For a finished plot, make sure you:
-
--   Choose colours for your plot.
--   Adjust the labels, breaks, and limits as necessary.
--   Add a theme.
-
-::: {.callout-note collapse="true" title="Solution"}
-We can start the same way we did above, just switching out our previous variable in `aes()` for the new one and changing `geom_histogram()` to `geom_density()`. We can drop the `binwidth` argument since it isn't relevant anymore. I've left the colours in because they work the same way (and look nice!).
-
-```{r}
-anx_scores_data |> 
-  ggplot(aes(x = rmars_s_test_score)) +
-  geom_density(colour = "#003b49", fill = "#007a78")  +
-  papaja::theme_apa(box = TRUE)
-```
-
-From here we might want to do a bit more tweaking to get the axes right, using the same functions as we did for the histogram.
-
-```{r}
-anx_scores_data |> 
-  ggplot(aes(x = rmars_s_test_score)) +
-  geom_density(colour = "#003b49", fill = "#007a78") +
-  scale_x_continuous(name = "Mean Score on the R-MARS-S Test Subscale",
-                     breaks = c(0:5)) +
-  scale_y_continuous(name = "Probability Density",
-                     limits = c(0, .5)) +
-  papaja::theme_apa(box = TRUE)
-```
-:::
-:::
 
 \ 
 
@@ -472,7 +478,7 @@ The `stars_help_cat` variable on the *x*-axis has automatically ordered the cate
 
 #### Option 1: Scale Labels
 
-We've seen the `scale_*()` functions already - this time, we have a discrete *x*-axis variable, so we need `scale_x_discrete()`. We've even already seen the `limits =` argument used to set the upper and lower bound of the plot. Here, we can use this argument to specify the order we want the order of the categories to be displayed in as well.
+We've seen the `scale_*()` functions already - this time, we have a discrete *x*-axis variable, so we need `scale_x_discrete()`. We've even already seen the `limits =` argument used to set the upper and lower bound of the plot. Here, we can use this argument to specify the order we want the categories to be displayed in as well.
 
 ```{r}
 anx_scores_data |> 
@@ -485,7 +491,7 @@ anx_scores_data |>
 
 #### Option 2: Factor Levels
 
-We haven't covered factors much in this course so far; for our purposes, most of the time, R treats character data more or less the same way it would treat factors so it hasn't been a problem thus far. However, converting our `stars_help_cat` variable to a factor would let us specify an order of factor levels.
+We haven't covered factors much in this course so far; for our purposes, most of the time, R treats character data more or less the same way it would treat factors so it hasn't been a problem (yet...). However, converting our `stars_help_cat` variable to a factor would let us specify an order of factor levels.
 
 Let's see how that would work. Here I'm using `mutate()` to do the factor conversion before I pipe the data on into `ggplot()`. We've seen the `factor()` function before, just adding the `levels =` argument to reorder the levels in the order we wanted. The resulting plot then has the levels in the right order.
 
@@ -516,28 +522,30 @@ Finish up your plot by adjusting the following elements:
 
 ::: {.callout-note collapse="true" title="Solution"}
 ```{r}
-anx_scores_data |> 
-  dplyr::filter(gender %in% c("male","female")) |> 
-  ggplot(aes(x = stars_help_cat, fill = gender)) +
-  geom_bar(position = "dodge") +
-  scale_x_discrete(name = "STARS Asking for Help Anxiety",
-                   ## This sets the order using the values in the variable
-                   limits = c("low", "high"),
-                   ## This sets the labels to appear in the plot
-                   labels = c("Low", "High")) +
-  ## I think this looks good but you can do what you like!
-  scale_y_continuous(name = "Count",
-                     limits = c(0, 175),
-                     breaks = seq(0, 175, by = 25))+
-  ## More Sussex colours :)
-  ## With a colourblind-friendly and greyscale-print-resilient colour scheme
-  scale_fill_discrete(name = "Gender",
-                      labels = c("Female", "Male"),
-                      type = c("#1b365d", "#f2c75c")) +
-  papaja::theme_apa(box = TRUE)
+anx_scores_data |> # <1> 
+  dplyr::filter(gender %in% c("male","female")) |> # <2> 
+  ggplot(aes(x = stars_help_cat, fill = gender)) +# <3> 
+  geom_bar(position = "dodge") +# <4> 
+  scale_x_discrete(name = "STARS Asking for Help Anxiety",# <5> 
+                   limits = c("low", "high"),# <5> 
+                   labels = c("Low", "High")) +# <5> 
+  scale_y_continuous(name = "Count",# <6> 
+                     limits = c(0, 175),# <6> 
+                     breaks = seq(0, 175, by = 25))+# <6> 
+  scale_fill_discrete(name = "Gender",# <7> 
+                      labels = c("Female", "Male"),# <7> 
+                      type = c("#1b365d", "#f2c75c")) +# <7> 
+  papaja::theme_apa(box = TRUE)# <8> 
 ```
 
-That's looking classy!
+1. Take the dataset, *and then*
+2. Filter the dataset to only retain cases where the value in the `gender` variable is any of "male" or "female", *and then*
+3. Set up a plot, mapping `stars_help_score` to the *x*-axis and `gender` as the fill, *plus*
+4. Draw a barplot, with the bars side by side, *plus*
+5. Adjust the discrete *x* axis by giving it a name, setting the limits (i.e. order of categories), and relabeling the categories, *plus*
+6. Adjust the continuous *y* axis by giving it a name, setting the limits, and setting the breakpoints to appear as ticks on the axis, *plus*
+7. Adjust the discrete fill legend by giving it a name, relabeling the categories, and changing the type of colours (using a colourblind-friendly and greyscale-print-resilient colour scheme!), *plus*
+8. Add an APA-style theme.
 
 :::
 :::
@@ -604,14 +612,14 @@ First, you can bring up the help documentation by running `?chisq.test` in the C
 
 You might notice right away that this function has no `data =` argument, and neither does it have an option to specify a formula like we've used previously. Instead, we just need to provide two vectors (or a matrix; see the Challenge task).
 
-Recall that when we made our plots above, we filtered the `gender` variable to contain only male and female participants. Here we need to do the same thing before we can run our test. Here, to make sure I don't drop these cases from my actual dataset, I'm going to create a new, filtered version of the dataset *only* for running this test.
+Recall that when we made our plots above, we filtered the `gender` variable to contain only male and female participants. Here we need to do the same thing before we can run our test. To make sure I don't drop these cases from my actual dataset, I'm going to create a new, filtered version of the dataset *only* for running this test.
 
 ```{r}
 anx_scores_data_chisq <- anx_scores_data |> 
   dplyr::filter(gender %in% c("male","female"))
 ```
 
-Next, we need to get each of the variables out of the dataset using `$` subsetting. This is *exactly* the same method we used in the very first tutorial to run a correlation! Remember to use the new, filtered dataset rather than the original.
+Next, we need to get each of the variables out of the dataset using `$` subsetting. This is *exactly* the same method we used in the very first tutorial to run a *t*-test! Remember to use the new, filtered dataset rather than the original.
 
 ```{r}
 chisq.test(anx_scores_data_chisq$gender, anx_scores_data_chisq$stars_help_cat)
@@ -634,7 +642,7 @@ The vector method we just saw took just the data, so we might first try doing th
 
 anx_scores_data |> 
   dplyr::filter(gender %in% c("female", "male")) |> 
-  dplyr::count(gender, stars_help_cat) |> 
+  dplyr::select(gender, stars_help_cat) |> 
   chisq.test()
 ```
 
@@ -721,8 +729,9 @@ anx_scores_data |> # <1>
 1.  Take the dataset `anx_scores_data`, *and then*
 2.  Set up a plot, mapping `mcq` to the *x*-axis and `stars_test_score` to the *y*-axis, *plus*
 3.  Draw a raincloud plot, *plus*
-4.  Adjust the discrete *x* axis by giving it a name, and relabelling the group labels, *plus* 5 Adjust the continuous *y* axis by giving it a name, *plus*
-5.  Add an APA-style theme.
+4.  Adjust the discrete *x* axis by giving it a name, and relabelling the group labels, *plus* 
+5.  Adjust the continuous *y* axis by giving it a name, *plus*
+6.  Add an APA-style theme.
 
 The default plot has three parts. From left to right, they are: a scatter of the data points; a boxplot; and a density plot of the data, turned on its side. If you tilt your head to the right, you can see that this looks a bit like a (very lumpy) cloud with the data falling like rain underneath.
 
@@ -747,9 +756,10 @@ anx_scores_data |> # <1>
 1.  Take the dataset `anx_scores_data`, *and then*
 2.  Set up a plot, mapping `mcq` to the *x*-axis and `stars_test_score` to the *y*-axis, *plus*
 3.  Draw a raincloud plot, *plus*
-4.  Adjust the discrete *x* axis by giving it a name, and relabelling the group labels, *plus* 5 Adjust the continuous *y* axis by giving it a name, *plus*
-5.  Calculate a summary of the data using the function `mean_cl_normal` for means and CIs, and add to the plot in red, *plus*
-6.  Add an APA-style theme.
+4.  Adjust the discrete *x* axis by giving it a name, and relabelling the group labels, *plus* 
+5.  Adjust the continuous *y* axis by giving it a name, *plus*
+6.  Calculate a summary of the data using the function `mean_cl_normal` for means and CIs, and add to the plot in red, *plus*
+7.  Add an APA-style theme.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
 In second year, students are also introduced to violin plots. Adapt the code we've already written for raincloud plots to create a violin plot with means and CIs instead.
@@ -782,7 +792,7 @@ anx_scores_data |>
   geom_rain(point.args = list(alpha = .4, aes(colour = mcq))) +
   stat_summary(fun.data = mean_cl_normal,
                shape = 23) +
-  scale_x_discrete(name = "MCQ Condition", labels = c("Maths", "Stats")) + # <4>
+  scale_x_discrete(name = "MCQ Condition", labels = c("Maths", "Stats")) +
   scale_y_continuous(name = "Mean STARS Test Score") +
   scale_fill_manual(values = c("#f2c75c", "#007a78")) +
   scale_colour_manual(values = c("#dc582a", "#003b49")) +
@@ -795,26 +805,32 @@ anx_scores_data |>
 This would have involved quite a bit of experimentation. If you made something like this, well done.
 
 ```{r}
-#| eval: false
-
-anx_scores_data |> 
-  ggplot(aes(x = mcq, y = stars_test_score, fill = mcq)) +
-  ## Customise geom_rain points to be transparent (alpha) and coloured by mcq group
-  geom_rain(point.args = list(alpha = .4, aes(colour = mcq))) +
-  ## Change the shape of the means
-  stat_summary(fun.data = mean_cl_normal,
-               shape = 23) +
-  scale_x_discrete(name = "MCQ Condition", labels = c("Maths", "Stats")) + # <4>
-  scale_y_continuous(name = "Mean STARS Test Score") +
-  ## Specify custom colours for the fill and colour elements
-  scale_fill_manual(values = c("#f2c75c", "#007a78")) +
-  scale_colour_manual(values = c("#dc582a", "#003b49")) +
-  ## Remove the legend
-  guides(fill = 'none', color = 'none') +
-  ## Flip the coordinates - reverses x and y!
-  coord_flip() +
-  papaja::theme_apa(box = TRUE)
+anx_scores_data |>  # <1>
+  ggplot(aes(x = mcq, y = stars_test_score, fill = mcq)) + # <2>
+  geom_rain(point.args = list(alpha = .4, aes(colour = mcq))) + # <3>
+  stat_summary(fun.data = mean_cl_normal, # <4>
+               shape = 23) + # <4>
+  scale_x_discrete(name = "MCQ Condition", labels = c("Maths", "Stats")) + # <5>
+  scale_y_continuous(name = "Mean STARS Test Score") + # 6>
+  scale_fill_manual(values = c("#f2c75c", "#007a78")) + # <7>
+  scale_colour_manual(values = c("#dc582a", "#003b49")) + # <8>
+  guides(fill = 'none', color = 'none') + # <9>
+  coord_flip() + # <10>
+  papaja::theme_apa(box = TRUE) # <11>
 ```
+
+1.  Take the dataset `anx_scores_data`, *and then*
+2.  Set up a plot, mapping `mcq` to the *x*-axis, `stars_test_score` to the *y*-axis, and fill colour to `mcq`, *plus*
+3.  Draw a raincloud plot, setting the transparency of the points to 40% and the colour to differ based on `mcq`, *plus*
+4.  Calculate a summary of the data using the function `mean_cl_normal` for means and CIs, and add to the plot using a diamond shape, *plus*
+5.  Adjust the discrete *x* axis by giving it a name, and relabelling the group labels, *plus* 
+6.  Adjust the continuous *y* axis by giving it a name, *plus*
+7.  Adjust the fill to custom values, *plus*
+8.  Adjust the colour to custom values, *plus*
+9.  Remove the fill and colour legends, *plus*
+10. Flip the coordinates to reverse *x* and *y*, *plus*
+11.  Add an APA-style theme.
+
 :::
 :::
 
@@ -828,7 +844,9 @@ Let's now turn to continuous variables only and produce a scatterplot to visuali
 Follow along with the instructions below to build your own plot as we go. Feel free to tweak details like colour and labels as you like.
 :::
 
-To start, let's set up a basic plot using the STICSA pre- and post-MCQ state anxiety scores. The new element is `geom_point()`, which draws points (tragically, `geom_scatter()` isn't a thing, not matter how many times I try!). In that layer, we also have two new arguments: `alpha`, which sets the transparency of the points between 1 (solid) and 0; and `position = "jitter"`, which introduces some random noise into the placement of the points so make it easier to see overlapping values.
+To start, let's set up a basic plot using the STICSA pre- and post-MCQ state anxiety scores. The new element is `geom_point()`, which draws points [^scatter]. In that layer, we also have two new arguments. The first is `alpha`, which sets the transparency of the points between 1 (solid) and 0 (invisible). The second is `position = "jitter"`, which introduces some random noise into the placement of the points so make it easier to see overlapping values.
+
+[^scatter] Tragically, `geom_scatter()` isn't a thing, not matter how many times I try!
 
 ```{r}
 anx_scores_data |> # <1>
@@ -857,10 +875,10 @@ Unfortunately the function to add a line of best fit isn't as intuitively named 
 As we did with the histogram previously, we can add `colour` and `fill` arguments to adjust the colour. Here, `colour` determines the colour of the line, and `fill` determines the colour of the shaded confidence intervals.
 
 ```{r}
-anx_scores_data |> # <1>
+anx_scores_data |>
   ggplot(aes(x = sticsa_pre_state_score, y = sticsa_post_state_score)) + # <2>
   geom_point(alpha = 0.4, position = "jitter") +  # <3>
-  geom_smooth(method = "lm", colour = "darkblue", fill = "darkcyan") + # <4>
+  geom_smooth(method = "lm", colour = "darkblue", fill = "darkcyan") + # <1>
   scale_x_continuous(name = "STICSA Pre-MCQ State Anxiety Score", # <5>
                     limits = c(1, 4)) + # <5>
   scale_y_continuous(name = "STICSA Post-MCQ State Anxiety Score", # <6>
@@ -868,9 +886,11 @@ anx_scores_data |> # <1>
   papaja::theme_apa(box = TRUE) # <7>
 ```
 
+1. Add a line of best fit using the "`lm`" function, with a dark blue line and dark cyan CIs.
+
 ### Colour and Fill Palette
 
-In the [previous Colour and Fill section](07_dataviz.qmd#colour-and-fill-manual) we chose colours by name or hex code to add to a plot. However, there are a wide variety of pre-made colour palettes to make use of. So, instead of chosing individual colours, you can quickly apply existing colour palettes.
+In the [previous Colour and Fill section](07_dataviz.qmd#colour-and-fill-manual) we chose colours by name or hex code to add to a plot. However, there are a wide variety of pre-made colour palettes to make use of. So, instead of choosing individual colours, you can quickly apply existing colour palettes.
 
 ::: {.callout-tip title="Colour Palette Options"}
 Looking for the right colour scheme? Try these resources:
@@ -879,14 +899,14 @@ Looking for the right colour scheme? Try these resources:
 -   [The {paletteer} package](https://emilhvitfeldt.github.io/paletteer/) for quick access to any R colour palette and to an overview of all the palettes available
 :::
 
-A popular palette and the one we'll use for this task is [the lovely {viridis} colour palette package](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html), designed to be pretty, print-friendly, and accessible (robust to colourblindness).
+A popular palette and the one we'll use for this task is from [the lovely {viridis} colour palette package](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html), designed to be pretty, print-friendly, and accessible (robust to colourblindness).
 
 To use the palettes, we start out by dropping the `colour` and `fill` arguments from within `geom_smooth()`, and instead setting `colour` and `fill` arguments at the beginning of the plot, in the `aes()` function along with `x` and `y`. This will apply the same colour palette across all elements in the plot that can have colour - namely, the points from `geom_point()`, and the line of best fit from `geom_smooth()`. By setting them both to `mcq`, the colours will be consistent across MCQ types between all of these elements. Incidentally, doing this will also split our single LM line into two lines: one for each level of the `mcq` variable.
 
 ```{r}
-anx_scores_data |> # <1>
-  ggplot(aes(x = sticsa_trait_score, y = sticsa_post_state_score,  # <2>
-             colour = mcq, fill = mcq)) + # <2>
+anx_scores_data |>
+  ggplot(aes(x = sticsa_trait_score, y = sticsa_post_state_score,  # <1>
+             colour = mcq, fill = mcq)) + # <1>
   geom_point(alpha = 0.4, position = "jitter") +  # <3>
   geom_smooth(method = "lm") + # <4>
   scale_x_continuous(name = "STICSA Pre-MCQ State Anxiety Score", # <5>
@@ -895,6 +915,8 @@ anx_scores_data |> # <1>
                     limits = c(1, 4)) + # <6>
   papaja::theme_apa(box = TRUE) # <9>
 ```
+
+1. Set up the plot, mapping `sticsa_pre_state_score` to the *x*-axis and `sticsa_post_state_score` to the *y*-axis, and both colour and fill to `mcq`.
 
 A start - but let's do something about that horrible default colour palette!
 
@@ -907,7 +929,7 @@ Just as we had `scale_x...` and `scale_y...` functions for specifying the `x` an
 -   `labels`: applies labels to the levels of the variables.
 
 ```{r}
-anx_scores_data |> # <1>
+anx_scores_data |> 
   ggplot(aes(x = sticsa_trait_score, y = sticsa_post_state_score,  # <2>
              colour = mcq, fill = mcq)) + # <2>
   geom_point(alpha = 0.4, position = "jitter") +  # <3>
@@ -916,10 +938,12 @@ anx_scores_data |> # <1>
                     limits = c(1, 4)) + # <5>
   scale_y_continuous(name = "STICSA Post-MCQ State Anxiety Score", # <6>
                     limits = c(1, 4)) + # <6>
-  scale_colour_viridis(name = "MCQ Type", discrete = TRUE, labels = c("Maths", "Stats")) + # <7>
-  scale_fill_viridis(name = "MCQ Type", discrete = TRUE, labels = c("Maths", "Stats")) + # <7>
+  scale_colour_viridis(name = "MCQ Type", discrete = TRUE, labels = c("Maths", "Stats")) + # <1
+  scale_fill_viridis(name = "MCQ Type", discrete = TRUE, labels = c("Maths", "Stats")) + # <1>
   papaja::theme_apa(box = TRUE) # <9>
 ```
+
+1.  Adjust the fill and colour by applying the viridis colour palette, giving each a name, using discrete values, and relabelling the categories.
 
 That's looking fairly nice now!
 
@@ -968,7 +992,7 @@ In something of a departure for us, we're going to use a package *that isn't {gg
 
 library(rgl)
 
-setupKnitr()
+rgl::setupKnitr(autoprint = TRUE)
 ```
 
 In order to have points coloured by MCQ type, I've created a new variable in the dataset assigning colours based on the values of the `mcq` variable. This and the rest of the code is borrowed straight from [R Graph Gallery's very helpful mini-tutorial on {rgl}](https://r-graph-gallery.com/3d_scatter_plot.html).
@@ -986,6 +1010,8 @@ Next, we'll use the `rgl::plot3d()` function to generate the plot. The `x`, `y`,
 Finally, the last function creates an interactive widget for the plot.
 
 ```{r}
+#| webgl: TRUE
+
 rgl::plot3d(
   x = anx_scores_data$sticsa_trait_score, 
   y = anx_scores_data$sticsa_post_state_score,
@@ -995,10 +1021,7 @@ rgl::plot3d(
   radius = .05,
   xlab = "STICSA Trait", ylab = "STICSA Post State", zlab = "STICSA Pre State"
 )
-
-rgl::rglwidget()
 ```
-:::
 
 \ 
 
@@ -1008,9 +1031,9 @@ rgl::rglwidget()
 As ever, I strongly recommend referring to [the Quarto Guide](https://quarto.org/docs/authoring/figures.html) as the first stop for possibilities and/or problem-solving with Quarto.
 :::
 
-In a previous section, we stored our lovely scatterplot as `mcq_lm_plot`. Let's see now how we could adjust the way that figure would appear in a Quarto document.
+In a previous section, we created a lovely scatterplot for a (hypothetical) linear model. Let's see now how we could adjust the way that figure would appear in a Quarto document.
 
-To begin, we're just going to put our plot object in a new code chunk, in the document where we want it to appear. Equally, this could be the code that produces the plot; it doesn't matter either way. Here, I've stored the final output for the LM plot we created above in a new object, `mcq_lm_plot`, to make the subsequent sections easier to read.
+To begin, I've stored the final output for the LM plot we created above in a new object, `mcq_lm_plot`, to make the subsequent sections easier to read.
 
 ```{r}
 mcq_lm_plot <- anx_scores_data |> # <1>
@@ -1026,6 +1049,8 @@ mcq_lm_plot <- anx_scores_data |> # <1>
   scale_fill_viridis(name = "MCQ Type", discrete = TRUE, labels = c("Maths", "Stats")) + # <7>
   papaja::theme_apa(box = TRUE) # <9>
 ```
+
+Then, we're just going to put our plot object in a new code chunk, in the document where we want it to appear. Equally, this could be the code that produces the plot; it doesn't matter either way. 
 
 ```{{r}}
 mcq_lm_plot
