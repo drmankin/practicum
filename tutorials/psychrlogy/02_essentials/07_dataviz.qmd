@@ -1,5 +1,8 @@
 ---
 title: "07: Visualisations"
+knitr:
+  opts_chunk: 
+    fig.align: center
 ---
 
 ## Overview
@@ -100,7 +103,7 @@ readr::read_csv(here::here("data/anx_scores_codebook.csv")) %>%
 
 If you have some experience with R, you are welcome to instead use another dataset that you are familiar with or are keen to explore. However, remember that anything you upload to the training Posit Cloud workspace is visible to all workspace admins, so keep GDPR in mind.
 
-\ 
+ 
 
 ## Grammar of Graphics
 
@@ -168,7 +171,7 @@ See the [{ggplot} reference documentation](https://ggplot2.tidyverse.org/referen
 
 Right, the best way to get a handle on these functions is to start building plots! So let's jump in.
 
-\ 
+ 
 
 ## Histograms and Density Plots
 
@@ -219,7 +222,7 @@ This is better, but now we've got some new problems: one, the automatically gene
 
 ### Colour and Fill Manual
 
-It's not obvious from the help documentation unfortunately (just mentioned in passing under the `...` argument) but this function, and most `geom_*()` functions!, will take the arguments `colour` and `fill`. For this, we give each argument a string with a colour name in it. You can just guess at colour names until you find one you like, or you can refer to this [massive list of R colour names]() to pick one.
+It's not obvious from the help documentation unfortunately (just mentioned in passing under the `...` argument) but this function, and most `geom_*()` functions!, will take the arguments `colour` and `fill`. For this, we give each argument a string with a colour name in it. You can just guess at colour names until you find one you like, or you can refer to this [massive list of R colour names](https://www.datanovia.com/en/blog/awesome-list-of-657-r-color-names/) to pick one.
 
 Here's an example of how that looks with some very boring colours, that's a bit easier on the eyes than the dark grey lump above.
 
@@ -253,7 +256,7 @@ You can use the `labs()` shortcut to adjust labels easily, but personally I pref
 
 [^2]: Yes, this is not *technically* true because the values can only be whole numbers between 0 and 5, but what matters here is that *R* thinks this is continuous data.
 
-The advantage of going through the extra trouble to use the `scale_*()` functions is that they allow you to adjust everything about that scale at once. So, I can use the arguments for `scale_x_continuous()` to change the axis label with `name =`, the breaks with `breaks =`, the limits with `limits =` - well, I'm sure you get the idea!
+The advantage of going through the extra trouble to use the `scale_*()` functions is that they allow you to adjust everything about that scale at once. So, I can use the arguments for `scale_x_continuous()` to change the axis label with `name =`, the breaks with `breaks =`, the limits with `limits =` ...well, I'm sure you get the idea!
 
 I can also do the same with the *y* axis, using (as you might have guessed) `scale_y_continuous()`.
 
@@ -300,8 +303,6 @@ anx_scores_data |>
 
 There you have it! That's looking pretty nice, I think.
 
-How are you doing? This is a bunch of new information, so don't worry if you feel a bit overwhelmed. Honestly when I am constructing plots, a good portion of the time I spend to make them is either 1) digging back through my own previous documents to lift code I've already written or 2) searching online for help posts to figure out how to do things! I didn't know how to do basically any of the formatting for the facet-wrapped plot above, and it took me about an hour of testing and searching to figure it out. I hope having these templates saves you a bit of time in the future.
-
 To lock it in, let's get some practice using these functions with a minimally different example.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
@@ -338,7 +339,7 @@ anx_scores_data |>
 
 ### Facet Wrap
 
-::: {.callout-warning}
+::: callout-warning
 *Note*: This gets a bit into the weeds, so if you'd like to skip this section, feel free to skip down to [the next type of plot](07_dataviz.qmd#barplots).
 :::
 
@@ -393,9 +394,13 @@ anx_scores_data |>
   papaja::theme_apa(box = TRUE)
 ```
 
- 
+:::{.callout-tip title="Checking In"}
 
-\ 
+How are you doing? This is a bunch of new information, so don't worry if you feel a bit overwhelmed. Honestly when I am constructing plots, a good portion of the time I spend to make them is either 1) digging back through my own previous documents to lift code I've already written or 2) searching online for help posts to figure out how to do things! I didn't know how to do basically any of the formatting for the facet-wrapped plot above, and it took me about an hour of testing and searching to figure it out. I hope having these templates saves you a bit of time in the future.
+
+:::
+
+ 
 
 ## Barplots
 
@@ -472,9 +477,9 @@ Nice! Already that's much better, and looking more like we might expect a groupe
 
 ### Reordering Categories
 
-The `stars_help_cat` variable on the *x*-axis has automatically ordered the categories in alphabetical order, "high" and then "low". As I am a native speaker of a language that reads left to right, I'd prefer to have "low" on the left and "high" on the right[^snarc]. So, how can I change the order of these categories?
+The `stars_help_cat` variable on the *x*-axis has automatically ordered the categories in alphabetical order, "high" and then "low". As I am a native speaker of a language that reads left to right, I'd prefer to have "low" on the left and "high" on the right[^3]. So, how can I change the order of these categories?
 
-[^snarc]: See e.g. [Shaki and Fischer, 2008](https://www.sciencedirect.com/science/article/pii/S0010027708000978?casa_token=6uU795RgZ4wAAAAA:NopLcy7IaTM1YyHXQZ7d3YSjDdV0-WOBJ208crznaivMxdR4AaUtXDMIgXvMZ0LvaRhwyTEBdg)
+[^3]: See e.g. [Shaki and Fischer, 2008](https://www.sciencedirect.com/science/article/pii/S0010027708000978?casa_token=6uU795RgZ4wAAAAA:NopLcy7IaTM1YyHXQZ7d3YSjDdV0-WOBJ208crznaivMxdR4AaUtXDMIgXvMZ0LvaRhwyTEBdg)
 
 #### Option 1: Scale Labels
 
@@ -538,20 +543,18 @@ anx_scores_data |> # <1>
   papaja::theme_apa(box = TRUE) # <8> 
 ```
 
-1. Take the dataset, *and then*
-2. Filter the dataset to only retain cases where the value in the `gender` variable is any of "male" or "female", *and then*
-3. Set up a plot, mapping `stars_help_score` to the *x*-axis and `gender` as the fill, *plus*
-4. Draw a barplot, with the bars side by side, *plus*
-5. Adjust the discrete *x* axis by giving it a name, setting the limits (i.e. order of categories), and relabeling the categories, *plus*
-6. Adjust the continuous *y* axis by giving it a name, setting the limits, and setting the breakpoints to appear as ticks on the axis, *plus*
-7. Adjust the discrete fill legend by giving it a name, relabeling the categories, and changing the type of colours (using a colourblind-friendly and greyscale-print-resilient colour scheme!), *plus*
-8. Add an APA-style theme.
-
+1.  Take the dataset, *and then*
+2.  Filter the dataset to only retain cases where the value in the `gender` variable is any of "male" or "female", *and then*
+3.  Set up a plot, mapping `stars_help_score` to the *x*-axis and `gender` as the fill, *plus*
+4.  Draw a barplot, with the bars side by side, *plus*
+5.  Adjust the discrete *x* axis by giving it a name, setting the limits (i.e. order of categories), and relabeling the categories, *plus*
+6.  Adjust the continuous *y* axis by giving it a name, setting the limits, and setting the breakpoints to appear as ticks on the axis, *plus*
+7.  Adjust the discrete fill legend by giving it a name, relabeling the categories, and changing the type of colours (using a colourblind-friendly and greyscale-print-resilient colour scheme!), *plus*
+8.  Add an APA-style theme.
 :::
 :::
 
 ::: {.callout-warning title="Check Order of Labels!" collapse="true"}
-
 Keep in mind that `ggplot()` is just applying the labels as strings on top of your plot. This means that if you, for instance, reorder your categories on the *x*-axis but then forget to update the order of axis labels in your code, your plot will be wrong. It's always important to double-check that the labels you add do in fact correspond correctly to the order of the categories in the plot to avoid mislabeling.
 
 As an example, the code below is identical to the solution above, except I've commented out the `limits` argument in `scale_x_discrete()` that reorders the categories on the *x*-axis. However, I've left in the `labels` argument that whacks on the axis labels in the reordered order. Comparing to the plot above, we can see by the sizes of the bars that the actual categories are in high-low order, despite what the nicely formatted labels say.
@@ -596,18 +599,16 @@ anx_scores_data |>
 ```
 :::
 
-\ 
+ 
 
 ## Quick Test: $\chi^2$
 
 While we're here looking at grouped barplots for categorical data, we can also have a quick $\chi^2$ test of association as a treat. Just like we did *t*-tests with `t.test()` and correlation tests with `cor.test()`, for $\chi^2$ we have `chisq.test()`.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
 Using the `chisq.test()` help documentation, perform a $\chi^2$ test of association for the `stars_help_cat` and `gender` variables.
 
 ::: {.callout-note collapse="true" title="Solution"}
-
 First, you can bring up the help documentation by running `?chisq.test` in the Console.
 
 You might notice right away that this function has no `data =` argument, and neither does it have an option to specify a formula like we've used previously. Instead, we just need to provide two vectors (or a matrix; see the Challenge task).
@@ -628,13 +629,11 @@ chisq.test(anx_scores_data_chisq$gender, anx_scores_data_chisq$stars_help_cat)
 :::
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
 **CHALLENGE**: Use a matrix to run this test, instead of two individual vectors.
 
 *Hint*: The way I've solved it, this requires reading the help documentation carefully and using a new function to create a `table()`.
 
 ::: {.callout-note collapse="true" title="Solution"}
-
 The vector method we just saw took just the data, so we might first try doing that with a smaller version of the dataset (doing the filtering on `gender`, then selecting only the two variables we want):
 
 ```{r}
@@ -667,11 +666,9 @@ This code has a few extra steps, but allows us to avoid creating a specialised s
 :::
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
 **CHALLENGE**: Report the results of the $\chi^2$ test in full, including a check of whether the expected frequencies are all greater than 5.
 
 ::: {.callout-note collapse="true" title="Solution"}
-
 Let's get the latter out of the way first. Under **Examples**, the help documentation shows us right at the top how to get expected frequencies: if we save our test output in an object, we can subset it. Let's have a look:
 
 ```{r}
@@ -693,17 +690,15 @@ Great, we can then go on to report the results! Let's save the `papaja::apa_prin
 chisq_out <- papaja::apa_print(anx_gender_chisq, n = nrow(anx_scores_data_chisq))
 ```
 
-
 > A $\chi^2$ test of association revealed no significant association relationship between gender and STARS Asking for Help anxiety (`` `r knitr::inline_expr("chisq_out$full_result[[1]]")` ``).
 
 Which will appear when rendered as:
 
 > A $\chi^2$ test of association revealed no significant association relationship between gender and STARS Asking for Help anxiety (`r chisq_out$full_result[[1]]`).
-
 :::
 :::
 
-\ 
+ 
 
 ## Raincloud and Violin Plots
 
@@ -729,7 +724,7 @@ anx_scores_data |> # <1>
 1.  Take the dataset `anx_scores_data`, *and then*
 2.  Set up a plot, mapping `mcq` to the *x*-axis and `stars_test_score` to the *y*-axis, *plus*
 3.  Draw a raincloud plot, *plus*
-4.  Adjust the discrete *x* axis by giving it a name, and relabelling the group labels, *plus* 
+4.  Adjust the discrete *x* axis by giving it a name, and relabelling the group labels, *plus*
 5.  Adjust the continuous *y* axis by giving it a name, *plus*
 6.  Add an APA-style theme.
 
@@ -756,7 +751,7 @@ anx_scores_data |> # <1>
 1.  Take the dataset `anx_scores_data`, *and then*
 2.  Set up a plot, mapping `mcq` to the *x*-axis and `stars_test_score` to the *y*-axis, *plus*
 3.  Draw a raincloud plot, *plus*
-4.  Adjust the discrete *x* axis by giving it a name, and relabelling the group labels, *plus* 
+4.  Adjust the discrete *x* axis by giving it a name, and relabelling the group labels, *plus*
 5.  Adjust the continuous *y* axis by giving it a name, *plus*
 6.  Calculate a summary of the data using the function `mean_cl_normal` for means and CIs, and add to the plot in red, *plus*
 7.  Add an APA-style theme.
@@ -822,21 +817,30 @@ anx_scores_data |>  # <1>
 ```
 
 <!-- 1.  Take the dataset `anx_scores_data`, *and then* -->
+
 <!-- 2.  Set up a plot, mapping `mcq` to the *x*-axis, `stars_test_score` to the *y*-axis, and fill colour to `mcq`, *plus* -->
+
 <!-- 3.  Draw a raincloud plot, setting the transparency of the points to 40% and the colour to differ based on `mcq`, *plus* -->
+
 <!-- 4.  Calculate a summary of the data using the function `mean_cl_normal` for means and CIs, and add to the plot using a diamond shape, *plus* -->
+
 <!-- 5.  Adjust the discrete *x* axis by giving it a name, and relabelling the group labels, *plus*  -->
+
 <!-- 6.  Adjust the continuous *y* axis by giving it a name, *plus* -->
+
 <!-- 7.  Adjust the fill to custom values, *plus* -->
+
 <!-- 8.  Adjust the colour to custom values, *plus* -->
+
 <!-- 9.  Remove the fill and colour legends, *plus* -->
+
 <!-- 10. Flip the coordinates to reverse *x* and *y*, *plus* -->
+
 <!-- 11.  Add an APA-style theme. -->
-
 :::
 :::
 
-\ 
+ 
 
 ## Scatterplots
 
@@ -848,7 +852,7 @@ Follow along with the instructions below to build your own plot as we go. Feel f
 
 To start, let's set up a basic plot using the STICSA pre- and post-MCQ state anxiety scores. The new element is `geom_point()`, which draws points [^scatter]. In that layer, we also have two new arguments. The first is `alpha`, which sets the transparency of the points between 1 (solid) and 0 (invisible). The second is `position = "jitter"`, which introduces some random noise into the placement of the points so make it easier to see overlapping values.
 
-[^scatter] Tragically, `geom_scatter()` isn't a thing, not matter how many times I try!
+[^scatter]: Tragically, `geom_scatter()` isn't a thing, not matter how many times I try!
 
 ```{r}
 anx_scores_data |> # <1>
@@ -864,7 +868,7 @@ anx_scores_data |> # <1>
 1.  Take the dataset `anx_scores_data`, *and then*
 2.  Set up a plot, mapping `sticsa_pre_state_score` to the *x*-axis and `sticsa_post_state_score` to the *y*-axis, *plus*
 3.  Draw points, with 40% transparency and some random noise to separate them, *plus*
-4.  Adjust the continuous *x* axis by giving it a name, and setting the limits to 1 and 4, *plus* 
+4.  Adjust the continuous *x* axis by giving it a name, and setting the limits to 1 and 4, *plus*
 5.  Adjust the continuous *x* axis by giving it a name, and setting the limits to 1 and 4, *plus*
 6.  Add an APA-style theme.
 
@@ -890,7 +894,7 @@ anx_scores_data |>
   papaja::theme_apa(box = TRUE) # <7>
 ```
 
-1. Add a line of best fit using the "`lm`" function, with a dark blue line and dark cyan CIs.
+1.  Add a line of best fit using the "`lm`" function, with a dark blue line and dark cyan CIs.
 
 ### Colour and Fill Palette
 
@@ -920,13 +924,13 @@ anx_scores_data |>
   papaja::theme_apa(box = TRUE) # <9>
 ```
 
-1. Set up the plot, mapping `sticsa_pre_state_score` to the *x*-axis and `sticsa_post_state_score` to the *y*-axis, and both colour and fill to `mcq`.
+1.  Set up the plot, mapping `sticsa_pre_state_score` to the *x*-axis and `sticsa_post_state_score` to the *y*-axis, and both colour and fill to `mcq`.
 
 A start - but let's do something about that horrible default colour palette!
 
-Just as we had `scale_x...` and `scale_y...` functions for specifying the `x` and `y` scales, we have `scale_colour...` and `scale_fill...` for specifying the details about the way the colour and fill appears. Here, I'm using viridis, which has its own dedicated functions, `scale_colour_viridis()` and `scale_fill_viridis()`[^3]. Within those two new elements, we have the same two elements:
+Just as we had `scale_x...` and `scale_y...` functions for specifying the `x` and `y` scales, we have `scale_colour...` and `scale_fill...` for specifying the details about the way the colour and fill appears. Here, I'm using viridis, which has its own dedicated functions, `scale_colour_viridis()` and `scale_fill_viridis()`[^4]. Within those two new elements, we have the same two elements:
 
-[^3]: Naturally, if you want to use palettes from a different package, you'll need to use the functions from that package instead! Those functions may also work a bit differently, so make sure you read the help documentation if you get stuck.
+[^4]: Naturally, if you want to use palettes from a different package, you'll need to use the functions from that package instead! Those functions may also work a bit differently, so make sure you read the help documentation if you get stuck.
 
 -   `name`: gives a title for the colour/fill legend
 -   `discrete`: tells {viridis} whether the variable to be coloured/filled is discrete or not. Here it is (it's `mcq`, a categorical variable), so we set this to `TRUE`.
@@ -987,10 +991,8 @@ anx_scores_data |>
 
 ### 3D Plots
 
-::: {.callout-warning}
-
+::: callout-warning
 *Note*: 3D plots really should be used with caution, and this bit is just for fun - feel free to skip if you're not inclined. If you're keen to have a go, the code below gets you an interactive, useable 3D scatterplot in no time at all, but think carefully about whether this is really the best way to represent your data.
-
 :::
 
 In something of a departure for us, we're going to use a package *that isn't {ggplot2}* for this next bit. (Shock! Horror!) Instead, we'll use the `plot3d()` function from the {rgl} package to get a snazzy interactive 3D-plot that does rotation and zoom right out of the box. The syntax might look slightly unfamiliar, but it's got the same underlying idea as what we've seen so far.
@@ -1015,8 +1017,6 @@ anx_scores_data <- anx_scores_data |>
 
 Next, we'll use the `rgl::plot3d()` function to generate the plot. The `x`, `y`, and `z` arguments each are specified using `$` subsetting, and the colours in `col` come from the new variable I created just above. The rest of the arguments change the appearance of the points (`type` and `size`) and set the axis labels.
 
-Finally, the last function creates an interactive widget for the plot.
-
 ```{r}
 #| webgl: TRUE
 
@@ -1037,8 +1037,7 @@ rgl::plot3d(
 rglwidget()
 ```
 
-
-\ 
+ 
 
 ## Reporting with Quarto
 
@@ -1065,7 +1064,7 @@ mcq_lm_plot <- anx_scores_data |> # <1>
   papaja::theme_apa(box = TRUE) # <9>
 ```
 
-Then, we're just going to put our plot object in a new code chunk, in the document where we want it to appear. Equally, this could be the code that produces the plot; it doesn't matter either way. 
+Then, we're just going to put our plot object in a new code chunk, in the document where we want it to appear. Equally, this could be the code that produces the plot; it doesn't matter either way.
 
 ```{{r}}
 mcq_lm_plot
@@ -1130,6 +1129,6 @@ Which would appear when rendered as below - notice the caption now has "Figure 1
 mcq_lm_plot
 ```
 
-\ 
+ 
 
 Very well done on your hard work so far. We'll keep using our {ggplot2} chops when we dig into analysis next week, and see how we can easily create plots to accompany those analyses using built-in functions.

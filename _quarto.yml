@@ -66,6 +66,7 @@ format:
     #code-block-border-left: "#be84a3"
     highlight-style: 
       light: tomorrow
+      
       dark: cobalt
     df-print: paged
 

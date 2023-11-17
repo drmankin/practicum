@@ -77,7 +77,7 @@ Read in from URL:
 ```{r}
 #| eval: false
 
-anx_data <- readr::read_csv("https://raw.githubusercontent.com/drmankin/practicum/master/data/anx_scores_data.csv")
+anx_scores_data <- readr::read_csv("https://raw.githubusercontent.com/drmankin/practicum/master/data/anx_scores_data.csv")
 ```
 :::
 :::
@@ -144,6 +144,42 @@ anx_scores_data |>
 #### Fit the Model
 
 As mentioned above, this model is taught as a linear model with a categorical predictor. That's literal: we're going to use the `lm()` function to fit the model. It was a bit ago, but we covered the linear model and `lm()` function in more depth back in [Tutorial 04](../01_fundRmentals/04_lm.qmd).
+
+Unfortunately, we'll need to make a quick change to our data beforehand.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Change out the "/" in the value `other/pnts` for an underscore, so the value reads `other_pnts`.
+
+*Hint*: You can try `stringr::str_replace_all()` for a {tidyverse} solution, or if you're basic like me, have a look at `gsub()`.
+
+::: {.callout-note collapse="true" title="Solution"}
+
+{stringr} solution:
+
+```{r}
+anx_scores_data <- anx_scores_data |> 
+  dplyr::mutate(
+    gender = stringr::str_replace_all(gender, 
+                                      pattern = "/", 
+                                      replacement = "_")
+  )
+```
+
+`gsub()` solution:
+
+```{r}
+#| eval: false
+
+anx_scores_data <- anx_scores_data |> 
+  dplyr::mutate(
+    gender = gsub("/", "_", gender)
+  )
+```
+
+These will do exactly the same thing, so which one you use is completely preference. It's very useful to know how to do this sort of thing though!
+:::
+:::
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
 Fit a linear model with STARS Asking for Help subscale score as the outcome, and gender as the predictor, and save this model as `stars_lm`.
@@ -258,7 +294,7 @@ anx_scores_data <- anx_scores_data |>
 Now that `gender` is a factor, we can set the contrasts.
 
 ```{r}
-contrasts(anx_scores_data$gender) <- contr.sum(3)
+contrasts(anx_scores_data$gender) <- contr.sum(4)
 ```
 :::
 :::
@@ -281,7 +317,7 @@ papaja::apa_table(papaja::apa_print(stars_contr_lm)$table)
 
 #### Post-Hoc Tests
 
-If we didn't have an *a priori* prediction about the differences between groups, we may decide to instead run post-hoc tests.
+If we didn't have an *a priori* prediction about the differences between groups, we may decide to instead run post-hoc tests. 
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
 Use the function `modelbased::estimate_contrasts()` to get post-hoc tests by putting in the original model
@@ -318,41 +354,115 @@ This section is derived from `discovr_13`, which also has more explanations and 
 anx_scores_data <- anx_scores_data |> 
   dplyr::filter(gender %in% c("male", "female")) |> 
   dplyr::mutate(
-    sticsa_cat = ifelse(sticsa_trait_score > 2, "anxious", "not anxious")
+    sticsa_cat = ifelse(sticsa_trait_score > 2, "high", "low")
   )
 ```
 
 ```{r}
 # fit the model:
-mcq_afx <- afex::aov_4(sticsa_post_state_score ~ sticsa_cat*mcq + (1|id), data = anx_scores_data)
+mcq_afx <- afex::aov_4(sticsa_post_state_score ~ mcq*sticsa_cat + (1|id), 
+                       data = anx_scores_data)
 mcq_afx #this shows us the model
 ```
 
 #### Interaction Plot
 
+Besides producing easy-to-read output, one of the handy things about {afex} is that you can quickly generate factorial interaction plots. The `afex_plot()` function lets you take a model you've produced with {afex} and visualise it easily. Since we have one of those to hand (convenient!) let's have a look.
+
+Minimally, we need to provide the model object, the variable to put on the *x*-axis, and the "trace", the variable on separate lines. Unlike with {ggplot}, though, here we need to provide the names of those variables as strings inside quotes.
+
 ```{r}
-# solution:
-afex::afex_plot(mcq_afx, "mcq", "sticsa_cat") +
-  labs(x = "Type of MCQ Test", y = "STICSA Post-Test State Anxiety") +
-  
-  theme_minimal()
+afex::afex_plot(mcq_afx,
+                x = "mcq",
+                trace = "sticsa_cat")
 ```
 
+The plot we get for very little work already has a lot of useful stuff. We get means for each combination of groups, with different values on the "trace" variable with different point shapes and connected by different lines. It needs some work, of course, but especially as a quick glimpse at the relationships of interest, it's a good start!
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+**CHALLENGE**: Use the `afex_plot()` help documentation and last week's tutorial on {ggplot2} to clean up this plot and make it presentable.
+
+::: {.callout-note collapse="true" title="Solution"}
+
+Here's what I went for!
+
+```{r}
+
+afex::afex_plot(mcq_afx, "mcq", "sticsa_cat",
+                legend_title = "STICSA Trait\nAnxiety",
+                factor_levels = list(
+                  sticsa_cat = c(high = "High",
+                                 low = "Low")),
+                data_arg = list(
+                  position = position_jitterdodge()
+                )
+                ) +
+  scale_x_discrete(name = "Type of MCQ", 
+                     labels = c("Maths", "Stats")) +
+  scale_y_continuous(name = "STICSA Post-Test State Anxiety",
+                     limits = c(1,4),
+                     breaks = 1:4) +
+  papaja::theme_apa()
+```
+:::
+:::
+
 #### EMMs
+
+In addition to the plot, we can get get the actual means for each combination of categories. As with everything, there's a package for it! Just like with `afex_plot()`, we provide the model object and the relevant variables to calculate means for.
 
 ```{r}
 emmeans::emmeans(mcq_afx, c("mcq", "sticsa_cat"))
 ```
 
-#### Simple Effects
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+**CHALLENGE**: Turn this estimated marginal means table into a nicely formatted table using `kbl()` (and, if you feel up for it, `pivot_wider()`).
+
+::: {.callout-note collapse="true" title="Solution"}
+
+The only information I really want out of this table are the means and confidence intervals. Instead of keeping all the other info, I decided to combine the means and CIs into a single variable using `paste0()`. The rest is just rearranging, relabelling, and making things look good!
 
 ```{r}
-# for the model created with afex
-emmeans::joint_tests(goggles_afx, "facetype") |> 
-  knitr::kable(digits = 3)
+emmeans::emmeans(mcq_afx, c("mcq", "sticsa_cat")) |> 
+  ## convert to tibble to work with more easily
+  tibble::as_tibble() |> 
+  ## concatenate all the info into a new variable and reformat mcq
+  dplyr::mutate(
+    mean_ci = paste0(round(emmean, 2), " ",
+                "[", round(lower.CL, 2), 
+                ", ", round(upper.CL, 2), "]"),
+    mcq = stringr::str_to_title(mcq)
+  ) |> 
+  ## keep only categorical vars and new one
+  dplyr::select(mcq, sticsa_cat, mean_ci) |> 
+  ## reshape
+  tidyr::pivot_wider(
+    names_from = sticsa_cat,
+    values_from = mean_ci
+  ) |> 
+  ## reorder
+  dplyr::select(mcq, low, high) |> 
+  kableExtra::kbl(
+    col.names = c("MCQ Condition", "Low Anxiety", "High Anxiety"),
+    align = "c",
+    caption = "STICSA Post-Test State Anxiety means and 95% confidence intervals"
+  ) |> 
+  kableExtra::kable_classic() |> 
+  kableExtra::add_header_above(header = c(" " = 1, 
+                               "STICSA Trait Anxiety" = 2))
+```
+:::
+:::
 
-emmeans::joint_tests(goggles_afx, "alcohol") |> 
-  knitr::kable(digits = 3)
+#### Simple Effects
+
+Finally, we can get tests of the effect between the levels of one variable, within each level of the other. Using the `emmeans::joint_tests()` function, we can use the model object and the name of the variable we want to split by to get tests within each level of that variable.
+
+```{r}
+emmeans::joint_tests(mcq_afx, "mcq")
+emmeans::joint_tests(mcq_afx, "sticsa_cat")
 ```
 
 ### Mixed Designs
@@ -425,50 +535,172 @@ emmeans::contrast(
   )
 ```
 
-## Moderation
+## Continuous Predictors
 
-### Centring
+### Mediation
+
+#### Fit the Model
 
 ```{r}
-# Solution
-vids_tib <- vids_tib |> 
+infidelity_mod <- 'phys_inf ~ c*ln_porn + b*commit
+                   commit ~ a*ln_porn
+                   indirect_effect := a*b
+                   total_effect := c + (a*b)
+                   '
+```
+
+mcq_score ~ rmars_num_score
+
+```{r}
+mars_mod <- 'mcq_score ~ c*rmars_num_score + b*sticsa_pre_state_score
+                   sticsa_pre_state_score ~ a*rmars_num_score
+                   indirect_effect := a*b
+                   total_effect := c + (a*b)
+                   '
+```
+
+```{r}
+mars_med <- lavaan::sem(mars_mod, data = anx_scores_data,
+                        missing = "FIML", estimator = "MLR")
+```
+
+#### Results
+
+```{r}
+#summarize the model (and round values for convenience)
+broom::glance(mars_med)
+broom::tidy(mars_med, conf.int = TRUE)
+```
+
+### Moderation
+
+#### Centring
+
+Before we fit our model, we will first mean-centre our predictors. This doesn't change the actual model, but it does change the interpretation by setting 0 to be the mean of each variable.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Use the `scale()` function to mean-centre your variables. Use the help documentation to make sure you use the right arguments.
+
+::: {.callout-note collapse="true" title="Solution"}
+
+The help documentation for `scale()` tells us that we need to give it the variable to centre, then decide whether we want to centre and/or scale. We *do* want to centre, and `center = TRUE` is the default setting, so we don't need to do anything here. However, we *don't* want to scale, and `scale = TRUE` is also the default setting, so we'll need to specify `scale = FALSE`.
+
+Then we just need to `mutate()` accordingly and give our variables some new names, either manually:
+
+```{r}
+anx_scores_data <- anx_scores_data |> 
   dplyr::mutate(
-    caunts_cent = caunts - mean(caunts, na.rm = TRUE),
-    vid_game_cent = vid_game - mean(vid_game, na.rm = TRUE)
+    sticsa_trait_score_cent = scale(sticsa_trait_score, scale = FALSE),
+    stars_int_score_cent = scale(stars_int_score, scale = FALSE)
   )
-vids_tib
 ```
 
-### Fit the Model
+Or with `across()`, if you did the challenge tasks in Tutorial 06:
 
 ```{r}
-aggress_lm <- lm(aggress ~ caunts_cent*vid_game_cent, data = vids_tib)
-broom::tidy(aggress_lm, conf.int = TRUE)
+#| eval: false
+
+anx_scores_data |> 
+  dplyr::mutate(
+    across(c(sticsa_trait_score, stars_int_score),
+           ~scale(.x, scale = FALSE),
+           .names = "{.col}_cent")
+  )
+```
+:::
+:::
+  
+#### Fit the Model
+
+The good news is that a moderation model is just a fancy name for your bog-standard linear model, just with an interaction effect, which means we're back to visit our old friend `lm()`. Literally the only new thing is how to specify the interaction. The simplest way is to use the multiplication symbol, `*`, to join together interacting predictors; this will include all the main effects as well as the interaction in the model at once. So, our formula will look like this:
+
+```
+outcome ~ predictor1*predictor2
 ```
 
-### Simple Slopes
+From there it's all exactly the same as what we did before in [Tutorial 04](../01_fundRmentals/04_lm.qmd) to fit and inspect the model.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Fit the model with MCQ score as the outcome, and the centered versions of STARS interpretation anxiety and STICSA trait anxiety as the predictors, including an interaction. Save the model in a new object called `stars_mod_lm`.
+
+::: {.callout-note collapse="true" title="Solution"}
+
+Just to keep things interesting, here's how you can do this with the pipe. The main difference it makes is that you can use the tab autocomplete for these long variable names when typing in the code, but it makes no difference to the resulting model.
 
 ```{r}
-# Ask for confidence intervals (solution)
-interactions::sim_slopes(
-  aggress_lm,
-  pred = vid_game_cent,
-  modx = caunts_cent,
-  jnplot = TRUE,
-  robust = TRUE,
-  confint = TRUE
-  )
+stars_mod_lm <- anx_scores_data |> 
+  lm(mcq_score ~ stars_int_score_cent*sticsa_trait_score_cent,
+     data = _)
+```
+:::
+:::
 
-# Label the legend (solution)
-interactions::interact_plot(
-  aggress_lm,
-  pred = vid_game_cent,
-  modx = caunts_cent,
-  interval = TRUE,
-  x.label = "Time playing video games per week (hours)",
-  y.label = "Predicted aggression",
-  legend.main = "Callous unemotional traits"
+#### Results
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Have a look at the model results. If you feel so inclined, print them out in a nice auto-formatted table as well.
+
+::: {.callout-note collapse="true" title="Solution"}
+
+To just get the parameters table, we can use `broom::tidy()` as before.
+
+```{r}
+broom::tidy(stars_mod_lm, conf.int = TRUE)
+```
+
+For the fancy one, you can do this with {papaja}, {rempsyc}, or other methods of your choice. I'm going for {papaja} this time.
+
+```{r}
+papaja::apa_print(stars_mod_lm)$table |> 
+  papaja::apa_table()
+```
+:::
+:::
+
+The tutorial introduces a few ways to explore the nature of the significant interaction. First, the simple slopes output includes some helpful statistical results as well as a Johnson-Neyman plot. For this we'll use the `sim_slopes()` function from the {interactions} package as below. 
+
+```{r}
+interactions::sim_slopes( # <1>
+  stars_mod_lm, # <2>
+  pred = stars_int_score_cent, # <3>
+  modx = sticsa_trait_score_cent, # <4>
+  jnplot = TRUE, # <5>
+  robust = TRUE, # <6>
+  confint = TRUE # <7>
   )
 ```
 
-## Report
+1. Produce a simple slopes analysis as follows:
+2. Use the model stored in the object `stars_mod_lm`,
+3. with the centered STARS Interpretation Anxiety score as the predictor,
+4. and the centered STICSA Trait Anxiety score as the moderator,
+5. including a Johnson-Neyman interval plot,
+6. robust estimation of confidence intervals,
+7. and CIs instead of SEs.
+
+For a lovely visualisation of the simple slopes analysis, the `interact_plot()` function from the same package produces a beautiful plot with minimal effort. This plot output is also a ggplot object, so you can further add to or customise it from here if you prefer.
+
+```{r}
+interactions::interact_plot( # <1>
+  stars_mod_lm, # <2>
+  pred = stars_int_score_cent, # <3>
+  modx = sticsa_trait_score_cent, # <4>
+  interval = TRUE, # <5>
+  x.label = "STARS Interpretation Anxiety Score", # <6>
+  y.label = "Predicted MCQ Score", # <6>
+  legend.main = "STICSA Trait Anxiety Score" # <6>
+  )
+```
+
+1. Produce a simple slopes interaction plot as follows:
+2. Use the model stored in the object `stars_mod_lm`,
+3. with the centered STARS Interpretation Anxiety score as the predictor,
+4. and the centered STICSA Trait Anxiety score as the moderator,
+5. with CIs included around the lines,
+6. and custom labels for the *x*, *y*, and legend.
+
+\ 
+
