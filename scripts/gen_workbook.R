@@ -111,7 +111,7 @@ gen_workbook <- function(this_file, out){
     dplyr::mutate(
       lines = dplyr::case_when(
         is_heading ~ paste0("\n", lines, "\n"),
-        is_yaml & cumsum(is_yaml) == sum(is_yaml) ~ paste0("embed-resources: true\n---\n\n", viewer_text, "\n\n"),
+        is_yaml & cumsum(is_yaml) == sum(is_yaml) ~ paste0("embed-resources: true\neditor: visual\n---\n\n", viewer_text, "\n\n"),
         .default = lines)
     ) |>
     dplyr::group_by(ex_index) |> 
