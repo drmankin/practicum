@@ -1,5 +1,6 @@
 ---
 title: "08: Analysis"
+embed-resources: true
 ---
 
 ## Overview
@@ -472,11 +473,11 @@ emmeans::joint_tests(mcq_afx, "sticsa_cat")
 #### Detour: Reshaping
 
 ```{r}
-anx_scores_data |> 
+anx_data_long <- anx_scores_data |> 
   dplyr::select(id, contains(c("sticsa", "mcq"))) |> 
   tidyr::pivot_longer(cols = contains("state"),
-                      names_to = "time",
-                      values_to = "sticsa_state",
+                      names_to = "sticsa_time",
+                      values_to = "sticsa_state_score",
                       names_pattern = ".*?_(.*?)_.*")
 ```
 
@@ -484,9 +485,11 @@ anx_scores_data |>
 
 ```{r}
 # fit the model:
-mcq_rep_afx <- afex::aov_4(date ~ strategy*looks*personality + (looks*personality|id), data = date_tib)
-date_afx #this shows us the model
+anx_mcq_afx <- anx_data_long |> 
+  afex::aov_4(sticsa_state_score ~ mcq*sticsa_time + (sticsa_time|id),
+              data = _)
 
+anx_mcq_afx
 ```
 
 #### Main Effects
@@ -501,35 +504,11 @@ emmeans::contrast(looks_emm, method = "trt.vs.ctrl", ref = 2, adjust = "holm")
 
 ```{r}
 
-strat_looks_emm <- emmeans::emmeans(date_afx, c("strategy", "looks"), model = "multivariate")
-strat_looks_emm # shows us the means
+anx_mcq_emm <- emmeans::emmeans(anx_mcq_afx, c("mcq", "sticsa_time"), model = "multivariate")
 
 emmeans::contrast(
-  strat_looks_emm,
-  interaction = c(strategy = "trt.vs.ctrl", looks = "trt.vs.ctrl"),
-  ref = 2,
-  adjust = "holm"
-  )
-
-strat_pers_emm <- emmeans::emmeans(date_afx, c("strategy", "personality"), model = "multivariate")
-strat_pers_emm # display the means
-emmeans::contrast(strat_pers_emm, interaction = c(strategy = "trt.vs.ctrl", personality = "trt.vs.ctrl"), ref = 2, adjust = "holm")
-
-looks_pers_emm <- emmeans::emmeans(date_afx, c("looks", "personality"), model = "multivariate")
-looks_pers_emm # display the means
-emmeans::contrast(looks_pers_emm, interaction = c(looks = "trt.vs.ctrl", personality = "trt.vs.ctrl"), ref = 2, adjust = "holm")
-
-```
-
-#### Three-Way Interaction
-
-```{r}
-three_way_emm <- emmeans::emmeans(date_afx, c("strategy", "looks", "personality"), model = "multivariate")
-three_way_emm # shows us the means
-
-emmeans::contrast(
-  three_way_emm,
-  interaction = c(strategy = "trt.vs.ctrl", looks = "trt.vs.ctrl", personality = "trt.vs.ctrl"),
+  anx_mcq_emm,
+  # interaction = c(strategy = "trt.vs.ctrl", looks = "trt.vs.ctrl"),
   ref = 2,
   adjust = "holm"
   )
@@ -601,7 +580,7 @@ Or with `across()`, if you did the challenge tasks in Tutorial 06:
 ```{r}
 #| eval: false
 
-anx_scores_data |> 
+anx_scores_data <- anx_scores_data |> 
   dplyr::mutate(
     across(c(sticsa_trait_score, stars_int_score),
            ~scale(.x, scale = FALSE),
