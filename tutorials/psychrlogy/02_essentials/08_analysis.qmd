@@ -315,12 +315,10 @@ modelbased::estimate_contrasts(stars_lm,
                                contrast = "gender")
 ```
 
-::: {.callout-warning}
-
+::: callout-warning
 ### What about ANCOVA?
 
 The procedures for including a covariate in the linear model aren't too complex, but the additional work to be done - testing independence of the covariate, changing the type of *F*-statistic, checking homogeneity of regression slopes, and so on - are just a bit much for this tutorial. If you are Keen to include a covariate, check out the *very* thorough `discovr_12` for a detailed walkthrough.
-
 :::
 
 ### Factorial Designs
@@ -335,14 +333,12 @@ This section is derived from `discovr_13`, which also has more explanations and 
 
 #### Fit the Model
 
-First we need to make a change to our dataset - namely, creating the `sticsa_trait_cat` variable we looked at last week as well. 
+First we need to make a change to our dataset - namely, creating the `sticsa_trait_cat` variable we looked at last week as well.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
 Recode the existing `sticsa_trait_score` variable into a categorical variable, with "high" values of 2.5 or greater, and "low" values below 2.5. Don't forget to save this change to your dataset!
 
 ::: {.callout-note collapse="true" title="Solution"}
-
 Expensive and sophisticated `dplyr::case_when()` option:
 
 ```{r}
@@ -371,9 +367,7 @@ anx_data <- anx_data |>
 With our categorical predictor in place, we can now fit our model.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
 Follow along with the code below to fit and interpret the model.
-
 :::
 
 The function we'll use for this and the next analysis as well is `afex::aov_4()`. The arguments to this function will look *extremely* familiar - in fact, it looks just about exactly like the way we used the `lm()` function. The only new thing is the extra element at the end of the function, `+ (1|id)`. We can ignore it for now, although we'll come back to it in the mixed design analysis. The main thing to notice is that if your dataset doesn't have one, you'll need a variable that contains ID codes or numbers of some type to use here. This dataset conveniently has anonymous alphanumeric ID codes in a variable called `id`, but if yours doesn't, you'd have to add or generate them.
@@ -389,11 +383,9 @@ mcq_afx
 So it seems that there's a significant *main effect* of anxiety (no surprise there), but no *interaction* with MCQ type.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
 **CHALLENGE**: Imagine you were working with a dataset that *didn't* already have ID codes. How could you generate a new `id_code` variable to use in the {afex} formula, that has a unique value for each row?
 
 ::: {.callout-note collapse="true" title="Solution"}
-
 There are *so* many ways to do this, but here's two quick ones.
 
 First, you could simply generate a new variable containing the numbers 1 through as many rows as there are in the dataset.
@@ -417,8 +409,7 @@ anx_data |>
 
 #### Interaction Plot
 
-Besides producing easy-to-read output, one of the handy things about {afex} is that you can quickly generate 
-interaction plots. The `afex_plot()` function lets you take a model you've produced with {afex} and visualise it easily. Since we have one of those to hand (convenient!) let's have a look.
+Besides producing easy-to-read output, one of the handy things about {afex} is that you can quickly generate interaction plots. The `afex_plot()` function lets you take a model you've produced with {afex} and visualise it easily. Since we have one of those to hand (convenient!) let's have a look.
 
 Minimally, we need to provide the model object, the variable to put on the *x*-axis, and the "trace", the variable on separate lines. Unlike with {ggplot}, though, here we need to provide the names of those variables as strings inside quotes.
 
@@ -436,7 +427,6 @@ Generate the plot.
 **CHALLENGE**: Use the `afex_plot()` help documentation and last week's tutorial on {ggplot2} to clean up this plot and make it presentable.
 
 ::: {.callout-note collapse="true" title="Solution"}
-
 Here's what I went for! There's a couple small bits left, like the labels on the legend, that I'll leave to you to work out.
 
 ```{r}
@@ -469,7 +459,6 @@ emmeans::emmeans(mcq_afx, c("mcq", "sticsa_trait_cat"))
 ```
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
 Generate the table of estimated marginal means.
 
 **CHALLENGE**: Turn this estimated marginal means table into a nicely formatted table using `kbl()` (and, if you feel up for it, `pivot_wider()`).
@@ -517,9 +506,7 @@ Finally, we can get tests of the effect between the levels of one variable, with
 emmeans::joint_tests(mcq_afx, "mcq")
 ```
 
-
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
 Produce the same output but the other way round, i.e. for the trait anxiety predictor.
 
 ::: {.callout-note collapse="true" title="Solution"}
@@ -544,9 +531,7 @@ For our upcoming analysis, we need to change the way our data are organised in t
 Reshaping in {tidyverse} is typically done with the `tidyr::pivot_*()` family of functions, which have two star players: `pivot_wider()` and `pivot_longer()`. We use generally `pivot_wider()` when we want to turn rows into columns, and `pivot_longer()` when we want to turn columns into rows. Here, we want to turn columns into rows, and our dataset will actually get longer (we'll have twice the rows as before!), so it's `pivot_longer()` we need.
 
 ::: {.callout-tip title="Partying with `pivot`"}
-
 Need help with pivoting? Me too, like *all* the time. Run `vignette("pivot")` in the Console for an absolute indispensable guide through both types of pivoting with a wealth of easily adaptable examples and code.
-
 :::
 
 For this analysis, I'm going to start by `select()`ing only the variables I actually need for the analysis, just to keep things as simple as possible. Next up is `pivot_longer()` to reshape the dataset. Minimally we have to specify the columns to pivot (using `<tidyselect>`, of course!), and where the names and values go to.
@@ -573,7 +558,6 @@ anx_data |>
 ```
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
 Reshape the dataset as above and assign to a **new dataset name**, `anx_data_long`, lest we overwrite all our data with this much smaller and reshaped dataset!
 
 *Hint*: It's fine to copy the code above, especially if you're short on time, but you'll learn and understand the code much better if you type it out instead of copying it.
@@ -591,11 +575,9 @@ anx_data_long <- anx_data |>
 :::
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
 **CHALLENGE**: How can you read the regular expression `.*?_(.*?)_.*`? If you're not sure, try putting into [regex101.com](https://regex101.com/) for some help (without the quotes).
 
 ::: {.callout-note collapse="true" title="Solution"}
-
 **Disclaimer**: This is an *extremely* nontechnical explanation, and is meant to capture the gist of what the regex does (as I understand it!) rather than to be technically accurate.
 
 This expression really only contains four elements: `.*?`, `.*`, `()`, and `_`. The last one, the underscore, is just a literal underscore, so all we need to worry about are the other three.
@@ -604,29 +586,26 @@ This expression really only contains four elements: `.*?`, `.*`, `()`, and `_`. 
 
 So, what about `.*?`? The only new element is the `?`, which combines with `*` to create a "lazy" quantifier, matching as *few* times as possible. So, we can read `.*?` as "any character any number of times, including none, but as few as possible."
 
-Finally, the brackets `()` are a capturing group - a portion of the expression we want to single out. In this case, it denotes the portion of the string that we want to actually use as the data in our new `sticsa_time` variable. 
+Finally, the brackets `()` are a capturing group - a portion of the expression we want to single out. In this case, it denotes the portion of the string that we want to actually use as the data in our new `sticsa_time` variable.
 
 So how can we read `.*?_(.*?)_.*`? Let's compare to an example string, `sticsa_pre_state_score`.
 
-1. `.*?_` matches any number of characters as few times as possible until it encounters an underscore. This captures the `sticsa_` portion of the example string.
+1.  `.*?_` matches any number of characters as few times as possible until it encounters an underscore. This captures the `sticsa_` portion of the example string.
 
-1. `(.*?)_` matches any number of characters as few times as possible until it encounters the next underscore. This matches the `pre_` portion of the example string, with the brackets singling out the capturing group of interest, namely the string "pre".
+2.  `(.*?)_` matches any number of characters as few times as possible until it encounters the next underscore. This matches the `pre_` portion of the example string, with the brackets singling out the capturing group of interest, namely the string "pre".
 
-1. `.*` matches any number of characters for the rest of the string. This matches the `state_score` portion of the example string.
+3.  `.*` matches any number of characters for the rest of the string. This matches the `state_score` portion of the example string.
 
 So, why didn't I type `"sticsa_(.*)_state_score"`? It would have worked just as well (try it!). In a word, generalisability. `.*?_(.*?)_.*` will get the element between the first and second underscores in *any* string, whereas `"sticsa_(.*)_state_score"` will only work for these particular variables. That's a matter of personal choice and style, but I almost always prefer the generalisable way if possible, because I know it'll be easier to adapt the next time round.
 
 If you like this kind of thing, bookmark regex101 and consider reading `vignette("regular-expressions")`!
-
 :::
 :::
 
 #### Fit the Model
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
 Follow along with the code below to fit and interpret the model.
-
 :::
 
 To fit our model, we'll use a very similar formula that was just saw for factorial designs. We're using the new `sticsa_state_score` as the outcome, with `mcq` (the independent-measures variable) and `sticsa_time` (the repeated-measures variable), and their interaction, as predictors. The key difference is in the last element of our formula, which is now `+ (sticsa_time|id)`. In other words, I've replaced the `1` in `+ (1|id)` with the repeated element(s) of the model.
@@ -658,14 +637,12 @@ afex::afex_plot(anx_mcq_afx,
 ```
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
 Following the example above, get EMMs and a plot for the main effect of `sticsa_time`.
 
 ::: {.callout-note collapse="true" title="Solution"}
-
 You can almost exactly adapt the code above, but watch out for the warning on the plot:
 
-```
+```         
 Warning: Panel(s) show within-subjects factors, but not within-subjects error bars.
 For within-subjects error bars use: error = "within"
 ```
@@ -730,7 +707,6 @@ Not bad for a first effort! I like that this version shows how the points are di
 Which one to use? Honestly, it depends on personal preference, the data, the journal requirements, and how comfortable you feel with each function.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
 Generate the plot with `papaja::apa_beeplot()`.
 
 **CHALLENGE**: [Zhoosh up](https://www.nytimes.com/2022/01/31/style/jeuje-zhoosh-zhuzh.html) this plot to get it at least within spitting distance of nicely formatted.
@@ -772,18 +748,23 @@ This section is derived from `discovr_10`, which also has more explanations and 
 Mediation models follow a classic structure. A predictor, X, has some relationship with the outcome, Y; this is the direct effect, *c*. The mediation route is the hypothesised mechanism by way of which X has its relationship in Y, either in whole or in part. The *a* and *b* paths in the model below represent the mediation route via the mediator, M.
 
 ```{mermaid}
+%%| label: fig-med
+%%| fig-cap: Mediation diagram
+%%| fig-align: center
 flowchart LR
-      X -- "`Path *a*`"--> M[Mediator] -- "`Path *b*`"--> Y
-      X[Predictor] -- "`Direct Effect *c*`" --> Y[Outcome]
+      X -- Path a --> M[M: Mediator] -- Path b--> Y
+      X[X: Predictor] -- Direct Effect c --> Y[Y: Outcome]
 ```
 
 For our example today, we'll use MCQ score as our outcome of interest, Y. I'll suggest that how anxious you are about numerical topics impacts MCQ score, so RMARS numerical anxiety score will be our predictor, X. However, it could be that this numerical anxiety makes you more anxious right before you take an MCQ test about numerical topics, which then impacts MCQ score. So, the mediator, M, will be STICSA pre-test state anxiety score.
-that how anxious you are before you take the MCQ test predicts MCQ score, so our STICSA pre-test state anxiety score will be the predictor, X. However, it could be that this (generalised) pre-test state anxiety triggers increased anxiety about numerical topics, which then impacts MCQ score. So, the mediator M will be the R-MARS numerical anxiety score.
 
 ```{mermaid}
+%%| label: fig-mars-med
+%%| fig-cap: Mediation diagram for the MCQ example
+%%| fig-align: center
 flowchart LR
-      X -- "`Path *a*`"--> M[M: STICSA Pre-Test State Anxiety] -- "`Path *b*`"--> Y
-      X[X: R-MARS Numerical Anxiety] -- "`Total Effect *c*`" --> Y[Y: MCQ score]
+      X -- Path a--> M[M: STICSA Pre-Test State Anxiety] -- Path b--> Y
+      X[X: R-MARS Numerical Anxiety] -- Direct Effect c--> Y[Y: MCQ score]
 ```
 
 All clear? Brill. That's a good thing because...
@@ -808,7 +789,6 @@ model <- 'outcome ~ c*predictor + b*mediator
 So, all we have to do is replace `predictor`, `mediator`, and `outcome` with the correct variable names!
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
 Create a new object, `mars_model`, that contains the text above with the correct variable names from `anx_data`.
 
 ::: {.callout-note collapse="true" title="Solution"}
@@ -860,8 +840,7 @@ Before we fit our model, we will first mean-centre our predictors. This doesn't 
 If this sounds like a job for `mutate()`, you're absolutely right!
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
-Create two new variables in the dataset, with the same names as the originals but with "_cent" on the end, that are mean-centered. Don't forget to assign this change back to the dataset.
+Create two new variables in the dataset, with the same names as the originals but with "\_cent" on the end, that are mean-centered. Don't forget to assign this change back to the dataset.
 
 ::: {.callout-note collapse="true" title="Solution"}
 ```{r}
