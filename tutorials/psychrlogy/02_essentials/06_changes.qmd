@@ -582,7 +582,7 @@ rep_excl <- function(summary, value){ # <1>
   summary |> # <2>
     dplyr::filter(remove == value) |> # <2>
     dplyr::pull(n) # <2>
-}
+} # <2>
 
 rep_excl(exclusion_summary, "no_consent") # <3>
 ```
@@ -595,7 +595,7 @@ Shiny right? Now my report might look like this:
 
 > To begin, `` `r knitr::inline_expr("rep_excl(exclusion_summary, 'no_consent')")` `` cases were removed who did not consent. Next, `` `r knitr::inline_expr("rep_excl(exclusion_summary, 'age_young')")` `` cases were removed who were younger than 18, which...
 
-We're done, right? Much easier to read, much easier to update. The only downside is that we have to create the `rep_excl()` function further up in this document, in a sourced script, or in our own package.
+Surely we're done now! Much easier to read, much easier to update. The only downside is that we have to create the `rep_excl()` function further up in this document, in a sourced script, or in our own package.
 
 We're done, *right*?
 
@@ -690,40 +690,24 @@ anx_data |>
 :::
 
 ::: {.callout-note title="Exercise" appearance="minimal"}
-**CHALLENGE**: You might notice that there's no `variable_name =` bit of the command to rename the transformed variables, so `across()` by default overwrites those variables, rather than creating new ones. However, the help documentation for `across()` describes a method for creating new output variables. Using this info, do the same task as above, but create new all-caps versions of the variable names so the originals are not overwritten.
-
-*Hint*: Look in the Examples, under `# Using an external vector of names`
+**CHALLENGE**: You might notice that `across()` by default overwrites variables, rather than creating new ones. However, the help documentation for `across()` includes an argument for creating new variables names. Do the same task as above - adding 10 to the RMARS-S variables - but add `_plusten` to the end of the new variable names.
 
 ::: {.callout-note title="Solution" collapse="true"}
-The help documentation starts by creating a new object of the variable names to work with "by hand". Once again, typing out the names of all 20 R-MARS-S items would be a right pain and violate the Function Commandment, so instead we're going to be cheeky and get the names from the data.
+Under "Arguments", the help documentation describes the `.names` argument, which allows us to easily create new variable names. This uses a "glue specification" (see [the {glue} package](https://glue.tidyverse.org/) for more on that!) but we don't need much more than what's in the help documentation for this.
 
-```{r}
-these_cols <- anx_data |> 
-  dplyr::select(contains("_s_")) |> 
-  names()
-these_cols
-```
-
-Next, as in the help documentation, we are going to change these column names to uppercase using `toupper()` and then assign them as vector element names.
-
-```{r}
-names(these_cols) <- toupper(these_cols)
-these_cols
-```
-
-We now have a vector of variable names, which are each named with an uppercase version of themselves! How does this help us? Well, now let's try to perform the same +10 operation, again modelling the code on the help documentation:
+So, let's add the `.names` argument. Here we're using `{.col}` as a stand-in for each variable name, so all of the new variables with 10 added will have the same name as the original, but with `_plusten` at the end.
 
 ```{r}
 anx_data |> 
   dplyr::mutate(
-    across(all_of(these_cols),
-           ~ .x + 10),
+    across(contains("_s_"),
+           ~ .x + 10,
+           .names = "{.col}_plusten"),
     ## For tutorial demo purposes only!
     .keep = "used"
   )
 ```
-
-This time around, the original variables still exist untouched in the dataset, and the new variables with +10 added have the same variable names, but in all caps. Bosh!
+Bosh!
 :::
 :::
 

@@ -16,7 +16,7 @@ Either copy the link to use in `readr::read_csv()`, or save the data at the link
    <th style="text-align:left;"> Filename </th>
    <th style="text-align:left;"> Citation/Source </th>
    <th style="text-align:left;"> Comments </th>
-   <th style="text-align:left;"> URL </th>
+   <th style="text-align:left;"> Download </th>
   </tr>
  </thead>
 <tbody>
@@ -24,19 +24,19 @@ Either copy the link to use in `readr::read_csv()`, or save the data at the link
    <td style="text-align:left;"> syn_data.csv </td>
    <td style="text-align:left;"> <a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0155483">Mealor et al., 2016</a> </td>
    <td style="text-align:left;"> Dataset publicly available </td>
-   <td style="text-align:left;"> <a href="https://raw.githubusercontent.com/drmankin/practicum/master/data/syn_data.csv">Link</a> </td>
+   <td style="text-align:left;"> <a href="https://raw.githubusercontent.com/drmankin/practicum/master/data/syn_data.csv">Download syn_data.csv</a> </td>
   </tr>
   <tr>
    <td style="text-align:left;"> anx_data.csv </td>
    <td style="text-align:left;"> <a href="https://osf.io/8jk5v/">Terry, Lea, &amp; Field (in prep)</a> </td>
    <td style="text-align:left;"> Dataset shared for teaching purposes. Note that demographics in this dataset are SIMULATED FOR TEACHING PURPOSES and are NOT real data. </td>
-   <td style="text-align:left;"> <a href="https://raw.githubusercontent.com/drmankin/practicum/master/data/anx_data.csv">Link</a> </td>
+   <td style="text-align:left;"> <a href="https://raw.githubusercontent.com/drmankin/practicum/master/data/anx_data.csv">Download anx_data.csv</a> </td>
   </tr>
   <tr>
    <td style="text-align:left;"> anx_scores_data.csv </td>
    <td style="text-align:left;"> <a href="https://osf.io/8jk5v/">Terry, Lea, &amp; Field (in prep)</a> </td>
    <td style="text-align:left;"> Dataset shared for teaching purposes, with mean subscale scores instead of individual items. Note that demographics in this dataset are SIMULATED FOR TEACHING PURPOSES and are NOT real data. </td>
-   <td style="text-align:left;"> <a href="https://raw.githubusercontent.com/drmankin/practicum/master/data/anx_scores_data.csv">Link</a> </td>
+   <td style="text-align:left;"> <a href="https://raw.githubusercontent.com/drmankin/practicum/master/data/anx_scores_data.csv">Download anx_scores_data.csv</a> </td>
   </tr>
 </tbody>
 </table>
@@ -78,6 +78,10 @@ or click through to view the text and copy/paste into an empty .Qmd document.
   <tr>
    <td style="text-align:left;"> 07: Visualisations </td>
    <td style="text-align:left;"> <a href="https://raw.githubusercontent.com/drmankin/practicum/master/workbooks/07_dataviz_workbook.qmd" download="07_dataviz_workbook.qmd">Download 07_dataviz_workbook.qmd</a> </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 08: Analysis </td>
+   <td style="text-align:left;"> <a href="https://raw.githubusercontent.com/drmankin/practicum/master/workbooks/08_analysis_workbook.qmd" download="08_analysis_workbook.qmd">Download 08_analysis_workbook.qmd</a> </td>
   </tr>
 </tbody>
 </table>

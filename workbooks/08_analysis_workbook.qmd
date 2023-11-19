@@ -1,0 +1,316 @@
+---
+title: "08: Analysis"
+embed-resources: true
+editor: visual
+---
+
+## Open the Tutorial
+
+Use the following code chunks to open the accompanying tutorial.
+
+### Open in RStudio Viewer
+
+```{r}
+rstudioapi::viewer('https://r-training.netlify.app/tutorials/psychrlogy/02_essentials/08_analysis')
+```
+
+### Open in a New Browser Tab
+
+```{r}
+utils::browseURL('https://r-training.netlify.app/tutorials/psychrlogy/02_essentials/08_analysis')
+```
+
+
+
+## Overview
+
+
+## Setup
+
+
+### Packages
+
+Load the packages.
+
+```{r}
+
+```
+
+
+
+### Data
+
+Read in the dataset and save it in a new object, `anx_data`.
+
+On the Cloud, you can read in this dataset from the `data` folder using `here::here()`.
+
+Elsewhere, you can download the dataset, or copy the dataset URL, from the [Data and Workbooks page](../../../data_workbooks.qmd).
+
+```{r}
+
+```
+
+
+
+#### Codebook
+
+
+## Categorical Predictors
+
+
+### Comparing Several Means
+
+
+#### Plot
+
+Use what we covered in the last tutorial to create a violin or raincloud plot (your choice) with means and CIs. **Optionally**, spruce up your plot with labels and a theme.
+
+```{r}
+
+```
+
+
+
+#### Fit the Model
+
+Change out the "/" in the value `other/pnts` for an underscore, so the value reads `other_pnts`.
+
+*Hint*: You can try `stringr::str_replace_all()` for a {tidyverse} solution, or if you're basic like me, have a look at `gsub()`.
+
+```{r}
+
+```
+
+
+Follow the steps below to fit and examine the model.
+```{r}
+
+```
+
+
+
+#### Contrasts
+
+First, change the character `gender` variable into a factor. You can do this just for this variable, or **optionally** use some of the challenge functions from the last tutorials to change all of the character variables into factors together.
+
+Then, use `contr.sum()` to set the contrasts for the `gender` variable.
+
+```{r}
+
+```
+
+
+Fit the model again and get the same parameters table as before.
+
+```{r}
+
+```
+
+
+
+#### Post-Hoc Tests
+
+
+### What about ANCOVA?
+
+
+### Factorial Designs
+
+
+#### Fit the Model
+
+
+Recode the existing `sticsa_trait_score` variable into a categorical variable, with "high" values of 2.5 or greater, and "low" values below 2.5. Don't forget to save this change to your dataset!
+
+```{r}
+
+```
+
+
+
+Follow along with the code below to fit and interpret the model.
+
+```{r}
+
+```
+
+
+
+**CHALLENGE**: Imagine you were working with a dataset that *didn't* already have ID codes. How could you generate a new `id_code` variable to use in the {afex} formula, that has a unique value for each row?
+
+```{r}
+
+```
+
+
+
+#### Interaction Plot
+
+Generate the plot.
+
+**CHALLENGE**: Use the `afex_plot()` help documentation and last week's tutorial on {ggplot2} to clean up this plot and make it presentable.
+
+```{r}
+
+```
+
+
+
+#### EMMs
+
+
+Generate the table of estimated marginal means.
+
+**CHALLENGE**: Turn this estimated marginal means table into a nicely formatted table using `kbl()` (and, if you feel up for it, `pivot_wider()`).
+
+```{r}
+
+```
+
+
+
+#### Simple Effects
+
+
+Produce the same output but the other way round, i.e. for the trait anxiety predictor.
+
+```{r}
+
+```
+
+
+
+### Mixed Designs
+
+
+#### Reshaping with `pivot_*()`
+
+
+Reshape the dataset as above and assign to a **new dataset name**, `anx_data_long`, lest we overwrite all our data with this much smaller and reshaped dataset!
+
+*Hint*: It's fine to copy the code above, especially if you're short on time, but you'll learn and understand the code much better if you type it out instead of copying it.
+
+```{r}
+
+```
+
+
+
+**CHALLENGE**: How can you read the regular expression `.*?_(.*?)_.*`? If you're not sure, try putting into [regex101.com](https://regex101.com/) for some help (without the quotes).
+
+```{r}
+
+```
+
+
+
+#### Fit the Model
+
+
+Follow along with the code below to fit and interpret the model.
+
+```{r}
+
+```
+
+
+
+#### Main Effects
+
+
+Following the example above, get EMMs and a plot for the main effect of `sticsa_time`.
+
+```{r}
+
+```
+
+
+
+#### Two-Way Interactions
+
+
+Generate the plot with `papaja::apa_beeplot()`.
+
+**CHALLENGE**: [Zhoosh up](https://www.nytimes.com/2022/01/31/style/jeuje-zhoosh-zhuzh.html) this plot to get it at least within spitting distance of nicely formatted.
+
+*Hint*: Use the [{papaja} help documentation](https://frederikaust.com/papaja_man/reporting.html#figures)!
+
+```{r}
+
+```
+
+
+
+## Continuous Predictors
+
+
+### Mediation
+
+
+#### Fit the Model
+
+
+Create a new object, `mars_model`, that contains the text above with the correct variable names from `anx_data`.
+
+```{r}
+
+```
+
+
+Fit and save the model using the example code.
+```{r}
+
+```
+
+
+
+#### Results
+
+Review the fit statistics and parameter estimates for the mediation model.
+
+```{r}
+
+```
+
+
+
+### Moderation
+
+
+#### Centring
+
+
+Create two new variables in the dataset, with the same names as the originals but with "_cent" on the end, that are mean-centered. Don't forget to assign this change back to the dataset.
+
+```{r}
+
+```
+
+
+**CHALLENGE**: Instead of doing this "manually", use the `scale()` function to mean-centre your variables. Use the help documentation to make sure you use the right arguments.
+
+```{r}
+
+```
+
+
+
+#### Fit the Model
+
+Fit the model with MCQ score as the outcome, and the centered versions of STARS interpretation anxiety and STICSA trait anxiety as the predictors, including an interaction. Save the model in a new object called `stars_mod_lm`.
+
+```{r}
+
+```
+
+
+
+#### Results
+
+Have a look at the model results. If you feel so inclined, print them out in a nice auto-formatted table as well.
+
+```{r}
+
+```
+
+

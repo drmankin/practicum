@@ -59,7 +59,7 @@ library(tidyverse)
 Today we're continuing to work with the dataset courtesy of fantastic Sussex colleague [Jenny Terry](https://www.jennyterry.co.uk/). This dataset contains real data about statistics and maths anxiety. For these latter two tutorials, I've created averaged scores for each overall scale and subscale, and dropped the individual items.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-Read in the dataset and save it in a new object, `anx_score_data`.
+Read in the dataset and save it in a new object, `anx_data`.
 
 On the Cloud, you can read in this dataset from the `data` folder using `here::here()`.
 
@@ -69,7 +69,7 @@ Elsewhere, you can download the dataset, or copy the dataset URL, from the [Data
 Read in from file:
 
 ```{r}
-anx_scores_data <- readr::read_csv(here::here("data/anx_scores_data.csv"))
+anx_data <- readr::read_csv(here::here("data/anx_scores_data.csv"))
 ```
 
 Read in from URL:
@@ -77,7 +77,7 @@ Read in from URL:
 ```{r}
 #| eval: false
 
-anx_data <- readr::read_csv("https://raw.githubusercontent.com/drmankin/practicum/master/data/anx_scores_data.csv")
+anx_data <- readr::read_csv("https://raw.githubusercontent.com/drmankin/practicum/master/data/anx_data.csv")
 ```
 :::
 :::
@@ -96,6 +96,7 @@ Participants also completed the State-Trait Inventory for Cognitive and Somatic 
 For learning purposes, I've randomly generated some additional variables to add to the dataset containing info on distribution channel, consent, gender, and age. Especially for the consent variable, don't worry: all the participants in this dataset did consent to the original study. I've simulated and added this variable in later to practice removing participants.
 :::
 
+::: {.callout-not title="Codebook" collapse="true"}
 ```{r}
 #| echo: false
 
@@ -106,6 +107,7 @@ readr::read_csv(here::here("data/anx_scores_codebook.csv")) %>%
   ) |> 
   kableExtra::kable_styling()
 ```
+:::
 
 If you have some experience with R, you are welcome to instead use another dataset that you are familiar with or are keen to explore. However, remember that anything you upload to Posit Cloud is visible to all workspace admins, so keep GDPR in mind.
 
@@ -126,16 +128,16 @@ This section is derived from `discovr_11`, which also has more explanations and 
 Let's start by visualising our variables. The `discovr` tutorial also includes code for a table of means and CIs, which we won't cover here.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-Use what we covered in the last tutorial to create a violin plot with means and CIs. **Optionally**, spruce up your plot with labels and a theme.
+Use what we covered in the last tutorial to create a violin or raincloud plot (your choice) with means and CIs. **Optionally**, spruce up your plot with labels and a theme.
 
 ::: {.callout-note collapse="true" title="Solution"}
 ```{r}
-anx_scores_data |> 
+anx_data |> 
   ggplot2::ggplot(aes(x = gender, y = stars_help_score)) + 
-  geom_violin() +
+  geom_rain() + ## or swap out for geom_violin()!
   stat_summary(fun.data = "mean_cl_boot") +
   ## here's the sprucing
-  labs(x = "Gender Identity", y = "Mean Trait Anxiety") +
+  labs(x = "Gender Identity", y = "STARS Asking for Help Anxiety Score") +
   theme_minimal()
 ```
 :::
@@ -145,22 +147,52 @@ anx_scores_data |>
 
 As mentioned above, this model is taught as a linear model with a categorical predictor. That's literal: we're going to use the `lm()` function to fit the model. It was a bit ago, but we covered the linear model and `lm()` function in more depth back in [Tutorial 04](../01_fundRmentals/04_lm.qmd).
 
+Unfortunately, we'll need to make a quick change to our data beforehand.
+
 ::: {.callout-note appearance="minimal" title="Exercise"}
-Fit a linear model with STARS Asking for Help subscale score as the outcome, and gender as the predictor, and save this model as `stars_lm`.
+Change out the "/" in the value `other/pnts` for an underscore, so the value reads `other_pnts`.
 
-Then, obtain the *F*-ratio for this model. Does the overall model explain the variance in the outcome better than just using the overall mean of the outcome? **Optionally**, use the `discovr` tutorial to get an overall effect size as well.
-
-Finally, get a table of model parameters, including confidence intervals, using `broom::tidy()`. **Optionally**, print it out in a nice APA-style table.
+*Hint*: You can try `stringr::str_replace_all()` for a {tidyverse} solution, or if you're basic like me, have a look at `gsub()`.
 
 ::: {.callout-note collapse="true" title="Solution"}
-First, let's fit the model and store it in `stars_lm`.
+{stringr} solution:
 
 ```{r}
-stars_lm <- lm(stars_help_score ~ gender, data = anx_scores_data)
+anx_data <- anx_data |> 
+  dplyr::mutate(
+    gender = stringr::str_replace_all(gender, 
+                                      pattern = "/", 
+                                      replacement = "_")
+  )
+```
+
+`gsub()` solution:
+
+```{r}
+#| eval: false
+
+anx_data <- anx_data |> 
+  dplyr::mutate(
+    gender = gsub("/", "_", gender)
+  )
+```
+
+These will do exactly the same thing, so which one you use is completely preference. It's very useful to know how to do this sort of thing though!
+:::
+:::
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Follow the steps below to fit and examine the model.
+:::
+
+Next up, we need to fit the model. There's absolutely no difference between this and what we did previously in Tutorial 04, *at all*, so let's use the same technique to fit a linear model with STARS Asking for Help subscale score as the outcome and gender as the predictor, and save this model as `stars_lm`.
+
+```{r}
+stars_lm <- lm(stars_help_score ~ gender, data = anx_data)
 
 ```
 
-We saw previously that we can get R^2^ and *F* for the model using `broom::glance()`:
+Next, again just as we did previously, we can get model fit statistics and an *F* ratio for the model using `broom::glance()`.
 
 ```{r}
 broom::glance(stars_lm)
@@ -173,17 +205,11 @@ anova(stars_lm) |>
   parameters::model_parameters(effectsize_type = "omega")
 ```
 
-Finally, we can get the parameters table as a dataset, or format it nicely with {papaja}.
+Finally, we can get a look at the model parameters using `broom::tidy()`, and see what R has done about our categorical predictor.
 
 ```{r}
-## Raw output
 broom::tidy(stars_lm, conf.int = TRUE)
-
-## Papaja table
-papaja::apa_table(papaja::apa_print(stars_lm)$table)
 ```
-:::
-:::
 
 ```{r}
 #| include: false
@@ -198,7 +224,7 @@ str_to_oxford <- function(x, backticks = TRUE){
     sub(pattern = ", ([^,]*)$", replacement = ", and \\1")
 }
 
-gender_oxford <- anx_scores_data |> 
+gender_oxford <- anx_data |> 
   dplyr::pull(gender) |> 
   unique() |> 
   str_to_oxford()
@@ -240,7 +266,7 @@ Without any fancy extras, we can just change `gender` into a factor directly - d
 
 ```{r}
 #| eval: false
-anx_scores_data <- anx_scores_data |> 
+anx_data <- anx_data |> 
   dplyr::mutate(
     gender = factor(gender)
   )
@@ -249,7 +275,7 @@ anx_scores_data <- anx_scores_data |>
 To make sure we don't have to deal with this again, we can change all of the character variables into factors with the `across()` + `where()` tag team from the last tutorial.
 
 ```{r}
-anx_scores_data <- anx_scores_data |> 
+anx_data <- anx_data |> 
   dplyr::mutate(
     across(where(is.character), factor)
   )
@@ -258,7 +284,7 @@ anx_scores_data <- anx_scores_data |>
 Now that `gender` is a factor, we can set the contrasts.
 
 ```{r}
-contrasts(anx_scores_data$gender) <- contr.sum(3)
+contrasts(anx_data$gender) <- contr.sum(4)
 ```
 :::
 :::
@@ -272,7 +298,7 @@ Because the underlying `gender` variable has changed, all we need to do is rerun
 Just so I can compare them if I want to, I'm going to call this model something different.
 
 ```{r}
-stars_contr_lm <- lm(stars_help_score ~ gender, data = anx_scores_data)
+stars_contr_lm <- lm(stars_help_score ~ gender, data = anx_data)
 
 papaja::apa_table(papaja::apa_print(stars_contr_lm)$table)
 ```
@@ -281,32 +307,24 @@ papaja::apa_table(papaja::apa_print(stars_contr_lm)$table)
 
 #### Post-Hoc Tests
 
-If we didn't have an *a priori* prediction about the differences between groups, we may decide to instead run post-hoc tests.
+If we didn't have an *a priori* prediction about the differences between groups, we may decide to instead run post-hoc tests. We can use the function `modelbased::estimate_contrasts()` to get post-hoc tests by putting in the original model (before we set the contrasts) and telling it which variable to produce the tests for. Confusingly, this argument is also called `contrast =` !
 
-::: {.callout-note appearance="minimal" title="Exercise"}
-Use the function `modelbased::estimate_contrasts()` to get post-hoc tests by putting in the original model
-
-::: {.callout-note collapse="true" title="Solution"}
 ```{r}
-anx_scores_data |> 
-  dplyr::group_by(gender) |> 
-  dplyr::summarise(
-    n = dplyr::n()
-  )
-
-
-
 modelbased::estimate_contrasts(stars_lm, 
                                contrast = "gender")
 ```
-:::
+
+::: callout-warning
+### What about ANCOVA?
+
+The procedures for including a covariate in the linear model aren't too complex, but the additional work to be done - testing independence of the covariate, changing the type of *F*-statistic, checking homogeneity of regression slopes, and so on - are just a bit much for this tutorial. If you are Keen to include a covariate, check out the *very* thorough `discovr_12` for a detailed walkthrough.
 :::
 
 ### Factorial Designs
 
-Our next analysis will be factorial design with two categorical predicts, traditionally called a 2x2 independent ANOVA. Although this can certainly be done using `lm()`, at this point the `lm()` route becomes a bit burdensome, so we will instead switch to using the {afex} package, which is designed especially for these types of analyses ("afex" stands for "analysis of factorial experiments"). The {discovr} tutorials for this and subsequent similar ANOVA-type analyses demonstrate both {afex} and `lm()` options, but students are only required to use {afex}.
+Our next analysis will be factorial design with two categorical predictors, traditionally called a 2x2 independent ANOVA. Although this can certainly be done using `lm()`, at this point the `lm()` route becomes a bit burdensome, so we will instead switch to using the {afex} package, which is designed especially for these types of analyses ("afex" stands for "analysis of factorial experiments"). The {discovr} tutorials for this and subsequent similar ANOVA-type analyses demonstrate both {afex} and `lm()` options, but students are only required to use {afex}.
 
-For our practice today, we'll look at again at gender, but this time with male and female participants only, and we'll compare whether their post-MCQ state anxiety scores are different depending on whether they saw stats or maths MCQ questions.
+For our practice today, we'll look at again at gender, but this time with male and female participants only, and we'll compare whether their post-MCQ state anxiety scores are different depending on whether have high or low trait anxiety.
 
 ::: callout-tip
 This section is derived from `discovr_13`, which also has more explanations and advanced techniques.
@@ -314,161 +332,655 @@ This section is derived from `discovr_13`, which also has more explanations and 
 
 #### Fit the Model
 
+First we need to make a change to our dataset - namely, creating the `sticsa_trait_cat` variable we looked at last week as well.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Recode the existing `sticsa_trait_score` variable into a categorical variable, with "high" values of 2.5 or greater, and "low" values below 2.5. Don't forget to save this change to your dataset!
+
+::: {.callout-note collapse="true" title="Solution"}
+Expensive and sophisticated `dplyr::case_when()` option:
+
 ```{r}
-anx_scores_data <- anx_scores_data |> 
-  dplyr::filter(gender %in% c("male", "female")) |> 
+anx_data <- anx_data |> 
   dplyr::mutate(
-    sticsa_cat = ifelse(sticsa_trait_score > 2, "anxious", "not anxious")
+    sticsa_trait_cat = dplyr::case_when(
+      sticsa_trait_score >= 2.5 ~ "high", 
+      sticsa_trait_score < 2.5 ~ "low",
+      .default = NA)
   )
 ```
 
+Cheap and cheerful `ifelse()` option:
+
 ```{r}
-# fit the model:
-mcq_afx <- afex::aov_4(sticsa_post_state_score ~ sticsa_cat*mcq + (1|id), data = anx_scores_data)
-mcq_afx #this shows us the model
+#| eval: false
+#| 
+anx_data <- anx_data |> 
+  dplyr::mutate(
+    sticsa_trait_cat = ifelse(sticsa_trait_score >= 2.5, "high", "low")
+  )
 ```
+:::
+:::
+
+With our categorical predictor in place, we can now fit our model.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Follow along with the code below to fit and interpret the model.
+:::
+
+The function we'll use for this and the next analysis as well is `afex::aov_4()`. The arguments to this function will look *extremely* familiar - in fact, it looks just about exactly like the way we used the `lm()` function. The only new thing is the extra element at the end of the function, `+ (1|id)`. We can ignore it for now, although we'll come back to it in the mixed design analysis. The main thing to notice is that if your dataset doesn't have one, you'll need a variable that contains ID codes or numbers of some type to use here. This dataset conveniently has anonymous alphanumeric ID codes in a variable called `id`, but if yours doesn't, you'd have to add or generate them.
+
+```{r}
+## Store the model
+mcq_afx <- afex::aov_4(sticsa_post_state_score ~ mcq*sticsa_trait_cat + (1|id), 
+                       data = anx_data)
+## Print the model
+mcq_afx
+```
+
+So it seems that there's a significant *main effect* of anxiety (no surprise there), but no *interaction* with MCQ type.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+**CHALLENGE**: Imagine you were working with a dataset that *didn't* already have ID codes. How could you generate a new `id_code` variable to use in the {afex} formula, that has a unique value for each row?
+
+::: {.callout-note collapse="true" title="Solution"}
+There are *so* many ways to do this, but here's two quick ones.
+
+First, you could simply generate a new variable containing the numbers 1 through as many rows as there are in the dataset.
+
+```{r}
+anx_data |> 
+  dplyr::mutate(
+    id_code = 1:dplyr::n(),
+    .before = id
+  )
+```
+
+Second, you could use a function to convert the row numbers of the dataset into a variable:
+
+```{r}
+anx_data |> 
+  tibble::rowid_to_column(var = "id_code")
+```
+:::
+:::
 
 #### Interaction Plot
 
+Besides producing easy-to-read output, one of the handy things about {afex} is that you can quickly generate interaction plots. The `afex_plot()` function lets you take a model you've produced with {afex} and visualise it easily. Since we have one of those to hand (convenient!) let's have a look.
+
+Minimally, we need to provide the model object, the variable to put on the *x*-axis, and the "trace", the variable on separate lines. Unlike with {ggplot}, though, here we need to provide the names of those variables as strings inside quotes.
+
 ```{r}
-# solution:
-afex::afex_plot(mcq_afx, "mcq", "sticsa_cat") +
-  labs(x = "Type of MCQ Test", y = "STICSA Post-Test State Anxiety") +
-  
-  theme_minimal()
+afex::afex_plot(mcq_afx,
+                x = "mcq",
+                trace = "sticsa_trait_cat")
 ```
+
+The plot we get for very little work already has a lot of useful stuff. We get means for each combination of groups, with different values on the "trace" variable with different point shapes and connected by different lines. It needs some work, of course, but especially as a quick glimpse at the relationships of interest, it's a good start!
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Generate the plot.
+
+**CHALLENGE**: Use the `afex_plot()` help documentation and last week's tutorial on {ggplot2} to clean up this plot and make it presentable.
+
+::: {.callout-note collapse="true" title="Solution"}
+Here's what I went for! There's a couple small bits left, like the labels on the legend, that I'll leave to you to work out.
+
+```{r}
+
+afex::afex_plot(mcq_afx, "mcq", "sticsa_trait_cat",
+                legend_title = "STICSA Trait\nAnxiety",
+                factor_levels = list(
+                  sticsa_cat = c(high = "High",
+                                 low = "Low")),
+                data_arg = list(
+                  position = position_jitterdodge()
+                )
+                ) +
+  scale_x_discrete(name = "Type of MCQ", 
+                     labels = c("Maths", "Stats")) +
+  scale_y_continuous(name = "STICSA Post-Test State Anxiety",
+                     limits = c(1,4),
+                     breaks = 1:4) +
+  papaja::theme_apa()
+```
+:::
+:::
 
 #### EMMs
 
+In addition to the plot, we can get get the actual means for each combination of categories. As with everything, there's a package for it! Just like with `afex_plot()`, we provide the model object and the relevant variables to calculate means for.
+
 ```{r}
-emmeans::emmeans(mcq_afx, c("mcq", "sticsa_cat"))
+emmeans::emmeans(mcq_afx, c("mcq", "sticsa_trait_cat"))
 ```
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Generate the table of estimated marginal means.
+
+**CHALLENGE**: Turn this estimated marginal means table into a nicely formatted table using `kbl()` (and, if you feel up for it, `pivot_wider()`).
+
+::: {.callout-note collapse="true" title="Solution"}
+The only information I really want out of this table are the means and confidence intervals. Instead of keeping all the other info, I decided to combine the means and CIs into a single variable using `paste0()`. The rest is just rearranging, relabelling, and making things look good!
+
+```{r}
+emmeans::emmeans(mcq_afx, c("mcq", "sticsa_trait_cat")) |> 
+  ## convert to tibble to work with more easily
+  tibble::as_tibble() |> 
+  ## concatenate all the info into a new variable and reformat mcq
+  dplyr::mutate(
+    mean_ci = paste0(round(emmean, 2), " ",
+                "[", round(lower.CL, 2), 
+                ", ", round(upper.CL, 2), "]"),
+    mcq = stringr::str_to_title(mcq)
+  ) |> 
+  ## keep only categorical vars and new one
+  dplyr::select(mcq, sticsa_trait_cat, mean_ci) |> 
+  ## reshape
+  tidyr::pivot_wider(
+    names_from = sticsa_trait_cat,
+    values_from = mean_ci
+  ) |> 
+  ## reorder
+  dplyr::select(mcq, low, high) |> 
+  kableExtra::kbl(
+    col.names = c("MCQ Condition", "Low Anxiety", "High Anxiety"),
+    align = "c",
+    caption = "STICSA Post-Test State Anxiety means and 95% confidence intervals"
+  ) |> 
+  kableExtra::kable_classic() |> 
+  kableExtra::add_header_above(header = c(" " = 1, 
+                               "STICSA Trait Anxiety" = 2))
+```
+:::
+:::
 
 #### Simple Effects
 
-```{r}
-# for the model created with afex
-emmeans::joint_tests(goggles_afx, "facetype") |> 
-  knitr::kable(digits = 3)
+Finally, we can get tests of the effect between the levels of one variable, within each level of the other. Using the `emmeans::joint_tests()` function, we can use the model object and the name of the variable we want to split by to get tests within each level of that variable.
 
-emmeans::joint_tests(goggles_afx, "alcohol") |> 
-  knitr::kable(digits = 3)
+```{r}
+emmeans::joint_tests(mcq_afx, "mcq")
 ```
+
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Produce the same output but the other way round, i.e. for the trait anxiety predictor.
+
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+emmeans::joint_tests(mcq_afx, "sticsa_trait_cat")
+```
+:::
+:::
+
 
 ### Mixed Designs
 
-`discovr_16`
+::: callout-tip
+This section is derived from `discovr_16`, which also has more explanations and advanced techniques.
+:::
 
-#### Detour: Reshaping
+For our final ANOVA-y analysis for today, we'll look at mixed designs - that is, models with categorical predictors that include at least one independent-measures variable and at least one repeated-measures variable. This is exactly what we'll do, using STICSA state anxiety timepoint (pre and post) and MCQ type to predict STICSA state anxiety scores. But before we do, we need to look at something we've been dancing around in the challenge tasks: at long last, it's time to tackle pivoting.
+
+#### Reshaping with `pivot_*()`
+
+For our upcoming analysis, we need to change the way our data are organised in the dataset. We have a repeated measures variable that is currently measured in two variables, namely `sticsa_pre_state_score` and `sticsa_post_state_score`. This is how other programmes, like SPSS, also represent repeated measures data, but this is *not* what we need for R. Instead, we need to reshape our data, so that instead of two separate variables, each with state anxiety scores, we have a single `sticsa_state_score` variable containing all the scores, with a separate `sticsa_time` coding variable telling us which timepoint each score comes from, "pre" or "post". When we're done, each participant will have *two rows* in the dataset.
+
+Reshaping in {tidyverse} is typically done with the `tidyr::pivot_*()` family of functions, which have two star players: `pivot_wider()` and `pivot_longer()`. We use generally `pivot_wider()` when we want to turn rows into columns, and `pivot_longer()` when we want to turn columns into rows. Here, we want to turn columns into rows, and our dataset will actually get longer (we'll have twice the rows as before!), so it's `pivot_longer()` we need.
+
+::: {.callout-tip title="Partying with `pivot`"}
+Need help with pivoting? Me too, like *all* the time. Run `vignette("pivot")` in the Console for an absolute indispensable guide through both types of pivoting with a wealth of easily adaptable examples and code.
+:::
+
+For this analysis, I'm going to start by `select()`ing only the variables I actually need for the analysis, just to keep things as simple as possible. Next up is `pivot_longer()` to reshape the dataset. Minimally we have to specify the columns to pivot (using `<tidyselect>`, of course!), and where the names and values go to.
+
+In this case, the columns I want to pivot are the ones containing "state" - that is, `sticsa_pre_state_score` and `sticsa_post_state_score`. The names of these variables are moved to a new variable, `sticsa_time`, using the `names_to =` argument - this variable now contains those names as values about timepoint (pre or post). The values that those variables previously contained, which for both variables were STICSA state anxiety scores, are moved to a new variable, `sticsa_state_score`, using the `values_to =` argument. Looking at the `id` and other variables, we can see that, as expected, there are now two rows for each participant, one "pre" and one "post". Result!
 
 ```{r}
-anx_scores_data |> 
+anx_data |> 
   dplyr::select(id, contains(c("sticsa", "mcq"))) |> 
   tidyr::pivot_longer(cols = contains("state"),
-                      names_to = "time",
-                      values_to = "sticsa_state",
+                      names_to = "sticsa_time",
+                      values_to = "sticsa_state_score")
+```
+
+I'd suggest one final step, if you're willing to wander dangerously close to regular expressions. The final `names_pattern` argument allows me to specify a portion of the variable names to be moved in `names_to`, instead of the entire variable name. We can see that the names `sticsa_pre_state_score` and `sticsa_post_state_score` contain only one important element: either "pre" or "post", between the first and second underscores. The brackets in the regular expression capture this portion of each name and keep only that string in the new `sticsa_time` variable, which makes the new variable much easier to work with and read.
+
+```{r}
+anx_data |> 
+  dplyr::select(id, contains(c("sticsa", "mcq"))) |> 
+  tidyr::pivot_longer(cols = contains("state"),
+                      names_to = "sticsa_time",
+                      values_to = "sticsa_state_score",
                       names_pattern = ".*?_(.*?)_.*")
 ```
 
+::: {.callout-note appearance="minimal" title="Exercise"}
+Reshape the dataset as above and assign to a **new dataset name**, `anx_data_long`, lest we overwrite all our data with this much smaller and reshaped dataset!
+
+*Hint*: It's fine to copy the code above, especially if you're short on time, but you'll learn and understand the code much better if you type it out instead of copying it.
+
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+anx_data_long <- anx_data |> 
+  dplyr::select(id, contains(c("sticsa", "mcq"))) |> 
+  tidyr::pivot_longer(cols = contains("state"),
+                      names_to = "sticsa_time",
+                      values_to = "sticsa_state_score",
+                      names_pattern = ".*?_(.*?)_.*")
+```
+:::
+:::
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+**CHALLENGE**: How can you read the regular expression `.*?_(.*?)_.*`? If you're not sure, try putting into [regex101.com](https://regex101.com/) for some help (without the quotes).
+
+::: {.callout-note collapse="true" title="Solution"}
+**Disclaimer**: This is an *extremely* nontechnical explanation, and is meant to capture the gist of what the regex does (as I understand it!) rather than to be technically accurate.
+
+This expression really only contains four elements: `.*?`, `.*`, `()`, and `_`. The last one, the underscore, is just a literal underscore, so all we need to worry about are the other three.
+
+`.` is a very handy token in regex that means "any character" (except line terminators). Literally anything: letters, numbers, punctuation, symbols, whitespace, etc. `*` is a quantifier, expressing how many of the preceding element to match, and means "match between zero and unlimited times". So, we can read `.*` as "any character any number of times, including none." `*` is a "greedy" quantifier, which means it will match as many times as possible.
+
+So, what about `.*?`? The only new element is the `?`, which combines with `*` to create a "lazy" quantifier, matching as *few* times as possible. So, we can read `.*?` as "any character any number of times, including none, but as few as possible."
+
+Finally, the brackets `()` are a capturing group - a portion of the expression we want to single out. In this case, it denotes the portion of the string that we want to actually use as the data in our new `sticsa_time` variable.
+
+So how can we read `.*?_(.*?)_.*`? Let's compare to an example string, `sticsa_pre_state_score`.
+
+1.  `.*?_` matches any number of characters as few times as possible until it encounters an underscore. This captures the `sticsa_` portion of the example string.
+
+2.  `(.*?)_` matches any number of characters as few times as possible until it encounters the next underscore. This matches the `pre_` portion of the example string, with the brackets singling out the capturing group of interest, namely the string "pre".
+
+3.  `.*` matches any number of characters for the rest of the string. This matches the `state_score` portion of the example string.
+
+So, why didn't I type `"sticsa_(.*)_state_score"`? It would have worked just as well (try it!). In a word, generalisability. `.*?_(.*?)_.*` will get the element between the first and second underscores in *any* string, whereas `"sticsa_(.*)_state_score"` will only work for these particular variables. That's a matter of personal choice and style, but I almost always prefer the generalisable way if possible, because I know it'll be easier to adapt the next time round.
+
+If you like this kind of thing, bookmark regex101 and consider reading `vignette("regular-expressions")`!
+:::
+:::
+
 #### Fit the Model
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Follow along with the code below to fit and interpret the model.
+:::
+
+To fit our model, we'll use a very similar formula that was just saw for factorial designs. We're using the new `sticsa_state_score` as the outcome, with `mcq` (the independent-measures variable) and `sticsa_time` (the repeated-measures variable), and their interaction, as predictors. The key difference is in the last element of our formula, which is now `+ (sticsa_time|id)`. In other words, I've replaced the `1` in `+ (1|id)` with the repeated element(s) of the model.
 
 ```{r}
 # fit the model:
-mcq_rep_afx <- afex::aov_4(date ~ strategy*looks*personality + (looks*personality|id), data = date_tib)
-date_afx #this shows us the model
+anx_mcq_afx <- anx_data_long |> 
+  afex::aov_4(sticsa_state_score ~ mcq*sticsa_time + (sticsa_time|id),
+              data = _)
 
+anx_mcq_afx
 ```
 
 #### Main Effects
 
+We can see from the output above that neither main effects are significant. However, that might not always be the case, so there's a couple ways we can investigate the effect.
+
+The first is to get estimated marginal means (EMMs) for all levels of the main effect, which we can do using the `emmeans::emmeans()` function. It might be useful to save the output in a new object so you can refer to (or report!) it easily.
+
+Second, we can visualise the effect easily using `afex::afex_plot()` and only specifying one variable on the *x*-axis. I haven't worried about any additional [zhooshing](https://www.nytimes.com/2022/01/31/style/jeuje-zhoosh-zhuzh.html), except to whack on a theme.
+
 ```{r}
-emmeans::contrast(looks_emm, method = "trt.vs.ctrl", ref = 2, adjust = "holm")
+mcq_emm <- emmeans::emmeans(anx_mcq_afx, ~mcq, model = "multivariate")
+mcq_emm
 
-
+afex::afex_plot(anx_mcq_afx,
+                x = "mcq") +
+  papaja::theme_apa()
 ```
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Following the example above, get EMMs and a plot for the main effect of `sticsa_time`.
+
+::: {.callout-note collapse="true" title="Solution"}
+You can almost exactly adapt the code above, but watch out for the warning on the plot:
+
+```         
+Warning: Panel(s) show within-subjects factors, but not within-subjects error bars.
+For within-subjects error bars use: error = "within"
+```
+
+This seems very sensible!
+
+```{r}
+
+time_emm <- emmeans::emmeans(anx_mcq_afx, ~sticsa_time, model = "multivariate")
+time_emm
+
+afex::afex_plot(anx_mcq_afx,
+                x = "sticsa_time",
+                error = "within") +
+  papaja::theme_apa()
+```
+:::
+:::
 
 #### Two-Way Interactions
 
-```{r}
+The first thing we might want to do with an interaction is break it apart to understand what's happening. We can start out with this by getting a table of EMMs just like we did above. These are *slightly* more interesting than those above, but only just (I can't make much of these without a plot!).
 
-strat_looks_emm <- emmeans::emmeans(date_afx, c("strategy", "looks"), model = "multivariate")
-strat_looks_emm # shows us the means
-
-emmeans::contrast(
-  strat_looks_emm,
-  interaction = c(strategy = "trt.vs.ctrl", looks = "trt.vs.ctrl"),
-  ref = 2,
-  adjust = "holm"
-  )
-
-strat_pers_emm <- emmeans::emmeans(date_afx, c("strategy", "personality"), model = "multivariate")
-strat_pers_emm # display the means
-emmeans::contrast(strat_pers_emm, interaction = c(strategy = "trt.vs.ctrl", personality = "trt.vs.ctrl"), ref = 2, adjust = "holm")
-
-looks_pers_emm <- emmeans::emmeans(date_afx, c("looks", "personality"), model = "multivariate")
-looks_pers_emm # display the means
-emmeans::contrast(looks_pers_emm, interaction = c(looks = "trt.vs.ctrl", personality = "trt.vs.ctrl"), ref = 2, adjust = "holm")
-
-```
-
-#### Three-Way Interaction
+We could also use `emmeans::estimate_contrast()` to break down the interaction...except that there's only the one 2x2 interaction here, so all this gives us is an identical result to the interaction effect in the overall model. For other designs with more levels, the output compares 2x2 combinations of conditions to better understand what's happening.
 
 ```{r}
-three_way_emm <- emmeans::emmeans(date_afx, c("strategy", "looks", "personality"), model = "multivariate")
-three_way_emm # shows us the means
+
+anx_mcq_emm <- emmeans::emmeans(anx_mcq_afx, ~c(mcq, sticsa_time), model = "multivariate")
+anx_mcq_emm
 
 emmeans::contrast(
-  three_way_emm,
-  interaction = c(strategy = "trt.vs.ctrl", looks = "trt.vs.ctrl", personality = "trt.vs.ctrl"),
+  anx_mcq_emm,
+  interaction = c(mcq = "trt.vs.ctrl", sticsa_time = "trt.vs.ctrl"),
   ref = 2,
   adjust = "holm"
   )
 ```
 
-## Moderation
-
-### Centring
+But of course, the main thing we want to see is the interaction plot! Just as we did before, we can use `afex_plot()` to quickly get the bones of the plot and finally see what the hell is going on.
 
 ```{r}
-# Solution
-vids_tib <- vids_tib |> 
+afex::afex_plot(anx_mcq_afx,
+                x = "sticsa_time",
+                trace = "mcq",
+                error = "none") +
+  papaja::theme_apa()
+```
+
+Before we go too far into zhooshing this plot, which we've already had a go at, let's have a look at {papaja}'s entry into the automatically-making-cool-plots race. To get started, we'll set up a plot giving the data, ID variable, dependent variable (outcome), and factors (predictors):
+
+```{r}
+papaja::apa_beeplot(
+  data = anx_data_long,
+  id = "id",
+  dv = "sticsa_state_score",
+  factors = c("sticsa_time", "mcq")
+)
+```
+
+Not bad for a first effort! I like that this version shows how the points are dispersed. I don't like a good few other things: the weird axes, the strange amount of whitespace, the lack of connecting lines to help judge the interaction.
+
+Which one to use? Honestly, it depends on personal preference, the data, the journal requirements, and how comfortable you feel with each function.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Generate the plot with `papaja::apa_beeplot()`.
+
+**CHALLENGE**: [Zhoosh up](https://www.nytimes.com/2022/01/31/style/jeuje-zhoosh-zhuzh.html) this plot to get it at least within spitting distance of nicely formatted.
+
+*Hint*: Use the [{papaja} help documentation](https://frederikaust.com/papaja_man/reporting.html#figures)!
+
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+papaja::apa_beeplot(
+  data = anx_data_long,
+  id = "id",
+  dv = "sticsa_state_score",
+  factors = c("sticsa_time", "mcq"),
+  dispersion = within_subjects_conf_int,
+  ylab = "STICSA State Anxiety Score",
+  xlab = "Timepoint",
+  args_x_axis = list(
+    labels = c("Post", "Pre")
+  ),
+  args_legend = list(
+    title = "MCQ",
+    legend = c("Maths", "Stats")
+  )
+)
+```
+:::
+:::
+
+## Continuous Predictors
+
+Right, had enough of factors? Me too. We're moving on to models with categorical predictors, which we cover in two broad areas: mediation and moderation.
+
+### Mediation
+
+::: callout-tip
+This section is derived from `discovr_10`, which also has more explanations and advanced techniques.
+:::
+
+Mediation models follow a classic structure. A predictor, X, has some relationship with the outcome, Y; this is the direct effect, *c*. The mediation route is the hypothesised mechanism by way of which X has its relationship in Y, either in whole or in part. The *a* and *b* paths in the model below represent the mediation route via the mediator, M.
+
+```{mermaid}
+flowchart LR
+      X -- "`Path *a*`"--> M[Mediator] -- "`Path *b*`"--> Y
+      X[Predictor] -- "`Direct Effect *c*`" --> Y[Outcome]
+```
+
+For our example today, we'll use MCQ score as our outcome of interest, Y. I'll suggest that how anxious you are about numerical topics impacts MCQ score, so RMARS numerical anxiety score will be our predictor, X. However, it could be that this numerical anxiety makes you more anxious right before you take an MCQ test about numerical topics, which then impacts MCQ score. So, the mediator, M, will be STICSA pre-test state anxiety score.
+
+```{mermaid}
+flowchart LR
+      X -- "`Path *a*`"--> M[Mediator: STICSA Pre-Test State Anxiety] -- "`Path *b*`"--> Y
+      X[Predictor: R-MARS Numerical Anxiety] -- "`Total Effect *c*`" --> Y[Outcome: MCQ score]
+```
+
+All clear? Brill. That's a good thing because...
+
+#### Fit the Model
+
+...now we have to use it to fit the model.
+
+The method we'll use for this is a bit different than everything we've done so far. Namely, in order to make the output interpretable, we'll create some text that will express the relationships that we're interested in. It's *very* easy doing this to lose track of what goes where, so that's why it's so useful to have a clear diagram to work with. (You're welcome!)
+
+The general form of this specification looks like this:
+
+```{r}
+#| eval: false
+model <- 'outcome ~ c*predictor + b*mediator
+                   mediator ~ a*predictor
+                   indirect_effect := a*b
+                   total_effect := c + (a*b)
+                   '
+```
+
+So, all we have to do is replace `predictor`, `mediator`, and `outcome` with the correct variable names!
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Create a new object, `mars_model`, that contains the text above with the correct variable names from `anx_data`.
+
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+mars_model <- 'mcq_score ~ c*rmars_num_score + b*sticsa_pre_state_score
+                   sticsa_pre_state_score ~ a*rmars_num_score
+                   indirect_effect := a*b
+                   total_effect := c + (a*b)
+                   '
+```
+:::
+:::
+
+Once we've got that down, we can now use it as the model to give to the `lavaan::sem()` function to create the model. You might notice that there's no formula anywhere else - it's all in the `mars_model` object!
+
+```{r}
+mars_med <- lavaan::sem(mars_model, data = anx_data,
+                        missing = "FIML", estimator = "MLR")
+```
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Fit and save the model using the example code.
+:::
+
+#### Results
+
+With the horrible part over, from here we can treat our new model object exactly like an `lm()` model, getting useful fit statistics and parameters with `glance()` and `tidy()`. The output might not look quite like we're used to, though - focus on the "label" column, which points us to the results for the *a*, *b*, *c*, indirect, and total effect.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Review the fit statistics and parameter estimates for the mediation model.
+
+::: {.callout-note collapse="true" title="Solution"}
+To make this easier to read, I've filtered the `tidy()` output to drop the other rows.
+
+```{r}
+broom::glance(mars_med)
+broom::tidy(mars_med, conf.int = TRUE) |> 
+  dplyr::filter(label != "")
+```
+:::
+:::
+
+### Moderation
+
+After the slight madness of mediation, we're on safe ground again with moderation. As we began this tutorial, we'll end with a nice, straightforward linear model, with minimal bells and whistles. The only fancy bit is the interaction, which we've already had a few examples of.
+
+For this analysis, we'll predict MCQ score from STARS interpretation anxiety score and STICSA trait anxiety score.
+
+#### Centring
+
+Before we fit our model, we will first mean-centre our predictors. This doesn't change the actual model, but it does change the interpretation by setting 0 to be the mean of each variable. All we have to do is subtract each value from the overall mean of the variable.
+
+If this sounds like a job for `mutate()`, you're absolutely right!
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Create two new variables in the dataset, with the same names as the originals but with "_cent" on the end, that are mean-centered. Don't forget to assign this change back to the dataset.
+
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+anx_data <- anx_data |> 
   dplyr::mutate(
-    caunts_cent = caunts - mean(caunts, na.rm = TRUE),
-    vid_game_cent = vid_game - mean(vid_game, na.rm = TRUE)
+    sticsa_trait_score_cent = sticsa_trait_score - mean(sticsa_trait_score, 
+                                                        na.rm = TRUE),
+    stars_int_score_cent = stars_int_score - mean(stars_int_score,
+                                                  na.rm = TRUE)
   )
-vids_tib
 ```
+:::
+:::
 
-### Fit the Model
+::: {.callout-note appearance="minimal" title="Exercise"}
+**CHALLENGE**: Instead of doing this "manually", use the `scale()` function to mean-centre your variables. Use the help documentation to make sure you use the right arguments.
+
+::: {.callout-note collapse="true" title="Solution"}
+The help documentation for `scale()` tells us that we need to give it the variable to centre, then decide whether we want to centre and/or scale. We *do* want to centre, and `center = TRUE` is the default setting, so we don't need to do anything here. However, we *don't* want to scale, and `scale = TRUE` is also the default setting, so we'll need to specify `scale = FALSE`.
+
+Then we just need to `mutate()` accordingly and give our variables some new names, either manually:
 
 ```{r}
-aggress_lm <- lm(aggress ~ caunts_cent*vid_game_cent, data = vids_tib)
-broom::tidy(aggress_lm, conf.int = TRUE)
+#| eval: false
+anx_data <- anx_data |> 
+  dplyr::mutate(
+    sticsa_trait_score_cent = scale(sticsa_trait_score, scale = FALSE),
+    stars_int_score_cent = scale(stars_int_score, scale = FALSE)
+  )
 ```
 
-### Simple Slopes
+Or with `across()`, if you did the challenge tasks in Tutorial 06:
 
 ```{r}
-# Ask for confidence intervals (solution)
-interactions::sim_slopes(
-  aggress_lm,
-  pred = vid_game_cent,
-  modx = caunts_cent,
-  jnplot = TRUE,
-  robust = TRUE,
-  confint = TRUE
-  )
+#| eval: false
 
-# Label the legend (solution)
-interactions::interact_plot(
-  aggress_lm,
-  pred = vid_game_cent,
-  modx = caunts_cent,
-  interval = TRUE,
-  x.label = "Time playing video games per week (hours)",
-  y.label = "Predicted aggression",
-  legend.main = "Callous unemotional traits"
+anx_data <- anx_data |> 
+  dplyr::mutate(
+    across(c(sticsa_trait_score, stars_int_score),
+           ~scale(.x, scale = FALSE),
+           .names = "{.col}_cent")
+  )
+```
+:::
+:::
+
+#### Fit the Model
+
+The good news is that a moderation model is just a fancy name for your bog-standard linear model with an interaction effect, which means we're back to visit our old friend `lm()`. Literally the only new thing is how to specify the interaction. The simplest way is to use the multiplication symbol, `*`, to join together interacting predictors; this will include all the main effects as well as the interaction in the model at once. So, our formula will look like this:
+
+```         
+outcome ~ predictor1*predictor2
+```
+
+From there it's all exactly the same as what we did before in [Tutorial 04](../01_fundRmentals/04_lm.qmd) to fit and inspect the model.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Fit the model with MCQ score as the outcome, and the centered versions of STARS interpretation anxiety and STICSA trait anxiety as the predictors, including an interaction. Save the model in a new object called `stars_mod_lm`.
+
+::: {.callout-note collapse="true" title="Solution"}
+Just to keep things interesting, here's how you can do this with the pipe. The main difference it makes is that you can use the tab autocomplete for these long variable names when typing in the code, but it makes no difference to the resulting model.
+
+```{r}
+stars_mod_lm <- anx_data |> 
+  lm(mcq_score ~ stars_int_score_cent*sticsa_trait_score_cent,
+     data = _)
+```
+:::
+:::
+
+#### Results
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Have a look at the model results. If you feel so inclined, print them out in a nice auto-formatted table as well.
+
+::: {.callout-note collapse="true" title="Solution"}
+To just get the parameters table, we can use `broom::tidy()` as before.
+
+```{r}
+broom::tidy(stars_mod_lm, conf.int = TRUE)
+```
+
+For the fancy one, you can do this with {papaja}, {rempsyc}, or other methods of your choice. I'm going for {papaja} this time.
+
+```{r}
+papaja::apa_print(stars_mod_lm)$table |> 
+  papaja::apa_table()
+```
+:::
+:::
+
+The tutorial introduces a few ways to explore the nature of the significant interaction. First, the simple slopes output includes some helpful statistical results as well as a Johnson-Neyman plot. For this we'll use the `sim_slopes()` function from the {interactions} package as below.
+
+```{r}
+interactions::sim_slopes( # <1>
+  stars_mod_lm, # <2>
+  pred = stars_int_score_cent, # <3>
+  modx = sticsa_trait_score_cent, # <4>
+  jnplot = TRUE, # <5>
+  robust = TRUE, # <6>
+  confint = TRUE # <7>
   )
 ```
 
-## Report
+1.  Produce a simple slopes analysis as follows:
+2.  Use the model stored in the object `stars_mod_lm`,
+3.  with the centered STARS Interpretation Anxiety score as the predictor,
+4.  and the centered STICSA Trait Anxiety score as the moderator,
+5.  including a Johnson-Neyman interval plot,
+6.  robust estimation of confidence intervals,
+7.  and CIs instead of SEs.
+
+For a lovely visualisation of the simple slopes analysis, the `interact_plot()` function from the same package produces a beautiful plot with minimal effort. This plot output is also a ggplot object, so you can further add to or customise it from here if you prefer.
+
+```{r}
+interactions::interact_plot( # <1>
+  stars_mod_lm, # <2>
+  pred = stars_int_score_cent, # <3>
+  modx = sticsa_trait_score_cent, # <4>
+  interval = TRUE, # <5>
+  x.label = "STARS Interpretation Anxiety Score", # <6>
+  y.label = "Predicted MCQ Score", # <6>
+  legend.main = "STICSA Trait Anxiety Score" # <6>
+  )
+```
+
+1.  Produce a simple slopes interaction plot as follows:
+2.  Use the model stored in the object `stars_mod_lm`,
+3.  with the centered STARS Interpretation Anxiety score as the predictor,
+4.  and the centered STICSA Trait Anxiety score as the moderator,
+5.  with CIs included around the lines,
+6.  and custom labels for the *x*, *y*, and legend.
+
+ 
+
+Well, that's enough statistics for...well, to be honest, most of second year of UG! Aside from factor analysis and some other bits and pieces, we've covered a good portion of what you can expect your supervisees to have been taught previously.
+
+From here, it would be a good idea to review the {discovr} tutorial in more depth for the specific analysis you're thinking of using. However, at this point a lot of the content will be familiar - and you may even know a few tips and tricks that Andy *doesn't* cover 🥳
+
+Well done!

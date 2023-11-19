@@ -12,7 +12,7 @@ if(!dir.exists(out)){
 all_qmds_path <- "tutorials/psychrlogy"
 all_qmds <- list.files(path = all_qmds_path, pattern = "qmd", recursive = TRUE)
 
-which_file <- "07_dataviz"
+which_file <- "08_analysis"
 
 this_file <- file.path(all_qmds_path, grep(which_file, all_qmds, value = TRUE))
 
@@ -111,7 +111,7 @@ gen_workbook <- function(this_file, out){
     dplyr::mutate(
       lines = dplyr::case_when(
         is_heading ~ paste0("\n", lines, "\n"),
-        is_yaml & cumsum(is_yaml) == sum(is_yaml) ~ paste0("embed-resources: true\n---\n\n", viewer_text, "\n\n"),
+        is_yaml & cumsum(is_yaml) == sum(is_yaml) ~ paste0("embed-resources: true\neditor: visual\n---\n\n", viewer_text, "\n\n"),
         .default = lines)
     ) |>
     dplyr::group_by(ex_index) |> 
