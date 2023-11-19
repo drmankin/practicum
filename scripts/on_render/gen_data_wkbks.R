@@ -1,6 +1,6 @@
-if (!nzchar(Sys.getenv("QUARTO_PROJECT_RENDER_ALL"))) {
-  quit()
-}
+# if (!nzchar(Sys.getenv("QUARTO_PROJECT_RENDER_ALL"))) {
+#   quit()
+# }
 
 ## Datasets
 
@@ -18,16 +18,16 @@ data_info <- tibble::tribble(
   dplyr::select(data_file, cite_link, notes)
 
 data_tab <- tibble::tibble(
-  data_file =list.files(data_path, pattern = "data.csv"),
+  data_file = list.files(data_path, pattern = "data.csv"),
   link = paste0("<a href='https://raw.githubusercontent.com/drmankin/practicum/master/data/", 
-                data_file, "'>Link</a>")
+                data_file, "'>Download ", data_file, "</a>")
   )|> 
   dplyr::arrange(data_file)
 
 data_tab <- data_info |>
   dplyr::left_join(data_tab) |> 
   kableExtra::kbl(
-    col.names = c("Filename", "Citation/Source", "Comments", "URL"),
+    col.names = c("Filename", "Citation/Source", "Comments", "Download"),
     format = "html",
     escape = FALSE
   ) |> 
