@@ -1,5 +1,6 @@
 name,type,value,values
 recordeddate,date,Recorded date,
+id,character,Unique participant id number,"Alphanumeric identifier (three letters, four numbers)"
 gender,factor,What gender do you identify with?,"Female, Male"
 age,factor,Which age bracket do you fall under?,"18-29, 30-39, 40-49, 50+"
 height,numeric,Height (in m),Range: 1.49 - 1.9

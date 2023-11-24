@@ -1,5 +1,8 @@
 library(tidyverse)
 
+
+# Original Data -----------------------------------------------------------
+
 bp_data <- here::here("data/bodypos_data.sav") |> 
   haven::read_sav()
 
@@ -15,8 +18,49 @@ bp_data <- bp_data |>
   ) |> 
   dplyr::relocate(c(condition, choice_perc), .after = instagram)
 
-saveRDS(bp_data, here::here("data/bp_data.rds"))
 
+# Mess It Up --------------------------------------------------------------
+
+## Add ID variable
+## Add missing rows
+## Add individual missing values
+
+set.seed(2411)
+
+make_id <- function(){
+  paste0(paste0(sample(LETTERS, 3, replace = TRUE), collapse = ""),
+         paste0(sample(0:9, 4, replace = TRUE), collapse = ""),
+         collapse = "")
+}
+
+## Add ID variable
+bp_data <- bp_data |> 
+  dplyr::rowwise() |> 
+  dplyr::mutate(
+    id = make_id(),
+    .after = recordeddate
+  ) |> 
+  dplyr::ungroup()
+
+## Add missing rows
+na_data <- bp_data |> 
+  dplyr::slice(sample(1:nrow(bp_data), size = 12)) |> 
+  dplyr::select(1:2)
+
+bp_data <- bp_data |> 
+  dplyr::filter(!(id %in% na_data$id)) |> 
+  dplyr::full_join(na_data) |> 
+  dplyr::arrange(recordeddate)
+
+## Add individual missing values in age
+
+bp_data$age[sample(1:nrow(bp_data), 8)] <- NA
+
+## Add label
+
+labelled::var_label(bp_data$id) <- "Unique participant ID number"
+
+saveRDS(bp_data, here::here("data/bp_data.rds"))
 
 # Codebook ----------------------------------------------------------------
 
@@ -33,7 +77,11 @@ demo_bp_cb <- demo_bp_data |>
   tibble::enframe() |> 
   dplyr::rowwise() |> 
   dplyr::mutate(
-    values = unlist(value) |> paste0(collapse = ", ")
+    values = unlist(value) |> paste0(collapse = ", "),
+    values = dplyr::case_when(
+      name == "id" ~ "Alphanumeric identifier (three letters, four numbers)",
+      .default = values
+    )
   ) |> 
   dplyr::select(-value) |> 
   dplyr::left_join(demo_bp_data |> 

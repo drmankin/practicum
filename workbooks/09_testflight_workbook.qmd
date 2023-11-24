@@ -1,0 +1,63 @@
+---
+title: "09: Test Flight"
+embed-resources: true
+editor: visual
+---
+
+## Open the Tutorial
+
+Use the following code chunks to open the accompanying tutorial.
+
+### Open in RStudio Viewer
+
+```{r}
+rstudioapi::viewer('https://r-training.netlify.app/tutorials/psychrlogy/03_improvRs/09_testflight')
+```
+
+### Open in a New Browser Tab
+
+```{r}
+utils::browseURL('https://r-training.netlify.app/tutorials/psychrlogy/03_improvRs/09_testflight')
+```
+
+## Overview
+
+## Setup
+
+### Data
+
+#### Codebooks
+
+## Data Analysis Tips
+
+### Plan Your Process
+
+### Keep a Record
+
+### Be Consistent
+
+#### Variable and object names
+
+#### Packages and functions
+
+#### Overwriting vs. creating an object
+
+### Reduce Redundancies
+
+## The Whole Shebang
+
+### Planning
+
+### Inspecting
+
+### Cleaning
+
+### Wrangling
+
+### Summarising
+
+### Analysing
+
+### Visualisation
+
+### Reporting

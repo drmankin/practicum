@@ -12,30 +12,53 @@ We'll look at a new dataset and work through the process of inspecting, cleaning
 
 There's no workbook this week, because we're emulating the process of doing a data analysis from start to finish in R. Instead, create a new Quarto document to work in.
 
-### Packages
+Make sure you start out by loading any necessary packages, minimally {tidyverse}.
 
 ```{r}
+#| echo: false
 library(tidyverse)
 library(codebookr)
 ```
 
-
 ### Data
 
+Today's data comes from [Body Positivity, but not for everyone (Simon & Hurst, 2021)](https://www.sciencedirect.com/science/article/abs/pii/S1740144521000978?via%3Dihub), which has [publicly available data hosted on Figshare](https://sussex.figshare.com/articles/dataset/Dataset_for_paper_Body_Positivity_but_not_for_everyone/9885644) (h/t Dr Hurst for this!). You can certainly use the data directly from Figshare, but for the purposes of this tutorial, I've prepared a subset of the data that you can load in using the code below.
+
+::: {.callout-tip title="RDS File Type"}
+You might notice that instead of the familiar `readr::read_csv()`, today we have `readRDS()`. That's because the file I've prepared is an `.rds`, or R data, file. This type of file preserves some features of the data, like factor levels, that CSV and other filetypes won't. Otherwise, there's nothing new about these commands!
+:::
+
+Read in from file:
+
 ```{r}
-here::here("data/bp_data.rds") |> readRDS()
+bp_data <- here::here("data/bp_data.rds") |> readRDS()
+```
+
+Read in from URL:
+
+```{r}
+#| eval: false
+
+bp_data <- readRDS("https://raw.githubusercontent.com/drmankin/practicum/master/data/bp_data.rds")
 ```
 
 #### Codebooks
 
 There are two separate codebooks for this dataset. The first describes the demographic and other single-item variables in the dataset. The second describes the variables that are items belonging to measures, and which items belong to what measures.
 
+::: callout-important
+
+As in previous datasets we've used, I've introduced some changes to the data to mess it up a bit and give us opportunities to practice. If you want the real dataset, make sure you use the links above!
+
+:::
+
+
 ```{r}
 readr::read_csv(here::here("data/bp_demo_codebook.csv")) |> 
   kableExtra::kbl(
     col.names = c("Variable Name", "Type", "Item", "Response Options"),
     escape = FALSE,
-    format = "html"
+    format = "html",
     caption = "Demographics and Single-Item Variables"
   ) |> 
   kableExtra::kable_styling()
@@ -53,38 +76,70 @@ readr::read_csv(here::here("data/bp_sub_codebook.csv")) |>
   kableExtra::kable_styling()
 ```
 
-
-## Tips
+## Data Analysis Tips
 
 ### Plan Your Process
 
-Develop an analysis plan, maybe in a quarto doc What are the steps you need to complete?
-
-### Be Consistent
-
--   Variable and object names
--   Packages and techniques
--   When to overwrite an object vs. create a new one
+The headings in the next section provide a basic outline of the steps to help you progress through the steps of the analysis, along with some suggestions about things to check or do at each step. However, you may want to add steps, or find that others aren't necessary. For your own data analysis, it's a good idea to have a clear idea of what you are try to achieve overall and at each step, so you know when you've done it successfully!
 
 ### Keep a Record
 
--   Use comments
--   Keep ALL code, no matter how small, that contributed to your analysis process
+Today it's up to you to create your own code chunks, make your own notes, and write your own report. As you go, you'll be writing a continuous script across multiple code chunks. For this code to work as expected, it's essential that you keep a record of each bit of code that contributes to the final output.
 
-### 
+However, for future use, it's almost as important to clearly note the code that *didn't* work, or that was only for the purpose of testing or understanding your code rather than that actually contributes to the analysis process. For this, make liberal use of `# comments`. You can add comments to your code, and also "comment out" code that was useful at the time but was only for you at the time. 
+
+In the example below, I've made a comment, preceded by `##`. This is my personal convention - just one `#` will do, but I use two (or more) to visually distinguish from commented-out code. That's the next two lines: a bit of code that I might have used to check whether my exclusions or `mutate` commands worked as expected. This code isn't a part of the main tasks I want to do with my code, so I don't need this to print out when I run the code in the future; but it's handy to have it, so I know I checked and how, and so if I need to check again, I have the code easy to hand.
+
+```{r}
+#| eval: false
+
+## Checking whether the counts came out
+
+# data |> 
+#   dplyr::count(condition)
+```
+
+::: callout-tip
+To easily comment out any bit of code, highlight (select) it with your cursor and press Ctrl/Cmd + Shift + C on your keyboard.
+:::
+
+### Be Consistent
+
+This tutorial is chance to work on some skills that you might not have had a lot of practice with yet, like creating and naming objects, managing your environment, and keeping track of what you have done. You may find this confusing or frustrating at times - don't worry, that's normal, and will get much easier with practice.
+
+However, you can make things easier from the start by thinking strategically about how to manage your code and objects. The key is to be consistent, in a variety of respects.
+
+#### Variable and object names
+
+Decide on a consistent convention for naming objects, and variables/elements within objects. Thus far we've been using `snake_case`, but you can of course use another convention of your choice; I'd recommend avoiding `a_mixOf.cases`
+
+Consider using suffixes, such as `_data` for datasets, `_tab` for tables, `_lm`, `_afx` for models, `_n` for objects containing counts, etc.
+
+#### Packages and functions
+
+Decide whether you use explicit style (i.e. `package::function()`) or not. Do you need to load more packages to make sure all your functions work, if you are not using explicit style?
+
+#### Overwriting vs. creating an object
+
+This is one of the more nuanced elements of managing your environment. When you make many changes to a dataset, consider how many you may need to make before you've made something "different". It may help to think of creating a new object as a "checkpoint" that you can return to easily.
 
 ### Reduce Redundancies
 
--   Look for pinch points:
-    -   Code repeated or copy-pasted
-    -   Code not robust - could easily break or go wrong if e.g. you don't remember to update a value
-    -   
-    
+Once you have some hands-on practice, you can start to look for opportunities to make your code more resilient to errors, more efficient, and more versatile. Keep an eye out for places where your code repeats or is identical, and/or you had to copy-paste multiple times; you might want to use a more efficient iteration function, or write your own function.
+
+Similarly, watch out for places where *you*, the individual, have to remember to do something - like add or delete elements, do a calculation, or update the code - in order for it to work. These are places where you might consider instead using an object instead of hard-coded value, so you can easily update your code later.
+
 ## The Whole Shebang
 
 The following sections are intended to prompt you through the whole process of inspecting, cleaning, wrangling, summarising, visualising, analysing, and reporting results. You will notice there are no solutions! All of the exercises (and hints) are suggestions, but you're welcome to make use of this dataset and workbook however is helpful for you.
 
 Remember, rather than working in a workbook, you should create your own Quarto document and work in that file, creating code chunks as necessary.
+
+### Planning
+
+The independent manipulation in this experiment was the image condition: whether participants saw an average-sized or larger-sized model in a body positivity post, or a control travel image. A key outcome was the selections participants subsequently made from an example menu, with percentage of healthy picks provided in the dataset.
+
+Percentage of healthy picks would be a sensible outcome variable to investigate, but you are welcome to choose something else. You may want to choose a couple categorical variables - for example, condition, age, and gender - along with a couple measures of your choice.
 
 ### Inspecting
 
@@ -106,8 +161,13 @@ Create at least one nicely formatted summary table describing the variables of i
 
 ### Analysing
 
-Choose an analysis from the list below, or formulate one of your own. Then, perform the appropriate statistical analysis.
+Choose an analysis to perform and do it.
 
+::: callout-tip
+
+Remember you can always refer to the `discovr` tutorials for more help!
+
+:::
 
 ### Visualisation
 
@@ -117,9 +177,8 @@ Choose a visualisation that reflects the key comparison or relationship of inter
 
 Write up a formal report of the analysis from start to finish, including:
 
-- A statement of the key comparison or relationship of interest
-- A description of relevant data cleaning procedures, including any exclusions
-- A nicely formatted descriptive table
-- A full report and interpretation of the analysis
-- An accompanying visualisation
-
+-   A statement of the key comparison or relationship of interest
+-   A description of relevant data cleaning procedures, including any exclusions
+-   A nicely formatted descriptive table
+-   A full report and interpretation of the analysis
+-   An accompanying visualisation
