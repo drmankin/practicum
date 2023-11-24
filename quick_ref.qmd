@@ -183,7 +183,7 @@ The table below is arranged alphabetically by function name, and the linked full
   <tr>
    <td style="text-align:left;"> here() </td>
    <td style="text-align:left;"> <a href="https://here.r-lib.org//reference/here.html">here::here()</a> </td>
-   <td style="text-align:left;"> 03: Datasets<br>05: Filter and Select<br>06: Mutate and Summarise<br>07: Visualisations<br>08: Analysis </td>
+   <td style="text-align:left;"> 03: Datasets<br>05: Filter and Select<br>06: Mutate and Summarise<br>07: Visualisations<br>08: Analysis<br>09: Test Flight </td>
   </tr>
   <tr>
    <td style="text-align:left;"> hist() </td>
@@ -218,12 +218,12 @@ The table below is arranged alphabetically by function name, and the linked full
   <tr>
    <td style="text-align:left;"> kable_styling() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kableExtra::kable_styling()</a> </td>
-   <td style="text-align:left;"> 03: Datasets<br>05: Filter and Select<br>06: Mutate and Summarise<br>07: Visualisations<br>08: Analysis </td>
+   <td style="text-align:left;"> 03: Datasets<br>05: Filter and Select<br>06: Mutate and Summarise<br>07: Visualisations<br>08: Analysis<br>09: Test Flight </td>
   </tr>
   <tr>
    <td style="text-align:left;"> library() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/base/library.html">library()</a> </td>
-   <td style="text-align:left;"> 03: Datasets<br>04: Reporting Linear Models with Quarto<br>05: Filter and Select<br>06: Mutate and Summarise<br>07: Visualisations<br>08: Analysis </td>
+   <td style="text-align:left;"> 03: Datasets<br>04: Reporting Linear Models with Quarto<br>05: Filter and Select<br>06: Mutate and Summarise<br>07: Visualisations<br>08: Analysis<br>09: Test Flight </td>
   </tr>
   <tr>
    <td style="text-align:left;"> lm() </td>
@@ -319,6 +319,11 @@ The table below is arranged alphabetically by function name, and the linked full
    <td style="text-align:left;"> range() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/base/range.html">range()</a> </td>
    <td style="text-align:left;"> 03: Datasets </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> readRDS() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/readRDS.html">readRDS()</a> </td>
+   <td style="text-align:left;"> 09: Test Flight </td>
   </tr>
   <tr>
    <td style="text-align:left;"> read_csv() </td>
@@ -618,6 +623,19 @@ If you're looking for a particular section of a tutorial, use this handy summary
   <tr>
    <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Continuous Predictors](tutorials/psychrlogy/02_essentials/08_analysis.qmd#continuous-predictors) </td>
    <td style="text-align:left;"> [Mediation](tutorials/psychrlogy/02_essentials/08_analysis.qmd#mediation), [Moderation](tutorials/psychrlogy/02_essentials/08_analysis.qmd#moderation) </td>
+  </tr>
+  <tr grouplength="3"><td colspan="2" style="border-bottom: 1px solid;"><strong>09: Test Flight</strong></td></tr>
+<tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Setup](tutorials/psychrlogy/03_improvRs/09_testflight.qmd#setup) </td>
+   <td style="text-align:left;"> [Data](tutorials/psychrlogy/03_improvRs/09_testflight.qmd#data) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Data Analysis Tips](tutorials/psychrlogy/03_improvRs/09_testflight.qmd#data-analysis-tips) </td>
+   <td style="text-align:left;"> [Plan Your Process](tutorials/psychrlogy/03_improvRs/09_testflight.qmd#plan-your-process), [Keep a Record](tutorials/psychrlogy/03_improvRs/09_testflight.qmd#keep-a-record), [Be Consistent](tutorials/psychrlogy/03_improvRs/09_testflight.qmd#be-consistent), [Reduce Redundancies](tutorials/psychrlogy/03_improvRs/09_testflight.qmd#reduce-redundancies) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [The Whole Shebang](tutorials/psychrlogy/03_improvRs/09_testflight.qmd#the-whole-shebang) </td>
+   <td style="text-align:left;"> [Planning](tutorials/psychrlogy/03_improvRs/09_testflight.qmd#planning), [Inspecting](tutorials/psychrlogy/03_improvRs/09_testflight.qmd#inspecting), [Cleaning](tutorials/psychrlogy/03_improvRs/09_testflight.qmd#cleaning), [Wrangling](tutorials/psychrlogy/03_improvRs/09_testflight.qmd#wrangling), [Summarising](tutorials/psychrlogy/03_improvRs/09_testflight.qmd#summarising), [Analysing](tutorials/psychrlogy/03_improvRs/09_testflight.qmd#analysing), [Visualisation](tutorials/psychrlogy/03_improvRs/09_testflight.qmd#visualisation), [Reporting](tutorials/psychrlogy/03_improvRs/09_testflight.qmd#reporting) </td>
   </tr>
 </tbody>
 </table>

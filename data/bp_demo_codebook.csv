@@ -1,0 +1,10 @@
+name,type,value,values
+recordeddate,date,Recorded date,
+id,character,Unique participant id number,"Alphanumeric identifier (three letters, four numbers)"
+gender,factor,What gender do you identify with?,"Female, Male"
+age,factor,Which age bracket do you fall under?,"18-29, 30-39, 40-49, 50+"
+height,numeric,Height (in m),Range: 1.49 - 1.9
+weight,numeric,Weight (in kg),Range: 44 - 158.75
+instagram,factor,Do you have an instagram account?,"Yes, No"
+condition,factor,"Whether participants viewed a body-positivity post featuring an average-sized model, larger model, or a control image about travel","Control, BPaverage, BPlarger"
+choice_perc,numeric,Percentage of healthy picks,Range: 0 - 100

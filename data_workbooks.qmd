@@ -38,6 +38,12 @@ Either copy the link to use in `readr::read_csv()`, or save the data at the link
    <td style="text-align:left;"> Dataset shared for teaching purposes, with mean subscale scores instead of individual items. Note that demographics in this dataset are SIMULATED FOR TEACHING PURPOSES and are NOT real data. </td>
    <td style="text-align:left;"> <a href="https://raw.githubusercontent.com/drmankin/practicum/master/data/anx_scores_data.csv">Download anx_scores_data.csv</a> </td>
   </tr>
+  <tr>
+   <td style="text-align:left;"> bp_data.rds </td>
+   <td style="text-align:left;"> <a href="https://sussex.figshare.com/articles/dataset/Dataset_for_paper_Body_Positivity_but_not_for_everyone/9885644">Simon &amp; Hurst (2021)</a> </td>
+   <td style="text-align:left;"> Dataset publicly available. Note that this subset of the public data has had ID variables and missing values randomly introduced for teaching purposes. </td>
+   <td style="text-align:left;"> <a href="https://raw.githubusercontent.com/drmankin/practicum/master/data/bp_data.rds">Download bp_data.rds</a> </td>
+  </tr>
 </tbody>
 </table>
 
