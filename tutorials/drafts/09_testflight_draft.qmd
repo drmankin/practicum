@@ -2,42 +2,124 @@
 title: "09: Test Flight"
 ---
 
+## Overview
+
+Today's tutorial is a bit different - less tutorial and more supported practice. Instead of more new information, today's session is an opportunity to try out the skills we've been working on.
+
+We'll look at a new dataset and work through the process of inspecting, cleaning, summarising, visualising, analysing, and reporting. Rather than solutions, this tutorial will support you to do these tasks yourself - but writing the code is up to you!
+
 ## Setup
+
+There's no workbook this week, because we're emulating the process of doing a data analysis from start to finish in R. Instead, create a new Quarto document to work in.
 
 ### Packages
 
+```{r}
+library(tidyverse)
+library(codebookr)
+```
 
 
 ### Data
 
+```{r}
+here::here("data/bp_data.rds") |> readRDS()
+```
 
+#### Codebooks
 
-#### Codebook
+There are two separate codebooks for this dataset. The first describes the demographic and other single-item variables in the dataset. The second describes the variables that are items belonging to measures, and which items belong to what measures.
+
+```{r}
+readr::read_csv(here::here("data/bp_demo_codebook.csv")) |> 
+  kableExtra::kbl(
+    col.names = c("Variable Name", "Type", "Item", "Response Options"),
+    escape = FALSE,
+    format = "html"
+    caption = "Demographics and Single-Item Variables"
+  ) |> 
+  kableExtra::kable_styling()
+```
+
+```{r}
+readr::read_csv(here::here("data/bp_sub_codebook.csv")) |> 
+  dplyr::relocate(subscale, .after = scale_full) |> 
+  kableExtra::kbl(
+    col.names = c("Scale", "Full Name", "Subscale", "Variable Prefix", "Item Numbers", "Items", "Response Scale"),
+    escape = FALSE,
+    format = "html",
+    caption = "Scale Items"
+  ) |> 
+  kableExtra::kable_styling()
+```
 
 
 ## Tips
 
 ### Plan Your Process
 
-Develop an analysis plan, maybe in a quarto doc
-What are the steps you need to complete?
+Develop an analysis plan, maybe in a quarto doc What are the steps you need to complete?
 
 ### Be Consistent
 
-- Variable and object names
-- Packages and techniques
-- When to overwrite an object vs. create a new one
+-   Variable and object names
+-   Packages and techniques
+-   When to overwrite an object vs. create a new one
 
 ### Keep a Record
 
-- Use comments
-- Keep ALL code, no matter how small, that contributed to your analysis process
+-   Use comments
+-   Keep ALL code, no matter how small, that contributed to your analysis process
 
 ### 
 
 ### Reduce Redundancies
 
-- Look for pinch points:
-  - Code repeated or copy-pasted
-  - Code not robust - could easily break or go wrong if e.g. you don't remember to update a value
-  - 
+-   Look for pinch points:
+    -   Code repeated or copy-pasted
+    -   Code not robust - could easily break or go wrong if e.g. you don't remember to update a value
+    -   
+    
+## The Whole Shebang
+
+The following sections are intended to prompt you through the whole process of inspecting, cleaning, wrangling, summarising, visualising, analysing, and reporting results. You will notice there are no solutions! All of the exercises (and hints) are suggestions, but you're welcome to make use of this dataset and workbook however is helpful for you.
+
+Remember, rather than working in a workbook, you should create your own Quarto document and work in that file, creating code chunks as necessary.
+
+### Inspecting
+
+Start by getting familiar with the overall dataset. Have a look at it, and look through the codebook. Is everything in order? Are there any issues?
+
+Create some summaries of the variables in the dataset. Are there any potential problems that need addressing?
+
+### Cleaning
+
+Make any changes necessary to clean the data. Remember to keep track of any exclusions that you need to report.
+
+### Wrangling
+
+Change or create any new variables. Minimally, you will need to create mean scores for each of the multi-item measures, making use of the Codebook to do so.
+
+### Summarising
+
+Create at least one nicely formatted summary table describing the variables of interest, split up by (at least) experimental condition. Feel free to add more if you like.
+
+### Analysing
+
+Choose an analysis from the list below, or formulate one of your own. Then, perform the appropriate statistical analysis.
+
+
+### Visualisation
+
+Choose a visualisation that reflects the key comparison or relationship of interest that you investigated in your analysis, and create it. Remember that you can build a visualisation from scratch with {ggplot2}, or use one of the "shortcut" plotting functions we have covered.
+
+### Reporting
+
+Write up a formal report of the analysis from start to finish, including:
+
+- A statement of the key comparison or relationship of interest
+- A description of relevant data cleaning procedures, including any exclusions
+- A nicely formatted descriptive table
+- A full report and interpretation of the analysis
+- An accompanying visualisation
+
