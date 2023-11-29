@@ -8,7 +8,7 @@ This tutorial will focus on efficient, transparent, and user-friendly techniques
 
 ### Acknowledgements
 
-This tutorial was co-conceived and co-created with two brilliant PhD researchers, Hanna Eldarwish and Josh Francis, who contributed invaluable input throughout the process of developing this and the next tutorial. This included collecting commonly asked questions and issues with Qualtrics data analysis; discussing the topics to cover and how best to cover them; and testing code and solutions. Hanna Eldarwish also provided the dataset, collected during her undergraduate dissertation at Sussex under the supervision of [Dr Vlad Costin](https://profiles.sussex.ac.uk/p323096-vlad-costin).
+This tutorial was co-conceived and co-created with two brilliant PhD researchers, [Hanna Eldarwish](mailto:haie20@sussex.ac.uk) and [Josh Francis](Joshua.Francis@sussex.ac.uk), who contributed invaluable input throughout the process of developing the tutorial. This included collecting commonly asked questions and issues with Qualtrics data analysis; discussing the topics to cover and how best to cover them; and testing code and solutions. Hanna Eldarwish also provided the basis for the dataset, collected during her undergraduate dissertation at Sussex under the supervision of [Dr Vlad Costin](https://profiles.sussex.ac.uk/p323096-vlad-costin).
 
 ## Setup
 
@@ -30,13 +30,17 @@ library(labelled)
 
 ## Qualtrics Data
 
-T
+[Qualtrics](https://www.sussex.ac.uk/its/services/software/qualtrics) is a survey-building tool very commonly used for questionnaire-type studies, as well as some experimental work. The University of Sussex has an institutional licence for Qualtrics, so all staff and students can log in with their Sussex details and easily construct and collaborate on surveys.
 
-### SAV Files
+For help using Qualtrics itself, the [Qualtrics support pages](https://www.qualtrics.com/support/survey-platform/my-projects/my-projects-overview/) are generally excellent. This tutorial will only briefly touch on the options within Qualtrics itself, primarily in the [Setting Up Qualtrics](10_qtrics.qmd#setting-up-qualtrics) section at the end.
+
+Once the study is complete and responses have been collected, you will need to [export your data from Qualtrics](https://www.qualtrics.com/support/survey-platform/data-and-analysis-module/data/download-data/export-data-overview/) so that you can analyse it. Qualtrics offers a variety of export data types, including our familiar CSV type. However, we're going to instead explore a new option: SAV data.
+
+### SAV Data
 
 The `.sav` file type is associated with [SPSS](https://www.ibm.com/products/spss-statistics), a widely used statistical analysis programme. So, why are we using SPSS files when working in R?
 
-Importing via .sav has two key advantages. First, it results in a much cleaner import format. If you try importing the same data via .csv file, you'll find that you need to do some very fiddly and pointless cleanup first. For instance, the .csv version of the same dataset will introduce some empty rows that have to be deleted with `dplyr::slice()` or similar. The .sav version of the dataset doesn't have any comparable formatting issues.
+Importing via `.sav` has two key advantages. First, it results in a much cleaner import format. If you try importing the same data via `.csv` file, you'll find that you need to do some very fiddly and pointless cleanup first. For instance, the `.csv` version of the same dataset will introduce some empty rows that have to be deleted with `dplyr::slice()` or similar. The `.sav` version of the dataset doesn't have any comparable formatting issues.
 
 Most importantly, however, importing `.sav` file types into R with particular packages like {haven} gets us a dataset with a special type of data: namely, labelled data. Labelled data has a number of features, all of which we will explore in depth throughout this tutorial:
 
@@ -46,7 +50,7 @@ Most importantly, however, importing `.sav` file types into R with particular pa
 
 -   [**Missing values**](10_qtrics.qmd#missing-values). Within value labels, you can designate particular values as indicative of missing responses, refusal to respond, etc. This is analogous to the "Missing" column of the Variable View in SPSS.
 
-We will explore the features of labelled data throughout this tutorial. In the next tutorial, we will look in more depth at a particularly useful application of labelled data, namely using it to automatically generate a codebook for your dataset.
+We will explore the features of labelled data throughout this tutorial and the next.
 
 ::: callout-important
 These features will work optimally *only* if you have set up your Qualtrics questionnaire appropriately. Make sure to refer to the [Setting Up Qualtrics](10_qtrics.qmd#setting-up-qualtrics) section of this tutorial to get the most out of your labelled data and save yourself data cleaning and wrangling headaches later.
@@ -66,7 +70,7 @@ In the "Download a data table" menu, choose "SPSS" from the choices along the to
 
 The dataset will download automatically to your computer's Downloads folder. From there, you should rename it to something sensible and move it into a `data` folder within your project folder.
 
-::: {.callout-tip title="Sensible Naming Conventions and Folder Structure" collapse="true"}
+::: {.callout-tip title="Sensible Naming Conventions and Folder Structure" collapse="false"}
 I know it may not seem like something anyone should care about, but sensible file and folder names will make your life so much easier for working in R (and generally).
 
 For folder structure, make sure you do the following:
@@ -87,6 +91,10 @@ This is a much more reliable system than calling them, say, `Qualtrics output.sa
 #### Codebook
 
 The codebook below was **automatically generated** from the .sav dataset we have just imported. We don't have time for it today, but if you're interested in being able to (more or less) instantly generate a codebook from the dataset itself, we'll get into it next week!
+
+## Factors
+
+
 
 ## Labelled Data
 
