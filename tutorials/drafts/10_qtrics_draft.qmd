@@ -8,7 +8,7 @@ This tutorial will focus on efficient, transparent, and user-friendly techniques
 
 ### Acknowledgements
 
-This tutorial was co-conceived and co-created with two PhD researchers, [Hanna Eldarwish](mailto:haie20@sussex.ac.uk) and [Josh Francis](Joshua.Francis@sussex.ac.uk), who contributed invaluable input throughout the process of developing the tutorial. This included collecting commonly asked questions and issues with Qualtrics data analysis; discussing the topics to cover and how best to cover them; and testing code and solutions. Hanna Eldarwish also provided the basis for the dataset, collected during her undergraduate dissertation at Sussex under the supervision of [Dr Vlad Costin](https://profiles.sussex.ac.uk/p323096-vlad-costin).
+This tutorial was co-conceived and co-created with two brilliant PhD researchers, [Hanna Eldarwish](mailto:haie20@sussex.ac.uk) and [Josh Francis](Joshua.Francis@sussex.ac.uk), who contributed invaluable input throughout the process of developing the tutorial. This included collecting commonly asked questions and issues with Qualtrics data analysis; discussing the topics to cover and how best to cover them; and testing code and solutions. Hanna Eldarwish also provided the basis for the dataset, collected during her undergraduate dissertation at Sussex under the supervision of [Dr Vlad Costin](https://profiles.sussex.ac.uk/p323096-vlad-costin).
 
 ## Setup
 
@@ -301,8 +301,6 @@ mil_data$english_fluency_1
 ### Numeric
 
 ### Conditional Conversion
-
-
 
 ## Setting Up Qualtrics
 
