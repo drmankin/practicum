@@ -24,9 +24,29 @@ Load the packages.
 library(tidyverse)
 library(haven)
 library(labelled)
+library(sjlabelled)
+library(sjPlot)
 ```
 :::
 :::
+
+### Data
+
+Today's dataset focuses on various aspects of meaning in life (MiL), and has been randomly generated based on a real dataset kindly contributed by Hanna Eldarwish and Vlad Costin. All variables have been randomly generated, but they are based on the patterns in the original dataset. The original, bigger dataset will be made available alongside article publication in the future, so keep an eye out for it!
+
+::: {.callout-tip title="New File Type"}
+You might notice that instead of the familiar `readr::read_csv()`, today we have `haven::read_sav()`. That's because the file I've prepared is a SAV file, associated with the SPSS statistical analysis programme. The next section explains *why* we are using this data type, but otherwise, there's nothing new about these commands.
+:::
+
+```{r}
+mil_data <- here::here("data/mil_data.sav") |> haven::read_sav()
+```
+
+#### Codebook
+
+This codebook is intentionally sparse, because we'll be generating our own from the dataset in just a moment. This table covers only the questionnaire measures to help you understand the variables.
+
+\ 
 
 ## Qualtrics Data
 
@@ -42,23 +62,11 @@ The `.sav` file type is associated with [SPSS](https://www.ibm.com/products/spss
 
 Importing via `.sav` has two key advantages. First, it results in a much cleaner import format. If you try importing the same data via `.csv` file, you'll find that you need to do some very fiddly and pointless cleanup first. For instance, the `.csv` version of the same dataset will introduce some empty rows that have to be deleted with `dplyr::slice()` or similar. The `.sav` version of the dataset doesn't have any comparable formatting issues.
 
-Most importantly, however, importing `.sav` file types into R with particular packages like {haven} gets us a dataset with a special type of data: namely, labelled data. Labelled data has a number of features, all of which we will explore in depth throughout this tutorial:
-
--   [**Variable labels**](10_qtrics.qmd#variable-labels). The label associated with a whole variable will contain the text of the item that the participants responded to. This is analogous to the "Label" column of the Variable View in SPSS.
-
--   [**Value labels**](10_qtrics.qmd#value-labels). The label associated with individual values within a variable will contain the text associated with individual choices, for instance the points on a Likert scale. This is analogous to the "Values" column of the Variable View in SPSS.
-
--   [**Missing values**](10_qtrics.qmd#missing-values). Within value labels, you can designate particular values as indicative of missing responses, refusal to respond, etc. This is analogous to the "Missing" column of the Variable View in SPSS.
-
-We will explore the features of labelled data throughout this tutorial and the next.
-
-::: callout-important
-These features will work optimally *only* if you have set up your Qualtrics questionnaire appropriately. Make sure to refer to the [Setting Up Qualtrics](10_qtrics.qmd#setting-up-qualtrics) section of this tutorial to get the most out of your labelled data and save yourself data cleaning and wrangling headaches later.
-:::
+Most importantly, however, importing `.sav` file types into R with particular packages like {haven} gets us a dataset with a special type of data: namely, labelled data. The labels allow us to preserve important information about the questions asked and response options in Qualtrics, and to (mostly) painlessly create codebooks for datasets. We will explore these features in depth in this tutorial
 
 ### Exporting from Qualtrics
 
-When you're ready to begin exploring your study data, you will need to export your data from Qualtrics first. To do this, open your Qualtrics survey and select the "Data & Analysis" tab along the top, just under the name of your survey.
+If you'd like to work with your own study data, you will need to export your data in SAV format from Qualtrics first. To do this, open your Qualtrics survey and select the "Data & Analysis" tab along the top, just under the name of your survey.
 
 In the Data Table view, look to the right-hand side of the screen. Click on the drop-down menu labelled "Export & Import", then select the first option, "Export Data..."
 
@@ -68,7 +76,7 @@ In the "Download a data table" menu, choose "SPSS" from the choices along the to
 
 ![](/images/qtrics_spss.png){fig-alt="A screenshot the Qualtrics Download a Data Table screen with red boxes indicating the steps to take to export SPSS data: SPSS tab, Download button."}
 
-The dataset will download automatically to your computer's Downloads folder. From there, you should rename it to something sensible and move it into a `data` folder within your project folder.
+The dataset will download automatically to your computer's Downloads folder. From there, you should rename it to something sensible and move it into a `data` folder within your project folder. From there, you can read it in using the `here::here() |> haven::read_sav()` combo that we saw in the Data section previously.
 
 ::: {.callout-tip title="Sensible Naming Conventions and Folder Structure" collapse="false"}
 I know it may not seem like something anyone should care about, but sensible file and folder names will make your life so much easier for working in R (and generally).
@@ -113,41 +121,213 @@ mil_data <- haven::read_sav("https://raw.githubusercontent.com/drmankin/practicu
 :::
 :::
 
-#### Codebook
+\ 
 
-The codebook below was **automatically generated** from the .sav dataset we have just imported. We don't have time for it today, but if you're interested in being able to (more or less) instantly generate a codebook from the dataset itself, we'll get into it next week!
+## The Plan
+
+Our workflow for this dataset will be slightly different than previously. We'll start by doing some basic cleanup of the dataset, and produce a codebook, or "data dictionary", drawing on the label metadata in the SAV file. For the purpose of practice, we'll also have a look at how to work with those labels, and manage different types of missing values.
+
+As useful as labels are, they will get in the way when we want to work with our dataset further. So, we'll convert the variables in the dataset into either factors, for categorical data, or numeric. From that point forward, we can work with the dataset using the techniques and functions we've learned thus far.
+
+\ 
+
+## Cleanup and Data Dictionary
+
+::: callout-tip
+Most of the following examples are drawn from the ["Introduction to labelled" vignette](https://cran.r-project.org/web/packages/labelled/vignettes/intro_labelled.html) from the {labelled} package. If you want to do something with labelled data that isn't covered here, that's a good place to start!
+:::
+
+Let's start off by having a look at the dataset. As usual, you can call the dataset or use `View()` on it directly, but we're going to take advantage of the new data type to get a more helpful summary, that emulates the "Variable View" in SPSS.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Use the `generate_dictionary()` function from the {labelled} packages to create a data dictionary for `mil_dict`, then pipe it into `View()`.
+
+::: {.callout-note collapse="true" title="Solution"}
 
 ```{r}
-labelled::look_for(mil_data) |> 
-  tibble::as_tibble() |> 
-  dplyr::select(-levels) |> 
-  dplyr::mutate(
-    values = unlist(value_labels) |> paste0(collapse = ", ")
-    )
+#| eval: false
+mil_data |> 
+  labelled::generate_dictionary() |>
+  View()
 ```
 
+```{r}
+#| echo: false
 
-## Factors
+mil_data |> 
+  labelled::generate_dictionary() |> 
+  tibble::as_tibble() |> 
+  dplyr::rowwise() |> 
+  dplyr::mutate(
+    value_labels = dplyr::case_when(
+      is.null(value_labels) ~ "",
+      !is.null(value_labels) ~ unlist(value_labels) |> names() |> paste0(collapse = ", ")
+    )
+  ) |> 
+  dplyr::ungroup()
+```
+
+:::
+:::
+
+What we get is a new summary dataset that contains some useful information about each of the variables in `mil_data`. Along with the actual variable name in the dataset, which we see under `variable`, we also get the actual question that participants saw in Qualtrics under `label`, and the response options - where applicable - in `value_labels`. We'll come back to these in a moment, but we're first going to address two minor issues that commonly come up with Qualtrics data.
+
+### Renaming Variables
+
+If you inspected the dataset closely, you might have noticed that one of the items has a strange name: `coherence_42`, right between `coherence_1` and `coherence_3`. 
+
+This wasn't intentional - in the process of creating the questionnaire in Qualtrics, this variable came out with a weird name. It happens more easily than you think! The best-case option would be to update the Qualtrics questionnaire itself before exporting the data, but you may not be able (or want) to do this, so instead, let's have a quick look at how to rename variables.
+
+As (almost) always, there's a friendly {dplyr} function to help us with our data wrangling. This time it's sensibly-named `dplyr::rename()`, which renames variables using `new_name = old_name` arguments. 
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Rename `coherence_42` to `coherence_2`. Don't forget to save this change to the dataset!
+
+::: {.callout-note collapse="true" title="Solution"}
+
+```{r}
+mil_data <- mil_data |> 
+  dplyr::rename(coherence_2 = coherence_42)
+```
+
+:::
+:::
+
+::: callout-tip
+
+Do you have lots of variables to rename? Do you like writing functions, or using regular expressions? Check out `rename()`'s flashier cousin `rename_with()`, which uses a function to rename variables.
+
+:::
+
+### Separating Columns
+
+The second thing I'd like to do doesn't concern the main dataset, but rather the data dictionary we've generated. For the single-item questions, the `label` column is reasonably helpful. However, the items with a shared prefix all come from the same matrix scale in Qualtrics, and their labels have two parts: the "question text" that usually contains directions about how to respond, and the actual item text for each individual item. 
+
+As an example, the label for `belonging_1` reads:
+
+```{r}
+#| echo: false
+#| 
+b1_text <- labelled::generate_dictionary(mil_data) |> 
+  dplyr::filter(variable == "belonging_1") |> 
+  dplyr::pull(label)
+```
+
+> `r b1_text`
+
+Which corresponds to this in Qualtrics:
+
+![](/images/b1.png){fig-alt="A screenshot of a Qualtrics matrix table of Likert responses, with 'Please rate the extent to which these statements apply to you' at the top, and a single item, 'When I am with others, I feel included' and a rating scale from strongly disagree to strongly agree."}
+
+To make the labels more readable, let's split the question text, which is repeated for all items on the same subscale and not very useful, and the item text, which contains the specific text of each item. The good news is that the two pieces are defined, or delimited, by the " - " symbol that Qualtrics automatically adds to link them.
+
+Since we want to separate the `labels` column into two - making the dataset wider - using a delimiter, the `separate_wider_delim()` function from the {tidyr} package should do the trick!
+
+```{r}
+mil_data |> #<1>
+  labelled::generate_dictionary() |> #<2>
+  tidyr::separate_wider_delim( #<3>
+    cols = label, #<4>
+    delim = " - ", #<5>
+    names = c("label", "item_label"), #<6>
+    too_few = "align_start" #<7>
+  )
+```
+
+1. Take the data, *and then*
+1. Generate the data dictionary, *and then*
+1. Separate wider by delimiter as follows:
+1. Separate the `label` column
+1. At the " - " delimiter
+1. Into two new columns called "label" and "item_label" respectively
+1. If there are two few pieces (that is, for the rows where there is no delimiter), fill in values from the start.
+
+The result isn't perfect, but it'll do for our purposes - namely, to have a quick reference for the variables in our dataset.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Save the final (for now) data dictionary in a new object, `mil_dict`, so we can refer to it as needed.
+
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+mil_dict <- mil_data |> 
+  labelled::generate_dictionary() |> 
+  tidyr::separate_wider_delim(
+    cols = label,
+    delim = " - ",
+    names = c("label", "item_label"),
+    too_few = "align_start"
+  )
+```
+
+:::
+:::
 
 ## Labelled Data
 
-::: callout-tip
-Most of the following examples are drawn from the "Introduction to labelled" vignette from the {labelled} package. If you want to do something with labelled data that isn't covered here, that's a good place to start!
+As we've just seen in the data dictionary, the SAV data we're using has a special property: labels. Labelled data has a number of features, all of which we will explore in depth throughout this tutorial:
+
+-   [**Variable labels**](10_qtrics.qmd#variable-labels). The label associated with a whole variable will contain the text of the item that the participants responded to. This is analogous to the "Label" column of the Variable View in SPSS.
+
+-   [**Value labels**](10_qtrics.qmd#value-labels). The label associated with individual values within a variable will contain the text associated with individual choices, for instance the points on a Likert scale or the options on a multiple-choice question. This is analogous to the "Values" column of the Variable View in SPSS.
+
+-   [**Missing values**](10_qtrics.qmd#missing-values). Within value labels, you can designate particular values as indicative of missing responses, refusal to respond, etc. This is analogous to the "Missing" column of the Variable View in SPSS.
+
+::: callout-important
+These features will work optimally *only* if you have set up your Qualtrics questionnaire appropriately. Make sure to refer to the [Setting Up Qualtrics](10_qtrics.qmd#setting-up-qualtrics) section of this tutorial to get the most out of your labelled data and save yourself data cleaning and wrangling headaches later.
 :::
 
 ### Variable Labels
 
+#### Getting Labels
+
+```{r}
+labelled::var_label(mil_data$gender)
+```
+
+#### Searching Labels
+
+```{r}
+labelled::look_for(mil_data, "family") |> 
+  tibble::as_tibble()
+```
+
+
+#### Creating/Updating Labels
+
 ### Value Labels
+
+#### Getting  Labels
+
+```{r}
+val_labels(mil_data$gender)
+```
+
+```{r}
+val_label(mil_data$gender, 1)
+```
 
 ### Missing Values
 
-### Converting Variables
+```{r}
+labelled::val_labels(mil_data$english_fluency_1)
 
-#### Conversion to Numeric
+labelled::na_values(mil_data$english_fluency_1) <- 3:4
 
-#### Conversion to Factor
+mil_data$english_fluency_1
+```
 
-#### Conditional Conversion
+
+## Converting Variables
+
+### Factor
+
+
+### Numeric
+
+### Conditional Conversion
 
 ## Setting Up Qualtrics
 
