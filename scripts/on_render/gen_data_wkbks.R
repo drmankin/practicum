@@ -11,7 +11,8 @@ data_info <- tibble::tribble(
   "syn_data.csv", "Mealor et al., 2016", "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0155483", "Dataset publicly available",
   "anx_data.csv", "Terry, Lea, & Field (in prep)", "https://osf.io/8jk5v/", "Dataset shared for teaching purposes. Note that demographics in this dataset are SIMULATED FOR TEACHING PURPOSES and are NOT real data.",
   "anx_scores_data.csv", "Terry, Lea, & Field (in prep)", "https://osf.io/8jk5v/", "Dataset shared for teaching purposes, with mean subscale scores instead of individual items. Note that demographics in this dataset are SIMULATED FOR TEACHING PURPOSES and are NOT real data.",
-  "bp_data.rds", "Simon & Hurst (2021)", "https://sussex.figshare.com/articles/dataset/Dataset_for_paper_Body_Positivity_but_not_for_everyone/9885644", "Dataset publicly available. Note that this subset of the public data has had ID variables and missing values randomly introduced for teaching purposes."
+  "bp_data.csv", "Simon & Hurst (2021)", "https://sussex.figshare.com/articles/dataset/Dataset_for_paper_Body_Positivity_but_not_for_everyone/9885644", "Dataset publicly available. Note that this subset of the public data has had ID variables and missing values randomly introduced for teaching purposes.",
+  "mil_data.sav", "Eldarwish et al, (in prep)", "https://profiles.sussex.ac.uk/p323096-vlad-costin", "Dataset expected to be publicly available in the future. Note that this dataset is entirely simulated, based on existing real data."
 ) |> 
   dplyr::mutate(
     cite_link = paste0("<a href='", cite, "'>", source, "</a>")
