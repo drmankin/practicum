@@ -369,11 +369,9 @@ val_label(mil_data$english_fluency_1, 3)
 These two functions can also be used to update an entire variable or a single value respectively.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
 Get all the value labels for the `gender` variable. Then, update the last value to "Other".
 
 ::: {.callout-note collapse="true" title="Solution"}
-
 ```{r}
 val_labels(mil_data$gender)
 ```
@@ -381,7 +379,6 @@ val_labels(mil_data$gender)
 ```{r}
 val_label(mil_data$gender, 3) <- "Other"
 ```
-
 :::
 :::
 
@@ -456,8 +453,13 @@ Factors are so common and useful in R that they have a whole {tidyverse} package
 
 The useful thing about labelled data that it's very easy to convert into factors, which is what R expects for many different types of analysis and plotting functions. Handy!
 
-For an individual variable, we can use `labelled::to_factor()` to convert to factor. Let's compare before and after:
+For an individual variable, we can use `labelled::to_factor()` to convert to factor. 
 
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Convert the `gender` variable to factor, although don't assign this change to the dataset.
+
+::: {.callout-note collapse="true" title="Solution"}
 ```{r}
 mil_data |> 
   dplyr::mutate(
@@ -465,12 +467,23 @@ mil_data |>
     .keep = "used"
   )
 ```
+:::
+:::
+
 
 If you wanted a specific order of the levels, for plotting or similar, there's also a `sort_levels =` argument described in the help documentation.
 
 ### Numeric
 
-For continuous variables, we don't need anything fancy to turn them into numeric data, because they technically already are. Instead, we just need to get rid of the labels.
+For continuous variables, we don't need anything fancy to turn them into numeric data, because they technically already are. Instead, we just need to get rid of the labels using `unclass()`.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Use `unclass()` to convert `belonging_1` to numeric, although don't assign the change to the dataset.
+
+::: {.callout-note collapse="true" title="Solution"}
+
+This example shows both the conversion to numeric, and back to labelled with `labelled::labelled()`.
 
 ```{r}
 mil_data |> 
@@ -481,11 +494,14 @@ mil_data |>
   )
 ```
 
+:::
+:::
+
 The nice thing about this method is that we can now do maths with the unclassed numeric functions as normal, but the labels are still there if we want to get back - just convert with `labelled::labelled()`.
 
 ### Conditional Conversion
 
-Back up when we went over [the plan](10_qtics.qmd#the-plan), I quoted a bit from the {labelled} intro vignette. Here's the same info in a bit more detail:
+There are two main ways we could more efficiently convert variables than one by one. The first is offered by the {labelled} package - here I've just borrowed from the vignette describing the setup.
 
 ::: callout-note
 In most of cases, if data documentation was properly done, categorical variables corresponds to vectors where all observed values have a value label while vectors where only few values have a value label should be considered as continuous.
@@ -499,7 +515,7 @@ In that situation, you could apply the `unlabelled()` method to an overall data 
 
 If we wanted to do this, we'd have a bit more work to do. That's because at the moment, our data doesn't line up with this template. Having a look at our data dictionary again, we can see that our subscale variables have all of their levels labelled, so they won't be converted as we'd like. Rather than do this now, I'd probably recommend setting up your Qualtrics like this to begin with.
 
-Instead, we can use what we've seen in previous Challenge tasks to convert variables conditionally.
+Instead, we can take the second route and use what we've seen in previous Challenge tasks to convert variables conditionally.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
 **CHALLENGE**: Convert categorical variables with labels to factors, and subscale variables to numeric.
@@ -519,6 +535,6 @@ mil_data |>
 :::
 :::
 
-\ 
+ 
 
 That's about all we've got for today, although it's a lot! You should now have a data dictionary to refer to, and a complete dataset to work with using the techniques we've already covered to clean up responses, create subscales, and so on. Next time we'll work on solving common issues and avoiding those issues in the first place by setting things up right to begin with.

@@ -39,10 +39,16 @@ Either copy the link to use in `readr::read_csv()`, or save the data at the link
    <td style="text-align:left;"> <a href="https://raw.githubusercontent.com/drmankin/practicum/master/data/anx_scores_data.csv">Download anx_scores_data.csv</a> </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> bp_data.rds </td>
+   <td style="text-align:left;"> bp_data.csv </td>
    <td style="text-align:left;"> <a href="https://sussex.figshare.com/articles/dataset/Dataset_for_paper_Body_Positivity_but_not_for_everyone/9885644">Simon &amp; Hurst (2021)</a> </td>
    <td style="text-align:left;"> Dataset publicly available. Note that this subset of the public data has had ID variables and missing values randomly introduced for teaching purposes. </td>
-   <td style="text-align:left;"> <a href="https://raw.githubusercontent.com/drmankin/practicum/master/data/bp_data.rds">Download bp_data.rds</a> </td>
+   <td style="text-align:left;"> <a href="https://raw.githubusercontent.com/drmankin/practicum/master/data/bp_data.csv">Download bp_data.csv</a> </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> mil_data.sav </td>
+   <td style="text-align:left;"> <a href="https://profiles.sussex.ac.uk/p323096-vlad-costin">Eldarwish et al, (in prep)</a> </td>
+   <td style="text-align:left;"> Dataset expected to be publicly available in the future. Note that this dataset is entirely simulated, based on existing real data. </td>
+   <td style="text-align:left;"> <a href="https://raw.githubusercontent.com/drmankin/practicum/master/data/mil_data.sav">Download mil_data.sav</a> </td>
   </tr>
 </tbody>
 </table>
@@ -88,6 +94,14 @@ or click through to view the text and copy/paste into an empty .Qmd document.
   <tr>
    <td style="text-align:left;"> 08: Analysis </td>
    <td style="text-align:left;"> <a href="https://raw.githubusercontent.com/drmankin/practicum/master/workbooks/08_analysis_workbook.qmd" download="08_analysis_workbook.qmd">Download 08_analysis_workbook.qmd</a> </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 09: Test Flight </td>
+   <td style="text-align:left;"> <a href="https://raw.githubusercontent.com/drmankin/practicum/master/workbooks/09_testflight_workbook.qmd" download="09_testflight_workbook.qmd">Download 09_testflight_workbook.qmd</a> </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 10: Qualtrics and Labelled Data </td>
+   <td style="text-align:left;"> <a href="https://raw.githubusercontent.com/drmankin/practicum/master/workbooks/10_qtrics_workbook.qmd" download="10_qtrics_workbook.qmd">Download 10_qtrics_workbook.qmd</a> </td>
   </tr>
 </tbody>
 </table>

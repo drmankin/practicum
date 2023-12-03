@@ -60,7 +60,8 @@ bp_data$age[sample(1:nrow(bp_data), 8)] <- NA
 
 labelled::var_label(bp_data$id) <- "Unique participant ID number"
 
-saveRDS(bp_data, here::here("data/bp_data.rds"))
+#saveRDS(bp_data, here::here("data/bp_data.rds"))
+readr::write_csv(bp_data, here::here("data/bp_data.csv"))
 
 # Codebook ----------------------------------------------------------------
 

@@ -1,0 +1,123 @@
+---
+title: "11: FAQs"
+---
+
+## Overview
+
+This tutorial will focus on efficient, transparent, and user-friendly techniques for working with data specifically gathered using the [Qualtrics survey platform](https://www.qualtrics.com/). We will cover how to import and work with labelled data from Qualtrics and how to reduce data management headaches down the line by setting up a well-structured and thoroughly labelled Qualtrics survey from the outset.
+
+### Acknowledgements
+
+This tutorial was co-conceived and co-created with two brilliant PhD researchers, [Hanna Eldarwish](mailto:haie20@sussex.ac.uk) and [Josh Francis](Joshua.Francis@sussex.ac.uk), who contributed invaluable input throughout the process of developing the tutorial. This included collecting commonly asked questions and issues with Qualtrics data analysis; discussing the topics to cover and how best to cover them; and testing code and solutions. Hanna Eldarwish also provided the basis for the dataset, collected during her undergraduate dissertation at Sussex under the supervision of [Dr Vlad Costin](https://profiles.sussex.ac.uk/p323096-vlad-costin).
+
+## Setup
+
+### Packages
+
+As usual, we will be using {tidyverse}. When {tidyverse} is installed, it also installs the {haven} package, which we will use for data importing. However, {haven} isn't loaded as part of the core {tidyverse} group of packages, so let's load it separately. Finally, we will also need the {labelled} package to work with labelled data.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Load the packages.
+
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+library(tidyverse)
+library(haven)
+library(labelled)
+library(sjlabelled)
+library(sjPlot)
+```
+:::
+:::
+
+### Data
+
+Today's dataset focuses on various aspects of meaning in life (MiL), and has been randomly generated based on a real dataset kindly contributed by Hanna Eldarwish and Vlad Costin. All variables have been randomly generated, but they are based on the patterns in the original dataset. The original, bigger dataset will be made available alongside article publication in the future, so keep an eye out for it!
+
+::: {.callout-tip title="New File Type"}
+You might notice that instead of the familiar `readr::read_csv()`, today we have `haven::read_sav()`. That's because the file I've prepared is a SAV file, associated with the SPSS statistical analysis programme. The next section explains *why* we are using this data type, but otherwise, there's nothing new about these commands.
+:::
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Read in the `mil_data.sav` object from the data folder, or alternatively from Github via URL, as you prefer.
+
+::: {.callout-note collapse="true" title="Solution"}
+From a folder:
+
+```{r}
+mil_data <- here::here("data/mil_data.sav") |> haven::read_sav()
+```
+
+From URL:
+
+```{r}
+#| eval: false
+#| 
+mil_data <- haven::read_sav("https://raw.githubusercontent.com/drmankin/practicum/master/data/mil_data.sav")
+```
+:::
+:::
+
+#### Codebook
+
+This codebook is intentionally sparse, because we'll be generating our own from the dataset in just a moment. This table covers only the questionnaire measures to help you understand the variables.
+
+```{r}
+#| echo: false
+
+# mil_data |> 
+#   dplyr::mutate(
+#     across(everything(),
+#            as.character)
+#   ) |> 
+#   tidyr::pivot_longer(
+#     cols = everything(),
+#     names_to = "var",
+#     values_to = "val"
+#   ) |> 
+#   tidyr::separate_wider_delim(cols = var, delim = "_", names = c("v1", "v2", "v3"), too_few = "align_start")
+
+sub_pref <- mil_data |> 
+  dplyr::select(global_meaning_1:last_col()) |> 
+  names() |> 
+  gsub("(.*)_[0-9]*", "\\1", x = _) |> 
+  unique()
+
+sub_format <- stringr::str_to_title(gsub("sym", "symbolic", gsub("_", " ", sub_pref)))
+
+tibble::tibble(
+  variable_prefix = sub_pref,
+  scale = c(rep("Meaning in Life", 4), sub_format[5:length(sub_format)]),
+  subscale = c(sub_format[1:4], rep("Single scale", 2))
+) %>%
+  kableExtra::kbl(
+    col.names = stringr::str_to_title(gsub("_", " ", names(.)))
+  ) |> 
+  kableExtra::kable_styling()
+```
+
+ 
+ 
+ 
+ 
+## Setting Up Qualtrics
+
+### Labelling Variables
+
+### Labelling Values
+
+### Other Considerations
+
+### Questionnaire Template
+
+duplicated
+
+```{r}
+mil_data |> 
+ dplyr::mutate(
+   n_miss = rowSums(is.na(mil_data)),
+   .keep = "used"
+ )
+
+
+```
