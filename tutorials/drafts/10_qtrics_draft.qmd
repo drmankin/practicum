@@ -94,6 +94,33 @@ So, for a download like this, I'd probably name it something like `qtrics_diss_2
 This is a much more reliable system than calling them, say, `Qualtrics output.sav` and `Dissertation FINAL REAL.sav`. This kind of naming "convention" contains no information about which is which or when they were exported, or even that they're two versions of the same study dataset! It might seem like a small detail at the time, but Future You trying to figure out which dataset to use weeks or months later will feel the difference.
 :::
 
+### Importing SAV Data
+
+Next we need to import, or read in, the data into an object in R as before. However, we can't use `readr::read_csv()`, because we don't have CSV data. We'll go with the {tidyverse} option (surprise), which uses the `read_sav()` function from the {haven} package instead. Otherwise, everything about this command is just like we've seen before.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Read in the `mil_data.sav` object from the data folder, or alternatively from Github via URL, as you prefer.
+
+::: {.callout-note collapse="true" title="Solution"}
+
+From a folder:
+
+```{r}
+mil_data <- here::here("data/mil_data.sav") |> haven::read_sav()
+```
+
+From URL:
+
+```{r}
+#| eval: false
+#| 
+mil_data <- haven::read_sav("https://raw.githubusercontent.com/drmankin/practicum/master/data/mil_data.sav")
+```
+
+:::
+:::
+
 \ 
 
 ## The Plan
