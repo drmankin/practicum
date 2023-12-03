@@ -298,9 +298,14 @@ mil_data$english_fluency_1
 ### Factor
 
 
+
 ### Numeric
 
+
+
 ### Conditional Conversion
+
+
 
 ## Setting Up Qualtrics
 
@@ -311,3 +316,16 @@ mil_data$english_fluency_1
 ### Other Considerations
 
 ### Questionnaire Template
+
+
+duplicated
+```{r}
+mil_data |> 
+ dplyr::mutate(
+   n_miss = rowSums(is.na(mil_data)),
+   .keep = "used"
+ )
+
+
+```
+
