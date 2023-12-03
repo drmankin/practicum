@@ -24,14 +24,10 @@ library(codebookr)
 
 Today's data comes from [Body Positivity, but not for everyone (Simon & Hurst, 2021)](https://www.sciencedirect.com/science/article/abs/pii/S1740144521000978?via%3Dihub), which has [publicly available data hosted on Figshare](https://sussex.figshare.com/articles/dataset/Dataset_for_paper_Body_Positivity_but_not_for_everyone/9885644) (h/t Dr Hurst for this!). You can certainly use the data directly from Figshare, but for the purposes of this tutorial, I've prepared a subset of the data that you can load in using the code below.
 
-::: {.callout-tip title="RDS File Type"}
-You might notice that instead of the familiar `readr::read_csv()`, today we have `readRDS()`. That's because the file I've prepared is an `.rds`, or R data, file. This type of file preserves some features of the data, like factor levels, that CSV and other filetypes won't. Otherwise, there's nothing new about these commands!
-:::
-
 Read in from file:
 
 ```{r}
-bp_data <- here::here("data/bp_data.rds") |> readRDS()
+bp_data <- here::here("data/bp_data.csv") |> readr::read_csv()
 ```
 
 Read in from URL:

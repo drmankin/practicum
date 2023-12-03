@@ -1,0 +1,168 @@
+---
+title: "10: Qualtrics and Labelled Data"
+embed-resources: true
+editor: visual
+---
+
+## Open the Tutorial
+
+Use the following code chunks to open the accompanying tutorial.
+
+### Open in RStudio Viewer
+
+```{r}
+rstudioapi::viewer('https://r-training.netlify.app/tutorials/psychrlogy/03_improvRs/10_qtrics')
+```
+
+### Open in a New Browser Tab
+
+```{r}
+utils::browseURL('https://r-training.netlify.app/tutorials/psychrlogy/03_improvRs/10_qtrics')
+```
+
+
+
+## Overview
+
+
+### Acknowledgements
+
+
+## Setup
+
+
+### Packages
+
+
+### Data
+
+Read in the `mil_data.sav` object from the data folder, or alternatively from Github via URL, as you prefer.
+
+```{r}
+
+```
+
+
+
+#### Codebook
+
+
+## Qualtrics Data
+
+
+### SAV Data
+
+
+### Exporting from Qualtrics
+
+
+## The Plan
+
+
+## Cleanup and Data Dictionary
+
+Use the `generate_dictionary()` function from the {labelled} packages to create a data dictionary for `mil_dict`, then pipe it into `View()`.
+
+```{r}
+
+```
+
+
+
+### Renaming Variables
+
+Rename `coherence_42` to `coherence_2`. Don't forget to save this change to the dataset!
+
+```{r}
+
+```
+
+
+
+### Separating Columns
+
+Save the final (for now) data dictionary in a new object, `mil_dict`, so we can refer to it as needed.
+
+```{r}
+
+```
+
+
+
+## Labelled Data
+
+
+### Variable Labels
+
+
+#### Getting Labels
+
+
+#### Creating/Updating Labels
+
+
+#### Searching Labels
+
+Use `labelled::look_for()` to get only the items that mentioned family.
+
+```{r}
+
+```
+
+
+
+### Value Labels
+
+
+#### Getting Labels
+
+
+#### Creating/Updating Labels
+
+Get all the value labels for the `gender` variable. Then, update the last value to "Other".
+
+```{r}
+
+```
+
+
+
+### Missing Values
+
+
+## Converting Variables
+
+
+### Factor
+
+
+Convert the `gender` variable to factor, although don't assign this change to the dataset.
+
+```{r}
+
+```
+
+
+
+### Numeric
+
+
+Use `unclass()` to convert `belonging_1` to numeric, although don't assign the change to the dataset.
+
+```{r}
+
+```
+
+
+
+### Conditional Conversion
+
+**CHALLENGE**: Convert categorical variables with labels to factors, and subscale variables to numeric.
+
+*Hint*: Have a look back at `dplyr::across()` for efficient selecting and applying.
+
+```{r}
+
+```
+
+
