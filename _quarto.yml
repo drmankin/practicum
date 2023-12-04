@@ -60,17 +60,21 @@ format:
     css: styles.css
     toc: true
     toc-depth: 4
-    embed-resources: true
+    # This bastard caused the rendering issues - DO NOT DO THIS AGAIN
+    # embed-resources: true
     code-overflow: wrap
     code-block-bg: true
+    # Forces embed code blocks out of alignment
     #code-block-border-left: "#be84a3"
-    highlight-style: 
-      light: tomorrow
-      dark: cobalt
     df-print: paged
     fig-align: center
 
-editor: visual
+## Can't get this to work but the deafult is fine I guess
+# highlight-style: 
+#   light: tomorrow
+#   dark: cobalt
+
+editor: source
 
 execute:
   warning: false

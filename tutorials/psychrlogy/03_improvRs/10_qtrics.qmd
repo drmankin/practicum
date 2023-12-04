@@ -65,18 +65,6 @@ This codebook is intentionally sparse, because we'll be generating our own from 
 ```{r}
 #| echo: false
 
-# mil_data |> 
-#   dplyr::mutate(
-#     across(everything(),
-#            as.character)
-#   ) |> 
-#   tidyr::pivot_longer(
-#     cols = everything(),
-#     names_to = "var",
-#     values_to = "val"
-#   ) |> 
-#   tidyr::separate_wider_delim(cols = var, delim = "_", names = c("v1", "v2", "v3"), too_few = "align_start")
-
 sub_pref <- mil_data |> 
   dplyr::select(global_meaning_1:last_col()) |> 
   names() |> 
@@ -415,7 +403,6 @@ labelled::user_na_to_na(mil_data$english_fluency_1)
 ```
 
 ::: callout-tip
-
 See the [{labelled} vignette](https://cran.r-project.org/web/packages/labelled/vignettes/intro_labelled.html) for more help on working with user-defined NAs, including how to deal with them when converting to other types.
 :::
 
