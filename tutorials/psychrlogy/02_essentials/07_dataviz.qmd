@@ -1,8 +1,5 @@
 ---
 title: "07: Visualisations"
-knitr:
-  opts_chunk: 
-    fig.align: center
 ---
 
 ## Overview
@@ -394,10 +391,8 @@ anx_scores_data |>
   papaja::theme_apa(box = TRUE)
 ```
 
-:::{.callout-tip title="Checking In"}
-
+::: {.callout-tip title="Checking In"}
 How are you doing? This is a bunch of new information, so don't worry if you feel a bit overwhelmed. Honestly when I am constructing plots, a good portion of the time I spend to make them is either 1) digging back through my own previous documents to lift code I've already written or 2) searching online for help posts to figure out how to do things! I didn't know how to do basically any of the formatting for the facet-wrapped plot above, and it took me about an hour of testing and searching to figure it out. I hope having these templates saves you a bit of time in the future.
-
 :::
 
  
@@ -850,9 +845,9 @@ Let's now turn to continuous variables only and produce a scatterplot to visuali
 Follow along with the instructions below to build your own plot as we go. Feel free to tweak details like colour and labels as you like.
 :::
 
-To start, let's set up a basic plot using the STICSA pre- and post-MCQ state anxiety scores. The new element is `geom_point()`, which draws points [^scatter]. In that layer, we also have two new arguments. The first is `alpha`, which sets the transparency of the points between 1 (solid) and 0 (invisible). The second is `position = "jitter"`, which introduces some random noise into the placement of the points so make it easier to see overlapping values.
+To start, let's set up a basic plot using the STICSA pre- and post-MCQ state anxiety scores. The new element is `geom_point()`, which draws points [^4]. In that layer, we also have two new arguments. The first is `alpha`, which sets the transparency of the points between 1 (solid) and 0 (invisible). The second is `position = "jitter"`, which introduces some random noise into the placement of the points so make it easier to see overlapping values.
 
-[^scatter]: Tragically, `geom_scatter()` isn't a thing, not matter how many times I try!
+[^4]: Tragically, `geom_scatter()` isn't a thing, not matter how many times I try!
 
 ```{r}
 anx_scores_data |> # <1>
@@ -928,9 +923,9 @@ anx_scores_data |>
 
 A start - but let's do something about that horrible default colour palette!
 
-Just as we had `scale_x...` and `scale_y...` functions for specifying the `x` and `y` scales, we have `scale_colour...` and `scale_fill...` for specifying the details about the way the colour and fill appears. Here, I'm using viridis, which has its own dedicated functions, `scale_colour_viridis()` and `scale_fill_viridis()`[^4]. Within those two new elements, we have the same two elements:
+Just as we had `scale_x...` and `scale_y...` functions for specifying the `x` and `y` scales, we have `scale_colour...` and `scale_fill...` for specifying the details about the way the colour and fill appears. Here, I'm using viridis, which has its own dedicated functions, `scale_colour_viridis()` and `scale_fill_viridis()`[^5]. Within those two new elements, we have the same two elements:
 
-[^4]: Naturally, if you want to use palettes from a different package, you'll need to use the functions from that package instead! Those functions may also work a bit differently, so make sure you read the help documentation if you get stuck.
+[^5]: Naturally, if you want to use palettes from a different package, you'll need to use the functions from that package instead! Those functions may also work a bit differently, so make sure you read the help documentation if you get stuck.
 
 -   `name`: gives a title for the colour/fill legend
 -   `discrete`: tells {viridis} whether the variable to be coloured/filled is discrete or not. Here it is (it's `mcq`, a categorical variable), so we set this to `TRUE`.

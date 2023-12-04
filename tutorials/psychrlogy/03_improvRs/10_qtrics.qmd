@@ -65,18 +65,6 @@ This codebook is intentionally sparse, because we'll be generating our own from 
 ```{r}
 #| echo: false
 
-# mil_data |> 
-#   dplyr::mutate(
-#     across(everything(),
-#            as.character)
-#   ) |> 
-#   tidyr::pivot_longer(
-#     cols = everything(),
-#     names_to = "var",
-#     values_to = "val"
-#   ) |> 
-#   tidyr::separate_wider_delim(cols = var, delim = "_", names = c("v1", "v2", "v3"), too_few = "align_start")
-
 sub_pref <- mil_data |> 
   dplyr::select(global_meaning_1:last_col()) |> 
   names() |> 
@@ -245,13 +233,13 @@ To make the labels more readable, let's split up the question text, which is rep
 Since we want to separate the `labels` column into two - making the dataset wider - using a delimiter, the `separate_wider_delim()` function from the {tidyr} package should do the trick!
 
 ```{r}
-mil_data |> #<1>
-  labelled::generate_dictionary() |> #<2>
-  tidyr::separate_wider_delim( #<3>
-    cols = label, #<4>
-    delim = " - ", #<5>
-    names = c("label", "item_label"), #<6>
-    too_few = "align_start" #<7>
+mil_data |> # <1>
+  labelled::generate_dictionary() |> # <2>
+  tidyr::separate_wider_delim( # <3>
+    cols = label, # <4>
+    delim = " - ", # <5>
+    names = c("label", "item_label"), # <6>
+    too_few = "align_start" # <7>
   )
 ```
 
@@ -415,8 +403,8 @@ labelled::user_na_to_na(mil_data$english_fluency_1)
 ```
 
 ::: callout-tip
-
 See the [{labelled} vignette](https://cran.r-project.org/web/packages/labelled/vignettes/intro_labelled.html) for more help on working with user-defined NAs, including how to deal with them when converting to other types.
+:::
 
 ## Converting Variables
 
@@ -453,10 +441,9 @@ Factors are so common and useful in R that they have a whole {tidyverse} package
 
 The useful thing about labelled data that it's very easy to convert into factors, which is what R expects for many different types of analysis and plotting functions. Handy!
 
-For an individual variable, we can use `labelled::to_factor()` to convert to factor. 
+For an individual variable, we can use `labelled::to_factor()` to convert to factor.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
 Convert the `gender` variable to factor, although don't assign this change to the dataset.
 
 ::: {.callout-note collapse="true" title="Solution"}
@@ -470,7 +457,6 @@ mil_data |>
 :::
 :::
 
-
 If you wanted a specific order of the levels, for plotting or similar, there's also a `sort_levels =` argument described in the help documentation.
 
 ### Numeric
@@ -478,11 +464,9 @@ If you wanted a specific order of the levels, for plotting or similar, there's a
 For continuous variables, we don't need anything fancy to turn them into numeric data, because they technically already are. Instead, we just need to get rid of the labels using `unclass()`.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
 Use `unclass()` to convert `belonging_1` to numeric, although don't assign the change to the dataset.
 
 ::: {.callout-note collapse="true" title="Solution"}
-
 This example shows both the conversion to numeric, and back to labelled with `labelled::labelled()`.
 
 ```{r}
@@ -493,7 +477,6 @@ mil_data |>
     .keep = "used"
   )
 ```
-
 :::
 :::
 
@@ -501,7 +484,7 @@ The nice thing about this method is that we can now do maths with the unclassed 
 
 ### Conditional Conversion
 
-There are two main ways we could more efficiently convert variables than one by one. The first is offered by the {labelled} package - here I've just borrowed from the vignette describing the setup.
+There are two main ways we could more efficiently convert variables than one by one. The first is offered by the {labelled} package - here I've just copied from the vignette describing the setup.
 
 ::: callout-note
 In most of cases, if data documentation was properly done, categorical variables corresponds to vectors where all observed values have a value label while vectors where only few values have a value label should be considered as continuous.
@@ -524,13 +507,13 @@ Instead, we can take the second route and use what we've seen in previous Challe
 
 ::: {.callout-note collapse="true" title="Solution"}
 ```{r}
-mil_data |> 
+mil_data <- mil_data |> 
   dplyr::mutate(
     across(global_meaning_1:last_col(),
            unclass),
     across(c(english_fluency_1, gender),
            labelled::to_factor)
-  ) |> View()
+  )
 ```
 :::
 :::

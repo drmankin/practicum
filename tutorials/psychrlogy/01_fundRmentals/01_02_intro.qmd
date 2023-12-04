@@ -1,10 +1,6 @@
 ---
 title: "01/02: IntRoduction"
-format: html
-editor: visual
 execute:
-  warning: false
-  message: false
   error: true
 ---
 

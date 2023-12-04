@@ -369,11 +369,9 @@ val_label(mil_data$english_fluency_1, 3)
 These two functions can also be used to update an entire variable or a single value respectively.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
 Get all the value labels for the `gender` variable. Then, update the last value to "Other".
 
 ::: {.callout-note collapse="true" title="Solution"}
-
 ```{r}
 val_labels(mil_data$gender)
 ```
@@ -381,7 +379,6 @@ val_labels(mil_data$gender)
 ```{r}
 val_label(mil_data$gender, 3) <- "Other"
 ```
-
 :::
 :::
 
@@ -519,6 +516,6 @@ mil_data |>
 :::
 :::
 
-\ 
+ 
 
 That's about all we've got for today, although it's a lot! You should now have a data dictionary to refer to, and a complete dataset to work with using the techniques we've already covered to clean up responses, create subscales, and so on. Next time we'll work on solving common issues and avoiding those issues in the first place by setting things up right to begin with.
