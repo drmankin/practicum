@@ -69,7 +69,7 @@ format:
     df-print: paged
     fig-align: center
 
-## Can't get this to work but the deafult is fine I guess
+## Can't get this to work but the default is fine I guess
 # highlight-style: 
 #   light: tomorrow
 #   dark: cobalt

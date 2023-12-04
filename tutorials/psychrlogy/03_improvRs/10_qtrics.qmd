@@ -24,7 +24,6 @@ Load the packages.
 library(tidyverse)
 library(haven)
 library(labelled)
-library(sjlabelled)
 library(sjPlot)
 ```
 :::
@@ -100,7 +99,7 @@ The `.sav` file type is associated with [SPSS](https://www.ibm.com/products/spss
 
 Importing via `.sav` has two key advantages. First, it results in a much cleaner import format. If you try importing the same data via `.csv` file, you'll find that you need to do some very fiddly and pointless cleanup first. For instance, the `.csv` version of the same dataset will introduce some empty rows that have to be deleted with `dplyr::slice()` or similar. The `.sav` version of the dataset doesn't have any comparable formatting issues.
 
-Most importantly, however, importing `.sav` file types into R with particular packages like {haven} gets us a dataset with a special type of data: namely, labelled data. The labels allow us to preserve important information about the questions asked and response options in Qualtrics, and to (mostly) painlessly create codebooks for datasets. We will explore these features in depth in this tutorial
+Most importantly, however, importing `.sav` file types into R with particular packages like {haven} gets us a dataset with a special type of data: namely, labelled data. The labels allow us to preserve important information about the questions asked and response options in Qualtrics, and to (mostly) painlessly create codebooks for datasets. We will explore these features in depth in this tutorial.
 
 ### Exporting from Qualtrics
 
@@ -138,9 +137,9 @@ This is a much more reliable system than calling them, say, `Qualtrics output.sa
 
 Our workflow for this dataset will be slightly different than previously. We'll start by doing some basic cleanup of the dataset, and produce a codebook, or "data dictionary", drawing on the label metadata in the SAV file. For the purpose of practice, we'll also have a look at how to work with those labels, and manage different types of missing values.
 
-As useful as labels are, they will get in the way when we want to work with our dataset further. So, we'll convert the variables in the dataset into either factors, for categorical data, or numeric, for continuous variables. From that point forward, we can work with the dataset using the techniques and functions we've learned thus far.
+As useful as labels are, they will get in the way when we want to work with our dataset further. So, we'll convert the variables in the dataset into either factors, for categorical data, or numeric, for continuous data [^cont]. From that point forward, we can work with the dataset using the techniques and functions we've learned thus far.
 
- 
+[^cont]: For the purposes of simplicity, we're going to keep pretending that Likert and similar rating scales are "continuous".
 
 ## Cleanup and Data Dictionary
 
@@ -151,7 +150,7 @@ Most of the following examples are drawn from the ["Introduction to labelled" vi
 Let's start off by having a look at the dataset. As usual, you can call the dataset or use `View()` on it directly, but we're going to take advantage of the new data type to get a more helpful summary, that emulates the "Variable View" in SPSS.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-Use the `generate_dictionary()` function from the {labelled} packages to create a data dictionary for `mil_dict`, then pipe it into `View()`.
+Use the `generate_dictionary()` function from the {labelled} packages to create a data dictionary for `mil_data`, then pipe it into `View()`.
 
 ::: {.callout-note collapse="true" title="Solution"}
 ```{r}
@@ -181,7 +180,7 @@ mil_data |>
 
 What we get is a new summary dataset that contains some useful information about each of the variables in `mil_data`. Along with the actual variable name in the dataset, which we see under `variable`, we also get the actual question that participants saw in Qualtrics under `label`, and the response options - where applicable - in `value_labels`.
 
-Why a data dictionary? There's two key reasons to do this. First, as we've already seen throughout these tutorials, data dictionaries (or "codebooks") are very useful for understand datasets, even your own. In this case, we've generally named our variables usefully in Qualtrics before the export, but if you forget to (or don't typically) do this, this reference helps you navigate "Q42", "Q16" etc. The second reason is for other people: if you want to share your data publicly, including a dictionary/codebook is not only a kindness to other users but also helps prevent misuse or misunderstandings.
+Why a data dictionary? There's two key reasons to do this. First, as we've already seen throughout these tutorials, data dictionaries (or "codebooks") are very useful for understanding datasets, even your own. In this case, we've generally named our variables usefully in Qualtrics before the export, but if you forget to (or don't typically) do this, this reference helps you navigate unhelpful variable names like "Q42", "Q16" etc. The second reason is for other people: if you want to share your data publicly, including a dictionary/codebook is not only a kindness to other users but also helps prevent misuse or misunderstandings.
 
 Before we look at these labels in more depth, we're first going to address two minor issues that commonly come up with Qualtrics data to make sure our dataset is ready to use.
 
@@ -270,6 +269,25 @@ mil_dict <- mil_data |>
 :::
 :::
 
+### Viewer Data Dictionary
+
+I personally like `labelled::generate_dictionary()` because (you will be unsurprised to learn) I like to mess about with regex to make it read just as I like. However, if you primarily need a quick reference as you're working with your dataset, the delightful `sjPlot::view_df()` function makes this particularly easy. 
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Put `mil_data` into the `sjPlot::view_df()` function and see what it does!
+
+::: {.callout-note collapse="true" title="Solution"}
+
+By default, the document opens in the Viewer, but you can also save the file it creates for further sharing - see the help documentation.
+
+```{r}
+sjPlot::view_df(mil_data)
+```
+
+:::
+:::
+
 ## Labelled Data
 
 As we've just seen in the data dictionary, the SAV data we're using has a special property: labels. Labelled data has a number of features, all of which we will explore in depth shortly:
@@ -302,7 +320,9 @@ labelled::var_label(mil_data$gender)
 
 #### Creating/Updating Labels
 
-If you'd like to edit labels, you can do it manually:
+If you'd like to edit labels, you can do it "manually" - that is, just writing a whole new label from scratch.
+ 
+The structure of this code might look a little unfamiliar in terms of the code structure. For the most part, we've seen code that contains longer and more complex instructions on the right-hand side of the `<-`, and a single object being created or updated on the left-hand side. In the structure below, the left-hand side contains longer and more complex code that identifies the value(s) to be updated or created, and the right-hand side contains the value(s) to create or update. It's the same logic, just with a different structure.
 
 ```{r}
 labelled::var_label(mil_data$StartDate) <- "Date and time questionnaire was started"
@@ -310,7 +330,7 @@ labelled::var_label(mil_data$StartDate) <- "Date and time questionnaire was star
 labelled::var_label(mil_data$StartDate)
 ```
 
-However, I'd recommend using it as an opportunity to start working with regular expressions. For example, if we want to keep only the first bit of the label for `gender`, then we can keep everything only up to an including the question mark, and and re-assign that to the variable label.
+If you're up for it, though, I'd recommend using it as an opportunity to start working with regular expressions. For example, if we want to keep only the first bit of the label for `gender`, then we can keep everything only up to an including the question mark, and and re-assign that to the variable label. This style is a bit more dynamic and resilient to changes or updates.
 
 ```{r}
 labelled::var_label(mil_data$gender) <- labelled::var_label(mil_data$gender) |> 
@@ -319,17 +339,74 @@ labelled::var_label(mil_data$gender) <- labelled::var_label(mil_data$gender) |>
 labelled::var_label(mil_data$gender)
 ```
 
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+**CHALLENGE**: How can you read the `gsub()` command above? Why migh this be "more dynamic and resilient to changes or updates"?
+
+::: {.callout-note collapse="true" title="Solution"}
+
+Let's pick apart this `gsub()` command a bit at a time. First, `gsub()` has three arguments:
+
+- `pattern`, here `"(.*\\?).*"`, which is the regex statement representing the string to match.
+- `replacement`, here `"\\1"`, which is the string that should replace the match in `pattern`.
+- `x`, the string to look in.
+
+The `pattern` has essentially two parts: the bit in the rounded brackets, and the bit outside. The rounded brackets designate a "capturing group" - a portion of the string that should be grouped together as a unit. The benefit of this grouping is in the second argument of `gsub()`; `\\1` isn't the number 1, but rather is a pronoun referring to the first capturing group. In other words, as a whole, this `gsub()` command captures a subset of the incoming string, and then replaces the entire string with that captured string, essentially dropping everything outside the capturing group.
+
+To understand the regex statement `"(.*\\?).*"`, we need to look at the incoming text, `x`. In this case, `x` is being piped in from above and looks like this:
+
+```{r}
+#| echo: false
+
+mil_data_prog <- mil_data
+
+mil_data <- here::here("data/mil_data.sav") |> haven::read_sav()
+```
+
+```{r}
+labelled::var_label(mil_data$gender)
+```
+
+As discussed in a previous Challenge task, `.*` is a common regex shorthand that means "match any character, as many times as possible." It's essentially an "any number of anything" wildcard. This wildcard appears both inside and outside the brackets. So, how does `gsub()` know which bit should belong in the capturing group?
+
+The answer is `\\?`. This is a "literal" question mark. Some symbols, like `.` and `?`, are regex operators, but we might want to also match the "literal" symbols full-stop "." and question mark "?" in a string. In this case we need an "escape" character "\", that escapes regex and turns the symbol into a literal one. So, the capturing group ends with a literal question mark - in the target string, that's the question mark after "identity", which is the only one in the string.
+
+As an aside, if you're wondering why there are *two* escape characters instead of one - i.e., why is it `\\?` and not `\?`, well, you and me both. There's an explanation in `vignette("regular-expressions")` that never completely makes sense to me. Also, this seems to be an R thing - regex outside of R seems to use only a single escape character, so a literal question mark would be `\?`. If you are ever trying to adapt regex from e.g. StackOverflow or regex101 and it isn't working, check whether the escape characters are right!
+
+Anyway. We can now read `"(.*\\?)"` as "capture all characters up to an including a literal question mark" - which matches the substring "What is your gender identity?" in `x`. However, we don't just want to replace that portion of the string - instead, we want to replace *the whole string* with that bit of it. So, the second `.*` outside the brackets matches the rest of the string. If we didn't include this last bit, the capturing group would just be replaced with itself, which would result in the same string as we started with, as below:
+
+```{r}
+labelled::var_label(mil_data$gender) |> 
+  gsub("(.*\\?)", "\\1", x = _)
+```
+
+So, altogether, we can read this `gsub()` command as: "Capture everything up to an including the question mark, and replace the entire string with that capturing group."
+
+Now. Why, you might wonder, is all this faff *better*?
+
+Well, it might not be. You might find it more frustrating or effortful to generate the right regex pattern than to replace the label "manually", and in that case, there's nothing wrong with just writing out the label you want. I said this was "more dynamic and resilient" because this command will always drop everything after the question mark, no matter what that text is. If there is no match, it won't replace anything. So, unlike the "manual" option, there's much less danger of accidentally mixing up labels or overwriting the wrong thing; and this regex statement can be generalised to *any* label that contains a question mark, rather than having to type out each label one by one.
+
+```{r}
+#| echo: false
+
+mil_data <- mil_data_prog
+```
+
+:::
+:::
+
 #### Searching Labels
 
-A *very* nifty feature of variable labels and {labelled} is the ability to search through them with `labelled::look_for()`. With the whole dataset, `look_for()` returns essentially the same info as `generate_dictionary()`, but given a second argument with a search term, you get back only the variables whose label contains that term.
+A *very* nifty feature of variable labels and {labelled} is the ability to search through them with `labelled::look_for()`. With the whole dataset, `look_for()` returns essentially the same info as `generate_dictionary()`, but given a second argument containing a search term, you get back only the variables whose label contains that term.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-Use `labelled::look_for()` to get only the items that mentioned family.
+Use `labelled::look_for()` to get only the items in this questionnaire that mentioned family.
 
 ::: {.callout-note collapse="true" title="Solution"}
 I've piped into `tibble::as_tibble()` to make the output easier to read.
 
 ```{r}
+
 labelled::look_for(mil_data, "family") |> 
   tibble::as_tibble()
 ```
@@ -342,30 +419,40 @@ Value labels contain individual labels associated with unique values within a va
 
 #### Getting Labels
 
-There are two functions to assist with this. `labelled::val_labels()` (with an "s") returns all of the labels, while `labelled::val_label()` (without an "s") will return the label for a single value.
+There are two functions to assist with this. `labelled::val_labels()` (with an "s") returns all of the labels, while `labelled::val_label()` (without an "s") will return the label for a single specified value.
 
 ```{r}
-val_labels(mil_data$english_fluency_1)
+labelled::val_labels(mil_data$english_fluency_1)
 ```
 
 ```{r}
-val_label(mil_data$english_fluency_1, 3)
+labelled::val_label(mil_data$english_fluency_1, 3)
 ```
 
 #### Creating/Updating Labels
 
-These two functions can also be used to update an entire variable or a single value respectively.
+These two functions can also be used to update an entire variable or a single value respectively. The structure of this code is the same as we saw with variable labels previously.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
 Get all the value labels for the `gender` variable. Then, update the last value to "Other".
 
 ::: {.callout-note collapse="true" title="Solution"}
 ```{r}
-val_labels(mil_data$gender)
+labelled::val_labels(mil_data$gender)
 ```
 
+The code for replacing this is *much* simpler manually...
+
 ```{r}
-val_label(mil_data$gender, 3) <- "Other"
+#| eval: false
+labelled::val_label(mil_data$gender, 3) <- "Other"
+```
+
+But when has that ever stopped me?
+
+```{r}
+labelled::val_label(mil_data$gender, 3) <- labelled::val_label(mil_data$gender, 3) |> 
+  gsub("(.*?) .*", "\\1", x = _)
 ```
 :::
 :::
@@ -506,18 +593,78 @@ Instead, we can take the second route and use what we've seen in previous Challe
 *Hint*: Have a look back at `dplyr::across()` for efficient selecting and applying.
 
 ::: {.callout-note collapse="true" title="Solution"}
+
 ```{r}
-mil_data <- mil_data |> 
-  dplyr::mutate(
-    across(global_meaning_1:last_col(),
-           unclass),
-    across(c(english_fluency_1, gender),
-           labelled::to_factor)
+mil_data <- mil_data |> # <1>
+  dplyr::mutate( # <2>
+    across(global_meaning_1:last_col(), # <3>
+           unclass), # <3>
+    across(c(english_fluency_1, gender), # <4>
+           labelled::to_factor) # <4>
   )
 ```
+
+1. Overwrite `mil_data` by taking the existing dataset `mil_data`, *and then*
+1. Change it as follows:
+1. Across all the variables from `global_meaning_1` through the last column, convert to numeric
+1. Across the variables `english_fluency_1` and `gender`, convert to factor.
+
 :::
 :::
 
  
 
-That's about all we've got for today, although it's a lot! You should now have a data dictionary to refer to, and a complete dataset to work with using the techniques we've already covered to clean up responses, create subscales, and so on. Next time we'll work on solving common issues and avoiding those issues in the first place by setting things up right to begin with.
+Very well done today. You should now have a data dictionary to refer to, and a complete dataset to work with using the techniques we've already covered to clean up responses, create subscales, and so on. Next time we'll work on solving common issues and avoiding those issues in the first place by setting things up right to begin with.
+
+This last exercise is a doozy, and I'm not going to give you much help with it. However, if you've got some spare time and you're keen to produce clean, beautiful, final data dictionaries...read on.
+
+```{r}
+df <- mil_data
+subscale <- "global"
+
+sub_pref <- df |> 
+    dplyr::select(starts_with("global")) |> 
+    names() |> 
+  gsub("(.*_)[0-9]+", "\\1", x = _) |> 
+  unique()
+
+strsplit(sub_vars, split = NULL)
+
+all(sapply(list(a,b,c,d), function(x) x == d))
+
+calc_subscale <- function(df, subscale){
+  sub_pref <- df |> 
+    dplyr::select({{subscale}}) |> 
+    names() |> 
+  gsub("(.*_)[0-9]+", "\\1", x = _) |> 
+  unique()
+
+  df |> 
+    dplyr::rowwise() |> 
+    dplyr::transmute(!!str_c(sub_pref, fx) := mean(c_across({{subscale}}), na.rm = TRUE)) |> 
+    dplyr::ungroup()
+} 
+
+calc_subscale(df, contains("global"))
+
+df |> 
+  purrr::map_dfc(
+    .x = list("global_meaning", "mattering"),
+    .y = _,
+    .f = ~
+  )
+
+
+df %>%
+  dplyr::bind_cols(
+    purrr::map_dfc(.x = list("math", "read"),
+            .f = ~ .y %>%
+               dplyr::rowwise() %>%
+               dplyr::transmute(!!str_c("mean_", .x) := mean(c_across(starts_with(.x)), na.rm = TRUE)),
+            .y = .)
+  )
+
+
+mil_data |> 
+```
+
