@@ -616,55 +616,54 @@ mil_data <- mil_data |> # <1>
 
 Very well done today. You should now have a data dictionary to refer to, and a complete dataset to work with using the techniques we've already covered to clean up responses, create subscales, and so on. Next time we'll work on solving common issues and avoiding those issues in the first place by setting things up right to begin with.
 
-This last exercise is a doozy, and I'm not going to give you much help with it. However, if you've got some spare time and you're keen to produce clean, beautiful, final data dictionaries...read on.
+<!-- This last exercise is a doozy, and I'm not going to give you much help with it. However, if you've got some spare time and you're keen to produce clean, beautiful, final data dictionaries...read on. -->
 
 ```{r}
-df <- mil_data
-subscale <- "global"
+#| include: false
+#| eval: false
 
-sub_pref <- df |> 
-    dplyr::select(starts_with("global")) |> 
-    names() |> 
-  gsub("(.*_)[0-9]+", "\\1", x = _) |> 
-  unique()
-
-strsplit(sub_vars, split = NULL)
-
-all(sapply(list(a,b,c,d), function(x) x == d))
-
-calc_subscale <- function(df, subscale){
-  sub_pref <- df |> 
-    dplyr::select({{subscale}}) |> 
-    names() |> 
-  gsub("(.*_)[0-9]+", "\\1", x = _) |> 
-  unique()
-
-  df |> 
-    dplyr::rowwise() |> 
-    dplyr::transmute(!!str_c(sub_pref, fx) := mean(c_across({{subscale}}), na.rm = TRUE)) |> 
-    dplyr::ungroup()
-} 
-
-calc_subscale(df, contains("global"))
-
-df |> 
-  purrr::map_dfc(
-    .x = list("global_meaning", "mattering"),
-    .y = _,
-    .f = ~
-  )
-
-
-df %>%
-  dplyr::bind_cols(
-    purrr::map_dfc(.x = list("math", "read"),
-            .f = ~ .y %>%
-               dplyr::rowwise() %>%
-               dplyr::transmute(!!str_c("mean_", .x) := mean(c_across(starts_with(.x)), na.rm = TRUE)),
-            .y = .)
-  )
-
-
-mil_data |> 
+# df <- mil_data
+# subscale <- "global"
+# 
+# sub_pref <- df |> 
+#     dplyr::select(starts_with("global")) |> 
+#     names() |> 
+#   gsub("(.*_)[0-9]+", "\\1", x = _) |> 
+#   unique()
+# 
+# strsplit(sub_vars, split = NULL)
+# 
+# all(sapply(list(a,b,c,d), function(x) x == d))
+# 
+# calc_subscale <- function(df, subscale){
+#   sub_pref <- df |> 
+#     dplyr::select({{subscale}}) |> 
+#     names() |> 
+#   gsub("(.*_)[0-9]+", "\\1", x = _) |> 
+#   unique()
+# 
+#   df |> 
+#     dplyr::rowwise() |> 
+#     dplyr::transmute(!!str_c(sub_pref, fx) := mean(c_across({{subscale}}), na.rm = TRUE)) |> 
+#     dplyr::ungroup()
+# } 
+# 
+# calc_subscale(df, contains("global"))
+# 
+# df |> 
+#   purrr::map_dfc(
+#     .x = list("global_meaning", "mattering"),
+#     .y = _,
+#     .f = ~
+#   )
+# 
+# df %>%
+#   dplyr::bind_cols(
+#     purrr::map_dfc(.x = list("math", "read"),
+#             .f = ~ .y %>%
+#                dplyr::rowwise() %>%
+#                dplyr::transmute(!!str_c("mean_", .x) := mean(c_across(starts_with(.x)), na.rm = TRUE)),
+#             .y = .)
+#   )
 ```
 

@@ -1,0 +1,11 @@
+---
+title: "Resources"
+---
+
+::: {.callout-caution title="Under Construction"}
+This section is still under construction. Check back for more in the future!
+:::
+
+This section will be added to as necessary to support staff in their progress with R, for dissertation supervision and for the own work. See the sections in the sidebar for the documents currently available.
+
+If you have a suggestion for a FAQ, guide, or other resource that would be helpful, you can drop it in the [Suggestion Box on Canvas](https://canvas.sussex.ac.uk/courses/29761/quizzes/40835) or [get in touch](about.qmd).

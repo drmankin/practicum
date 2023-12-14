@@ -72,12 +72,12 @@ By the end of this series, you will be able to:
 
 ### ImprovRs
 
-The four-part ImprovRs series is designed for those with a strong foundation in R who want to move to using R in part or entirely for their data management and analysis process, and follows on from the Essentials series. It covers specific skills in working with questionnaire data, advanced data wrangling, and an introduction to writing functions, with the aim of building a diverse toolbox of R skills.
+The three-part ImprovRs series is designed for those with a strong foundation in R who want to move to using R in part or entirely for their data management and analysis process, and follows on from the Essentials series. It covers specific skills in creating Qualtrics questionnaires, working with questionnaire data, and advanced data wrangling, with the aim of building a diverse toolbox of R skills.
 
 By the end of this series, you will be able to:
 
+-   Work with a new dataset from beginning (reading in, inspecting, cleaning) to end (wrangling, visualising, analysing, reporting)
+-   Design a Qualtrics questionnaire with efficient analysis in mind
 -   Work with labelled Qualtrics data and factors
 -   Create standardised subscale scores
 -   Generate automatic codebooks for Qualtrics datasets
--   Reshape (wide/long format) and merge/separate datasets
--   Write custom anonymous and named functions

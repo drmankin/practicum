@@ -106,12 +106,12 @@ tibble::tibble(
 
 The following sections contain not one, not two, but *three* different ways to do the same thing. Why? Well, at this point you probably have a good sense of how much you like or want to use R, and how confident you feel using tricks and shortcuts, like `<tidyselect>`, `across()`, etc. I'm sure you also have a sense of how I feel about this: I will pretty much always choose the method that is the most elaborate and efficient in the long run, even (especially??) if it means more work in R to get it set up. However, I fully appreciate that not everyone is like me, and would prefer the more transparent, less intensive options in order to get the job done.
 
-So, I've described three ways to set up a Qualtrics project. First, by "set up a Qualtrics project", I mean creating everything you would need for the data gathering, managing, and organising side of running a study using Qualtrics. That includes setting up Qualtrics itself, cleaning and reviewing the dataset ahead of analysis, and generating a complete codebook for the final dataset. This *doesn't* include the data processing and analysing portion of the study - that's been covered extensively in previous tutorials.
+So, I've described three ways to set up a Qualtrics project. First, by "set up a Qualtrics project", I mean creating everything you would need for the data gathering, managing, and organising side of running a study using Qualtrics. That includes setting up Qualtrics itself and cleaning and reviewing the dataset ahead of analysis. This *doesn't* include the data processing and analysing portion of the study - that's been covered extensively in previous tutorials.
 
 I also hope that this description will give you a sense of what these different R-intensity levels look like, and how much of an investment each is. Do keep a few important things in mind as you're exploring the options below:
 
 - These levels build on each other. Starting with "Minimal" might be where you're at now, but it's also a *good idea*, especially if these tutorials are your only experience with R so far! You can always come back and explore more complex options if you find you've mastered the first level and want to streamline your study process.
-- I really, *really* don't have a good sense of it, but I suspect that in a typical University school/department, not many people - maybe none! - are doing the Majority option (described below). I taught myself how to do it for the purposes of writing this tutorial, so I don't even use it myself (yet)! You might even find it doesn't work as well as I've described, so [let me know](mailto:J.Mankin@sussex.ac.uk) if you have any suggestions.
+- I really, *really* don't have a good sense of it, but I suspect that in a typical University school/department, not many people - maybe none - are doing the Majority option (described below). I looked into it for the purposes of writing this tutorial, so I don't even use it myself (yet)! You might even find it doesn't work as well as I've described, so [let me know](mailto:J.Mankin@sussex.ac.uk) if you have any suggestions.
 
 ### Choose Your Path
 
@@ -131,6 +131,7 @@ tibble::tribble(
   ) |> 
   kableExtra::kable_styling()
 ```
+
 Made your choice? Brill. The following sections of the tutorial will guide you through how to set up, download, and work with Qualtrics data for each level. Note that you *can* mix and match as you like, of course, but this tutorial isn't designed that way.
 
 ### Accessing Qualtrics
@@ -161,7 +162,7 @@ Follow the steps in the previous section to log in and create a survey first, th
 
 #### Using Blocks
 
-Blocks are the way that Qualtrics organises pieces of the survey. Essentially, everything in the same block becomes a unit. You can have multiple questions per block, or just one, but it helps you how related elements appear. Blocks are vital for creating a study that appears as you want, but they won't have any substantial impact on the format of the data.
+Blocks are the way that Qualtrics organises pieces of the survey. Essentially, everything in the same block becomes a unit. You can have multiple questions per block, or just one. Blocks are vital for creating a study that appears as you want, but they won't have any substantial impact on the format of the data.
 
 Explaining blocks and how they can be arranged is a bit outside the scope of this tutorial, so see the [Block Options](https://www.qualtrics.com/support/survey-platform/survey-module/block-options/block-options-overview/) page in the Qualtrics guide for more details.
 
@@ -196,7 +197,7 @@ To check the values, click on the question, scroll down to the bottom of the Edi
 
 ![](/images/qtrics_recode.png){fig-alt="The Recode Values popup showing editing both values and value labels."}
 
-As you can see from this simple "What's your favourite pie?" question, these underlying numeric values can go wonky quickly. I have four options, "apple", "cherry", "pecan", and "pumpkin", which are numbered 1, 6, 2, and 3 respectively! What's happened is that I created "apple", "pecan", and "pumpkin", and then went back and added "cherry" after "apple" - and the values are assigned based on the order they are added. If I wanted these to go in order (which isn't a bad idea, since you want your data to be predictable), I can tick "Recode Values" and then manually enter the numeric values I want for each choice.
+As you can see from this simple "What's your favourite pie?" question, these underlying numeric values can go wonky quickly. I have four options, "apple", "cherry", "pecan", and "pumpkin", which are numbered 1, 6, 2, and 3 respectively! What's happened is that I created "apple", "pecan", and "pumpkin", and then a couple other options; then I changed my mind, removed the other options (which would have been 4 and 5) and added "cherry" after "apple". Values are assigned based on the order they are added, which is why the values came out weird and out of numerical order. If I wanted these to go in order (which isn't a bad idea, since you want your data to be predictable), I can tick "Recode Values" and then manually enter the numeric values I want for each choice.
 
 ##### Matrix Questions
 
@@ -204,7 +205,7 @@ Matrix questions are very commonly used as an efficient way to present multiple 
 
 To create one, create a "Matrix table" type question. The typical setup is for the items/questions to be presented down the left-hand side as "statements", and the rating scale to be presented along the top as "scale points". 
 
-The "Scale points" section of the Edit Question sidebar lets you control how these scale points appear. You can add or remove the number of points, and for many scales in Psychology, you can use suggested rating scales, which automatically insert labels for each scale point for you.
+The "Scale points" section of the Edit Question sidebar lets you control how these scale points appear. You can add or remove the number of points, and for many scales in Psychology, you can use suggested rating scales by switching the toggle on, which automatically insert labels for each scale point for you.
 
 ::: callout-tip
 
@@ -212,11 +213,11 @@ Remember in the last tutorial, we could use `labelled::unlabelled()` to automati
 
 :::
 
-For some reason, matrix tables are especially prone to issues with the underlying numeric values, especially if you use these automatic scale points. You'll end up with really weird ranges, like 61-65, instead of 1-5, which will do a number on the interpretation of any descriptives. Even better, the numeric values change themselves every time you make changes to them! So, I'd strongly recommend you update the numeric values using "Recode values" as the last step to make sure you don't have any surprises when you round to looking at the data.
+For some reason, matrix tables are especially prone to issues with the underlying numeric values, especially if you use these automatic scale points. You'll end up with really weird ranges, like 61-65, instead of 1-5, which will do a number on the interpretation of any descriptives. Even better, the numeric values change themselves every time you make changes to them! So, I'd strongly recommend you update the numeric values using "Recode values" as the last step to make sure you don't have any surprises when you get round to looking at the data.
 
 ### Testing the Study
 
-Before you publish your study and start collecting responses, I *strongly* recommend you check that everything has been set up correctly. To do this, use the Preview button to run through your study a few times as if you were a participant. This has two important benefits. First, you can check that you have set up your questions correctly, that they appear in the order you want or conditionally as required, and any settings, like Force Response, have been implemented correctly. Second, preview runs are still recorded as data in your dataset, under the "DistributionChannel" variable (as we've seen before). This essentially generates a small, toy dataset to work with that will be formatted identically to your real dataset.
+Before you publish your study and start collecting responses, I *strongly* recommend you check that everything has been set up correctly. To do this, use the Preview button to run through your study a few times as if you were a participant. This has two important benefits. First, you can check that you have set up your questions correctly, that they appear in the order you want or conditionally as required, and any settings, like Force Response, have been implemented correctly. Second, preview runs are still recorded as data in your dataset, under the "DistributionChannel" variable (as we've seen before). These preview runs essentially generate a small, toy dataset to work with that will be formatted identically to your real dataset.
 
 #### Do Your Worst
 
@@ -226,7 +227,7 @@ While you're previewing, I recommend that you try to "break" your survey. Try to
 
 Once you've done your preview runs, export your dataset and read it into R just as you would a real dataset. Here you can check that your variable labels and values are correct, that all response options appear correctly, and so forth. When you're happy that all your data is recording as it should, you can publish your study and start collecting responses. (Good luck!)
 
-We're not done yet, though. As I said above, this preview dataset full of junk data is formatted exactly the same way as your real dataset will be. This means that while your study is collecting responses, you can  write the code to clean the dataset, generate the codebook, calculate subscales, etc. - because you already know what your variables will be named and what they will contain. Once you complete your data collection, you will already have the majority of your data cleaning work done - although make sure you carefully check your code step by step with the real data; there are always surprises!
+We're not done yet, though. As I said above, this preview dataset full of junk data is formatted exactly the same way as your real dataset will be. This means that while your study is collecting responses, you can already start writing the code to clean the dataset, generate the codebook, calculate subscales, etc. - because you already know what your variables will be named and what they will contain. Once you complete your data collection, you will already have the majority of your data cleaning work done - although make sure you carefully check your code step by step with the real data; there are always surprises!
 
 ## Moderate
 
@@ -236,8 +237,83 @@ The moderate level assumes that you'd like to futureproof your work somewhat, to
 
 Templates allow you to easily replicate the same setup across multiple studies. You can turn your own surveys into templates to use in the future, or find existing templates to adapt for your purposes.
 
+Creating your surveys in Qualtrics with an eye to turning them into templates, or using surveys from template, has an enormous potential advantage: *predictability*. The demographic gender question, for example, might always be called `demo_gender`, so you don't have to check or remember if it was `gender` or `Gender_Demo` or `Q12` or whatever between studies - it's always the same. Why is this the best thing ever? Because *generalising code* depends on predictability. If your data is predictable - if it always has the same names and the same format and contains the same type of information in the same variables from one study to another - then the code that works on one dataset will work on another[^caveat]. So, not only will you save a lot of time setting up the same questions and writing the same consent forms over and over, but you can also make your data cleaning and wrangling process more automated.
+
+[^caveat]: I can't leave this supremely confident, nigh-hubristic statement just hanging here without a huge flag: **NEVER ASSUME YOUR CODE HAS WORKED AS EXPECTED WITHOUT THOROUGH CHECKING/TESTING!** For relatively simple setups, and routine steps, you can achieve this, but even for the most basic operations, you should always always *always* double check what your code has produced.
+
 #### Creating Your Own Template
 
+There are a few ways to use existing surveys as templates. This is largely preference, but might depend on what information you have access to.
+
+##### Copy an Existing Survey
+
+For a survey you already have set up, you can straightforwardly duplicate it. This will copy all the settings, questions, survey flow, etc., but none of the actual responses. 
+
+::: {callout-tip}
+See [the Qualtrics Support on Creating from a Copy](https://www.qualtrics.com/support/survey-platform/my-projects/creating-a-project/#CreatingFromACopy).
+:::
+
+:::: {.columns}
+::: {.column}
+**Pros**
+
+- Reuse the entire survey as you originally set it up
+- Easily edit it as normal for your new round of data collection
+:::
+::: {.column}
+**Cons**
+
+- Multiple similar copies of the same survey may get confused
+- Not easy to remix elements from existing surveys
+:::
+::::
+
+##### Add to Your Library
+
+Your Library in Qualtrics is an archive of surveys, or pieces of surveys (like blocks or questions) that you might want to reuse across multiple surveys. There are [public Library elements](https://www.qualtrics.com/support/survey-platform/survey-module/editing-questions/question-types-guide/pre-made-qualtrics-library-questions/?parent=p001138), but you can also add elements you've made from your own surveys to your personal Library to reuse in the future.
+
+::: {callout-tip}
+See [the Qualtrics Support on Library Surveys](https://www.qualtrics.com/support/survey-platform/account-library/survey-library/).
+:::
+
+:::: {.columns}
+::: {.column}
+**Pros**
+
+- Allows recombination of elements easily
+- No need to remember which survey(s) contain which element(s) you want to reuse
+:::
+::: {.column}
+**Cons**
+
+- Somewhat unwieldy to manage (lots of clicking and naming things, setting up folder organisation)
+- Difficult to share?
+- Would require extra work to export library elements
+:::
+::::
+
+##### Import/Export to File
+
+For this option, you export a survey as a .qsf file. The file contains all the information about the survey, including the blocks/questions and all of the settings, survey flow, etc. You can then send this file to others, post it on Canvas, and otherwise share it however you like, and anyone who uploads it to Qualtrics will have the complete survey without any responses.
+
+::: callout-tip
+See [the Qualtrics Support pages on Importing and Exporting Surveys](https://www.qualtrics.com/support/survey-platform/survey-module/survey-tools/import-and-export-surveys/).
+:::
+
+:::: {.columns}
+::: {.column}
+**Pros**
+
+- Easy to share complete surveys with other users, like dissertation students/supervisors, collaborators
+- Keep an archive of your surveys separate from institution account
+:::
+::: {.column}
+**Cons**
+
+- Within the same account, is essentially identical to copying a survey, just with more steps
+- Can only export the entire survey, rather than parts
+:::
+::::
 
 #### Using Existing Templates
 
@@ -250,9 +326,29 @@ To use these or other QSF file templates, the [Qualtrics guide to creating a pro
 
 ### Developing a Script
 
-One key advantage of using templates is that you can coordinate your Qualtrics setup across studies, and that means consistency in the details of the data, such as variable names and labels. The reason this is so helpful is that you can use that consistency to develop a script that you can use across different studies to do different data cleaning and wrangling processes, without having to reinvent the wheel each time.
+As described above, tne key advantage of using templates is that you can coordinate your Qualtrics setup across studies, and that means consistency in the details of the data, such as variable names and labels. You can then develop a script that you can use across different studies to do data cleaning and wrangling processes, without having to reinvent the wheel each time.
 
+By a "script", here, I don't necessarily mean a .R script file; this could be a Quarto document as well. You could, for example, create a Quarto document that contains generalisable code for any similar surveys, beginning as follows:
 
+```{r}
+#| eval: false
+
+file_name <- "your_file_name.sav"
+
+library(tidyverse)
+
+my_data <- here::here("data", file_name) |> haven::read_sav()
+```
+
+For future surveys, you can replace the file name stored in `file_name` in the first line and then work through the code from that point on. The best way to do this would be to use a study that is set up as you typically intend to run studies; write your script to do your processing using that dataset as a test case; and then apply the same code step by step to the next study that used that first study as a template.
+
+It's quite difficult to write a description of what that processing script might look like, but here are some elements you may want to include:
+
+- Dropping variables added by Qualtrics that you don't want
+- Producing a codebook
+- Calculating subscale scores
+- Producing visualisations of variables of interest
+- Producing summaries of missing values and identifying cases to remove based on consistent criteria.
 
 ## Majority
 
@@ -261,6 +357,8 @@ One key advantage of using templates is that you can coordinate your Qualtrics s
 At the moment, I do not have API access to Qualtrics. So, I'm instead going to simply sketch the steps I will investigate when/if my institution enables API access on my account. If you want to do this process yourself, please be aware that the description below may not be accurate, and will likely require some (extensive) problem-solving!
 
 :::
+
+The Majority level would be quite an undertaking, and as I've said, this is hypothetical - I haven't even managed it myself yet! If you are looking to work at this level, you should be pretty comfortable and confident working in R, since the system would rely as little as possible on point-and-click interfaces and as much as possible on R.
 
 For this system, there are a couple of promising packages. Both make use of the [Qualtrics API](https://api.qualtrics.com/24d63382c3a88-api-quick-start), which is well-documented but an additional paid feature, so you need to check if you have access to it. If you don't - well, unfortunately, this won't work!
 
@@ -322,29 +420,3 @@ From the help documentation, there are a few outstanding questions that I would 
 The {qualtRics} allows you to read in survey data from Qualtrics directly. So, no having to export and then choose a sensible filename and then save and then import - you could simply read in the most recent copy of the dataset. *However*, the package documentation says that the functions read in a CSV file - and not a SAV file, which would allow us to use the {labelled} package and all those nifty features of labelled data. So, I'd want to investigate whether the functions can be adapted to import a SAV file instead; if not, I'd probably stick to manual download, since I'd prefer to have the labels rather than the convenience of direct download.
 
 For this download system, I'd have a script or short bit of code that would identify which survey I wanted - depending on which I wanted to analyse - and read it in. This would be part of the project specific to that particular study, rather than in the questionnaire project I described above.
-
-
-
-
-
-## Setting Up Qualtrics
-
-### Labelling Variables
-
-### Labelling Values
-
-### Other Considerations
-
-### Questionnaire Template
-
-duplicated
-
-```{r}
-mil_data |> 
- dplyr::mutate(
-   n_miss = rowSums(is.na(mil_data)),
-   .keep = "used"
- )
-
-
-```
