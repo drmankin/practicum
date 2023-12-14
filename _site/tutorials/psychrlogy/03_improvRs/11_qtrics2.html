@@ -134,8 +134,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link" href="../../../workshops.html" rel="" target="">
  <span class="menu-text">Workshops</span></a>
   </li>  
-  <li class="dropdown-header">
- <span class="menu-text">Resources</span></li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../resources.html" rel="" target="">
+ <span class="menu-text">Resources</span></a>
+  </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
@@ -527,18 +529,6 @@ Solution
 <h3 class="anchored" data-anchor-id="choose-your-path">Choose Your Path</h3>
 <p>The next sections will be organised as <a href="../../../tutorials/psychrlogy/03_improvRs/11_qtrics2.html#minimal">Minimal</a>, <a href="../../../tutorials/psychrlogy/03_improvRs/11_qtrics2.html#moderate">Moderate</a>, and <a href="../../../tutorials/psychrlogy/03_improvRs/11_qtrics2.html#majority">Majority</a> based on the approaches described below. Following the steps in each section will each walk you through the process of building and maintaining the data from a Qualtrics study, but you will come out with a different underlying infrastructure depending on which level you go for.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>use_r, <span class="sc">~</span>dupl, <span class="sc">~</span>adv, <span class="sc">~</span>disadv,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Minimal"</span>, <span class="st">"I want to get it done *now* and I'm not worried about having to do the same thing again in the future"</span>, <span class="st">"Get everything set up straightaway"</span>, <span class="st">"May have to repeat fiddly steps, change small details, or redo large chunks of the same process for the next time round"</span>,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Moderate"</span>, <span class="st">"I want to make it easier for myself in the future without getting bogged down in too much R"</span>, <span class="st">"Less work to reproduce down the line"</span>, <span class="st">"Requires more upfront time investment and some advanced R usage"</span>,</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Majority"</span>, <span class="st">"I'm willing to spend more time setting things up now, so I can duplicate or redo as little as possible in the future"</span>, <span class="st">"Set up an efficient, replicable system that can be adapted for future projects"</span>, <span class="st">"More time-intensive to create, requires more knowledge of R and/or willingness to experiment with new packages/structures"</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> </span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kbl</span>(</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"R Level"</span>, <span class="st">"Duplication vs Efficiency"</span>, <span class="st">"Advantages"</span>, <span class="st">"Disadvantages"</span>),</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">format =</span> <span class="st">"html"</span>,</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">escape =</span> <span class="cn">FALSE</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
@@ -552,7 +542,7 @@ Solution
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Minimal</td>
-<td style="text-align: left;">I want to get it done *now* and I'm not worried about having to do the same thing again in the future</td>
+<td style="text-align: left;">I want to get it done now and I'm not worried about having to do the same thing again in the future</td>
 <td style="text-align: left;">Get everything set up straightaway</td>
 <td style="text-align: left;">May have to repeat fiddly steps, change small details, or redo large chunks of the same process for the next time round</td>
 </tr>
@@ -764,7 +754,7 @@ Tip
 <p>Using others’ templates is largely a matter of finding something or someone who has the setup you want, and getting them to share it with you. Here are some resources to get you started:</p>
 <ul>
 <li><a href="https://osf.io/28adg/">Psychology Qualtrics Template</a>: A massive, open-source template containing a large number of common and widely used psychological measures.</li>
-<li><a href="">Sussex low-risk ethics</a>: A template created by me for ethically low-risk online survey studies at Sussex. Includes fill-in-the-blank ethics and debrief forms, some common demographics questions, and layouts for matrix table measures. It also includes a survey flow randomising the order of the two questionnaire blocks.</li>
+<li><a href="https://raw.githubusercontent.com/drmankin/practicum/master/data/low_risk_template.qsf" download="">Sussex low-risk ethics</a>: A template created by me for ethically low-risk online survey studies at Sussex. Includes fill-in-the-blank ethics and debrief forms, some common demographics questions, and layouts for matrix table measures. It also includes a survey flow randomising the order of the two questionnaire blocks.</li>
 </ul>
 <p>To use these or other QSF file templates, the <a href="https://www.qualtrics.com/support/survey-platform/my-projects/creating-a-project/">Qualtrics guide to creating a project</a> details the process step by step.</p>
 </section>
@@ -774,11 +764,11 @@ Tip
 <p>As described above, tne key advantage of using templates is that you can coordinate your Qualtrics setup across studies, and that means consistency in the details of the data, such as variable names and labels. You can then develop a script that you can use across different studies to do data cleaning and wrangling processes, without having to reinvent the wheel each time.</p>
 <p>By a “script”, here, I don’t necessarily mean a .R script file; this could be a Quarto document as well. You could, for example, create a Quarto document that contains generalisable code for any similar surveys, beginning as follows:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>file_name <span class="ot">&lt;-</span> <span class="st">"your_file_name.sav"</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>my_data <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, file_name) <span class="sc">|&gt;</span> haven<span class="sc">::</span><span class="fu">read_sav</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>file_name <span class="ot">&lt;-</span> <span class="st">"your_file_name.sav"</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>my_data <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, file_name) <span class="sc">|&gt;</span> haven<span class="sc">::</span><span class="fu">read_sav</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>For future surveys, you can replace the file name stored in <code>file_name</code> in the first line and then work through the code from that point on. The best way to do this would be to use a study that is set up as you typically intend to run studies; write your script to do your processing using that dataset as a test case; and then apply the same code step by step to the next study that used that first study as a template.</p>
 <p>It’s quite difficult to write a description of what that processing script might look like, but here are some elements you may want to include:</p>
@@ -808,7 +798,18 @@ Important
 </div>
 <p>The Majority level would be quite an undertaking, and as I’ve said, this is hypothetical - I haven’t even managed it myself yet! If you are looking to work at this level, you should be pretty comfortable and confident working in R, since the system would rely as little as possible on point-and-click interfaces and as much as possible on R.</p>
 <p>For this system, there are a couple of promising packages. Both make use of the <a href="https://api.qualtrics.com/24d63382c3a88-api-quick-start">Qualtrics API</a>, which is well-documented but an additional paid feature, so you need to check if you have access to it. If you don’t - well, unfortunately, this won’t work!</p>
-<p>::: {callout-tip title=“Checking API Access” collapse=“true”}</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Checking API Access">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Checking API Access
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <p>To check whether you have API access on your Qualtrics account:</p>
 <ul>
 <li>Log into Qualtrics</li>
@@ -817,7 +818,9 @@ Important
 <li>Check the box labeled API.</li>
 </ul>
 <p>Compare what you see there to the description under <a href="https://api.qualtrics.com/24d63382c3a88-api-quick-start#getting-your-api-url">Getting Your API URL</a>. If it matches what you see there, carry on! If it says what mine does - “The API is not enabled for your account” - then you’ll have to get in touch with your Qualtrics admin and ask for it.</p>
-<p>:::</p>
+</div>
+</div>
+</div>
 <p>If this is your first contact with an API, well, you’re in for a good time! As an extremely approximate and non-technical explanation, an API (Application Program Interface) is a structure for communicating with an application directly, without using their point-and-click user interface. R packages that utilise APIs have functions that convert your input in R into a format that the API can understand, or make requests for information from the API directly in R. Usually, this involves setting up an authentication system to allow requests from you to be identified and associated with your account.</p>
 <p>There are two packages that I’d be interested in using in order to work with Qualtrics via the API, with unfortunately similar names:</p>
 <ul>
@@ -825,14 +828,14 @@ Important
 <li><a href="https://github.com/ropensci/qualtRics">{qualtRics}</a> contains functions to retrieve surveys directly from Qualtrics, circumventing the export - download - save - import process.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Install devtools if necessary</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span>(<span class="sc">!</span><span class="fu">require</span>(devtools)) <span class="fu">install.packages</span>(<span class="st">"devtools"</span>)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Install qualtricsR from GitHub</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">'saberry/qualtricsR'</span>)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Install qualtRics from CRAN</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"qualtRics"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Install devtools if necessary</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span>(<span class="sc">!</span><span class="fu">require</span>(devtools)) <span class="fu">install.packages</span>(<span class="st">"devtools"</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Install qualtricsR from GitHub</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">'saberry/qualtricsR'</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Install qualtRics from CRAN</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"qualtRics"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="survey-creation-system" class="level3">
 <h3 class="anchored" data-anchor-id="survey-creation-system">Survey Creation System</h3>

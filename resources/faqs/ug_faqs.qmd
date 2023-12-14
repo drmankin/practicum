@@ -4,11 +4,15 @@ execute:
   eval: false
 ---
 
-::: {.callout-important title="Acknowledgements"}
-This FAQ is co-authored with current Sussex PhD researchers, [Hanna Eldarwish](mailto:haie20@sussex.ac.uk) and [Josh Francis](Joshua.Francis@sussex.ac.uk). Their input and insight has been invaluable throughout. However, if you are a UG student reading this, **do not email Hanna or Josh for help with your dissertation!** You should talk to your supervisor in the first instance if you need specific help with your own work.
+## Acknowledgements
+
+This FAQ is co-authored with current Sussex PhD researchers, [Hanna Eldarwish](mailto:haie20@sussex.ac.uk) and [Josh Francis](Joshua.Francis@sussex.ac.uk). Their input and insight has been invaluable throughout.
+
+::: {.callout-important}
+If you are a UG student reading this, **do not email Hanna or Josh for help with your dissertation!** You should talk to your supervisor in the first instance if you need specific help with your own work.
 :::
 
-Many UG dissertation projects at Sussex use Qualtrics, so involve the wrangling and analysis of Qualtrics datasets. The recommended method for dealing with Qualtrics data is using SAV files with the {haven} and {labelled} packages, as described in Tutorials 10 and 11 (see [Tutorials](tutorials.qmd)). However, this method is not (presently) taught at UG level, as there isn't space in the curriculum for it, and not all students end up using Qualtrics data. This page compiles some frequently encountered problems and solutions that have come up in previous years.
+Many UG dissertation projects at Sussex use Qualtrics, so involve the wrangling and analysis of Qualtrics datasets. The recommended method for dealing with Qualtrics data is using SAV files with the {haven} and {labelled} packages, as described in Tutorials 10 and 11 (see [Tutorials](../../tutorials.qmd)). However, this method is not (presently) taught at UG level, as there isn't space in the curriculum for it, and not all students end up using Qualtrics data. This page compiles some frequently encountered problems and solutions that have come up in previous years.
 
 ## Data Cleaning
 
