@@ -19,6 +19,7 @@ website:
         file: tutorials.qmd
       - text: "Workshops"
         file: workshops.qmd
+      - text: "Resources"  
     right:
       - href: https://canvas.sussex.ac.uk/courses/29761
         text: "Canvas"
@@ -47,6 +48,14 @@ website:
     - title: "Workshops"
       contents:
         - Workshops.qmd
+    - title: "Resources"
+      style: "docked"      
+      background: "#d0d3d4"
+      contents:
+        - resources.qmd
+        - section: "FAQs"
+          contents:
+            - auto: resources/faqs/*
   page-footer: 
     center: "&copy; Jennifer Mankin 2023"
     background: "#003b49"
@@ -69,7 +78,7 @@ format:
     df-print: paged
     fig-align: center
 
-## Can't get this to work but the deafult is fine I guess
+## Can't get this to work but the default is fine I guess
 # highlight-style: 
 #   light: tomorrow
 #   dark: cobalt

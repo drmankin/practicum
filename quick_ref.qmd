@@ -6,6 +6,7 @@ title: 'Quick Reference'
 
 Looking for a function you can't quite remember how to use? You're in the right place!
 The table below is arranged alphabetically by function name, and the linked full name (including relevant package calls) will take you to the help documentation.
+
 <table class="table" style="margin-left: auto; margin-right: auto;">
  <thead>
   <tr>
@@ -78,7 +79,7 @@ The table below is arranged alphabetically by function name, and the linked full
   <tr>
    <td style="text-align:left;"> c() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/base/c.html">c()</a> </td>
-   <td style="text-align:left;"> 01/02: IntRoduction<br>03: Datasets<br>04: Reporting Linear Models with Quarto<br>05: Filter and Select<br>06: Mutate and Summarise<br>07: Visualisations<br>08: Analysis<br>10: Qualtrics and Labelled Data </td>
+   <td style="text-align:left;"> 01/02: IntRoduction<br>03: Datasets<br>04: Reporting Linear Models with Quarto<br>05: Filter and Select<br>06: Mutate and Summarise<br>07: Visualisations<br>08: Analysis<br>10: Qualtrics and Labelled Data<br>11: Qualtrics II </td>
   </tr>
   <tr>
    <td style="text-align:left;"> c_across() </td>
@@ -183,12 +184,12 @@ The table below is arranged alphabetically by function name, and the linked full
   <tr>
    <td style="text-align:left;"> gsub() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/base/grep.html">gsub()</a> </td>
-   <td style="text-align:left;"> 06: Mutate and Summarise<br>10: Qualtrics and Labelled Data </td>
+   <td style="text-align:left;"> 06: Mutate and Summarise<br>10: Qualtrics and Labelled Data<br>11: Qualtrics II </td>
   </tr>
   <tr>
    <td style="text-align:left;"> here() </td>
    <td style="text-align:left;"> <a href="https://here.r-lib.org//reference/here.html">here::here()</a> </td>
-   <td style="text-align:left;"> 03: Datasets<br>05: Filter and Select<br>06: Mutate and Summarise<br>07: Visualisations<br>08: Analysis<br>09: Test Flight<br>10: Qualtrics and Labelled Data </td>
+   <td style="text-align:left;"> 03: Datasets<br>05: Filter and Select<br>06: Mutate and Summarise<br>07: Visualisations<br>08: Analysis<br>09: Test Flight<br>10: Qualtrics and Labelled Data<br>11: Qualtrics II </td>
   </tr>
   <tr>
    <td style="text-align:left;"> hist() </td>
@@ -228,12 +229,12 @@ The table below is arranged alphabetically by function name, and the linked full
   <tr>
    <td style="text-align:left;"> kable_styling() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kableExtra::kable_styling()</a> </td>
-   <td style="text-align:left;"> 03: Datasets<br>05: Filter and Select<br>06: Mutate and Summarise<br>07: Visualisations<br>08: Analysis<br>09: Test Flight<br>10: Qualtrics and Labelled Data </td>
+   <td style="text-align:left;"> 03: Datasets<br>05: Filter and Select<br>06: Mutate and Summarise<br>07: Visualisations<br>08: Analysis<br>09: Test Flight<br>10: Qualtrics and Labelled Data<br>11: Qualtrics II </td>
   </tr>
   <tr>
    <td style="text-align:left;"> library() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/base/library.html">library()</a> </td>
-   <td style="text-align:left;"> 03: Datasets<br>04: Reporting Linear Models with Quarto<br>05: Filter and Select<br>06: Mutate and Summarise<br>07: Visualisations<br>08: Analysis<br>09: Test Flight<br>10: Qualtrics and Labelled Data </td>
+   <td style="text-align:left;"> 03: Datasets<br>04: Reporting Linear Models with Quarto<br>05: Filter and Select<br>06: Mutate and Summarise<br>07: Visualisations<br>08: Analysis<br>09: Test Flight<br>10: Qualtrics and Labelled Data<br>11: Qualtrics II </td>
   </tr>
   <tr>
    <td style="text-align:left;"> lm() </td>
@@ -278,7 +279,7 @@ The table below is arranged alphabetically by function name, and the linked full
   <tr>
    <td style="text-align:left;"> names() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/base/names.html">names()</a> </td>
-   <td style="text-align:left;"> 03: Datasets<br>10: Qualtrics and Labelled Data </td>
+   <td style="text-align:left;"> 03: Datasets<br>10: Qualtrics and Labelled Data<br>11: Qualtrics II </td>
   </tr>
   <tr>
    <td style="text-align:left;"> ncol() </td>
@@ -343,7 +344,7 @@ The table below is arranged alphabetically by function name, and the linked full
   <tr>
    <td style="text-align:left;"> read_sav() </td>
    <td style="text-align:left;"> <a href="https://haven.tidyverse.org/reference/read_spss.html">haven::read_sav()</a> </td>
-   <td style="text-align:left;"> 10: Qualtrics and Labelled Data </td>
+   <td style="text-align:left;"> 10: Qualtrics and Labelled Data<br>11: Qualtrics II </td>
   </tr>
   <tr>
    <td style="text-align:left;"> rename() </td>
@@ -353,7 +354,7 @@ The table below is arranged alphabetically by function name, and the linked full
   <tr>
    <td style="text-align:left;"> rep() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/base/rep.html">rep()</a> </td>
-   <td style="text-align:left;"> 10: Qualtrics and Labelled Data </td>
+   <td style="text-align:left;"> 10: Qualtrics and Labelled Data<br>11: Qualtrics II </td>
   </tr>
   <tr>
    <td style="text-align:left;"> return() </td>
@@ -413,7 +414,7 @@ The table below is arranged alphabetically by function name, and the linked full
   <tr>
    <td style="text-align:left;"> str_to_title() </td>
    <td style="text-align:left;"> <a href="https://stringr.tidyverse.org/reference/case.html">stringr::str_to_title()</a> </td>
-   <td style="text-align:left;"> 06: Mutate and Summarise<br>07: Visualisations<br>08: Analysis<br>10: Qualtrics and Labelled Data </td>
+   <td style="text-align:left;"> 06: Mutate and Summarise<br>07: Visualisations<br>08: Analysis<br>10: Qualtrics and Labelled Data<br>11: Qualtrics II </td>
   </tr>
   <tr>
    <td style="text-align:left;"> sub() </td>
@@ -468,7 +469,7 @@ The table below is arranged alphabetically by function name, and the linked full
   <tr>
    <td style="text-align:left;"> unique() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/base/unique.html">unique()</a> </td>
-   <td style="text-align:left;"> 10: Qualtrics and Labelled Data </td>
+   <td style="text-align:left;"> 10: Qualtrics and Labelled Data<br>11: Qualtrics II </td>
   </tr>
   <tr>
    <td style="text-align:left;"> unlist() </td>
@@ -488,11 +489,16 @@ The table below is arranged alphabetically by function name, and the linked full
   <tr>
    <td style="text-align:left;"> val_labels() </td>
    <td style="text-align:left;"> <a href="https://larmarange.github.io/labelled/reference/val_labels.html">labelled::val_labels()</a> </td>
-   <td style="text-align:left;"> 10: Qualtrics and Labelled Data<br>10: Qualtrics and Labelled Data </td>
+   <td style="text-align:left;"> 10: Qualtrics and Labelled Data </td>
   </tr>
   <tr>
    <td style="text-align:left;"> var_label() </td>
    <td style="text-align:left;"> <a href="https://larmarange.github.io/labelled/reference/var_label.html">labelled::var_label()</a> </td>
+   <td style="text-align:left;"> 10: Qualtrics and Labelled Data </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> view_df() </td>
+   <td style="text-align:left;"> <a href="https://strengejacke.github.io/sjPlot/reference/view_df.html">sjPlot::view_df()</a> </td>
    <td style="text-align:left;"> 10: Qualtrics and Labelled Data </td>
   </tr>
   <tr>
@@ -690,7 +696,7 @@ If you're looking for a particular section of a tutorial, use this handy summary
   </tr>
   <tr>
    <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [The Whole Shebang](tutorials/psychrlogy/03_improvRs/09_testflight.qmd#the-whole-shebang) </td>
-   <td style="text-align:left;"> [Planning](tutorials/psychrlogy/03_improvRs/09_testflight.qmd#planning), [Inspecting](tutorials/psychrlogy/03_improvRs/09_testflight.qmd#inspecting), [Cleaning](tutorials/psychrlogy/03_improvRs/09_testflight.qmd#cleaning), [Wrangling](tutorials/psychrlogy/03_improvRs/09_testflight.qmd#wrangling), [Summarising](tutorials/psychrlogy/03_improvRs/09_testflight.qmd#summarising), [Analysing](tutorials/psychrlogy/03_improvRs/09_testflight.qmd#analysing), [Visualisation](tutorials/psychrlogy/03_improvRs/09_testflight.qmd#visualisation), [Reporting](tutorials/psychrlogy/03_improvRs/09_testflight.qmd#reporting) </td>
+   <td style="text-align:left;"> [Planning](tutorials/psychrlogy/03_improvRs/09_testflight.qmd#planning), [Inspecting](tutorials/psychrlogy/03_improvRs/09_testflight.qmd#inspecting), [Cleaning](tutorials/psychrlogy/03_improvRs/09_testflight.qmd#cleaning), [Wrangling](tutorials/psychrlogy/03_improvRs/09_testflight.qmd#wrangling), [Summarising](tutorials/psychrlogy/03_improvRs/09_testflight.qmd#summarising), [Analysing](tutorials/psychrlogy/03_improvRs/09_testflight.qmd#analysing), [Visualising](tutorials/psychrlogy/03_improvRs/09_testflight.qmd#visualising), [Reporting](tutorials/psychrlogy/03_improvRs/09_testflight.qmd#reporting) </td>
   </tr>
   <tr grouplength="7"><td colspan="2" style="border-bottom: 1px solid;"><strong>10: Qualtrics and Labelled Data</strong></td></tr>
 <tr>
@@ -711,7 +717,7 @@ If you're looking for a particular section of a tutorial, use this handy summary
   </tr>
   <tr>
    <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Cleanup and Data Dictionary](tutorials/psychrlogy/03_improvRs/10_qtrics.qmd#cleanup-and-data-dictionary) </td>
-   <td style="text-align:left;"> [Renaming Variables](tutorials/psychrlogy/03_improvRs/10_qtrics.qmd#renaming-variables), [Separating Columns](tutorials/psychrlogy/03_improvRs/10_qtrics.qmd#separating-columns) </td>
+   <td style="text-align:left;"> [Renaming Variables](tutorials/psychrlogy/03_improvRs/10_qtrics.qmd#renaming-variables), [Separating Columns](tutorials/psychrlogy/03_improvRs/10_qtrics.qmd#separating-columns), [Viewer Data Dictionary](tutorials/psychrlogy/03_improvRs/10_qtrics.qmd#viewer-data-dictionary) </td>
   </tr>
   <tr>
    <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Labelled Data](tutorials/psychrlogy/03_improvRs/10_qtrics.qmd#labelled-data) </td>
@@ -720,6 +726,31 @@ If you're looking for a particular section of a tutorial, use this handy summary
   <tr>
    <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Converting Variables](tutorials/psychrlogy/03_improvRs/10_qtrics.qmd#converting-variables) </td>
    <td style="text-align:left;"> [Factor](tutorials/psychrlogy/03_improvRs/10_qtrics.qmd#factor), [Numeric](tutorials/psychrlogy/03_improvRs/10_qtrics.qmd#numeric), [Conditional Conversion](tutorials/psychrlogy/03_improvRs/10_qtrics.qmd#conditional-conversion) </td>
+  </tr>
+  <tr grouplength="6"><td colspan="2" style="border-bottom: 1px solid;"><strong>11: Qualtrics II</strong></td></tr>
+<tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> NA </td>
+   <td style="text-align:left;"> [Acknowledgements](tutorials/psychrlogy/03_improvRs/11_qtrics2.qmd#acknowledgements) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Setup](tutorials/psychrlogy/03_improvRs/11_qtrics2.qmd#setup) </td>
+   <td style="text-align:left;"> [Packages](tutorials/psychrlogy/03_improvRs/11_qtrics2.qmd#packages), [Data](tutorials/psychrlogy/03_improvRs/11_qtrics2.qmd#data) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Building a Qualtrics Project](tutorials/psychrlogy/03_improvRs/11_qtrics2.qmd#building-a-qualtrics-project) </td>
+   <td style="text-align:left;"> [Choose Your Path](tutorials/psychrlogy/03_improvRs/11_qtrics2.qmd#choose-your-path), [Accessing Qualtrics](tutorials/psychrlogy/03_improvRs/11_qtrics2.qmd#accessing-qualtrics), [Creating a Project](tutorials/psychrlogy/03_improvRs/11_qtrics2.qmd#creating-a-project) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Minimal](tutorials/psychrlogy/03_improvRs/11_qtrics2.qmd#minimal) </td>
+   <td style="text-align:left;"> [Set Up Qualtrics](tutorials/psychrlogy/03_improvRs/11_qtrics2.qmd#set-up-qualtrics), [Testing the Study](tutorials/psychrlogy/03_improvRs/11_qtrics2.qmd#testing-the-study) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Moderate](tutorials/psychrlogy/03_improvRs/11_qtrics2.qmd#moderate) </td>
+   <td style="text-align:left;"> [Using Templates](tutorials/psychrlogy/03_improvRs/11_qtrics2.qmd#using-templates), [Developing a Script](tutorials/psychrlogy/03_improvRs/11_qtrics2.qmd#developing-a-script) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Majority](tutorials/psychrlogy/03_improvRs/11_qtrics2.qmd#majority) </td>
+   <td style="text-align:left;"> [Survey Creation System](tutorials/psychrlogy/03_improvRs/11_qtrics2.qmd#survey-creation-system), [Survey Access System](tutorials/psychrlogy/03_improvRs/11_qtrics2.qmd#survey-access-system) </td>
   </tr>
 </tbody>
 </table>

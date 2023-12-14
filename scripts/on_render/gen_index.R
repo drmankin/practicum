@@ -280,6 +280,7 @@ writeLines(
   "",
   "Looking for a function you can't quite remember how to use? You're in the right place!",
   "The table below is arranged alphabetically by function name, and the linked full name (including relevant package calls) will take you to the help documentation.",
+  "",
   fxs_tab,
   "",
   "## Index of Topics",

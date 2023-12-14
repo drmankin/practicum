@@ -162,7 +162,7 @@ Choose an analysis to perform and do it.
 Remember you can always refer to the `discovr` tutorials for more help!
 :::
 
-### Visualisation
+### Visualising
 
 Choose a visualisation that reflects the key comparison or relationship of interest that you investigated in your analysis, and create it. Remember that you can build a visualisation from scratch with {ggplot2}, or use one of the "shortcut" plotting functions we have covered.
 
