@@ -118,9 +118,10 @@ I also hope that this description will give you a sense of what these different 
 The next sections will be organised as [Minimal](11_qtrics2.qmd#minimal), [Moderate](11_qtrics2.qmd#moderate), and [Majority](11_qtrics2.qmd#majority) based on the approaches described below. Following the steps in each section will each walk you through the process of building and maintaining the data from a Qualtrics study, but you will come out with a different underlying infrastructure depending on which level you go for.
 
 ```{r}
+#| echo: false
 tibble::tribble(
   ~use_r, ~dupl, ~adv, ~disadv,
-  "Minimal", "I want to get it done *now* and I'm not worried about having to do the same thing again in the future", "Get everything set up straightaway", "May have to repeat fiddly steps, change small details, or redo large chunks of the same process for the next time round",
+  "Minimal", "I want to get it done now and I'm not worried about having to do the same thing again in the future", "Get everything set up straightaway", "May have to repeat fiddly steps, change small details, or redo large chunks of the same process for the next time round",
   "Moderate", "I want to make it easier for myself in the future without getting bogged down in too much R", "Less work to reproduce down the line", "Requires more upfront time investment and some advanced R usage",
   "Majority", "I'm willing to spend more time setting things up now, so I can duplicate or redo as little as possible in the future", "Set up an efficient, replicable system that can be adapted for future projects", "More time-intensive to create, requires more knowledge of R and/or willingness to experiment with new packages/structures"
 ) |> 
@@ -320,7 +321,7 @@ See [the Qualtrics Support pages on Importing and Exporting Surveys](https://www
 Using others' templates is largely a matter of finding something or someone who has the setup you want, and getting them to share it with you. Here are some resources to get you started:
 
 - [Psychology Qualtrics Template](https://osf.io/28adg/): A massive, open-source template containing a large number of common and widely used psychological measures.
-- [Sussex low-risk ethics](): A template created by me for ethically low-risk online survey studies at Sussex. Includes fill-in-the-blank ethics and debrief forms, some common demographics questions, and layouts for matrix table measures. It also includes a survey flow randomising the order of the two questionnaire blocks.
+- <a href="https://raw.githubusercontent.com/drmankin/practicum/master/data/low_risk_template.qsf" download>Sussex low-risk ethics</a>: A template created by me for ethically low-risk online survey studies at Sussex. Includes fill-in-the-blank ethics and debrief forms, some common demographics questions, and layouts for matrix table measures. It also includes a survey flow randomising the order of the two questionnaire blocks.
 
 To use these or other QSF file templates, the [Qualtrics guide to creating a project](https://www.qualtrics.com/support/survey-platform/my-projects/creating-a-project/) details the process step by step.
 
@@ -362,7 +363,7 @@ The Majority level would be quite an undertaking, and as I've said, this is hypo
 
 For this system, there are a couple of promising packages. Both make use of the [Qualtrics API](https://api.qualtrics.com/24d63382c3a88-api-quick-start), which is well-documented but an additional paid feature, so you need to check if you have access to it. If you don't - well, unfortunately, this won't work!
 
-::: {callout-tip title="Checking API Access" collapse="true"}
+::: {.callout-tip title="Checking API Access" collapse="true"}
 
 To check whether you have API access on your Qualtrics account:
 

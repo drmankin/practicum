@@ -132,8 +132,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link" href="../../workshops.html" rel="" target="">
  <span class="menu-text">Workshops</span></a>
   </li>  
-  <li class="dropdown-header">
- <span class="menu-text">Resources</span></li>
+  <li class="nav-item">
+    <a class="nav-link active" href="../../resources.html" rel="" target="" aria-current="page">
+ <span class="menu-text">Resources</span></a>
+  </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
@@ -201,7 +203,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#data-cleaning" id="toc-data-cleaning" class="nav-link active" data-scroll-target="#data-cleaning">Data Cleaning</a>
+  <li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link active" data-scroll-target="#acknowledgements">Acknowledgements</a></li>
+  <li><a href="#data-cleaning" id="toc-data-cleaning" class="nav-link" data-scroll-target="#data-cleaning">Data Cleaning</a>
   <ul>
   <li><a href="#removing-extra-rows" id="toc-removing-extra-rows" class="nav-link" data-scroll-target="#removing-extra-rows">Removing extra rows</a>
   <ul class="collapse">
@@ -273,20 +276,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<div class="callout callout-style-default callout-important callout-titled" title="Acknowledgements">
+<section id="acknowledgements" class="level2">
+<h2 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h2>
+<p>This FAQ is co-authored with current Sussex PhD researchers, <a href="mailto:haie20@sussex.ac.uk">Hanna Eldarwish</a> and <a href="Joshua.Francis@sussex.ac.uk">Josh Francis</a>. Their input and insight has been invaluable throughout.</p>
+<div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Acknowledgements
+Important
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This FAQ is co-authored with current Sussex PhD researchers, <a href="mailto:haie20@sussex.ac.uk">Hanna Eldarwish</a> and <a href="Joshua.Francis@sussex.ac.uk">Josh Francis</a>. Their input and insight has been invaluable throughout. However, if you are a UG student reading this, <strong>do not email Hanna or Josh for help with your dissertation!</strong> You should talk to your supervisor in the first instance if you need specific help with your own work.</p>
+<p>If you are a UG student reading this, <strong>do not email Hanna or Josh for help with your dissertation!</strong> You should talk to your supervisor in the first instance if you need specific help with your own work.</p>
 </div>
 </div>
-<p>Many UG dissertation projects at Sussex use Qualtrics, so involve the wrangling and analysis of Qualtrics datasets. The recommended method for dealing with Qualtrics data is using SAV files with the {haven} and {labelled} packages, as described in Tutorials 10 and 11 (see <a href="tutorials.qmd">Tutorials</a>). However, this method is not (presently) taught at UG level, as there isn’t space in the curriculum for it, and not all students end up using Qualtrics data. This page compiles some frequently encountered problems and solutions that have come up in previous years.</p>
+<p>Many UG dissertation projects at Sussex use Qualtrics, so involve the wrangling and analysis of Qualtrics datasets. The recommended method for dealing with Qualtrics data is using SAV files with the {haven} and {labelled} packages, as described in Tutorials 10 and 11 (see <a href="../../tutorials.html">Tutorials</a>). However, this method is not (presently) taught at UG level, as there isn’t space in the curriculum for it, and not all students end up using Qualtrics data. This page compiles some frequently encountered problems and solutions that have come up in previous years.</p>
+</section>
 <section id="data-cleaning" class="level2">
 <h2 class="anchored" data-anchor-id="data-cleaning">Data Cleaning</h2>
 <section id="removing-extra-rows" class="level3">

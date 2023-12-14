@@ -301,7 +301,7 @@ As we've just seen in the data dictionary, the SAV data we're using has a specia
 We're first going to look at how you can work with each of these elements. The reason to do this is that once our dataset has been thoroughly checked, we're going to generate a final data dictionary, then convert any categorical variables into factors, the levels of which will correspond to the labels for that variable. We'll also convert any numeric variables into numeric data type, which will discard the labels; that will make it possible to do analyses with them, but that's why we have to create the data dictionary first.
 
 ::: callout-important
-These features will work optimally *only* if you have set up your Qualtrics questionnaire appropriately. Make sure to refer to the [Setting Up Qualtrics](11_faq.qmd#setting-up-qualtrics) section of the next tutorial to get the most out of your labelled data and save yourself data cleaning and wrangling headaches later.
+These features will work optimally *only* if you have set up your Qualtrics questionnaire appropriately. Make sure to refer to the [Setting Up Qualtrics](11_qtrics2.qmd#building-a-qualtrics-project) section of the next tutorial to get the most out of your labelled data and save yourself data cleaning and wrangling headaches later.
 :::
 
 ### Variable Labels
