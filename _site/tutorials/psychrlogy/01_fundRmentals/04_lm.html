@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -277,8 +277,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../tutorials/psychrlogy/03_improvRs/11_faqs.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">11: FAQs</span></a>
+  <a href="../../../tutorials/psychrlogy/03_improvRs/11_qtrics2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">11: Qualtrics II</span></a>
   </div>
 </li>
       </ul>
@@ -1074,7 +1074,7 @@ Solution
 
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["Parameter"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Coefficient"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["CI"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["CI_low"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["CI_high"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["p"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"(Intercept)","2":"4.0810352","3":"0.95","4":"4.01364773","5":"4.1453741","6":"0"},{"1":"beauty","2":"0.1484024","3":"0.95","4":"0.08179685","5":"0.2041268","6":"0"},{"1":"genderfemale","2":"-0.1983040","3":"0.95","4":"-0.29523297","5":"-0.1026007","6":"0"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["Parameter"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Coefficient"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["CI"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["CI_low"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["CI_high"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["p"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"(Intercept)","2":"4.0821965","3":"0.95","4":"4.01726071","5":"4.1494554","6":"0"},{"1":"beauty","2":"0.1465023","3":"0.95","4":"0.08194202","5":"0.2093393","6":"0"},{"1":"genderfemale","2":"-0.1973224","3":"0.95","4":"-0.30259895","5":"-0.1028464","6":"0"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -1574,15 +1574,15 @@ Solution
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-lines="2" data-code-cell="annotated-cell-1">The test: is the <em>p</em>-value for our <em>F</em>-test less than .05? (If you have a different <span class="math inline">\(\alpha\)</span>-threshold, you could hard-code it here or use an object you’ve defined previously for this comparison.)</span>
+<span data-code-cell="annotated-cell-1" data-code-annotation="1" data-code-lines="2">The test: is the <em>p</em>-value for our <em>F</em>-test less than .05? (If you have a different <span class="math inline">\(\alpha\)</span>-threshold, you could hard-code it here or use an object you’ve defined previously for this comparison.)</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-annotation="2" data-code-lines="3" data-code-cell="annotated-cell-1">What to do if the test returns <code>TRUE</code>: print “significant”.</span>
+<span data-code-cell="annotated-cell-1" data-code-annotation="2" data-code-lines="3">What to do if the test returns <code>TRUE</code>: print “significant”.</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-annotation="3" data-code-lines="4" data-code-cell="annotated-cell-1">What to do if the test returns <code>FALSE</code>: print “non-significant”.</span>
+<span data-code-cell="annotated-cell-1" data-code-annotation="3" data-code-lines="4">What to do if the test returns <code>FALSE</code>: print “non-significant”.</span>
 </dd>
 </dl>
 </div>
@@ -1748,13 +1748,8 @@ Solution
 <div class="cell">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>papaja<span class="sc">::</span><span class="fu">apa_table</span>(eval_full_lm_out<span class="sc">$</span>table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-
-(#tab:unnamed-chunk-21)
-
-<div data-custom-style="Table Caption">
-**
-</div>
 <table class="table table-sm table-striped small">
+<caption>(#tab:unnamed-chunk-21)</caption>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Predictor</th>
@@ -1827,7 +1822,7 @@ Solution
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>rempsyc<span class="sc">::</span><span class="fu">nice_table</span>(broom<span class="sc">::</span><span class="fu">tidy</span>(eval_full_lm, <span class="at">conf.int =</span> <span class="cn">TRUE</span>), <span class="at">broom =</span> <span class="st">"lm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div class="tabwid"><style>.cl-78b524b6{table-layout:auto;}.cl-78a6a2ec{font-family:'Times New Roman';font-size:12pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-78a6a364{font-family:'Times New Roman';font-size:12pt;font-weight:normal;font-style:italic;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-78ac6c90{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 2;background-color:transparent;}.cl-78ac6ca4{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 2;background-color:transparent;}.cl-78ac8e78{background-color:transparent;vertical-align: middle;border-bottom: 0.5pt solid rgba(0, 0, 0, 1.00);border-top: 0.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-78ac8e79{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-78ac8e82{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-78ac8e83{background-color:transparent;vertical-align: middle;border-bottom: 0.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-78ac8ea0{background-color:transparent;vertical-align: middle;border-bottom: 0.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-78b524b6"><thead><tr style="overflow-wrap:break-word;"><th class="cl-78ac8e78"><p class="cl-78ac6c90"><span class="cl-78a6a2ec">Term</span></p></th><th class="cl-78ac8e78"><p class="cl-78ac6c90"><span class="cl-78a6a364">b</span></p></th><th class="cl-78ac8e78"><p class="cl-78ac6c90"><span class="cl-78a6a364">SE</span></p></th><th class="cl-78ac8e78"><p class="cl-78ac6c90"><span class="cl-78a6a364">t</span></p></th><th class="cl-78ac8e78"><p class="cl-78ac6c90"><span class="cl-78a6a364">p</span></p></th><th class="cl-78ac8e78"><p class="cl-78ac6c90"><span class="cl-78a6a2ec">95% CI</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-78ac8e79"><p class="cl-78ac6ca4"><span class="cl-78a6a2ec">(Intercept)</span></p></td><td class="cl-78ac8e82"><p class="cl-78ac6c90"><span class="cl-78a6a2ec">4.08</span></p></td><td class="cl-78ac8e82"><p class="cl-78ac6c90"><span class="cl-78a6a2ec">0.03</span></p></td><td class="cl-78ac8e82"><p class="cl-78ac6c90"><span class="cl-78a6a2ec">123.94</span></p></td><td class="cl-78ac8e82"><p class="cl-78ac6c90"><span class="cl-78a6a2ec">&lt; .001***</span></p></td><td class="cl-78ac8e82"><p class="cl-78ac6c90"><span class="cl-78a6a2ec">[4.02, 4.15]</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-78ac8e79"><p class="cl-78ac6ca4"><span class="cl-78a6a2ec">beauty</span></p></td><td class="cl-78ac8e82"><p class="cl-78ac6c90"><span class="cl-78a6a2ec">0.15</span></p></td><td class="cl-78ac8e82"><p class="cl-78ac6c90"><span class="cl-78a6a2ec">0.03</span></p></td><td class="cl-78ac8e82"><p class="cl-78ac6c90"><span class="cl-78a6a2ec">4.65</span></p></td><td class="cl-78ac8e82"><p class="cl-78ac6c90"><span class="cl-78a6a2ec">&lt; .001***</span></p></td><td class="cl-78ac8e82"><p class="cl-78ac6c90"><span class="cl-78a6a2ec">[0.09, 0.21]</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-78ac8e83"><p class="cl-78ac6ca4"><span class="cl-78a6a2ec">genderfemale</span></p></td><td class="cl-78ac8ea0"><p class="cl-78ac6c90"><span class="cl-78a6a2ec">-0.20</span></p></td><td class="cl-78ac8ea0"><p class="cl-78ac6c90"><span class="cl-78a6a2ec">0.05</span></p></td><td class="cl-78ac8ea0"><p class="cl-78ac6c90"><span class="cl-78a6a2ec">-3.88</span></p></td><td class="cl-78ac8ea0"><p class="cl-78ac6c90"><span class="cl-78a6a2ec">&lt; .001***</span></p></td><td class="cl-78ac8ea0"><p class="cl-78ac6c90"><span class="cl-78a6a2ec">[-0.30, -0.10]</span></p></td></tr></tbody></table></div>
+<div class="tabwid"><style>.cl-d4e1f026{table-layout:auto;}.cl-d4d45a88{font-family:'Times New Roman';font-size:12pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-d4d45a9c{font-family:'Times New Roman';font-size:12pt;font-weight:normal;font-style:italic;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-d4d7b2c8{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 2;background-color:transparent;}.cl-d4d7b2d2{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 2;background-color:transparent;}.cl-d4d7c4f2{background-color:transparent;vertical-align: middle;border-bottom: 0.5pt solid rgba(0, 0, 0, 1.00);border-top: 0.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d4d7c4f3{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d4d7c4fc{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d4d7c4fd{background-color:transparent;vertical-align: middle;border-bottom: 0.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d4d7c4fe{background-color:transparent;vertical-align: middle;border-bottom: 0.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-d4e1f026"><thead><tr style="overflow-wrap:break-word;"><th class="cl-d4d7c4f2"><p class="cl-d4d7b2c8"><span class="cl-d4d45a88">Term</span></p></th><th class="cl-d4d7c4f2"><p class="cl-d4d7b2c8"><span class="cl-d4d45a9c">b</span></p></th><th class="cl-d4d7c4f2"><p class="cl-d4d7b2c8"><span class="cl-d4d45a9c">SE</span></p></th><th class="cl-d4d7c4f2"><p class="cl-d4d7b2c8"><span class="cl-d4d45a9c">t</span></p></th><th class="cl-d4d7c4f2"><p class="cl-d4d7b2c8"><span class="cl-d4d45a9c">p</span></p></th><th class="cl-d4d7c4f2"><p class="cl-d4d7b2c8"><span class="cl-d4d45a88">95% CI</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-d4d7c4f3"><p class="cl-d4d7b2d2"><span class="cl-d4d45a88">(Intercept)</span></p></td><td class="cl-d4d7c4fc"><p class="cl-d4d7b2c8"><span class="cl-d4d45a88">4.08</span></p></td><td class="cl-d4d7c4fc"><p class="cl-d4d7b2c8"><span class="cl-d4d45a88">0.03</span></p></td><td class="cl-d4d7c4fc"><p class="cl-d4d7b2c8"><span class="cl-d4d45a88">123.94</span></p></td><td class="cl-d4d7c4fc"><p class="cl-d4d7b2c8"><span class="cl-d4d45a88">&lt; .001***</span></p></td><td class="cl-d4d7c4fc"><p class="cl-d4d7b2c8"><span class="cl-d4d45a88">[4.02, 4.15]</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-d4d7c4f3"><p class="cl-d4d7b2d2"><span class="cl-d4d45a88">beauty</span></p></td><td class="cl-d4d7c4fc"><p class="cl-d4d7b2c8"><span class="cl-d4d45a88">0.15</span></p></td><td class="cl-d4d7c4fc"><p class="cl-d4d7b2c8"><span class="cl-d4d45a88">0.03</span></p></td><td class="cl-d4d7c4fc"><p class="cl-d4d7b2c8"><span class="cl-d4d45a88">4.65</span></p></td><td class="cl-d4d7c4fc"><p class="cl-d4d7b2c8"><span class="cl-d4d45a88">&lt; .001***</span></p></td><td class="cl-d4d7c4fc"><p class="cl-d4d7b2c8"><span class="cl-d4d45a88">[0.09, 0.21]</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-d4d7c4fd"><p class="cl-d4d7b2d2"><span class="cl-d4d45a88">genderfemale</span></p></td><td class="cl-d4d7c4fe"><p class="cl-d4d7b2c8"><span class="cl-d4d45a88">-0.20</span></p></td><td class="cl-d4d7c4fe"><p class="cl-d4d7b2c8"><span class="cl-d4d45a88">0.05</span></p></td><td class="cl-d4d7c4fe"><p class="cl-d4d7b2c8"><span class="cl-d4d45a88">-3.88</span></p></td><td class="cl-d4d7c4fe"><p class="cl-d4d7b2c8"><span class="cl-d4d45a88">&lt; .001***</span></p></td><td class="cl-d4d7c4fe"><p class="cl-d4d7b2c8"><span class="cl-d4d45a88">[-0.30, -0.10]</span></p></td></tr></tbody></table></div>
 </div>
 </div>
 </div>
@@ -1886,12 +1881,6 @@ Solution
 <div class="cell">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>papaja<span class="sc">::</span><span class="fu">apa_table</span>(eval_full_lm_out<span class="sc">$</span>table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-
-(#tab:tbl-final-model)
-
-<div data-custom-style="Table Caption">
-**
-</div>
 <div id="tbl-final-model" class="anchored">
 <table class="table table-sm table-striped small">
 <caption>Table&nbsp;1: The final model predicting teaching evaluation ratings from instructor beauty and gender.</caption>
@@ -2025,27 +2014,27 @@ editor: visual
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-5" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-lines="5" data-code-cell="annotated-cell-5">Automatically produce a table of contents (ToC) from the document headings.</span>
+<span data-code-cell="annotated-cell-5" data-code-annotation="1" data-code-lines="5">Automatically produce a table of contents (ToC) from the document headings.</span>
 </dd>
 <dt data-target-cell="annotated-cell-5" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-annotation="2" data-code-lines="7" data-code-cell="annotated-cell-5">Combine all the files, images, stylesheets etc. into a single output document. Necessary if you want to send an HTML file to someone else and have it look as it should!</span>
+<span data-code-cell="annotated-cell-5" data-code-annotation="2" data-code-lines="7">Combine all the files, images, stylesheets etc. into a single output document. Necessary if you want to send an HTML file to someone else and have it look as it should!</span>
 </dd>
 <dt data-target-cell="annotated-cell-5" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-annotation="3" data-code-lines="8" data-code-cell="annotated-cell-5">Set default behaviour for all code chunks as follows</span>
+<span data-code-cell="annotated-cell-5" data-code-annotation="3" data-code-lines="8">Set default behaviour for all code chunks as follows</span>
 </dd>
 <dt data-target-cell="annotated-cell-5" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-annotation="4" data-code-lines="9" data-code-cell="annotated-cell-5">Run code and show output, but do not show the code itself.</span>
+<span data-code-cell="annotated-cell-5" data-code-annotation="4" data-code-lines="9">Run code and show output, but do not show the code itself.</span>
 </dd>
 <dt data-target-cell="annotated-cell-5" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-annotation="5" data-code-lines="10" data-code-cell="annotated-cell-5">Do not show any warnings produced by code.</span>
+<span data-code-cell="annotated-cell-5" data-code-annotation="5" data-code-lines="10">Do not show any warnings produced by code.</span>
 </dd>
 <dt data-target-cell="annotated-cell-5" data-target-annotation="6">6</dt>
 <dd>
-<span data-code-annotation="6" data-code-lines="11" data-code-cell="annotated-cell-5">Do not show any messages produced by code.</span>
+<span data-code-cell="annotated-cell-5" data-code-annotation="6" data-code-lines="11">Do not show any messages produced by code.</span>
 </dd>
 </dl>
 </div>
