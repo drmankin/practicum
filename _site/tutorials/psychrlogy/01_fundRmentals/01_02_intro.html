@@ -134,8 +134,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link" href="../../../workshops.html" rel="" target="">
  <span class="menu-text">Workshops</span></a>
   </li>  
-  <li class="dropdown-header">
- <span class="menu-text">Resources</span></li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../resources.html" rel="" target="">
+ <span class="menu-text">Resources</span></a>
+  </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
@@ -324,11 +326,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions">Functions</a>
   <ul>
   <li><a href="#basics-and-help" id="toc-basics-and-help" class="nav-link" data-scroll-target="#basics-and-help">Basics and Help</a></li>
-  <li><a href="#arguments" id="toc-arguments" class="nav-link" data-scroll-target="#arguments">Arguments</a>
-  <ul class="collapse">
-  <li><a href="#unnamed-arguments" id="toc-unnamed-arguments" class="nav-link" data-scroll-target="#unnamed-arguments">Unnamed Arguments</a></li>
-  <li><a href="#named-arguments" id="toc-named-arguments" class="nav-link" data-scroll-target="#named-arguments">Named Arguments</a></li>
-  </ul></li>
+  <li><a href="#arguments" id="toc-arguments" class="nav-link" data-scroll-target="#arguments">Arguments</a></li>
   <li><a href="#using-functions" id="toc-using-functions" class="nav-link" data-scroll-target="#using-functions">Using Functions</a>
   <ul class="collapse">
   <li><a href="#passing-multiple-values-to-arguments" id="toc-passing-multiple-values-to-arguments" class="nav-link" data-scroll-target="#passing-multiple-values-to-arguments">Passing Multiple Values to Arguments</a></li>
@@ -1934,18 +1932,12 @@ Help Documentation
 <section id="arguments" class="level3">
 <h3 class="anchored" data-anchor-id="arguments">Arguments</h3>
 <p>The information inside a function’s brackets, which give it the information it needs to work, are called <strong>arguments</strong>. Each argument in a function is separated by a comma, so we can see from <code>round(x, digits = 0)</code> that the <code>round()</code> function can take two arguments. How many arguments a function has depends on the function; some (like <code>Sys.Date()</code>) don’t need any arguments to run. One of the most useful parts of a function’s help documentation is the “Arguments” section, which tells you what each of the function’s arguments are and how to use them.</p>
-<p>There are two main types of arguments: named and unnamed arguments. Conveniently, the arguments of <code>round()</code> give us one example of each.</p>
-<section id="unnamed-arguments" class="level4">
-<h4 class="anchored" data-anchor-id="unnamed-arguments">Unnamed Arguments</h4>
-<p>The first argument to <code>round()</code> is simply <code>x</code>. Just like in maths, <code>x</code> is a placeholder for some number or numbers (a “numeric vector”, which should sound familiar now) that the function will work on. This is common notation in many functions: <code>x</code>, often the first argument in a function, typically denotes the placeholder for the information you want to use the function on. In our case, we just have one number we want to round, so that’s what we should replace with <code>x</code>.</p>
-<p>This argument has no default so it must be provided, or the function won’t run.</p>
-</section>
-<section id="named-arguments" class="level4">
-<h4 class="anchored" data-anchor-id="named-arguments">Named Arguments</h4>
-<p>The second argument of <code>round()</code> is a named argument, <code>digits = 0</code>. You can think of named arguments like settings that change the way a function works, often with only certain allowable values. Here we can see that the name of the argument is <code>digits</code>; the name before the <code>=</code> sign tells R which setting we want to change.</p>
-<p>The help documentation tells us that <code>digits</code> should be an “integer indicating the number of decimal places…to be used.” We can also see in “Usage” that this argument has a default value, <code>digits = 0</code>. That means that if we don’t explicitly include the argument <code>digits</code> when we use the function, by default the <code>round()</code> function will round the number you give it to 0 decimal places. Named arguments frequently, but not always, have a default, and it’s important to check so the function doesn’t quietly do something unexpected.</p>
-<p>Default values of arguments are really useful, because the default is often the most frequently used or safest<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> setting. It means you don’t have to specify every single aspect of a function every time you use it, as long as you want the function to work according to its defaults. In our case, we actually wanted <code>round()</code> to round to two decimal places, not 0. So, in our command, we should change the <code>digits</code> setting from the default, <code>0</code>, to <code>2</code>.</p>
-</section>
+<p>When referring to arguments, you will hear the terms “named” and “unnamed” arguments. This can be a bit confusing, because all arguments have a name - they have to, otherwise we couldn’t refer to them!<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> The named vs unnamed distinction doesn’t refer to the arguments themselves, but rather how the person using the function chooses to write them out. There are some conventions around which arguments are named or not, so let’s have a look at that now.</p>
+<p>The <strong>first argument</strong> to <code>round()</code> is simply <code>x</code>. Just like in maths, <code>x</code> is a placeholder for some number or numbers (a “numeric vector”, which should sound familiar now) that the function will work on. This is common notation in many functions: <code>x</code>, often the first argument in a function, typically denotes the placeholder for the information you want to use the function on. In our case, we just have one number we want to round, so that’s what we should replace with <code>x</code>.</p>
+<p>This argument has no default, so it must be provided or the function won’t run. Because we always have to provide some information here, <code>x</code> and similar arguments containing the values or data to work on are frequently <em>unnamed</em> when we use them. That means that instead of <code>round(x = 64.333333...)</code> we can just write <code>round(64.33333...)</code>. They are also frequently the first argument in the function<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>. So, when you see reference to the “first unnamed argument” - especially important in {tidyverse} functions designed to work with the pipe operator, which we’ll meet next week - that simply means, “the first argument in the function for which the programmer hasn’t specifed a name”, which is usually, but not always or necessarily, the “data” or “information to work on” argument.</p>
+<p>The <strong>second argument</strong> of <code>round()</code> is <code>digits</code>. You can think of arguments like this as settings that change the way a function works, often with only certain allowable values.</p>
+<p>The help documentation tells us that <code>digits</code> should be an “integer indicating the number of decimal places…to be used.” We can also see in “Usage” that this argument has a default value, <code>digits = 0</code>. That means that if we don’t explicitly include the argument <code>digits</code> when we use the function, by default the <code>round()</code> function will round the number you give it to 0 decimal places. Arguments frequently, but not always, have a default, and it’s important to check so the function doesn’t quietly do something unexpected.</p>
+<p>Default values of arguments are really useful, because the default is often the most frequently used or safest<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a> setting. It means you don’t have to specify every single aspect of a function every time you use it, as long as you want the function to work according to its defaults. In our case, we actually wanted <code>round()</code> to round to two decimal places, not 0. So, in our command, we should change the <code>digits</code> setting from the default, <code>0</code>, to <code>2</code>.</p>
 </section>
 <section id="using-functions" class="level3">
 <h3 class="anchored" data-anchor-id="using-functions">Using Functions</h3>
@@ -1976,12 +1968,12 @@ Solution
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb143"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb143-1"><a href="#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Using the actual value from my earlier calculation</span></span>
-<span id="cb143-2"><a href="#cb143-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fl">64.3333333</span>, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb143-2"><a href="#cb143-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="at">x =</span> <span class="fl">64.3333333</span>, <span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 64.33</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb145"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb145-1"><a href="#cb145-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Using a nested function - that is, calculating the mean and then rounding it!</span></span>
-<span id="cb145-2"><a href="#cb145-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">mean</span>(quiz_9am), <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb145-2"><a href="#cb145-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="at">x =</span> <span class="fu">mean</span>(quiz_9am), <span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 64.33</code></pre>
 </div>
@@ -1991,48 +1983,51 @@ Solution
 </div>
 </div>
 </div>
-<div class="callout callout-style-default callout-tip callout-titled" title="Order of Arguments">
+<div class="callout callout-style-default callout-tip callout-titled" title="Order and Naming of Arguments">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-63-contents" aria-controls="callout-63" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Order of Arguments
+Order and Naming of Arguments
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-63" class="callout-63-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>If you want to, you can achieve the same result by changing the order of the arguments. Because we have written the names of both arguments, R can still do what we want it to do:</p>
+<p>If you want to, you can achieve the same result by changing the order of the arguments, as long as you pay careful attention to which argument(s) you have named.</p>
+<p>If we have written the names of both arguments, R can still do what we want it to do with the order of arguments reversed:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb147"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb147-1"><a href="#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="at">digits =</span> <span class="dv">2</span>, <span class="at">x =</span> <span class="fl">64.3333333</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 64.33</code></pre>
 </div>
 </div>
-<p>We can also, to some degree, drop the names of the arguments, as long as R can still understand what we’re trying to do:</p>
+<p>We can also, to some degree, drop the names of the arguments, as long as R can still understand what we’re trying to do. In this case, the “first unnamed argument” is still <code>x</code>! Even though it’s not the first argument we’ve written in the function, it’s the first one that doesn’t have an explicit name.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb149"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb149-1"><a href="#cb149-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="at">digits =</span> <span class="dv">2</span>, <span class="fl">64.3333333</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 64.33</code></pre>
 </div>
 </div>
-<p>Here I left out the <code>x =</code>. R can still understand this because <code>round()</code> only takes two arguments, and we explicitly told it what value belongs to <code>digits</code>, so it assumes the second number must be <code>x</code>.</p>
+<p>Although I left out the <code>x =</code>, R can still understand this because <code>round()</code> only takes two arguments, and we explicitly told it what value belongs to <code>digits</code>, so it assumes the second number must be <code>x</code>.</p>
+<p>If more than one, or all, of the arguments are unnamed, then order becomes critical:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb151"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb151-1"><a href="#cb151-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fl">64.3333333</span>, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 64.33</code></pre>
 </div>
 </div>
-<p>This time I dropped both argument names. R can still understand this because when you don’t specify which input goes with which argument, R will assume they should go in the default order given in the help documentation. So, R has automatically assigned 64.3333333 to <code>x</code> and 2 to <code>digits</code>, which is what we wanted.</p>
+<p>This time I dropped both argument names. R can still understand this because when you don’t specify which input goes with which argument, R will assume they should go in the default order given in the help documentation. So, R has automatically assigned 64.3333333 to <code>x</code> and 2 to <code>digits</code>.</p>
 <p>As I use R more and more, I find that I name arguments <em>more</em> consistently, even though I know how the function works and dropping them is more efficient (at least in terms of typing). That’s because when I come back from lunch, or the next day, or six months later to revisit the same code, it’s much easier to recall what it all means when it’s well-annotated. So, I strongly recommend getting in the habit of including argument names in your code as a favour to your future self, and to avoid situations like this:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb153"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb153-1"><a href="#cb153-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="dv">2</span>, <span class="fl">64.3333333</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb153"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb153-1"><a href="#cb153-1" aria-hidden="true" tabindex="-1"></a><span class="do">## uh oh!</span></span>
+<span id="cb153-2"><a href="#cb153-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="dv">2</span>, <span class="fl">64.3333333</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2</code></pre>
 </div>
 </div>
-<p>Here, since we didn’t specify, R assumed that 2 was the number we wanted to round. This isn’t what we wanted - but R has no way of knowing this. It always assumes that what we typed was precisely what we intended to ask R to do.</p>
+<p>Here, since we left all the arguments unnamed, R assumed that 2 was the number we wanted to round. This isn’t what we wanted - but R has no way of knowing this. It always assumes that what we typed was precisely what we intended to ask R to do.</p>
 </div>
 </div>
 </div>
@@ -2040,17 +2035,17 @@ Order of Arguments
 <h4 class="anchored" data-anchor-id="passing-multiple-values-to-arguments">Passing Multiple Values to Arguments</h4>
 <p>A last important aspect of using functions is that <strong>each argument in a function can only take a single object or value as input</strong>. For example, we saw above that we put the single value 64.3333333 into the <code>x</code> argument of <code>round()</code>. But what if we wanted to round more than one number? We don’t want to have to write a new <code>round()</code> command for every number, even though we could do this if we particularly enjoyed doing a lot of tedious and repetitive typing:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb155"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb155-1"><a href="#cb155-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fl">64.3333333</span>, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb155"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb155-1"><a href="#cb155-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fl">64.3333333</span>, <span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 64.33</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb157"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb157-1"><a href="#cb157-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ughhhh</span></span>
-<span id="cb157-2"><a href="#cb157-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fl">59.5452</span>, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb157-2"><a href="#cb157-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fl">59.5452</span>, <span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 59.55</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb159"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb159-1"><a href="#cb159-1" aria-hidden="true" tabindex="-1"></a><span class="do">## noooooo :(</span></span>
-<span id="cb159-2"><a href="#cb159-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fl">0.198</span>, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb159-2"><a href="#cb159-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fl">0.198</span>, <span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.2</code></pre>
 </div>
@@ -2272,7 +2267,9 @@ Well Done!
 <li id="fn4"><p>As a linguist I have to note, one, <a href="https://amazingakita.tumblr.com/post/181685581034/people-who-dont-even-care-about-language-how-can">words don’t exist</a>, and two, the closest linguistic term for what an object is is probably “lexeme”. “Word” will get you in the right vicinity, though, conceptually. If you’d like to dive down this rabbit hole (rabbit-hole?) <a href="https://www.youtube.com/watch?v=93sK4jTGrss">this Crash Course video on morphology</a> is a good place to start.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5"><p>Again, I could have called this object anything, like <code>the_first_example_of_an_object_InThisSection.so.far</code> or <code>made_upQuizScores.fornineamclass</code> or anything else that follows R’s naming conventions. However, it’s a good idea to name your objects something brief and obvious, so you can remember what they contain and work with them easily.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn6"><p>There is a way to do this - you can enclose the entire expression in round brackets, e.g.&nbsp;<code>(object &lt;- instructions)</code>, which will BOTH create the object AND print out what that object contains at the same time. I’m not using this method in these tutorials because I think it will be confusing, since it’s primarily for demonstration purposes and not necessary the sort of thing you’d want to use in your own analysis code.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7"><p>By “safest” setting, I mean that the function makes the fewest assumptions about what you intended.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>In fact, a previous version of this tutorial very confidently gave the wrong definitions! Sorry…<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>Again, not necessarily - the base-R string-manipulation functions <code>grep()</code> and friends, for example, have <code>x</code> as their <em>third</em> argument. I know all the irregularities can be confusing, but remember that R is a massive collaborative project across decades and millions of users, so some quirks are inevitable!<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>By “safest” setting, I mean that the function makes the fewest assumptions about what you intended.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
