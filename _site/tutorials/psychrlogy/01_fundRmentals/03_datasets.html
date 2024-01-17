@@ -134,8 +134,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link" href="../../../workshops.html" rel="" target="">
  <span class="menu-text">Workshops</span></a>
   </li>  
-  <li class="dropdown-header">
- <span class="menu-text">Resources</span></li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../resources.html" rel="" target="">
+ <span class="menu-text">Resources</span></a>
+  </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
@@ -502,10 +504,10 @@ Solution
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.1.3     ✔ readr     2.1.4
-✔ forcats   1.0.0     ✔ stringr   1.5.1
-✔ ggplot2   3.4.4     ✔ tibble    3.2.1
-✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+✔ dplyr     1.1.2     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.0
+✔ ggplot2   3.4.3     ✔ tibble    3.2.1
+✔ lubridate 1.9.2     ✔ tidyr     1.3.0
 ✔ purrr     1.0.2     
 ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ✖ dplyr::filter() masks stats::filter()
@@ -1176,9 +1178,9 @@ Definition: Pipe
 <p>In most cases, including almost all of the code we will learn in these tutorials, the two pipes are interchangeable and will result in the same output.</p>
 </div>
 </div>
-<p>Conceptually, the pipe works taking the output of the code on the left and passing it into the first argument of whatever comes after it on the right. Many functions - both from the {tidyverse} and not - are already set up so that the first argument is the data, and {tidyverse} functions are explicitly designed this way in order to work best with the pipe.</p>
-<p>For functions where this is not the case, you can determine where the piped-in information should go using a “placeholder”. The most noticeable difference is that the native pipe placeholder is <code>_</code>, while the magrittr pipe placeholder is <code>.</code> There’s an example using placeholders below to help make this clearer.</p>
-<p>From this point forward, we’ll start working with the native pipe. The following sections will have specific examples on using the pipe to practice. Working with the pipe is also a good chance to practice “translating” R code into English, which we’ll do as we go. To give you an idea, here’s an example of how we can read the following code.</p>
+<p>Conceptually, the pipe works taking the output of the code on the left and passing it, by default, into the <strong>first unnamed argument</strong> of whatever comes after it on the right<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. Many functions - both from the {tidyverse} and not - are already set up so that the first argument is the data, and {tidyverse} functions are explicitly designed this way in order to work best with the pipe.</p>
+<p>For functions where this is not the case, you can determine where the piped-in information should go using a “placeholder”. The most noticeable difference between the two pipes is that they have different placeholders. The native pipe (<code>|&gt;</code>) uses underscore <code>_</code> as its placeholder, while the magrittr pipe (<code>%&gt;%</code>) uses the dot/full stop <code>.</code> There’s an example using placeholders below to help make this clearer.</p>
+<p>From this point forward, we’ll start working with the native pipe. The following sections will have specific examples on using the pipe to practice. Working with the pipe is also a good chance to practice “translating” R code into English, which we’ll do as we go. To give you an idea, here’s an example of how we can read the following code. We’ll typically read <code>|&gt;</code> as “and then”, taking the output of whatever the preceding line produces and passing it on to the next line.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-3"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><a class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-3-1" class="code-annotation-target"><a href="#annotated-cell-3-1" aria-hidden="true" tabindex="-1"></a>some_numbers <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">3.52</span>, <span class="fl">7.03</span>, <span class="fl">9.2</span>, <span class="fl">10.11</span>, <span class="dv">2</span>)</span>
 <span id="annotated-cell-3-2"><a href="#annotated-cell-3-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -1209,7 +1211,8 @@ Definition: Pipe
 <pre><code>[1] 6.37</code></pre>
 </div>
 </div>
-<p>So, we’ll typically read <code>|&gt;</code> as “and then”, taking the output of whatever the preceding line produces and passing it on to the next line. To illustrate this more clearly, here’s the same code explicitly including the placeholders to indicate where the piped-in information goes:</p>
+<p>It might seem strange that these functions appear to be “empty”. Take the third step above, which just reads <code>mean()</code>. There’s nothing in the brackets, so it appears that the <code>mean()</code> function is working on nothing! However, remember that the pipe passes whatever is on its left-hand side (abbreviated LHS) to the <em>first unnamed argument</em> of the function on its right-hand side (RHS). In this example, the object <code>some_numbers</code> is the input on the LHS, which is being “piped into” the first unnamed argument of the <code>mean()</code> function on the RHS, which is <code>x</code>, the data or values to work with. We don’t have to explicitly specify this; it’s just how the pipe works by default.</p>
+<p>To illustrate this more clearly, here’s the same code explicitly including the placeholders to indicate where the piped-in information goes:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>some_numbers <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">3.52</span>, <span class="fl">7.03</span>, <span class="fl">9.2</span>, <span class="fl">10.11</span>, <span class="dv">2</span>)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -1217,7 +1220,7 @@ Definition: Pipe
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(<span class="at">x =</span> _) <span class="sc">|&gt;</span></span>
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(<span class="at">x =</span> _, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Think of the placeholder like a bucket or landing pad, where the information coming in from the pipe falls. In this example, the placeholders aren’t necessary, because at each step, we already want the piped-in information to go into the first argument; but including the placeholders helps to see what’s going on.</p>
+<p>Think of the placeholder like a bucket or landing pad, where the information coming in from the pipe falls. In this example, the placeholders aren’t necessary, because at each step, we already want the piped-in information to go into the first argument, which we have left unnamed, and which is conveniently, in both cases, <code>x</code>, the data or values to work with; but including the placeholders (and, necessarily if we want to use placeholders, the argument names) helps to see what’s going on.</p>
 <p>To make this fully explicit, this illustration shows the progress of information through the same pipe. The orange arrows show how the piped-in information is passed from one function to the next. The teal arrows show what is produced at each step of the pipe - which is what is passed on to the next function via the orange arrows/pipe.</p>
 <p><img src="../../../images/pipe_arrows.jpg" class="img-fluid" alt="A screenshot of the same code as above, with orange arrows starting at the end of each pipe and pointing into the placeholder in the following function, and teal arrows pointing to snippets of output for each step of the pipe."></p>
 <div class="callout callout-style-default callout-tip callout-titled" title="A Sweet Pipe Example">
@@ -1241,7 +1244,7 @@ A Sweet Pipe Example
 <span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">assemble</span>(<span class="at">filling =</span> <span class="fu">c</span>(<span class="st">"buttercream"</span>, <span class="st">"jam"</span>), <span class="at">topping =</span> <span class="st">"icing_sugar"</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">devour</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>At each step, <code>|&gt;</code> takes whatever the previous step produces and passes it on to the next step. So, we begin with <code>ingredients</code> - presumably an object that contains our flour, sugar, eggs, etc - which is “piped into” the <code>mix()</code> function. The output of that function might be all our ingredients mixed together in a bowl, which is then piped into the <code>pour()</code> function, and so on.</p>
-<p>Notice for example, the function <code>cool()</code>, which doesn’t appear to have anything in it. It actually does: the <code>cool()</code> function would work with whatever the output of the <code>bake()</code> function was above it.</p>
+<p>Notice for example, the function <code>cool()</code>, which doesn’t appear to have anything in it. It actually does: the <code>cool()</code> function would work with whatever the output of the <code>bake()</code> function was above it: a freshly baked cake straight out of the oven.</p>
 <p>Without the pipe, our command might look something like this, which must be read from the inside out rather from top to bottom:</p>
 <pre class="{[r]}"><code>devour(
   assemble(
@@ -1369,7 +1372,7 @@ Solution
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>px_initial <span class="ot">&lt;-</span> syn_data <span class="sc">|&gt;</span> </span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nrow</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>This format takes a bit of getting used to. The new object, which I’ve called <code>px_initial</code><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>, is created at the first line of the command by the <code>&lt;-</code>. However, this object <em>contains</em> whatever the final output of this pipe is at the end - in this case, the number of rows as a numeric value produced by <code>nrow()</code>.</p>
+<p>This format takes a bit of getting used to. The new object, which I’ve called <code>px_initial</code><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>, is created at the first line of the command by the <code>&lt;-</code>. However, this object <em>contains</em> whatever the final output of this pipe is at the end - in this case, the number of rows as a numeric value produced by <code>nrow()</code>.</p>
 </div>
 </div>
 </div>
@@ -1443,7 +1446,7 @@ Solution
 </section>
 <section id="subsetting" class="level3">
 <h3 class="anchored" data-anchor-id="subsetting">Subsetting</h3>
-<p>To work with individual variables, we need to get them out of the dataset. Specifically, for many of the functions we’re about to use, we will need the values stored in those variables as vectors. We can do this in two ways: <code>$</code> notation, or the function <code>dplyr::pull()</code><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>.</p>
+<p>To work with individual variables, we need to get them out of the dataset. Specifically, for many of the functions we’re about to use, we will need the values stored in those variables as vectors. We can do this in two ways: <code>$</code> notation, or the function <code>dplyr::pull()</code><a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>.</p>
 <p>Subsetting with <code>$</code> is the base-R method, and it takes the general form:</p>
 <pre><code>dataset_name$variable_to_subset</code></pre>
 <p>Subsetting with <code>dplyr::pull()</code> is a {tidyverse} method of accomplishing the same thing. Using the pipe structure we’ve seen previously, the general form is:</p>
@@ -1761,8 +1764,9 @@ Well Done!
 <ol>
 <li id="fn1"><p>You can read this notation as “the filter function from the dplyr package”, or just “dplyr filter”. As for how to pronounce “dplyr”, the <a href="https://twitter.com/hadleywickham/status/925313165554012160?s=20">official pronunciation</a> is “dee-ply-er”, with “plier” like the tool <a href="https://dplyr.tidyverse.org/">for which it’s named</a>. I have heard other people say “dipler”. Since code is always a bit tricky to read aloud, just go with whatever sounds good to you.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>[](https://media.giphy.com/media/12XMGIWtrHBl5e/giphy.gif, fig-alt=‘A gif of Michael from the Office (US) shouting “Oh God no! Please no! NOOOOO”’)<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>You can call this object anything you like; I use “px” as shorthand for “participant.”<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>This function always makes me think of one of those arcade <a href="https://www.youtube.com/watch?v=N-Esh4W3dfI">claw machines</a> reaching into the dataset to grab the values you want!<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Remember last week I mentioned that “first unnamed arguments” would be important? Here’s why! Look back on <a href="../../../tutorials/psychrlogy/01_fundRmentals/01_02_intro.html#arguments">01/02 IntRoductions</a> if you’d like a refresher.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>You can call this object anything you like; I use “px” as shorthand for “participant.”<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>This function always makes me think of one of those arcade <a href="https://www.youtube.com/watch?v=N-Esh4W3dfI">claw machines</a> reaching into the dataset to grab the values you want!<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

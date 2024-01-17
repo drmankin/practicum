@@ -424,11 +424,13 @@ The pipe operator may appear in two formats.
 In most cases, including almost all of the code we will learn in these tutorials, the two pipes are interchangeable and will result in the same output.
 :::
 
-Conceptually, the pipe works taking the output of the code on the left and passing it into the first argument of whatever comes after it on the right. Many functions - both from the {tidyverse} and not - are already set up so that the first argument is the data, and {tidyverse} functions are explicitly designed this way in order to work best with the pipe.
+Conceptually, the pipe works taking the output of the code on the left and passing it, by default, into the **first unnamed argument** of whatever comes after it on the right[^unnamed]. Many functions - both from the {tidyverse} and not - are already set up so that the first argument is the data, and {tidyverse} functions are explicitly designed this way in order to work best with the pipe.
 
-For functions where this is not the case, you can determine where the piped-in information should go using a "placeholder". The most noticeable difference is that the native pipe placeholder is `_`, while the magrittr pipe placeholder is `.` There's an example using placeholders below to help make this clearer.
+[^unnamed]: Remember last week I mentioned that "first unnamed arguments" would be important? Here's why! Look back on [01/02 IntRoductions](01_02_intro.qmd#arguments) if you'd like a refresher. 
 
-From this point forward, we'll start working with the native pipe. The following sections will have specific examples on using the pipe to practice. Working with the pipe is also a good chance to practice "translating" R code into English, which we'll do as we go. To give you an idea, here's an example of how we can read the following code.
+For functions where this is not the case, you can determine where the piped-in information should go using a "placeholder". The most noticeable difference between the two pipes is that they have different placeholders. The native pipe (`|>`) uses underscore `_` as its placeholder, while the magrittr pipe (`%>%`) uses the dot/full stop `.` There's an example using placeholders below to help make this clearer.
+
+From this point forward, we'll start working with the native pipe. The following sections will have specific examples on using the pipe to practice. Working with the pipe is also a good chance to practice "translating" R code into English, which we'll do as we go. To give you an idea, here's an example of how we can read the following code. We'll typically read `|>` as "and then", taking the output of whatever the preceding line produces and passing it on to the next line.
 
 ```{r}
 some_numbers <- c(3.52, 7.03, 9.2, 10.11, 2) #<1>
@@ -443,7 +445,9 @@ some_numbers |> #<2>
 3. Calculate the mean of those numbers, *and then...*
 4. Round that mean to two decimal places, which outputs:
 
-So, we'll typically read `|>` as "and then", taking the output of whatever the preceding line produces and passing it on to the next line. To illustrate this more clearly, here's the same code explicitly including the placeholders to indicate where the piped-in information goes:
+It might seem strange that these functions appear to be "empty". Take the third step above, which just reads `mean()`. There's nothing in the brackets, so it appears that the `mean()` function is working on nothing! However, remember that the pipe passes whatever is on its left-hand side (abbreviated LHS) to the *first unnamed argument* of the function on its right-hand side (RHS). In this example, the object `some_numbers` is the input on the LHS, which is being "piped into" the first unnamed argument of the `mean()` function on the RHS, which is `x`, the data or values to work with. We don't have to explicitly specify this; it's just how the pipe works by default.
+
+To illustrate this more clearly, here's the same code explicitly including the placeholders to indicate where the piped-in information goes:
 
 ```{r}
 #| eval: false
@@ -455,7 +459,7 @@ some_numbers |>
   round(x = _, 2)
 ```
 
-Think of the placeholder like a bucket or landing pad, where the information coming in from the pipe falls. In this example, the placeholders aren't necessary, because at each step, we already want the piped-in information to go into the first argument; but including the placeholders helps to see what's going on.
+Think of the placeholder like a bucket or landing pad, where the information coming in from the pipe falls. In this example, the placeholders aren't necessary, because at each step, we already want the piped-in information to go into the first argument, which we have left unnamed, and which is conveniently, in both cases, `x`, the data or values to work with; but including the placeholders (and, necessarily if we want to use placeholders, the argument names) helps to see what's going on.
 
 To make this fully explicit, this illustration shows the progress of information through the same pipe. The orange arrows show how the piped-in information is passed from one function to the next. The teal arrows show what is produced at each step of the pipe - which is what is passed on to the next function via the orange arrows/pipe.
 
@@ -477,7 +481,7 @@ ingredients |>
 
 At each step, `|>` takes whatever the previous step produces and passes it on to the next step. So, we begin with `ingredients` - presumably an object that contains our flour, sugar, eggs, etc - which is "piped into" the `mix()` function. The output of that function might be all our ingredients mixed together in a bowl, which is then piped into the `pour()` function, and so on.
 
-Notice for example, the function `cool()`, which doesn't appear to have anything in it. It actually does: the `cool()` function would work with whatever the output of the `bake()` function was above it.
+Notice for example, the function `cool()`, which doesn't appear to have anything in it. It actually does: the `cool()` function would work with whatever the output of the `bake()` function was above it: a freshly baked cake straight out of the oven.
 
 Without the pipe, our command might look something like this, which must be read from the inside out rather from top to bottom:
 

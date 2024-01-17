@@ -139,8 +139,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link" href="../../../workshops.html" rel="" target="">
  <span class="menu-text">Workshops</span></a>
   </li>  
-  <li class="dropdown-header">
- <span class="menu-text">Resources</span></li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../resources.html" rel="" target="">
+ <span class="menu-text">Resources</span></a>
+  </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
@@ -942,8 +944,13 @@ Solution
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>papaja<span class="sc">::</span><span class="fu">apa_table</span>(papaja<span class="sc">::</span><span class="fu">apa_print</span>(stars_contr_lm)<span class="sc">$</span>table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
+
+(#tab:unnamed-chunk-16)
+
+<div data-custom-style="Table Caption">
+**
+</div>
 <table class="table table-sm table-striped small">
-<caption>(#tab:unnamed-chunk-16)</caption>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Predictor</th>
@@ -2124,8 +2131,13 @@ Solution
 <div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>papaja<span class="sc">::</span><span class="fu">apa_print</span>(stars_mod_lm)<span class="sc">$</span>table <span class="sc">|&gt;</span> </span>
 <span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>  papaja<span class="sc">::</span><span class="fu">apa_table</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
+
+(#tab:unnamed-chunk-50)
+
+<div data-custom-style="Table Caption">
+**
+</div>
 <table class="table table-sm table-striped small">
-<caption>(#tab:unnamed-chunk-50)</caption>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Predictor</th>
@@ -2151,7 +2163,7 @@ Solution
 <td style="text-align: left;">[-0.42, -0.12]</td>
 <td style="text-align: left;">-3.47</td>
 <td style="text-align: left;">373</td>
-<td style="text-align: left;">&lt; .001</td>
+<td style="text-align: left;">.001</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Sticsa trait score cent</td>
@@ -2192,31 +2204,31 @@ Solution
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-23" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-cell="annotated-cell-23" data-code-lines="1">Produce a simple slopes analysis as follows:</span>
+<span data-code-cell="annotated-cell-23" data-code-annotation="1" data-code-lines="1">Produce a simple slopes analysis as follows:</span>
 </dd>
 <dt data-target-cell="annotated-cell-23" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-annotation="2" data-code-cell="annotated-cell-23" data-code-lines="2">Use the model stored in the object <code>stars_mod_lm</code>,</span>
+<span data-code-cell="annotated-cell-23" data-code-annotation="2" data-code-lines="2">Use the model stored in the object <code>stars_mod_lm</code>,</span>
 </dd>
 <dt data-target-cell="annotated-cell-23" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-annotation="3" data-code-cell="annotated-cell-23" data-code-lines="3">with the centered STARS Interpretation Anxiety score as the predictor,</span>
+<span data-code-cell="annotated-cell-23" data-code-annotation="3" data-code-lines="3">with the centered STARS Interpretation Anxiety score as the predictor,</span>
 </dd>
 <dt data-target-cell="annotated-cell-23" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-annotation="4" data-code-cell="annotated-cell-23" data-code-lines="4">and the centered STICSA Trait Anxiety score as the moderator,</span>
+<span data-code-cell="annotated-cell-23" data-code-annotation="4" data-code-lines="4">and the centered STICSA Trait Anxiety score as the moderator,</span>
 </dd>
 <dt data-target-cell="annotated-cell-23" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-annotation="5" data-code-cell="annotated-cell-23" data-code-lines="5">including a Johnson-Neyman interval plot,</span>
+<span data-code-cell="annotated-cell-23" data-code-annotation="5" data-code-lines="5">including a Johnson-Neyman interval plot,</span>
 </dd>
 <dt data-target-cell="annotated-cell-23" data-target-annotation="6">6</dt>
 <dd>
-<span data-code-annotation="6" data-code-cell="annotated-cell-23" data-code-lines="6">robust estimation of confidence intervals,</span>
+<span data-code-cell="annotated-cell-23" data-code-annotation="6" data-code-lines="6">robust estimation of confidence intervals,</span>
 </dd>
 <dt data-target-cell="annotated-cell-23" data-target-annotation="7">7</dt>
 <dd>
-<span data-code-annotation="7" data-code-cell="annotated-cell-23" data-code-lines="7">and CIs instead of SEs.</span>
+<span data-code-cell="annotated-cell-23" data-code-annotation="7" data-code-lines="7">and CIs instead of SEs.</span>
 </dd>
 </dl>
 </div>
@@ -2268,27 +2280,27 @@ Slope of stars_int_score_cent when sticsa_trait_score_cent =  0.65407153 (+ 1 SD
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-24" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-cell="annotated-cell-24" data-code-lines="1">Produce a simple slopes interaction plot as follows:</span>
+<span data-code-cell="annotated-cell-24" data-code-annotation="1" data-code-lines="1">Produce a simple slopes interaction plot as follows:</span>
 </dd>
 <dt data-target-cell="annotated-cell-24" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-annotation="2" data-code-cell="annotated-cell-24" data-code-lines="2">Use the model stored in the object <code>stars_mod_lm</code>,</span>
+<span data-code-cell="annotated-cell-24" data-code-annotation="2" data-code-lines="2">Use the model stored in the object <code>stars_mod_lm</code>,</span>
 </dd>
 <dt data-target-cell="annotated-cell-24" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-annotation="3" data-code-cell="annotated-cell-24" data-code-lines="3">with the centered STARS Interpretation Anxiety score as the predictor,</span>
+<span data-code-cell="annotated-cell-24" data-code-annotation="3" data-code-lines="3">with the centered STARS Interpretation Anxiety score as the predictor,</span>
 </dd>
 <dt data-target-cell="annotated-cell-24" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-annotation="4" data-code-cell="annotated-cell-24" data-code-lines="4">and the centered STICSA Trait Anxiety score as the moderator,</span>
+<span data-code-cell="annotated-cell-24" data-code-annotation="4" data-code-lines="4">and the centered STICSA Trait Anxiety score as the moderator,</span>
 </dd>
 <dt data-target-cell="annotated-cell-24" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-annotation="5" data-code-cell="annotated-cell-24" data-code-lines="5">with CIs included around the lines,</span>
+<span data-code-cell="annotated-cell-24" data-code-annotation="5" data-code-lines="5">with CIs included around the lines,</span>
 </dd>
 <dt data-target-cell="annotated-cell-24" data-target-annotation="6">6</dt>
 <dd>
-<span data-code-annotation="6" data-code-cell="annotated-cell-24" data-code-lines="6,7,8">and custom labels for the <em>x</em>, <em>y</em>, and legend.</span>
+<span data-code-cell="annotated-cell-24" data-code-annotation="6" data-code-lines="6,7,8">and custom labels for the <em>x</em>, <em>y</em>, and legend.</span>
 </dd>
 </dl>
 </div>
