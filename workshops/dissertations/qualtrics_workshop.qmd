@@ -396,8 +396,18 @@ Clean up your dataset by doing the following. You can do the steps in whatever o
 - Keep all the demographic questions, items measuring Global Meaning, and Mattering, and all the Belonging items.
 - Rename any default-named Qualtrics variables (starting with "Q") to a sensible name using the Codebook to guide you.
 
+
+
 ```{r}
 #| echo: false
+
+mil_data <- mil_data %>% 
+  dplyr::select(
+    Q1:Q7_4,
+    starts_with('Q11')
+    ) 
+
+
 mil_data <- mil_data %>% 
   dplyr::rename(
     english_fluency = Q1, 
