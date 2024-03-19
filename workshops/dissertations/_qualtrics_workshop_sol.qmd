@@ -1,0 +1,1154 @@
+---
+title: "Working with Qualtrics Data"
+---
+
+```{=html}
+<!--    
+Timeline
+
+Separate into clear sections. Keep in mind we have two hours total.
+
+:00  Intro to Qualtrics and labelled data; reading in (up to The Plan)
+:15  Selection helpers, renaming, using labelled data
+:40  Practice time and break
+1:00 Data dictionary, conversion with `across()`, comp scores with `c_across()`
+1:25 Practice time
+1:50 End/Break
+2:00 Optional: download data from Qualtrics, get started working with it
+
+-->
+```
+
+## Overview
+
+This tutorial will focus on efficient, transparent, and user-friendly techniques for working with data specifically gathered using the [Qualtrics survey platform](https://www.qualtrics.com/). We will cover how to import and work with labelled data from Qualtrics and how to easily produce a data dictionary straight from the dataset itself.
+
+### Acknowledgements
+
+This tutorial was co-written with [Dr Dan Evans](https://drdanielleevans.netlify.app/), drawing on her existing resources for Qualtrics and her extensive experience support dissertation students.
+
+The material in this tutorial was originally co-conceived with two brilliant PhD researchers, [Hanna Eldarwish](mailto:haie20@sussex.ac.uk) and [Josh Francis](Joshua.Francis@sussex.ac.uk), who contributed invaluable input throughout the process of developing the tutorial. Hanna Eldarwish also provided the basis for the dataset, collected during her undergraduate dissertation at Sussex under the supervision of [Dr Vlad Costin](https://profiles.sussex.ac.uk/p323096-vlad-costin).
+
+### Navigation
+
+The first section of the tutorial gives advice for setting up a Qualtrics questionnaire, and will help you understand how the questionnaire you build will correspond to the dataset you get at the end.
+
+If you are in a live workshop or already have data to work with, [jump down to Setup](#setup) to get started with the data portion.
+
+ 
+
+## Qualtrics
+
+[Qualtrics](https://www.sussex.ac.uk/its/services/software/qualtrics) is a survey-building tool very commonly used for questionnaire-type studies, as well as some experimental work. The University of Sussex has an institutional licence for Qualtrics, so all staff and students can log in with their Sussex details and easily construct and collaborate on surveys.
+
+For help using Qualtrics itself, the [Qualtrics support pages](https://www.qualtrics.com/support/survey-platform/my-projects/my-projects-overview/) are generally excellent. This tutorial will only briefly touch on the options within Qualtrics itself.
+
+Once the study is complete and responses have been collected, you will need to [export your data from Qualtrics](https://www.qualtrics.com/support/survey-platform/data-and-analysis-module/data/download-data/export-data-overview/) so that you can analyse it. Qualtrics offers a variety of export data types, including our familiar CSV type. However, we're going to instead explore a new option: SAV data.
+
+### SAV Data
+
+The `.sav` file type is associated with [SPSS](https://www.ibm.com/products/spss-statistics), a widely used statistical analysis programme. So, why are we using SPSS files when working in R?
+
+Importing via `.sav` has two key advantages. First, it results in a much cleaner import format. If you try importing the same data via `.csv` file, you'll find that you need to do some very fiddly and pointless cleanup first. For instance, the `.csv` version of the same dataset will introduce some empty rows that have to be deleted with `dplyr::slice()` or similar. The `.sav` version of the dataset doesn't have any comparable formatting issues.
+
+Most importantly, however, importing `.sav` file types into R with particular packages like {haven} gets us a dataset with a special type of data: namely, labelled data. The labels allow us to preserve important information about the questions asked and response options in Qualtrics, and to (mostly) painlessly create codebooks for datasets. We will explore these features in depth in this tutorial.
+
+### Setting Up Qualtrics
+
+::: callout-important
+
+The following section is most useful when you are creating your Qualtrics questionnaire. If you are just starting your study, you're recommended to read this section in full.
+
+If you already have a Qualtrics questionnaire, **be very careful** about editing it after data collection has begun. Minimally, if you do decide you want to make changes, **export copies of both your dataset and your questionnaire** before you make any edits.
+
+If you have a dataset in Qualtrics, [jump down to exporting data](#exporting-data).
+
+If you already have data in `.sav` format to work with, [jump down to the next section](#setup).
+
+:::
+
+In this section we'll have a quick look at how to set up Qualtrics to work as smoothly as possible with R. This has also previously been covered in a [QQM Skills Lab](https://drdanielleevans.netlify.app/posts/qqm_22/skills_lab_05-1).
+
+#### Using Blocks
+
+Blocks are the way that Qualtrics organises pieces of the survey. Essentially, everything in the same block becomes a unit. You can have multiple questions per block, or just one. Blocks are vital for creating a study that appears as you want, but they won't have any substantial impact on the format of the data.
+
+Explaining blocks and how they can be arranged is a bit outside the scope of this tutorial, so see the [Block Options](https://www.qualtrics.com/support/survey-platform/survey-module/block-options/block-options-overview/) page in the Qualtrics guide for more details.
+
+#### Using Questions
+
+The core of Qualtrics are questions, which you can create within blocks. By default, a new question is a multiple-choice question (MCQ), but you can customise this in depth in the "Edit question" sidebar to the left of the survey. To edit a question, you have to click on each question, which will outline the question in a blue box; you can then change the settings for that question in the sidebar.
+
+::: callout-tip
+
+For extensive help on creating and work with questions, see the [Qualtrics Guide](https://www.qualtrics.com/support/survey-platform/survey-module/editing-questions/creating-questions/?parent=p0030).
+
+:::
+
+##### Questions in R
+
+Let's have a look at the default question, which appears like this:
+
+![](/images/qtrics_question.png){fig-alt="Screenshot of a question in Qualtrics, with the label 'Q1' annotated as variable name, the text 'Click to write the question text' as variable label, and the choices as value labels."}
+
+As you can see here, the way that you set up your questions translates directly into the way your dataset will appear.
+
+- **Names**: All questions are automatically given a name, by default Q[number], e.g. Q1, Q2, etc. This question name will appear as the **variable name** in your exported dataset. These names are not visible to your participants.
+- **Text**: Question text is the actual question that your participants see. This question text will appear as the **variable label** in your exported dataset.
+- **Choices**: For questions with a specific set of choices, like multiple-choice questions and rating scales, the choices you list here are the response options that your participants see. These choices will appear as the **value labels** in your exported dataset.
+
+You may notice that there's no evidence of the underlying numerical values for each choice. Although Qualtrics doesn't make this immediately obvious, they are *always* worth checking, because sometimes they're...creative. This doesn't matter so much for questions that are going to become factors - whether the underlying number is 1 or 14 or 73 doesn't matter because they're just a marker for a unique category. However, we'll see in a moment an example where it *does* matter, namely rating scales.
+
+To check the values, click on the question, scroll down to the bottom of the Edit Question sidebar, and click on "x -> Recode values". This opens a new pop-up window where you can edit a few options:
+
+- Tick **Recode Values** to change the numeric values for each choice. These values are the underlying values that will appear as numbers in the dataset in R.
+- Tick **Variable Naming** to give different **value labels** to the choices than the ones the participants see. (Personally I'd be very wary of doing this, as it would be easy to lose track of what participants actually saw/responded to!)
+
+![](/images/qtrics_recode.png){fig-alt="The Recode Values popup showing editing both values and value labels."}
+
+As you can see from this simple "What's your favourite pie?" question, these underlying numeric values can go wonky quickly. I have four options, "apple", "cherry", "pecan", and "pumpkin", which are numbered 1, 6, 2, and 3 respectively! What's happened is that I created "apple", "pecan", and "pumpkin", and then a couple other options; then I changed my mind, removed the other options (which would have been 4 and 5) and added "cherry" after "apple". Values are assigned based on the order they are added, which is why the values came out weird and out of numerical order. If I wanted these to go in order (which isn't a bad idea, since you want your data to be predictable), I can tick "Recode Values" and then manually enter the numeric values I want for each choice.
+
+##### Matrix Questions
+
+Matrix questions are very commonly used as an efficient way to present multiple questions or items with the same response scale - for example, items on a scale or subscale with a consistent Likert response scale.
+
+To create one, create a "Matrix table" type question. The typical setup is for the items/questions to be presented down the left-hand side as "statements", and the rating scale to be presented along the top as "scale points". 
+
+The "Scale points" section of the Edit Question sidebar lets you control how these scale points appear. You can add or remove the number of points, and for many scales in Psychology, you can use suggested rating scales by switching the toggle on, which automatically insert labels for each scale point for you.
+
+Matrix tables are especially prone to issues with the underlying numeric values, especially if you use these automatic scale points. You'll end up with really weird ranges, like 61-65, instead of 1-5, which will do a number on the interpretation of any descriptives. Even better, the numeric values change themselves every time you make changes to them! So, I'd strongly recommend you update the numeric values using "Recode values" as the last step to make sure you don't have any surprises when you get round to looking at the data.
+
+### Exporting Data
+
+If you'd like to work with your own study data, you will need to export your data in SAV format from Qualtrics first. To do this, open your Qualtrics survey and select the "Data & Analysis" tab along the top, just under the name of your survey.
+
+In the Data Table view, look to the right-hand side of the screen. Click on the drop-down menu labelled "Export & Import", then select the first option, "Export Data..."
+
+![](/images/qtrics_export.png){fig-alt="A screenshot the Qualtrics Data & Analysis screen with red boxes indicating the steps to take to export data: Data & Analysis tab, Export & Import menu, and Export Data... option."}
+
+In the "Download a data table" menu, choose "SPSS" from the choices along the top. Make sure "Download all fields" is ticked, then click "Download".
+
+![](/images/qtrics_spss.png){fig-alt="A screenshot the Qualtrics Download a Data Table screen with red boxes indicating the steps to take to export SPSS data: SPSS tab, Download button."}
+
+The dataset will download automatically to your computer's Downloads folder. From there, you should rename it to something sensible and move it into a `data` folder within your project folder. From there, you can read it in using the `here::here() %>% haven::read_sav()` combo that we saw in the Data section previously.
+
+::: {.callout-tip title="Sensible Naming Conventions and Folder Structure" collapse="false"}
+Sensible file and folder names will make your life so much easier for working in R (and generally).
+
+For folder structure, make sure you do the following:
+
+-   Always always *ALWAYS* use an R Project for working in R.
+-   Have a consistent set of folders for each project: for example, `images`, `data`, and `docs`.
+-   Use sub-folders where necessary, but consider using sensible naming conventions instead.
+
+For naming conventions, your file name should make it obvious what information it contains and when it was created, *especially* for datasets like this. I recommend longer and more explicit file names over brevity.
+
+So, for a download like this, I'd name it something like `qtrics_diss_2024_03_20.sav`. The `qtrics` tells me it's a Qualtrics export, the `diss` tells me it's a dissertation project, and the last bit is the full date in easily machine-readable format. Imagine if I continue to recruit participants and download a new dataset later, say a month from now, and name it `qtrics_diss_2024_04_20.sav`. I could easily distinguish which dataset was which by the date, but also see that they are different versions of the same thing by their shared prefix.
+
+This is a much more reliable system than calling them, say, `Qualtrics output.sav` and `Dissertation FINAL REAL.sav`. This kind of naming "convention" contains no information about which is which or when they were exported, or even that they're two versions of the same study dataset! Future You trying to figure out which dataset to use weeks or months later will feel the difference.
+:::
+
+ 
+
+## Setup
+
+The rest of this tutorial walks you through the basics of importing, inspecting, cleaning, and converting your Qualtrics data, including automatically generating a data dictionary for reference. Data is provided to practice with in workshops, but you are welcome to follow along with your own data if you prefer.
+
+### Packages
+
+We will need the following packages:
+
+- {tidyverse} for data wrangling.
+- {haven} for importing data. This package is installed with {tidyverse} but not loaded with the core packages so needs to be loaded separately.
+- {labelled} for working with labelled data.
+- {sjPlot} for a data dictionary convenience function
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Load the packages.
+
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+#| warning: false
+#| message: false
+
+library(tidyverse)
+library(haven)
+library(labelled)
+library(sjPlot)
+```
+:::
+:::
+
+### Data
+
+Today's example dataset focuses on various aspects of meaning in life (MiL), and has been randomly generated based on a real dataset kindly contributed by Hanna Eldarwish and Vlad Costin. All variables have been randomly generated, but they are based on the patterns in the original dataset. The original, bigger dataset will be made available alongside article publication in the future, so keep an eye out for it!
+
+::: {.callout-tip title="New File Type"}
+You might notice that instead of the familiar `readr::read_csv()`, today we have `haven::read_sav()`. We need a different function since we are using a different type of data. [See the section above on `.sav` data](#sav-data) for more details.
+:::
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Read in the `mil_data.sav` object from the data folder, or alternatively from Github via URL, as you prefer.
+
+URL: https://github.com/de84sussex/data/raw/main/mil_data.sav
+
+::: {.callout-note collapse="true" title="Solution"}
+From a folder:
+
+```{r}
+#| eval: false
+#| 
+mil_data <- here::here("data/mil_data.sav") %>% haven::read_sav()
+```
+
+From URL:
+
+```{r}
+mil_data <- haven::read_sav("https://github.com/de84sussex/data/raw/main/mil_data.sav")
+```
+:::
+:::
+
+
+#### Codebook
+
+This codebook is intentionally sparse, because we'll be generating our own from the dataset in just a moment. This table covers only the demographic and questionnaire measures to help you understand the variables.
+
+::: {.callout-note title="Codebook" collapse="false"}
+
+```{r}
+#| echo: false
+
+here::here("data/codebook_short.csv") %>% readr::read_csv(show_col_types = FALSE) |> kableExtra::kbl() %>% 
+  kableExtra::kable_styling() %>%
+  kableExtra::scroll_box(height = "500px")
+```
+:::
+
+## Variable Names
+
+Qualtrics datasets are often large and unwieldy. However, they also often have a consistent structure, which we can take advantage of to work with them consistently.
+
+### Default Variable Names
+
+In your dataset, you will by default have some variables that are automatically created by Qualtrics, with (somewhat) sensible names, like `DistributionChannel` and `StartDate`. You will also have all the questions that you created, and what they are called depends on what you (or, rather, the author of the questionnaire) called them. 
+
+If you changed the [name of the questions](#questions-in-r), they will have the name that you gave them. If not, they will have a default name from Qualtrics, usually the capital letter "Q" followed by a number, like this: `Q15`, `Q34`, etc.
+
+If you have [matrix questions](#matrix-questions), the variable names will have a further number indicating which item in the matrix they correspond to. If, for example, your matrix question was `Q23`, then the responses to the first item in that matrix will be stored in `Q23_1`, the second in `Q23_2`, and so on. 
+
+These default variable names should be changed as a first step, before you carry on with your data processing. This is because they are easy to mix up or mistype, and difficult to remember (was it `Q23` or `Q32` that contained the question I wanted...?), which will lead to both unnecessary errors and extra time spent fixing problems or cross-checking which question is which.
+
+To do this, we'll get round to the `dplyr::rename()` function by way of a detour revising `dplyr::select()`.
+
+### Selecting
+
+You have already encountered the function `dplyr::select()` as a function for keeping or dropping columns in a dataset. As a reminder, there's some easy notation to use for variable names to quickly select single variables or ranges, or to drop variables. 
+
+```{r}
+#| eval: false
+
+dataset_name %>% #<1>
+  dplyr::select( #<2>
+    variable_to_include, #<3> 
+    -variable_to_exclude,  #<4>
+    keep_this_one:through_this_one,  #<5>
+    new_name = variable_to_rename,  #<6>
+    variable_number #<7>
+  )
+
+```
+
+1.  Take the dataset `dataset_name`, *and then*
+2.  Select the following variables:
+3.  The name of a variable to be included in the output. Multiple variables can be selected separated by commas.
+4.  The name of a variable to be excluded from the output. Use either an exclamation mark (`!`) or a minus sign (`-`) in front of each variable to exclude. Multiple variables can be dropped, separated by commas with a `!` (or `-`) before each.
+5.  A range of variables to include in the output. All the variables between and including the two named will be selected (or dropped, with `!(drop_this_one:through_this_one)`).
+6.  Include `variable_to_rename` in the output, but call it `new_name`.
+7.  Include a variable in the output by where it appears in the dataset, numbered left to right. For example, "2" will select the second column in the original dataset.
+
+Columns will appear in the output in the order they are selected in `select()`, so this function can also be used to reorder columns.
+
+#### Selection Helpers
+
+However, the real power in this and other {tidyverse} functions is in a system of helper functions and notations collectively called "selection helpers", or `<tidyselect>`. The overall goal of "`<tidyselect>` semantics" (as you will see it referred to in help documentation) is to make selecting variables easy, efficient, and clear.
+
+These helper functions can be combined with the selection methods above in any combination. Some very convenient options include:
+
+-   `everything()` for all columns
+-   `last_col()` for the last column in the dataset
+-   `starts_with()`, `ends_with()`, and `contains()` for selecting columns by shared name elements, which will be our key focus today.
+-   `where()` for selecting with a function, not described here (see `?where()` for more)
+
+For example, we can select specific groups of variables using the shared portions of their names, such as:
+
+- "Date" for the three default Qualtrics variables containing date information
+- "Q8" for the four Coherence items
+
+```{r}
+mil_data %>% 
+  dplyr::select(
+    contains("Date"), starts_with("Q8")
+  )
+```
+
+### Renaming 
+
+Now that we know how to easily select groups of variables, we need sensible names in order to make best use of those selection helpers. There are three main options for renaming variables, depending on access to the original Qualtrics questionnaire, and proficiency in R.
+
+::: callout-important
+You are strongly advised **not** to manually change the names in your dataset, e.g. in a .csv file/Excel. Not only will you lose the labels, but this is very prone to error with no record of the changes made.
+:::
+
+#### Option 1: Rename in Qualtrics
+
+This option requires that you have have access to, and are willing to edit, the original Qualtrics questionnaire. Rather than being a coding option, this entails going back to the Qualtrics questionnaire and changing the question labels *before* you export the dataset.
+
+For more on this, see [Setting Up Qualtrics](#setting-up-qualtrics).
+
+#### Option 2: `rename()`
+
+The friendly `dplyr::rename()` function does exactly what it says on the tin. In general:
+
+```{r}
+#| eval: false
+
+dataset_name %>% #<1>
+  dplyr::rename( #<2>
+    new_name = old_name #<3> 
+  )
+
+```
+
+1.  Take the dataset `dataset_name`, *and then*
+2.  Rename the following variables:
+3.  The new name (`new_name`) you would like to give to an existing variable (`old_name`).
+
+You can list as many of these `new_name = old_name` pairs as you like. For example, let's rename the Global Meaning items so they have sensible prefixes. We should keep the item numbers as they are, so we know which one is which.
+
+```{r}
+mil_data %>% 
+  dplyr::rename(
+    meaning_1 = Q6_1,
+    meaning_2 = Q6_2,
+    meaning_3 = Q6_3,
+    meaning_4 = Q6_4,
+  )
+```
+
+This option allows you to easily keep track of the renaming you've done in your code, but it is very tedious and intensive, especially if you have many variables that need renaming.
+
+#### Option 3: `rename_with()`
+
+This option requires considerable proficiency and experience with R. It is by far the quickest and most efficient of these options, but you must be able to write anonymous functions, use regular expressions and selection helpers, and have good working knowledge of how to debug errors and check output. If any of those things are unfamiliar, use one of the two previous options instead.
+
+::: {.callout-warning title="HaRd Mode: Using `rename_with()`" collapse="true"}
+
+The versatile `dplyr::rename_with()` function allows quick, efficient, and accurate renaming of large groups of variables at once. The general form is:
+
+```{r}
+#| eval: false
+
+dataset_name %>% #<1>
+  dplyr::rename_with( #<2>
+     .fn = function_to_apply, #<3>
+     .cols = variables_to_rename #<4>
+  )
+
+```
+
+<!-- This isn't working here but is has worked previously. Is it because of the callout? -->
+
+<!-- 1.  Take the dataset `dataset_name`, *and then* -->
+<!-- 2.  Rename variables using: -->
+<!-- 3.  A function to apply to each of the selected variable names -->
+<!-- 4.  The variable name(s) the function should be applied to -->
+
+The "function to apply" here could be simply the name of an existing function, for example `tolower` (convert to lowercase). You can also write a "purrr-style lambda" function, which will allow you to write your own custom function to change the variable names however you please.
+
+As an example, let's convert the `Q11` variables in the dataset at once. We know from the codebook that these are all items on the Belonging subscale, so we want to replace the string "Q11" in the variable names to "belonging".
+
+```{r}
+mil_data %>% #<1>
+  dplyr::rename_with( #<1>
+    .fn = ~ gsub("Q11", "belonging", .x),  #<2>
+    .cols = dplyr::starts_with("Q11") #<3>
+  )
+```
+
+1. Take the `mil_data` dataset *and then* rename variables as follows
+2. Replace every instance of the string "Q11" with the string "belonging"
+3. Do this for every column that currently starts with the string "Q11"
+
+In this command, our "purrr-style lambda" is the anonymous function `~ gsub("Q23", "belonging", .x)`. The `~` (apparently [pronounced "twiddle"](https://adv-r.hadley.nz/functionals.html#purrr-shortcuts)) at the beginning is a shortcut for the longer `function(x) ...` notation for creating functions. The `.x` is a placeholder for each of the variables that the function will be applied to. These are both used in a customised version of the base-R `gsub()` function, which **g**enerally **sub**stitutes every match with its first argument with the replacement in its second argument for the vector of possibilities in its third argument; see `?gsub()` for details.
+
+As you can see from the output, this *only* replaces the relevant portion of the column name, leaving the numbered item suffixes unchanged. If you are proficient in working with regular expressions and string manipulation, you can use this technique to programmatically rename variables very easily.
+:::
+
+## Exercises: Names
+
+Before we go on, it's time to get the variables in this dataset sorted out. You must do this, or the solutions further on in the document won't work!
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Clean up your dataset by doing the following. You can do the steps in whatever order works for you.
+
+- Keep all the demographic questions, items measuring Global Meaning, and Mattering, and all the Belonging items.
+- Rename any default-named Qualtrics variables (starting with "Q") to a sensible name using the Codebook to guide you.
+
+::: {.callout-note collapse="true" title="Solution"}
+
+You can accomplish this task in either order:
+
+- First, select the variables you want, then rename them.
+- Second, rename the variables, then select them.
+
+This solution will give answers in the order of the sections above, so first select and then rename. However, consider that if you need to go back and change your selection later, this will be easier if the variables are named something sensible, so it's worth considering renaming first, before you do anything else, for your own data.
+
+Both tasks could be done in one pipeline, but to break it down, in this first chunk we have selected the range of demographic variables, and the Global Meaning and Mattering scale items by using the the colon between `Q1` and `Q7_4`, and have selected the Belonging scale items which all start with `'Q11'`.
+
+```{r, message=FALSE}
+mil_data <- mil_data %>% 
+  dplyr::select(
+    Q1:Q7_4,
+    starts_with('Q11')
+    ) 
+
+```
+
+For the second task, we need to decide on "sensible" names. You can choose anything that makes sense to you, but we will use `global_meaning` for Q6, `mattering` for Q7, and `belonging` for Q11.
+
+In our second pipeline, we're using `rename()` to replace the names of each variable individually. If you did this yourself before looking at the solution, you will likely have found this to be a laborious, tedious, and error-prone process, so for your own data, make sure you allow time to both do and check this code.
+
+```{r}
+#| eval: false
+
+mil_data <- mil_data %>% 
+  dplyr::rename(
+    english_fluency = Q1, 
+    age = Q2,
+    gender = Q3,
+    income = Q4,
+    occupation = Q5,
+    global_meaning_1 = Q6_1,
+    global_meaning_2 = Q6_2,
+    global_meaning_3 = Q6_3,
+    global_meaning_4 = Q6_4,
+    mattering_1 = Q7_1,
+    mattering_2 = Q7_2,
+    mattering_3 = Q7_3,
+    mattering_4 = Q7_4,
+    belonging_1 = Q11_1,
+    belonging_2 = Q11_2,
+    belonging_3 = Q11_3,
+    belonging_4 = Q11_4,
+    belonging_5 = Q11_5,
+    belonging_6 = Q11_6,
+    belonging_7 = Q11_7,
+    belonging_8 = Q11_8,
+    belonging_9 = Q11_9,
+    belonging_10 = Q11_10,
+    belonging_11 = Q11_11,
+    belonging_12 = Q11_12
+  )
+```
+
+Alternatively, if you ventured into Option 3 for renaming above, you could instead use `rename_with()` to rename all the items starting with `'Q6'` to have the prefix of `'global_meaning'`, all the items starting with `'Q7'` to have the prefix of `'mattering'`, and all the items starting with `'Q11'` to have the prefix of `'belonging'`.
+
+```{r, message=FALSE}
+mil_data <- mil_data %>% 
+  dplyr::rename(
+    english_fluency = Q1, 
+    age = Q2,
+    gender = Q3,
+    income = Q4,
+    occupation = Q5 
+  ) %>% 
+  dplyr::rename_with( 
+    .fn = ~ gsub("Q6", "global_meaning", .x),  
+    .cols = dplyr::starts_with("Q6")
+  ) %>% 
+  dplyr::rename_with( 
+    .fn = ~ gsub("Q7", "mattering", .x),  
+    .cols = dplyr::starts_with("Q7")
+  ) %>% 
+  dplyr::rename_with( 
+    .fn = ~ gsub("Q11", "belonging", .x),  
+    .cols = dplyr::starts_with("Q11") 
+  )
+```
+
+:::
+:::
+
+
+\ 
+
+## Labelled Data
+
+With the minimal necessary cleaning out of the way, we can now move on to exploring labelled data.
+
+::: {.callout-note title="The Plan"}
+
+Our workflow for this dataset will be slightly different than you may have encountered before. 
+
+We'll start by checking the labels and producing a codebook, or "data dictionary", drawing on the label metadata in the SAV file. For the purpose of practice, we'll also have a look at how to work with those labels, and optionally manage different types of missing values.
+
+As useful as labels are, they will get in the way when we want to work with our dataset further. So, we'll next convert the variables in the dataset into either factors, for categorical data, or numeric, for continuous data [^1]. From that point forward, we can work with the dataset using the techniques and functions we've covered throughout first and second year.
+
+[^1]: For the purposes of simplicity, we're going to pretend that Likert and similar rating scales are "continuous".
+
+:::
+
+### Working with Labels
+
+The SAV data we're using has a special property: labels. Labelled data has a number of features, which we will explore in depth shortly:
+
+-   [**Variable labels**](#variable-labels). The label associated with a whole variable will contain the text of the item that the participants responded to. This is analogous to the "Label" column of the Variable View in SPSS.
+
+-   [**Value labels**](#value-labels). The label associated with individual values within a variable will contain the text associated with individual choices, for instance the points on a Likert scale or the options on a multiple-choice question. This is analogous to the "Values" column of the Variable View in SPSS.
+
+-   [**Missing values**](#missing-values). Within value labels, you can designate particular values as indicative of missing responses, refusal to respond, etc. This is analogous to the "Missing" column of the Variable View in SPSS.
+
+We're first going to look at how you can work with each of these elements. The reason to do this is that once our dataset has been thoroughly checked, we're going to generate a final data dictionary, then convert any categorical variables into factors, the levels of which will correspond to the labels for that variable. We'll also convert any numeric variables into numeric data type, which will discard the labels; that will make it possible to do analyses with them, but that's why we have to create the data dictionary first.
+
+Most of the following examples are drawn from the ["Introduction to labelled" vignette](https://cran.r-project.org/web/packages/labelled/vignettes/intro_labelled.html) from the {labelled} package. If you want to do something with labelled data that isn't covered here, that's a good place to start!
+
+::: callout-important
+These features will work optimally *only* if you have set up your Qualtrics questionnaire appropriately. Make sure to refer to the [Setting Up Qualtrics](#setting-up-qualtrics) section to get the most out of your labelled data and save yourself data cleaning and wrangling headaches later.
+:::
+
+### Variable Labels
+
+Variable labels contain information about the whole variable, and for Qualtrics data, will by default contain either an automatically generated Qualtrics value (like "Start Date"), or the question text that that variable contains the responses to.
+
+#### Getting Labels
+
+To begin, let's just get out a single variable label to work with using `labelled::var_label()`.
+
+To specify the variable we want, we will need to subset it from the dataset, using either `$` or `dplyr::pull()`.
+
+```{r}
+labelled::var_label(mil_data$gender)
+```
+
+#### Creating/Updating Labels
+
+If you'd like to edit labels, you can do it "manually" - that is, just writing a whole new label from scratch.
+
+The structure of the following code might look a little unfamiliar. For the most part, we've seen code that contains longer and more complex instructions on the right-hand side of the `<-`, and a single object being created or updated on the left-hand side. In the structure below, the left-hand side contains longer and more complex code that identifies the value(s) to be updated or created, and the right-hand side contains the value(s) to create or update. It's the same logic, just with a different structure.
+
+```{r, eval = F, echo = T}
+labelled::var_label(mil_data$StartDate) <- "Date and time questionnaire was started"
+
+labelled::var_label(mil_data$StartDate)
+```
+
+```{r, echo = F}
+
+mil_data2 <- here::here("data/mil_data.sav") %>% haven::read_sav()
+
+labelled::var_label(mil_data2$StartDate) <- "Date and time questionnaire was started"
+
+labelled::var_label(mil_data2$StartDate)
+
+```
+
+
+::: {.callout-warning title="HaRd Mode: Using Regular Expressions" collapse="true"}
+Regular expressions are the magic of working with code. They are also fiddly, confusing, and difficult. If you're not keen on spending a lot of time learning what is in essence a new mini-language, skip this section!
+
+Editing labels is a good opportunity to start working with regular expressions. For example, if we want to keep only the first bit of the label for `gender`, then we can keep everything only up to and including the question mark, and re-assign that to the variable label. This style is a bit more dynamic and resilient to changes or updates.
+
+```{r, eval = F, echo = T}
+labelled::var_label(mil_data$gender) <- labelled::var_label(mil_data$gender) %>%
+  gsub("(.*\\?).*", "\\1", x = .)
+
+labelled::var_label(mil_data$gender)
+```
+
+```{r, echo=FALSE}
+
+mil_data2 <- mil_data
+
+labelled::var_label(mil_data2$gender) <- labelled::var_label(mil_data$gender) %>%
+  gsub("(.*\\?).*", "\\1", x = .)
+
+labelled::var_label(mil_data2$gender)
+```
+
+
+Let's pick apart this `gsub()` command a bit at a time. First, `gsub()` has three arguments:
+
+-   `pattern`, here `"(.*\\?).*"`, which is the regex statement representing the string to match.
+-   `replacement`, here `"\\1"`, which is the string that should replace the match in `pattern`.
+-   `x`, the string to look in.
+
+The `pattern` has essentially two parts: the bit in the rounded brackets, and the bit outside. The rounded brackets designate a "capturing group" - a portion of the string that should be grouped together as a unit. The benefit of this grouping is in the second argument of `gsub()`; `\\1` isn't the number 1, but rather is a pronoun referring to the first capturing group. In other words, as a whole, this `gsub()` command captures a subset of the incoming string, and then replaces the entire string with that captured string, essentially dropping everything outside the capturing group.
+
+To understand the regex statement `"(.*\\?).*"`, we need to look at the incoming text, `x`. In this case, `x` is being piped in from above and looks like this:
+
+```{r}
+#| echo: false
+
+mil_data_prog <- mil_data
+
+#mil_data <- here::here("data/mil_data.sav") %>% haven::read_sav() 
+```
+
+```{r}
+labelled::var_label(mil_data$gender)
+```
+
+`.*` is a common regex shorthand that means "match any character, as many times as possible." It's essentially an "any number of anything" wildcard. This wildcard appears both inside and outside the brackets. So, how does `gsub()` know which bit should belong in the capturing group?
+
+The answer is `\\?`. This is a "literal" question mark. Some symbols, like `.` and `?`, are regex operators, but we might want to also match the "literal" symbols full-stop "." and question mark "?" in a string. In this case we need an "escape" character "\\\", that escapes regex and turns the symbol into a literal one. So, the capturing group ends with a literal question mark - in the target string, that's the question mark after "identity", which is the only one in the string.
+
+As an aside, if you're wondering why there are *two* escape characters instead of one - i.e., why is it `\\?` and not `\?`, well, you and me both. There's an explanation in `vignette("regular-expressions")` that never completely makes sense to me. Also, this seems to be an R thing - regex outside of R seems to use only a single escape character, so a literal question mark would be `\?`. If you are ever trying to adapt regex from e.g. StackOverflow or regex101 and it isn't working, check whether the escape characters are right!
+
+Anyway. We can now read `"(.*\\?)"` as "capture all characters up to and including a literal question mark" - which matches the substring "What is your gender identity?" in `x`. However, we don't just want to replace that portion of the string - instead, we want to replace *the whole string* with that bit of it. So, the second `.*` outside the brackets matches the rest of the string. If we didn't include this last bit, the capturing group would just be replaced with itself, which would result in the same string as we started with, as below:
+
+```{r}
+labelled::var_label(mil_data$gender) %>%
+  gsub("(.*\\?)", "\\1", x = .)
+```
+
+So, altogether, we can read this `gsub()` command as: "Capture everything up to an including the question mark, and replace the entire string with that capturing group."
+
+Now. Why, you might wonder, is all this faff *better*?
+
+Well, it might not be. You might find it more frustrating or effortful to generate the right regex pattern than to replace the label "manually", and in that case, there's nothing wrong with just writing out the label you want. 
+
+On the other hand, the regex command will always drop everything after the question mark, no matter what that text is. If there is no match, it won't replace anything. So, unlike the "manual" option, there's much less danger of accidentally mixing up labels or overwriting the wrong thing; and this regex statement can be generalised to *any* label that contains a question mark, rather than having to type out each label one by one.
+
+```{r}
+#| echo: false
+
+#mil_data <- mil_data_prog
+```
+:::
+
+#### Searching Labels
+
+A *very* nifty feature of variable labels and {labelled} is the ability to search through them with `labelled::look_for()`. With the whole dataset, `look_for()` returns a whole codebook (see [Data Dictionaries](#data-dictionaries) below for more on this), but given a second argument containing a search term, you get back only the variables whose label contains that term.
+
+For example, we can use `labelled::look_for()` to get only the items in this questionnaire that mentioned family. (I've piped into `tibble::as_tibble()` to make the output easier to read.)
+
+```{r}
+labelled::look_for(mil_data, "family") %>%
+  tibble::as_tibble()
+```
+
+### Value Labels
+
+Value labels contain individual labels associated with unique values within a variable. It's not necessary to have a label for every value, but for our purposes, it's important that all values that represent **categories** have a label.
+
+#### Getting Labels
+
+There are two functions to assist with this. `labelled::val_labels()` (with an "s") returns all of the labels, while `labelled::val_label()` (without an "s") will return the label for a single specified value.
+
+```{r}
+labelled::val_labels(mil_data$english_fluency)
+```
+
+```{r}
+labelled::val_label(mil_data$english_fluency, 3)
+```
+
+#### Creating/Updating Labels
+
+These two functions can also be used to update an entire variable or a single value respectively. The structure of this code is the same as we saw with variable labels previously.
+
+For example, let's get all the value labels for the `gender` variable, then update the last value to "Other".
+
+First, return the existing labels:
+
+```{r}
+labelled::val_labels(mil_data$gender)
+```
+
+Then, replace the label associated with the value `3`:
+
+```{r}
+#| eval: false
+labelled::val_label(mil_data$gender, 3) <- "Other"
+```
+
+### Missing Values
+
+This section is included especially for people who may have previous experience with SPSS, and are learning how to adapt their SPSS knowledge to R. Unless you make regular use of SPSS's alternative options for managing missing values, you can skip this section.
+
+::: {.callout-warning title="HaRd Mode: Missing Values" collapse="true"}
+
+Labelled data allows an extra functionality from SPSS, namely to create user-defined "missing" values. These missing values aren't *actually* missing, in the sense that the participant didn't respond at all. Rather, they might be missing in the sense that a participant selected an option like "don't know", "doesn't apply", "prefer not to say", etc.
+
+Let's look at an example. As we've just seen, we can get out all the value labels in variable with `labelled::val_labels()`:
+
+```{r}
+labelled::val_labels(mil_data$english_fluency)
+```
+
+This variable asked participants to indicate their level of English fluency. Even for participants who have in fact responded to this question, we may want to code "Not well" and "Not as all" as "missing" so that they can be excluded easily. To do this, we can use the function `labelled::na_values()` to indicate which values should be considered as missing.
+
+```{r}
+labelled::na_values(mil_data$english_fluency) <- 3:4
+
+mil_data$english_fluency
+```
+
+For the moment, these values are not actually `NA` in the data - they're listed under "Missing Values" in the variable attributes. In other words, the actual responses are still retained. However, if we ask R which of the values in this variable are missing...
+
+```{r}
+is.na(mil_data$english_fluency)
+```
+
+...we can see one `TRUE` corresponding to the 3 above.
+
+If we wanted to actually remove those values entirely and turn them into `NA`s for real, we could use `labelled::user_na_to_na()` for that purpose. Now, the variable has only two remaining values, and any 3s and 4s have been replaced.
+
+```{r}
+labelled::user_na_to_na(mil_data$english_fluency)
+```
+
+::: callout-tip
+See the [{labelled} vignette](https://cran.r-project.org/web/packages/labelled/vignettes/intro_labelled.html) for more help on working with user-defined NAs, including how to deal with them when converting to other types.
+:::
+:::
+
+## Exercises: Labels
+
+The following exercises will help you get some hands-on practice with working with labels. You're strongly recommended to try them yourself before you carry on.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Identify the item that mentions 'job'. Then, change the variable label of this item so that it just says 'Occupational Status'
+
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+## Find the variable
+labelled::look_for(mil_data, "job") %>%
+  tibble::as_tibble()
+
+## Update the label
+labelled::var_label(mil_data$occupation) <- "Occupational Status"
+
+## Check the new label
+labelled::var_label(mil_data$occupation)
+
+```
+:::
+:::
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+For the `income` variable, change the value label 'I prefer not to disclose information about my annual income as part of this research study.' to 'Prefer not to say.'
+
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+## View current labels
+labelled::val_labels(mil_data$income)
+```
+
+```{r}
+## Replace the correct value
+labelled::val_label(mil_data$income, 8) <- "Prefer not to say."
+
+## Check this has been done correctly
+labelled::val_labels(mil_data$income)
+```
+:::
+:::
+
+## Data Dictionaries
+
+Once our labels have been cleaned and updated, we can finally produce a data dictionary for this dataset.
+
+::: {.callout-tip title="Why a data dictionary?" collapse="true"}
+There's two key reasons to produce a data dictionary for your dataset. 
+
+First, data dictionaries (or "codebooks") are very useful for understanding datasets, even your own. You may find yourself referring to it frequently when writing your methods and results, to remind yourself what different questions contain, what the text of the question was, etc.
+
+Second, data dictionaries are hugely useful for other people. This would be a massive help to, for example, your supervisor who may need to assist you with your data analysis, or to include in your dissertation submission for your markers. If you want to share your data publicly, including a dictionary/codebook is not only a kindness to other users but also helps prevent misuse or misunderstandings.
+:::
+
+If you primarily need a quick reference as you're working with your dataset, the delightful `sjPlot::view_df()` function makes this particularly easy.
+
+Let's put `mil_data` into the `sjPlot::view_df()` function and see what it does. By default, the document opens in the Viewer, but you can also save the file it creates for further sharing - see the help documentation.
+
+```{r}
+#| eval: false
+sjPlot::view_df(mil_data)
+```
+
+If you're happy with this, this is probably all you need to carry on. If you are keen to create your data dictionary *as a dataset* that you could further edit - or if you'd like a version of the data dictionary that more closely emulates SPSS's Variable View - see below.
+
+::: {.callout-warning title="HaRd Mode: Editable Data Dictonary" collapse="true"}
+
+Use the `generate_dictionary()` function from the {labelled} packages to create a data dictionary for `mil_data`. To have the best look at it, I would recommend using `View()` to review it.
+
+```{r}
+#| eval: false
+mil_data %>%
+  labelled::generate_dictionary() %>%
+  View()
+```
+
+```{r}
+#| echo: false
+
+mil_data %>%
+  labelled::generate_dictionary() %>%
+  tibble::as_tibble() %>%
+  dplyr::rowwise() %>%
+  dplyr::mutate(
+    value_labels = dplyr::case_when(
+      is.null(value_labels) ~ "",
+      !is.null(value_labels) ~ unlist(value_labels) %>% names() %>% paste0(collapse = ", ")
+    )
+  ) %>%
+  dplyr::ungroup()
+```
+
+Unlike the output from `sjPlot::view_df()`, the output from this function is a dataset that you can work with. This means you can edit it using any of your {dplyr} skills and render it as a table in a document if you like. The sky's the limit!
+:::
+
+## Converting Variables
+
+The labels have served their purpose helping us navigate and clean up the dataset, and produce a lovely data dictionary for sharing. However, if we want to *use* the data, we'll need to convert to other data types that we can use for statistical analysis.
+
+How we convert each variable will fall into two main categories:
+
+- Any variables containing categorical data, we'll convert to **factors**, which will use the value labels as factor levels
+- Any variables containing numbers that we want to do maths with, we'll convert to **numeric**, which will strip the labels. 
+
+::: callout-important
+Variables that will be converted to factor should have labels for all of their levels, whereas variables that will be converted to numeric can have fewer labels, because we will stop using them after the numeric conversion.
+:::
+
+### Factors
+
+Factor variables are R's way of representing categorical data, which have a fixed and known set of possible values. 
+
+Factors actually contain two pieces of information for each observation: *levels* and *labels*. Levels are the (existing or possible) values that the variable contains, whereas labels are *very* similar to the labels we've just been exploring.
+
+If you feel confident understanding and working with factors in R, you can skip the box below.
+
+::: {.callout-note}
+#### Revision of Factors
+
+Let's start by looking at an example factor to see how it appears. This isn't in our dataset; instead, we can create factor data using the `factor()` function.
+
+```{r}
+factor(c(1, 2, 1, 1, 2),
+       labels = c("Male", "Female"))
+```
+
+The underlying values in the factor are numbers, here 1 and 2. The labels are applied to the values in ascending order of those values, so 1 becomes "Male", "2" becomes "Female", etc. Here, we don't need to specify the levels; if you don't elaborate otherwise, R will assume that they are the same as the unique values.
+
+You can also supply additional possible values, even if they haven't been observed, using the `levels` argument:
+
+```{r}
+factor(c(1, 2, 1, 1, 1),
+       levels = c(1, 2, 3),
+       labels = c("Male", "Female", "Non-binary"))
+```
+:::
+
+::: callout-tip
+Factors are so common and useful in R that they have a whole {tidyverse} package to themselves! You already installed {forcats} with {tidyverse}, but you can [check out the help documentation](https://forcats.tidyverse.org/) if you'd like to learn more about working with factors.
+:::
+
+#### Converting to Factors
+
+Labelled data is very easy to convert into factors, which is what R expects for many different types of analysis and plotting functions. Handy!
+
+For an individual variable, we can use `labelled::to_factor()` to convert to factor.
+
+For example, we can convert the `gender` variable to factor as follows, using the `dplyr::mutate()` function to make a change to the dataset. Remember that using the same variable name as we have done here means that the existing variable will be replaced (overwritten) in the dataset.
+
+If we look at only this particular variable, we can see that its data type is now `<fctr>`, which is what we wanted.
+
+```{r}
+mil_data <- mil_data %>% 
+  dplyr::mutate(
+    gender = labelled::to_factor(gender)
+  ) %>% 
+  dplyr::select(gender)
+```
+
+If you wanted a specific order of the levels, for plotting or similar, there's also a `sort_levels =` argument described in the help documentation for `labelled::to_factor()`.
+
+That's actually it! Whatever the value labels are in the variable, they will be converted into factor labels. Assuming your value labels are correct, no further editing is needed.
+
+### Numeric
+
+For continuous variables, we don't need anything fancy to turn them into numeric data, because they technically already are. Instead, we just need to get rid of the labels using `unclass()`.
+
+As an example, we can use `unclass()` to convert `belonging_1` to numeric, using the `dplyr::mutate()` function to make a change to the dataset again.
+
+If we look at only this particular variable, we can see that its data type is now `<dbl>`, which is again what we wanted.
+
+```{r}
+mil_data %>% 
+  dplyr::mutate(
+    belonging_1 = unclass(belonging_1)
+  ) %>% 
+  dplyr::select(belonging_1)
+```
+
+From here, you can convert variables one by one as necessary...or, for a (much!) more efficient method, read on.
+
+### Efficient Conversion
+
+Depending on the size of your dataset, converting your variables one by one to either factor or numeric might range from mild inconvenience to massive undertaking. In this optional section, we will make use of what we covered previously about selection helpers in combination with a new function, `dplyr::across()`, to convert multiple variables at once.
+
+The general form is:
+
+```{r}
+#| eval: false
+
+dataset_name %>% #<1>
+  dplyr::mutate( #<1>
+     dplyr::across(  #<2>
+        .cols = variables_to_change, #<3>
+        .fn = function_to_apply #<4>
+     )
+  )
+
+```
+
+1.  Take the dataset `dataset_name`, *and then* make a change to it as follows
+2.  Apply to...
+3.  The variables selected to be changed
+3.  A function to apply to each of the selected variables
+
+In the first `.cols` argument, we use `<tidyselect>` syntax (i.e. [selection helpers](#selection-helpers)) to choose which variables we want to change.
+
+In the second argument, the function or expression in `function_to_apply` is applied to each of the variables we've chosen.
+
+As an example, we can change *all* of the mattering variables at once as follows:
+
+```{r}
+mil_data %>% #<1>
+  dplyr::mutate( #<1>
+     dplyr::across(  #<2>
+        .cols = starts_with("mattering"), #<3>
+        .fn = unclass #<4>
+     )
+  )
+```
+
+Here I've used the `dplyr::starts_with()` function to choose which variables I want to change, and then each of those variables will have the `unclass()` function applied to them, converting them to numeric. This is exactly the same result as:
+
+```{r}
+#| eval: false
+
+mil_data %>% #<1>
+  dplyr::mutate(
+    mattering_1 = unclass(mattering_1),
+    mattering_2 = unclass(mattering_2),
+    mattering_3 = unclass(mattering_3),
+    mattering_4 = unclass(mattering_4)
+  )
+```
+
+...but with no risk of accidentally replacing variables with the wrong values due to copy/paste or typing mistakes.
+
+
+## Calculating Variables
+
+As a final topic to get you ahead on your data analysis, this last section is a brief revision/reference of key topics you've already covered previously in your core methods modules. First, we'll revise reverse-coding, to reverse the direction of responses on particular items as necessary. Once that's done, we can create scores for each group of items that belong to the same subscale to get overall subscale scores to use in analysis.
+
+::: callout-tip
+
+Both reverse-coding and composite scores, including the underlying concepts and the code, have previously been covered in last year's [QQM Skills Lab](https://drdanielleevans.netlify.app/posts/qqm_22/skills%20lab%2006_%20data%20wrangling#1).
+
+:::
+
+### Reverse Coding
+
+You may or not have items in your questionnaire that are reverse-coded. There's nothing in the data that will tell you this; you have to know what's in your questionnaire, how the questions were designed, and which item(s) need reverse-coding. Make sure you check this carefully before you go on if working with your own data.
+
+::: {.callout-tip title="What is reverse-coding?" collapse="true"}
+In many multi-item measures, some items are reversed in the way that they capture a particular construct. For example, items on the State-Trait Inventory of Cognitive and Somatic Anxiety (STICSA, not in this example data) are worded so that a higher numerical response (closer to the "very much so" end of the scale) indicates *more* anxiety, such as item 4: "I think that others won't approve of me".
+
+However, reverse-coded items are intended to capture the same ideas, but in reverse. A reversed version a STICSA item might read, "I can concentrate easily with no intrusive thoughts." In this case, a higher numerical response (closer to the "very much so" end of the scale) would indicate *less* anxiety. In order for these reversed items to be aligned with the other items on the scale, so that together they form a cohesive score, the coding of the response scale must be flipped: high becomes low, and low becomes high.
+
+If the response scale is a numerical integer sequence, as this one is, then the simplest way to reverse-code the responses is to subtract every response from the maximum possible response plus one. For the STICSA, the response scale ranges from 1 to 4; the maximum possible response is 4, plus one is 5. So, to reverse-code the responses, we would need to subtract each rating on this item from 5. A high score (4) will be become a low score (5 - 4 = 1), and vice versa for a low score (5 - 1 = 4).
+:::
+
+In order to reverse-code a variable, we will need to make use again of the `dplyr::mutate()` function for changing variables. For example, let's reverse-code `mattering_3`[^rev].
+
+[^rev]: Note that this item is NOT reversed on the real scale; this is only for practice!
+
+First, we need to know the maximum possible value in this variable. Using our data dictionary, we can see that values range from 1 to 7. So, to reverse-code, we should subtract each value from the max value plus one = 7 + 1 = 8.
+
+Then, we simply overwrite the existing variable with the new scores:
+
+```{r}
+#| eval: false
+
+mil_data %>% 
+  dplyr::mutate(
+    mattering_3 = 8 - mattering_3
+  )
+```
+
+Note that it is recommended to overwrite the item, rather than create a new variable, so that you don't accidently include the wrong or multiple versions in the next step.
+
+### Composite Scores
+
+Once all your items are cleaned and reverse-scored, you can finally create a composite score. For example, we have four `mattering` items, that we can combine into a "composite" score measuring general performance across all items. How this composite is calculated will depend on the questionnaire you're using, but as many questionnaire subscale scores use mean scores[^likert], we will demonstrate that here.
+
+[^likert]: Note that [averaging Likert data is controversial](https://www.frontiersin.org/articles/10.3389/feduc.2020.589965/full) (h/t Dr Vlad Costin!), but widespread in the literature. We're going to press boldly onward anyway to not get too deep in the statistical weeds, but if you're using Likert scales in your own research, it's something you might want to consider.
+
+To do this, we need two new functions.
+
+1.  The first new function, `dplyr::c_across()`, provides an efficient way to select multiple variables to contribute to the calculation - namely, by using `<tidyselect>` selection helpers.
+
+2.  The second new function is actually a pair of functions, `dplyr::rowwise()` and `dplyr::ungroup()`. These two respectively impose and remove an internal structure to the dataset, such that each row is treated like its own group, and any operations are done within those row-wise groups.
+
+Let's see the combination of these two in action to create a `mattering` composite score.
+
+::: callout-important
+The code below assumes a dataset structured so there is information from each participant on only and exactly one row in the dataset.
+
+If your data has observations from the same participants on multiple rows, you will need to reshape your data or otherwise adapt the code to suit your data structure.
+:::
+
+```{r}
+
+mil_data |> # <1>
+  dplyr::rowwise() |> # <2>
+  dplyr::mutate( # <3>
+    mattering_comp = mean(c_across(starts_with("mattering")), # <3>
+                        na.rm = TRUE) # <3>
+  ) |>  # <3>
+  dplyr::ungroup() # <4>
+
+```
+
+1.  Overwrite the `mil_data` dataset with the following output: take the existing `mil_data` dataset, *and then*
+2.  Group the dataset by row, so any subsequent calculations will be done for each row separately, *and then*
+3.  Create the new `mattering_comp` variable by taking the mean of all the values in variables that start with the string "mattering" (ignoring any missing values), *and then*
+4.  Remove the by-row grouping that was created by `rowwise()` to output an ungrouped dataset.
+
+If you don't feel comfortable using selection helpers, you can list variables instead inside `c_across()` using `c()` to combine them:
+
+```{r}
+#| eval: false
+
+mil_data |> # <1>
+  dplyr::rowwise() |> # <2>
+  dplyr::mutate( # <3>
+    mattering_comp = mean(c_across(c(mattering_1, mattering_2, mattering_3, mattering_4)), # <3>
+                        na.rm = TRUE) # <3>
+  ) |>  # <3>
+  dplyr::ungroup() # <4>
+
+```
+
+However, you're strongly recommended to get the hang of selection helpers, since they are both easy to read and use and extremely versatile!
+
+
+::: {.callout-warning title="Running Code Out of Order"}
+
+Using selection helpers like this does have a potential issue: it will give you the wrong answer if you run the same code more than once, or out of the order.
+
+In the first example above using `starts_with()`, this command calculates the mean across all of the variables in the data whose names start with the string "mattering". This will be `mattering_1`, `mattering_2`, `mattering_3`, and `mattering_4`.
+
+However, if you run the same code a second time, the command will again calculate the mean across all of the variables in the data whose names start with the string "mattering". This will be `mattering_1`, `mattering_2`, `mattering_3`, `mattering_4` - AND `mattering_comp`, which was created previously.
+
+Although the second example above enumerating individual variable names doesn't have this danger, it's still better to use the selection helpers, and simply never run your code out of order.
+
+:::
+
+## Exercises: Conversion and Wrangling
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Prepare the `mil_data` dataset for analysis.
+
+1. Produce a final data dictionary and save it.
+2. Convert all categorical variables to factor, and all scale rating variables to numeric.
+3. Reverse-code `global_meaning_2`.
+4. Create composite scores for all of the subscale variables.
+
+::: {.callout-note collapse="true" title="Solution"}
+
+1. Produce a final data dictionary and save it.
+
+Using the help documentation, we can see there is a `file` argument. Providing a file path/name will save the output of this file into that file. For example, the command below will save the data dictionary as an HTML file to review or share.
+
+```{r}
+#| eval: false
+sjPlot::view_df(mil_data, file = "diss_dict.html")
+```
+
+2. Convert all categorical variables to factor, and all scale rating variables to numeric.
+
+This can again be accomplished multiple ways. The first way involves listing each variable one by one. Below just a couple of variables are listed, but this would need to be done individually for every variable in the dataset that needs conversion.
+
+```{r}
+#| eval: false
+
+mil_data %>% 
+  dplyr::mutate(
+    english_fluency = labelled::to_factor(english_fluency),
+    mattering_1 = unclass(mattering_1),
+    ...
+  )
+```
+
+Instead, you are strongly recommended to use `dplyr::across()` and selection helpers.
+
+```{r}
+mil_data <- mil_data %>% 
+  dplyr::mutate(
+    ## Change all grouping variables to factor
+    dplyr::across(c(english_fluency, gender, income, occupation),
+                  labelled::to_factor),
+    ## Change all subscale items to numeric
+    dplyr::across(contains(c("mattering", "global_meaning", "belonging")),
+                  unclass)
+  )
+```
+
+3. Reverse-code `global_meaning_2`.
+
+```{r}
+mil_data <- mil_data %>% 
+  dplyr::mutate(
+    global_meaning_2 = 8 - global_meaning_2
+  )
+```
+
+4. Create composite scores for all of the subscale variables.
+
+There are three subscales to calculate here for `belonging`, `global_meaning`, and `mattering`.
+
+Again, you can type the item names into this command one by one. This does require careful checking to avoid duplicating or leaving out items, especially for subscales with many items. On the other hand, this method is likely to work better if you need specific and nonsequential items for each subscale (for instance, if the subscale is items 2, 3, 7, 10, and 12).
+
+Instead, if all the items with the same prefix belong to the same subscale (as they do here), `c_across()` + selection helpers are much preferred.
+
+```{r}
+mil_data <- mil_data %>% 
+  dplyr::rowwise() %>% 
+  dplyr::mutate(
+    belonging_comp = mean(c_across(starts_with("belonging")),
+                          na.rm = TRUE),
+    global_meaning_comp = mean(c_across(starts_with("global_meaning")),
+                          na.rm = TRUE),
+    mattering_comp = mean(c_across(starts_with("mattering")),
+                          na.rm = TRUE),
+  ) %>% 
+  dplyr::ungroup()
+```
+:::
+:::
+
+\ 
+
+## Well done!
+
+From here you can carry on with your data analysis: further cleaning, visualisation, and analysis. You've gained quite a few new skills today, so very well done indeed!
