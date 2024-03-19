@@ -9,10 +9,10 @@ if(!dir.exists(out)){
 
 ## Get file paths to all qmds in tutorials folder and onward
 
-all_qmds_path <- "tutorials/psychrlogy"
+all_qmds_path <- "workshops/dissertations"
 all_qmds <- list.files(path = all_qmds_path, pattern = "qmd", recursive = TRUE)
 
-which_file <- "10_qtrics"
+which_file <- all_qmds[1]
 
 this_file <- file.path(all_qmds_path, grep(which_file, all_qmds, value = TRUE))
 

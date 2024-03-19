@@ -47,8 +47,13 @@ website:
           contents:
             - auto: tutorials/psychrlogy/03_improvRs/*
     - title: "Workshops"
+      style: "docked"
+      background: "#d0d3d4"
       contents:
-        - Workshops.qmd
+        - workshops.qmd
+        - section: "Dissertations"
+          contents:
+            - auto: workshops/dissertations/*
     - title: "Resources"
       style: "docked"      
       background: "#d0d3d4"

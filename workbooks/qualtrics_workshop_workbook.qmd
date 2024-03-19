@@ -1,0 +1,147 @@
+---
+title: "Working with Qualtrics Data"
+embed-resources: true
+editor: visual
+---
+
+## Open the Tutorial
+
+Use the following code chunks to open the accompanying tutorial.
+
+### Open in RStudio Viewer
+
+```{r}
+rstudioapi::viewer('https://r-training.netlify.app/workshops/dissertations/qualtrics_workshop')
+```
+
+### Open in a New Browser Tab
+
+```{r}
+utils::browseURL('https://r-training.netlify.app/workshops/dissertations/qualtrics_workshop')
+```
+
+## Qualtrics
+
+## Setup
+
+### Packages
+
+Load the packages.
+
+```{r}
+#| warning: false
+#| message: false
+
+library(tidyverse)
+library(haven)
+library(labelled)
+library(sjPlot)
+```
+
+### Data
+
+Read in the `mil_data.sav` object from the data folder, or alternatively from Github via URL, as you prefer.
+
+URL: https://github.com/de84sussex/data/raw/main/mil_data.sav
+
+```{r}
+mil_data <- here::here("data/mil_data.sav") %>% haven::read_sav()
+```
+
+#### Codebook
+
+## Variable Names
+
+### Default Variable Names
+
+### Selecting
+
+#### Selection Helpers
+
+### Renaming
+
+#### Option 1: Rename in Qualtrics
+
+#### Option 2: `rename()`
+
+#### Option 3: `rename_with()`
+
+## Exercises: Names
+
+Clean up your dataset by doing the following. You can do the steps in whatever order works for you.
+
+-   Keep all the demographic questions, items measuring Global Meaning, and Mattering, and all the Belonging items.
+-   Rename any default-named Qualtrics variables (starting with "Q") to a sensible name using the Codebook to guide you.
+
+```{r}
+
+```
+
+## Labelled Data
+
+### Working with Labels
+
+### Variable Labels
+
+#### Getting Labels
+
+#### Creating/Updating Labels
+
+#### Searching Labels
+
+### Value Labels
+
+#### Getting Labels
+
+#### Creating/Updating Labels
+
+### Missing Values
+
+## Exercises: Labels
+
+Identify the item that mentions 'job'. Then, change the variable label of this item so that it just says 'Occupational Status'
+
+```{r}
+
+```
+
+For the `income` variable, change the value label 'I prefer not to disclose information about my annual income as part of this research study.' to 'Prefer not to say.'
+
+```{r}
+
+```
+
+## Data Dictionaries
+
+## Converting Variables
+
+### Factors
+
+#### Revision of Factors
+
+#### Converting to Factors
+
+### Numeric
+
+### Efficient Conversion
+
+## Calculating Variables
+
+### Reverse Coding
+
+### Composite Scores
+
+## Exercises: Conversion and Wrangling
+
+Prepare the `mil_data` dataset for analysis.
+
+1.  Produce a final data dictionary and save it.
+2.  Convert all categorical variables to factor, and all scale rating variables to numeric.
+3.  Reverse-code `global_meaning_2`.
+4.  Create composite scores for all of the subscale variables.
+
+```{r}
+
+```
+
+## Well done!
