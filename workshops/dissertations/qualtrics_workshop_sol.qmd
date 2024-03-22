@@ -222,7 +222,7 @@ mil_data <- haven::read_sav("https://raw.githubusercontent.com/drmankin/practicu
 :::
 
 
-#### Codebook
+### Codebook
 
 This codebook is intentionally sparse, because we'll be generating our own from the dataset in just a moment. This table covers only the demographic and questionnaire measures to help you understand the variables.
 
@@ -236,6 +236,8 @@ here::here("data/codebook_short.csv") %>% readr::read_csv(show_col_types = FALSE
   kableExtra::scroll_box(height = "500px")
 ```
 :::
+
+For easy navigation, jump to: [Renaming](#renaming), [Exercises: Names](#exercises-names)
 
 ## Variable Names
 
@@ -336,7 +338,7 @@ dataset_name %>% #<1>
 2.  Rename the following variables:
 3.  The new name (`new_name`) you would like to give to an existing variable (`old_name`).
 
-You can list as many of these `new_name = old_name` pairs as you like. For example, let's rename the Global Meaning items so they have sensible prefixes. We should keep the item numbers as they are, so we know which one is which.
+You can list as many of these `new_name = old_name` pairs as you like. For example, let's rename the Global Meaning items so they have sensible prefixes (refer to the [Codebook](#codebook) for which variables these are!). We should keep the item numbers as they are, so we know which one is which.
 
 ```{r}
 mil_data %>% 
@@ -406,7 +408,9 @@ Before we go on, it's time to get the variables in this dataset sorted out. You 
 Clean up your dataset by doing the following. You can do the steps in whatever order works for you.
 
 - Keep all the demographic questions, items measuring Global Meaning, and Mattering, and all the Belonging items.
-- Rename any default-named Qualtrics variables (starting with "Q") to a sensible name using the Codebook to guide you.
+- Rename any default-named Qualtrics variables (starting with "Q") to a sensible name.
+
+Refer to the [Codebook](#codebook) to figure out which variables are which.
 
 ::: {.callout-note collapse="true" title="Solution"}
 
@@ -1139,7 +1143,7 @@ mil_data <- mil_data %>%
 
 There are three subscales to calculate here for `belonging`, `global_meaning`, and `mattering`.
 
-Again, you can type the item names into this command one by one. This does require careful checking to avoid duplicating or leaving out items, especially for subscales with many items. On the other hand, this method is likely to work better if you need specific and nonsequential items for each subscale (for instance, if the subscale is items 2, 3, 7, 10, and 12).
+Again, you can type the item names into this command one by one. This does require careful checking to avoid duplicating or leaving out items, especially for subscales with many items. On the other hand, this method is likely to work better if you need specific and nonsequential items for each subscale (for instance, if the subscale is items 2, 3, 7, 10, and 12). For a `<tidyselect>` way to accompish this, have a look at the selection helper `num_range()` in the `select()` help documentation.
 
 Instead, if all the items with the same prefix belong to the same subscale (as they do here), `c_across()` + selection helpers are much preferred.
 
