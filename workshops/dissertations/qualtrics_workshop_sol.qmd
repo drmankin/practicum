@@ -1,5 +1,5 @@
 ---
-title: "Working with Qualtrics Data"
+title: "Working with Qualtrics Data (with Solutions)"
 ---
 
 ```{=html}
@@ -25,7 +25,7 @@ This tutorial will focus on efficient, transparent, and user-friendly techniques
 
 ### Acknowledgements
 
-This tutorial was co-written with [Dr Dan Evans](https://drdanielleevans.netlify.app/), drawing on her existing resources for Qualtrics and her extensive experience support dissertation students.
+This tutorial was co-written with [Dr Dan Evans](https://drdanielleevans.netlify.app/), drawing on her existing resources for Qualtrics and her extensive experience supporting dissertation students.
 
 The material in this tutorial was originally co-conceived with two brilliant PhD researchers, [Hanna Eldarwish](mailto:haie20@sussex.ac.uk) and [Josh Francis](Joshua.Francis@sussex.ac.uk), who contributed invaluable input throughout the process of developing the tutorial. Hanna Eldarwish also provided the basis for the dataset, collected during her undergraduate dissertation at Sussex under the supervision of [Dr Vlad Costin](https://profiles.sussex.ac.uk/p323096-vlad-costin).
 

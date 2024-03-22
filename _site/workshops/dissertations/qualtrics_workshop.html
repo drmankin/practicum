@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>R Training - Working with Qualtrics Data (with Solutions)</title>
+<title>R Training - Working with Qualtrics Data</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -160,7 +160,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../workshops/dissertations/qualtrics_workshop.html">Dissertations</a></li><li class="breadcrumb-item"><a href="../../workshops/dissertations/qualtrics_workshop_sol.html">Working with Qualtrics Data (with Solutions)</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../workshops/dissertations/qualtrics_workshop.html">Dissertations</a></li><li class="breadcrumb-item"><a href="../../workshops/dissertations/qualtrics_workshop.html">Working with Qualtrics Data</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
     </div>
@@ -189,13 +189,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../workshops/dissertations/qualtrics_workshop.html" class="sidebar-item-text sidebar-link">
+  <a href="../../workshops/dissertations/qualtrics_workshop.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Working with Qualtrics Data</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../workshops/dissertations/qualtrics_workshop_sol.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../workshops/dissertations/qualtrics_workshop_sol.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Working with Qualtrics Data (with Solutions)</span></a>
   </div>
 </li>
@@ -229,8 +229,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup">Setup</a>
   <ul>
   <li><a href="#packages" id="toc-packages" class="nav-link" data-scroll-target="#packages">Packages</a></li>
-  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a>
+  <ul class="collapse">
   <li><a href="#codebook" id="toc-codebook" class="nav-link" data-scroll-target="#codebook">Codebook</a></li>
+  </ul></li>
   </ul></li>
   <li><a href="#variable-names" id="toc-variable-names" class="nav-link" data-scroll-target="#variable-names">Variable Names</a>
   <ul>
@@ -289,7 +291,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Working with Qualtrics Data (with Solutions)</h1>
+<h1 class="title">Working with Qualtrics Data</h1>
 </div>
 
 
@@ -419,7 +421,7 @@ Tip
 <p><img src="../..\images/qtrics_export.png" class="img-fluid" alt="A screenshot the Qualtrics Data &amp; Analysis screen with red boxes indicating the steps to take to export data: Data &amp; Analysis tab, Export &amp; Import menu, and Export Data... option."></p>
 <p>In the “Download a data table” menu, choose “SPSS” from the choices along the top. Make sure “Download all fields” is ticked, then click “Download”.</p>
 <p><img src="../..\images/qtrics_spss.png" class="img-fluid" alt="A screenshot the Qualtrics Download a Data Table screen with red boxes indicating the steps to take to export SPSS data: SPSS tab, Download button."></p>
-<p>The dataset will download automatically to your computer’s Downloads folder. From there, you should rename it to something sensible and move it into a <code>data</code> folder within your project folder. From there, you can read it in using the <code>here::here() %&gt;% haven::read_sav()</code> combo that we will seee in the Data section in just a moment.</p>
+<p>The dataset will download automatically to your computer’s Downloads folder. From there, you should rename it to something sensible and move it into a <code>data</code> folder within your project folder. From there, you can read it in using the <code>here::here() %&gt;% haven::read_sav()</code> combo that we saw in the Data section previously.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Sensible Naming Conventions and Folder Structure">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -521,9 +523,8 @@ Exercise
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Read in the <code>mil_data.sav</code> object from folder, or alternatively from Github via URL, as you prefer.</p>
-<p>On the Cloud, you can read in this dataset from the <code>data</code> folder using <code>here::here()</code>.</p>
-<p>Elsewhere, you can download the dataset, or copy the dataset URL, from the <a href="../../data_workbooks.html">Data and Workbooks page</a>.</p>
+<p>Read in the <code>mil_data.sav</code> object from the data folder, or alternatively from Github via URL, as you prefer.</p>
+<p>URL: https://github.com/de84sussex/data/raw/main/mil_data.sav</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -536,26 +537,21 @@ Solution
 </div>
 <div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>On the Cloud:</p>
+<p>From a folder:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>mil_data <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/mil_data.sav"</span>) <span class="sc">%&gt;%</span> haven<span class="sc">::</span><span class="fu">read_sav</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>From a folder:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mil_data <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/mil_data_wkshp.sav"</span>) <span class="sc">%&gt;%</span> haven<span class="sc">::</span><span class="fu">read_sav</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 <p>From URL:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mil_data <span class="ot">&lt;-</span> haven<span class="sc">::</span><span class="fu">read_sav</span>(<span class="st">"https://raw.githubusercontent.com/drmankin/practicum/master/data/mil_data_wkshp.sav"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mil_data <span class="ot">&lt;-</span> haven<span class="sc">::</span><span class="fu">read_sav</span>(<span class="st">"https://github.com/de84sussex/data/raw/main/mil_data.sav"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
 </div>
 </div>
 </div>
-</section>
-<section id="codebook" class="level3">
-<h3 class="anchored" data-anchor-id="codebook">Codebook</h3>
+<section id="codebook" class="level4">
+<h4 class="anchored" data-anchor-id="codebook">Codebook</h4>
 <p>This codebook is intentionally sparse, because we’ll be generating our own from the dataset in just a moment. This table covers only the demographic and questionnaire measures to help you understand the variables.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Codebook">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="true" aria-label="Toggle callout">
@@ -729,7 +725,7 @@ Codebook
 </div>
 </div>
 </div>
-<p>For easy navigation, jump to: <a href="#renaming">Renaming</a>, <a href="#exercises-names">Exercises: Names</a></p>
+</section>
 </section>
 </section>
 <section id="variable-names" class="level2">
@@ -759,31 +755,31 @@ Codebook
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="1" data-code-cell="annotated-cell-1" data-code-annotation="1">Take the dataset <code>dataset_name</code>, <em>and then</em></span>
+<span data-code-lines="1" data-code-annotation="1" data-code-cell="annotated-cell-1">Take the dataset <code>dataset_name</code>, <em>and then</em></span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="2" data-code-cell="annotated-cell-1" data-code-annotation="2">Select the following variables:</span>
+<span data-code-lines="2" data-code-annotation="2" data-code-cell="annotated-cell-1">Select the following variables:</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-lines="3" data-code-cell="annotated-cell-1" data-code-annotation="3">The name of a variable to be included in the output. Multiple variables can be selected separated by commas.</span>
+<span data-code-lines="3" data-code-annotation="3" data-code-cell="annotated-cell-1">The name of a variable to be included in the output. Multiple variables can be selected separated by commas.</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-lines="4" data-code-cell="annotated-cell-1" data-code-annotation="4">The name of a variable to be excluded from the output. Use either an exclamation mark (<code>!</code>) or a minus sign (<code>-</code>) in front of each variable to exclude. Multiple variables can be dropped, separated by commas with a <code>!</code> (or <code>-</code>) before each.</span>
+<span data-code-lines="4" data-code-annotation="4" data-code-cell="annotated-cell-1">The name of a variable to be excluded from the output. Use either an exclamation mark (<code>!</code>) or a minus sign (<code>-</code>) in front of each variable to exclude. Multiple variables can be dropped, separated by commas with a <code>!</code> (or <code>-</code>) before each.</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-lines="5" data-code-cell="annotated-cell-1" data-code-annotation="5">A range of variables to include in the output. All the variables between and including the two named will be selected (or dropped, with <code>!(drop_this_one:through_this_one)</code>).</span>
+<span data-code-lines="5" data-code-annotation="5" data-code-cell="annotated-cell-1">A range of variables to include in the output. All the variables between and including the two named will be selected (or dropped, with <code>!(drop_this_one:through_this_one)</code>).</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="6">6</dt>
 <dd>
-<span data-code-lines="6" data-code-cell="annotated-cell-1" data-code-annotation="6">Include <code>variable_to_rename</code> in the output, but call it <code>new_name</code>.</span>
+<span data-code-lines="6" data-code-annotation="6" data-code-cell="annotated-cell-1">Include <code>variable_to_rename</code> in the output, but call it <code>new_name</code>.</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="7">7</dt>
 <dd>
-<span data-code-lines="7" data-code-cell="annotated-cell-1" data-code-annotation="7">Include a variable in the output by where it appears in the dataset, numbered left to right. For example, “2” will select the second column in the original dataset.</span>
+<span data-code-lines="7" data-code-annotation="7" data-code-cell="annotated-cell-1">Include a variable in the output by where it appears in the dataset, numbered left to right. For example, “2” will select the second column in the original dataset.</span>
 </dd>
 </dl>
 </div>
@@ -805,10 +801,10 @@ Codebook
 <li>“Q8” for the four Coherence items</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>mil_data <span class="sc">%&gt;%</span> </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">contains</span>(<span class="st">"Date"</span>), <span class="fu">starts_with</span>(<span class="st">"Q8"</span>)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mil_data <span class="sc">%&gt;%</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">contains</span>(<span class="st">"Date"</span>), <span class="fu">starts_with</span>(<span class="st">"Q8"</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -853,28 +849,28 @@ Important
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="1" data-code-cell="annotated-cell-3" data-code-annotation="1">Take the dataset <code>dataset_name</code>, <em>and then</em></span>
+<span data-code-lines="1" data-code-annotation="1" data-code-cell="annotated-cell-3">Take the dataset <code>dataset_name</code>, <em>and then</em></span>
 </dd>
 <dt data-target-cell="annotated-cell-3" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="2" data-code-cell="annotated-cell-3" data-code-annotation="2">Rename the following variables:</span>
+<span data-code-lines="2" data-code-annotation="2" data-code-cell="annotated-cell-3">Rename the following variables:</span>
 </dd>
 <dt data-target-cell="annotated-cell-3" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-lines="3" data-code-cell="annotated-cell-3" data-code-annotation="3">The new name (<code>new_name</code>) you would like to give to an existing variable (<code>old_name</code>).</span>
+<span data-code-lines="3" data-code-annotation="3" data-code-cell="annotated-cell-3">The new name (<code>new_name</code>) you would like to give to an existing variable (<code>old_name</code>).</span>
 </dd>
 </dl>
 </div>
 </div>
-<p>You can list as many of these <code>new_name = old_name</code> pairs as you like. For example, let’s rename the Global Meaning items so they have sensible prefixes (refer to the <a href="#codebook">Codebook</a> for which variables these are!). We should keep the item numbers as they are, so we know which one is which.</p>
+<p>You can list as many of these <code>new_name = old_name</code> pairs as you like. For example, let’s rename the Global Meaning items so they have sensible prefixes. We should keep the item numbers as they are, so we know which one is which.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>mil_data <span class="sc">%&gt;%</span> </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">meaning_1 =</span> Q6_1,</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">meaning_2 =</span> Q6_2,</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">meaning_3 =</span> Q6_3,</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">meaning_4 =</span> Q6_4,</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>mil_data <span class="sc">%&gt;%</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">meaning_1 =</span> Q6_1,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">meaning_2 =</span> Q6_2,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">meaning_3 =</span> Q6_3,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">meaning_4 =</span> Q6_4,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -926,15 +922,15 @@ HaRd Mode: Using <code>rename_with()</code>
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="1,2" data-code-cell="annotated-cell-2" data-code-annotation="1">Take the <code>mil_data</code> dataset <em>and then</em> rename variables as follows</span>
+<span data-code-lines="1,2" data-code-annotation="1" data-code-cell="annotated-cell-2">Take the <code>mil_data</code> dataset <em>and then</em> rename variables as follows</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="3" data-code-cell="annotated-cell-2" data-code-annotation="2">Replace every instance of the string “Q11” with the string “belonging”</span>
+<span data-code-lines="3" data-code-annotation="2" data-code-cell="annotated-cell-2">Replace every instance of the string “Q11” with the string “belonging”</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-lines="4" data-code-cell="annotated-cell-2" data-code-annotation="3">Do this for every column that currently starts with the string “Q11”</span>
+<span data-code-lines="4" data-code-annotation="3" data-code-cell="annotated-cell-2">Do this for every column that currently starts with the string “Q11”</span>
 </dd>
 </dl>
 </div>
@@ -971,93 +967,8 @@ Exercise
 <p>Clean up your dataset by doing the following. You can do the steps in whatever order works for you.</p>
 <ul>
 <li>Keep all the demographic questions, items measuring Global Meaning, and Mattering, and all the Belonging items.</li>
-<li>Rename any default-named Qualtrics variables (starting with “Q”) to a sensible name.</li>
+<li>Rename any default-named Qualtrics variables (starting with “Q”) to a sensible name using the Codebook to guide you.</li>
 </ul>
-<p>Refer to the <a href="#codebook">Codebook</a> to figure out which variables are which.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Solution
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-12" class="callout-12-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>You can accomplish this task in either order:</p>
-<ul>
-<li>First, select the variables you want, then rename them.</li>
-<li>Second, rename the variables, then select them.</li>
-</ul>
-<p>This solution will give answers in the order of the sections above, so first select and then rename. However, consider that if you need to go back and change your selection later, this will be easier if the variables are named something sensible, so it’s worth considering renaming first, before you do anything else, for your own data.</p>
-<p>Both tasks could be done in one pipeline, but to break it down, in this first chunk we have selected the range of demographic variables, and the Global Meaning and Mattering scale items by using the the colon between <code>Q1</code> and <code>Q7_4</code>, and have selected the Belonging scale items which all start with <code>'Q11'</code>.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>mil_data <span class="ot">&lt;-</span> mil_data <span class="sc">%&gt;%</span> </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    Q1<span class="sc">:</span>Q7_4,</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">starts_with</span>(<span class="st">'Q11'</span>)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>For the second task, we need to decide on “sensible” names. You can choose anything that makes sense to you, but we will use <code>global_meaning</code> for Q6, <code>mattering</code> for Q7, and <code>belonging</code> for Q11.</p>
-<p>In our second pipeline, we’re using <code>rename()</code> to replace the names of each variable individually. If you did this yourself before looking at the solution, you will likely have found this to be a laborious, tedious, and error-prone process, so for your own data, make sure you allow time to both do and check this code.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>mil_data <span class="ot">&lt;-</span> mil_data <span class="sc">%&gt;%</span> </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">english_fluency =</span> Q1, </span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">age =</span> Q2,</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">gender =</span> Q3,</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">income =</span> Q4,</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">occupation =</span> Q5,</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">global_meaning_1 =</span> Q6_1,</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">global_meaning_2 =</span> Q6_2,</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">global_meaning_3 =</span> Q6_3,</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">global_meaning_4 =</span> Q6_4,</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">mattering_1 =</span> Q7_1,</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">mattering_2 =</span> Q7_2,</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">mattering_3 =</span> Q7_3,</span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">mattering_4 =</span> Q7_4,</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">belonging_1 =</span> Q11_1,</span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">belonging_2 =</span> Q11_2,</span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">belonging_3 =</span> Q11_3,</span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">belonging_4 =</span> Q11_4,</span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">belonging_5 =</span> Q11_5,</span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">belonging_6 =</span> Q11_6,</span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">belonging_7 =</span> Q11_7,</span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">belonging_8 =</span> Q11_8,</span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">belonging_9 =</span> Q11_9,</span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">belonging_10 =</span> Q11_10,</span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">belonging_11 =</span> Q11_11,</span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">belonging_12 =</span> Q11_12</span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Alternatively, if you ventured into Option 3 for renaming above, you could instead use <code>rename_with()</code> to rename all the items starting with <code>'Q6'</code> to have the prefix of <code>'global_meaning'</code>, all the items starting with <code>'Q7'</code> to have the prefix of <code>'mattering'</code>, and all the items starting with <code>'Q11'</code> to have the prefix of <code>'belonging'</code>.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>mil_data <span class="ot">&lt;-</span> mil_data <span class="sc">%&gt;%</span> </span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">english_fluency =</span> Q1, </span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">age =</span> Q2,</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">gender =</span> Q3,</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">income =</span> Q4,</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">occupation =</span> Q5 </span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename_with</span>( </span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">.fn =</span> <span class="sc">~</span> <span class="fu">gsub</span>(<span class="st">"Q6"</span>, <span class="st">"global_meaning"</span>, .x),  </span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">.cols =</span> dplyr<span class="sc">::</span><span class="fu">starts_with</span>(<span class="st">"Q6"</span>)</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename_with</span>( </span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">.fn =</span> <span class="sc">~</span> <span class="fu">gsub</span>(<span class="st">"Q7"</span>, <span class="st">"mattering"</span>, .x),  </span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">.cols =</span> dplyr<span class="sc">::</span><span class="fu">starts_with</span>(<span class="st">"Q7"</span>)</span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename_with</span>( </span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">.fn =</span> <span class="sc">~</span> <span class="fu">gsub</span>(<span class="st">"Q11"</span>, <span class="st">"belonging"</span>, .x),  </span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">.cols =</span> dplyr<span class="sc">::</span><span class="fu">starts_with</span>(<span class="st">"Q11"</span>) </span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</div>
-</div>
 </div>
 </div>
 <p>&nbsp;</p>
@@ -1112,7 +1023,7 @@ Important
 <p>To begin, let’s just get out a single variable label to work with using <code>labelled::var_label()</code>.</p>
 <p>To specify the variable we want, we will need to subset it from the dataset, using either <code>$</code> or <code>dplyr::pull()</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>labelled<span class="sc">::</span><span class="fu">var_label</span>(mil_data<span class="sc">$</span>gender)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>labelled<span class="sc">::</span><span class="fu">var_label</span>(mil_data<span class="sc">$</span>gender)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "What is your gender identity?  This question is optional. - Selected Choice"</code></pre>
 </div>
@@ -1123,9 +1034,9 @@ Important
 <p>If you’d like to edit labels, you can do it “manually” - that is, just writing a whole new label from scratch.</p>
 <p>The structure of the following code might look a little unfamiliar. For the most part, we’ve seen code that contains longer and more complex instructions on the right-hand side of the <code>&lt;-</code>, and a single object being created or updated on the left-hand side. In the structure below, the left-hand side contains longer and more complex code that identifies the value(s) to be updated or created, and the right-hand side contains the value(s) to create or update. It’s the same logic, just with a different structure.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>labelled<span class="sc">::</span><span class="fu">var_label</span>(mil_data<span class="sc">$</span>StartDate) <span class="ot">&lt;-</span> <span class="st">"Date and time questionnaire was started"</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>labelled<span class="sc">::</span><span class="fu">var_label</span>(mil_data<span class="sc">$</span>StartDate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>labelled<span class="sc">::</span><span class="fu">var_label</span>(mil_data<span class="sc">$</span>StartDate) <span class="ot">&lt;-</span> <span class="st">"Date and time questionnaire was started"</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>labelled<span class="sc">::</span><span class="fu">var_label</span>(mil_data<span class="sc">$</span>StartDate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -1133,7 +1044,7 @@ Important
 </div>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled" title="HaRd Mode: Using Regular Expressions">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1142,15 +1053,15 @@ HaRd Mode: Using Regular Expressions
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Regular expressions are the magic of working with code. They are also fiddly, confusing, and difficult. If you’re not keen on spending a lot of time learning what is in essence a new mini-language, skip this section!</p>
 <p>Editing labels is a good opportunity to start working with regular expressions. For example, if we want to keep only the first bit of the label for <code>gender</code>, then we can keep everything only up to and including the question mark, and re-assign that to the variable label. This style is a bit more dynamic and resilient to changes or updates.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>labelled<span class="sc">::</span><span class="fu">var_label</span>(mil_data<span class="sc">$</span>gender) <span class="ot">&lt;-</span> labelled<span class="sc">::</span><span class="fu">var_label</span>(mil_data<span class="sc">$</span>gender) <span class="sc">%&gt;%</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gsub</span>(<span class="st">"(.*</span><span class="sc">\\</span><span class="st">?).*"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">1"</span>, <span class="at">x =</span> .)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>labelled<span class="sc">::</span><span class="fu">var_label</span>(mil_data<span class="sc">$</span>gender)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>labelled<span class="sc">::</span><span class="fu">var_label</span>(mil_data<span class="sc">$</span>gender) <span class="ot">&lt;-</span> labelled<span class="sc">::</span><span class="fu">var_label</span>(mil_data<span class="sc">$</span>gender) <span class="sc">%&gt;%</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gsub</span>(<span class="st">"(.*</span><span class="sc">\\</span><span class="st">?).*"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">1"</span>, <span class="at">x =</span> .)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>labelled<span class="sc">::</span><span class="fu">var_label</span>(mil_data<span class="sc">$</span>gender)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -1166,7 +1077,7 @@ HaRd Mode: Using Regular Expressions
 <p>The <code>pattern</code> has essentially two parts: the bit in the rounded brackets, and the bit outside. The rounded brackets designate a “capturing group” - a portion of the string that should be grouped together as a unit. The benefit of this grouping is in the second argument of <code>gsub()</code>; <code>\\1</code> isn’t the number 1, but rather is a pronoun referring to the first capturing group. In other words, as a whole, this <code>gsub()</code> command captures a subset of the incoming string, and then replaces the entire string with that captured string, essentially dropping everything outside the capturing group.</p>
 <p>To understand the regex statement <code>"(.*\\?).*"</code>, we need to look at the incoming text, <code>x</code>. In this case, <code>x</code> is being piped in from above and looks like this:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>labelled<span class="sc">::</span><span class="fu">var_label</span>(mil_data<span class="sc">$</span>gender)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>labelled<span class="sc">::</span><span class="fu">var_label</span>(mil_data<span class="sc">$</span>gender)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "What is your gender identity?  This question is optional. - Selected Choice"</code></pre>
 </div>
@@ -1176,8 +1087,8 @@ HaRd Mode: Using Regular Expressions
 <p>As an aside, if you’re wondering why there are <em>two</em> escape characters instead of one - i.e., why is it <code>\\?</code> and not <code>\?</code>, well, you and me both. There’s an explanation in <code>vignette("regular-expressions")</code> that never completely makes sense to me. Also, this seems to be an R thing - regex outside of R seems to use only a single escape character, so a literal question mark would be <code>\?</code>. If you are ever trying to adapt regex from e.g.&nbsp;StackOverflow or regex101 and it isn’t working, check whether the escape characters are right!</p>
 <p>Anyway. We can now read <code>"(.*\\?)"</code> as “capture all characters up to and including a literal question mark” - which matches the substring “What is your gender identity?” in <code>x</code>. However, we don’t just want to replace that portion of the string - instead, we want to replace <em>the whole string</em> with that bit of it. So, the second <code>.*</code> outside the brackets matches the rest of the string. If we didn’t include this last bit, the capturing group would just be replaced with itself, which would result in the same string as we started with, as below:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>labelled<span class="sc">::</span><span class="fu">var_label</span>(mil_data<span class="sc">$</span>gender) <span class="sc">%&gt;%</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gsub</span>(<span class="st">"(.*</span><span class="sc">\\</span><span class="st">?)"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">1"</span>, <span class="at">x =</span> .)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>labelled<span class="sc">::</span><span class="fu">var_label</span>(mil_data<span class="sc">$</span>gender) <span class="sc">%&gt;%</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gsub</span>(<span class="st">"(.*</span><span class="sc">\\</span><span class="st">?)"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">1"</span>, <span class="at">x =</span> .)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "What is your gender identity?  This question is optional. - Selected Choice"</code></pre>
 </div>
@@ -1195,8 +1106,8 @@ HaRd Mode: Using Regular Expressions
 <p>A <em>very</em> nifty feature of variable labels and {labelled} is the ability to search through them with <code>labelled::look_for()</code>. With the whole dataset, <code>look_for()</code> returns a whole codebook (see <a href="#data-dictionaries">Data Dictionaries</a> below for more on this), but given a second argument containing a search term, you get back only the variables whose label contains that term.</p>
 <p>For example, we can use <code>labelled::look_for()</code> to get only the items in this questionnaire that mentioned family. (I’ve piped into <code>tibble::as_tibble()</code> to make the output easier to read.)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>labelled<span class="sc">::</span><span class="fu">look_for</span>(mil_data, <span class="st">"family"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">as_tibble</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>labelled<span class="sc">::</span><span class="fu">look_for</span>(mil_data, <span class="st">"family"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">as_tibble</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -1215,14 +1126,14 @@ HaRd Mode: Using Regular Expressions
 <h4 class="anchored" data-anchor-id="getting-labels-1">Getting Labels</h4>
 <p>There are two functions to assist with this. <code>labelled::val_labels()</code> (with an “s”) returns all of the labels, while <code>labelled::val_label()</code> (without an “s”) will return the label for a single specified value.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>labelled<span class="sc">::</span><span class="fu">val_labels</span>(mil_data<span class="sc">$</span>english_fluency)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>labelled<span class="sc">::</span><span class="fu">val_labels</span>(mil_data<span class="sc">$</span>english_fluency)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Very well       Well   Not well Not at all 
          1          2          3          4 </code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>labelled<span class="sc">::</span><span class="fu">val_label</span>(mil_data<span class="sc">$</span>english_fluency, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>labelled<span class="sc">::</span><span class="fu">val_label</span>(mil_data<span class="sc">$</span>english_fluency, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Not well"</code></pre>
 </div>
@@ -1234,7 +1145,7 @@ HaRd Mode: Using Regular Expressions
 <p>For example, let’s get all the value labels for the <code>gender</code> variable, then update the last value to “Other”.</p>
 <p>First, return the existing labels:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>labelled<span class="sc">::</span><span class="fu">val_labels</span>(mil_data<span class="sc">$</span>gender)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>labelled<span class="sc">::</span><span class="fu">val_labels</span>(mil_data<span class="sc">$</span>gender)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                      Male                     Female 
                          0                          1 
@@ -1244,7 +1155,7 @@ HaRd Mode: Using Regular Expressions
 </div>
 <p>Then, replace the label associated with the value <code>3</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>labelled<span class="sc">::</span><span class="fu">val_label</span>(mil_data<span class="sc">$</span>gender, <span class="dv">3</span>) <span class="ot">&lt;-</span> <span class="st">"Other"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>labelled<span class="sc">::</span><span class="fu">val_label</span>(mil_data<span class="sc">$</span>gender, <span class="dv">3</span>) <span class="ot">&lt;-</span> <span class="st">"Other"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
@@ -1252,7 +1163,7 @@ HaRd Mode: Using Regular Expressions
 <h3 class="anchored" data-anchor-id="missing-values">Missing Values</h3>
 <p>This section is included especially for people who may have previous experience with SPSS, and are learning how to adapt their SPSS knowledge to R. Unless you make regular use of SPSS’s alternative options for managing missing values, you can skip this section.</p>
 <div class="callout callout-style-default callout-warning callout-titled" title="HaRd Mode: Missing Values">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1261,12 +1172,12 @@ HaRd Mode: Missing Values
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-18" class="callout-18-contents callout-collapse collapse">
+<div id="callout-17" class="callout-17-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Labelled data allows an extra functionality from SPSS, namely to create user-defined “missing” values. These missing values aren’t <em>actually</em> missing, in the sense that the participant didn’t respond at all. Rather, they might be missing in the sense that a participant selected an option like “don’t know”, “doesn’t apply”, “prefer not to say”, etc.</p>
 <p>Let’s look at an example. As we’ve just seen, we can get out all the value labels in variable with <code>labelled::val_labels()</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>labelled<span class="sc">::</span><span class="fu">val_labels</span>(mil_data<span class="sc">$</span>english_fluency)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>labelled<span class="sc">::</span><span class="fu">val_labels</span>(mil_data<span class="sc">$</span>english_fluency)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Very well       Well   Not well Not at all 
          1          2          3          4 </code></pre>
@@ -1274,9 +1185,9 @@ HaRd Mode: Missing Values
 </div>
 <p>This variable asked participants to indicate their level of English fluency. Even for participants who have in fact responded to this question, we may want to code “Not well” and “Not as all” as “missing” so that they can be excluded easily. To do this, we can use the function <code>labelled::na_values()</code> to indicate which values should be considered as missing.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>labelled<span class="sc">::</span><span class="fu">na_values</span>(mil_data<span class="sc">$</span>english_fluency) <span class="ot">&lt;-</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">4</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>mil_data<span class="sc">$</span>english_fluency</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>labelled<span class="sc">::</span><span class="fu">na_values</span>(mil_data<span class="sc">$</span>english_fluency) <span class="ot">&lt;-</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">4</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>mil_data<span class="sc">$</span>english_fluency</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;labelled_spss&lt;double&gt;[164]&gt;: Please select which box best describes your English fluency. - How well can you speak English?
   [1] 2 2 2 1 1 1 2 1 2 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 1 1 1
@@ -1296,7 +1207,7 @@ Labels:
 </div>
 <p>For the moment, these values are not actually <code>NA</code> in the data - they’re listed under “Missing Values” in the variable attributes. In other words, the actual responses are still retained. However, if we ask R which of the values in this variable are missing…</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is.na</span>(mil_data<span class="sc">$</span>english_fluency)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is.na</span>(mil_data<span class="sc">$</span>english_fluency)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
  [13] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
@@ -1317,7 +1228,7 @@ Labels:
 <p>…we can see one <code>TRUE</code> corresponding to the 3 above.</p>
 <p>If we wanted to actually remove those values entirely and turn them into <code>NA</code>s for real, we could use <code>labelled::user_na_to_na()</code> for that purpose. Now, the variable has only two remaining values, and any 3s and 4s have been replaced.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>labelled<span class="sc">::</span><span class="fu">user_na_to_na</span>(mil_data<span class="sc">$</span>english_fluency)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>labelled<span class="sc">::</span><span class="fu">user_na_to_na</span>(mil_data<span class="sc">$</span>english_fluency)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;labelled&lt;double&gt;[164]&gt;: Please select which box best describes your English fluency. - How well can you speak English?
   [1]  2  2  2  1  1  1  2  1  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
@@ -1366,42 +1277,6 @@ Exercise
 </div>
 <div class="callout-body-container callout-body">
 <p>Identify the item that mentions ‘job’. Then, change the variable label of this item so that it just says ‘Occupational Status’</p>
-<div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Solution
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-19" class="callout-19-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Find the variable</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>labelled<span class="sc">::</span><span class="fu">look_for</span>(mil_data, <span class="st">"job"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">as_tibble</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["pos"],"name":[1],"type":["int"],"align":["right"]},{"label":["variable"],"name":[2],"type":["chr"],"align":["left"]},{"label":["label"],"name":[3],"type":["chr"],"align":["left"]},{"label":["col_type"],"name":[4],"type":["chr"],"align":["left"]},{"label":["missing"],"name":[5],"type":["int"],"align":["right"]},{"label":["levels"],"name":[6],"type":["named list"],"align":["right"]},{"label":["value_labels"],"name":[7],"type":["named list"],"align":["right"]}],"data":[{"1":"5","2":"occupation","3":"What is your job or occupation that you do most of the time? For example, are you employed, a student, unemployed, retired? - Selected Choice","4":"dbl+lbl","5":"21","6":"<NULL>","7":"<dbl [6]>"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
-</div>
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Update the label</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>labelled<span class="sc">::</span><span class="fu">var_label</span>(mil_data<span class="sc">$</span>occupation) <span class="ot">&lt;-</span> <span class="st">"Occupational Status"</span></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Check the new label</span></span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>labelled<span class="sc">::</span><span class="fu">var_label</span>(mil_data<span class="sc">$</span>occupation)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "Occupational Status"</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
@@ -1415,56 +1290,6 @@ Exercise
 </div>
 <div class="callout-body-container callout-body">
 <p>For the <code>income</code> variable, change the value label ‘I prefer not to disclose information about my annual income as part of this research study.’ to ‘Prefer not to say.’</p>
-<div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Solution
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-21" class="callout-21-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="do">## View current labels</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>labelled<span class="sc">::</span><span class="fu">val_labels</span>(mil_data<span class="sc">$</span>income)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>                                                                          Less than £15,000 
-                                                                                          1 
-                                                                          £15,000 - £29,999 
-                                                                                          2 
-                                                                          £30,000 - £44,999 
-                                                                                          3 
-                                                                          £45,000 - £59,999 
-                                                                                          4 
-                                                                          £60,000 - £74,999 
-                                                                                          5 
-                                                                          £75,000 - £89,999 
-                                                                                          6 
-                                                                          More than £90,000 
-                                                                                          7 
-I prefer not to disclose information about my annual income as part of this research study. 
-                                                                                          8 </code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Replace the correct value</span></span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>labelled<span class="sc">::</span><span class="fu">val_label</span>(mil_data<span class="sc">$</span>income, <span class="dv">8</span>) <span class="ot">&lt;-</span> <span class="st">"Prefer not to say."</span></span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Check this has been done correctly</span></span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>labelled<span class="sc">::</span><span class="fu">val_labels</span>(mil_data<span class="sc">$</span>income)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> Less than £15,000  £15,000 - £29,999  £30,000 - £44,999  £45,000 - £59,999 
-                 1                  2                  3                  4 
- £60,000 - £74,999  £75,000 - £89,999  More than £90,000 Prefer not to say. 
-                 5                  6                  7                  8 </code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
 </div>
 </div>
 </section>
@@ -1472,7 +1297,7 @@ I prefer not to disclose information about my annual income as part of this rese
 <h2 class="anchored" data-anchor-id="data-dictionaries">Data Dictionaries</h2>
 <p>Once our labels have been cleaned and updated, we can finally produce a data dictionary for this dataset.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Why a data dictionary?">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-20-contents" aria-controls="callout-20" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1481,7 +1306,7 @@ Why a data dictionary?
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-23" class="callout-23-contents callout-collapse collapse">
+<div id="callout-20" class="callout-20-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>There’s two key reasons to produce a data dictionary for your dataset.</p>
 <p>First, data dictionaries (or “codebooks”) are very useful for understanding datasets, even your own. You may find yourself referring to it frequently when writing your methods and results, to remind yourself what different questions contain, what the text of the question was, etc.</p>
@@ -1492,11 +1317,11 @@ Why a data dictionary?
 <p>If you primarily need a quick reference as you’re working with your dataset, the delightful <code>sjPlot::view_df()</code> function makes this particularly easy.</p>
 <p>Let’s put <code>mil_data</code> into the <code>sjPlot::view_df()</code> function and see what it does. By default, the document opens in the Viewer, but you can also save the file it creates for further sharing - see the help documentation.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>sjPlot<span class="sc">::</span><span class="fu">view_df</span>(mil_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>sjPlot<span class="sc">::</span><span class="fu">view_df</span>(mil_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>If you’re happy with this, this is probably all you need to carry on. If you are keen to create your data dictionary <em>as a dataset</em> that you could further edit - or if you’d like a version of the data dictionary that more closely emulates SPSS’s Variable View - see below.</p>
 <div class="callout callout-style-default callout-warning callout-titled" title="HaRd Mode: Editable Data Dictonary">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-24-contents" aria-controls="callout-24" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1505,20 +1330,20 @@ HaRd Mode: Editable Data Dictonary
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-24" class="callout-24-contents callout-collapse collapse">
+<div id="callout-21" class="callout-21-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Use the <code>generate_dictionary()</code> function from the {labelled} packages to create a data dictionary for <code>mil_data</code>. To have the best look at it, I would recommend using <code>View()</code> to review it.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>mil_data <span class="sc">%&gt;%</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  labelled<span class="sc">::</span><span class="fu">generate_dictionary</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">View</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>mil_data <span class="sc">%&gt;%</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  labelled<span class="sc">::</span><span class="fu">generate_dictionary</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">View</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["pos"],"name":[1],"type":["int"],"align":["right"]},{"label":["variable"],"name":[2],"type":["chr"],"align":["left"]},{"label":["label"],"name":[3],"type":["chr"],"align":["left"]},{"label":["col_type"],"name":[4],"type":["chr"],"align":["left"]},{"label":["missing"],"name":[5],"type":["int"],"align":["right"]},{"label":["levels"],"name":[6],"type":["named list"],"align":["right"]},{"label":["value_labels"],"name":[7],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"english_fluency","3":"Please select which box best describes your English fluency. - How well can you speak English?","4":"dbl+lbl","5":"1","6":"<NULL>","7":"Very well, Well, Not well, Not at all"},{"1":"2","2":"age","3":"How old are you?","4":"dbl","5":"0","6":"<NULL>","7":""},{"1":"3","2":"gender","3":"What is your gender identity?  This question is optional. - Selected Choice","4":"dbl+lbl","5":"25","6":"<NULL>","7":"Male, Female, Non-binary, Other (please state below)"},{"1":"4","2":"income","3":"What is your annual income?  - Selected Choice","4":"dbl+lbl","5":"21","6":"<NULL>","7":"Less than £15,000, £15,000 - £29,999, £30,000 - £44,999, £45,000 - £59,999, £60,000 - £74,999, £75,000 - £89,999, More than £90,000, Prefer not to say."},{"1":"5","2":"occupation","3":"Occupational Status","4":"dbl+lbl","5":"21","6":"<NULL>","7":"Employed full time, Employed part time, Student, Unemployed looking for work, Unemployed not looking for work, Retired"},{"1":"6","2":"global_meaning_1","3":"Please rate the extent to which you agree or disagree with these statements. - My life as a whole has meaning.","4":"dbl+lbl","5":"16","6":"<NULL>","7":"Strongly disagree, Disagree, Somewhat disagree, Neither agree nor disagree, Somewhat agree, Agree, Strongly agree"},{"1":"7","2":"global_meaning_2","3":"Please rate the extent to which you agree or disagree with these statements. - My entire existence is full of meaning.","4":"dbl+lbl","5":"21","6":"<NULL>","7":"Strongly disagree, Disagree, Somewhat disagree, Neither agree nor disagree, Somewhat agree, Agree, Strongly agree"},{"1":"8","2":"global_meaning_3","3":"Please rate the extent to which you agree or disagree with these statements. - My life is meaningless.","4":"dbl+lbl","5":"20","6":"<NULL>","7":"Strongly disagree, Disagree, Somewhat disagree, Neither agree nor disagree, Somewhat agree, Agree, Strongly agree"},{"1":"9","2":"global_meaning_4","3":"Please rate the extent to which you agree or disagree with these statements. - My existence is empty of meaning.","4":"dbl+lbl","5":"18","6":"<NULL>","7":"Strongly disagree, Disagree, Somewhat disagree, Neither agree nor disagree, Somewhat agree, Agree, Strongly agree"},{"1":"10","2":"mattering_1","3":"Please rate the extent to which you agree or disagree with these statements. - Whether my life ever existed matters even in the grand scheme of the universe.","4":"dbl+lbl","5":"18","6":"<NULL>","7":"Strongly disagree, Disagree, Somewhat disagree, Neither agree nor disagree, Somewhat agree, Agree, Strongly agree"},{"1":"11","2":"mattering_2","3":"Please rate the extent to which you agree or disagree with these statements. - Even considering how big the universe is, I can say that my life matters.","4":"dbl+lbl","5":"18","6":"<NULL>","7":"Strongly disagree, Disagree, Somewhat disagree, Neither agree nor disagree, Somewhat agree, Agree, Strongly agree"},{"1":"12","2":"mattering_3","3":"Please rate the extent to which you agree or disagree with these statements. - My existence is not significant in the grand scheme of things.","4":"dbl+lbl","5":"21","6":"<NULL>","7":"Strongly disagree, Disagree, Somewhat disagree, Neither agree nor disagree, Somewhat agree, Agree, Strongly agree"},{"1":"13","2":"mattering_4","3":"Please rate the extent to which you agree or disagree with these statements. - Given the vastness of the universe, my life does not matter.","4":"dbl+lbl","5":"15","6":"<NULL>","7":"Strongly disagree, Disagree, Somewhat disagree, Neither agree nor disagree, Somewhat agree, Agree, Strongly agree"},{"1":"14","2":"belonging_1","3":"Please rate the extent to which these statements apply to you. - When I am with other people, I feel included","4":"dbl+lbl","5":"20","6":"<NULL>","7":"Strongly disagree, Disagree, Somewhat Disagree, Neither Agree nor Disagree, Somewhat agree, Agree, Strongly agree"},{"1":"15","2":"belonging_2","3":"Please rate the extent to which these statements apply to you. - I have close bonds with family and friends","4":"dbl+lbl","5":"15","6":"<NULL>","7":"Strongly disagree, Disagree, Somewhat Disagree, Neither Agree nor Disagree, Somewhat agree, Agree, Strongly agree"},{"1":"16","2":"belonging_3","3":"Please rate the extent to which these statements apply to you. - I feel accepted by others","4":"dbl+lbl","5":"18","6":"<NULL>","7":"Strongly disagree, Disagree, Somewhat Disagree, Neither Agree nor Disagree, Somewhat agree, Agree, Strongly agree"},{"1":"17","2":"belonging_4","3":"Please rate the extent to which these statements apply to you. - I have a sense of belonging","4":"dbl+lbl","5":"15","6":"<NULL>","7":"Strongly disagree, Disagree, Somewhat Disagree, Neither Agree nor Disagree, Somewhat agree, Agree, Strongly agree"},{"1":"18","2":"belonging_5","3":"Please rate the extent to which these statements apply to you. - I have a place at the table with others","4":"dbl+lbl","5":"18","6":"<NULL>","7":"Strongly disagree, Disagree, Somewhat Disagree, Neither Agree nor Disagree, Somewhat agree, Agree, Strongly agree"},{"1":"19","2":"belonging_6","3":"Please rate the extent to which these statements apply to you. - I feel connected with others","4":"dbl+lbl","5":"19","6":"<NULL>","7":"Strongly disagree, Disagree, Somewhat Disagree, Neither Agree nor Disagree, Somewhat agree, Agree, Strongly agree"},{"1":"20","2":"belonging_7","3":"Please rate the extent to which these statements apply to you. - I feel like an outsider","4":"dbl+lbl","5":"16","6":"<NULL>","7":"Strongly disagree, Disagree, Somewhat Disagree, Neither Agree nor Disagree, Somewhat agree, Agree, Strongly agree"},{"1":"21","2":"belonging_8","3":"Please rate the extent to which these statements apply to you. - I feel as if people do not care about me","4":"dbl+lbl","5":"18","6":"<NULL>","7":"Strongly disagree, Disagree, Somewhat Disagree, Neither Agree nor Disagree, Somewhat agree, Agree, Strongly agree"},{"1":"22","2":"belonging_9","3":"Please rate the extent to which these statements apply to you. - Because I do not belong, I feel distant during the holiday season","4":"dbl+lbl","5":"18","6":"<NULL>","7":"Strongly disagree, Disagree, Somewhat Disagree, Neither Agree nor Disagree, Somewhat agree, Agree, Strongly agree"},{"1":"23","2":"belonging_10","3":"Please rate the extent to which these statements apply to you. - I feel isolated from the rest of the world","4":"dbl+lbl","5":"17","6":"<NULL>","7":"Strongly disagree, Disagree, Somewhat Disagree, Neither Agree nor Disagree, Somewhat agree, Agree, Strongly agree"},{"1":"24","2":"belonging_11","3":"Please rate the extent to which these statements apply to you. - When I am with other people, I feel like a stranger","4":"dbl+lbl","5":"18","6":"<NULL>","7":"Strongly disagree, Disagree, Somewhat Disagree, Neither Agree nor Disagree, Somewhat agree, Agree, Strongly agree"},{"1":"25","2":"belonging_12","3":"Please rate the extent to which these statements apply to you. - Friends and family do not involve me in their plans","4":"dbl+lbl","5":"17","6":"<NULL>","7":"Strongly disagree, Disagree, Somewhat Disagree, Neither Agree nor Disagree, Somewhat agree, Agree, Strongly agree"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["pos"],"name":[1],"type":["int"],"align":["right"]},{"label":["variable"],"name":[2],"type":["chr"],"align":["left"]},{"label":["label"],"name":[3],"type":["chr"],"align":["left"]},{"label":["col_type"],"name":[4],"type":["chr"],"align":["left"]},{"label":["missing"],"name":[5],"type":["int"],"align":["right"]},{"label":["levels"],"name":[6],"type":["named list"],"align":["right"]},{"label":["value_labels"],"name":[7],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"english_fluency","3":"Please select which box best describes your English fluency. - How well can you speak English?","4":"dbl+lbl","5":"1","6":"<NULL>","7":"Very well, Well, Not well, Not at all"},{"1":"2","2":"age","3":"How old are you?","4":"dbl","5":"0","6":"<NULL>","7":""},{"1":"3","2":"gender","3":"What is your gender identity?  This question is optional. - Selected Choice","4":"dbl+lbl","5":"25","6":"<NULL>","7":"Male, Female, Non-binary, Other (please state below)"},{"1":"4","2":"income","3":"What is your annual income?  - Selected Choice","4":"dbl+lbl","5":"21","6":"<NULL>","7":"Less than £15,000, £15,000 - £29,999, £30,000 - £44,999, £45,000 - £59,999, £60,000 - £74,999, £75,000 - £89,999, More than £90,000, I prefer not to disclose information about my annual income as part of this research study."},{"1":"5","2":"occupation","3":"What is your job or occupation that you do most of the time? For example, are you employed, a student, unemployed, retired? - Selected Choice","4":"dbl+lbl","5":"21","6":"<NULL>","7":"Employed full time, Employed part time, Student, Unemployed looking for work, Unemployed not looking for work, Retired"},{"1":"6","2":"global_meaning_1","3":"Please rate the extent to which you agree or disagree with these statements. - My life as a whole has meaning.","4":"dbl+lbl","5":"16","6":"<NULL>","7":"Strongly disagree, Disagree, Somewhat disagree, Neither agree nor disagree, Somewhat agree, Agree, Strongly agree"},{"1":"7","2":"global_meaning_2","3":"Please rate the extent to which you agree or disagree with these statements. - My entire existence is full of meaning.","4":"dbl+lbl","5":"21","6":"<NULL>","7":"Strongly disagree, Disagree, Somewhat disagree, Neither agree nor disagree, Somewhat agree, Agree, Strongly agree"},{"1":"8","2":"global_meaning_3","3":"Please rate the extent to which you agree or disagree with these statements. - My life is meaningless.","4":"dbl+lbl","5":"20","6":"<NULL>","7":"Strongly disagree, Disagree, Somewhat disagree, Neither agree nor disagree, Somewhat agree, Agree, Strongly agree"},{"1":"9","2":"global_meaning_4","3":"Please rate the extent to which you agree or disagree with these statements. - My existence is empty of meaning.","4":"dbl+lbl","5":"18","6":"<NULL>","7":"Strongly disagree, Disagree, Somewhat disagree, Neither agree nor disagree, Somewhat agree, Agree, Strongly agree"},{"1":"10","2":"mattering_1","3":"Please rate the extent to which you agree or disagree with these statements. - Whether my life ever existed matters even in the grand scheme of the universe.","4":"dbl+lbl","5":"18","6":"<NULL>","7":"Strongly disagree, Disagree, Somewhat disagree, Neither agree nor disagree, Somewhat agree, Agree, Strongly agree"},{"1":"11","2":"mattering_2","3":"Please rate the extent to which you agree or disagree with these statements. - Even considering how big the universe is, I can say that my life matters.","4":"dbl+lbl","5":"18","6":"<NULL>","7":"Strongly disagree, Disagree, Somewhat disagree, Neither agree nor disagree, Somewhat agree, Agree, Strongly agree"},{"1":"12","2":"mattering_3","3":"Please rate the extent to which you agree or disagree with these statements. - My existence is not significant in the grand scheme of things.","4":"dbl+lbl","5":"21","6":"<NULL>","7":"Strongly disagree, Disagree, Somewhat disagree, Neither agree nor disagree, Somewhat agree, Agree, Strongly agree"},{"1":"13","2":"mattering_4","3":"Please rate the extent to which you agree or disagree with these statements. - Given the vastness of the universe, my life does not matter.","4":"dbl+lbl","5":"15","6":"<NULL>","7":"Strongly disagree, Disagree, Somewhat disagree, Neither agree nor disagree, Somewhat agree, Agree, Strongly agree"},{"1":"14","2":"belonging_1","3":"Please rate the extent to which these statements apply to you. - When I am with other people, I feel included","4":"dbl+lbl","5":"20","6":"<NULL>","7":"Strongly disagree, Disagree, Somewhat Disagree, Neither Agree nor Disagree, Somewhat agree, Agree, Strongly agree"},{"1":"15","2":"belonging_2","3":"Please rate the extent to which these statements apply to you. - I have close bonds with family and friends","4":"dbl+lbl","5":"15","6":"<NULL>","7":"Strongly disagree, Disagree, Somewhat Disagree, Neither Agree nor Disagree, Somewhat agree, Agree, Strongly agree"},{"1":"16","2":"belonging_3","3":"Please rate the extent to which these statements apply to you. - I feel accepted by others","4":"dbl+lbl","5":"18","6":"<NULL>","7":"Strongly disagree, Disagree, Somewhat Disagree, Neither Agree nor Disagree, Somewhat agree, Agree, Strongly agree"},{"1":"17","2":"belonging_4","3":"Please rate the extent to which these statements apply to you. - I have a sense of belonging","4":"dbl+lbl","5":"15","6":"<NULL>","7":"Strongly disagree, Disagree, Somewhat Disagree, Neither Agree nor Disagree, Somewhat agree, Agree, Strongly agree"},{"1":"18","2":"belonging_5","3":"Please rate the extent to which these statements apply to you. - I have a place at the table with others","4":"dbl+lbl","5":"18","6":"<NULL>","7":"Strongly disagree, Disagree, Somewhat Disagree, Neither Agree nor Disagree, Somewhat agree, Agree, Strongly agree"},{"1":"19","2":"belonging_6","3":"Please rate the extent to which these statements apply to you. - I feel connected with others","4":"dbl+lbl","5":"19","6":"<NULL>","7":"Strongly disagree, Disagree, Somewhat Disagree, Neither Agree nor Disagree, Somewhat agree, Agree, Strongly agree"},{"1":"20","2":"belonging_7","3":"Please rate the extent to which these statements apply to you. - I feel like an outsider","4":"dbl+lbl","5":"16","6":"<NULL>","7":"Strongly disagree, Disagree, Somewhat Disagree, Neither Agree nor Disagree, Somewhat agree, Agree, Strongly agree"},{"1":"21","2":"belonging_8","3":"Please rate the extent to which these statements apply to you. - I feel as if people do not care about me","4":"dbl+lbl","5":"18","6":"<NULL>","7":"Strongly disagree, Disagree, Somewhat Disagree, Neither Agree nor Disagree, Somewhat agree, Agree, Strongly agree"},{"1":"22","2":"belonging_9","3":"Please rate the extent to which these statements apply to you. - Because I do not belong, I feel distant during the holiday season","4":"dbl+lbl","5":"18","6":"<NULL>","7":"Strongly disagree, Disagree, Somewhat Disagree, Neither Agree nor Disagree, Somewhat agree, Agree, Strongly agree"},{"1":"23","2":"belonging_10","3":"Please rate the extent to which these statements apply to you. - I feel isolated from the rest of the world","4":"dbl+lbl","5":"17","6":"<NULL>","7":"Strongly disagree, Disagree, Somewhat Disagree, Neither Agree nor Disagree, Somewhat agree, Agree, Strongly agree"},{"1":"24","2":"belonging_11","3":"Please rate the extent to which these statements apply to you. - When I am with other people, I feel like a stranger","4":"dbl+lbl","5":"18","6":"<NULL>","7":"Strongly disagree, Disagree, Somewhat Disagree, Neither Agree nor Disagree, Somewhat agree, Agree, Strongly agree"},{"1":"25","2":"belonging_12","3":"Please rate the extent to which these statements apply to you. - Friends and family do not involve me in their plans","4":"dbl+lbl","5":"17","6":"<NULL>","7":"Strongly disagree, Disagree, Somewhat Disagree, Neither Agree nor Disagree, Somewhat agree, Agree, Strongly agree"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -1566,8 +1391,8 @@ Revision of Factors
 <div class="callout-body-container callout-body">
 <p>Let’s start by looking at an example factor to see how it appears. This isn’t in our dataset; instead, we can create factor data using the <code>factor()</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">factor</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>),</span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Male"</span>, <span class="st">"Female"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">factor</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>),</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Male"</span>, <span class="st">"Female"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] Male   Female Male   Male   Female
 Levels: Male Female</code></pre>
@@ -1576,9 +1401,9 @@ Levels: Male Female</code></pre>
 <p>The underlying values in the factor are numbers, here 1 and 2. The labels are applied to the values in ascending order of those values, so 1 becomes “Male”, “2” becomes “Female”, etc. Here, we don’t need to specify the levels; if you don’t elaborate otherwise, R will assume that they are the same as the unique values.</p>
 <p>You can also supply additional possible values, even if they haven’t been observed, using the <code>levels</code> argument:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">factor</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>),</span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>),</span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Male"</span>, <span class="st">"Female"</span>, <span class="st">"Non-binary"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">factor</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>),</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>),</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Male"</span>, <span class="st">"Female"</span>, <span class="st">"Non-binary"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] Male   Female Male   Male   Male  
 Levels: Male Female Non-binary</code></pre>
@@ -1606,11 +1431,11 @@ Tip
 <p>For example, we can convert the <code>gender</code> variable to factor as follows, using the <code>dplyr::mutate()</code> function to make a change to the dataset. Remember that using the same variable name as we have done here means that the existing variable will be replaced (overwritten) in the dataset.</p>
 <p>If we look at only this particular variable, we can see that its data type is now <code>&lt;fctr&gt;</code>, which is what we wanted.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>mil_data <span class="sc">%&gt;%</span> </span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">gender =</span> labelled<span class="sc">::</span><span class="fu">to_factor</span>(gender)</span>
-<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
-<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(gender)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>mil_data <span class="sc">%&gt;%</span> </span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">gender =</span> labelled<span class="sc">::</span><span class="fu">to_factor</span>(gender)</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(gender)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -1630,11 +1455,11 @@ Tip
 <p>As an example, we can use <code>unclass()</code> to convert <code>belonging_1</code> to numeric, using the <code>dplyr::mutate()</code> function to make a change to the dataset again.</p>
 <p>If we look at only this particular variable, we can see that its data type is now <code>&lt;dbl&gt;</code>, which is again what we wanted.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>mil_data <span class="sc">%&gt;%</span> </span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">belonging_1 =</span> <span class="fu">unclass</span>(belonging_1)</span>
-<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
-<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(belonging_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>mil_data <span class="sc">%&gt;%</span> </span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">belonging_1 =</span> <span class="fu">unclass</span>(belonging_1)</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(belonging_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -1662,19 +1487,19 @@ Tip
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-15" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="1,2" data-code-cell="annotated-cell-15" data-code-annotation="1">Take the dataset <code>dataset_name</code>, <em>and then</em> make a change to it as follows</span>
+<span data-code-lines="1,2" data-code-annotation="1" data-code-cell="annotated-cell-15">Take the dataset <code>dataset_name</code>, <em>and then</em> make a change to it as follows</span>
 </dd>
 <dt data-target-cell="annotated-cell-15" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="3" data-code-cell="annotated-cell-15" data-code-annotation="2">Apply to…</span>
+<span data-code-lines="3" data-code-annotation="2" data-code-cell="annotated-cell-15">Apply to…</span>
 </dd>
 <dt data-target-cell="annotated-cell-15" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-lines="4" data-code-cell="annotated-cell-15" data-code-annotation="3">The variables selected to be changed</span>
+<span data-code-lines="4" data-code-annotation="3" data-code-cell="annotated-cell-15">The variables selected to be changed</span>
 </dd>
 <dt data-target-cell="annotated-cell-15" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-lines="5" data-code-cell="annotated-cell-15" data-code-annotation="4">A function to apply to each of the selected variables</span>
+<span data-code-lines="5" data-code-annotation="4" data-code-cell="annotated-cell-15">A function to apply to each of the selected variables</span>
 </dd>
 </dl>
 </div>
@@ -1732,7 +1557,7 @@ Tip
 <h3 class="anchored" data-anchor-id="reverse-coding">Reverse Coding</h3>
 <p>You may or not have items in your questionnaire that are reverse-coded. There’s nothing in the data that will tell you this; you have to know what’s in your questionnaire, how the questions were designed, and which item(s) need reverse-coding. Make sure you check this carefully before you go on if working with your own data.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="What is reverse-coding?">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-29-contents" aria-controls="callout-29" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-26-contents" aria-controls="callout-26" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1741,7 +1566,7 @@ What is reverse-coding?
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-29" class="callout-29-contents callout-collapse collapse">
+<div id="callout-26" class="callout-26-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>In many multi-item measures, some items are reversed in the way that they capture a particular construct. For example, items on the State-Trait Inventory of Cognitive and Somatic Anxiety (STICSA, not in this example data) are worded so that a higher numerical response (closer to the “very much so” end of the scale) indicates <em>more</em> anxiety, such as item 4: “I think that others won’t approve of me”.</p>
 <p>However, reverse-coded items are intended to capture the same ideas, but in reverse. A reversed version a STICSA item might read, “I can concentrate easily with no intrusive thoughts.” In this case, a higher numerical response (closer to the “very much so” end of the scale) would indicate <em>less</em> anxiety. In order for these reversed items to be aligned with the other items on the scale, so that together they form a cohesive score, the coding of the response scale must be flipped: high becomes low, and low becomes high.</p>
@@ -1753,10 +1578,10 @@ What is reverse-coding?
 <p>First, we need to know the maximum possible value in this variable. Using our data dictionary, we can see that values range from 1 to 7. So, to reverse-code, we should subtract each value from the max value plus one = 7 + 1 = 8.</p>
 <p>Then, we simply overwrite the existing variable with the new scores:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>mil_data <span class="sc">%&gt;%</span> </span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">mattering_3 =</span> <span class="dv">8</span> <span class="sc">-</span> mattering_3</span>
-<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>mil_data <span class="sc">%&gt;%</span> </span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">mattering_3 =</span> <span class="dv">8</span> <span class="sc">-</span> mattering_3</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Note that it is recommended to overwrite the item, rather than create a new variable, so that you don’t accidently include the wrong or multiple versions in the next step.</p>
 </section>
@@ -1795,19 +1620,19 @@ Important
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-19" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="1" data-code-cell="annotated-cell-19" data-code-annotation="1">Overwrite the <code>mil_data</code> dataset with the following output: take the existing <code>mil_data</code> dataset, <em>and then</em></span>
+<span data-code-lines="1" data-code-annotation="1" data-code-cell="annotated-cell-19">Overwrite the <code>mil_data</code> dataset with the following output: take the existing <code>mil_data</code> dataset, <em>and then</em></span>
 </dd>
 <dt data-target-cell="annotated-cell-19" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="2" data-code-cell="annotated-cell-19" data-code-annotation="2">Group the dataset by row, so any subsequent calculations will be done for each row separately, <em>and then</em></span>
+<span data-code-lines="2" data-code-annotation="2" data-code-cell="annotated-cell-19">Group the dataset by row, so any subsequent calculations will be done for each row separately, <em>and then</em></span>
 </dd>
 <dt data-target-cell="annotated-cell-19" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-lines="3,4,5,6" data-code-cell="annotated-cell-19" data-code-annotation="3">Create the new <code>mattering_comp</code> variable by taking the mean of all the values in variables that start with the string “mattering” (ignoring any missing values), <em>and then</em></span>
+<span data-code-lines="3,4,5,6" data-code-annotation="3" data-code-cell="annotated-cell-19">Create the new <code>mattering_comp</code> variable by taking the mean of all the values in variables that start with the string “mattering” (ignoring any missing values), <em>and then</em></span>
 </dd>
 <dt data-target-cell="annotated-cell-19" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-lines="7" data-code-cell="annotated-cell-19" data-code-annotation="4">Remove the by-row grouping that was created by <code>rowwise()</code> to output an ungrouped dataset.</span>
+<span data-code-lines="7" data-code-annotation="4" data-code-cell="annotated-cell-19">Remove the by-row grouping that was created by <code>rowwise()</code> to output an ungrouped dataset.</span>
 </dd>
 </dl>
 </div>
@@ -1868,80 +1693,6 @@ Exercise
 <li>Reverse-code <code>global_meaning_2</code>.</li>
 <li>Create composite scores for all of the subscale variables.</li>
 </ol>
-<div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-32-contents" aria-controls="callout-32" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Solution
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-32" class="callout-32-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li>Produce a final data dictionary and save it.</li>
-</ol>
-<p>Using the help documentation, we can see there is a <code>file</code> argument. Providing a file path/name will save the output of this file into that file. For example, the command below will save the data dictionary as an HTML file to review or share.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>sjPlot<span class="sc">::</span><span class="fu">view_df</span>(mil_data, <span class="at">file =</span> <span class="st">"diss_dict.html"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ol start="2" type="1">
-<li>Convert all categorical variables to factor, and all scale rating variables to numeric.</li>
-</ol>
-<p>This can again be accomplished multiple ways. The first way involves listing each variable one by one. Below just a couple of variables are listed, but this would need to be done individually for every variable in the dataset that needs conversion.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>mil_data <span class="sc">%&gt;%</span> </span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">english_fluency =</span> labelled<span class="sc">::</span><span class="fu">to_factor</span>(english_fluency),</span>
-<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">mattering_1 =</span> <span class="fu">unclass</span>(mattering_1),</span>
-<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>    ...</span>
-<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Instead, you are strongly recommended to use <code>dplyr::across()</code> and selection helpers.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>mil_data <span class="ot">&lt;-</span> mil_data <span class="sc">%&gt;%</span> </span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Change all grouping variables to factor</span></span>
-<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">across</span>(<span class="fu">c</span>(english_fluency, gender, income, occupation),</span>
-<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>                  labelled<span class="sc">::</span>to_factor),</span>
-<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Change all subscale items to numeric</span></span>
-<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">across</span>(<span class="fu">contains</span>(<span class="fu">c</span>(<span class="st">"mattering"</span>, <span class="st">"global_meaning"</span>, <span class="st">"belonging"</span>)),</span>
-<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>                  unclass)</span>
-<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ol start="3" type="1">
-<li>Reverse-code <code>global_meaning_2</code>.</li>
-</ol>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>mil_data <span class="ot">&lt;-</span> mil_data <span class="sc">%&gt;%</span> </span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">global_meaning_2 =</span> <span class="dv">8</span> <span class="sc">-</span> global_meaning_2</span>
-<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ol start="4" type="1">
-<li>Create composite scores for all of the subscale variables.</li>
-</ol>
-<p>There are three subscales to calculate here for <code>belonging</code>, <code>global_meaning</code>, and <code>mattering</code>.</p>
-<p>Again, you can type the item names into this command one by one. This does require careful checking to avoid duplicating or leaving out items, especially for subscales with many items. On the other hand, this method is likely to work better if you need specific and nonsequential items for each subscale (for instance, if the subscale is items 2, 3, 7, 10, and 12). For a <code>&lt;tidyselect&gt;</code> way to accompish this, have a look at the selection helper <code>num_range()</code> in the <code>select()</code> help documentation.</p>
-<p>Instead, if all the items with the same prefix belong to the same subscale (as they do here), <code>c_across()</code> + selection helpers are much preferred.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>mil_data <span class="ot">&lt;-</span> mil_data <span class="sc">%&gt;%</span> </span>
-<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rowwise</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">belonging_comp =</span> <span class="fu">mean</span>(<span class="fu">c_across</span>(<span class="fu">starts_with</span>(<span class="st">"belonging"</span>)),</span>
-<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>                          <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">global_meaning_comp =</span> <span class="fu">mean</span>(<span class="fu">c_across</span>(<span class="fu">starts_with</span>(<span class="st">"global_meaning"</span>)),</span>
-<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a>                          <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">mattering_comp =</span> <span class="fu">mean</span>(<span class="fu">c_across</span>(<span class="fu">starts_with</span>(<span class="st">"mattering"</span>)),</span>
-<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a>                          <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
-<span id="cb56-11"><a href="#cb56-11" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</div>
-</div>
 </div>
 </div>
 <p>&nbsp;</p>
