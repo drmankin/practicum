@@ -36,7 +36,6 @@ website:
       contents: 
         - tutorials.qmd
         - quick_ref.qmd
-        - data_workbooks.qmd
         - section: "FundRmentals"
           contents:
             - auto: tutorials/psychrlogy/01_fundRmentals/*
@@ -59,6 +58,7 @@ website:
       background: "#d0d3d4"
       contents:
         - resources.qmd
+        - data_workbooks.qmd
         - section: "FAQs"
           contents:
             - auto: resources/faqs/*
