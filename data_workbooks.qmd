@@ -7,7 +7,8 @@ title: 'Data and Workbooks'
 
 
 Download and save datasets to use for tutorial tasks here.
-Either copy the link to use in `readr::read_csv()`, or save the data at the link to a .csv file to read in.
+Either copy the link to use in a reading-in function (e.g. `readr::read_csv()`, `haven::read_sav()`), or save the data at the link to a file to read in.
+Make sure that if you save the file, you keep the correct file suffix!
 
 
 <table class="table" style="margin-left: auto; margin-right: auto;">
@@ -20,12 +21,6 @@ Either copy the link to use in `readr::read_csv()`, or save the data at the link
   </tr>
  </thead>
 <tbody>
-  <tr>
-   <td style="text-align:left;"> syn_data.csv </td>
-   <td style="text-align:left;"> <a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0155483">Mealor et al., 2016</a> </td>
-   <td style="text-align:left;"> Dataset publicly available </td>
-   <td style="text-align:left;"> <a href="https://raw.githubusercontent.com/drmankin/practicum/master/data/syn_data.csv">Download syn_data.csv</a> </td>
-  </tr>
   <tr>
    <td style="text-align:left;"> anx_data.csv </td>
    <td style="text-align:left;"> <a href="https://osf.io/8jk5v/">Terry, Lea, &amp; Field (in prep)</a> </td>
@@ -46,9 +41,21 @@ Either copy the link to use in `readr::read_csv()`, or save the data at the link
   </tr>
   <tr>
    <td style="text-align:left;"> mil_data.sav </td>
-   <td style="text-align:left;"> <a href="https://profiles.sussex.ac.uk/p323096-vlad-costin">Eldarwish et al, (in prep)</a> </td>
+   <td style="text-align:left;"> <a href="https://profiles.sussex.ac.uk/p323096-vlad-costin">Eldarwish et al., (in prep)</a> </td>
    <td style="text-align:left;"> Dataset expected to be publicly available in the future. Note that this dataset is entirely simulated, based on existing real data. </td>
    <td style="text-align:left;"> <a href="https://raw.githubusercontent.com/drmankin/practicum/master/data/mil_data.sav">Download mil_data.sav</a> </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> mil_data_wkshp.sav </td>
+   <td style="text-align:left;"> <a href="https://profiles.sussex.ac.uk/p323096-vlad-costin">Eldarwish et al., (in prep)</a> </td>
+   <td style="text-align:left;"> Version of mil_data.sav with additional simulated variables for workshop use, contributed by Dr Dan Evans </td>
+   <td style="text-align:left;"> <a href="https://raw.githubusercontent.com/drmankin/practicum/master/data/mil_data_wkshp.sav">Download mil_data_wkshp.sav</a> </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> syn_data.csv </td>
+   <td style="text-align:left;"> <a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0155483">Mealor et al., 2016</a> </td>
+   <td style="text-align:left;"> Dataset publicly available </td>
+   <td style="text-align:left;"> <a href="https://raw.githubusercontent.com/drmankin/practicum/master/data/syn_data.csv">Download syn_data.csv</a> </td>
   </tr>
 </tbody>
 </table>
@@ -62,7 +69,7 @@ or click through to view the text and copy/paste into an empty .Qmd document.
 <table class="table" style="margin-left: auto; margin-right: auto;">
  <thead>
   <tr>
-   <th style="text-align:left;"> Tutorial </th>
+   <th style="text-align:left;"> Tutorial/Workshop Name </th>
    <th style="text-align:left;"> Download </th>
   </tr>
  </thead>
@@ -102,6 +109,10 @@ or click through to view the text and copy/paste into an empty .Qmd document.
   <tr>
    <td style="text-align:left;"> 10: Qualtrics and Labelled Data </td>
    <td style="text-align:left;"> <a href="https://raw.githubusercontent.com/drmankin/practicum/master/workbooks/10_qtrics_workbook.qmd" download="10_qtrics_workbook.qmd">Download 10_qtrics_workbook.qmd</a> </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Working with Qualtrics Data </td>
+   <td style="text-align:left;"> <a href="https://raw.githubusercontent.com/drmankin/practicum/master/workbooks/qualtrics_workshop_workbook.qmd" download="qualtrics_workshop_workbook.qmd">Download qualtrics_workshop_workbook.qmd</a> </td>
   </tr>
 </tbody>
 </table>

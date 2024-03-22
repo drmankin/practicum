@@ -130,7 +130,7 @@ In the "Download a data table" menu, choose "SPSS" from the choices along the to
 
 ![](/images/qtrics_spss.png){fig-alt="A screenshot the Qualtrics Download a Data Table screen with red boxes indicating the steps to take to export SPSS data: SPSS tab, Download button."}
 
-The dataset will download automatically to your computer's Downloads folder. From there, you should rename it to something sensible and move it into a `data` folder within your project folder. From there, you can read it in using the `here::here() %>% haven::read_sav()` combo that we saw in the Data section previously.
+The dataset will download automatically to your computer's Downloads folder. From there, you should rename it to something sensible and move it into a `data` folder within your project folder. From there, you can read it in using the `here::here() %>% haven::read_sav()` combo that we will seee in the Data section in just a moment.
 
 ::: {.callout-tip title="Sensible Naming Conventions and Folder Structure" collapse="false"}
 Sensible file and folder names will make your life so much easier for working in R (and generally).
@@ -188,23 +188,35 @@ You might notice that instead of the familiar `readr::read_csv()`, today we have
 :::
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-Read in the `mil_data.sav` object from the data folder, or alternatively from Github via URL, as you prefer.
+Read in the `mil_data.sav` object from folder, or alternatively from Github via URL, as you prefer.
 
-URL: https://github.com/de84sussex/data/raw/main/mil_data.sav
+On the Cloud, you can read in this dataset from the `data` folder using `here::here()`.
+
+Elsewhere, you can download the dataset, or copy the dataset URL, from the [Data and Workbooks page](../../data_workbooks.qmd).
 
 ::: {.callout-note collapse="true" title="Solution"}
-From a folder:
+
+On the Cloud:
 
 ```{r}
 #| eval: false
-#| 
+
 mil_data <- here::here("data/mil_data.sav") %>% haven::read_sav()
+```
+
+From a folder:
+
+```{r}
+
+mil_data <- here::here("data/mil_data_wkshp.sav") %>% haven::read_sav()
 ```
 
 From URL:
 
 ```{r}
-mil_data <- haven::read_sav("https://github.com/de84sussex/data/raw/main/mil_data.sav")
+#| eval: false
+
+mil_data <- haven::read_sav("https://raw.githubusercontent.com/drmankin/practicum/master/data/mil_data_wkshp.sav")
 ```
 :::
 :::
@@ -869,7 +881,7 @@ For example, we can convert the `gender` variable to factor as follows, using th
 If we look at only this particular variable, we can see that its data type is now `<fctr>`, which is what we wanted.
 
 ```{r}
-mil_data <- mil_data %>% 
+mil_data %>% 
   dplyr::mutate(
     gender = labelled::to_factor(gender)
   ) %>% 
