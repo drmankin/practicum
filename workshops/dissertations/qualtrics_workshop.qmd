@@ -23,6 +23,14 @@ Separate into clear sections. Keep in mind we have two hours total.
 
 This tutorial will focus on efficient, transparent, and user-friendly techniques for working with data specifically gathered using the [Qualtrics survey platform](https://www.qualtrics.com/). We will cover how to import and work with labelled data from Qualtrics and how to easily produce a data dictionary straight from the dataset itself.
 
+::: callout-important
+
+This is the live version of the workshop tutorial, with no solutions for exercises. It's recommended to use this one the first time through to work on the exercises yourself.
+
+If you'd like the complete version, see the [Solutions version of this same workshop tutorial](qualtrics_workshop_sol.qmd) which includes all code for exercises along with extra tips and explanations.
+
+:::
+
 ### Acknowledgements
 
 This tutorial was co-written with [Dr Dan Evans](https://drdanielleevans.netlify.app/), drawing on her existing resources for Qualtrics and her extensive experience supporting dissertation students.

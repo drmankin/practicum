@@ -323,6 +323,20 @@ Separate into clear sections. Keep in mind we have two hours total.
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
 <p>This tutorial will focus on efficient, transparent, and user-friendly techniques for working with data specifically gathered using the <a href="https://www.qualtrics.com/">Qualtrics survey platform</a>. We will cover how to import and work with labelled data from Qualtrics and how to easily produce a data dictionary straight from the dataset itself.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This is the live version of the workshop tutorial, with no solutions for exercises. It’s recommended to use this one the first time through to work on the exercises yourself.</p>
+<p>If you’d like the complete version, see the <a href="../../workshops/dissertations/qualtrics_workshop_sol.html">Solutions version of this same workshop tutorial</a> which includes all code for exercises along with extra tips and explanations.</p>
+</div>
+</div>
 <section id="acknowledgements" class="level3">
 <h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
 <p>This tutorial was co-written with <a href="https://drdanielleevans.netlify.app/">Dr Dan Evans</a>, drawing on her existing resources for Qualtrics and her extensive experience supporting dissertation students.</p>
@@ -423,7 +437,7 @@ Tip
 <p><img src="../..\images/qtrics_spss.png" class="img-fluid" alt="A screenshot the Qualtrics Download a Data Table screen with red boxes indicating the steps to take to export SPSS data: SPSS tab, Download button."></p>
 <p>The dataset will download automatically to your computer’s Downloads folder. From there, you should rename it to something sensible and move it into a <code>data</code> folder within your project folder. From there, you can read it in using the <code>here::here() %&gt;% haven::read_sav()</code> combo that we saw in the Data section previously.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Sensible Naming Conventions and Folder Structure">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -432,7 +446,7 @@ Sensible Naming Conventions and Folder Structure
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse show">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <p>Sensible file and folder names will make your life so much easier for working in R (and generally).</p>
 <p>For folder structure, make sure you do the following:</p>
@@ -474,7 +488,7 @@ Exercise
 <div class="callout-body-container callout-body">
 <p>Load the packages.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -483,7 +497,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
@@ -526,7 +540,7 @@ Exercise
 <p>Read in the <code>mil_data.sav</code> object from the data folder, or alternatively from Github via URL, as you prefer.</p>
 <p>URL: https://github.com/de84sussex/data/raw/main/mil_data.sav</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -535,7 +549,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>From a folder:</p>
 <div class="cell">
@@ -554,7 +568,7 @@ Solution
 <h4 class="anchored" data-anchor-id="codebook">Codebook</h4>
 <p>This codebook is intentionally sparse, because we’ll be generating our own from the dataset in just a moment. This table covers only the demographic and questionnaire measures to help you understand the variables.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Codebook">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -563,7 +577,7 @@ Codebook
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-9" class="callout-9-contents callout-collapse collapse show">
+<div id="callout-10" class="callout-10-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="cell-output-display">
@@ -755,31 +769,31 @@ Codebook
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="1" data-code-annotation="1" data-code-cell="annotated-cell-1">Take the dataset <code>dataset_name</code>, <em>and then</em></span>
+<span data-code-cell="annotated-cell-1" data-code-lines="1" data-code-annotation="1">Take the dataset <code>dataset_name</code>, <em>and then</em></span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="2" data-code-annotation="2" data-code-cell="annotated-cell-1">Select the following variables:</span>
+<span data-code-cell="annotated-cell-1" data-code-lines="2" data-code-annotation="2">Select the following variables:</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-lines="3" data-code-annotation="3" data-code-cell="annotated-cell-1">The name of a variable to be included in the output. Multiple variables can be selected separated by commas.</span>
+<span data-code-cell="annotated-cell-1" data-code-lines="3" data-code-annotation="3">The name of a variable to be included in the output. Multiple variables can be selected separated by commas.</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-lines="4" data-code-annotation="4" data-code-cell="annotated-cell-1">The name of a variable to be excluded from the output. Use either an exclamation mark (<code>!</code>) or a minus sign (<code>-</code>) in front of each variable to exclude. Multiple variables can be dropped, separated by commas with a <code>!</code> (or <code>-</code>) before each.</span>
+<span data-code-cell="annotated-cell-1" data-code-lines="4" data-code-annotation="4">The name of a variable to be excluded from the output. Use either an exclamation mark (<code>!</code>) or a minus sign (<code>-</code>) in front of each variable to exclude. Multiple variables can be dropped, separated by commas with a <code>!</code> (or <code>-</code>) before each.</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-lines="5" data-code-annotation="5" data-code-cell="annotated-cell-1">A range of variables to include in the output. All the variables between and including the two named will be selected (or dropped, with <code>!(drop_this_one:through_this_one)</code>).</span>
+<span data-code-cell="annotated-cell-1" data-code-lines="5" data-code-annotation="5">A range of variables to include in the output. All the variables between and including the two named will be selected (or dropped, with <code>!(drop_this_one:through_this_one)</code>).</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="6">6</dt>
 <dd>
-<span data-code-lines="6" data-code-annotation="6" data-code-cell="annotated-cell-1">Include <code>variable_to_rename</code> in the output, but call it <code>new_name</code>.</span>
+<span data-code-cell="annotated-cell-1" data-code-lines="6" data-code-annotation="6">Include <code>variable_to_rename</code> in the output, but call it <code>new_name</code>.</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="7">7</dt>
 <dd>
-<span data-code-lines="7" data-code-annotation="7" data-code-cell="annotated-cell-1">Include a variable in the output by where it appears in the dataset, numbered left to right. For example, “2” will select the second column in the original dataset.</span>
+<span data-code-cell="annotated-cell-1" data-code-lines="7" data-code-annotation="7">Include a variable in the output by where it appears in the dataset, numbered left to right. For example, “2” will select the second column in the original dataset.</span>
 </dd>
 </dl>
 </div>
@@ -849,15 +863,15 @@ Important
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="1" data-code-annotation="1" data-code-cell="annotated-cell-3">Take the dataset <code>dataset_name</code>, <em>and then</em></span>
+<span data-code-cell="annotated-cell-3" data-code-lines="1" data-code-annotation="1">Take the dataset <code>dataset_name</code>, <em>and then</em></span>
 </dd>
 <dt data-target-cell="annotated-cell-3" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="2" data-code-annotation="2" data-code-cell="annotated-cell-3">Rename the following variables:</span>
+<span data-code-cell="annotated-cell-3" data-code-lines="2" data-code-annotation="2">Rename the following variables:</span>
 </dd>
 <dt data-target-cell="annotated-cell-3" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-lines="3" data-code-annotation="3" data-code-cell="annotated-cell-3">The new name (<code>new_name</code>) you would like to give to an existing variable (<code>old_name</code>).</span>
+<span data-code-cell="annotated-cell-3" data-code-lines="3" data-code-annotation="3">The new name (<code>new_name</code>) you would like to give to an existing variable (<code>old_name</code>).</span>
 </dd>
 </dl>
 </div>
@@ -886,7 +900,7 @@ Important
 <h4 class="anchored" data-anchor-id="option-3-rename_with">Option 3: <code>rename_with()</code></h4>
 <p>This option requires considerable proficiency and experience with R. It is by far the quickest and most efficient of these options, but you must be able to write anonymous functions, use regular expressions and selection helpers, and have good working knowledge of how to debug errors and check output. If any of those things are unfamiliar, use one of the two previous options instead.</p>
 <div class="callout callout-style-default callout-warning callout-titled" title="HaRd Mode: Using `rename_with()`">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -895,7 +909,7 @@ HaRd Mode: Using <code>rename_with()</code>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The versatile <code>dplyr::rename_with()</code> function allows quick, efficient, and accurate renaming of large groups of variables at once. The general form is:</p>
 <div class="cell">
@@ -922,15 +936,15 @@ HaRd Mode: Using <code>rename_with()</code>
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="1,2" data-code-annotation="1" data-code-cell="annotated-cell-2">Take the <code>mil_data</code> dataset <em>and then</em> rename variables as follows</span>
+<span data-code-cell="annotated-cell-2" data-code-lines="1,2" data-code-annotation="1">Take the <code>mil_data</code> dataset <em>and then</em> rename variables as follows</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="3" data-code-annotation="2" data-code-cell="annotated-cell-2">Replace every instance of the string “Q11” with the string “belonging”</span>
+<span data-code-cell="annotated-cell-2" data-code-lines="3" data-code-annotation="2">Replace every instance of the string “Q11” with the string “belonging”</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-lines="4" data-code-annotation="3" data-code-cell="annotated-cell-2">Do this for every column that currently starts with the string “Q11”</span>
+<span data-code-cell="annotated-cell-2" data-code-lines="4" data-code-annotation="3">Do this for every column that currently starts with the string “Q11”</span>
 </dd>
 </dl>
 </div>
@@ -1044,7 +1058,7 @@ Important
 </div>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled" title="HaRd Mode: Using Regular Expressions">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1053,7 +1067,7 @@ HaRd Mode: Using Regular Expressions
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-15" class="callout-15-contents callout-collapse collapse">
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Regular expressions are the magic of working with code. They are also fiddly, confusing, and difficult. If you’re not keen on spending a lot of time learning what is in essence a new mini-language, skip this section!</p>
 <p>Editing labels is a good opportunity to start working with regular expressions. For example, if we want to keep only the first bit of the label for <code>gender</code>, then we can keep everything only up to and including the question mark, and re-assign that to the variable label. This style is a bit more dynamic and resilient to changes or updates.</p>
@@ -1163,7 +1177,7 @@ HaRd Mode: Using Regular Expressions
 <h3 class="anchored" data-anchor-id="missing-values">Missing Values</h3>
 <p>This section is included especially for people who may have previous experience with SPSS, and are learning how to adapt their SPSS knowledge to R. Unless you make regular use of SPSS’s alternative options for managing missing values, you can skip this section.</p>
 <div class="callout callout-style-default callout-warning callout-titled" title="HaRd Mode: Missing Values">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1172,7 +1186,7 @@ HaRd Mode: Missing Values
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-17" class="callout-17-contents callout-collapse collapse">
+<div id="callout-18" class="callout-18-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Labelled data allows an extra functionality from SPSS, namely to create user-defined “missing” values. These missing values aren’t <em>actually</em> missing, in the sense that the participant didn’t respond at all. Rather, they might be missing in the sense that a participant selected an option like “don’t know”, “doesn’t apply”, “prefer not to say”, etc.</p>
 <p>Let’s look at an example. As we’ve just seen, we can get out all the value labels in variable with <code>labelled::val_labels()</code>:</p>
@@ -1297,7 +1311,7 @@ Exercise
 <h2 class="anchored" data-anchor-id="data-dictionaries">Data Dictionaries</h2>
 <p>Once our labels have been cleaned and updated, we can finally produce a data dictionary for this dataset.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Why a data dictionary?">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-20-contents" aria-controls="callout-20" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1306,7 +1320,7 @@ Why a data dictionary?
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-20" class="callout-20-contents callout-collapse collapse">
+<div id="callout-21" class="callout-21-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>There’s two key reasons to produce a data dictionary for your dataset.</p>
 <p>First, data dictionaries (or “codebooks”) are very useful for understanding datasets, even your own. You may find yourself referring to it frequently when writing your methods and results, to remind yourself what different questions contain, what the text of the question was, etc.</p>
@@ -1321,7 +1335,7 @@ Why a data dictionary?
 </div>
 <p>If you’re happy with this, this is probably all you need to carry on. If you are keen to create your data dictionary <em>as a dataset</em> that you could further edit - or if you’d like a version of the data dictionary that more closely emulates SPSS’s Variable View - see below.</p>
 <div class="callout callout-style-default callout-warning callout-titled" title="HaRd Mode: Editable Data Dictonary">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-22-contents" aria-controls="callout-22" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1330,7 +1344,7 @@ HaRd Mode: Editable Data Dictonary
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-21" class="callout-21-contents callout-collapse collapse">
+<div id="callout-22" class="callout-22-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Use the <code>generate_dictionary()</code> function from the {labelled} packages to create a data dictionary for <code>mil_data</code>. To have the best look at it, I would recommend using <code>View()</code> to review it.</p>
 <div class="cell">
@@ -1487,19 +1501,19 @@ Tip
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-15" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="1,2" data-code-annotation="1" data-code-cell="annotated-cell-15">Take the dataset <code>dataset_name</code>, <em>and then</em> make a change to it as follows</span>
+<span data-code-cell="annotated-cell-15" data-code-lines="1,2" data-code-annotation="1">Take the dataset <code>dataset_name</code>, <em>and then</em> make a change to it as follows</span>
 </dd>
 <dt data-target-cell="annotated-cell-15" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="3" data-code-annotation="2" data-code-cell="annotated-cell-15">Apply to…</span>
+<span data-code-cell="annotated-cell-15" data-code-lines="3" data-code-annotation="2">Apply to…</span>
 </dd>
 <dt data-target-cell="annotated-cell-15" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-lines="4" data-code-annotation="3" data-code-cell="annotated-cell-15">The variables selected to be changed</span>
+<span data-code-cell="annotated-cell-15" data-code-lines="4" data-code-annotation="3">The variables selected to be changed</span>
 </dd>
 <dt data-target-cell="annotated-cell-15" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-lines="5" data-code-annotation="4" data-code-cell="annotated-cell-15">A function to apply to each of the selected variables</span>
+<span data-code-cell="annotated-cell-15" data-code-lines="5" data-code-annotation="4">A function to apply to each of the selected variables</span>
 </dd>
 </dl>
 </div>
@@ -1557,7 +1571,7 @@ Tip
 <h3 class="anchored" data-anchor-id="reverse-coding">Reverse Coding</h3>
 <p>You may or not have items in your questionnaire that are reverse-coded. There’s nothing in the data that will tell you this; you have to know what’s in your questionnaire, how the questions were designed, and which item(s) need reverse-coding. Make sure you check this carefully before you go on if working with your own data.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="What is reverse-coding?">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-26-contents" aria-controls="callout-26" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-27-contents" aria-controls="callout-27" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1566,7 +1580,7 @@ What is reverse-coding?
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-26" class="callout-26-contents callout-collapse collapse">
+<div id="callout-27" class="callout-27-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>In many multi-item measures, some items are reversed in the way that they capture a particular construct. For example, items on the State-Trait Inventory of Cognitive and Somatic Anxiety (STICSA, not in this example data) are worded so that a higher numerical response (closer to the “very much so” end of the scale) indicates <em>more</em> anxiety, such as item 4: “I think that others won’t approve of me”.</p>
 <p>However, reverse-coded items are intended to capture the same ideas, but in reverse. A reversed version a STICSA item might read, “I can concentrate easily with no intrusive thoughts.” In this case, a higher numerical response (closer to the “very much so” end of the scale) would indicate <em>less</em> anxiety. In order for these reversed items to be aligned with the other items on the scale, so that together they form a cohesive score, the coding of the response scale must be flipped: high becomes low, and low becomes high.</p>
@@ -1620,19 +1634,19 @@ Important
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-19" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="1" data-code-annotation="1" data-code-cell="annotated-cell-19">Overwrite the <code>mil_data</code> dataset with the following output: take the existing <code>mil_data</code> dataset, <em>and then</em></span>
+<span data-code-cell="annotated-cell-19" data-code-lines="1" data-code-annotation="1">Overwrite the <code>mil_data</code> dataset with the following output: take the existing <code>mil_data</code> dataset, <em>and then</em></span>
 </dd>
 <dt data-target-cell="annotated-cell-19" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="2" data-code-annotation="2" data-code-cell="annotated-cell-19">Group the dataset by row, so any subsequent calculations will be done for each row separately, <em>and then</em></span>
+<span data-code-cell="annotated-cell-19" data-code-lines="2" data-code-annotation="2">Group the dataset by row, so any subsequent calculations will be done for each row separately, <em>and then</em></span>
 </dd>
 <dt data-target-cell="annotated-cell-19" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-lines="3,4,5,6" data-code-annotation="3" data-code-cell="annotated-cell-19">Create the new <code>mattering_comp</code> variable by taking the mean of all the values in variables that start with the string “mattering” (ignoring any missing values), <em>and then</em></span>
+<span data-code-cell="annotated-cell-19" data-code-lines="3,4,5,6" data-code-annotation="3">Create the new <code>mattering_comp</code> variable by taking the mean of all the values in variables that start with the string “mattering” (ignoring any missing values), <em>and then</em></span>
 </dd>
 <dt data-target-cell="annotated-cell-19" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-lines="7" data-code-annotation="4" data-code-cell="annotated-cell-19">Remove the by-row grouping that was created by <code>rowwise()</code> to output an ungrouped dataset.</span>
+<span data-code-cell="annotated-cell-19" data-code-lines="7" data-code-annotation="4">Remove the by-row grouping that was created by <code>rowwise()</code> to output an ungrouped dataset.</span>
 </dd>
 </dl>
 </div>
