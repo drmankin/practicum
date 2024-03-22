@@ -223,10 +223,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup">Setup</a>
   <ul>
   <li><a href="#packages" id="toc-packages" class="nav-link" data-scroll-target="#packages">Packages</a></li>
-  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a>
-  <ul class="collapse">
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
   <li><a href="#codebook" id="toc-codebook" class="nav-link" data-scroll-target="#codebook">Codebook</a></li>
-  </ul></li>
   </ul></li>
   <li><a href="#variable-names" id="toc-variable-names" class="nav-link" data-scroll-target="#variable-names">Variable Names</a>
   <ul>
@@ -549,8 +547,9 @@ Solution
 </div>
 </div>
 </div>
-<section id="codebook" class="level4">
-<h4 class="anchored" data-anchor-id="codebook">Codebook</h4>
+</section>
+<section id="codebook" class="level3">
+<h3 class="anchored" data-anchor-id="codebook">Codebook</h3>
 <p>This codebook is intentionally sparse, because we’ll be generating our own from the dataset in just a moment. This table covers only the demographic and questionnaire measures to help you understand the variables.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Codebook">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="true" aria-label="Toggle callout">
@@ -724,7 +723,7 @@ Codebook
 </div>
 </div>
 </div>
-</section>
+<p>For easy navigation, jump to: <a href="#renaming">Renaming</a>, <a href="#exercises-names">Exercises: Names</a></p>
 </section>
 </section>
 <section id="variable-names" class="level2">
@@ -754,31 +753,31 @@ Codebook
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-cell="annotated-cell-1" data-code-lines="1">Take the dataset <code>dataset_name</code>, <em>and then</em></span>
+<span data-code-lines="1" data-code-cell="annotated-cell-1" data-code-annotation="1">Take the dataset <code>dataset_name</code>, <em>and then</em></span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-annotation="2" data-code-cell="annotated-cell-1" data-code-lines="2">Select the following variables:</span>
+<span data-code-lines="2" data-code-cell="annotated-cell-1" data-code-annotation="2">Select the following variables:</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-annotation="3" data-code-cell="annotated-cell-1" data-code-lines="3">The name of a variable to be included in the output. Multiple variables can be selected separated by commas.</span>
+<span data-code-lines="3" data-code-cell="annotated-cell-1" data-code-annotation="3">The name of a variable to be included in the output. Multiple variables can be selected separated by commas.</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-annotation="4" data-code-cell="annotated-cell-1" data-code-lines="4">The name of a variable to be excluded from the output. Use either an exclamation mark (<code>!</code>) or a minus sign (<code>-</code>) in front of each variable to exclude. Multiple variables can be dropped, separated by commas with a <code>!</code> (or <code>-</code>) before each.</span>
+<span data-code-lines="4" data-code-cell="annotated-cell-1" data-code-annotation="4">The name of a variable to be excluded from the output. Use either an exclamation mark (<code>!</code>) or a minus sign (<code>-</code>) in front of each variable to exclude. Multiple variables can be dropped, separated by commas with a <code>!</code> (or <code>-</code>) before each.</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-annotation="5" data-code-cell="annotated-cell-1" data-code-lines="5">A range of variables to include in the output. All the variables between and including the two named will be selected (or dropped, with <code>!(drop_this_one:through_this_one)</code>).</span>
+<span data-code-lines="5" data-code-cell="annotated-cell-1" data-code-annotation="5">A range of variables to include in the output. All the variables between and including the two named will be selected (or dropped, with <code>!(drop_this_one:through_this_one)</code>).</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="6">6</dt>
 <dd>
-<span data-code-annotation="6" data-code-cell="annotated-cell-1" data-code-lines="6">Include <code>variable_to_rename</code> in the output, but call it <code>new_name</code>.</span>
+<span data-code-lines="6" data-code-cell="annotated-cell-1" data-code-annotation="6">Include <code>variable_to_rename</code> in the output, but call it <code>new_name</code>.</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="7">7</dt>
 <dd>
-<span data-code-annotation="7" data-code-cell="annotated-cell-1" data-code-lines="7">Include a variable in the output by where it appears in the dataset, numbered left to right. For example, “2” will select the second column in the original dataset.</span>
+<span data-code-lines="7" data-code-cell="annotated-cell-1" data-code-annotation="7">Include a variable in the output by where it appears in the dataset, numbered left to right. For example, “2” will select the second column in the original dataset.</span>
 </dd>
 </dl>
 </div>
@@ -848,20 +847,20 @@ Important
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-cell="annotated-cell-3" data-code-lines="1">Take the dataset <code>dataset_name</code>, <em>and then</em></span>
+<span data-code-lines="1" data-code-cell="annotated-cell-3" data-code-annotation="1">Take the dataset <code>dataset_name</code>, <em>and then</em></span>
 </dd>
 <dt data-target-cell="annotated-cell-3" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-annotation="2" data-code-cell="annotated-cell-3" data-code-lines="2">Rename the following variables:</span>
+<span data-code-lines="2" data-code-cell="annotated-cell-3" data-code-annotation="2">Rename the following variables:</span>
 </dd>
 <dt data-target-cell="annotated-cell-3" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-annotation="3" data-code-cell="annotated-cell-3" data-code-lines="3">The new name (<code>new_name</code>) you would like to give to an existing variable (<code>old_name</code>).</span>
+<span data-code-lines="3" data-code-cell="annotated-cell-3" data-code-annotation="3">The new name (<code>new_name</code>) you would like to give to an existing variable (<code>old_name</code>).</span>
 </dd>
 </dl>
 </div>
 </div>
-<p>You can list as many of these <code>new_name = old_name</code> pairs as you like. For example, let’s rename the Global Meaning items so they have sensible prefixes. We should keep the item numbers as they are, so we know which one is which.</p>
+<p>You can list as many of these <code>new_name = old_name</code> pairs as you like. For example, let’s rename the Global Meaning items so they have sensible prefixes (refer to the <a href="#codebook">Codebook</a> for which variables these are!). We should keep the item numbers as they are, so we know which one is which.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>mil_data <span class="sc">%&gt;%</span> </span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(</span>
@@ -921,15 +920,15 @@ HaRd Mode: Using <code>rename_with()</code>
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-cell="annotated-cell-2" data-code-lines="1,2">Take the <code>mil_data</code> dataset <em>and then</em> rename variables as follows</span>
+<span data-code-lines="1,2" data-code-cell="annotated-cell-2" data-code-annotation="1">Take the <code>mil_data</code> dataset <em>and then</em> rename variables as follows</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-annotation="2" data-code-cell="annotated-cell-2" data-code-lines="3">Replace every instance of the string “Q11” with the string “belonging”</span>
+<span data-code-lines="3" data-code-cell="annotated-cell-2" data-code-annotation="2">Replace every instance of the string “Q11” with the string “belonging”</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-annotation="3" data-code-cell="annotated-cell-2" data-code-lines="4">Do this for every column that currently starts with the string “Q11”</span>
+<span data-code-lines="4" data-code-cell="annotated-cell-2" data-code-annotation="3">Do this for every column that currently starts with the string “Q11”</span>
 </dd>
 </dl>
 </div>
@@ -966,8 +965,9 @@ Exercise
 <p>Clean up your dataset by doing the following. You can do the steps in whatever order works for you.</p>
 <ul>
 <li>Keep all the demographic questions, items measuring Global Meaning, and Mattering, and all the Belonging items.</li>
-<li>Rename any default-named Qualtrics variables (starting with “Q”) to a sensible name using the Codebook to guide you.</li>
+<li>Rename any default-named Qualtrics variables (starting with “Q”) to a sensible name.</li>
 </ul>
+<p>Refer to the <a href="#codebook">Codebook</a> to figure out which variables are which.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1656,19 +1656,19 @@ Tip
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-15" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-cell="annotated-cell-15" data-code-lines="1,2">Take the dataset <code>dataset_name</code>, <em>and then</em> make a change to it as follows</span>
+<span data-code-lines="1,2" data-code-cell="annotated-cell-15" data-code-annotation="1">Take the dataset <code>dataset_name</code>, <em>and then</em> make a change to it as follows</span>
 </dd>
 <dt data-target-cell="annotated-cell-15" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-annotation="2" data-code-cell="annotated-cell-15" data-code-lines="3">Apply to…</span>
+<span data-code-lines="3" data-code-cell="annotated-cell-15" data-code-annotation="2">Apply to…</span>
 </dd>
 <dt data-target-cell="annotated-cell-15" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-annotation="3" data-code-cell="annotated-cell-15" data-code-lines="4">The variables selected to be changed</span>
+<span data-code-lines="4" data-code-cell="annotated-cell-15" data-code-annotation="3">The variables selected to be changed</span>
 </dd>
 <dt data-target-cell="annotated-cell-15" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-annotation="4" data-code-cell="annotated-cell-15" data-code-lines="5">A function to apply to each of the selected variables</span>
+<span data-code-lines="5" data-code-cell="annotated-cell-15" data-code-annotation="4">A function to apply to each of the selected variables</span>
 </dd>
 </dl>
 </div>
@@ -1789,19 +1789,19 @@ Important
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-19" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-cell="annotated-cell-19" data-code-lines="1">Overwrite the <code>mil_data</code> dataset with the following output: take the existing <code>mil_data</code> dataset, <em>and then</em></span>
+<span data-code-lines="1" data-code-cell="annotated-cell-19" data-code-annotation="1">Overwrite the <code>mil_data</code> dataset with the following output: take the existing <code>mil_data</code> dataset, <em>and then</em></span>
 </dd>
 <dt data-target-cell="annotated-cell-19" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-annotation="2" data-code-cell="annotated-cell-19" data-code-lines="2">Group the dataset by row, so any subsequent calculations will be done for each row separately, <em>and then</em></span>
+<span data-code-lines="2" data-code-cell="annotated-cell-19" data-code-annotation="2">Group the dataset by row, so any subsequent calculations will be done for each row separately, <em>and then</em></span>
 </dd>
 <dt data-target-cell="annotated-cell-19" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-annotation="3" data-code-cell="annotated-cell-19" data-code-lines="3,4,5,6">Create the new <code>mattering_comp</code> variable by taking the mean of all the values in variables that start with the string “mattering” (ignoring any missing values), <em>and then</em></span>
+<span data-code-lines="3,4,5,6" data-code-cell="annotated-cell-19" data-code-annotation="3">Create the new <code>mattering_comp</code> variable by taking the mean of all the values in variables that start with the string “mattering” (ignoring any missing values), <em>and then</em></span>
 </dd>
 <dt data-target-cell="annotated-cell-19" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-annotation="4" data-code-cell="annotated-cell-19" data-code-lines="7">Remove the by-row grouping that was created by <code>rowwise()</code> to output an ungrouped dataset.</span>
+<span data-code-lines="7" data-code-cell="annotated-cell-19" data-code-annotation="4">Remove the by-row grouping that was created by <code>rowwise()</code> to output an ungrouped dataset.</span>
 </dd>
 </dl>
 </div>
@@ -1918,7 +1918,7 @@ Solution
 <li>Create composite scores for all of the subscale variables.</li>
 </ol>
 <p>There are three subscales to calculate here for <code>belonging</code>, <code>global_meaning</code>, and <code>mattering</code>.</p>
-<p>Again, you can type the item names into this command one by one. This does require careful checking to avoid duplicating or leaving out items, especially for subscales with many items. On the other hand, this method is likely to work better if you need specific and nonsequential items for each subscale (for instance, if the subscale is items 2, 3, 7, 10, and 12).</p>
+<p>Again, you can type the item names into this command one by one. This does require careful checking to avoid duplicating or leaving out items, especially for subscales with many items. On the other hand, this method is likely to work better if you need specific and nonsequential items for each subscale (for instance, if the subscale is items 2, 3, 7, 10, and 12). For a <code>&lt;tidyselect&gt;</code> way to accompish this, have a look at the selection helper <code>num_range()</code> in the <code>select()</code> help documentation.</p>
 <p>Instead, if all the items with the same prefix belong to the same subscale (as they do here), <code>c_across()</code> + selection helpers are much preferred.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>mil_data <span class="ot">&lt;-</span> mil_data <span class="sc">%&gt;%</span> </span>
