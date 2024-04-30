@@ -1,0 +1,13 @@
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+
+```
+:::
+:::
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+:::

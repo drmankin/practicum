@@ -36,15 +36,9 @@ website:
       contents: 
         - tutorials.qmd
         - quick_ref.qmd
-        - section: "FundRmentals"
+        - section: "Tutorials"
           contents:
-            - auto: tutorials/psychrlogy/01_fundRmentals/*
-        - section: "Essentials"
-          contents:
-            - auto: tutorials/psychrlogy/02_essentials/*
-        - section: "ImprovRs"
-          contents:
-            - auto: tutorials/psychrlogy/03_improvRs/*
+            - auto: tutorials/docs/*
     - title: "Workshops"
       style: "docked"
       background: "#d0d3d4"
