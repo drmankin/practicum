@@ -2,6 +2,8 @@
 title: "02: IntRoduction II"
 ---
 
+<!-- UPDATE: We need to do something fun and interactive in this session otherwise it's mostly talking. Maybe writing a very simple reproducible script? Does Reny have a checklist of good practice for reproducible code? -->
+
 ## Functions
 
 Functions are like verbs in the R language. We've already started using a few functions: `c()`, `class()`, `mean()`, and `as.numeric()`. As we've seen, these functions perform some operation using the input inside their brackets, and produce the output of that operation. So, functions are the main way that R *does* anything.
@@ -34,7 +36,7 @@ What we want to do, "Round the number `r mean(quiz_9am)` to two decimal places",
 Open the help documentation for the `round()` function by running `?round()` or `help(round)` in the Console.
 :::
 
-::: {.callout-tip title="Help Documentation"}
+::: {.callout-tip title="Definition: Help Documentation"}
 Help documentation is information, like instruction manuals, built into R about how individual functions work. Function documentation varies wildly in helpfulness and completeness, but it's a useful place to check first if you want to find out what a function does. You can access the help documentation in a few different ways: by running `?function_name` or `help(function_name)` in the Console, or by clicking on the "Help" tab in the Files section of RStudio and using the Find box to search for the function.
 :::
 
@@ -52,7 +54,7 @@ When referring to arguments, you will hear the terms "named" and "unnamed" argum
 
 The **first argument** to `round()` is simply `x`. Just like in maths, `x` is a placeholder for some number or numbers (a "numeric vector", which should sound familiar now) that the function will work on. This is common notation in many functions: `x`, often the first argument in a function, typically denotes the placeholder for the information you want to use the function on. In our case, we just have one number we want to round, so that's what we should replace with `x`.
 
-This argument has no default, so it must be provided or the function won't run. Because we always have to provide some information here, `x` and similar arguments containing the values or data to work on are frequently *unnamed* when we use them. That means that instead of `round(x = 64.333333...)` we can just write `round(64.33333...)`. They are also frequently the first argument in the function[^first]. So, when you see reference to the "first unnamed argument" - especially important in {tidyverse} functions designed to work with the pipe operator, which we'll meet next week - that simply means, "the first argument in the function for which the programmer hasn't specifed a name", which is usually, but not always or necessarily, the "data" or "information to work on" argument.
+This argument has no default, so it must be provided or the function won't run. Because we always have to provide some information here, `x` and similar arguments containing the values or data to work on are frequently *unnamed* when we use them. That means that instead of `round(x = 64.333333...)` we can just write `round(64.33333...)`. They are also frequently the first argument in the function[^first]. So, when you see reference to the "first unnamed argument" - especially important in {tidyverse} functions designed to work with the pipe operator, which we'll meet next week - that simply means, "the first argument in the function for which the programmer hasn't specifed a name", which is often, but not always or necessarily, the "data" or "information to work on" argument.
 
 [^first]: Again, not necessarily - the base-R string-manipulation functions `grep()` and friends, for example, have `x` as their *third* argument. I know all the irregularities can be confusing, but remember that R is a massive collaborative project across decades and millions of users, so some quirks are inevitable!
 
@@ -66,7 +68,7 @@ Default values of arguments are really useful, because the default is often the 
 
 ### Using Functions
 
-Now that we know what both of these arguments mean, we can change them to actually translate the sentence "Round the number `r mean(quiz_9am)` to two decimal places" into a command that R can work with. We'll explicitly write out each argument so we know what they are doing.
+Now that we know what both of these arguments mean, we can change them to actually translate the sentence "Round the number `r mean(quiz_9am)` to two decimal places" into a command that R can work with. We'll explicitly write out the name of each argument so we know what they are doing.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
 Use the `round()` function to round 64.3333333 to two decimal places.
@@ -84,7 +86,7 @@ round(x = mean(quiz_9am), digits = 2)
 :::
 :::
 
-::: {.callout-tip title="Order and Naming of Arguments" collapse="true"}
+::: {.callout-important title="MoRe About: Order and Naming of Arguments" collapse="true"}
 If you want to, you can achieve the same result by changing the order of the arguments, as long as you pay careful attention to which argument(s) you have named. 
 
 If we have written the names of both arguments, R can still do what we want it to do with the order of arguments reversed:
@@ -125,15 +127,12 @@ A last important aspect of using functions is that **each argument in a function
 
 ```{r}
 round(64.3333333, digits = 2)
-## ughhhh
 round(59.5452, digits = 2)
-## noooooo :(
 round(0.198, digits = 2)
-## thanks I hate it
 ```
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-Before you go on, have a go using a single `round()` command to round 64.3333333, 59.5452, and 0.198 at once.
+Before you go on, have a go using a single `round()` command to round 64.3333333, 59.5452, and 0.198 using a single `round()` command.
 
 *Hint*: Refer to [Vectors](#vectors).
 :::
@@ -146,7 +145,7 @@ round(64.3333333, 59.5452, 0.198, 2)
 
 Once again, R tells us that this doesn't work by throwing an error. R has tried to do what we wanted, but the `round()` function only allows a max of two arguments, and we've given it four. Behind the scenes, R has tried to run `round(x = 64.3333333, digits = 59.5452...` and can't proceed from there because it doesn't know what to do with the last two numbers. So, what we need to do is find a way to put all three numbers that we want to round into the first `x` argument together. If only there was a way to **c**oncatenate them together...
 
-You may have guessed where this is going: one method we could use would be to put the three numbers we want to round into a single object, and then pass that object to `round()` as the `x` argument. We already saw that we can combine any number of things together into a single vector using the `c()` function.
+You may have guessed where this is going: one method we could use would be to put the three numbers we want to round into a vector, and then use that vector in `round()` as the `x` argument. We already saw that we can combine any number of things together into a single vector using the `c()` function.
 
 ::: {.callout-note title="Solution" collapse="true"}
 ```{r}
@@ -168,3 +167,11 @@ Before we leave the `round()` function altogether, let's take a look at two more
 
 Finally, at the end of the documentation you can find the "Examples" section. If you are learning to use a new function, this section can give you a template for writing your own commands. You can also click the "Run examples" link, which will run the code in the Examples section for you so you can see what the function will do.
 :::
+
+## Packages
+
+### Why Packages?
+
+### Installing Packages
+
+### Loading Packages
