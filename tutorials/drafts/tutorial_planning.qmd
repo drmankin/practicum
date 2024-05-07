@@ -14,6 +14,7 @@ In particular please add points where it makes sense to mention reproducibility 
     - RStudio
     - Errors
     - Data types
+      - Add in factors here? Later?
     - Objects
     - Assignment
     - RepRoducibility: Naming Objects

@@ -4,6 +4,142 @@ title: "02: IntRoduction II"
 
 <!-- UPDATE: We need to do something fun and interactive in this session otherwise it's mostly talking. Maybe writing a very simple reproducible script? Does Reny have a checklist of good practice for reproducible code? -->
 
+## Setup
+
+In each session, we will always follow the same steps to set up. We'll walk through the key elements here in detail and then provide a brief summary in future tutorials.
+
+::: {.callout-tip title="Setup Steps"}
+1.  Create or open a [project in RStudio](#projects)
+2.  Create or open a [document to work in](#creating-documents)
+3.  [Load the necessary packages](#packages)
+:::
+
+### Projects
+
+Projects are the main way that RStudio organises related files and information. Projects are associated with a working directory; everything in that directory, including all the sub-folders, are part of the same project.
+
+It is **highly recommended** that you create a new project for each separate thing you want to work on in R. Among other advantages, it makes navigating folders much easier (see [Reading In](03_datasets.qmd#reading-in)), allows you to easily pick up work from where you left off, and retain all the settings and options you have set each time you work on the same project.
+
+::: {.callout-tip title="Creating a Project" collapse="false"}
+On Posit Cloud, you don't really have a choice in the matter - you must create or open a project in the Cloud workspace in order to do anything.
+
+On a desktop installation, you can create a new directory as a project or associate a project file with an existing directory.
+
+See [Posit's Using RStudio Projects](https://support.posit.co/hc/en-us/articles/200526207-Using-RStudio-Projects) guide or Andy Field's [video guide to RStudio Desktop](https://www.youtube.com/watch?v=EA7JW2SfKSY) for more information.
+:::
+
+### Documents
+
+As we discussed [in the previous tutorial](01_02_intro.qmd), one of the key strengths of doing your work using R (or any other programming language) is reproducibility - in other words, every step of the process from raw file to output is documented and replicable. However, this is only the case if you do in fact write your code down somewhere! To do that, you'll need to create some kind of document to record your code. There are two main types of documents you might consider using: a script or a Quarto document.
+
+#### Quarto documents
+
+Quarto documents contain a combination of both non-code text and code. The main strength of these documents is that they can be **rendered** to some other output format, such as HTML, PDF, or Word, by executing all of the code and combining it with the text to create a nicely formatted document.
+
+We will investigate the options for Quarto documents in depth in [the next tutorial](04_lm.qmd#quarto). For now, use the Quarto document in your project on Posit Cloud for your work in this tutorial.
+
+#### Scripts
+
+Scripts are text files that RStudio knows to read as R code. They have a .R file extension and can ONLY contain code. They are very useful for running code behind the scenes, so to speak, but not great for reviewing or presenting results.
+
+::: {.callout-tip title="Quarto or Script?"}
+When deciding what kind of document to create, think about what you want to do with the output of your work.
+
+-   Use **Quarto** if the document needs to contain any amount of text, or will be used to share the output of your code in a presentable way, such as notes for yourself, reports, articles, websites, etc.
+  -   The page you're reading now is (or was!) a Quarto document.
+-   Use a **script** if the document only needs to contain code and has a solely functional purpose, such as cleaning a dataset, manipulating files, defining new functions, etc.
+  -   I use a script to process all of the tutorial documents and generate the [Quick Reference](../../../quick_ref.qmd) page.
+
+In this series, we will almost always use Quarto documents, but scripts are an essential part of the development side of R.
+:::
+
+### Packages
+
+In this tutorial, we'll see how the main way that R does anything is via functions. All functions belong to a **package**, which are extensions to the R language. Packages can contain functions, documentation for those functions, datasets, sample code, and more. Some packages, like the {base} and {stats} packages that contain the `mean()` and `t.test()` functions that we saw previously, are included by default with R. However, you will often want to use functions from packages that aren't included by default, so you must do this explicitly.
+
+#### Installing and Loading
+
+In order to utilise the functions in a package, you must do two things:
+
+1.  Install the package (only **once** per device, or to update the package) using `install.packages("package_name")` **in the Console**
+2.  Load the package (every time you want to use it) using `library(package_name)` **at the beginning of each new document**
+
+::: callout-important
+If you are working on these tutorials on the Posit Cloud workspace, **all of the packages you need have been installed already**. Please do not try to install any packages, as this could cause unexpected conflicts or errors.
+:::
+
+::: {.callout-tip title="MoRe About: Installing vs Loading Packages" collapse="true"}
+When you install R and RStudio for the first time on a device, this is like buying a new mobile phone. When you get a new phone, it comes with some apps pre-installed, like a messaging app, a camera, a calculator, etc. If you only ever wanted to take pictures and do basic maths with your phone, you could probably leave it at that. In the same way, when you install R it already comes with some basic packages for doing some operations.
+
+Most likely, though, you'll want to use other apps that don't come with your new phone - like WhatsApp, or ~~Twitter~~ ~~X~~ Bluesky. Let's say you've just got a new phone and you want to use WhatsApp. To do this, you'll need to:
+
+1.  Go to your phone's app store and download WhatsApp (only **once** per device, or to update the app)
+2.  Open the app (every time you want to use it)
+
+As you can see, these steps correspond almost exactly to the installing vs loading steps described above. In order to use a package that doesn't come pre-installed with R, you have to do both of these steps.
+:::
+
+#### Loading 
+
+One of the core packages we use for UG teaching is [{tidyverse}](https://www.tidyverse.org/). This isn't actually a single package, but rather a convenient shorthand to install and load a suite of interconnected packages all together. We will be using {tidyverse} packages throughout this training series, so loading {tidyverse} straightaway is a good habit to get into!
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Load the {tidyverse} package in your workbook.
+
+*Note*: If you are on the Cloud workspace, {tidyverse} will already be installed. If not, you may need to install it first.
+
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+#| message: true
+library(tidyverse)
+```
+:::
+:::
+
+When you load {tidyverse} for the first time, quite a lot of extra stuff gets printed along with it. All this output looks alarming, but these aren't errors or warnings - they're just *messages*. Messages are like warnings, but neutral: they just contain information that you might find helpful.
+
+The usual {tidyverse} message contains two parts:
+
+- **`Attaching core tidyverse packages`** tells you which packages have just been loaded. Essentially, `library(tidyverse)` is a shortcut for loading all of these packages individually. Somewhat confusingly, installing {tidyverse} *installs* more packages than are in this list (for example, {magrittr} and {rlang}), many of which other {tidyverse} packages rely on to function. If you want to load them, you can use `library()` to do this - but you don't need to unless you're using those packages explicitly. For our purposes now, just the default {tidyverse} packages are fine.
+
+- **`Conflicts`** tells you about any package conflicts as a result of loading the packages.
+
+What are conflicts? Consider that there are lots and *lots* of packages for R. At the time of this writing, CRAN (the repository for R packages) contains [just shy of 20,000](https://cran.r-project.org/web/packages/) R packages, with many, many more on Github and elsewhere. Although people generally try to avoid it, it is necessarily the case that sometimes, people give the same name to two different functions from two different packages. 
+
+So, if you have those packages both loaded, how does R know which one to use? This situation is called a *conflict*.
+
+::: {.callout-important title="Resolving Conflicts"}
+
+**Method 1: Recency**
+
+In the absence of any other information, R will use the function from the package that was loaded most recently. This is exactly what's happening in the {tidyverse} message above.
+
+There are two conflicts mentioned. one of which reads:
+
+```
+x dplyr::filter() masks stats::filter()
+```
+
+{stats}, you might remember, is a package that is always installed with R and is loaded by default. So, the {stats} package has a function called `filter()` that is already loaded to begin with. When we loaded {tidyverse}, one of the new packages, {dplyr}, also contains a function called `filter()`. Because {dplyr} has been loaded more recently, if you write a bit of code using `filter()`, the one you will get is `dplyr::filter()`[^pkgfx]. In other words, the more recently loaded `dplyr::filter()` covers over, steps in front of, or (in R terminology) "masks" `stats::filter()`.
+
+[^pkgfx]: You can read this notation as "the filter function from the dplyr package", or just "dplyr filter". As for how to pronounce "dplyr", the [official pronunciation](https://twitter.com/hadleywickham/status/925313165554012160?s=20) is "dee-ply-er", with "plier" like the tool [for which it's named](https://dplyr.tidyverse.org/). I have heard other people say "dipler". Since code is always a bit tricky to read aloud, just go with whatever sounds good to you.
+
+Now, what if you actually want to use `filter()` from {stats} instead? Well, in that case you might want to use...
+
+**Method 2: Explicit style**
+
+Above we saw several examples of the `package::function()` notation, called "explicit" or "verbose" coding style. With explicit style, there isn't actually a conflict between `stats::filter()` and `dplyr::filter()` anymore, because their package calls are clearly stated so R doesn't have to guess which `filter()` you want. So, if you had loaded {tidyverse}, you could write `stats::filter()` in your code, and you would still get the function from the {stats} package even with {dplyr} loaded.
+
+Another, secret benefit of explicit style is that as long as you have a package *installed*, you can use a function from that package without having to load it. Imagine I start a new project (so I have `stats::filter()` already loaded by default). If I only want to quickly use `dplyr::filter()`, I can use explicit style to use that function without having to run `library(tidyverse)`.
+:::
+
+The style you'll see in these tutorials is a pretty devotedly explicit style: that is, I'll always write `dplyr::filter()` instead of just `filter()`. I only leave out the package name in a few situations:
+
+1. When the function is from a default-loaded package, like {base} or {stats} (so I write `mean()` instead of `base::mean()`). This is mostly just convenience!
+1. When there are lots of functions from the same package in row, all of which have very distinctive names, that would make reading the code very difficult and writing the code very repetitive. This is the case, for example, with {ggplot2}, which we will encounter later on in the course. For cases like this, I make sure to load the relevant package and then leave off the package name.
+
+I like explicit style because I never have to deal with package conflicts; I rarely have to load packages; and it helps me understand better how my code works. You don't have to use it, and most of the time it won't make *that* much difference, so do what makes sense to you. Just to be safe, though, we'll load {tidyverse} regularly.
+
 ## Functions
 
 Functions are like verbs in the R language. We've already started using a few functions: `c()`, `class()`, `mean()`, and `as.numeric()`. As we've seen, these functions perform some operation using the input inside their brackets, and produce the output of that operation. So, functions are the main way that R *does* anything.
