@@ -1,5 +1,5 @@
 ---
-title: "01/02: IntRoduction"
+title: "01: IntRoduction"
 execute:
   error: true
 ---
@@ -10,9 +10,9 @@ execute:
 
 Welcome to the first R Training tutorial! 
 
-This tutorial is the first in a series covering fundamental skills in R. This first tutorial assumes **no knowledge or previous experience** of R or codoing whatsoever, and is a great place to start if you're totally brand new to R. Subsequent tutorials will build on the techniques and terminology introduced in each tutorial, so you're strongly recommended to work through them in order.
+This tutorial is the first in a series covering fundamental skills in R. This first tutorial assumes **no knowledge or previous experience** of R or coding whatsoever, and is a great place to start if you're totally brand new to R. Subsequent tutorials will build on the techniques and terminology introduced in each tutorial, so you're strongly recommended to work through them in order.
 
-Overall, these tutorials are designed to support faculty supervising undergraduate student dissertations in R at the University of Sussex, UK. The tutorials present a condensed guide through the key functions and statistical analyses that are covered in the first two years of core methods 
+Overall, these tutorials are designed to support faculty supervising undergraduate student dissertations in R at the University of Sussex, UK. The tutorials present a condensed guide through the key functions and statistical analyses that are covered in the first two years of core methods teaching.
 
 Before we get started in R, just a couple notes for those using these materials.
 
@@ -911,7 +911,7 @@ Let's put all of this together and have a look at what we can already do with th
 In case you're not familiar with *t*-tests, you can find a lecture recording on the [Analysing Data 22/23 Canvas site](https://sussex.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=26671aaa-5909-4bef-8617-afb001299757).
 :::
 
-We've created two objects that contain scores from two different groups - scores we made up, but we will get to real data soon. For now, one common statistical test we could run on data like this is a independent-samples *t*-test, which is a hypothesis test essentially evaluating the probability that two sets of scores come from the same population.
+We've created two objects that contain scores from two different groups - scores we made up, but we will get to real data soon. For now, one common statistical test we could run on data like this is a independent-samples *t*-test, which is a hypothesis test commonly used to test whether two sets of scores are likely to be sampled from the same underlying population or not.
 
 Helpfully, the function we want is called `t.test()`. For our purposes, we can run the *t*-test by adapting the following general format:
 

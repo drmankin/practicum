@@ -40,7 +40,7 @@ website:
         - section: "Current"
           contents:
             - auto: tutorials/docs/*
-        - section:
+        - section: "Archive (Autumn 2023)"
           contents:
             - auto: tutorials/archive_autumn_2023/*
     - title: "Workshops"

@@ -53,11 +53,9 @@ When deciding what kind of document to create, think about what you want to do w
 In this series, we will almost always use Quarto documents, but scripts are an essential part of the development side of R.
 :::
 
-### Packages
+## Packages
 
 In this tutorial, we'll see how the main way that R does anything is via functions. All functions belong to a **package**, which are extensions to the R language. Packages can contain functions, documentation for those functions, datasets, sample code, and more. Some packages, like the {base} and {stats} packages that contain the `mean()` and `t.test()` functions that we saw previously, are included by default with R. However, you will often want to use functions from packages that aren't included by default, so you must do this explicitly.
-
-#### Installing and Loading
 
 In order to utilise the functions in a package, you must do two things:
 
@@ -65,7 +63,7 @@ In order to utilise the functions in a package, you must do two things:
 2.  Load the package (every time you want to use it) using `library(package_name)` **at the beginning of each new document**
 
 ::: callout-important
-If you are working on these tutorials on the Posit Cloud workspace, **all of the packages you need have been installed already**. Please do not try to install any packages, as this could cause unexpected conflicts or errors.
+If you are working on these tutorials on the Posit Cloud workspace, **all of the packages you need have been installed already**. Please do not try to install any packages unless directed by the lead, as this could cause unexpected conflicts or errors.
 :::
 
 ::: {.callout-tip title="MoRe About: Installing vs Loading Packages" collapse="true"}
@@ -79,7 +77,7 @@ Most likely, though, you'll want to use other apps that don't come with your new
 As you can see, these steps correspond almost exactly to the installing vs loading steps described above. In order to use a package that doesn't come pre-installed with R, you have to do both of these steps.
 :::
 
-#### Loading 
+### Loading tidyverse
 
 One of the core packages we use for UG teaching is [{tidyverse}](https://www.tidyverse.org/). This isn't actually a single package, but rather a convenient shorthand to install and load a suite of interconnected packages all together. We will be using {tidyverse} packages throughout this training series, so loading {tidyverse} straightaway is a good habit to get into!
 
@@ -140,6 +138,8 @@ The style you'll see in these tutorials is a pretty devotedly explicit style: th
 
 I like explicit style because I never have to deal with package conflicts; I rarely have to load packages; and it helps me understand better how my code works. You don't have to use it, and most of the time it won't make *that* much difference, so do what makes sense to you. Just to be safe, though, we'll load {tidyverse} regularly.
 
+\ 
+
 ## Functions
 
 Functions are like verbs in the R language. We've already started using a few functions: `c()`, `class()`, `mean()`, and `as.numeric()`. As we've seen, these functions perform some operation using the input inside their brackets, and produce the output of that operation. So, functions are the main way that R *does* anything.
@@ -148,9 +148,14 @@ In this section, we'll take a systematic look at the process of using a new func
 
 ### Basics and Help
 
-Let's look at an example of how this translation might work. For this example, I'm going to use a number I generated earlier: the mean of the `quiz_9am` group, `r mean(quiz_9am)`, which I'd like to round to two decimal places - a common task for reporting results in APA style.
+Let's look at an example of how this translation might work. For this example, I'd like to round the mean of four numbers 45.34, 23.001, 7.3, and 16.9820 to two decimal places - a common task for reporting results in APA style.
 
-If we want R to do this for us, we have to write this command in a way that R can understand. First, we need to know what function corresponds to the English verb "round" - that is, what function will do the same action that we want R to perform. We're lucky in this case: the function in R is also called `round()`.
+```{r}
+mean_to_round <- mean(c(45.34, 23.001, 7.3, 16.9820))
+mean_to_round
+```
+
+If we want R to do this for us, we have to write a command that represents the operation we want R to perform. First, we need to know what R function corresponds to that operation. We're lucky in this case: the function in R is also called `round()`.
 
 We know that we're looking at a function in R because functions often have a name followed by brackets (and nothing else in R does). That is, they have the general form `function_name()`. Inside the brackets, we can add more information to the function to complete our command, although not all functions require any more information.
 
@@ -166,10 +171,10 @@ Unsurprisingly, R has given us an error. This is an **informative** error, thoug
 :::
 :::
 
-What we want to do, "Round the number `r mean(quiz_9am)` to two decimal places", has two more important pieces of information that we need to tell R: what number we want to round (`r mean(quiz_9am)`) and how many decimal places we want to round it to (2). So, how do we say this in R? To find out, let's look at the help documentation.
+What we want to do, "Round the number `r mean_to_round` to two decimal places", has two more important pieces of information that we need to tell R: what number we want to round (`r mean_to_round`) and how many decimal places we want to round it to (2). So, how do we say this in R? To find out, let's look at the help documentation.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-Open the help documentation for the `round()` function by running `?round()` or `help(round)` in the Console.
+Open the help documentation for the `round()` function by running `?round()` or `help(round)` **in the Console**.
 :::
 
 ::: {.callout-tip title="Definition: Help Documentation"}
@@ -182,7 +187,7 @@ Let's scroll down to "Usage", which gives examples of what the function looks li
 
 ### Arguments
 
-The information inside a function's brackets, which give it the information it needs to work, are called **arguments**. Each argument in a function is separated by a comma, so we can see from `round(x, digits = 0)` that the `round()` function can take two arguments. How many arguments a function has depends on the function; some (like `Sys.Date()`) don't need any arguments to run. One of the most useful parts of a function's help documentation is the "Arguments" section, which tells you what each of the function's arguments are and how to use them.
+The information inside a function's brackets, which gives it the information it needs to work, are called **arguments**. Each argument in a function is separated by a comma, so we can see from `round(x, digits = 0)` that the `round()` function can take two arguments. How many arguments a function has depends on the function; some (like `Sys.Date()`) don't need any arguments to run. One of the most useful parts of a function's help documentation is the "Arguments" section, which tells you what each of the function's arguments are and how to use them.
 
 When referring to arguments, you will hear the terms "named" and "unnamed" arguments. This can be a bit confusing, because all arguments have a name - they have to, otherwise we couldn't refer to them![^oops] The named vs unnamed distinction doesn't refer to the arguments themselves, but rather how the person using the function chooses to write them out. There are some conventions around which arguments are named or not, so let's have a look at that now.
 
@@ -190,7 +195,7 @@ When referring to arguments, you will hear the terms "named" and "unnamed" argum
 
 The **first argument** to `round()` is simply `x`. Just like in maths, `x` is a placeholder for some number or numbers (a "numeric vector", which should sound familiar now) that the function will work on. This is common notation in many functions: `x`, often the first argument in a function, typically denotes the placeholder for the information you want to use the function on. In our case, we just have one number we want to round, so that's what we should replace with `x`.
 
-This argument has no default, so it must be provided or the function won't run. Because we always have to provide some information here, `x` and similar arguments containing the values or data to work on are frequently *unnamed* when we use them. That means that instead of `round(x = 64.333333...)` we can just write `round(64.33333...)`. They are also frequently the first argument in the function[^first]. So, when you see reference to the "first unnamed argument" - especially important in {tidyverse} functions designed to work with the pipe operator, which we'll meet next week - that simply means, "the first argument in the function for which the programmer hasn't specifed a name", which is often, but not always or necessarily, the "data" or "information to work on" argument.
+It's important to note here that this argument `x` has no **default value**. In other words, we must minimally provide some information `x` to this function or it won't be able to run. We know this because `x` appears on its own as an argument; arguments that *do* have a default value have an `=` sign followed y their default value (see the next paragraphs on `digits = 0`!). Because we always have to provide additional information, `x` and similar arguments containing the values or data to work on are frequently *unnamed* when we use them. That means that instead of `r paste0("round(x = ", mean_to_round,"...)")` we can just write `r paste0("round(", mean_to_round,"...)")`. They are also frequently the first argument in the function[^first]. So, when you see reference to the "first unnamed argument" - especially important in {tidyverse} functions designed to work with the pipe operator, which we'll meet next week - that simply means, "the first argument in the function for which the programmer hasn't specifed a name", which is often, but not always or necessarily, the "data" or "information to work on" argument.
 
 [^first]: Again, not necessarily - the base-R string-manipulation functions `grep()` and friends, for example, have `x` as their *third* argument. I know all the irregularities can be confusing, but remember that R is a massive collaborative project across decades and millions of users, so some quirks are inevitable!
 
@@ -204,20 +209,20 @@ Default values of arguments are really useful, because the default is often the 
 
 ### Using Functions
 
-Now that we know what both of these arguments mean, we can change them to actually translate the sentence "Round the number `r mean(quiz_9am)` to two decimal places" into a command that R can work with. We'll explicitly write out the name of each argument so we know what they are doing.
+Now that we know what both of these arguments mean, we can change them to actually translate the sentence "Round the number `r mean_to_round` to two decimal places" into a command that R can work with. We'll explicitly write out the name of each argument so we know what they are doing.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-Use the `round()` function to round 64.3333333 to two decimal places.
+Use the `round()` function to round `r mean_to_round` to two decimal places.
 
 If you prefer, you can do this with one of the means you calculated for your own scores earlier.
 
 ::: {.callout-note collapse="true" title="Solution"}
 ```{r}
 ## Using the actual value from my earlier calculation
-round(x = 64.3333333, digits = 2)
+round(x = 23.15575, digits = 2)
 
 ## Using a nested function - that is, calculating the mean and then rounding it!
-round(x = mean(quiz_9am), digits = 2)
+round(x = mean(c(45.34, 23.001, 7.3, 16.9820)), digits = 2)
 ```
 :::
 :::
@@ -228,13 +233,13 @@ If you want to, you can achieve the same result by changing the order of the arg
 If we have written the names of both arguments, R can still do what we want it to do with the order of arguments reversed:
 
 ```{r}
-round(digits = 2, x = 64.3333333)
+round(digits = 2, x = 23.15575)
 ```
 
 We can also, to some degree, drop the names of the arguments, as long as R can still understand what we're trying to do. In this case, the "first unnamed argument" is still `x`! Even though it's not the first argument we've written in the function, it's the first one that doesn't have an explicit name.
 
 ```{r}
-round(digits = 2, 64.3333333)
+round(digits = 2, 23.15575)
 ```
 
 Although I left out the `x =`, R can still understand this because `round()` only takes two arguments, and we explicitly told it what value belongs to `digits`, so it assumes the second number must be `x`.
@@ -242,16 +247,16 @@ Although I left out the `x =`, R can still understand this because `round()` onl
 If more than one, or all, of the arguments are unnamed, then order becomes critical:
 
 ```{r}
-round(64.3333333, 2)
+round(23.15575, 2)
 ```
 
-This time I dropped both argument names. R can still understand this because when you don't specify which input goes with which argument, R will assume they should go in the default order given in the help documentation. So, R has automatically assigned 64.3333333 to `x` and 2 to `digits`.
+This time I dropped both argument names. R can still understand this because when you don't specify which input goes with which argument, R will assume they should go in the default order given in the help documentation. So, R has automatically assigned 23.15575 to `x` and 2 to `digits`.
 
 As I use R more and more, I find that I name arguments *more* consistently, even though I know how the function works and dropping them is more efficient (at least in terms of typing). That's because when I come back from lunch, or the next day, or six months later to revisit the same code, it's much easier to recall what it all means when it's well-annotated. So, I strongly recommend getting in the habit of including argument names in your code as a favour to your future self, and to avoid situations like this:
 
 ```{r}
 ## uh oh!
-round(2, 64.3333333)
+round(2, 23.15575)
 ```
 
 Here, since we left all the arguments unnamed, R assumed that 2 was the number we wanted to round. This isn't what we wanted - but R has no way of knowing this. It always assumes that what we typed was precisely what we intended to ask R to do.
@@ -259,16 +264,16 @@ Here, since we left all the arguments unnamed, R assumed that 2 was the number w
 
 #### Passing Multiple Values to Arguments
 
-A last important aspect of using functions is that **each argument in a function can only take a single object or value as input**. For example, we saw above that we put the single value 64.3333333 into the `x` argument of `round()`. But what if we wanted to round more than one number? We don't want to have to write a new `round()` command for every number, even though we could do this if we particularly enjoyed doing a lot of tedious and repetitive typing:
+A last important aspect of using functions is that **each argument in a function can only take a single object or value as input**. For example, we saw above that we put the single value 23.15575 into the `x` argument of `round()`. But what if we wanted to round more than one number? We don't want to have to write a new `round()` command for every number, even though we could do this if we particularly enjoyed doing a lot of tedious and repetitive typing:
 
 ```{r}
-round(64.3333333, digits = 2)
+round(23.15575, digits = 2)
 round(59.5452, digits = 2)
 round(0.198, digits = 2)
 ```
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-Before you go on, have a go using a single `round()` command to round 64.3333333, 59.5452, and 0.198 using a single `round()` command.
+Before you go on, have a go using a single `round()` command to round 23.15575, 59.5452, and 0.198 using a single `round()` command.
 
 *Hint*: Refer to [Vectors](#vectors).
 :::
@@ -276,21 +281,21 @@ Before you go on, have a go using a single `round()` command to round 64.3333333
 So what happens if we try to put all of those numbers into `round()`? We might first try this:
 
 ```{r}
-round(64.3333333, 59.5452, 0.198, 2)
+round(23.15575, 59.5452, 0.198, 2)
 ```
 
-Once again, R tells us that this doesn't work by throwing an error. R has tried to do what we wanted, but the `round()` function only allows a max of two arguments, and we've given it four. Behind the scenes, R has tried to run `round(x = 64.3333333, digits = 59.5452...` and can't proceed from there because it doesn't know what to do with the last two numbers. So, what we need to do is find a way to put all three numbers that we want to round into the first `x` argument together. If only there was a way to **c**oncatenate them together...
+Once again, R tells us that this doesn't work by throwing an error. R has tried to do what we wanted, but the `round()` function only allows a max of two arguments, and we've given it four. Behind the scenes, R has tried to run `round(x = 23.15575, digits = 59.5452...` and can't proceed from there because it doesn't know what to do with the last two numbers. So, what we need to do is find a way to put all three numbers that we want to round into the first `x` argument together. If only there was a way to **c**oncatenate them together...
 
 You may have guessed where this is going: one method we could use would be to put the three numbers we want to round into a vector, and then use that vector in `round()` as the `x` argument. We already saw that we can combine any number of things together into a single vector using the `c()` function.
 
 ::: {.callout-note title="Solution" collapse="true"}
 ```{r}
 ## Create an intermediate object to contain the numbers
-numbers <- c(64.3333333, 59.5452, 0.198)
+numbers <- c(23.15575, 59.5452, 0.198)
 round(numbers, digits = 2)
 
 ## Put the vector of numbers into round() directly
-round(c(64.3333333, 59.5452, 0.198), digits = 2)
+round(c(23.15575, 59.5452, 0.198), digits = 2)
 ```
 :::
 
@@ -304,10 +309,103 @@ Before we leave the `round()` function altogether, let's take a look at two more
 Finally, at the end of the documentation you can find the "Examples" section. If you are learning to use a new function, this section can give you a template for writing your own commands. You can also click the "Run examples" link, which will run the code in the Examples section for you so you can see what the function will do.
 :::
 
-## Packages
+## Packages, redux
 
-### Why Packages?
+We just had an in-depth look at the `round()` function, but say we weren't happy with the way this function does rounding in particular situations. For instance, we might want to round a *p*-value to three decimal places with no leading 0 (as we teach UGs to report *p*), but that's not how `round()` rolls:
+
+```{r}
+round(.00793, digits = 3)
+```
+
+So, instead, we might look for a different function that does the rounding as we want, with no leading 0, for example [the `rd()` function linked here](https://rdrr.io/cran/weights/man/rd.html). Looks great!
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Round the number .00793 to three decimal places using the `rd()` function.
+
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+rd(.00793, digits = 3)
+```
+:::
+:::
+
+Well, that didn't go to plan!
+
+There are two main reasons this "could not find function" error usually appears:
+
+1. You've misspelt the function name. This isn't the case here (it's only two letters!).
+2. The package that the function belongs to isn't installed and/or loaded.
+
+So, this function does exist, but in order to use it, we need to install and then load it. 
 
 ### Installing Packages
 
+According to the documentation linked above, the package that this function belongs to is called {weights}, so let's install it first.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Install the {weights} package. Replace `function_name` in the example command below and run this command **in the Console** only.
+
+```{r}
+#| eval: false
+
+install.packages("function_name")
+```
+
+*Note*: As mentioned above, please don't regularly install packages if you're on the Posit Cloud workspace - but in this specific case, it's good to get the practice!
+
+::: {.callout-note collapse="true" title="Solution"}
+Remember to run this command **in the CONSOLE** and *not* in a code chunk!
+
+```{r}
+#| eval: false
+
+install.packages("weights")
+```
+:::
+
+You should see a good bit of chat from R in (alarming) red text. Don't worry unless you see the actual word "ERROR". You should soon see the message `package ‘weights’ successfully unpacked and MD5 sums checked`, which means all is well. 
+
+Now that we know we have the package installed, let's give it another go.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Round the number .00793 to three decimal places using the `rd()` function.
+
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+rd(.00793, digits = 3)
+```
+:::
+:::
+
+Still no dice!
+
 ### Loading Packages
+
+We know that we have the right package installed - but as you may have guessed, we haven't also loaded the package. We can actually fix this error in one of two ways:
+
+1. Load the {weights} package using the `library()` function. We can then use the function as written above.
+1. Use verbose style, e.g. `weights::rd()`, when writing our command. In this case we don't need to load the package as long as we have it installed.
+
+Alright, third time lucky!
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Round the number .00793 to three decimal places using the `rd()` function, using either method to access the function in the {weights} package.
+
+::: {.callout-note collapse="true" title="Solution"}
+Using verbose style, before loading the package:
+
+```{r}
+weights::rd(.00793, digits = 3)
+```
+
+First loading the package, then using the function without the package call:
+
+```{r}
+library(weights)
+
+rd(.00793, digits = 3)
+```
+
+:::
+:::
+

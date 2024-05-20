@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.550">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>R Training - 01/02: IntRoduction</title>
+<title>R Training - 01: IntRoduction</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -57,31 +57,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../../../">
-<script src="../../../site_libs/quarto-html/quarto.js"></script>
-<script src="../../../site_libs/quarto-html/popper.min.js"></script>
-<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -90,29 +96,56 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
 }</script>
-
-<link href="../../../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
-<script src="../../../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+<link href="../../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="../../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<link rel="stylesheet" href="../../../styles.css">
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
 <body class="nav-sidebar docked nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
-    <a class="navbar-brand" href="../../../index.html">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">R Training</span>
     </a>
   </div>
@@ -123,71 +156,65 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../../index.html" rel="" target="">
- <span class="menu-text">Home</span></a>
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../../../tutorials.html" rel="" target="" aria-current="page">
- <span class="menu-text">Tutorials</span></a>
+    <a class="nav-link active" href="../../tutorials.html" aria-current="page"> 
+<span class="menu-text">Tutorials</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../workshops.html" rel="" target="">
- <span class="menu-text">Workshops</span></a>
+    <a class="nav-link" href="../../workshops.html"> 
+<span class="menu-text">Workshops</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../resources.html" rel="" target="">
- <span class="menu-text">Resources</span></a>
+    <a class="nav-link" href="../../resources.html"> 
+<span class="menu-text">Resources</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="https://canvas.sussex.ac.uk/courses/29761" rel="" target="">
- <span class="menu-text">Canvas</span></a>
+    <a class="nav-link" href="https://canvas.sussex.ac.uk/courses/29761"> 
+<span class="menu-text">Canvas</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../about.html" rel="" target="">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
-          </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../tutorials/psychrlogy/01_fundRmentals/01_02_intro.html">FundRmentals</a></li><li class="breadcrumb-item"><a href="../../../tutorials/psychrlogy/01_fundRmentals/01_02_intro.html">01/02: IntRoduction</a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../tutorials/docs/01_intro.html">Current</a></li><li class="breadcrumb-item"><a href="../../tutorials/docs/01_intro.html">01: IntRoduction</a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
     </div>
   </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../tutorials.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Tutorials</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../quick_ref.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Quick Reference</span></a>
+  <a href="../../tutorials.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tutorials Overview</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
- <span class="menu-text">FundRmentals</span></a>
+ <span class="menu-text">Current</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -195,20 +222,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../tutorials/psychrlogy/01_fundRmentals/01_02_intro.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">01/02: IntRoduction</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../tutorials/psychrlogy/01_fundRmentals/03_datasets.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">03: Datasets</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../tutorials/psychrlogy/01_fundRmentals/04_lm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">04: Reporting Linear Models with Quarto</span></a>
+  <a href="../../tutorials/docs/01_intro.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">01: IntRoduction</span></a>
   </div>
 </li>
       </ul>
@@ -216,7 +231,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
- <span class="menu-text">Essentials</span></a>
+ <span class="menu-text">Archive</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -224,54 +239,67 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../tutorials/psychrlogy/02_essentials/05_filter.html" class="sidebar-item-text sidebar-link">
+  <a href="../../tutorials/archive_autumn_2023/00_quick_ref.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Quick Reference</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../tutorials/archive_autumn_2023/01_02_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">01/02: IntRoduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../tutorials/archive_autumn_2023/03_datasets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">03: Datasets</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../tutorials/archive_autumn_2023/04_lm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">04: Reporting Linear Models with Quarto</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../tutorials/archive_autumn_2023/05_filter.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">05: Filter and Select</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../tutorials/psychrlogy/02_essentials/06_changes.html" class="sidebar-item-text sidebar-link">
+  <a href="../../tutorials/archive_autumn_2023/06_changes.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">06: Mutate and Summarise</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../tutorials/psychrlogy/02_essentials/07_dataviz.html" class="sidebar-item-text sidebar-link">
+  <a href="../../tutorials/archive_autumn_2023/07_dataviz.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">07: Visualisations</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../tutorials/psychrlogy/02_essentials/08_analysis.html" class="sidebar-item-text sidebar-link">
+  <a href="../../tutorials/archive_autumn_2023/08_analysis.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">08: Analysis</span></a>
   </div>
 </li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
- <span class="menu-text">ImprovRs</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../tutorials/psychrlogy/03_improvRs/09_testflight.html" class="sidebar-item-text sidebar-link">
+  <a href="../../tutorials/archive_autumn_2023/09_testflight.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">09: Test Flight</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../tutorials/psychrlogy/03_improvRs/10_qtrics.html" class="sidebar-item-text sidebar-link">
+  <a href="../../tutorials/archive_autumn_2023/10_qtrics.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">10: Qualtrics and Labelled Data</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../tutorials/psychrlogy/03_improvRs/11_qtrics2.html" class="sidebar-item-text sidebar-link">
+  <a href="../../tutorials/archive_autumn_2023/11_qtrics2.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">11: Qualtrics II</span></a>
   </div>
 </li>
@@ -280,7 +308,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -289,6 +317,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#orientation" id="toc-orientation" class="nav-link active" data-scroll-target="#orientation">Orientation</a>
   <ul>
+  <li><a href="#using-the-tutorials" id="toc-using-the-tutorials" class="nav-link" data-scroll-target="#using-the-tutorials">Using the Tutorials</a>
+  <ul class="collapse">
+  <li><a href="#on-the-cloud" id="toc-on-the-cloud" class="nav-link" data-scroll-target="#on-the-cloud">On the Cloud</a></li>
+  <li><a href="#elsewhere" id="toc-elsewhere" class="nav-link" data-scroll-target="#elsewhere">Elsewhere</a></li>
+  </ul></li>
   <li><a href="#the-rstudio-interface" id="toc-the-rstudio-interface" class="nav-link" data-scroll-target="#the-rstudio-interface">The RStudio Interface</a>
   <ul class="collapse">
   <li><a href="#source" id="toc-source" class="nav-link" data-scroll-target="#source">Source</a></li>
@@ -317,15 +350,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#using-objects" id="toc-using-objects" class="nav-link" data-scroll-target="#using-objects">Using Objects</a></li>
   <li><a href="#overwriting-objects" id="toc-overwriting-objects" class="nav-link" data-scroll-target="#overwriting-objects">Overwriting Objects</a></li>
   </ul></li>
-  <li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions">Functions</a>
-  <ul>
-  <li><a href="#basics-and-help" id="toc-basics-and-help" class="nav-link" data-scroll-target="#basics-and-help">Basics and Help</a></li>
-  <li><a href="#arguments" id="toc-arguments" class="nav-link" data-scroll-target="#arguments">Arguments</a></li>
-  <li><a href="#using-functions" id="toc-using-functions" class="nav-link" data-scroll-target="#using-functions">Using Functions</a>
-  <ul class="collapse">
-  <li><a href="#passing-multiple-values-to-arguments" id="toc-passing-multiple-values-to-arguments" class="nav-link" data-scroll-target="#passing-multiple-values-to-arguments">Passing Multiple Values to Arguments</a></li>
-  </ul></li>
-  </ul></li>
   <li><a href="#quick-test-t-test" id="toc-quick-test-t-test" class="nav-link" data-scroll-target="#quick-test-t-test">Quick Test: <em>t</em>-test</a></li>
   </ul>
 </nav>
@@ -333,9 +357,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../tutorials/docs/01_intro.html">Current</a></li><li class="breadcrumb-item"><a href="../../tutorials/docs/01_intro.html">01: IntRoduction</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">01/02: IntRoduction</h1>
+<h1 class="title">01: IntRoduction</h1>
 </div>
 
 
@@ -348,13 +372,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
+
 </header>
+
 
 <p>&nbsp;</p>
 <section id="orientation" class="level2">
 <h2 class="anchored" data-anchor-id="orientation">Orientation</h2>
-<p>Welcome to the first PsychRlogy tutorial! Let’s jump right in and get started.</p>
-<p>This tutorial is designed to accompany a “Workbook” document, which is already available for you on the Posit Cloud workspace for this course. To access it, navigate to <a href="https://posit.cloud">Posit Cloud</a> and open the course workspace. If you haven’t joined the workspace yet, use the join link on the <a href="https://canvas.sussex.ac.uk/courses/29761/pages/posit-cloud">Posit Cloud page on Canvas</a>.</p>
+<p>Welcome to the first R Training tutorial!</p>
+<p>This tutorial is the first in a series covering fundamental skills in R. This first tutorial assumes <strong>no knowledge or previous experience</strong> of R or codoing whatsoever, and is a great place to start if you’re totally brand new to R. Subsequent tutorials will build on the techniques and terminology introduced in each tutorial, so you’re strongly recommended to work through them in order.</p>
+<p>Overall, these tutorials are designed to support faculty supervising undergraduate student dissertations in R at the University of Sussex, UK. The tutorials present a condensed guide through the key functions and statistical analyses that are covered in the first two years of core methods</p>
+<p>Before we get started in R, just a couple notes for those using these materials.</p>
+<section id="using-the-tutorials" class="level3">
+<h3 class="anchored" data-anchor-id="using-the-tutorials">Using the Tutorials</h3>
+<p>This tutorial is designed to accompany a “Workbook” document. The workbook is a Quarto document with all of the headings and exercises from this tutorial, where you can take notes and try out the code in these tutorials.</p>
+<section id="on-the-cloud" class="level4">
+<h4 class="anchored" data-anchor-id="on-the-cloud">On the Cloud</h4>
+<p>If you are joining the live R Training at the University of Sussex, the workbooks are already available for you in projects for each week on the Posit Cloud workspace for this course. To access them, navigate to <a href="https://posit.cloud">Posit Cloud</a> and open the course workspace. If you haven’t joined the workspace yet, use the join link on the <a href="https://canvas.sussex.ac.uk/courses/29761/pages/posit-cloud">Posit Cloud page on Canvas</a>.</p>
 <p>In the workspace, you will see a list of <strong>projects</strong> available. These will have an “ASSIGNMENT” banner next to them. When you click on these projects, a new copy of the project will be generated for you to work in.</p>
 <div class="callout callout-style-simple callout-note no-icon">
 <div class="callout-body d-flex">
@@ -362,10 +396,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>Click on the project with the same name as this tutorial: “01/02 IntRoduction”.</p>
+<p>Click on the project with the same name as this tutorial: “01 IntRoduction”.</p>
 </div>
 </div>
 </div>
+</section>
+<section id="elsewhere" class="level4">
+<h4 class="anchored" data-anchor-id="elsewhere">Elsewhere</h4>
+<p>If you have found these materials from outside the R Training course, hello! Please work through and share these materials freely. If you would like to use the accompanying workbooks, you can download them on the <a href="../../data_workbooks.html">Data and Workbooks page</a>, but you will either need to <a href="https://posit.cloud/learn/guide">set up your own Posit Cloud workspace</a> or <a href="https://posit.co/download/rstudio-desktop/">install R and RStudio</a> on your own device.</p>
+</section>
+</section>
 <section id="the-rstudio-interface" class="level3">
 <h3 class="anchored" data-anchor-id="the-rstudio-interface">The RStudio Interface</h3>
 <p>You are now looking at the RStudio IDE itself. It is possible to use R directly with minimal interface, but using an integrated development environment like <a href="https://posit.co/products/open-source/rstudio/">RStudio</a> comes with a lot of additional convenience to make working with R smoother, easier, and more efficient.</p>
@@ -390,29 +430,43 @@ Important
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>Find the document named “01_02_intro_workbook.qmd” in the Files window. Click on it to open it.</p>
+<p>Find the document named “01_intro_workbook.qmd” in the Files window. Click on it to open it.</p>
 </div>
 </div>
 </div>
 <p>You should now be looking at a dashboard-like interface with four main windows, each with a bunch of tabs across the top, like pictured below. We’ll refer to each window by these names, which come from the most important or commonly used tab in each window.</p>
-<p><img src="../../..\images/posit_rstudio_windows.jpg" class="img-fluid" alt="A screenshot of the RStudio IDE on Posit Cloud. The four main windows are each outlined in a different colour and labeled (top row then bottom), 'Source Window', 'Environment Window', 'Console Window', and 'Files/Viewer Window', with arrows pointing at the relevant tabs."></p>
+<p><img src="../..\images/posit_rstudio_windows.jpg" class="img-fluid" alt="A screenshot of the RStudio IDE on Posit Cloud. The four main windows are each outlined in a different colour and labeled (top row then bottom), 'Source Window', 'Environment Window', 'Console Window', and 'Files/Viewer Window', with arrows pointing at the relevant tabs."></p>
 <p>We will eventually work with all four of these windows, but if you’ve opened the workbook, you can <strong>ignore the Environment and Files windows</strong> for now. We’ll be focusing only on the other two: Source and Console.</p>
 <section id="source" class="level4">
 <h4 class="anchored" data-anchor-id="source">Source</h4>
-<p>The Source window is where any documents you want to create or work on will open up. What you have open now is a <strong>Quarto document</strong>, a type of document that integrates regular text and code. A Quarto document has three main elements: the YAML header, body text, and code chunks.</p>
+<p>The Source window is where any documents you want to create or work on will open up. What you have open now is a <strong>Quarto document</strong>, a type of document that integrates regular text and code. This document can be <strong>rendered</strong>, which means that all of the code is run and combined with the text to create a single output document. Quarto documents can be rendered into almost any format you like, including HTML webpages (like this one!), Word documents, PDFs, etc.</p>
+<p>A Quarto document has three main elements: the YAML header, body text, and code chunks.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../..\images/quarto_anatomy.png" class="img-fluid figure-img" alt="A screenshot of the default Quarto document, with the YAML, text, and code chunks each circled and labelled in a different colour."></p>
+<p><img src="../..\images/quarto_anatomy.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="A screenshot of the default Quarto document, with the YAML, text, and code chunks each circled and labelled in a different colour."></p>
 </figure>
 </div>
-<p>Ignore the YAML header for now; we’ll come back to Quarto documents, including the YAML, in depth <a href="../../../tutorials/psychrlogy/01_fundRmentals/04_lm.html#quarto">in Tutorial 04</a>.</p>
+<p>The YAML header controls the settings for rendering. The defaults are fine for our purposes, but see <a href="https://quarto.org/docs/get-started/hello/rstudio.html">this guide for get started with using Quarto</a> for more details.</p>
 <p>You can use the body text portion of a Quarto document more or less like you would a document in Word (or your word processor of choice). In the body of the document, you can write and format any text you want - notes, questions, thoughts, ideas, comments, etc. This workbook already contains all the headings from this tutorial to help you get organised, but please do delete or edit as you see fit.</p>
-<p>The last element is the <strong>code chunk</strong>, which is where all R code should be written. Code chunks have a contrasting background colour, an <code>{r}</code> in the upper left corner, and two green buttons in the upper right. The one that looks like a green “play” button will run all the code in that chunk. Code chunks will NOT handle any non-code text, unless it’s a comment (i.e.&nbsp;preceded by one or more <code>#</code>s.)</p>
+<p>The last element is the <strong>code chunk</strong>, which is where all R code should be written. Code chunks have a contrasting background colour, an <code>{r}</code> in the upper left corner, and two green buttons in the upper right. The one that looks like a green “play” button will run all the code in that chunk. Code chunks are like windows into R - little islands of code. Code chunks can only work with code, and will NOT handle any non-code text, unless it’s a comment (i.e.&nbsp;preceded by one or more <code>#</code>s.)</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <code>{r}</code> line in a code chunk is what defines that box as containing R code. You can write any code you like in the box underneath the <code>{r}</code>, but you must not write any code after the <code>{r}</code> on the same line or the code chunk box won’t work at all.</p>
+</div>
+</div>
 </section>
 <section id="console" class="level4">
 <h4 class="anchored" data-anchor-id="console">Console</h4>
 <p>The Console is deceptively simple: just some stuff about the R version and acknowledgements, and the <code>&gt;</code> symbol with a flashing cursor after it, waiting for you to type something. However, the Console is the heart of R, where anything you want to do actually happens. Every command that you type, anything you want R to do, goes through here.</p>
-<p>So, already we have two places we could write R code: in a code chunk or in the Console. How do we know where to start?</p>
+<p>So, already we have two places we could write R code: in a code chunk, or in the Console. How do we know where to start?</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Code Chunk or Console?">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -423,18 +477,18 @@ Code Chunk or Console?
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>For the purposes of learning</strong>, by default, it’s best that you write <strong>all</strong> code into the workbook code chunks, so you have a detailed record of everything you’ve tried - even if it doesn’t work!</p>
+<p><strong>For the purposes of learning</strong>, by default, it’s best that you write <strong>all</strong> code into the workbook code chunks, so you have a detailed record of everything you’ve tried - even if it doesn’t work. Don’t delete code that produces errors! It’s useful as a record to understand what did and didn’t work as you expected, and it will be much easier to ask questions and get help with your code if you keep a copy of what you tried.</p>
 <p>Outside of these sessions, whether to write a bit of R code in a code chunk in Quarto, or in the Console, largely depends on a single question: do you want to use this same line of code again in the future?</p>
 <p>If <strong>yes</strong>, write the code in a <strong>code chunk</strong>. By adding the code to a document like Quarto, we are creating a record of all the steps we’ve taken in whatever task we are working on. Assuming we want to be able to use and refer to that code again in the future, it should go into a document.</p>
 <p>If <strong>no</strong>, write the code in the <strong>Console</strong>. Code written directly in the Console isn’t saved or documented anywhere<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. Some common uses of the Console are:</p>
+<!-- 1.  [Installing/updating packages](UPDATE) -->
 <ol type="1">
-<li><a href="../../../tutorials/psychrlogy/01_fundRmentals/03_datasets.html">Installing/updating packages</a></li>
 <li>Opening help documentation</li>
 <li>Drafting or testing code to go into a document.</li>
 </ol>
 <p>So, I often use the Console to test my code, building it up bit by bit, until it does what I want it to do. Then, when I’ve puzzled out the solution, I add it into a code chunk.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Still Confused? How About a Convoluted Analogy?">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -443,11 +497,11 @@ Still Confused? How About a Convoluted Analogy?
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Imagine that working in R is like <a href="https://rc2e.com/">cooking</a>, and writing a sequence of commands to, for example, clean a new dataset is like developing a new recipe.</p>
 <p>If you’re developing a recipe, you likely wouldn’t just sit down and write down the final version if you’ve never tried the recipe before. Instead, you might experiment a bit with each step to see what works and what doesn’t.</p>
-<p>Along the way, you may write notes to yourself: “Maybe try cumin?”, “Buy more kefir”, “This time was 2 tsp salt, too salty!” Those notes are a part of the development process, relevant to what you’re doing <em>now</em> and helpful to try out or note down ideas, but they wouldn’t go in your final recipe. Those behind-the-scenes and under-development bits are the code you’d write in the Console.</p>
+<p>Along the way, you may write notes to yourself: “Maybe try cumin?”, “Buy more kefir”, “2 tsp salt was too much!” Those notes are a part of the development process, relevant to what you’re doing <em>now</em> and helpful to try out or note down ideas, but they wouldn’t go in your final recipe. Those behind-the-scenes and under-development bits are the code you’d write in the Console.</p>
 <p>When you find a technique or temperature or seasoning that works, you might add it as a step in your recipe. That final recipe, the steps that actually work the way you want, are the code in your code chunks.</p>
 </div>
 </div>
@@ -462,7 +516,10 @@ Still Confused? How About a Convoluted Analogy?
 </section>
 <section id="errors" class="level2">
 <h2 class="anchored" data-anchor-id="errors">Errors</h2>
-<p>Before we go any further, an affirmation: you will, inevitably, make typos and errors using R. You will write commands that make sense to you that R doesn’t understand; and you will write commands that <strong>don’t</strong> make sense to you, that R <strong>does</strong> understand. Errors are an essential and unavoidable part of learning R, so let’s start there.</p>
+<p>Let’s begin with an affirmation:</p>
+<p><strong>You will, inevitably, make errors using R.</strong></p>
+<p>You will write commands that make sense to you that R doesn’t understand; and you will write commands that <strong>don’t</strong> make sense to you, that R <strong>does</strong> understand.</p>
+<p>Errors are an essential and unavoidable part of learning R, so let’s start there.</p>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -473,9 +530,11 @@ Exercise
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Type literally any gibberish, words, keysmashes etc. into the code chunk in the workbook and press Run (or Ctrl/Cmd + Shift + Enter).</p>
+<p>Type literally any gibberish, words, keysmashes etc. into the code chunk in the workbook and run the code.</p>
+<p>You can run the all the code in a code chunk by clicking the green “play” arrow in the top right corner of the code chunk, or by pressing Ctrl/Cmd + Shift + Enter on your keyboard when your cursor is inside the code chunk.</p>
+<p>You can also run only a particular line of code, or something that you’ve highlighted, by pressing Ctrl/Cmd + Enter.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -484,7 +543,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Keysmash!</span></span>
@@ -522,13 +581,12 @@ Solution
 </div>
 </div>
 <p>Well, that went about as well as expected.</p>
-<p>If you haven’t tried this yet, and your pristine document is just ominously staring at you, I’m serious - punch your keyboard if you have to, or let your cat walk on it, or play it as if it were a piano, and press Enter. There’s two important things to learn from this:</p>
+<p>If you haven’t tried this yet, and your pristine document is just ominously staring at you, I’m serious - punch your keyboard if you have to, or let your cat walk on it, or play it as if it were a piano, and run it. There’s two important things to learn from this:</p>
 <ol type="1">
 <li><p>To ask R to do something, you must write commands out somewhere (in a code chunk, in the Console) and then run them.</p></li>
 <li><p>Eventually, inevitably, something that you type WILL produce an error.</p></li>
 </ol>
 <p>From our keysmashing above, you will have seen that <code>aslavb;lj aew aljvb</code>, <code>Am I a coward? Who calls me villain?</code>, and <code>¯\_(ツ)_/¯</code> are not valid commands in R. Although each of these has <a href="https://www.cjr.org/language_corner/keysmash-qwerty-asdf.php">a communicative function for humans</a>, R can’t understand them. In order to get the answer that we want, we have to ask R to do something in a way it can understand, by writing commands it can parse using the R language.</p>
-<p>Just like learning any other language, learning to communicate with R takes time and practice, and it can be very frustrating when you and R can’t seem to understand each other. However, one advantage of learning to talk to R vs learning to speak a human language is that R always works the same way. Even if the response it gives doesn’t make sense to you, there’s always a logical reason for what it does.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -539,11 +597,11 @@ GlossoRlia: the Language of Errors
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Very often, R communicates with you via errors. Unlike many other computer programmes you might be familiar with, an “error” in R doesn’t (usually!) mean a catastrophic failure and/or potential loss of hours of work<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. Rather, whatever you’ve asked R to do, it’s essentially replied, “<a href="https://youtu.be/7qnd-hdmgfk?feature=shared">Sorry, I can’t do that.</a>” Two of the most important skills you can develop early on with R is to <strong>treat errors as feedback</strong>, and to <strong>learn to read and recognise errors</strong>.</p>
+<p>Very often, R communicates with you via errors. Unlike many other computer programmes you might be familiar with, an “error” in R doesn’t (usually!) mean a catastrophic failure and/or potential loss of hours of work<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. Rather, whatever you’ve asked R to do, it’s essentially replied, “<a href="https://youtu.be/7qnd-hdmgfk?feature=shared">Sorry, I can’t do that.</a>” Two of the most important skills you can develop early on with R is to <strong>treat errors as feedback</strong>, and to <strong>learn to read errors</strong>.</p>
 <p><em>Treat errors as feedback</em>: Errors aren’t (just) an annoyance, although running into lots of errors, usually just when you don’t want them the most!, can be incredibly frustrating. However, errors are just R’s way of telling you that it can’t do what you’ve asked it to do. If you’re trying to work out how to get R to do something, then the “no” of an error rules out whatever you’ve just tried. Rather than setting out to avoid errors, and thinking of an error as a “failure” to “do it right”, it’s much better to expect errors, and make use of them as part of the code-writing process.</p>
-<p><em>Learn to read and recognise errors</em>: Errors often contain useful information about what’s gone wrong and how to fix it. At minimum, errors usually contain the following information:</p>
+<p><em>Learn to read errors</em>: Errors often contain useful information about what’s gone wrong and how to fix it. At minimum, errors usually contain the following information:</p>
 <ul>
-<li>Where in the document the error occurred, or which command/bit of code produced the error</li>
+<li>Where in the code the error occurred, or which command/bit of code produced the error</li>
 <li>Some sort of message about what went wrong.</li>
 </ul>
 <p>Errors vary wildly in understandability and helpfulness, from highly technical jargon to friendly and conversational with suggestions for fixing common problems. Even the obtuse ones, though, will become familiar with time.</p>
@@ -558,12 +616,13 @@ GlossoRlia: the Language of Errors
               ^</code></pre>
 </div>
 </div>
-<p>Here R doesn’t need to tell us where the error is, because there’s only one thing it’s trying to run. We do have the text of the error, though: <code>object 'aslavb' not found</code>. We’ll come to objects <a href="../../../tutorials/psychrlogy/01_fundRmentals/01_02_intro.html#Objects">later on in this tutorial</a>, but in short R is looking for some information labeled <code>aslavb</code> and can’t find it (because it’s just a keysmash!). This is an example of an error that comes up <em>all the time</em> - often when you’ve made a typo, or forgotten to create or store information in an object properly. For me at this point, as someone who forgets or mistypes things on the reg, this error is a familiar friend!</p>
+<p>Here R doesn’t need to tell us where the error is, because there’s only one thing it’s trying to run. We do have the text of the error, though: <code>object 'aslavb' not found</code>. We’ll come to objects in just a bit, but in brief, R is looking for some information stored under the name <code>aslavb</code> and can’t find it (because it’s just a keysmash!). This is an example of an error that comes up <em>all the time</em> - often when you’ve made a typo, or forgotten to create or store information in an object properly. For me at this point, as someone who forgets or mistypes things on the reg, this error is a familiar friend!</p>
 <p>&nbsp;</p>
 </section>
 <section id="types-of-data" class="level2">
 <h2 class="anchored" data-anchor-id="types-of-data">Types of Data</h2>
-<p>One key concept for using R is the different ways it categorises data. “Data” here means any piece of information you put into R - a word, a number, the result of a command or calculation, a dataset, etc. Depending on the type of data you have, R will treat it differently, and some operations only work on certain types of data. So, let’s have a look at how R encodes and deals with different types of data. Here we’ll cover three of the most common and important: numeric, character, and logical. As we do so, we’ll practice some core skills in R.</p>
+<p>One key concept for using R is the different ways it categorises data. “Data” here means any piece of information you put into R - a word, a number, the result of a command or calculation, a dataset, etc. Depending on the type of data you have, R will treat it differently, and some operations only work on certain types of data.</p>
+<p>So, let’s have a look at how R encodes and deals with different types of data. Here we’ll cover three core data types - numeric, character, and logical - as well as a very common type for data analysis, namely factor. As we do so, we’ll practice some core skills in R.</p>
 <section id="numeric-data" class="level3">
 <h3 class="anchored" data-anchor-id="numeric-data">Numeric Data</h3>
 <p>The first, and perhaps most obvious, type of data in R is numbers. We’ll start by doing some calculations with common mathematical operators.</p>
@@ -579,7 +638,7 @@ Exercise
 <div class="callout-body-container callout-body">
 <p>Type any single number and run the code.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -588,7 +647,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pick any number at random</span></span>
@@ -628,9 +687,9 @@ Exercise
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>How does R handle commas within a number (e.g.&nbsp;to separate the thousands place from the hundreds)? How about full stops for decimals?</p>
+<p>How does R handle commas within a number (e.g.&nbsp;to separate the thousands place from the hundreds)? How about full stops for decimals? Try each on a separate line and find out.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -639,7 +698,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span>,<span class="dv">958</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -662,7 +721,7 @@ Solution
 </div>
 <p>So, commas within numbers throw an error. This is because commas have an important role to play in the syntax of R, so long numbers must be inputted into R without any punctuation. However, full stops to mark decimal places are just fine.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Grammar Check">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -671,7 +730,7 @@ Grammar Check
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Try for a moment switching to Source mode by clicking the <code>Source</code> button in the upper left hand of your Quarto document. You can see that RStudio helpfully marks out the part of the code that isn’t parsable (not in “grammatical” R) with a red ❌ next to the line number, and squiggly red underlining, likely familiar from word processing programmes, under the part of the code that’s causing the issue. It won’t do this for every error, but it’s very helpful for finding “grammatical” errors like extra or missing brackets or misplaced commas.</p>
 </div>
@@ -690,7 +749,7 @@ Exercise
 <div class="callout-body-container callout-body">
 <p>Add together your shoe size and the number of windows in the room you’re currently in.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -699,7 +758,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="dv">40</span> <span class="sc">+</span> <span class="dv">8</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -726,7 +785,7 @@ Exercise
 <div class="callout-body-container callout-body">
 <p>Try subtracting, dividing, and multiplying the same two numbers.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -735,7 +794,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-15" class="callout-15-contents callout-collapse collapse">
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="dv">40</span> <span class="sc">-</span> <span class="dv">8</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -772,7 +831,7 @@ Exercise
 <div class="callout-body-container callout-body">
 <p>Print out every whole number between 1 and 50.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -781,7 +840,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-17" class="callout-17-contents callout-collapse collapse">
+<div id="callout-18" class="callout-18-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">:</span><span class="dv">50</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -826,9 +885,9 @@ Exercise
 </div>
 </div>
 <p>As you can see from the indices, this is three separate commands, because the numbered indices start over from <code>[1]</code> each time. However, we want all those numbers <em>in a single command</em>. To do this, we’ll use a <strong>function</strong> called <code>c()</code>.</p>
-<p>This is our first contact with functions in R, and <a href="../../../tutorials/psychrlogy/01_fundRmentals/01_02_intro.html#functions">we’ll explore how they work more later on</a>. To use this one, type it out, then inside the brackets, put the numbers you want to <strong>c</strong>ollect (or <strong>c</strong>oncatenate, or <strong>c</strong>ombine), with different groups separated by commas.</p>
+<p>This is our first contact with functions in R, and we’ll explore how they work more later on. To use this one, type it out, then inside the brackets, put the numbers you want to <strong>c</strong>ollect (or <strong>c</strong>oncatenate, or <strong>c</strong>ombine), with different groups separated by commas.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-20-contents" aria-controls="callout-20" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -837,7 +896,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-20" class="callout-20-contents callout-collapse collapse">
+<div id="callout-21" class="callout-21-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="dv">12</span><span class="sc">:</span><span class="dv">30</span>, <span class="dv">23</span><span class="sc">:</span><span class="dv">55</span>, <span class="dv">36</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -851,7 +910,7 @@ Solution
 </div>
 </div>
 <p>As you can see from the numbered indices this time, when I put the numbers I want inside the function <code>c()</code>, separated by commas, R <strong>c</strong>ollects all of the numbers into a single series of elements, called a <strong>vector</strong>.</p>
-<p>Actually, we’ve been looking at vectors this whole time. Any series of pieces of information in R is a vector (but see Tip box on vectors and elements). When we were looking at single numbers (like <code>3958</code> above), we were still getting a vector back from R, but it was a vector with only one element, and thus only <code>[1]</code>.</p>
+<p>Actually, we’ve been looking at vectors this whole time. When we were looking at single numbers (like <code>3958</code> above), we were still getting a vector back from R, but it was a vector with only one element, and thus only <code>[1]</code>.</p>
 <p>If I want the <em>n</em>th element in the vector we’ve just created, (say, the 33rd), I can get it out by <strong>indexing</strong> with square brackets.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="dv">12</span><span class="sc">:</span><span class="dv">30</span>, <span class="dv">23</span><span class="sc">:</span><span class="dv">55</span>, <span class="dv">36</span>)[<span class="dv">33</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -898,7 +957,7 @@ Exercise
 <div class="callout-body-container callout-body">
 <p>Create a vector of every whole number between 37 and 63, and subtract 7 from each element.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-22-contents" aria-controls="callout-22" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -907,7 +966,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-22" class="callout-22-contents callout-collapse collapse">
+<div id="callout-23" class="callout-23-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="dv">37</span><span class="sc">:</span><span class="dv">63</span>) <span class="sc">-</span> <span class="dv">7</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -970,7 +1029,7 @@ Order of Operations
 <pre><code>[1] "Hello world!"</code></pre>
 </div>
 </div>
-<p>As you can see here, the first command without quotes throws an error, whereas the second prints out our input just like it did with the single numbers before.</p>
+<p>As you can see here, the first command without quotes throws an error, whereas the second prints out our input just like it did with the single numbers before. This tells us that unquoted strings have a particular role to play in R, whereas quoted strings are treated as character data.</p>
 <p>An important thing to note is that R sees everything inside a pair of quotes as a <strong>single element</strong>, regardless of how long it is. You can see this in the indices we saw before:</p>
 <!-- single element inside quotes -->
 <div class="cell">
@@ -996,7 +1055,7 @@ Exercise
 <div class="callout-body-container callout-body">
 <p>Create a vector containing the first five animals you think of, then print the 3rd one.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-25-contents" aria-controls="callout-25" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-26-contents" aria-controls="callout-26" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1005,7 +1064,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-25" class="callout-25-contents callout-collapse collapse">
+<div id="callout-26" class="callout-26-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="st">"bumblebee"</span>, <span class="st">"squid"</span>, <span class="st">"falcon"</span>, <span class="st">"flea"</span>, <span class="st">"seagull"</span>)[<span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1025,8 +1084,8 @@ Solution
 <pre><code>[1] NA</code></pre>
 </div>
 </div>
-<p><code>NA</code> is a special value in R. It indicates that something is <strong>n</strong>ot <strong>a</strong>vailable, and it usually represents missing data, or that a calculation has gone wrong or can’t be performed properly.</p>
-<p>Here, we asked R for the third element in a vector that, as far as R can tell, only contained one. This is because there’s only one pair of quotes, so all five animals and the commas between them are considered to be one element. Since there isn’t a third element, R has informed us so accordingly - the answer to our query is <code>NA</code>, doesn’t exist.</p>
+<p><code>NA</code> is a special value in R. It indicates that something is <strong>n</strong>ot <strong>a</strong>vailable, and it usually represents missing data.</p>
+<p>Here, we asked R for the third element in a vector that, as far as R can tell, only contained one. This is because there’s only one pair of quotes, so all five animals and the commas between them are considered to be one element. Since there isn’t a third element, R has informed us so accordingly - the answer to our query is <code>NA</code>, not available, because it doesn’t exist.</p>
 </section>
 <section id="logical-data" class="level3">
 <h3 class="anchored" data-anchor-id="logical-data">Logical Data</h3>
@@ -1050,7 +1109,7 @@ Exercise
 <li>420 equals 42</li>
 </ul>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-27-contents" aria-controls="callout-27" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-28-contents" aria-controls="callout-28" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1059,7 +1118,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-27" class="callout-27-contents callout-collapse collapse">
+<div id="callout-28" class="callout-28-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span> <span class="sc">&gt;</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1088,13 +1147,13 @@ Solution
 </div>
 </div>
 </div>
-<div class="callout callout-style-default callout-tip callout-titled" title="Asserting Equivalence">
+<div class="callout callout-style-default callout-tip callout-titled" title="Comparison Operators">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Asserting Equivalence
+Comparison Operators
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1123,7 +1182,7 @@ Exercise
 <div class="callout-body-container callout-body">
 <p>Use a single command to ask R whether the numbers 2 through 10 are less than or equal to 6.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-30-contents" aria-controls="callout-30" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-31-contents" aria-controls="callout-31" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1132,7 +1191,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-30" class="callout-30-contents callout-collapse collapse">
+<div id="callout-31" class="callout-31-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="sc">:</span><span class="dv">10</span> <span class="sc">&lt;=</span> <span class="dv">6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1145,9 +1204,9 @@ Solution
 </div>
 </div>
 </div>
-<p>Here R prints out a value of <code>TRUE</code> or <code>FALSE</code> for each comparison it’s asked to make. So, the first element in the output (<code>TRUE</code>) corresponds to the statement <code>2 &lt;= 6</code>, the second to <code>3 &lt;= 6</code>, and so on. This is a vectorised calculation again, as we saw with numeric data before. These vectorised assertions will be absolutely essential to <a href="../../../tutorials/psychrlogy/02_essentials/05_filter.html">selecting and filtering data</a> that meet particular requirements, or checking our data to find problems.</p>
+<p>Here R prints out a vector of <code>TRUE</code>s or <code>FALSE</code>s, one for each element in the original vector. So, the first element in the output (<code>TRUE</code>) corresponds to the statement <code>2 &lt;= 6</code>, the second to <code>3 &lt;= 6</code>, and so on. This is a vectorised calculation again, as we saw with numeric data before. These vectorised assertions will be absolutely essential to <a href="..\02_essentials\05_filter.qmd">selecting and filtering data</a> that meet particular requirements, or checking our data to find problems.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="SPSS Data Types">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-32-contents" aria-controls="callout-32" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-33-contents" aria-controls="callout-33" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1156,7 +1215,7 @@ SPSS Data Types
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-32" class="callout-32-contents callout-collapse collapse">
+<div id="callout-33" class="callout-33-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>If you’re a regular SPSS user, you might recognise many of these data types from SPSS. See page 7 of <a href="https://public.dhe.ibm.com/software/analytics/spss/documentation/statistics/26.0/en/client/Manuals/IBM_SPSS_Statistics_Brief_Guide.pdf">this SPSS user guide</a> for a reminder of these types.</p>
 <p>So far, what we’ve called “numeric” in R is also (broadly) “scale/numeric” in SPSS. What we’ve called “character” in R is “string” in SPSS. As far as I know, SPSS doesn’t have an equivalent of “logical”, but would probably be a “nominal/string” type.</p>
@@ -1182,7 +1241,7 @@ Exercise
 <div class="callout-body-container callout-body">
 <p>Use the <code>class()</code> function to get R to print the values <code>"numeric"</code>, <code>"logical"</code>, and <code>"character"</code>.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-33-contents" aria-controls="callout-33" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-34-contents" aria-controls="callout-34" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1191,7 +1250,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-33" class="callout-33-contents callout-collapse collapse">
+<div id="callout-34" class="callout-34-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Any numeric vector will do</span></span>
@@ -1240,7 +1299,7 @@ Exercise
 <div class="callout-body-container callout-body">
 <p>What data type does R give you if you combine numbers and characters in <code>c()</code>?</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-35-contents" aria-controls="callout-35" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-36-contents" aria-controls="callout-36" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1249,7 +1308,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-35" class="callout-35-contents callout-collapse collapse">
+<div id="callout-36" class="callout-36-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Again, anything will do</span></span>
@@ -1283,7 +1342,7 @@ Definition: Coersion
 </div>
 </div>
 <p>This explains why our vector from the last exercise was a <code>character</code> vector - since the vector contained at least one character element, everything else in the vector was coerced to the same type. This can cause problems when, for example, numeric data is coerced into character data, even though it still <em>looks like</em> numbers.</p>
-<p>Even though we can do mathematical operations on numbers, we can’t do them on characters; it should be clear that asking e.g.&nbsp;what is <code>"tomato" - 7</code> is nonsense. However, this is the case even if all of the data are numerals! For example:</p>
+<p>Even though we can do mathematical operations on numbers, we can’t do them on characters; it should be clear that asking e.g.&nbsp;what is <code>"tomato" - 7</code> is nonsense. However, this is the case even if all of the data are digits! For example:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="do">## No problem here; all numbers</span></span>
 <span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">20</span>, <span class="dv">45</span>) <span class="sc">-</span> <span class="dv">7</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1309,7 +1368,7 @@ Exercise
 <div class="callout-body-container callout-body">
 <p>Use an <code>as.*()</code> function to convert the following vector of participant ages into numeric data: <code>c(20, "42", "36 years old")</code>. What do you think will happen to each element?</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-38-contents" aria-controls="callout-38" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-39-contents" aria-controls="callout-39" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1318,7 +1377,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-38" class="callout-38-contents callout-collapse collapse">
+<div id="callout-39" class="callout-39-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.numeric</span>(<span class="fu">c</span>(<span class="dv">20</span>, <span class="st">"42"</span>, <span class="st">"36 years old"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1370,20 +1429,20 @@ Clear Your Environment
 <div class="callout-body-container callout-body">
 <p>At the moment your Environment should be empty. As a reminder, Environment is by default the first (leftmost) tab in one of your four main windows in RStudio, probably the one on the top right.</p>
 <p>If this window is blank except for “Environment is empty”, you’re ready to go. If for some reason it isn’t empty, click the broom icon to clear everything from your Environment before you get started, as indicted in the image below. (There will be a very ominous-sounding “Are you sure?” pop-up, but just click “Yes”.)</p>
-<p><img src="../../..\images/clear_env.png" class="img-fluid" alt="A screenshot of the Environment pane in RStudio, with the 'Clear objects from workspace' broom icon circled, along with the 'Yes' button on the subsequent pop-up."></p>
+<p><img src="../..\images/clear_env.png" class="img-fluid" alt="A screenshot of the Environment pane in RStudio, with the 'Clear objects from workspace' broom icon circled, along with the 'Yes' button on the subsequent pop-up."></p>
 </div>
 </div>
 <p>First, let’s look at the foundational structure of almost everything you will do in R:</p>
 <div class="sourceCode" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>object <span class="ot">&lt;-</span> instructions</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This is “pseudo-code”, or a “general format” for a command in R. It isn’t valid R code, but is rather intended as a midpoint between natural language and R to help make it clear how the code works. You can read this code as, “An object is created from (<code>&lt;-</code>) some instructions.”</p>
 <ul>
-<li><code>object</code>: Objects can be named almost anything (although see Naming Objects, below). The object name is a label so you, the analyst, can find, refer to, and use the information you need.</li>
+<li><code>object</code>: Objects can be named almost anything (although see Naming Objects, below). The object name is a label so you can find, refer to, and use the information you need.</li>
 <li><code>&lt;-</code>: The assignment operator <code>&lt;-</code> has single job: to assign output to names, or in other words, to create objects.</li>
 <li><code>instructions</code>: Any amount of code that produces some output, which is what <code>object</code> will contain.</li>
 </ul>
 <section id="naming-objects" class="level4">
 <h4 class="anchored" data-anchor-id="naming-objects">Naming Objects</h4>
-<p>Generally, you can name objects pretty freely in R. Object names must be a single sequence of symbols, so can’t include spaces or special operators (like <code>=</code>, <code>&lt;-</code>, <code>,</code>, etc.). The best idea is to come up with naming conventions that work for you, so you can easily remember what objects contain. R will let you know if you try to name an object something that it doesn’t like:</p>
+<p>Generally, you can name objects pretty freely in R. Object names must be a single sequence of symbols, so can’t include spaces or special operators (like <code>=</code>, <code>&lt;-</code>, <code>,</code>, etc.). The best idea is to come up with naming conventions that work for you, so you can easily remember what objects contain, and then <strong>be consistent</strong> as much as possible. R will let you know if you try to name an object something that it doesn’t like:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="do">## This doesn't work because it would frankly be bonkers if it did</span></span>
 <span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a><span class="dv">1285</span> <span class="ot">&lt;-</span> <span class="st">"a"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1393,7 +1452,7 @@ Clear Your Environment
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Can't start with a number...</span></span>
-<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a>1stletter <span class="ot">&lt;-</span> <span class="st">"a"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span>stletter <span class="ot">&lt;-</span> <span class="st">"a"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: &lt;text&gt;:2:2: unexpected symbol
 1: ## Can't start with a number...
@@ -1410,7 +1469,7 @@ Clear Your Environment
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="do">## You can really go wild if you want!</span></span>
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="do">## You can really go wild if you want, but this kind of thing is NOT recommended!</span></span>
 <span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a>thisis_TheFirstLETTER.of.the.alphabetWOW <span class="ot">&lt;-</span> <span class="st">"a"</span></span>
 <span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a>thisis_TheFirstLETTER.of.the.alphabetWOW</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1419,7 +1478,7 @@ Clear Your Environment
 </div>
 <p>In these tutorials, we will typically stick to so-called “snake case” - lowercase names with underscores. This is generally the style of {tidyverse} as well. However, there’s nothing to stop you from using different conventions such as camelCase, PascalCase, whatever.this.is, or mixing them all at random, except maybe for the fact that your future self, and anyone else who might want to read or use your code, will almost certainly despair.</p>
 <div class="callout callout-style-default callout-warning callout-titled" title="Nongrammatical Names">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-42-contents" aria-controls="callout-42" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-43-contents" aria-controls="callout-43" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1428,7 +1487,7 @@ Nongrammatical Names
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-42" class="callout-42-contents callout-collapse collapse">
+<div id="callout-43" class="callout-43-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>It is actually possible to use unallowable symbols, like spaces and punctuation, in some names, by using backticks. You must use the backticks when you create AND every time you use/call the object. It is generally a <strong>very bad idea</strong> to do this (just use underscores like a reasonable person), but it occasionally comes in handy for formatting tables or figures when the names don’t need to be machine-readable/good R code/easy to work with anymore.</p>
 <div class="cell">
@@ -1468,7 +1527,7 @@ Exercise
 <p>Make a note of the scenario you chose. Then, create two new objects: one that contains a vector of six scores from the first of the two groups, and the second that has six different scores from the second group.</p>
 <p><em>Hint</em>: Just make up some numbers that sound plausible!</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-43-contents" aria-controls="callout-43" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-44-contents" aria-controls="callout-44" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1477,7 +1536,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-43" class="callout-43-contents callout-collapse collapse">
+<div id="callout-44" class="callout-44-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Choosing scenario 3, this vector contains some hypothetical quiz marks from each class.</p>
 <div class="cell">
@@ -1509,7 +1568,7 @@ Exercise
 <div class="callout-body-container callout-body">
 <p>Call both of the objects you just created.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-45-contents" aria-controls="callout-45" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-46-contents" aria-controls="callout-46" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1518,7 +1577,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-45" class="callout-45-contents callout-collapse collapse">
+<div id="callout-46" class="callout-46-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Replace with the name of the object you created, if you did something different.</p>
 <div class="cell">
@@ -1576,7 +1635,7 @@ Exercise
 <div class="callout-body-container callout-body">
 <p>Calculate the mean of each of the two sets of scores you created.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-48-contents" aria-controls="callout-48" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-49-contents" aria-controls="callout-49" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1585,7 +1644,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-48" class="callout-48-contents callout-collapse collapse">
+<div id="callout-49" class="callout-49-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Whether you save the output of the <code>mean()</code> command is up to you!</p>
 <div class="cell">
@@ -1615,7 +1674,7 @@ Exercise
 <div class="callout-body-container callout-body">
 <p>Calculate the <strong>difference</strong> in the mean of each of the two sets of scores, and save this difference in a new object called <code>quiz_diff</code>.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-50-contents" aria-controls="callout-50" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-51-contents" aria-controls="callout-51" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1624,7 +1683,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-50" class="callout-50-contents callout-collapse collapse">
+<div id="callout-51" class="callout-51-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Here are two options for accomplishing this.</p>
 <p>The first option is to save each mean value in a new intermediate object (if you didn’t do that already), then subtract one mean from the other. This is very easy to read, but a bit inefficient.</p>
@@ -1662,7 +1721,7 @@ Exercise
 <div class="callout-body-container callout-body">
 <p>What is the class of these objects?</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-52-contents" aria-controls="callout-52" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-53-contents" aria-controls="callout-53" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1671,7 +1730,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-52" class="callout-52-contents callout-collapse collapse">
+<div id="callout-53" class="callout-53-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Either one will do.</p>
 <div class="cell">
@@ -1711,7 +1770,7 @@ Exercise
 <div class="callout-body-container callout-body">
 <p>First, let’s imagine we get three new participants in each condition of our previous study. Update the same two objects you created previously with three new scores each.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-54-contents" aria-controls="callout-54" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-55-contents" aria-controls="callout-55" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1720,7 +1779,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-54" class="callout-54-contents callout-collapse collapse">
+<div id="callout-55" class="callout-55-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>One way - the longer way round - is to type in all the same numbers again from before, and then include three more.</p>
 <div class="cell">
@@ -1800,17 +1859,17 @@ Solution
 </div>
 <p>This illustrates the importance of writing and running code <strong>sequentially</strong>, from beginning to end. If you go back and change values created earlier on in your code, the value you currently have in your Environment may not match the value that your code will produce when run.</p>
 <p>If you are interested in understanding this process of assigning and replacing the contents of objects better, the aside below explains it in more depth.</p>
-<div class="callout callout-style-default callout-important callout-titled" title="Can you actually change an object?">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-56-contents" aria-controls="callout-56" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout callout-style-default callout-important callout-titled" title="MoRe About: Changing Objects">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-57-contents" aria-controls="callout-57" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Can you actually change an object?
+MoRe About: Changing Objects
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-56" class="callout-56-contents callout-collapse collapse">
+<div id="callout-57" class="callout-57-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><em>The majority of this aside was originally written by <a href="https://mival.netlify.app/">Milan Valášek</a></em></p>
 <p>Think of objects as boxes. The names of the objects are only <em>labels</em>, and you can store anything you like inside them. However, unlike in the physical world, objects in R cannot truly change. You can put stuff in and take stuff out, and that’s pretty much it. Unlike boxes, though, when you take stuff out of objects, you only take out a <strong>copy</strong> of its contents. The original contents of the box remain intact. Of course, you can do whatever you want (within limits) to the stuff once you’ve taken it out of the box, but you are only modifying the copy. The key thing to remember is that unless you put that modified stuff into a box, R will forget about it as soon as it’s done with it. In other words, if you want to “save” any changes you make, you must assign them to an object in order to keep them.</p>
@@ -1849,273 +1908,6 @@ Can you actually change an object?
 <p>&nbsp;</p>
 </section>
 </section>
-<section id="functions" class="level2">
-<h2 class="anchored" data-anchor-id="functions">Functions</h2>
-<p>Functions are like verbs in the R language. We’ve already started using a few functions: <code>c()</code>, <code>class()</code>, <code>mean()</code>, and <code>as.numeric()</code>. As we’ve seen, these functions perform some operation using the input inside their brackets, and produce the output of that operation. So, functions are the main way that R <em>does</em> anything.</p>
-<p>In this section, we’ll take a systematic look at the process of using a new function - in particular, functions that take multiple inputs, or <em>arguments</em>. As we go, we’ll look at how to “translate” the command you want to give R into a verb (function) it can understand.</p>
-<section id="basics-and-help" class="level3">
-<h3 class="anchored" data-anchor-id="basics-and-help">Basics and Help</h3>
-<p>Let’s look at an example of how this translation might work. For this example, I’m going to use a number I generated earlier: the mean of the <code>quiz_9am</code> group, 64.3333333, which I’d like to round to two decimal places - a common task for reporting results in APA style.</p>
-<p>If we want R to do this for us, we have to write this command in a way that R can understand. First, we need to know what function corresponds to the English verb “round” - that is, what function will do the same action that we want R to perform. We’re lucky in this case: the function in R is also called <code>round()</code>.</p>
-<p>We know that we’re looking at a function in R because functions often have a name followed by brackets (and nothing else in R does). That is, they have the general form <code>function_name()</code>. Inside the brackets, we can add more information to the function to complete our command, although not all functions require any more information.</p>
-<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Exercise
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Try running the <code>round()</code> function.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-57-contents" aria-controls="callout-57" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Solution
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-57" class="callout-57-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb141"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb141-1"><a href="#cb141-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): 0 arguments passed to 'round' which requires 1 or 2 arguments</code></pre>
-</div>
-</div>
-<p>Unsurprisingly, R has given us an error. This is an <strong>informative</strong> error, though - that is, the error gives of some sort of intelligible clue about what’s gone wrong. Namely, it tells us that <code>round()</code> can’t just work without additional information (i.e.&nbsp;“required arguments”).</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-<p>What we want to do, “Round the number 64.3333333 to two decimal places”, has two more important pieces of information that we need to tell R: what number we want to round (64.3333333) and how many decimal places we want to round it to (2). So, how do we say this in R? To find out, let’s look at the help documentation.</p>
-<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Exercise
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Open the help documentation for the <code>round()</code> function by running <code>?round()</code> or <code>help(round)</code> in the Console.</p>
-</div>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled" title="Help Documentation">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Help Documentation
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Help documentation is information, like instruction manuals, built into R about how individual functions work. Function documentation varies wildly in helpfulness and completeness, but it’s a useful place to check first if you want to find out what a function does. You can access the help documentation in a few different ways: by running <code>?function_name</code> or <code>help(function_name)</code> in the Console, or by clicking on the “Help” tab in the Files section of RStudio and using the Find box to search for the function.</p>
-</div>
-</div>
-<p>The first section, “Description”, varies quite a bit in intelligibility, depending on how complex the function is. Here, if we ignore the information about the other function included in this document, we can see that we have a useful description of <code>round()</code> that tells us that it rounds numbers (that’s a good sign) to a certain number of decimal places. That’s exactly what we want, so how do we use it?</p>
-<p>Let’s scroll down to “Usage”, which gives examples of what the function looks like. You can see that the basic structure of this function is <code>round(x, digits = 0)</code>. It seems like we need to add some more information in the brackets of our function - but how do we interpret <code>x</code> and <code>digits = 0</code>?</p>
-</section>
-<section id="arguments" class="level3">
-<h3 class="anchored" data-anchor-id="arguments">Arguments</h3>
-<p>The information inside a function’s brackets, which give it the information it needs to work, are called <strong>arguments</strong>. Each argument in a function is separated by a comma, so we can see from <code>round(x, digits = 0)</code> that the <code>round()</code> function can take two arguments. How many arguments a function has depends on the function; some (like <code>Sys.Date()</code>) don’t need any arguments to run. One of the most useful parts of a function’s help documentation is the “Arguments” section, which tells you what each of the function’s arguments are and how to use them.</p>
-<p>When referring to arguments, you will hear the terms “named” and “unnamed” arguments. This can be a bit confusing, because all arguments have a name - they have to, otherwise we couldn’t refer to them!<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> The named vs unnamed distinction doesn’t refer to the arguments themselves, but rather how the person using the function chooses to write them out. There are some conventions around which arguments are named or not, so let’s have a look at that now.</p>
-<p>The <strong>first argument</strong> to <code>round()</code> is simply <code>x</code>. Just like in maths, <code>x</code> is a placeholder for some number or numbers (a “numeric vector”, which should sound familiar now) that the function will work on. This is common notation in many functions: <code>x</code>, often the first argument in a function, typically denotes the placeholder for the information you want to use the function on. In our case, we just have one number we want to round, so that’s what we should replace with <code>x</code>.</p>
-<p>This argument has no default, so it must be provided or the function won’t run. Because we always have to provide some information here, <code>x</code> and similar arguments containing the values or data to work on are frequently <em>unnamed</em> when we use them. That means that instead of <code>round(x = 64.333333...)</code> we can just write <code>round(64.33333...)</code>. They are also frequently the first argument in the function<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>. So, when you see reference to the “first unnamed argument” - especially important in {tidyverse} functions designed to work with the pipe operator, which we’ll meet next week - that simply means, “the first argument in the function for which the programmer hasn’t specifed a name”, which is usually, but not always or necessarily, the “data” or “information to work on” argument.</p>
-<p>The <strong>second argument</strong> of <code>round()</code> is <code>digits</code>. You can think of arguments like this as settings that change the way a function works, often with only certain allowable values.</p>
-<p>The help documentation tells us that <code>digits</code> should be an “integer indicating the number of decimal places…to be used.” We can also see in “Usage” that this argument has a default value, <code>digits = 0</code>. That means that if we don’t explicitly include the argument <code>digits</code> when we use the function, by default the <code>round()</code> function will round the number you give it to 0 decimal places. Arguments frequently, but not always, have a default, and it’s important to check so the function doesn’t quietly do something unexpected.</p>
-<p>Default values of arguments are really useful, because the default is often the most frequently used or safest<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a> setting. It means you don’t have to specify every single aspect of a function every time you use it, as long as you want the function to work according to its defaults. In our case, we actually wanted <code>round()</code> to round to two decimal places, not 0. So, in our command, we should change the <code>digits</code> setting from the default, <code>0</code>, to <code>2</code>.</p>
-</section>
-<section id="using-functions" class="level3">
-<h3 class="anchored" data-anchor-id="using-functions">Using Functions</h3>
-<p>Now that we know what both of these arguments mean, we can change them to actually translate the sentence “Round the number 64.3333333 to two decimal places” into a command that R can work with. We’ll explicitly write out each argument so we know what they are doing.</p>
-<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Exercise
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Use the <code>round()</code> function to round 64.3333333 to two decimal places.</p>
-<p>If you prefer, you can do this with one of the means you calculated for your own scores earlier.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-61-contents" aria-controls="callout-61" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Solution
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-61" class="callout-61-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb143"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb143-1"><a href="#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Using the actual value from my earlier calculation</span></span>
-<span id="cb143-2"><a href="#cb143-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="at">x =</span> <span class="fl">64.3333333</span>, <span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 64.33</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb145"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb145-1"><a href="#cb145-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Using a nested function - that is, calculating the mean and then rounding it!</span></span>
-<span id="cb145-2"><a href="#cb145-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="at">x =</span> <span class="fu">mean</span>(quiz_9am), <span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 64.33</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled" title="Order and Naming of Arguments">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-63-contents" aria-controls="callout-63" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Order and Naming of Arguments
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-63" class="callout-63-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>If you want to, you can achieve the same result by changing the order of the arguments, as long as you pay careful attention to which argument(s) you have named.</p>
-<p>If we have written the names of both arguments, R can still do what we want it to do with the order of arguments reversed:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb147"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb147-1"><a href="#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="at">digits =</span> <span class="dv">2</span>, <span class="at">x =</span> <span class="fl">64.3333333</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 64.33</code></pre>
-</div>
-</div>
-<p>We can also, to some degree, drop the names of the arguments, as long as R can still understand what we’re trying to do. In this case, the “first unnamed argument” is still <code>x</code>! Even though it’s not the first argument we’ve written in the function, it’s the first one that doesn’t have an explicit name.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb149"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb149-1"><a href="#cb149-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="at">digits =</span> <span class="dv">2</span>, <span class="fl">64.3333333</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 64.33</code></pre>
-</div>
-</div>
-<p>Although I left out the <code>x =</code>, R can still understand this because <code>round()</code> only takes two arguments, and we explicitly told it what value belongs to <code>digits</code>, so it assumes the second number must be <code>x</code>.</p>
-<p>If more than one, or all, of the arguments are unnamed, then order becomes critical:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb151"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb151-1"><a href="#cb151-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fl">64.3333333</span>, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 64.33</code></pre>
-</div>
-</div>
-<p>This time I dropped both argument names. R can still understand this because when you don’t specify which input goes with which argument, R will assume they should go in the default order given in the help documentation. So, R has automatically assigned 64.3333333 to <code>x</code> and 2 to <code>digits</code>.</p>
-<p>As I use R more and more, I find that I name arguments <em>more</em> consistently, even though I know how the function works and dropping them is more efficient (at least in terms of typing). That’s because when I come back from lunch, or the next day, or six months later to revisit the same code, it’s much easier to recall what it all means when it’s well-annotated. So, I strongly recommend getting in the habit of including argument names in your code as a favour to your future self, and to avoid situations like this:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb153"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb153-1"><a href="#cb153-1" aria-hidden="true" tabindex="-1"></a><span class="do">## uh oh!</span></span>
-<span id="cb153-2"><a href="#cb153-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="dv">2</span>, <span class="fl">64.3333333</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2</code></pre>
-</div>
-</div>
-<p>Here, since we left all the arguments unnamed, R assumed that 2 was the number we wanted to round. This isn’t what we wanted - but R has no way of knowing this. It always assumes that what we typed was precisely what we intended to ask R to do.</p>
-</div>
-</div>
-</div>
-<section id="passing-multiple-values-to-arguments" class="level4">
-<h4 class="anchored" data-anchor-id="passing-multiple-values-to-arguments">Passing Multiple Values to Arguments</h4>
-<p>A last important aspect of using functions is that <strong>each argument in a function can only take a single object or value as input</strong>. For example, we saw above that we put the single value 64.3333333 into the <code>x</code> argument of <code>round()</code>. But what if we wanted to round more than one number? We don’t want to have to write a new <code>round()</code> command for every number, even though we could do this if we particularly enjoyed doing a lot of tedious and repetitive typing:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb155"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb155-1"><a href="#cb155-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fl">64.3333333</span>, <span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 64.33</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb157"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb157-1"><a href="#cb157-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ughhhh</span></span>
-<span id="cb157-2"><a href="#cb157-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fl">59.5452</span>, <span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 59.55</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb159"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb159-1"><a href="#cb159-1" aria-hidden="true" tabindex="-1"></a><span class="do">## noooooo :(</span></span>
-<span id="cb159-2"><a href="#cb159-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fl">0.198</span>, <span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.2</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb161"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb161-1"><a href="#cb161-1" aria-hidden="true" tabindex="-1"></a><span class="do">## thanks I hate it</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Exercise
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Before you go on, have a go using a single <code>round()</code> command to round 64.3333333, 59.5452, and 0.198 at once.</p>
-<p><em>Hint</em>: Refer to <a href="#vectors">Vectors</a>.</p>
-</div>
-</div>
-<p>So what happens if we try to put all of those numbers into <code>round()</code>? We might first try this:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb162"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb162-1"><a href="#cb162-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fl">64.3333333</span>, <span class="fl">59.5452</span>, <span class="fl">0.198</span>, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): 4 arguments passed to 'round' which requires 1 or 2 arguments</code></pre>
-</div>
-</div>
-<p>Once again, R tells us that this doesn’t work by throwing an error. R has tried to do what we wanted, but the <code>round()</code> function only allows a max of two arguments, and we’ve given it four. Behind the scenes, R has tried to run <code>round(x = 64.3333333, digits = 59.5452...</code> and can’t proceed from there because it doesn’t know what to do with the last two numbers. So, what we need to do is find a way to put all three numbers that we want to round into the first <code>x</code> argument together. If only there was a way to <strong>c</strong>oncatenate them together…</p>
-<p>You may have guessed where this is going: one method we could use would be to put the three numbers we want to round into a single object, and then pass that object to <code>round()</code> as the <code>x</code> argument. We already saw that we can combine any number of things together into a single vector using the <code>c()</code> function.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-65-contents" aria-controls="callout-65" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Solution
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-65" class="callout-65-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb164"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb164-1"><a href="#cb164-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Create an intermediate object to contain the numbers</span></span>
-<span id="cb164-2"><a href="#cb164-2" aria-hidden="true" tabindex="-1"></a>numbers <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">64.3333333</span>, <span class="fl">59.5452</span>, <span class="fl">0.198</span>)</span>
-<span id="cb164-3"><a href="#cb164-3" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(numbers, <span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 64.33 59.55  0.20</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb166"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb166-1"><a href="#cb166-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Put the vector of numbers into round() directly</span></span>
-<span id="cb166-2"><a href="#cb166-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">c</span>(<span class="fl">64.3333333</span>, <span class="fl">59.5452</span>, <span class="fl">0.198</span>), <span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 64.33 59.55  0.20</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<p>Here we can see a good example of a function inside another function. You can stack, or “nest”, functions inside each other like this as much as you like, although it can become difficult to read the code or keep track of what it’s doing. (There’s a great solution to this problem that we’ll encounter in the next tutorial: the pipe operator.)</p>
-<p>That’s looking like some proper R code! Very nicely done.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="Help Documentation, Revisited">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Help Documentation, Revisited
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Before we leave the <code>round()</code> function altogether, let’s take a look at two more useful sections of the help documentation. Depending on what you are trying to do, the “Details” section can tell you more about how exactly the function works - how it behaves in certain situations, or how it handles unusual or difficult cases. If a function isn’t doing what you expect it to, this is a good place to look for an explanation.</p>
-<p>Finally, at the end of the documentation you can find the “Examples” section. If you are learning to use a new function, this section can give you a template for writing your own commands. You can also click the “Run examples” link, which will run the code in the Examples section for you so you can see what the function will do.</p>
-</div>
-</div>
-<p>&nbsp;</p>
-</section>
-</section>
-</section>
 <section id="quick-test-t-test" class="level2">
 <h2 class="anchored" data-anchor-id="quick-test-t-test">Quick Test: <em>t</em>-test</h2>
 <p>Let’s put all of this together and have a look at what we can already do with the skills in this tutorial. R has many, many uses, but one of its core purposes is statistical analysis - and we already know more than enough to do this.</p>
@@ -2125,13 +1917,15 @@ Help Documentation, Revisited
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>If we run out of time in the live session, you can attempt this last bit as an optional <strong>Challenge</strong> task. Don’t worry if you get stuck - we will come back to <em>t</em>-tests later on in the Essentials section of the course.</p>
 <p>In case you’re not familiar with <em>t</em>-tests, you can find a lecture recording on the <a href="https://sussex.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=26671aaa-5909-4bef-8617-afb001299757">Analysing Data 22/23 Canvas site</a>.</p>
 </div>
 </div>
 </div>
-<p>We’ve created two objects that contain scores from two different groups - scores we made up, but we will get to real data soon (in the next tutorial!). For now, one common statistical test we could run on data like this is a independent-samples <em>t</em>-test, which is a hypothesis test essentially evaluating the probability that two sets of scores come from the same population.</p>
-<p>Helpfully, the function we want is called <code>t.test()</code>.</p>
+<p>We’ve created two objects that contain scores from two different groups - scores we made up, but we will get to real data soon. For now, one common statistical test we could run on data like this is a independent-samples <em>t</em>-test, which is a hypothesis test essentially evaluating the probability that two sets of scores come from the same population.</p>
+<p>Helpfully, the function we want is called <code>t.test()</code>. For our purposes, we can run the <em>t</em>-test by adapting the following general format:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb141"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb141-1"><a href="#cb141-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(vector_of_scores, another_vector_of_scores)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -2142,9 +1936,9 @@ Exercise
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Bring up the help documentation for <code>t.test()</code> and use it to run a <em>t</em>-test comparing your two sets of scores.</p>
+<p>Use the two objects containing scores to run a <em>t</em>-test.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-67-contents" aria-controls="callout-67" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-58-contents" aria-controls="callout-58" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -2153,16 +1947,11 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-67" class="callout-67-contents callout-collapse collapse">
+<div id="callout-58" class="callout-58-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Call up the help documentation <strong>in the Console</strong>:</p>
+<p>Replace the object names with yours if you called them something different.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb168"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb168-1"><a href="#cb168-1" aria-hidden="true" tabindex="-1"></a>?t.test</span>
-<span id="cb168-2"><a href="#cb168-2" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(t.test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Run the test:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb169"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb169-1"><a href="#cb169-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(quiz_9am, quiz_6pm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb142"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb142-1"><a href="#cb142-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(quiz_9am, quiz_6pm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Welch Two Sample t-test
@@ -2182,53 +1971,8 @@ mean of x mean of y
 </div>
 </div>
 </div>
-<p>There are a lot of options in the <code>t.test()</code> function, which can be used, through different arguments, to run almost any variety of <em>t</em>-test you can think of. In this case, though, the code is quite simple, because we want all the default settings (for a two-sample, independent test), so we only need to provide <code>x</code> and <code>y</code>, our two numeric vectors.</p>
-<p>Note that the output mentions “Welch Two Sample t-test”, which is a version of the test that does <strong>not</strong> assume equal variances. This is the version that is taught to undergraduates, because we have not at this point introduced the process of assumption testing. If you definitely know that the variances <em>are</em> equal and you definitely want Student’s <em>t</em>-test, you can instead change the default setting.</p>
-<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Exercise
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Using the help documentation, re-run the <em>t</em>-test with equal variances assumed.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-69-contents" aria-controls="callout-69" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Solution
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-69" class="callout-69-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb171"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb171-1"><a href="#cb171-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(quiz_9am, quiz_6pm, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    Two Sample t-test
-
-data:  quiz_9am and quiz_6pm
-t = 1.0264, df = 16, p-value = 0.32
-alternative hypothesis: true difference in means is not equal to 0
-95 percent confidence interval:
- -12.19206  35.08095
-sample estimates:
-mean of x mean of y 
- 64.33333  52.88889 </code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<p>In future tutorial, we’ll see how to turn this rather ugly R output automatically into beautifully formatted reporting like this:</p>
+<p>Note that the output mentions “Welch Two Sample t-test”, which is a version of the test that does <strong>not</strong> assume equal variances. This is the version that is taught to undergraduates, because we have not at this point introduced the process of assumption testing. If you definitely know that the variances <em>are</em> equal and you definitely want Student’s <em>t</em>-test, you can instead change the default setting. Next time, we’ll look in more depth about how to work with functions and specify exactly how you want them to run.</p>
+<p>In future tutorials, we’ll also see how to turn this rather ugly R output automatically into beautifully formatted reporting like this:</p>
 <blockquote class="blockquote">
 <p>We compared mean scores between two groups, one who took the quiz in a 9am practical session (<em>M</em> = 64.33) and the other who took the quiz in a 6pm practical session (<em>M</em> =52.89, <em>M</em><sub>diff</sub> = 11.44). There was no statistically significant difference in scores between practical groups (<em>t</em>(16) = 1.03, <em>p</em> = 0.32, 95% CI [-12.19, 35.08]).</p>
 </blockquote>
@@ -2257,13 +2001,10 @@ Well Done!
 <ol>
 <li id="fn1"><p>This isn’t <em>technically</em> true - have a look at the “History” tab in the Environment window. However, the commands stored here can’t be run or used - they have to be copied into the Console or Source windows in order to run. The History tab provides an exhaustive record of the things you’ve typed, not a cohesive or meaningful series of steps.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>Don’t get me wrong - crashes do happen! But they often look like a “fatal error” popup message, the programme freezing, or other obvious breakdowns of the programme itself. “Errors” in code as we’re seeing here are just a part of the normal functioning of R and don’t usually mean anything particularly horrific is occurring.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>Well, not in the single command we’re using here. We can certainly get out the age <code>36</code>, but it will take a bit more work. We’ll come back to this problem in the Essentials section of the course.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Well, not in the single command we’re using here. We can certainly get out the age <code>36</code>, but it will take a bit more work - and maybe some <em>regular expressions</em>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p>As a linguist I have to note, one, <a href="https://amazingakita.tumblr.com/post/181685581034/people-who-dont-even-care-about-language-how-can">words don’t exist</a>, and two, the closest linguistic term for what an object is is probably “lexeme”. “Word” will get you in the right vicinity, though, conceptually. If you’d like to dive down this rabbit hole (rabbit-hole?) <a href="https://www.youtube.com/watch?v=93sK4jTGrss">this Crash Course video on morphology</a> is a good place to start.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5"><p>Again, I could have called this object anything, like <code>the_first_example_of_an_object_InThisSection.so.far</code> or <code>made_upQuizScores.fornineamclass</code> or anything else that follows R’s naming conventions. However, it’s a good idea to name your objects something brief and obvious, so you can remember what they contain and work with them easily.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Again, I could have called this object anything, like <code>the_first_example_of_an_object_InThisSection.so.far</code> or <code>made_upQuizScores.fornineamclass</code> or anything else that follows R’s naming conventions. However, it’s a good idea to name your objects something brief and obvious, so you can remember what they contain and work with them easily. <!-- UPDATE - Reny to add something here? --><a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn6"><p>There is a way to do this - you can enclose the entire expression in round brackets, e.g.&nbsp;<code>(object &lt;- instructions)</code>, which will BOTH create the object AND print out what that object contains at the same time. I’m not using this method in these tutorials because I think it will be confusing, since it’s primarily for demonstration purposes and not necessary the sort of thing you’d want to use in your own analysis code.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7"><p>In fact, a previous version of this tutorial very confidently gave the wrong definitions! Sorry…<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn8"><p>Again, not necessarily - the base-R string-manipulation functions <code>grep()</code> and friends, for example, have <code>x</code> as their <em>third</em> argument. I know all the irregularities can be confusing, but remember that R is a massive collaborative project across decades and millions of users, so some quirks are inevitable!<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn9"><p>By “safest” setting, I mean that the function makes the fewest assumptions about what you intended.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -2307,6 +2048,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       } else {
         el.classList.add('notransition');
       }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
     }
   }
   const toggleColorMode = (alternate) => {
@@ -2375,13 +2143,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  let localAlternateSentinel = 'default';
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
@@ -2460,10 +2230,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -2473,8 +2242,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -2487,6 +2265,125 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -2530,6 +2427,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -2555,6 +2453,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -2620,12 +2544,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     <div class="nav-footer-left">
       &nbsp;
     </div>   
-    <div class="nav-footer-center">© Jennifer Mankin 2023</div>
+    <div class="nav-footer-center">
+<p>© Jennifer Mankin 2024</p>
+</div>
     <div class="nav-footer-right">
       &nbsp;
     </div>
   </div>
 </footer>
+
 
 
 

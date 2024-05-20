@@ -1,0 +1,756 @@
+---
+title: 'Quick Reference'
+---
+
+## Index of Functions
+
+Looking for a function you can't quite remember how to use? You're in the right place!
+The table below is arranged alphabetically by function name, and the linked full name (including relevant package calls) will take you to the help documentation.
+
+<table class="table" style="margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Function Name </th>
+   <th style="text-align:left;"> Link to Help Documentation </th>
+   <th style="text-align:left;"> Used In... </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> across() </td>
+   <td style="text-align:left;"> <a href="https://dplyr.tidyverse.org/reference/across.html">dplyr::across()</a> </td>
+   <td style="text-align:left;"> 06: Mutate and Summarise<br>08: Analysis </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> all() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/all.html">all()</a> </td>
+   <td style="text-align:left;"> 05: Filter and Select<br>07: Visualisations </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> anova() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/stats/anova.html">anova()</a> </td>
+   <td style="text-align:left;"> 04: Reporting Linear Models with Quarto </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> any() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/any.html">any()</a> </td>
+   <td style="text-align:left;"> 05: Filter and Select </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> apa_print() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/pkg/papaja/man/apa_print.html">papaja::apa_print()</a> </td>
+   <td style="text-align:left;"> 04: Reporting Linear Models with Quarto<br>05: Filter and Select<br>06: Mutate and Summarise<br>07: Visualisations<br>08: Analysis </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> apa_table() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/pkg/papaja/man/apa_table.html">papaja::apa_table()</a> </td>
+   <td style="text-align:left;"> 04: Reporting Linear Models with Quarto<br>08: Analysis </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> arrange() </td>
+   <td style="text-align:left;"> <a href="https://dplyr.tidyverse.org/reference/arrange.html">dplyr::arrange()</a> </td>
+   <td style="text-align:left;"> 05: Filter and Select </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> as.numeric() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/numeric.html">as.numeric()</a> </td>
+   <td style="text-align:left;"> 01/02: IntRoduction </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> as_tibble() </td>
+   <td style="text-align:left;"> <a href="https://tibble.tidyverse.org/reference/as_tibble.html">tibble::as_tibble()</a> </td>
+   <td style="text-align:left;"> 10: Qualtrics and Labelled Data </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> autoplot() </td>
+   <td style="text-align:left;"> <a href="https://ggplot2.tidyverse.org/reference/autoplot.html">ggplot2::autoplot()</a> </td>
+   <td style="text-align:left;"> 04: Reporting Linear Models with Quarto </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> between() </td>
+   <td style="text-align:left;"> <a href="https://dplyr.tidyverse.org/reference/between.html">dplyr::between()</a> </td>
+   <td style="text-align:left;"> 05: Filter and Select </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> boxplot() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/graphics/boxplot.html">boxplot()</a> </td>
+   <td style="text-align:left;"> 03: Datasets </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> c() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/c.html">c()</a> </td>
+   <td style="text-align:left;"> 01/02: IntRoduction<br>03: Datasets<br>04: Reporting Linear Models with Quarto<br>05: Filter and Select<br>06: Mutate and Summarise<br>07: Visualisations<br>08: Analysis<br>10: Qualtrics and Labelled Data<br>11: Qualtrics II </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> c_across() </td>
+   <td style="text-align:left;"> <a href="https://dplyr.tidyverse.org/reference/c_across.html">dplyr::c_across()</a> </td>
+   <td style="text-align:left;"> 06: Mutate and Summarise </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> chisq.test() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test()</a> </td>
+   <td style="text-align:left;"> 07: Visualisations </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> class() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/class.html">class()</a> </td>
+   <td style="text-align:left;"> 01/02: IntRoduction </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> contains() </td>
+   <td style="text-align:left;"> <a href="https://tidyselect.r-lib.org/reference/starts_with.html">dplyr::contains()</a> </td>
+   <td style="text-align:left;"> 05: Filter and Select<br>06: Mutate and Summarise </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> contr.sum() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/stats/contrast.html">contr.sum()</a> </td>
+   <td style="text-align:left;"> 08: Analysis </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> contrasts() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/stats/contrasts.html">contrasts()</a> </td>
+   <td style="text-align:left;"> 08: Analysis </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> cor.test() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/stats/cor.test.html">cor.test()</a> </td>
+   <td style="text-align:left;"> 06: Mutate and Summarise </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> correlation() </td>
+   <td style="text-align:left;"> <a href="https://easystats.github.io/correlation/reference/correlation.html">correlation::correlation()</a> </td>
+   <td style="text-align:left;"> 06: Mutate and Summarise </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> count() </td>
+   <td style="text-align:left;"> <a href="https://dplyr.tidyverse.org/reference/count.html">dplyr::count()</a> </td>
+   <td style="text-align:left;"> 03: Datasets<br>05: Filter and Select<br>06: Mutate and Summarise </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> data() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/utils/data.html">data()</a> </td>
+   <td style="text-align:left;"> 04: Reporting Linear Models with Quarto </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> describe_distribution() </td>
+   <td style="text-align:left;"> <a href="https://easystats.github.io/datawizard/reference/describe_distribution.html">datawizard::describe_distribution()</a> </td>
+   <td style="text-align:left;"> 03: Datasets </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> drop_na() </td>
+   <td style="text-align:left;"> <a href="https://tidyr.tidyverse.org/reference/drop_na.html">tidyr::drop_na()</a> </td>
+   <td style="text-align:left;"> 05: Filter and Select </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> emmeans() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/pkg/emmeans/man/emmeans.html">emmeans::emmeans()</a> </td>
+   <td style="text-align:left;"> 08: Analysis </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> everything() </td>
+   <td style="text-align:left;"> <a href="https://tidyselect.r-lib.org/reference/everything.html">dplyr::everything()</a> </td>
+   <td style="text-align:left;"> 05: Filter and Select </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> filter() </td>
+   <td style="text-align:left;"> <a href="https://dplyr.tidyverse.org/reference/filter.html">dplyr::filter()</a> </td>
+   <td style="text-align:left;"> 05: Filter and Select<br>06: Mutate and Summarise<br>07: Visualisations<br>08: Analysis </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> geom_histogram() </td>
+   <td style="text-align:left;"> <a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">ggplot2::geom_histogram()</a> </td>
+   <td style="text-align:left;"> 07: Visualisations </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ggpairs() </td>
+   <td style="text-align:left;"> <a href="https://ggobi.github.io/ggally/reference/ggpairs.html">GGally::ggpairs()</a> </td>
+   <td style="text-align:left;"> 06: Mutate and Summarise </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ggscatmat() </td>
+   <td style="text-align:left;"> <a href="https://ggobi.github.io/ggally/reference/ggscatmat.html">GGally::ggscatmat()</a> </td>
+   <td style="text-align:left;"> 06: Mutate and Summarise </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> glance() </td>
+   <td style="text-align:left;"> <a href="https://generics.r-lib.org/reference/glance.html">broom::glance()</a> </td>
+   <td style="text-align:left;"> 04: Reporting Linear Models with Quarto<br>08: Analysis </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> glimpse() </td>
+   <td style="text-align:left;"> <a href="https://pillar.r-lib.org/reference/glimpse.html">dplyr::glimpse()</a> </td>
+   <td style="text-align:left;"> 03: Datasets </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> gsub() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/grep.html">gsub()</a> </td>
+   <td style="text-align:left;"> 06: Mutate and Summarise<br>10: Qualtrics and Labelled Data<br>11: Qualtrics II </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> here() </td>
+   <td style="text-align:left;"> <a href="https://here.r-lib.org//reference/here.html">here::here()</a> </td>
+   <td style="text-align:left;"> 03: Datasets<br>05: Filter and Select<br>06: Mutate and Summarise<br>07: Visualisations<br>08: Analysis<br>09: Test Flight<br>10: Qualtrics and Labelled Data<br>11: Qualtrics II </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> hist() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/graphics/hist.html">hist()</a> </td>
+   <td style="text-align:left;"> 03: Datasets </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ifelse() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/ifelse.html">ifelse()</a> </td>
+   <td style="text-align:left;"> 07: Visualisations </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> is.character() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/character.html">is.character()</a> </td>
+   <td style="text-align:left;"> 05: Filter and Select </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> is.na() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/NA.html">is.na()</a> </td>
+   <td style="text-align:left;"> 05: Filter and Select<br>10: Qualtrics and Labelled Data </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> is.null() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/NULL.html">is.null()</a> </td>
+   <td style="text-align:left;"> 10: Qualtrics and Labelled Data </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> joint_tests() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/pkg/emmeans/man/joint_tests.html">emmeans::joint_tests()</a> </td>
+   <td style="text-align:left;"> 08: Analysis </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> kable_classic() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/pkg/kableExtra/man/kable_classic.html">kableExtra::kable_classic()</a> </td>
+   <td style="text-align:left;"> 06: Mutate and Summarise </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> kable_styling() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kableExtra::kable_styling()</a> </td>
+   <td style="text-align:left;"> 03: Datasets<br>05: Filter and Select<br>06: Mutate and Summarise<br>07: Visualisations<br>08: Analysis<br>09: Test Flight<br>10: Qualtrics and Labelled Data<br>11: Qualtrics II </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> library() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/library.html">library()</a> </td>
+   <td style="text-align:left;"> 03: Datasets<br>04: Reporting Linear Models with Quarto<br>05: Filter and Select<br>06: Mutate and Summarise<br>07: Visualisations<br>08: Analysis<br>09: Test Flight<br>10: Qualtrics and Labelled Data<br>11: Qualtrics II </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> lm() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/stats/lm.html">lm()</a> </td>
+   <td style="text-align:left;"> 04: Reporting Linear Models with Quarto<br>08: Analysis </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> lmRob() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/pkg/robust/man/lmRob.html">robust::lmRob()</a> </td>
+   <td style="text-align:left;"> 04: Reporting Linear Models with Quarto </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> max() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/Extremes.html">max()</a> </td>
+   <td style="text-align:left;"> 06: Mutate and Summarise </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> mean() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/mean.html">mean()</a> </td>
+   <td style="text-align:left;"> 01/02: IntRoduction<br>03: Datasets </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> median() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/stats/median.html">median()</a> </td>
+   <td style="text-align:left;"> 03: Datasets<br>05: Filter and Select </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> model_parameters() </td>
+   <td style="text-align:left;"> <a href="https://easystats.github.io/parameters/reference/model_parameters.html">parameters::model_parameters()</a> </td>
+   <td style="text-align:left;"> 04: Reporting Linear Models with Quarto<br>08: Analysis </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> n() </td>
+   <td style="text-align:left;"> <a href="https://dplyr.tidyverse.org/reference/context.html">dplyr::n()</a> </td>
+   <td style="text-align:left;"> 06: Mutate and Summarise </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> na_values() </td>
+   <td style="text-align:left;"> <a href="https://larmarange.github.io/labelled/reference/na_values.html">labelled::na_values()</a> </td>
+   <td style="text-align:left;"> 10: Qualtrics and Labelled Data </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> names() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/names.html">names()</a> </td>
+   <td style="text-align:left;"> 03: Datasets<br>10: Qualtrics and Labelled Data<br>11: Qualtrics II </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ncol() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/nrow.html">ncol()</a> </td>
+   <td style="text-align:left;"> 03: Datasets </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> nice_table() </td>
+   <td style="text-align:left;"> <a href="https://rempsyc.remi-theriault.com/reference/nice_table.html">rempsyc::nice_table()</a> </td>
+   <td style="text-align:left;"> 04: Reporting Linear Models with Quarto </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> nrow() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/nrow.html">nrow()</a> </td>
+   <td style="text-align:left;"> 03: Datasets<br>05: Filter and Select<br>06: Mutate and Summarise<br>07: Visualisations </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> options() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/options.html">options()</a> </td>
+   <td style="text-align:left;"> 07: Visualisations </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> paste0() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/paste.html">paste0()</a> </td>
+   <td style="text-align:left;"> 08: Analysis<br>10: Qualtrics and Labelled Data </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> pick() </td>
+   <td style="text-align:left;"> <a href="https://dplyr.tidyverse.org/reference/pick.html">dplyr::pick()</a> </td>
+   <td style="text-align:left;"> 05: Filter and Select </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> plot() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a> </td>
+   <td style="text-align:left;"> 03: Datasets </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> position_jitterdodge() </td>
+   <td style="text-align:left;"> <a href="https://ggplot2.tidyverse.org/reference/position_jitterdodge.html">ggplot2::position_jitterdodge()</a> </td>
+   <td style="text-align:left;"> 08: Analysis </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> print() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/print.html">print()</a> </td>
+   <td style="text-align:left;"> 06: Mutate and Summarise </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> pull() </td>
+   <td style="text-align:left;"> <a href="https://dplyr.tidyverse.org/reference/pull.html">dplyr::pull()</a> </td>
+   <td style="text-align:left;"> 03: Datasets<br>06: Mutate and Summarise<br>10: Qualtrics and Labelled Data </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> range() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/range.html">range()</a> </td>
+   <td style="text-align:left;"> 03: Datasets </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> read_csv() </td>
+   <td style="text-align:left;"> <a href="https://readr.tidyverse.org/reference/read_delim.html">readr::read_csv()</a> </td>
+   <td style="text-align:left;"> 03: Datasets<br>05: Filter and Select<br>06: Mutate and Summarise<br>07: Visualisations<br>08: Analysis<br>09: Test Flight </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> read_sav() </td>
+   <td style="text-align:left;"> <a href="https://haven.tidyverse.org/reference/read_spss.html">haven::read_sav()</a> </td>
+   <td style="text-align:left;"> 10: Qualtrics and Labelled Data<br>11: Qualtrics II </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> rename() </td>
+   <td style="text-align:left;"> <a href="https://dplyr.tidyverse.org/reference/rename.html">dplyr::rename()</a> </td>
+   <td style="text-align:left;"> 10: Qualtrics and Labelled Data </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> rep() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/rep.html">rep()</a> </td>
+   <td style="text-align:left;"> 10: Qualtrics and Labelled Data<br>11: Qualtrics II </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> return() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/function.html">return()</a> </td>
+   <td style="text-align:left;"> 06: Mutate and Summarise </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> rglwidget() </td>
+   <td style="text-align:left;"> <a href="https://dmurdoch.github.io/rgl/dev/reference/rglwidget.html">rgl::rglwidget()</a> </td>
+   <td style="text-align:left;"> 07: Visualisations </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> round() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/Round.html">round()</a> </td>
+   <td style="text-align:left;"> 01/02: IntRoduction<br>03: Datasets<br>04: Reporting Linear Models with Quarto </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> rowMeans() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/colSums.html">rowMeans()</a> </td>
+   <td style="text-align:left;"> 06: Mutate and Summarise </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> rowSums() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/colSums.html">rowSums()</a> </td>
+   <td style="text-align:left;"> 05: Filter and Select </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> rowid_to_column() </td>
+   <td style="text-align:left;"> <a href="https://tibble.tidyverse.org/reference/rownames.html">tibble::rowid_to_column()</a> </td>
+   <td style="text-align:left;"> 08: Analysis </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> scale() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/scale.html">scale()</a> </td>
+   <td style="text-align:left;"> 08: Analysis </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> sd() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/stats/sd.html">sd()</a> </td>
+   <td style="text-align:left;"> 03: Datasets </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> se() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/pkg/papaja/man/se.html">papaja::se()</a> </td>
+   <td style="text-align:left;"> 06: Mutate and Summarise<br>06: Mutate and Summarise </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> sqrt() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/MathFun.html">sqrt()</a> </td>
+   <td style="text-align:left;"> 06: Mutate and Summarise </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> starts_with() </td>
+   <td style="text-align:left;"> <a href="https://tidyselect.r-lib.org/reference/starts_with.html">dplyr::starts_with()</a> </td>
+   <td style="text-align:left;"> 05: Filter and Select<br>06: Mutate and Summarise </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> str_to_title() </td>
+   <td style="text-align:left;"> <a href="https://stringr.tidyverse.org/reference/case.html">stringr::str_to_title()</a> </td>
+   <td style="text-align:left;"> 06: Mutate and Summarise<br>07: Visualisations<br>08: Analysis<br>10: Qualtrics and Labelled Data<br>11: Qualtrics II </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> sub() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/grep.html">sub()</a> </td>
+   <td style="text-align:left;"> 08: Analysis </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> sum() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/sum.html">sum()</a> </td>
+   <td style="text-align:left;"> 05: Filter and Select </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> summary() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/summary.html">summary()</a> </td>
+   <td style="text-align:left;"> 03: Datasets<br>04: Reporting Linear Models with Quarto </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> t.test() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/stats/t.test.html">t.test()</a> </td>
+   <td style="text-align:left;"> 01/02: IntRoduction<br>05: Filter and Select </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> theme_apa() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/pkg/papaja/man/theme_apa.html">papaja::theme_apa()</a> </td>
+   <td style="text-align:left;"> 07: Visualisations<br>08: Analysis </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> theme_minimal() </td>
+   <td style="text-align:left;"> <a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">ggplot2::theme_minimal()</a> </td>
+   <td style="text-align:left;"> 08: Analysis </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> tidy() </td>
+   <td style="text-align:left;"> <a href="https://generics.r-lib.org/reference/tidy.html">broom::tidy()</a> </td>
+   <td style="text-align:left;"> 04: Reporting Linear Models with Quarto<br>08: Analysis </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> tolower() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/chartr.html">tolower()</a> </td>
+   <td style="text-align:left;"> 06: Mutate and Summarise </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> toupper() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/chartr.html">toupper()</a> </td>
+   <td style="text-align:left;"> 06: Mutate and Summarise </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ungroup() </td>
+   <td style="text-align:left;"> <a href="https://dplyr.tidyverse.org/reference/group_by.html">dplyr::ungroup()</a> </td>
+   <td style="text-align:left;"> 06: Mutate and Summarise<br>10: Qualtrics and Labelled Data </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> unique() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/unique.html">unique()</a> </td>
+   <td style="text-align:left;"> 10: Qualtrics and Labelled Data<br>11: Qualtrics II </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> unlist() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/unlist.html">unlist()</a> </td>
+   <td style="text-align:left;"> 10: Qualtrics and Labelled Data </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> user_na_to_na() </td>
+   <td style="text-align:left;"> <a href="https://larmarange.github.io/labelled/reference/na_values.html">labelled::user_na_to_na()</a> </td>
+   <td style="text-align:left;"> 10: Qualtrics and Labelled Data </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> val_label() </td>
+   <td style="text-align:left;"> <a href="https://larmarange.github.io/labelled/reference/val_labels.html">labelled::val_label()</a> </td>
+   <td style="text-align:left;"> 10: Qualtrics and Labelled Data </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> val_labels() </td>
+   <td style="text-align:left;"> <a href="https://larmarange.github.io/labelled/reference/val_labels.html">labelled::val_labels()</a> </td>
+   <td style="text-align:left;"> 10: Qualtrics and Labelled Data </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> var_label() </td>
+   <td style="text-align:left;"> <a href="https://larmarange.github.io/labelled/reference/var_label.html">labelled::var_label()</a> </td>
+   <td style="text-align:left;"> 10: Qualtrics and Labelled Data </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> view_df() </td>
+   <td style="text-align:left;"> <a href="https://strengejacke.github.io/sjPlot/reference/view_df.html">sjPlot::view_df()</a> </td>
+   <td style="text-align:left;"> 10: Qualtrics and Labelled Data </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> where() </td>
+   <td style="text-align:left;"> <a href="https://tidyselect.r-lib.org/reference/where.html">dplyr::where()</a> </td>
+   <td style="text-align:left;"> 05: Filter and Select<br>08: Analysis </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> which() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/which.html">which()</a> </td>
+   <td style="text-align:left;"> 06: Mutate and Summarise </td>
+  </tr>
+</tbody>
+</table>
+
+## Index of Topics
+
+If you're looking for a particular section of a tutorial, use this handy summary to jump straight to the section you want.
+
+<table class="table table-condensed table" style="margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;text-align: center;"> Topic </th>
+   <th style="text-align:left;text-align: center;"> Sub-Topic </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr grouplength="7"><td colspan="2" style="border-bottom: 1px solid;"><strong>01/02: IntRoduction</strong></td></tr>
+<tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Orientation](01_02_intro.qmd#orientation) </td>
+   <td style="text-align:left;"> [The RStudio Interface](01_02_intro.qmd#the-rstudio-interface) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Errors](01_02_intro.qmd#errors) </td>
+   <td style="text-align:left;"> [GlossoRlia: the Language of Errors](01_02_intro.qmd#glossorlia:-the-language-of-errors) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Types of Data](01_02_intro.qmd#types-of-data) </td>
+   <td style="text-align:left;"> [Numeric Data](01_02_intro.qmd#numeric-data), [Character Data](01_02_intro.qmd#character-data), [Logical Data](01_02_intro.qmd#logical-data) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Class and Coercion](01_02_intro.qmd#class-and-coercion) </td>
+   <td style="text-align:left;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Objects](01_02_intro.qmd#objects) </td>
+   <td style="text-align:left;"> [Creating an Object](01_02_intro.qmd#creating-an-object), [Calling an Object](01_02_intro.qmd#calling-an-object), [Using Objects](01_02_intro.qmd#using-objects), [Overwriting Objects](01_02_intro.qmd#overwriting-objects) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Functions](01_02_intro.qmd#functions) </td>
+   <td style="text-align:left;"> [Basics and Help](01_02_intro.qmd#basics-and-help), [Arguments](01_02_intro.qmd#arguments), [Using Functions](01_02_intro.qmd#using-functions) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Quick Test: *t*-test](01_02_intro.qmd#quick-test:-*t*-test) </td>
+   <td style="text-align:left;">  </td>
+  </tr>
+  <tr grouplength="8"><td colspan="2" style="border-bottom: 1px solid;"><strong>03: Datasets</strong></td></tr>
+<tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Setup](03_datasets.qmd#setup) </td>
+   <td style="text-align:left;"> [Projects](03_datasets.qmd#projects), [Documents](03_datasets.qmd#documents), [Installing and Loading Packages](03_datasets.qmd#installing-and-loading-packages) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Reading In](03_datasets.qmd#reading-in) </td>
+   <td style="text-align:left;"> [Reading from File](03_datasets.qmd#reading-from-file) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Codebook](03_datasets.qmd#codebook) </td>
+   <td style="text-align:left;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Viewing](03_datasets.qmd#viewing) </td>
+   <td style="text-align:left;"> [Call the Object](03_datasets.qmd#call-the-object), [A Glimpse of the Data](03_datasets.qmd#a-glimpse-of-the-data), [View Mode](03_datasets.qmd#view-mode) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Overall Summaries](03_datasets.qmd#overall-summaries) </td>
+   <td style="text-align:left;"> [Basic Summary](03_datasets.qmd#basic-summary), [Other Summaries](03_datasets.qmd#other-summaries) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [The Pipe](03_datasets.qmd#the-pipe) </td>
+   <td style="text-align:left;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Describing Datasets](03_datasets.qmd#describing-datasets) </td>
+   <td style="text-align:left;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Describing Variables](03_datasets.qmd#describing-variables) </td>
+   <td style="text-align:left;"> [Counting](03_datasets.qmd#counting), [Subsetting](03_datasets.qmd#subsetting), [Descriptives](03_datasets.qmd#descriptives), [Visualisations](03_datasets.qmd#visualisations) </td>
+  </tr>
+  <tr grouplength="2"><td colspan="2" style="border-bottom: 1px solid;"><strong>04: Reporting Linear Models with Quarto</strong></td></tr>
+<tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [The Linear Model](04_lm.qmd#the-linear-model) </td>
+   <td style="text-align:left;"> [Data and Codebook](04_lm.qmd#data-and-codebook), [One Predictor](04_lm.qmd#one-predictor), [Hierarchial Models](04_lm.qmd#hierarchial-models), [Assumptions Checks](04_lm.qmd#assumptions-checks) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Quarto](04_lm.qmd#quarto) </td>
+   <td style="text-align:left;"> [Getting Started](04_lm.qmd#getting-started), [Creating a Code Chunk](04_lm.qmd#creating-a-code-chunk), [Body Text](04_lm.qmd#body-text), [Dynamic Reporting](04_lm.qmd#dynamic-reporting), [Rendering](04_lm.qmd#rendering) </td>
+  </tr>
+  <tr grouplength="4"><td colspan="2" style="border-bottom: 1px solid;"><strong>05: Filter and Select</strong></td></tr>
+<tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Setup](05_filter.qmd#setup) </td>
+   <td style="text-align:left;"> [Packages](05_filter.qmd#packages), [Data](05_filter.qmd#data) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Filter](05_filter.qmd#filter) </td>
+   <td style="text-align:left;"> [General Format](05_filter.qmd#general-format), [Filtering with Assertions](05_filter.qmd#filtering-with-assertions), [Multiple Assertions](05_filter.qmd#multiple-assertions), [Data Cleaning](05_filter.qmd#data-cleaning) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Select](05_filter.qmd#select) </td>
+   <td style="text-align:left;"> [General Format](05_filter.qmd#general-format), [Selecting Directly](05_filter.qmd#selecting-directly), [Using {tidyselect}](05_filter.qmd#using-{tidyselect}) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Quick Test: *t*-test redux](05_filter.qmd#quick-test:-*t*-test-redux) </td>
+   <td style="text-align:left;">  </td>
+  </tr>
+  <tr grouplength="5"><td colspan="2" style="border-bottom: 1px solid;"><strong>06: Mutate and Summarise</strong></td></tr>
+<tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Setup](06_changes.qmd#setup) </td>
+   <td style="text-align:left;"> [Packages](06_changes.qmd#packages), [Data](06_changes.qmd#data) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Mutate](06_changes.qmd#mutate) </td>
+   <td style="text-align:left;"> [General Format](06_changes.qmd#general-format), [Adding and Changing Variables](06_changes.qmd#adding-and-changing-variables), [Composite Scores](06_changes.qmd#composite-scores), [Conditionals](06_changes.qmd#conditionals), [Iteration](06_changes.qmd#iteration) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Summarise](06_changes.qmd#summarise) </td>
+   <td style="text-align:left;"> [General Format](06_changes.qmd#general-format), [By Group](06_changes.qmd#by-group), [Iteration](06_changes.qmd#iteration) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Formatting with `{kableExtra}`](06_changes.qmd#formatting-with-`{kableextra}`) </td>
+   <td style="text-align:left;"> [Essential Formatting](06_changes.qmd#essential-formatting), [Dynamic Formatting](06_changes.qmd#dynamic-formatting) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Quick Test: Correlation](06_changes.qmd#quick-test:-correlation) </td>
+   <td style="text-align:left;"> [Visualisation](06_changes.qmd#visualisation), [Testing Correlation](06_changes.qmd#testing-correlation) </td>
+  </tr>
+  <tr grouplength="9"><td colspan="2" style="border-bottom: 1px solid;"><strong>07: Visualisations</strong></td></tr>
+<tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> NA </td>
+   <td style="text-align:left;"> [What do UGs know?](07_dataviz.qmd#what-do-ugs-know?) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Setup](07_dataviz.qmd#setup) </td>
+   <td style="text-align:left;"> [Packages](07_dataviz.qmd#packages), [Data](07_dataviz.qmd#data) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Grammar of Graphics](07_dataviz.qmd#grammar-of-graphics) </td>
+   <td style="text-align:left;"> [Layers](07_dataviz.qmd#layers), [Mapping](07_dataviz.qmd#mapping), [Geoms, etc.](07_dataviz.qmd#geoms,-etc.) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Histograms and Density Plots](07_dataviz.qmd#histograms-and-density-plots) </td>
+   <td style="text-align:left;"> [Adjusting Binwidth](07_dataviz.qmd#adjusting-binwidth), [Colour and Fill Manual](07_dataviz.qmd#colour-and-fill-manual), [Adjusting Axes with `scale_*()`](07_dataviz.qmd#adjusting-axes-with-`scale_*()`), [Adding a Theme](07_dataviz.qmd#adding-a-theme), [Facet Wrap](07_dataviz.qmd#facet-wrap) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Barplots](07_dataviz.qmd#barplots) </td>
+   <td style="text-align:left;"> [Position Dodge](07_dataviz.qmd#position-dodge), [Reordering Categories](07_dataviz.qmd#reordering-categories) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Quick Test: $\chi^2$](07_dataviz.qmd#quick-test:-$\chi^2$) </td>
+   <td style="text-align:left;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Raincloud and Violin Plots](07_dataviz.qmd#raincloud-and-violin-plots) </td>
+   <td style="text-align:left;"> [Calculating Stats](07_dataviz.qmd#calculating-stats) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Scatterplots](07_dataviz.qmd#scatterplots) </td>
+   <td style="text-align:left;"> [Line of Best Fit](07_dataviz.qmd#line-of-best-fit), [Colour and Fill Palette](07_dataviz.qmd#colour-and-fill-palette), [3D Plots](07_dataviz.qmd#3d-plots) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Reporting with Quarto](07_dataviz.qmd#reporting-with-quarto) </td>
+   <td style="text-align:left;"> [Captions and Alt Text](07_dataviz.qmd#captions-and-alt-text), [Cross-Referencing](07_dataviz.qmd#cross-referencing) </td>
+  </tr>
+  <tr grouplength="3"><td colspan="2" style="border-bottom: 1px solid;"><strong>08: Analysis</strong></td></tr>
+<tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Setup](08_analysis.qmd#setup) </td>
+   <td style="text-align:left;"> [Packages](08_analysis.qmd#packages), [Data](08_analysis.qmd#data) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Categorical Predictors](08_analysis.qmd#categorical-predictors) </td>
+   <td style="text-align:left;"> [Comparing Several Means](08_analysis.qmd#comparing-several-means), [What about ANCOVA?](08_analysis.qmd#what-about-ancova?), [Factorial Designs](08_analysis.qmd#factorial-designs), [Mixed Designs](08_analysis.qmd#mixed-designs) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Continuous Predictors](08_analysis.qmd#continuous-predictors) </td>
+   <td style="text-align:left;"> [Mediation](08_analysis.qmd#mediation), [Moderation](08_analysis.qmd#moderation) </td>
+  </tr>
+  <tr grouplength="3"><td colspan="2" style="border-bottom: 1px solid;"><strong>09: Test Flight</strong></td></tr>
+<tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Setup](09_testflight.qmd#setup) </td>
+   <td style="text-align:left;"> [Data](09_testflight.qmd#data) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Data Analysis Tips](09_testflight.qmd#data-analysis-tips) </td>
+   <td style="text-align:left;"> [Plan Your Process](09_testflight.qmd#plan-your-process), [Keep a Record](09_testflight.qmd#keep-a-record), [Be Consistent](09_testflight.qmd#be-consistent), [Reduce Redundancies](09_testflight.qmd#reduce-redundancies) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [The Whole Shebang](09_testflight.qmd#the-whole-shebang) </td>
+   <td style="text-align:left;"> [Planning](09_testflight.qmd#planning), [Inspecting](09_testflight.qmd#inspecting), [Cleaning](09_testflight.qmd#cleaning), [Wrangling](09_testflight.qmd#wrangling), [Summarising](09_testflight.qmd#summarising), [Analysing](09_testflight.qmd#analysing), [Visualising](09_testflight.qmd#visualising), [Reporting](09_testflight.qmd#reporting) </td>
+  </tr>
+  <tr grouplength="7"><td colspan="2" style="border-bottom: 1px solid;"><strong>10: Qualtrics and Labelled Data</strong></td></tr>
+<tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> NA </td>
+   <td style="text-align:left;"> [Acknowledgements](10_qtrics.qmd#acknowledgements) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Setup](10_qtrics.qmd#setup) </td>
+   <td style="text-align:left;"> [Packages](10_qtrics.qmd#packages), [Data](10_qtrics.qmd#data) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Qualtrics Data](10_qtrics.qmd#qualtrics-data) </td>
+   <td style="text-align:left;"> [SAV Data](10_qtrics.qmd#sav-data), [Exporting from Qualtrics](10_qtrics.qmd#exporting-from-qualtrics) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [The Plan](10_qtrics.qmd#the-plan) </td>
+   <td style="text-align:left;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Cleanup and Data Dictionary](10_qtrics.qmd#cleanup-and-data-dictionary) </td>
+   <td style="text-align:left;"> [Renaming Variables](10_qtrics.qmd#renaming-variables), [Separating Columns](10_qtrics.qmd#separating-columns), [Viewer Data Dictionary](10_qtrics.qmd#viewer-data-dictionary) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Labelled Data](10_qtrics.qmd#labelled-data) </td>
+   <td style="text-align:left;"> [Variable Labels](10_qtrics.qmd#variable-labels), [Value Labels](10_qtrics.qmd#value-labels), [Missing Values](10_qtrics.qmd#missing-values) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Converting Variables](10_qtrics.qmd#converting-variables) </td>
+   <td style="text-align:left;"> [Factor](10_qtrics.qmd#factor), [Numeric](10_qtrics.qmd#numeric), [Conditional Conversion](10_qtrics.qmd#conditional-conversion) </td>
+  </tr>
+  <tr grouplength="6"><td colspan="2" style="border-bottom: 1px solid;"><strong>11: Qualtrics II</strong></td></tr>
+<tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> NA </td>
+   <td style="text-align:left;"> [Acknowledgements](11_qtrics2.qmd#acknowledgements) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Setup](11_qtrics2.qmd#setup) </td>
+   <td style="text-align:left;"> [Packages](11_qtrics2.qmd#packages), [Data](11_qtrics2.qmd#data) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Building a Qualtrics Project](11_qtrics2.qmd#building-a-qualtrics-project) </td>
+   <td style="text-align:left;"> [Choose Your Path](11_qtrics2.qmd#choose-your-path), [Accessing Qualtrics](11_qtrics2.qmd#accessing-qualtrics), [Creating a Project](11_qtrics2.qmd#creating-a-project) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Minimal](11_qtrics2.qmd#minimal) </td>
+   <td style="text-align:left;"> [Set Up Qualtrics](11_qtrics2.qmd#set-up-qualtrics), [Testing the Study](11_qtrics2.qmd#testing-the-study) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Moderate](11_qtrics2.qmd#moderate) </td>
+   <td style="text-align:left;"> [Using Templates](11_qtrics2.qmd#using-templates), [Developing a Script](11_qtrics2.qmd#developing-a-script) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Majority](11_qtrics2.qmd#majority) </td>
+   <td style="text-align:left;"> [Survey Creation System](11_qtrics2.qmd#survey-creation-system), [Survey Access System](11_qtrics2.qmd#survey-access-system) </td>
+  </tr>
+</tbody>
+</table>

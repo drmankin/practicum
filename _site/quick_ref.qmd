@@ -58,27 +58,27 @@ If you're looking for a particular section of a tutorial, use this handy summary
 <tbody>
   <tr grouplength="6"><td colspan="2" style="border-bottom: 1px solid;"><strong>01: IntRoduction</strong></td></tr>
 <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Orientation](tutorials/docs/01_intro.qmd#orientation) </td>
-   <td style="text-align:left;"> [Using the Tutorials](tutorials/docs/01_intro.qmd#using-the-tutorials), [The RStudio Interface](tutorials/docs/01_intro.qmd#the-rstudio-interface) </td>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Orientation](tutorials/archive_autumn_2023/01_intro.qmd#orientation) </td>
+   <td style="text-align:left;"> [Using the Tutorials](tutorials/archive_autumn_2023/01_intro.qmd#using-the-tutorials), [The RStudio Interface](tutorials/archive_autumn_2023/01_intro.qmd#the-rstudio-interface) </td>
   </tr>
   <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Errors](tutorials/docs/01_intro.qmd#errors) </td>
-   <td style="text-align:left;"> [GlossoRlia: the Language of Errors](tutorials/docs/01_intro.qmd#glossorlia:-the-language-of-errors) </td>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Errors](tutorials/archive_autumn_2023/01_intro.qmd#errors) </td>
+   <td style="text-align:left;"> [GlossoRlia: the Language of Errors](tutorials/archive_autumn_2023/01_intro.qmd#glossorlia:-the-language-of-errors) </td>
   </tr>
   <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Types of Data](tutorials/docs/01_intro.qmd#types-of-data) </td>
-   <td style="text-align:left;"> [Numeric Data](tutorials/docs/01_intro.qmd#numeric-data), [Character Data](tutorials/docs/01_intro.qmd#character-data), [Logical Data](tutorials/docs/01_intro.qmd#logical-data) </td>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Types of Data](tutorials/archive_autumn_2023/01_intro.qmd#types-of-data) </td>
+   <td style="text-align:left;"> [Numeric Data](tutorials/archive_autumn_2023/01_intro.qmd#numeric-data), [Character Data](tutorials/archive_autumn_2023/01_intro.qmd#character-data), [Logical Data](tutorials/archive_autumn_2023/01_intro.qmd#logical-data) </td>
   </tr>
   <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Class and Coercion](tutorials/docs/01_intro.qmd#class-and-coercion) </td>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Class and Coercion](tutorials/archive_autumn_2023/01_intro.qmd#class-and-coercion) </td>
    <td style="text-align:left;">  </td>
   </tr>
   <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Objects](tutorials/docs/01_intro.qmd#objects) </td>
-   <td style="text-align:left;"> [Creating an Object](tutorials/docs/01_intro.qmd#creating-an-object), [Calling an Object](tutorials/docs/01_intro.qmd#calling-an-object), [Using Objects](tutorials/docs/01_intro.qmd#using-objects), [Overwriting Objects](tutorials/docs/01_intro.qmd#overwriting-objects) </td>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Objects](tutorials/archive_autumn_2023/01_intro.qmd#objects) </td>
+   <td style="text-align:left;"> [Creating an Object](tutorials/archive_autumn_2023/01_intro.qmd#creating-an-object), [Calling an Object](tutorials/archive_autumn_2023/01_intro.qmd#calling-an-object), [Using Objects](tutorials/archive_autumn_2023/01_intro.qmd#using-objects), [Overwriting Objects](tutorials/archive_autumn_2023/01_intro.qmd#overwriting-objects) </td>
   </tr>
   <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Quick Test: *t*-test](tutorials/docs/01_intro.qmd#quick-test:-*t*-test) </td>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Quick Test: *t*-test](tutorials/archive_autumn_2023/01_intro.qmd#quick-test:-*t*-test) </td>
    <td style="text-align:left;">  </td>
   </tr>
 </tbody>
