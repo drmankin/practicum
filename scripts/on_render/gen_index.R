@@ -41,8 +41,13 @@ get_calls <- function(filepath) {
 
 ## Get file paths to all qmds in tutorials folder and onward
 
-all_qmds_path <- "tutorials/psychrlogy"
+all_qmds_path <- "tutorials/docs"
+# all_qmds_path <- "tutorials/archive_autumn_2023" #for generating the archive quickref
 all_qmds <- list.files(path = all_qmds_path, pattern = "qmd", recursive = TRUE)
+
+## don't include any unrendered docs
+
+all_qmds <- all_qmds[!grepl("^_.*", all_qmds)]
 
 # Create Functions Index --------------------------------------------------
 
@@ -218,7 +223,7 @@ exclude_headings <- c("Overview", "Basic Structure", "Setting Up", "Next Steps",
 topics_tab <- topics |> 
   dplyr::filter(!(heading_text %in% exclude_headings)) |> 
   dplyr::mutate(
-    link = paste0("[", heading_text, "](tutorials/psychrlogy/", name, "#", gsub(" ", "-", tolower(heading_text)),")")
+    link = paste0("[", heading_text, "](tutorials/docs/", name, "#", gsub(" ", "-", tolower(heading_text)),")")
   ) |> 
   dplyr::rowwise() |> 
   dplyr::mutate(

@@ -1,0 +1,87 @@
+## Current Structure
+
+https://r-training.netlify.app/quick_ref#index-of-topics
+
+## New Structure
+
+Feel free to edit!
+
+Previously I had a mini-test each week (e.g. t-test, correlation etc.) so that people felt like they were "learning something". It did really squish up the rest of the session and always felt rushed, but it was also a good opportunity to talk about what UGs are (and aren't!) taught. Thoughts welcome especially how to combine that with the reproducibility stuff!
+
+In particular please add points where it makes sense to mention reproducibility tips/tricks/skills/best practice.
+
+1. Introduction I
+    - RStudio
+    - Errors
+    - Data types
+      - Add in factors here? Later?
+    - Objects
+    - Assignment
+    - RepRoducibility: Naming Objects
+
+2. Introduction II
+    - Quarto and Scripts
+    - RepRoducibility: Projects
+    - Functions
+        - Installing and Loading
+        - Help docs
+        - Arguments
+    - RepRoducibility: Comments
+    
+3. Datasets
+    - Reading in
+    - Viewing
+    - Basic summaries
+    - The pipe (?)
+    - Describing Datasets
+    - Describing Variables
+        - Subsetting
+        - If we've introduced e.g. `mean()`, `sd()` in Intro II then this can be revision!
+        
+4. The Reproducible Linear Model (?)
+    - Fitting the Model
+    - Model fit and diagnostics
+    - Reporting
+    - Creating a reproducible script (?)
+    
+5. Filter and Select
+    - Filter
+        - Assertions
+        - Data Cleaning
+    - Select
+        - Directly
+        - (Optional) `tidyselect`
+
+6. Mutate
+    - Adding and changing variables
+    - Calculating composites
+    - Conditionals with `case_when()`
+    - (Optional) Iteration
+    
+7. Summarise
+    - At once, by group
+    - (Optional) Iteration
+    - KableExtra
+    - Exporting tables
+    
+8. Data Visualisations
+    - Introducing ggplot
+    - Histograms and density plots
+    - Barplots
+    - Raincloud and Violin plots
+    - Scatterplots
+    - Exporting plots
+    
+9. Qualtrics and Labelled Data
+    - Using SAV data
+    - Tidyselect, renaming
+    - Data dictionaries
+    
+10. RepRoducibility
+    - Complete walkthrough from beginning to end!
+    - Read in data, run some analysis, create a reproducible report
+    - Use Reny's template, upload to OSF, etc.
+    - Earlier in the sequence? What skills are needed for this?
+
+
+

@@ -4,6 +4,7 @@ project:
   render: 
     - "*.qmd"
     - "!tutorials/drafts/" #don't attempt to render the drafts folder
+    - "!tutorials/staff/" #don't attempt to render the staff folder
     - "!workbooks/" # don't attempt to render the workbooks
 
 website:
@@ -36,15 +37,12 @@ website:
       contents: 
         - tutorials.qmd
         - quick_ref.qmd
-        - section: "FundRmentals"
+        - section: "Current"
           contents:
-            - auto: tutorials/psychrlogy/01_fundRmentals/*
-        - section: "Essentials"
+            - auto: tutorials/docs/*
+        - section: "Archive (Autumn 2023)"
           contents:
-            - auto: tutorials/psychrlogy/02_essentials/*
-        - section: "ImprovRs"
-          contents:
-            - auto: tutorials/psychrlogy/03_improvRs/*
+            - auto: tutorials/archive_autumn_2023/*
     - title: "Workshops"
       style: "docked"
       background: "#d0d3d4"
@@ -63,7 +61,7 @@ website:
           contents:
             - auto: resources/faqs/*
   page-footer: 
-    center: "&copy; Jennifer Mankin 2023"
+    center: "&copy; Jennifer Mankin 2024"
     background: "#003b49"
     
 format:

@@ -1,0 +1,2709 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.550">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>R Training - 04: Reporting Linear Models with Quarto</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link href="../../site_libs/tabwid-1.1.3/tabwid.css" rel="stylesheet">
+<script src="../../site_libs/tabwid-1.1.3/tabwid.js"></script>
+<link href="../../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="../../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">R Training</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../../tutorials.html" aria-current="page"> 
+<span class="menu-text">Tutorials</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../workshops.html"> 
+<span class="menu-text">Workshops</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../resources.html"> 
+<span class="menu-text">Resources</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://canvas.sussex.ac.uk/courses/29761"> 
+<span class="menu-text">Canvas</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../tutorials/archive_autumn_2023/00_quick_ref.html">Archive</a></li><li class="breadcrumb-item"><a href="../../tutorials/archive_autumn_2023/04_lm.html">04: Reporting Linear Models with Quarto</a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../tutorials.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tutorials Overview</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Current</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../tutorials/docs/01_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">01: IntRoduction</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Archive</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../tutorials/archive_autumn_2023/00_quick_ref.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Quick Reference</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../tutorials/archive_autumn_2023/01_02_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">01/02: IntRoduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../tutorials/archive_autumn_2023/03_datasets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">03: Datasets</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../tutorials/archive_autumn_2023/04_lm.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">04: Reporting Linear Models with Quarto</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../tutorials/archive_autumn_2023/05_filter.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">05: Filter and Select</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../tutorials/archive_autumn_2023/06_changes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">06: Mutate and Summarise</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../tutorials/archive_autumn_2023/07_dataviz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">07: Visualisations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../tutorials/archive_autumn_2023/08_analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">08: Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../tutorials/archive_autumn_2023/09_testflight.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">09: Test Flight</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../tutorials/archive_autumn_2023/10_qtrics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">10: Qualtrics and Labelled Data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../tutorials/archive_autumn_2023/11_qtrics2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">11: Qualtrics II</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#the-linear-model" id="toc-the-linear-model" class="nav-link" data-scroll-target="#the-linear-model">The Linear Model</a>
+  <ul>
+  <li><a href="#data-and-codebook" id="toc-data-and-codebook" class="nav-link" data-scroll-target="#data-and-codebook">Data and Codebook</a></li>
+  <li><a href="#one-predictor" id="toc-one-predictor" class="nav-link" data-scroll-target="#one-predictor">One Predictor</a>
+  <ul class="collapse">
+  <li><a href="#general-format" id="toc-general-format" class="nav-link" data-scroll-target="#general-format">General Format</a></li>
+  <li><a href="#model-fit" id="toc-model-fit" class="nav-link" data-scroll-target="#model-fit">Model Fit</a></li>
+  <li><a href="#model-parameters" id="toc-model-parameters" class="nav-link" data-scroll-target="#model-parameters">Model Parameters</a></li>
+  </ul></li>
+  <li><a href="#hierarchial-models" id="toc-hierarchial-models" class="nav-link" data-scroll-target="#hierarchial-models">Hierarchial Models</a>
+  <ul class="collapse">
+  <li><a href="#comparing-models" id="toc-comparing-models" class="nav-link" data-scroll-target="#comparing-models">Comparing Models</a></li>
+  <li><a href="#standardised-bs" id="toc-standardised-bs" class="nav-link" data-scroll-target="#standardised-bs">Standardised <em>B</em>s</a></li>
+  </ul></li>
+  <li><a href="#assumptions-checks" id="toc-assumptions-checks" class="nav-link" data-scroll-target="#assumptions-checks">Assumptions Checks</a>
+  <ul class="collapse">
+  <li><a href="#residual-plots" id="toc-residual-plots" class="nav-link" data-scroll-target="#residual-plots">Residual Plots</a></li>
+  <li><a href="#distribution-of-standardised-residuals" id="toc-distribution-of-standardised-residuals" class="nav-link" data-scroll-target="#distribution-of-standardised-residuals">Distribution of Standardised Residuals</a></li>
+  <li><a href="#robust-models" id="toc-robust-models" class="nav-link" data-scroll-target="#robust-models">Robust Models</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#quarto" id="toc-quarto" class="nav-link" data-scroll-target="#quarto">Quarto</a>
+  <ul>
+  <li><a href="#getting-started" id="toc-getting-started" class="nav-link" data-scroll-target="#getting-started">Getting Started</a></li>
+  <li><a href="#creating-a-code-chunk" id="toc-creating-a-code-chunk" class="nav-link" data-scroll-target="#creating-a-code-chunk">Creating a Code Chunk</a></li>
+  <li><a href="#body-text" id="toc-body-text" class="nav-link" data-scroll-target="#body-text">Body Text</a>
+  <ul class="collapse">
+  <li><a href="#headings" id="toc-headings" class="nav-link" data-scroll-target="#headings">Headings</a></li>
+  <li><a href="#text" id="toc-text" class="nav-link" data-scroll-target="#text">Text</a></li>
+  </ul></li>
+  <li><a href="#dynamic-reporting" id="toc-dynamic-reporting" class="nav-link" data-scroll-target="#dynamic-reporting">Dynamic Reporting</a>
+  <ul class="collapse">
+  <li><a href="#inline-code" id="toc-inline-code" class="nav-link" data-scroll-target="#inline-code">Inline Code</a></li>
+  <li><a href="#automatic-reporting" id="toc-automatic-reporting" class="nav-link" data-scroll-target="#automatic-reporting">Automatic Reporting</a></li>
+  <li><a href="#table-formatting" id="toc-table-formatting" class="nav-link" data-scroll-target="#table-formatting">Table Formatting</a></li>
+  <li><a href="#cross-referencing" id="toc-cross-referencing" class="nav-link" data-scroll-target="#cross-referencing">Cross-Referencing</a></li>
+  </ul></li>
+  <li><a href="#rendering" id="toc-rendering" class="nav-link" data-scroll-target="#rendering">Rendering</a>
+  <ul class="collapse">
+  <li><a href="#global-options" id="toc-global-options" class="nav-link" data-scroll-target="#global-options">Global Options</a></li>
+  <li><a href="#code-chunk-options" id="toc-code-chunk-options" class="nav-link" data-scroll-target="#code-chunk-options">Code Chunk Options</a></li>
+  <li><a href="#output-formats" id="toc-output-formats" class="nav-link" data-scroll-target="#output-formats">Output Formats</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../tutorials/archive_autumn_2023/00_quick_ref.html">Archive</a></li><li class="breadcrumb-item"><a href="../../tutorials/archive_autumn_2023/04_lm.html">04: Reporting Linear Models with Quarto</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">04: Reporting Linear Models with Quarto</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>This tutorial covers how to run, inspect, and report a linear model in R. For the <em>report</em> portion, we will cover some key features of dynamic reporting in Quarto and how to write and render professionally formatted documents.</p>
+</section>
+<section id="the-linear-model" class="level2">
+<h2 class="anchored" data-anchor-id="the-linear-model">The Linear Model</h2>
+<p>In this section, we will walk through the process of fitting, comparing, and reporting hierarchical linear models in R. This is not a statistics tutorial, so there will be minimal detail about how to understand or interpret the output of these commands. Instead, refer to <a href="https://github.com/profandyfield/discovr">Prof Andy Field’s {discovr} tutorials</a>, which are the primary teaching materials for the same content in UG teaching at Sussex. All of the code and interpretation in the following section is from <code>discovr_08</code>, the GLM.</p>
+<p>There are two key goals for this linear model walkthrough:</p>
+<ul>
+<li>Create a detailed “cheatsheet” for a linear model analysis for future reference</li>
+<li>Get familiar with the {discovr} tutorials</li>
+</ul>
+<p>Of the two, the first is more important. I’d strongly recommend you <strong>open</strong> the relevant {discovr} tutorial and skim through it as you go so you’re familiar with what it contains. However, the following sections of this tutorial will present the same code and information with very abbreviated text, to serve as a quick reference.</p>
+<p>You can also have them both open at once and refer to each!</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Installing {discovr}">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Installing {discovr}
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>If you are working in the Posit Cloud workspace, the tutorials have already been installed. <strong>Please do NOT reinstall them!</strong></p>
+<p>If working elsewhere, use the following code to install the necessary packages <strong>in the Console</strong>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">require</span>(remotes)){</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">install.packages</span>(<span class="st">'remotes'</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"profandyfield/discovr"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Note that there’s no need to call <code>library(discovr)</code> at the start of your document, since the tutorials don’t work <em>in</em> the document, but rather in RStudio itself.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Using the {discovr} tutorials">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Using the {discovr} tutorials
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Prof Andy Field’s {discovr} tutorials provide detailed walkthroughs of both the R code and the statistical concepts of a variety of statistical analyses. They are a good place to look first to understand what your UG supervisees or advisees have been taught on a particular topic.</p>
+<p>The tutorials are built in {learnr}, an interactive platform for learning and running R code. So, unlike the tutorial you’re currently reading, they must be run inside an R session.</p>
+<p>To start a tutorial, open any project and click on the Tutorial tab in the Environment pane. You can run any tutorial from here, but the relevant one for the linear modelling we are working on now is <code>discovr_08</code>, “the GLM”. Scroll down to this tutorial and click the “Start Tutorial ▶️” button to load the tutorial.</p>
+<p>Because {discovr} tutorials run within R, you don’t need to use any external documents; you can write and run R code within the tutorial itself. However, I <em>strongly</em> recommend that whenever you work with these tutorials, you write and run your code in a separate document, otherwise you will have no record of the code and output.</p>
+</div>
+</div>
+</div>
+<section id="data-and-codebook" class="level3">
+<h3 class="anchored" data-anchor-id="data-and-codebook">Data and Codebook</h3>
+<p>Today’s data is the <code>TeachingRatings</code> dataset from the {AER} package. This dataset is built into the package, so you don’t need to read it in from anywhere. Instead, use the code below to get the data and rename it <code>teach_tib</code> (not necessary, just easier to type!).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"TeachingRatings"</span>, <span class="at">package =</span> <span class="st">"AER"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>teach_tib <span class="ot">&lt;-</span> TeachingRatings</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Installing {AER}">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Installing {AER}
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>As usual, no need to install anything on the Cloud, but elsewhere install {AER} first in the Console:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"AER"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<p>You can load the codebook in the Help viewer by running the following in the Console:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>?AER<span class="sc">::</span>TeachingRatings</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="one-predictor" class="level3">
+<h3 class="anchored" data-anchor-id="one-predictor">One Predictor</h3>
+<p>Now that we have some data, we can fit our first model with a single predictor. We will do this with the very hardworking <code>lm()</code> function in R, standing for “<strong>l</strong>inear <strong>m</strong> odel”.</p>
+<section id="general-format" class="level4">
+<h4 class="anchored" data-anchor-id="general-format">General Format</h4>
+<p>The <code>lm()</code> function has <em>a lot</em> of options (as you might expect, given the versatility and ubiquity of linear models!), but its basic format to fit a linear model with a single predictor is very simple:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(outcome <span class="sc">~</span> predictor, <span class="at">data =</span> dataset_name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In this function, <code>outcome ~ predictor</code> is a formula expressing a (simplified version of) the linear model equation. Here, <code>outcome</code> is the name of the variable in <code>dataset_name</code> that contains the outcome or dependent variable <em>y</em>, and <code>predictor</code> is the name of the variable that contains the predictor or independent variable <em>x</em>.</p>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use the Codebook and the <code>lm()</code> function to fit a linear model predicting teaching evaluation score from beauty ratings. Save the resulting model in a new object called <code>eval_lm</code>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>eval_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(eval <span class="sc">~</span> beauty, <span class="at">data =</span> teach_tib)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>That’s it!</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>Now we have a new object that contains all the information about our model. We could simply call the name of this object, but the output doesn’t tell us anything besides the actual value of the <em>b</em> estimates (try it if you like!). Instead, we’ll use some useful functions from the {tidyverse} package {broom} to get the information we need.</p>
+</section>
+<section id="model-fit" class="level4">
+<h4 class="anchored" data-anchor-id="model-fit">Model Fit</h4>
+<p>To get some common measures of model fit, we can use the function <code>broom::glance()</code>. The output includes <span class="math inline">\(R^2\)</span>, adjusted <span class="math inline">\(R^2\)</span>, and <em>F</em> and accompanying statistics in comparison to the null model (the mean of the outcome alone).</p>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Put the <code>eval_lm</code> object into <code>broom::glance()</code> to get model fit statistics.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell" data-df-print="paged">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">glance</span>(eval_lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["r.squared"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["adj.r.squared"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["sigma"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["statistic"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["df"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["logLik"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["AIC"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["BIC"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["deviance"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["df.residual"],"name":[11],"type":["int"],"align":["right"]},{"label":["nobs"],"name":[12],"type":["int"],"align":["right"]}],"data":[{"1":"0.03573578","2":"0.0336441","3":"0.5454517","4":"17.08473","5":"4.247116e-05","6":"1","7":"-375.3231","8":"756.6462","9":"769.0594","10":"137.1556","11":"461","12":"463"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>Helpfully, <code>broom::glance()</code> (and many other {tidyverse} functions) output tibbles, which means we can work with them as we already know how to do. In future tutorials, we’ll also learn more about changing and filtering tibbles that will make this even more useful. For now, we can simply note the information we get out of this function for future use.</p>
+</section>
+<section id="model-parameters" class="level4">
+<h4 class="anchored" data-anchor-id="model-parameters">Model Parameters</h4>
+<p>The most common technique for getting a look at the details of the model is to use a function we’ve met before: <code>summary()</code>. The output isn’t great, but it does let us get a whole bunch of useful information quickly and directly.</p>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Put the <code>eval_lm</code> object into <code>summary()</code> to produce the model summary output.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(eval_lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = eval ~ beauty, data = teach_tib)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.80015 -0.36304  0.07254  0.40207  1.10373 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  3.99827    0.02535 157.727  &lt; 2e-16 ***
+beauty       0.13300    0.03218   4.133 4.25e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.5455 on 461 degrees of freedom
+Multiple R-squared:  0.03574,   Adjusted R-squared:  0.03364 
+F-statistic: 17.08 on 1 and 461 DF,  p-value: 4.247e-05</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Significance Codes">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Significance Codes
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The output from many base-R {stats} functions, like this <code>summary()</code> output, include a line labeled <code>Signif. codes</code> that provide a key for understanding the notation given for significance levels in <em>p</em>-values.</p>
+<p>Reading the key from left to right, we can see that a result is given three asterisks (<code>***</code>) when the <em>p</em>-value is between 0 and .001; two asterisks between .001 and .01; and so on.</p>
+<p>This can be a useful visual check, especially because <em>p</em>-values that are very, very small are frequently expressed in scientific notation, which can make them more difficult to spot.</p>
+</div>
+</div>
+</div>
+<p>To get information about the <em>b</em> estimates for individual predictors, we can also use the function <code>broom::tidy()</code>. We could run this function without any other information, as we did with <code>glance()</code> above, but we’ll change one argument here in order to get 95% confidence intervals for <em>b</em> in the output as well.</p>
+<p>The CIs are an improvement over <code>summary()</code>, and this information is a tibble rather than just text output, which will make it very handy for reporting in the future.</p>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Put the <code>eval_lm</code> object into <code>broom::tidy()</code> and use the argument <code>conf.int = TRUE</code> to obtain confidence intervals.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(eval_lm, <span class="at">conf.int =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["term"],"name":[1],"type":["chr"],"align":["left"]},{"label":["estimate"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["std.error"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["statistic"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["conf.low"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["conf.high"],"name":[7],"type":["dbl"],"align":["right"]}],"data":[{"1":"(Intercept)","2":"3.9982721","3":"0.02534929","4":"157.727173","5":"0.000000e+00","6":"3.94845765","7":"4.0480866"},{"1":"beauty","2":"0.1330014","3":"0.03217750","4":"4.133368","5":"4.247116e-05","6":"0.06976869","7":"0.1962342"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="hierarchial-models" class="level3">
+<h3 class="anchored" data-anchor-id="hierarchial-models">Hierarchial Models</h3>
+<p>Next, we may want to test the addition of further predictors in the model. We can then compare the more complex multi-predictor model to the single-predictor model.</p>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Fit a linear model with teaching evaluations as the outcome, and both beauty ratings and gender as predictors. Save the model output in a new object called <code>eval_full_lm</code>.</p>
+<p>Then, obtain model fit statistics and parameters as before.</p>
+<p><em>Hint</em>: to add a new predictor, you will need to literally add it (<code>+</code>) to the formula.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>eval_full_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(eval <span class="sc">~</span> beauty <span class="sc">+</span> gender, <span class="at">data =</span> teach_tib)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Simple output with summary</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(eval_full_lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = eval ~ beauty + gender, data = teach_tib)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.87196 -0.36913  0.03493  0.39919  1.03237 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   4.08158    0.03293  123.94  &lt; 2e-16 ***
+beauty        0.14859    0.03195    4.65 4.34e-06 ***
+genderfemale -0.19781    0.05098   -3.88  0.00012 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.5373 on 460 degrees of freedom
+Multiple R-squared:  0.0663,    Adjusted R-squared:  0.06224 
+F-statistic: 16.33 on 2 and 460 DF,  p-value: 1.407e-07</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Tibble output and CIs with broom</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">glance</span>(eval_full_lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["r.squared"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["adj.r.squared"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["sigma"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["statistic"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["df"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["logLik"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["AIC"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["BIC"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["deviance"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["df.residual"],"name":[11],"type":["int"],"align":["right"]},{"label":["nobs"],"name":[12],"type":["int"],"align":["right"]}],"data":[{"1":"0.0662953","2":"0.06223572","3":"0.537322","4":"16.33056","5":"1.406679e-07","6":"2","7":"-367.8676","8":"743.7352","9":"760.2862","10":"132.8089","11":"460","12":"463"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(eval_full_lm, <span class="at">conf.int =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["term"],"name":[1],"type":["chr"],"align":["left"]},{"label":["estimate"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["std.error"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["statistic"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["conf.low"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["conf.high"],"name":[7],"type":["dbl"],"align":["right"]}],"data":[{"1":"(Intercept)","2":"4.0815829","3":"0.03293298","4":"123.936050","5":"0.000000e+00","6":"4.01686514","7":"4.14630059"},{"1":"beauty","2":"0.1485876","3":"0.03195142","4":"4.650424","5":"4.335250e-06","6":"0.08579881","7":"0.21137646"},{"1":"genderfemale","2":"-0.1978096","3":"0.05098001","4":"-3.880140","5":"1.196428e-04","6":"-0.29799217","7":"-0.09762702"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="What About Interactions?">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+What About Interactions?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The models we’re describing here contain only additions, not interactions. So, you may be wondering, “What if I want to model more complex relationships between predictors?” If that’s what you’re trying to do now, you may want to jump ahead to <code>discovr_10</code> for moderation and mediation.</p>
+<p>Otherwise, we will get there in this course eventually!</p>
+</div>
+</div>
+</div>
+<section id="comparing-models" class="level4">
+<h4 class="anchored" data-anchor-id="comparing-models">Comparing Models</h4>
+<p>Now we have two models, one simpler with only a single predictor, and the other with two predictors. We might next want to test whether the more complex, two-predictor model is a significant improvement over the simpler model, in order to decide which model to retain. We can do this with the <code>anova()</code> function<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> to compare the two models.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <code>anova()</code> function will only work for model comparison for particular models.</p>
+<ol type="1">
+<li><p><strong>The models must be hierarchical.</strong> That is, the more complex model(s) must contain all of the predictor(s) present in the less complex model(s).</p></li>
+<li><p><strong>All models must be fit to the same dataset.</strong> If, for example, your first predictor has no missing values, but your second predictor had one, the model with using the second predictor would have been fit to a dataset of a different size than the model using only the first, and the <code>anova()</code> function will throw an error to this effect.</p></li>
+</ol>
+<p>If you encounter this issue, you may need to <a href="..\02_essentials\05_filter.qmd">inspect and clean your dataset</a> before you proceed with analysis!</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Put both model objects into the <code>anova()</code> function to find out which model to retain.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-17" class="callout-17-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(eval_lm, eval_full_lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Res.Df"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["RSS"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Df"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Sum of Sq"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["F"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Pr(>F)"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"461","2":"137.1556","3":"NA","4":"NA","5":"NA","6":"NA","_rn_":"1"},{"1":"460","2":"132.8089","3":"1","4":"4.346745","5":"15.05549","6":"0.0001196428","_rn_":"2"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>The <em>F</em>-test is significant, indicating that the more complex two-predictor model is a significant improvement over the one-predictor model, so we will proceed with the two-predictor model.</p>
+</section>
+<section id="standardised-bs" class="level4">
+<h4 class="anchored" data-anchor-id="standardised-bs">Standardised <em>B</em>s</h4>
+<p>You may have noticed that the output we’ve seen so for only contains <em>un</em>standardised model parameter estimates. If we want standardised <em>B</em>s expressing the relationship between predictor(s) and outcome in standard deviation units, we can make use of the <code>model_parameters()</code> function from the {parameters} package to standardise our <em>b</em>s.</p>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use the <code>standarize = "refit"</code> argument in the <code>parameters::model_parameters()</code> function to obtain standardised <em>B</em>s.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note the spelling of <code>standardize</code> with a “z”! Spelling it with an “s” will <strong>not</strong> rescale the parameter estimates.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-20-contents" aria-controls="callout-20" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-20" class="callout-20-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>parameters<span class="sc">::</span><span class="fu">model_parameters</span>(eval_full_lm, <span class="at">standardize =</span> <span class="st">"refit"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["Parameter"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Coefficient"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["SE"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["CI"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["CI_low"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["CI_high"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["t"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["df_error"],"name":[8],"type":["int"],"align":["right"]},{"label":["p"],"name":[9],"type":["dbl"],"align":["right"]}],"data":[{"1":"(Intercept)","2":"0.1501458","3":"0.05935307","4":"0.95","5":"0.03350904","6":"0.2667826","7":"2.529706","8":"460","9":"1.174865e-02"},{"1":"beauty","2":"0.2111922","3":"0.04541354","4":"0.95","5":"0.12194851","6":"0.3004359","7":"4.650424","8":"460","9":"4.335250e-06"},{"1":"genderfemale","2":"-0.3565000","3":"0.09187813","4":"0.95","5":"-0.53705292","6":"-0.1759472","7":"-3.880140","8":"460","9":"1.196428e-04"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="assumptions-checks" class="level3">
+<h3 class="anchored" data-anchor-id="assumptions-checks">Assumptions Checks</h3>
+<p>At Sussex, we teach a range of model diagnostics and robust model sensitivity tests in order to test model assumptions. We will look briefly at each of these in turn.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Remember, there are more examples and longer explanations in the <code>discovr_08</code> tutorial!</p>
+</div>
+</div>
+<section id="residual-plots" class="level4">
+<h4 class="anchored" data-anchor-id="residual-plots">Residual Plots</h4>
+<p>To begin, we can generate nicely formatted, customisable residual plots using the function <code>ggplot2::autoplot()</code>. However, it is <strong>essential</strong> to load the {ggfortify} package in order for this to work!</p>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Load the {ggfortify} package and use the <code>autoplot()</code> function to generate residual plots for <code>eval_full_lm</code>. Set the <code>which</code> argument to <code>c(1, 3, 2, 4)</code>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-23" class="callout-23-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggfortify)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">autoplot</span>(eval_full_lm, <span class="at">which =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04_lm_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>If you’re wondering what’s up with <code>which</code>, the <code>plot()</code> function that <code>autoplot()</code> is based on has a total of six plots available. Here I’ve chosen the two residual plots, the normal Q-Q and the Cook’s distance plot. Plots 5 and 6 have to do with leverage, which we don’t teach at UG level. To see them, simply add them to the <code>which =</code> argument.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>If you want to customise the theme or look of these plots further, they are built with {ggplot2} so you can add or change anything about them using that package. We will come round later to <a href="..\02_essentials\07_dataviz.qmd">a detailed exploration of data visualisations with {ggplot2}</a>.</p>
+</section>
+<section id="distribution-of-standardised-residuals" class="level4">
+<h4 class="anchored" data-anchor-id="distribution-of-standardised-residuals">Distribution of Standardised Residuals</h4>
+<p>In the UG core statistics modules at Sussex, we teach that normality is the least important of the assumptions of the linear model - the most important being additivity and linearity - so we do not generally worry too much about normally distributed standardised residuals, especially in large sample sizes. However, we do teach them how to evaluate the proportion of standardised residuals with values above ±1.96 (approximately 5%), ±2.56 (approximately 1%), and above ±3 (likely an outlier). For details on how to use <code>broom::augment()</code> to obtain standardised residuals and other model diagnostic measures like Cook’s distance, see the <code>discovr_08</code> tutorial.</p>
+</section>
+<section id="robust-models" class="level4">
+<h4 class="anchored" data-anchor-id="robust-models">Robust Models</h4>
+<p>At UG level, we teach robust models for two purposes:</p>
+<ol type="1">
+<li><strong>As sensitivity tests</strong> to check assumptions. If a robust technique that adjusts for a particular issue, such as heteroscedasticity, results in a model that is substantially different from the unadjusted model, we might conclude that the unadjusted model did in fact have that particular issue.</li>
+<li><strong>As robust alternatives</strong> to the unadjusted model.</li>
+</ol>
+<section id="robust-parameter-estimates" class="level5">
+<h5 class="anchored" data-anchor-id="robust-parameter-estimates">Robust Parameter Estimates</h5>
+<p>Our first robust model re-estimates the parameter estimates using robust techniques with the <code>robust::lmRob()</code> function. We can then compare the robust parameter estimates to the unadjusted ones obtained with <code>lm()</code> to find out if our estimates were biased, and report the robust parameter estimates if they were.</p>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Fit the same two-predictor model again with <code>robust::lmRob()</code> and compare the results to the unadjusted two-predictor model.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-25-contents" aria-controls="callout-25" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-25" class="callout-25-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>eval_lm_rob <span class="ot">&lt;-</span> robust<span class="sc">::</span><span class="fu">lmRob</span>(eval <span class="sc">~</span> beauty <span class="sc">+</span> gender, <span class="at">data =</span> teach_tib)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(eval_lm_rob, <span class="at">conf.int =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["term"],"name":[1],"type":["chr"],"align":["left"]},{"label":["estimate"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["std.error"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["statistic"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"(Intercept)","2":"4.1044493","3":"0.03362548","4":"122.063650","5":"0.000000e+00"},{"1":"beauty","2":"0.1387792","3":"0.03266064","4":"4.249128","5":"2.599099e-05"},{"1":"genderfemale","2":"-0.2070840","3":"0.05192907","4":"-3.987824","5":"7.755041e-05"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Compare to the unadjusted model</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(eval_full_lm, <span class="at">conf.int =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["term"],"name":[1],"type":["chr"],"align":["left"]},{"label":["estimate"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["std.error"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["statistic"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["conf.low"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["conf.high"],"name":[7],"type":["dbl"],"align":["right"]}],"data":[{"1":"(Intercept)","2":"4.0815829","3":"0.03293298","4":"123.936050","5":"0.000000e+00","6":"4.01686514","7":"4.14630059"},{"1":"beauty","2":"0.1485876","3":"0.03195142","4":"4.650424","5":"4.335250e-06","6":"0.08579881","7":"0.21137646"},{"1":"genderfemale","2":"-0.1978096","3":"0.05098001","4":"-3.880140","5":"1.196428e-04","6":"-0.29799217","7":"-0.09762702"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Comparing the values of the two versions of the model, we can see that the parameter estimates have changed very little, so we might conclude that the unadjusted model was fine.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="robust-cis-and-p-values" class="level5">
+<h5 class="anchored" data-anchor-id="robust-cis-and-p-values">Robust CIs and <em>p</em>-values</h5>
+<p>To test and adjust for heteroscedastic residuals, we can re-estimate the standard error using a robust method. To do this, we’ll use the <code>parameters::model_parameters()</code> function with the argument <code>vcov = "HC4"</code> as recommended in the {discovr} tutorial. To do this, use the unadjusted model object <code>eval_full_lm</code> as the first argument.</p>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use <code>parameters::model_parameters()</code> to re-estimate the <em>SE</em>s, CIs, and <em>p</em>-values, and compare the results to the unadjusted model.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-27-contents" aria-controls="callout-27" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-27" class="callout-27-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>parameters<span class="sc">::</span><span class="fu">model_parameters</span>(eval_full_lm, <span class="at">vcov =</span> <span class="st">"HC4"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["Parameter"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Coefficient"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["SE"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["CI"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["CI_low"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["CI_high"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["t"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["df_error"],"name":[8],"type":["int"],"align":["right"]},{"label":["p"],"name":[9],"type":["dbl"],"align":["right"]}],"data":[{"1":"(Intercept)","2":"4.0815829","3":"0.03257954","4":"0.95","5":"4.01755969","6":"4.14560604","7":"125.280564","8":"460","9":"0.000000e+00"},{"1":"beauty","2":"0.1485876","3":"0.03236206","4":"0.95","5":"0.08499183","6":"0.21218344","7":"4.591414","8":"460","9":"5.689289e-06"},{"1":"genderfemale","2":"-0.1978096","3":"0.05025302","4":"0.95","5":"-0.29656354","6":"-0.09905566","7":"-3.936273","8":"460","9":"9.555794e-05"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Compare to the unadjusted model</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(eval_full_lm, <span class="at">conf.int =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["term"],"name":[1],"type":["chr"],"align":["left"]},{"label":["estimate"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["std.error"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["statistic"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["conf.low"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["conf.high"],"name":[7],"type":["dbl"],"align":["right"]}],"data":[{"1":"(Intercept)","2":"4.0815829","3":"0.03293298","4":"123.936050","5":"0.000000e+00","6":"4.01686514","7":"4.14630059"},{"1":"beauty","2":"0.1485876","3":"0.03195142","4":"4.650424","5":"4.335250e-06","6":"0.08579881","7":"0.21137646"},{"1":"genderfemale","2":"-0.1978096","3":"0.05098001","4":"-3.880140","5":"1.196428e-04","6":"-0.29799217","7":"-0.09762702"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>The parameter estimates will not change, but the <em>SE</em>s, CIs, and <em>p</em>-values may. Here, the values are nearly identical and there are no major changes - that is, no predictors have become non-significant that were previously significant - so we might again conclude that the unadjusted model was not unduly biased.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="bootstrapping" class="level5">
+<h5 class="anchored" data-anchor-id="bootstrapping">Bootstrapping</h5>
+<p>If we had a small sample size, a final option would be to bootstrap the confidence intervals. To do this, we will again use <code>parameters::model_parameters()</code>, but this time with <code>bootstrap = TRUE</code>.</p>
+<p><em>Note</em>: Sample size is not an issue with this dataset (<em>N</em> = 463).</p>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Produce bootstrapped confidence intervals for the two-predictor model and compare to the unadjusted confidence intervals.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-29-contents" aria-controls="callout-29" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-29" class="callout-29-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>parameters<span class="sc">::</span><span class="fu">model_parameters</span>(eval_full_lm, <span class="at">bootstrap =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["Parameter"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Coefficient"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["CI"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["CI_low"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["CI_high"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["p"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"(Intercept)","2":"4.0838084","3":"0.95","4":"4.01919115","5":"4.1414123","6":"0"},{"1":"beauty","2":"0.1496150","3":"0.95","4":"0.08633439","5":"0.2114526","6":"0"},{"1":"genderfemale","2":"-0.1969769","3":"0.95","4":"-0.29665812","5":"-0.1008895","6":"0"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Compare to the unadjusted model</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(eval_full_lm, <span class="at">conf.int =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["term"],"name":[1],"type":["chr"],"align":["left"]},{"label":["estimate"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["std.error"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["statistic"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["conf.low"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["conf.high"],"name":[7],"type":["dbl"],"align":["right"]}],"data":[{"1":"(Intercept)","2":"4.0815829","3":"0.03293298","4":"123.936050","5":"0.000000e+00","6":"4.01686514","7":"4.14630059"},{"1":"beauty","2":"0.1485876","3":"0.03195142","4":"4.650424","5":"4.335250e-06","6":"0.08579881","7":"0.21137646"},{"1":"genderfemale","2":"-0.1978096","3":"0.05098001","4":"-3.880140","5":"1.196428e-04","6":"-0.29799217","7":"-0.09762702"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>We could once again note that there are no major changes, as previously, so the evidence of our checks suggests that the original, unadjusted model was not unduly biased.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+</section>
+<section id="quarto" class="level2">
+<h2 class="anchored" data-anchor-id="quarto">Quarto</h2>
+<p>Quarto documents are a mix of text and code, the next generation of R Markdown documents. For our purposes, we will be using R within Quarto, but Quarto documents support the integration of many different coding languages, including Python, Julia, and Observable. If you’ve previously used Rmd (RMarkdown), Quarto is backwards-compatible and will able to render most documents with no issues.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Help with Quarto">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Help with Quarto
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <a href="https://quarto.org/docs/guide/">official Quarto Guide</a> is extensive, detailed, and extremely helpful. It’s always the best first stop for any questions you have about using Quarto. Quarto also offers detailed <a href="https://quarto.org/docs/get-started/hello/rstudio.html">tutorials</a>.</p>
+<p>This <a href="https://quarto.org/docs/authoring/markdown-basics.html">quick-reference to Markdown formatting</a> is particularly helpful.</p>
+<p>Prof Andy Field has also recorded a <a href="https://www.youtube.com/watch?v=4rKWIJXe3mA&amp;list=PLEzw67WWDg80-fT1hq2IZf7D62tRmKy8f">series of video guides to using Quarto</a> that are used in UG teaching.</p>
+</div>
+</div>
+<section id="getting-started" class="level3">
+<h3 class="anchored" data-anchor-id="getting-started">Getting Started</h3>
+<p>To get some hands-on practice working with Quarto, we will create a new Quarto document from scratch. We will use the analysis code we’ve already written to create a nicely formatted report.</p>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Create a new Quarto document via File &gt; New File &gt; Quarto Document.</p>
+<p>If you like, you can give it a title; you will be able to change this later.</p>
+<p>Then, click “Create”.</p>
+</div>
+</div>
+<p>By default, your new Quarto document will already have some settings and content to demonstrate how it works. Most importantly, you can see that there are three main types of information in this document:</p>
+<ol type="1">
+<li>The <a href="../../tutorials/archive_autumn_2023/04_lm.html#global-options"><strong>YAML header</strong></a> at the top, delineated by <code>---</code>s, which contains information about how the document will be <em>rendered</em></li>
+<li>The <a href="../../tutorials/archive_autumn_2023/04_lm.html#body-text"><strong>body text</strong></a>, which contains regular (i.e.&nbsp;non-code) text</li>
+<li>The <a href="../../tutorials/archive_autumn_2023/04_lm.html#code-chunks"><strong>code chunks</strong></a>, which contain code - in this case, specifically, R.</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../..\images/quarto_anatomy.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="A screenshot of the default Quarto document, with the YAML, text, and code chunks each circled and labelled in a different colour."></p>
+</figure>
+</div>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To complete our setup, take the following steps:</p>
+<ul>
+<li>Delete everything in the new Quarto document except for the YAML header (i.e.&nbsp;all the text and code chunks).</li>
+<li>Clear your Environment by clicking the broom icon in the Environment tab.</li>
+<li>Restart your R session (via Session &gt; Restart R).</li>
+</ul>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Make sure you have completed and saved your worksheet with all of your code before you do this!</p>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Visual vs Source Mode">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-35-contents" aria-controls="callout-35" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Visual vs Source Mode
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-35" class="callout-35-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>A new feature with Quarto is <strong>Visual mode</strong>, which is very like using Word or a similar word processing programme. All formatting can be applied and previewed in the document itself, using keyboard shortcuts or the familiar formatting buttons along the top toolbar.</p>
+<p>Visual mode also has an “insert anything” shortcut, <code>/</code>, that allows you to quickly insert elements into your document. If you type <code>/</code> at the start of a new line (or Ctrl/Cmd + / otherwise), a drop-down list of possible elements will appear, which you can navigate by scrolling or search by typing.</p>
+<p>Alternatively, you can toggle to <strong>Source mode</strong> by clicking the “Source” button at the very top left of the document pane. In Source mode you can edit the document using Markdown formatting. This allows more fine-tuned control of elements, but automatic formatting and the <code>/</code> shortcut don’t work in this mode.</p>
+<p>Which you use is entirely personal preference - I toggle regularly between them depending on what I’m trying to do, so pick whichever works for you.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="creating-a-code-chunk" class="level3">
+<h3 class="anchored" data-anchor-id="creating-a-code-chunk">Creating a Code Chunk</h3>
+<p>To prepare for our analysis, we will need a place to load packages and read in the data. Any executable code - that is, code that you want to run and do something - must be written in a code chunk and NOT in the body text<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
+<p>There are several ways to insert a new code chunk.</p>
+<ul>
+<li>In Visual mode, by typing <code>/</code> and then Enter (since “R Code Chunk” is the first option)</li>
+<li>In either mode, by:
+<ul>
+<li>Clicking the green “insert code chunk” button in the top right</li>
+<li>Typing out the literal code fencing: <code>```{r} ```</code></li>
+<li>Using a keyboard shortcut.</li>
+</ul></li>
+</ul>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Create a new code chunk and code that does the following:</p>
+<ul>
+<li>Load all the packages we used in the previous Linear Model section</li>
+<li><a href="../../tutorials/archive_autumn_2023/04_lm.html#data-and-codebook">Read in the dataset</a></li>
+<li>Create the two objects containing the linear models with <a href="../../tutorials/archive_autumn_2023/04_lm.html#one-predictor">one predictor</a> and with <a href="../../tutorials/archive_autumn_2023/04_lm.html#hierarchical-models">two predictors</a>.</li>
+</ul>
+<p>Then, run the code chunk.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-36-contents" aria-controls="callout-36" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-36" class="callout-36-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Load packages</strong>:</p>
+<p>In the previous section, we used the following packages:</p>
+<ul>
+<li>{tidyverse}, or specifically {broom}, for tidying up the linear model output</li>
+<li>{ggfortify} for creating diagnostic plots</li>
+<li>{parameters} for standardising <em>b</em>s, re-estimating CIs, and boostrapping</li>
+<li>{robust} for robust parameter estimates</li>
+</ul>
+<p><strong>Read in the data</strong>:</p>
+<p>Use the code from the <a href="../../tutorials/archive_autumn_2023/04_lm.html#data-and-codebook">Data and Codebook</a> section of this tutorial to read in the dataset and rename it if you want.</p>
+<p><strong>Create the models</strong>:</p>
+<p>Copy and paste the code from your workbook document, or from the previous sections of this tutorial. You can also find all of the commands you have run your History tab (next to Environment).</p>
+<p>Altogether, your new code chunk should look like this:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="in">library(ggfortify)</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="in">library(parameters)</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="in">library(robust)</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="in">data("TeachingRatings", package = "AER")</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="in">teach_tib &lt;- TeachingRatings</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="in">eval_lm &lt;- lm(eval ~ beauty, data = teach_tib)</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="in">eval_full_lm &lt;- lm(eval ~ beauty + gender, data = teach_tib)</span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Run the code chunk by clicking the green “play” arrow, or by pressing Ctrl/Cmd + Shift + Enter while your cursor is inside the chunk.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="body-text" class="level3">
+<h3 class="anchored" data-anchor-id="body-text">Body Text</h3>
+<section id="headings" class="level4">
+<h4 class="anchored" data-anchor-id="headings">Headings</h4>
+<p>To begin, we’ll use headings to map out our document. There are several ways to insert a new heading.</p>
+<ul>
+<li>In Visual mode, by:
+<ul>
+<li>Using the text formatting dropdown. Click on “Normal” and select the heading level.</li>
+<li>Using a keyboard shortcut, Ctrl + Alt + the number of the heading (e.g.&nbsp;3 for a level 3 heading)</li>
+</ul></li>
+<li>In either mode, by:
+<ul>
+<li>Typing hashes at the start of a new line, followed by a space (e.g.&nbsp;<code>###</code> creates a level 3 heading)</li>
+</ul></li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="Why Use Headings?">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-38-contents" aria-controls="callout-38" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Why Use Headings?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-38" class="callout-38-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Properly formatted headings are strongly recommended for any documents you write, for a variety of reasons:</p>
+<ul>
+<li>They automatically create the outline (to the right) and navigation menu (to the bottom) of your document for easy navigation</li>
+<li>They can be automatically converted into a <a href="../../tutorials/archive_autumn_2023/04_lm.html#rendering">table of contents</a></li>
+<li>They are a crucial accessibility feature for navigating the document via keyboard/screenreader, as well as providing clear visual structure.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Create 2-3 level 2 headings in your document for the brief report of the linear model. You can choose anything you like, but the three I will refer to will be called “Model Comparison” (constructing and comparing the two models), “Assumptions Checks”, and “The Final Model” (reporting the final model in full).</p>
+</div>
+</div>
+</section>
+<section id="text" class="level4">
+<h4 class="anchored" data-anchor-id="text">Text</h4>
+<p>Any new-line text will automatically be plain text. This can be anything you like, although in our current document, we are writing a mock-formal results section.</p>
+<p>How to format body text depends on the mode you are in.</p>
+<ul>
+<li>In Visual mode, by:
+<ul>
+<li>Using familiar keyboard shortcuts (e.g.&nbsp;Ctrl/Cmd + B for <strong>bold</strong>, Ctrl/Cmd + I for <em>italics</em>, etc.)</li>
+<li>Using the formatting toolbar at the top of the document.</li>
+</ul></li>
+<li>In Source mode, by using <a href="https://quarto.org/docs/authoring/markdown-basics.html">Markdown formatting</a>.</li>
+</ul>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Under the first heading (which I have called “Model Comparison”), write a brief, journal-style description of the two models. Don’t fill in any statistics, but leave placeholders where the statistical reporting will go.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-40-contents" aria-controls="callout-40" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-40" class="callout-40-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>If you aren’t inclined to write your own, here’s a brief sample text to use.</p>
+<blockquote class="blockquote">
+<p>Two linear models were constructed to investigate the influences on teaching evaluation ratings. The first model contained only instructor beauty ratings as a predictor, and teaching evaluation ratings as the outcome (R<sup>2</sup> = ???, <em>F</em>(???, ???) = ???, <em>p</em> = ???). The second model added instructor gender as a second predictor with no interaction, both again predicting teaching evaluation ratings (R<sup>2</sup> = ???, <em>F</em>(???, ???) = ???, <em>p</em> = ???). An ANOVA comparing the models indicated a significant improvement in model fit for the second model compared to the first (<em>F</em>(???, ???) = ???, <em>p</em> = ???).</p>
+</blockquote>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="dynamic-reporting" class="level3">
+<h3 class="anchored">Dynamic Reporting</h3>
+<p>The paragraph from the previous exercise was very clearly missing some key information: the actual statistical results of the linear model analysis. To start with, the last sentence should report which of the two models was better, based on the result of our <em>F</em>-test, rather than question marks. We <em>could</em> produce the output of this test, read it ourselves with our very own eyes/ears, and then type out the results by hand…but that is definitely <em>not</em> what we are going to do! Instead, we’ll look at a couple options for reporting the results dynamically. (We’ll come back to the R<sup>2</sup>s and <em>F</em>s for each model in a moment.)</p>
+<section id="inline-code" class="level4">
+<h4 class="anchored" data-anchor-id="inline-code">Inline Code</h4>
+<p>Our first option is to use inline code to report the numbers. In order to do this, we first need to know what information we have available in the test output, so we can make use of it.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This section will make extensive use of <code>$</code> subsetting, which was covered in <a href="../../tutorials/archive_autumn_2023/03_datasets.html">Tutorial 03</a>, and <code>[]</code> subsetting, which was covered in <a href="../../tutorials/archive_autumn_2023/01_02_intro.html">Tutorial 01/02</a>.</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In your report document, in a <strong>new code chunk</strong>, use the <code>broom::tidy()</code> function to get a nice tibble of the <code>anova()</code> comparison between the two models, and save it in a new object called <code>tidy_f</code>. Then, print out this object <strong>in the Console</strong>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-43-contents" aria-controls="callout-43" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-43" class="callout-43-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>We are creating the <code>tidy_f</code> object in a code chunk because we will want to use it again in our report.</p>
+<p>We are calling this object in the Console because viewing its contents is only for our information/reference, and not something we want to appear or use directly in our finished document.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="do">## In a code chunk</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>tidy_f <span class="ot">&lt;-</span> broom<span class="sc">::</span><span class="fu">tidy</span>(<span class="fu">anova</span>(eval_lm, eval_full_lm))</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="do">## In the Console</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>tidy_f</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["term"],"name":[1],"type":["chr"],"align":["left"]},{"label":["df.residual"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["rss"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["df"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["sumsq"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["statistic"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[7],"type":["dbl"],"align":["right"]}],"data":[{"1":"eval ~ beauty","2":"461","3":"137.1556","4":"NA","5":"NA","6":"NA","7":"NA"},{"1":"eval ~ beauty + gender","2":"460","3":"132.8089","4":"1","5":"4.346745","6":"15.05549","7":"0.0001196428"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>The tibble we get here is quite different from <a href="../../tutorials/archive_autumn_2023/04_lm.html#comparing-models">the “Analysis of Variance Table” text output</a> that we saw earlier when we printed out the results of the <code>anova()</code> function on its own. We now have all the values we need to report these results in a conveniently subsettable tibble with nice R-friendly names.</p>
+<p>So, let’s have a go getting at some of those values.</p>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Get out the <em>F</em>-ratio of 15.0554899 from this object, and round it to two decimal places.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-45-contents" aria-controls="callout-45" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-45" class="callout-45-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>First, we need to get out the <code>statistic</code> variable, which we can do with <code>$</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>tidy_f<span class="sc">$</span>statistic</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]       NA 15.05549</code></pre>
+</div>
+</div>
+<p>This returns a vector of two values, <code>NA</code> and 15.0554899. To index the second of these values, we need <code>[]</code> subsetting and the index number of the correct value.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>tidy_f<span class="sc">$</span>statistic[<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 15.05549</code></pre>
+</div>
+</div>
+<p>Finally, we can <a href="../../tutorials/archive_autumn_2023/01_02_intro.html#using-functions">use the <code>round()</code> function</a> to round to two decimal places.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(tidy_f<span class="sc">$</span>statistic[<span class="dv">2</span>], <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 15.06</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>We now have a bit of R code that produces a <strong>single</strong> number that we want to report in the text<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. The issue is that code chunks contain code, and body text contains text, but we would like the code that we’ve written to print out its value in the text!</p>
+<p>The solution is <em>inline code</em>, a small bit of R code written in the body text (“inline”) that will, when the document is rendered, automatically insert the right number. Inline code is written as follows, in the text: <code>`r some_r_code`</code>. Note the backticks; these are NOT apostrophes, and are typically located on the top left of a UK keyboard to the lefter of the 1/! key.</p>
+<p>For our reporting, we will need to insert the inline code in exactly the spot where we would like the output of the code to appear. This particular bit of code produces the <em>F</em>-statistic, so we can replace the “???”s in our reporting where the value of the <em>F</em>-statistic should go:</p>
+<blockquote class="blockquote">
+<p>An ANOVA comparing the models indicated a significant improvement in model fit for the second model compared to the first (<em>F</em>(???, ???) = <code>`r round(tidy_f$statistic[2], 2)`</code>, <em>p</em> = ???).</p>
+</blockquote>
+<p>You can check whether this has worked in two ways:</p>
+<ol type="1">
+<li>Place your cursor inside the backticks and press Ctrl/Cmd + Enter, as you would inside a code chunk. This will run the code and a small pop-up will show you what that code will produce when rendered.</li>
+<li>Render your document and see what appears!</li>
+</ol>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use inline code to replace all of the ???s in the <em>F</em>-test reporting to produce a final report in APA style.</p>
+<p><em>Hint</em>: Rounding <em>p</em>-values is a bit tricky. <a href="https://frederikaust.com/papaja_man/reporting.html">Check out the {papaja} package</a> to see if you can find a function besides <code>round()</code> that will produce the <em>p</em>-value with the correct formatting.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-47-contents" aria-controls="callout-47" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-47" class="callout-47-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>All of the other numbers should be straightforward, except for the <em>p</em>-value. Rounding to three decimal places with <code>round()</code> will result in a value of 0, which is not what we want. Instead, since the <em>p</em>-value is below .001, we want “&lt; .001”.</p>
+<p>{papaja} has the <code>printp()</code> function, which will do this exactly was we like (as well as containing a lot of other useful functions for rounding and printing in APA style!)</p>
+<p>Your final text may look like this:</p>
+<blockquote class="blockquote">
+<p>An ANOVA comparing the models indicated a significant improvement in model fit for the second model compared to the first (<em>F</em>(<code>`r tidy_f$df[2]`</code>, <code>`r tidy_f$df.residual[2]`</code>) = <code>`r round(tidy_f$statistic[2], 2)`</code>, <em>p</em> <code>`r papaja::printp(tidy_f$p.value[2]`</code>).</p>
+</blockquote>
+<p>Note that there’s no need for a “&lt;” symbol because <code>papaja::printp()</code> includes it automatically.</p>
+<p>This will render as:</p>
+<blockquote class="blockquote">
+<p>An ANOVA comparing the models indicated a significant improvement in model fit for the second model compared to the first (<em>F</em>(1, 460) = 15.06, <em>p</em> &lt; .001).</p>
+</blockquote>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>CHALLENGE</strong>: Create a bit of inline code that will either report a significant or non-significant result depending on the value of <em>p</em>.</p>
+<p><em>Hint</em>: You may need to check out the <code>ifelse()</code> function.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-49-contents" aria-controls="callout-49" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-49" class="callout-49-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>If we really want our reporting to be resilient, we want to remove or replace all the places where we have to manually remember to update the code if our results change. In this case, our reporting reads:</p>
+<blockquote class="blockquote">
+<p>An ANOVA comparing the models indicated a significant improvement in model fit…</p>
+</blockquote>
+<p>But if we wanted to reuse this code for another report, we would have to remember to update this depending on the actual value of <em>p</em>. OR, we can have R do it for us.</p>
+<p>First, we need to write a bit of R code that will evaluate whether the value of <em>p</em> is above or below a particular threshold, and then output the correct text. We could do this with <code>ifelse()</code>, a handy little base R function with three arguments. The first is a test returning a logical value (either <code>TRUE</code> or <code>FALSE</code>). If the test returns <code>TRUE</code>, the second argument is executed; if the test returns <code>FALSE</code>, the final argument is executed.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-35"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-35-1"><a href="#annotated-cell-35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ifelse</span>(</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-35" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-35-2" class="code-annotation-target"><a href="#annotated-cell-35-2" aria-hidden="true" tabindex="-1"></a>  tidy_f<span class="sc">$</span>p.value[<span class="dv">2</span>] <span class="sc">&lt;</span> .<span class="dv">05</span>,</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-35" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-35-3" class="code-annotation-target"><a href="#annotated-cell-35-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"significant"</span>,</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-35" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-35-4" class="code-annotation-target"><a href="#annotated-cell-35-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"non-significant"</span></span>
+<span id="annotated-cell-35-5"><a href="#annotated-cell-35-5" aria-hidden="true" tabindex="-1"></a>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-35" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-35" data-code-lines="2" data-code-annotation="1">The test: is the <em>p</em>-value for our <em>F</em>-test less than .05? (If you have a different <span class="math inline">\(\alpha\)</span>-threshold, you could hard-code it here or use an object you’ve defined previously for this comparison.)</span>
+</dd>
+<dt data-target-cell="annotated-cell-35" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-35" data-code-lines="3" data-code-annotation="2">What to do if the test returns <code>TRUE</code>: print “significant”.</span>
+</dd>
+<dt data-target-cell="annotated-cell-35" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-35" data-code-lines="4" data-code-annotation="3">What to do if the test returns <code>FALSE</code>: print “non-significant”.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "significant"</code></pre>
+</div>
+</div>
+<p>We can then take this command and replace the word “significant” in our report with this inline code:</p>
+<blockquote class="blockquote">
+<p>An ANOVA comparing the models indicated a <code>`r ifelse(tidy_f$p.value[2] &lt; .05, "significant", "non-significant")`</code> improvement in model fit…</p>
+</blockquote>
+<p>Now we don’t have to worry about getting this right: our document, when rendered, will automatically insert the right word depending on the data.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="automatic-reporting" class="level4">
+<h4 class="anchored" data-anchor-id="automatic-reporting">Automatic Reporting</h4>
+<p>As helpful as inline code is (and I would recommend reporting all values dynamically/automatically wherever possible, so it is <em>very</em> useful!), you may have noticed that there was a lot of repetitive typing that also made the text itself quite difficult to read, as well lots of opportunities make typos or mistakes. Surely there’s a simpler way to do this sort of thing!<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
+<p>There are, in fact, many simpler ways to do common tasks like this, which take advantage of the fact that an object created by a particular function will <em>always</em> have the same structure. One option is to make further use of the {papaja} package, which is designed for just this purpose.</p>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use <a href="https://frederikaust.com/papaja_man/reporting.html#statistical-models-and-tests">the {papaja} documentation</a> to fill in the statistical reporting for each of the linear models (i.e., R<sup>2</sup>, <em>F</em>, and <em>p</em>) using only <strong>one piece</strong> of inline code for each.</p>
+<p>When you’re done, render your document to see the results!</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-51-contents" aria-controls="callout-51" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-51" class="callout-51-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The {papaja} documentation illustrates the process using <code>t.test()</code>, which works the same way as <code>lm()</code>. The key here is to use the original objects containing the models you want to report.</p>
+<p>Let’s have a look at the first of the two models and see what the <code>papaja::apa_print()</code> function gives us.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>papaja<span class="sc">::</span><span class="fu">apa_print</span>(eval_lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$estimate
+$estimate$Intercept
+[1] "$b = 4.00$, 95\\% CI $[3.95, 4.05]$"
+
+$estimate$beauty
+[1] "$b = 0.13$, 95\\% CI $[0.07, 0.20]$"
+
+$estimate$modelfit
+$estimate$modelfit$r2
+[1] "$R^2 = .04$"
+
+$estimate$modelfit$r2_adj
+[1] "$R^2_{adj} = .03$"
+
+$estimate$modelfit$aic
+[1] "$\\mathrm{AIC} = 756.65$"
+
+$estimate$modelfit$bic
+[1] "$\\mathrm{BIC} = 769.06$"
+
+
+
+$statistic
+$statistic$Intercept
+[1] "$t(461) = 157.73$, $p &lt; .001$"
+
+$statistic$beauty
+[1] "$t(461) = 4.13$, $p &lt; .001$"
+
+$statistic$modelfit
+$statistic$modelfit$r2
+[1] "$F(1, 461) = 17.08$, $p &lt; .001$"
+
+
+
+$full_result
+$full_result$Intercept
+[1] "$b = 4.00$, 95\\% CI $[3.95, 4.05]$, $t(461) = 157.73$, $p &lt; .001$"
+
+$full_result$beauty
+[1] "$b = 0.13$, 95\\% CI $[0.07, 0.20]$, $t(461) = 4.13$, $p &lt; .001$"
+
+$full_result$modelfit
+$full_result$modelfit$r2
+[1] "$R^2 = .04$, $F(1, 461) = 17.08$, $p &lt; .001$"
+
+
+
+$table
+A data.frame with 6 labelled columns:
+
+       term estimate     conf.int statistic  df p.value
+1 Intercept     4.00 [3.95, 4.05]    157.73 461  &lt; .001
+2    Beauty     0.13 [0.07, 0.20]      4.13 461  &lt; .001
+
+term     : Predictor 
+estimate : $b$ 
+conf.int : 95\\% CI 
+statistic: $t$ 
+df       : $\\mathit{df}$ 
+p.value  : $p$ 
+attr(,"class")
+[1] "apa_results" "list"       </code></pre>
+</div>
+</div>
+<p>We’ve got a huge number of options here, but for this exercise we wanted R<sup>2</sup>, <em>F</em>, and <em>p</em>. All three are given under <code>$full_result$modelfit$r2</code>. We will need to save the output from <code>apa_print()</code> into an object, then we can subset it using inline code:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>eval_lm_out <span class="ot">&lt;-</span> papaja<span class="sc">::</span><span class="fu">apa_print</span>(eval_lm)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>eval_full_lm_out <span class="ot">&lt;-</span> papaja<span class="sc">::</span><span class="fu">apa_print</span>(eval_full_lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<blockquote class="blockquote">
+<p>Two linear models were constructed to investigate the influences on teaching evaluation ratings. The first model contained only instructor beauty ratings as a predictor, and teaching evaluation ratings as the outcome (<code>`r eval_lm_out$full_result$modelfit$r2`</code>). The second model added instructor gender as a second predictor with no interaction, both again predicting teaching evaluation ratings (<code>`r eval_full_lm_out$full_result$modelfit$r2`</code>).</p>
+</blockquote>
+<p>Which will render as:</p>
+<blockquote class="blockquote">
+<p>Two linear models were constructed to investigate the influences on teaching evaluation ratings. The first model contained only instructor beauty ratings as a predictor, and teaching evaluation ratings as the outcome (<span class="math inline">\(R^2 = .04\)</span>, <span class="math inline">\(F(1, 461) = 17.08\)</span>, <span class="math inline">\(p &lt; .001\)</span>). The second model added instructor gender as a second predictor with no interaction, both again predicting teaching evaluation ratings (<span class="math inline">\(R^2 = .07\)</span>, <span class="math inline">\(F(2, 460) = 16.33\)</span>, <span class="math inline">\(p &lt; .001\)</span>).</p>
+</blockquote>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="table-formatting" class="level4">
+<h4 class="anchored" data-anchor-id="table-formatting">Table Formatting</h4>
+<p>Next, we will jump to the “Final Model” heading and have a look at how to turn our final model output into a nicely formatted table. Once again, {papaja} provides a quick and beautiful solution for reporting, so let’s use it again.</p>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Using <a href="https://frederikaust.com/papaja_man/reporting.html#reporting-models-and-tests-in-a-table">the {papaja} help documentation</a>, produce a nicely formatted table of the final model, presenting the parameter estimates, <em>p</em>-values etc. for each predictor under the third (“Final Model”) heading.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-53-contents" aria-controls="callout-53" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-53" class="callout-53-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>We already have the necessary object, <code>eval_full_lm_out</code>, from the previous task. We just need to subset it as described in the help documentation.</p>
+<p>This command should go in a new code chunk, wherever you want the table to appear in your document.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>papaja<span class="sc">::</span><span class="fu">apa_table</span>(eval_full_lm_out<span class="sc">$</span>table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>(#tab:unnamed-chunk-21)</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Predictor</th>
+<th style="text-align: left;"><span class="math inline">\(b\)</span></th>
+<th style="text-align: left;">95% CI</th>
+<th style="text-align: left;"><span class="math inline">\(t\)</span></th>
+<th style="text-align: left;"><span class="math inline">\(\mathit{df}\)</span></th>
+<th style="text-align: left;"><span class="math inline">\(p\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Intercept</td>
+<td style="text-align: left;">4.08</td>
+<td style="text-align: left;">[4.02, 4.15]</td>
+<td style="text-align: left;">123.94</td>
+<td style="text-align: left;">460</td>
+<td style="text-align: left;">&lt; .001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Beauty</td>
+<td style="text-align: left;">0.15</td>
+<td style="text-align: left;">[0.09, 0.21]</td>
+<td style="text-align: left;">4.65</td>
+<td style="text-align: left;">460</td>
+<td style="text-align: left;">&lt; .001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Genderfemale</td>
+<td style="text-align: left;">-0.20</td>
+<td style="text-align: left;">[-0.30, -0.10]</td>
+<td style="text-align: left;">-3.88</td>
+<td style="text-align: left;">460</td>
+<td style="text-align: left;">&lt; .001</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>CHALLENGE</strong>: {papaja} isn’t the only package to provide easy formatting for commonly reported tests. Have a go creating this table again using the <code>nice_table()</code> function from the {rempsyc} package.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-55-contents" aria-controls="callout-55" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-55" class="callout-55-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The <code>nice_table()</code> function can be for tables generally, but it can apply specialised formatting for model tables created with <code>broom</code>, if we use the <code>broom =</code> argument to tell the function what formatting template to apply.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>rempsyc<span class="sc">::</span><span class="fu">nice_table</span>(broom<span class="sc">::</span><span class="fu">tidy</span>(eval_full_lm, <span class="at">conf.int =</span> <span class="cn">TRUE</span>), <span class="at">broom =</span> <span class="st">"lm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="tabwid"><style>.cl-4f1306c6{table-layout:auto;}.cl-4f091a9e{font-family:'Times New Roman';font-size:12pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-4f091ab2{font-family:'Times New Roman';font-size:12pt;font-weight:normal;font-style:italic;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-4f0d95ec{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 2;background-color:transparent;}.cl-4f0d95f6{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 2;background-color:transparent;}.cl-4f0dabe0{background-color:transparent;vertical-align: middle;border-bottom: 0.5pt solid rgba(0, 0, 0, 1.00);border-top: 0.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4f0dabe1{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4f0dabea{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4f0dabeb{background-color:transparent;vertical-align: middle;border-bottom: 0.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4f0dabf4{background-color:transparent;vertical-align: middle;border-bottom: 0.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-4f1306c6"><thead><tr style="overflow-wrap:break-word;"><th class="cl-4f0dabe0"><p class="cl-4f0d95ec"><span class="cl-4f091a9e">Term</span></p></th><th class="cl-4f0dabe0"><p class="cl-4f0d95ec"><span class="cl-4f091ab2">b</span></p></th><th class="cl-4f0dabe0"><p class="cl-4f0d95ec"><span class="cl-4f091ab2">SE</span></p></th><th class="cl-4f0dabe0"><p class="cl-4f0d95ec"><span class="cl-4f091ab2">t</span></p></th><th class="cl-4f0dabe0"><p class="cl-4f0d95ec"><span class="cl-4f091ab2">p</span></p></th><th class="cl-4f0dabe0"><p class="cl-4f0d95ec"><span class="cl-4f091a9e">95% CI</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-4f0dabe1"><p class="cl-4f0d95f6"><span class="cl-4f091a9e">(Intercept)</span></p></td><td class="cl-4f0dabea"><p class="cl-4f0d95ec"><span class="cl-4f091a9e">4.08</span></p></td><td class="cl-4f0dabea"><p class="cl-4f0d95ec"><span class="cl-4f091a9e">0.03</span></p></td><td class="cl-4f0dabea"><p class="cl-4f0d95ec"><span class="cl-4f091a9e">123.94</span></p></td><td class="cl-4f0dabea"><p class="cl-4f0d95ec"><span class="cl-4f091a9e">&lt; .001***</span></p></td><td class="cl-4f0dabea"><p class="cl-4f0d95ec"><span class="cl-4f091a9e">[4.02, 4.15]</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4f0dabe1"><p class="cl-4f0d95f6"><span class="cl-4f091a9e">beauty</span></p></td><td class="cl-4f0dabea"><p class="cl-4f0d95ec"><span class="cl-4f091a9e">0.15</span></p></td><td class="cl-4f0dabea"><p class="cl-4f0d95ec"><span class="cl-4f091a9e">0.03</span></p></td><td class="cl-4f0dabea"><p class="cl-4f0d95ec"><span class="cl-4f091a9e">4.65</span></p></td><td class="cl-4f0dabea"><p class="cl-4f0d95ec"><span class="cl-4f091a9e">&lt; .001***</span></p></td><td class="cl-4f0dabea"><p class="cl-4f0d95ec"><span class="cl-4f091a9e">[0.09, 0.21]</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4f0dabeb"><p class="cl-4f0d95f6"><span class="cl-4f091a9e">genderfemale</span></p></td><td class="cl-4f0dabf4"><p class="cl-4f0d95ec"><span class="cl-4f091a9e">-0.20</span></p></td><td class="cl-4f0dabf4"><p class="cl-4f0d95ec"><span class="cl-4f091a9e">0.05</span></p></td><td class="cl-4f0dabf4"><p class="cl-4f0d95ec"><span class="cl-4f091a9e">-3.88</span></p></td><td class="cl-4f0dabf4"><p class="cl-4f0d95ec"><span class="cl-4f091a9e">&lt; .001***</span></p></td><td class="cl-4f0dabf4"><p class="cl-4f0d95ec"><span class="cl-4f091a9e">[-0.30, -0.10]</span></p></td></tr></tbody></table></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="cross-referencing" class="level4">
+<h4 class="anchored">Cross-Referencing</h4>
+<p>As anyone who has had to create a long document with lots of tables and figures knows, keeping track of the numbering is a huge pain, especially when, for instance, a reviewer asks you to add something partway through and then everything has to be renumbered.</p>
+<p>The good news is that Quarto can take care of figure and table numbering <strong>automatically</strong>. There are two steps to this:</p>
+<ul>
+<li>Include a label in the relevant code chunk, using the prefix <code>fig-</code> for figures and <code>tbl-</code> for tables.</li>
+<li>Refer to the figure or table in the text using <code>@</code>.</li>
+</ul>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercises">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercises
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Using <a href="https://quarto.org/docs/authoring/cross-references.html#tables">the Quarto help documentation</a>, write a short introductory sentence under the “Final Model” heading and refer to the final model table with a cross-reference.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-57-contents" aria-controls="callout-57" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-57" class="callout-57-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>First, add a label and caption to the code chunk from the previous task that produces the model table.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: tbl-final-model</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="in">#| tbl-cap: "The final model predicting teaching evaluation ratings from instructor beauty and gender."</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="in">papaja::apa_table(eval_full_lm_out$table)</span></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You can of course write whatever you like, or borrow the text below, but use whatever label you gave the table code chunk to refer to the table.</p>
+<blockquote class="blockquote">
+<p>The final model with two predictors is presented in full in <code>@tbl-final-model</code>.</p>
+</blockquote>
+<p>Altogether, it should render as follows:</p>
+<blockquote class="blockquote">
+<h2 id="the-final-model" class="anchored" data-anchor-id="cross-referencing">The Final Model</h2>
+<p>The final model with two predictors is presented in full in <a href="#tbl-final-model" class="quarto-xref">Table&nbsp;1</a>.</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>papaja<span class="sc">::</span><span class="fu">apa_table</span>(eval_full_lm_out<span class="sc">$</span>table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="tbl-final-model" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-final-model-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: The final model predicting teaching evaluation ratings from instructor beauty and gender.
+</figcaption>
+<div aria-describedby="tbl-final-model-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell table table-sm table-striped small">
+<caption>(#tab:tbl-final-model)</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Predictor</th>
+<th style="text-align: left;"><span class="math inline">\(b\)</span></th>
+<th style="text-align: left;">95% CI</th>
+<th style="text-align: left;"><span class="math inline">\(t\)</span></th>
+<th style="text-align: left;"><span class="math inline">\(\mathit{df}\)</span></th>
+<th style="text-align: left;"><span class="math inline">\(p\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Intercept</td>
+<td style="text-align: left;">4.08</td>
+<td style="text-align: left;">[4.02, 4.15]</td>
+<td style="text-align: left;">123.94</td>
+<td style="text-align: left;">460</td>
+<td style="text-align: left;">&lt; .001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Beauty</td>
+<td style="text-align: left;">0.15</td>
+<td style="text-align: left;">[0.09, 0.21]</td>
+<td style="text-align: left;">4.65</td>
+<td style="text-align: left;">460</td>
+<td style="text-align: left;">&lt; .001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Genderfemale</td>
+<td style="text-align: left;">-0.20</td>
+<td style="text-align: left;">[-0.30, -0.10]</td>
+<td style="text-align: left;">-3.88</td>
+<td style="text-align: left;">460</td>
+<td style="text-align: left;">&lt; .001</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>CHALLENGE</strong>: Complete the final “Assumptions Checks” section summarising the checks and using figure cross-referencing to insert and refer to the diagnostic plots.</p>
+<p><em>Hint</em>: To report the exact maximum value of Cook’s distance, you will also need to refer to <code>discovr_08</code> for how to use <code>broom::augment()</code>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-59-contents" aria-controls="callout-59" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-59" class="callout-59-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>You can write whatever you like, but here’s a suggestion with the plot included.</p>
+<blockquote class="blockquote">
+<h2 id="assumptions-checks-1" class="anchored">Assumptions Checks</h2>
+<p>We next assessed the model with two predictors for any evidence of bias. Residual plots (<code>@fig-diag-plots</code>) did not indicate any outstanding issues with normality, linearity, or heteroscedasticity. There was also no evidence of influential cases, as the max value of Cook’s distance was <code>`r round(max(broom::augment(eval_full_lm)$.cooksd), 2)`</code>. Robust models were also fitted as sensitivity checks. Robust parameter estimates estimated using the {robust} package were minimally different from the unadjusted parameter estimates. Similarly, robust HC4 standard errors estimated using the {parameters} package yielded confidence intervals and <em>p</em>-values very similar to the unadjusted values. Therefore, we will proceed with the unadjusted two-predictor model as our final model.</p>
+</blockquote>
+<div class="sourceCode" id="cb40"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: fig-diag-plots</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: "Diagnostic plots for the two-predictor model."</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot2::autoplot(eval_full_lm, which = c(1, 3, 2, 4))</span></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="rendering" class="level3">
+<h3 class="anchored" data-anchor-id="rendering">Rendering</h3>
+<p>After all this work to analyse, interpret, and report, it’s finally time to produce the final document. The process of turning a Quarto document into some output format - including running all the code and applying all the formatting - is called <em>rendering</em> (previously <em>knitting</em> with RMarkdown).</p>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Render your report document using the “Render” button at the top of the document, or by using the keyboard shortcut Ctrl/Cmd + Shift + K<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>.</p>
+</div>
+</div>
+<section id="global-options" class="level4">
+<h4 class="anchored" data-anchor-id="global-options">Global Options</h4>
+<p>At the moment, your report may not be as clean as we’d like it to be: there are likely messages from R floating around and code all over the place, whereas for a formal report, we of course only want to show the final output. This is where the YAML header comes in.</p>
+<p>The default YAML header contains only a few explicit settings, and if you haven’t changed anything, probably looks like this:</p>
+<pre><code>---
+title: "Untitled"
+format: html
+editor: visual
+---</code></pre>
+<p>By adding options to the YAML header, we can determine how the document as a whole is rendered. Here are the common ones that I use on the regular:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-5"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-5-1"><a href="#annotated-cell-5-1" aria-hidden="true" tabindex="-1"></a><span class="sc">---</span></span>
+<span id="annotated-cell-5-2"><a href="#annotated-cell-5-2" aria-hidden="true" tabindex="-1"></a>title<span class="sc">:</span> <span class="st">"Linear Model Report"</span></span>
+<span id="annotated-cell-5-3"><a href="#annotated-cell-5-3" aria-hidden="true" tabindex="-1"></a>format<span class="sc">:</span></span>
+<span id="annotated-cell-5-4"><a href="#annotated-cell-5-4" aria-hidden="true" tabindex="-1"></a>  html<span class="sc">:</span></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-5-5" class="code-annotation-target"><a href="#annotated-cell-5-5" aria-hidden="true" tabindex="-1"></a>    toc<span class="sc">:</span> true</span>
+<span id="annotated-cell-5-6"><a href="#annotated-cell-5-6" aria-hidden="true" tabindex="-1"></a>editor<span class="sc">:</span> visual</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-5-7" class="code-annotation-target"><a href="#annotated-cell-5-7" aria-hidden="true" tabindex="-1"></a>self<span class="sc">-</span>contained<span class="sc">:</span> true</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-5-8" class="code-annotation-target"><a href="#annotated-cell-5-8" aria-hidden="true" tabindex="-1"></a>execute<span class="sc">:</span></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="4" onclick="event.preventDefault();">4</a><span id="annotated-cell-5-9" class="code-annotation-target"><a href="#annotated-cell-5-9" aria-hidden="true" tabindex="-1"></a>  echo<span class="sc">:</span> false</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="5" onclick="event.preventDefault();">5</a><span id="annotated-cell-5-10" class="code-annotation-target"><a href="#annotated-cell-5-10" aria-hidden="true" tabindex="-1"></a>  warning<span class="sc">:</span> false</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="6" onclick="event.preventDefault();">6</a><span id="annotated-cell-5-11" class="code-annotation-target"><a href="#annotated-cell-5-11" aria-hidden="true" tabindex="-1"></a>  message<span class="sc">:</span> false</span>
+<span id="annotated-cell-5-12"><a href="#annotated-cell-5-12" aria-hidden="true" tabindex="-1"></a><span class="sc">---</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-5" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-5" data-code-lines="5" data-code-annotation="1">Automatically produce a table of contents (ToC) from the document headings.</span>
+</dd>
+<dt data-target-cell="annotated-cell-5" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-5" data-code-lines="7" data-code-annotation="2">Combine all the files, images, stylesheets etc. into a single output document. Necessary if you want to send an HTML file to someone else and have it look as it should!</span>
+</dd>
+<dt data-target-cell="annotated-cell-5" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-5" data-code-lines="8" data-code-annotation="3">Set default behaviour for all code chunks as follows</span>
+</dd>
+<dt data-target-cell="annotated-cell-5" data-target-annotation="4">4</dt>
+<dd>
+<span data-code-cell="annotated-cell-5" data-code-lines="9" data-code-annotation="4">Run code and show output, but do not show the code itself.</span>
+</dd>
+<dt data-target-cell="annotated-cell-5" data-target-annotation="5">5</dt>
+<dd>
+<span data-code-cell="annotated-cell-5" data-code-lines="10" data-code-annotation="5">Do not show any warnings produced by code.</span>
+</dd>
+<dt data-target-cell="annotated-cell-5" data-target-annotation="6">6</dt>
+<dd>
+<span data-code-cell="annotated-cell-5" data-code-lines="11" data-code-annotation="6">Do not show any messages produced by code.</span>
+</dd>
+</dl>
+</div>
+</div>
+<p>The requirements for each document will change depending on its purpose.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <a href="https://quarto.org/docs/computations/execution-options.html">Quarto help documentation</a>, as usual, has a complete list of YAML options, including how to set default behaviour for figures and other settings.</p>
+</div>
+</div>
+</section>
+<section id="code-chunk-options" class="level4">
+<h4 class="anchored" data-anchor-id="code-chunk-options">Code Chunk Options</h4>
+<p>Global options apply to the entire document, but you may want to change these settings for individual code chunks to override the default settings in the YAML.</p>
+<p>For example, you may have a code chunk containing some processing code that you used to view and clean your data. If your global execution option is set to <code>echo: false</code>, the code output would still appear, although the code itself would be hidden. If, for this particular code chunk, you don’t want the output to appear either, you can override the global option with a local option for that chunk only.</p>
+<p>Local code chunk options appear as “hashpipe” (<code>#|</code>) comments, as we have seen earlier with labels. They use the same syntax as YAML, but the settings only apply to individual code chunks. Any settings that aren’t explicitly changed within the chunk are inherited from the YAML settings.</p>
+<p>For this example, we could set a local code chunk option <code>include: false</code> which will prevent the output from appearing in the document.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| include: false</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="in">some_code_doing_cleaning_and_processing</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="output-formats" class="level4">
+<h4 class="anchored" data-anchor-id="output-formats">Output Formats</h4>
+<p>For these tutorials, we will generally stick to HTML, as it’s the most painless of the rendering options. However, you will likely find yourself wanting to produce some other type of document, which you can easily<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> do from the same Quarto document.</p>
+<p>To render to a different format, change the YAML <code>format:</code> setting to a different output.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>As per, the <a href="https://quarto.org/docs/output-formats/all-formats.html">Quarto guide on output formats</a> has all the information you need!</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Render your linear model report to a Word document.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-64-contents" aria-controls="callout-64" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-64" class="callout-64-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Simply update the <code>format: html</code> YAML option to <code>format: docx</code> and render your document. Note that the <code>format</code> options are usually named after the file extension rather than the name of the programme necessarily (e.g.&nbsp;<code>docx</code> rather than <code>word</code>.)</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>&nbsp;</p>
+<p>And there we have it! You now have a complete example of a linear model report, rendered into both HTML and Word, to refer to. It’s amazing how much you’re able to do after just a few weeks!</p>
+<p>This is the end of the FundRmentals section of the course. If you’re so inclined, we’ll see you in the Essentials section, which will cover data wrangling and cleaning, and running and reporting many more statistical analyses.</p>
+
+
+</section>
+</section>
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Somewhat confusingly, this is <em>not</em> the function we teach UGs to perform ANOVAs! See <code>discovr</code> tutorials 11, 12, 15, and 16 for a detailed guide through the <code>afex</code> package for running linear models with categorical predictors.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Mostly true, except for <a href="../../tutorials/archive_autumn_2023/04_lm.html#inline-code">inline code</a>!<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Generally, inline code should only ever produce a single value, otherwise the formatting can get <em>interesting</em>. This value, however, could longer than a single number, if you want to get creative with your dynamic reporting!<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Here we’re going to briefly encounter a principle that will come up again and again, namely: If you have to copy and paste more than once, <a href="https://r4ds.had.co.nz/functions.html#when-should-you-write-a-function">use a function instead</a>.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>It seems obvious that this should be R instead of K, but remember this made perfect sense when it was called “knitting”!<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>For writing tutorials, I make extensive use of <code>eval: false</code>, which includes the code in the output but does not attempt to run the code. This allows me to write all kinds of nonsense code without R getting stroppy and throwing errors all over the place!<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>Depends crucially on what you consider to be “easy”, especially when dealing with PDFs!<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>© Jennifer Mankin 2024</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
