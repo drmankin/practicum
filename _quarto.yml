@@ -4,6 +4,7 @@ project:
   render: 
     - "*.qmd"
     - "!tutorials/drafts/" #don't attempt to render the drafts folder
+    - "!tutorials/staff/" #don't attempt to render the staff folder
     - "!workbooks/" # don't attempt to render the workbooks
 
 website:
@@ -36,9 +37,12 @@ website:
       contents: 
         - tutorials.qmd
         - quick_ref.qmd
-        - section: "Tutorials"
+        - section: "Current"
           contents:
             - auto: tutorials/docs/*
+        - section:
+          contents:
+            - auto: tutorials/archive_autumn_2023/*
     - title: "Workshops"
       style: "docked"
       background: "#d0d3d4"
@@ -57,7 +61,7 @@ website:
           contents:
             - auto: resources/faqs/*
   page-footer: 
-    center: "&copy; Jennifer Mankin 2023"
+    center: "&copy; Jennifer Mankin 2024"
     background: "#003b49"
     
 format:

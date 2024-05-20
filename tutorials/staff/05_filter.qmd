@@ -1,0 +1,955 @@
+---
+title: "05: Filter and Select"
+---
+
+## Overview
+
+This tutorial covers two important {dplyr} functions: `filter()` and `select()`. Easy to confuse, `filter()` uses logical assertions to return a subset of rows (cases) in a dataset, while `select()` returns a subset of the columns (variables) in the dataset.
+
+::: callout-tip
+To remember which does which:
+
+-   `filter()` works on **r**ows, which starts with "r", so it contains the letter "r".
+-   `select()` works on **c**olumns, which starts with "c", so it contains the letter "c".
+:::
+
+## Setup
+
+### Packages
+
+We will be focusing on {dplyr} today, which contains both the `filter()` and `select()` functions. You can either load {dplyr} alone, or all of {tidyverse} - it won't make a difference, but you only need one or the other.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Load the necessary packages.
+
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+library(dplyr)
+## OR
+library(tidyverse)
+```
+:::
+:::
+
+### Data
+
+Today we're going to start working with a dataset that we're going to get familiar with over the next few weeks. Courtesy of fantastic Sussex colleague [Jenny Terry](https://www.jennyterry.co.uk/), this dataset contains real data about statistics and maths anxiety.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Read in the dataset and save it in a new object, `anx_data`.
+
+On the Cloud, you can read in this dataset from the `data` folder using `here::here()`.
+
+Elsewhere, you can download the dataset, or copy the dataset URL, from the [Data and Workbooks page](../../../data_workbooks.qmd).
+
+::: {.callout-note collapse="true" title="Solution"}
+Read in from file:
+
+```{r}
+
+anx_data <- readr::read_csv(here::here("data/anx_data.csv"))
+```
+
+Read in from URL:
+
+```{r}
+#| eval: false
+
+anx_data <- readr::read_csv("https://raw.githubusercontent.com/drmankin/practicum/master/data/anx_data.csv")
+```
+:::
+:::
+
+#### Codebook
+
+There's quite a bit in this dataset, so you will need to refer to the codebook below for a description of all the variables.
+
+This study explored the difference between maths and statistics anxiety, widely assumed to be different constructs. Participants completed the Statistics Anxiety Rating Scale ([STARS](https://explore.bps.org.uk/content/bpsptr/24/2/101)) and Maths Anxiety Rating Scale - Revised ([R-MARS](https://journals.sagepub.com/doi/10.1177/001316448204200218)), as well as modified versions, the STARS-M and R-MARS-S. In the modified versions of the scales, references to statistics and maths were swapped; for example, the STARS item "Studying for an examination in a statistics course" became the STARS-M item "Studying for an examination in a maths course"; and the R-MARS item "Walking into a maths class" because the R-MARS-S item "Walking into a statistics class".
+
+Participants also completed the State-Trait Inventory for Cognitive and Somatic Anxiety ([STICSA](https://www.cambridge.org/core/journals/behavioural-and-cognitive-psychotherapy/article/abs/distinguishing-cognitive-and-somatic-dimensions-of-state-and-trait-anxiety-development-and-validation-of-the-statetrait-inventory-for-cognitive-and-somatic-anxiety-sticsa/78FDDC5BCDE9D4164434AC10E83DCEF3?utm_campaign=shareaholic&utm_medium=copy_link&utm_source=bookmark)). They completed the state anxiety items twice: once before, and once after, answering a set of five MCQ questions. These MCQ questions were either about maths, or about statistics; each participant only saw one of the two MCQ conditions.
+
+::: callout-important
+For learning purposes, I've randomly generated some additional variables to add to the dataset containing info on distribution channel, consent, gender, and age. Especially for the consent variable, don't worry: all the participants in this dataset did consent to the original study. I've simulated and added this variable in later to practice removing participants.
+:::
+
+```{r}
+#| echo: false
+
+readr::read_csv(here::here("data/anx_codebook.csv")) %>%
+  kableExtra::kbl(
+    col.names = stringr::str_to_title(names(.)),
+    format = "html",
+    escape = FALSE
+  ) |> 
+  kableExtra::kable_styling()
+```
+
+## Filter
+
+The `filter()` function's primary job is to easily and transparently **subset the rows** within a dataset - in particular, a `tibble`. `filter()` takes one or more logical assertions and returns only the rows for which the assertion is `TRUE`. Columns are not affected by `filter()`, only rows.
+
+### General Format
+
+```{r}
+#| eval: false
+
+dataset_name |> #<1>
+  dplyr::filter #<2>
+    logical_assertion #<3>
+  )
+```
+
+1.  Take the dataset `dataset_name`, *and then*
+2.  Filter it keeping only the cases where the following assertion is true:
+3.  A logical assertion about the variable(s) in `dataset_name` that returns logical (`TRUE` or `FALSE`) values.
+
+### Filtering with Assertions
+
+The `logical_assertion` in the general format above is just like the assertions we saw in [the first tutorial](..\01_fundRmentals\01_02_intro.qmd). The rows where the assertion returns `TRUE` will be included in the output; those that return `FALSE` will not. Inside the `filter()` command, use the names of the variable in the piped-in dataset to create the logical assertions.
+
+As a first example, let's use some of our familiar operators from the first tutorial. To retain only people who completed the maths MCQs, we can run:
+
+```{r}
+#| output: false
+
+anx_data |> #<1>
+  dplyr::filter( #<2>
+    mcq == "maths" #<3>
+    )
+```
+
+1.  Take the dataset `anx_data`, *and then*
+2.  Filter it keeping only the cases where the following assertion is true:
+3.  The value in the `mcq` variable is exactly and only equal to `"maths"`.
+
+So, the tibble we get as output contains cases that have the value `"maths"`, and NOT `"stats"`, nor any `NA`s (because `NA` does not equal `"maths"`!).
+
+::: {.callout-warning title="Error Watch: Detected a named input" collapse="true"}
+Remember that for exact matches like this, we must use double-equals `==` and not single-equals `=`. If you use single equals, you're not alone - this is such a common thing that the (incredibly friendly and helpful) error message tells you what to do to fix it!
+
+```{r}
+#| error: true
+
+anx_data |> 
+  dplyr::filter(mcq = "maths")
+```
+:::
+
+Naturally, we can also filter on numeric values. If we wanted to keep only participants younger than 40 years old, we can filter as follows:
+
+```{r}
+#| output: false
+
+anx_data |> #<1>
+  dplyr::filter( #<2>
+    age < 40 #<3>
+    )
+```
+
+1.  Take the dataset `anx_data`, *and then*
+2.  Filter it keeping only the cases where the following assertion is true:
+3.  The value in the `age` variable is less than 40.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Produce a subset of `anx_data` that doesn't contain any male participants.
+
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+#| output: false
+
+anx_data |> 
+  dplyr::filter(
+    gender != "male"
+  )
+```
+:::
+:::
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Produce a subset of `anx_data` that contains only participants as old as the median age, or younger.
+
+::: {.callout-note collapse="true" title="Solution"}
+Here we can take advantage of the fact that we can use variable names as objects inside {dplyr} functions like `filter()`[^1]. Then we write a logical assertion just like we have done in previous tutorials.
+
+```{r}
+#| output: false
+
+anx_data |> 
+  dplyr::filter(
+    age <= median(age, na.rm = TRUE)
+  )
+```
+
+If you mysteriously got an empty tibble, you may have missed out the `na.rm = TRUE` argument to `median()`.
+:::
+:::
+
+[^1]: This incredibly useful property is called "data masking". If you want to know more, run `vignette("programming")` in the Console.
+
+As a final example, let's consider a situation where we want to retain only participants that gave a gender identity of either "male" or "female".[^2]
+
+[^2]: I'm not wild about this example - the experiences of non-binary and other genders are just as important! Unfortunately it's the only variable in the dataset with the right number of categories.
+
+To do this, we need a new operator: `%in%`, which God knows I just pronounce as "in" (try saying "percent-in-percent" three times fast!). This looks for any matches with any of the elements that come after it:
+
+```{r}
+#| eval: false
+
+anx_data |> #<1>
+  dplyr::filter( #<2>
+    gender %in% c("female", "male") #<3>
+    )
+```
+
+1.  Take the dataset `anx_dat`, *and then*
+2.  Filter it keeping only the cases where the following assertion is true:
+3.  The value in the `gender` variable matches any of the values "female" or "male".
+
+::: {.callout-tip title="Why not `==`?"}
+What follows here is a rabbit hole that gets into some gritty detail. If you're happy to take my word for it that you absolutely, definitely needed `%in%` and not `==` in the previous exercise, you can skip the explanation below. If you're keen to understand all the nuance, click to expand and read on!
+
+::: {.callout-warning title="The Danger of `==` vs `%in%`" collapse="true"}
+For this matching task, you might have thought we'd use `gender == c("female", "male")`, which runs successfully and sure looks okay. So why isn't this right?
+
+```{r}
+## DO NOT DO THIS
+anx_data |> 
+  ## THIS DOES NOT DO WHAT WE WANT!!
+  dplyr::filter(gender == c("female", "male"))
+## DANGER WILL ROBINSON
+```
+
+At a glance it looks like this produces the same output as the solution above - `gender` now contains only male or female participants. As you might have gathered from the all-caps comments above - intended to prevent you from accidentally using this code in the future for tasks like this - this is NOT what this code does.
+
+To demonstrate what it *does* do, I need the `dplyr::mutate()` function [from the next tutorial](06_changes.qmd#mutate) to create some new variables. The first new variable, `double_equals`, contains `TRUE`s and `FALSE`s for each case using the assertion with `==`. The second is exactly the same, but reverses the order of the genders - something that should NOT make a difference to the matching! (We want either female OR male participants, regardless of which we happen to write first.) The third, `in_op`, contains the same again but this time with `%in%`. The final `arrange()` line sorts the dataset by gender to make the output easier to read.
+
+```{r}
+anx_data |> 
+  dplyr::mutate(
+    double_equals = (gender == c("female", "male")),
+    double_equals_rev = (gender == c("male", "female")),
+    in_op = (gender %in% c("female", "male")),
+    .keep = "used"
+  ) |> 
+  dplyr::arrange(gender)
+```
+
+Notice anything *wild*?
+
+For participants with the same value in `gender`, the assertions with `==` both flip between `TRUE` and `FALSE`, but in the reverse pattern to each other. The assertion with `%in%` correctly labels them all as `TRUE`. WTF?
+
+What's happening is that because the vector `c("female", "male")` contains two elements, the assertion with `==` matches the first case to the first element - female - and returns `TRUE`. Then it matches the second case to the second element - male - and this time returns `FALSE`. Then because there are more cases, it repeats: the next (third) case matches female and returns `TRUE`, the next male and `FALSE`, and so forth. The `==` assertion with the gender categories reversed does the same, but starts with male first and female second. **Only `%in%` actually does what we wanted**, which was to return `TRUE` for any case that matches female OR male.
+
+This is a good example of what I think of as "dangerous" code. I don't mean "reckless" or "irresponsible" - R is just doing exactly what I asked it to do, and it's not the job of the language or package creators to make sure *my* code is right. I mean dangerous because it runs as expected, produces (what looks like) the right output, and even with some brief checking, would appear to contain the right cases - but would quietly result in a large chunk of the data being wrongly discarded. If you didn't know about `%in%`, or how to carefully double-check your work, you could easily carry on from here and think no more about it.
+
+So, how can we avoid a problem like this? Think of any coding task - especially new ones, where you're not completely familiar with the code or functions you're working with - as a three-step process[^3].
+
+-   **Anticipate.** Form a clear picture of the task you are trying to achieve with your code. What do you expect the output of the code to look like when it runs successfully?
+-   **Execute.** Develop and run the code to perform the task.
+-   **Confirm.** Compare the output to your expectations, and perform tests to confirm that what you *think* the code has done, is in fact what it has done.
+
+So, what might the Confirm step look like for a situation like this?
+
+One option is the code I created above, with new columns for the different assertion options - but this might be something you'd only think to do if you already knew about `%in%` or suspected there was a problem. A more routine check might look like:
+
+> I expect that when my filtering is accomplished, my dataset will contain all and only the participants who reported a gender identy of female or male, and no others. I will also have the same number of cases as the original dataset, less the number of other gender categories.
+
+First, I'll create a new dataset using the filtered data.
+
+```{r}
+## SERIOUSLY THIS IS BAD
+anx_data_bd <- anx_data |> 
+## DON'T USE THIS CODE FOR MATCHING
+  dplyr::filter(gender == c("female", "male"))
+## STOP OH GOD PLEASE JUST DON'T
+```
+
+Check 1: Filtered data contains only male and female participants.
+
+```{r}
+anx_data_bd |> 
+  dplyr::count(gender)
+```
+
+Only female and male participants! Tick ✅
+
+At this point, though, I might become suspicious. The original dataset contained `r nrow(anx_data)` cases - we've lost more than half! Can that be right?? Better check the numbers.
+
+```{r}
+## Get the numbers from the original dataset
+anx_data |> 
+  dplyr::count(gender)
+```
+
+Uh oh. Already we can see that something's wrong with the numbers. But instead of relying on visual checks, let's let R tell us.
+
+```{r}
+## Calculate how many cases we expect if the filtering had gone right
+expected_n <- anx_data |> 
+  dplyr::count(gender) |> 
+  ## This isn't the best way to filter
+  dplyr::filter(gender != "non-binary") |>
+  ## The next section on multiple assertions has a much better method!
+  dplyr::filter(gender != "other/pnts") |> 
+  dplyr::pull(n) |> 
+  sum()
+
+## Ask R whether the expected number of rows is equal to the actual number of rows in the filtered data
+expected_n == nrow(anx_data_bd)
+```
+
+Now we know for sure there's a problem and can investigate what happened more thoroughly.
+
+As a final stop on this *incredibly* lengthy detour (are you still here? 👋), you might wonder whether the check above would give me the wrong answer, because I used two `filter()`s in a row, and the whole point of this goose chase is how to accomplish that exact filtering task. First, this is NOT the way I would do this (as the comments suggest), but I'm really trying to stick to ONLY what we've already covered wherever possible. But let's say I'd tried to do this with the bad `==` filtering that caused all this faff in the first place.
+
+For this particular case there are four values in `gender`. If I try `gender == c("female", "male")` here, this DOES actually work fine - because the categories are in the right order and are a multiple of the length of the dataset 🤦 But at least the numbers still wouldn't match, which would tell me that something went wrong with filtering the whole dataset.
+
+```{r}
+#| warning: true
+anx_data |> 
+  dplyr::count(gender) |> 
+  dplyr::filter(gender == c("female", "male"))
+```
+
+If I happened to have had the genders the other way round, I would have got an empty tibble, and hopefully that also would have clued me in that there was a problem with the original filtering.
+
+```{r}
+#| warning: true
+anx_data |> 
+  dplyr::count(gender) |> 
+  dplyr::filter(gender == c("male", "female"))
+```
+:::
+:::
+
+[^3]: I did try to think of a snazzy acronym here, but all I came up with is AEC (yikes). I'll keep thinking and try to update this with something better, and I welcome suggestions if you've made it this far!
+
+### Multiple Assertions
+
+Logical assertions can also be combined to specify exactly the cases you want to retain. The two most important operators are:
+
+-   `&` (AND): Only cases that return `TRUE` for **all** assertions will be retained.
+-   `|` (OR): Any cases that return `TRUE` for **at least one** assertion will be retained.
+
+::: {.callout-tip title="More on AND and OR" collapse="true"}
+Let's look at a couple minimal examples to get the hang of these two symbols. For each of these, you can think of the single response R gives as the answer to the questions, "Are ALL of these assertions true?" for AND, and "Is AT LEAST ONE of these assertions true?" for OR.
+
+First, let's start with a few straightforward logical assertions:
+
+```{r}
+"apple" == "apple"
+23 > 12
+
+42 == "the answer"
+10 > 50
+```
+
+Next, let's look at how they combine.
+
+Two true statements, combined with `&`, return `TRUE`, because it is true that **all** of these assertions are true.
+
+```{r}
+"apple" == "apple" & 23 > 12
+```
+
+Two true statements, combined with `|`, also return `TRUE`, because it true that **at least one** of these assertions is true.
+
+```{r}
+"apple" == "apple" | 23 > 12
+```
+
+Two false statements, combined with `&`, return `FALSE`, because it is NOT true that **all** of them are true.
+
+```{r}
+42 == "the answer" & 10 > 50
+```
+
+Two false statements, combined with `|`, return `FALSE`, because it is NOT true that **at least one** of them is true.
+
+```{r}
+42 == "the answer" | 10 > 50
+```
+
+One true and one false statement, combined with `&`, return `FALSE`, because it is NOT true that **all** of them are true.
+
+```{r}
+23 > 12 & 42 == "the answer"
+```
+
+One true and one false statement, combined with `|`, return `TRUE`, because it is true that **at least one** of them is true.
+
+```{r}
+23 > 12 | 42 == "the answer"
+```
+:::
+
+To see how this works, let's filter `anx_data` to keep only cases that saw the stats MCQs, **OR** that scored 3 or higher on the first STARS test subscale item.
+
+This requires two separate statements, combined with `|` "OR":
+
+```{r}
+#| eval: false
+
+anx_data |> #<1>
+  dplyr::filter( #<2>
+    mcq == "stats" | #<3>
+     stars_test1 >= 3 #<4>
+    ) 
+```
+
+1.  Take the dataset `anx_data`, *and then*
+2.  Filter it keeping only the cases where the following assertion is true:
+3.  The value in the `mcq` variable is only and exactly equal to `"stats"`, **OR**
+4.  The value in `stars_test1` is greater than or equal to 3.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Filter `anx_data` to keep only cases where the value of `rmars_s_test2` is between 2 and 4.
+
+*Hint*: You can use two separate assertions to do this, or check out `dplyr::between()`.
+
+::: {.callout-note collapse="true" title="Solution"}
+For the first solution, we must use `&` "AND" to ensure that both these conditions are met simultaneously.
+
+For the second solution, the `dplyr::between()` function does the same operation, without having to worry about getting AND vs OR right.
+
+```{r}
+#| eval: false
+
+anx_data |> 
+  dplyr::filter(
+    rmars_s_test2 >= 2 & rmars_s_test2 <= 4
+  )
+
+anx_data |> 
+  dplyr::filter(
+    dplyr::between(rmars_s_test2, 2, 4)
+  )
+```
+:::
+:::
+
+### Data Cleaning
+
+Filtering is absolutely invaluable in the process of data cleaning. In order to practice this process, I've introduced some messy values into the data, so let's have a look at a method of cleaning up the dataset and documenting our changes as we go.
+
+#### Pre-Exclusions
+
+For data collected on platforms like Qualtrics, you can frequently test out your study via a preview mode. Responses completed via preview are still recorded in Qualtrics, but labeled as such in a variable typically called "DistributionChannel" or similar. In this dataset, we have a similar variable, `distribution`, that labels whether the data was recorded in a preview (`"preview"`) or from real participants (`"anonymous"`).
+
+Your method may vary, but I wouldn't bother to document these cases as "exclusions" because they aren't real data. I would just drop them from the dataset - but of course make sure to record the code that does so!
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Remove any preview runs from the dataset, keeping only real data.
+
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+anx_data <- anx_data |> 
+  dplyr::filter(distribution == "anonymous")
+```
+:::
+:::
+
+#### Recording Exclusions
+
+As a part of complete and transparent reporting, we will want to report all of the reasons we excluded cases from our dataset, along with the number excluded. We can build this counting process into our workflow so that at the end, we have a record of each exclusion along with initial and final numbers.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Follow along with the following data cleaning steps, trying them out in a code chunk for yourself as you go. You'll need them at the end!
+:::
+
+For each check below, our recording process will have two steps:
+
+1.  Produce a dataset of the cases you will **exclude**, and count the number of rows (cases).
+2.  Remove the cases and overwrite the old dataset with the new one.
+
+In my process, I'm going to keep `anx_data` as the original, "raw" version of the dataset. So, I'll create a copy in a new dataset object to use while "*proc*essing" that I will update as I go.
+
+```{r}
+anx_data_proc <- anx_data
+```
+
+To begin, we will count the initial number of cases before any exclusions.
+
+```{r}
+n_initial <- nrow(anx_data_proc)
+n_initial
+```
+
+(Remember that we can use `nrow()` because there is only one participant per row. If we had long-form data with observations from the same participant across multiple rows, we would have to do something a bit different!)
+
+#### Consent
+
+For many datasets, you would likely have a variable with responses from your participants about informed consent. How you filter this depends on what that variable contains, of course. However, we've already seen examples of this kind of operation earlier in this tutorial.
+
+For the first assertion, we capture any responses that don't match "Yes", but for the second, we need to use a function from a family we met all the way back in Tutorial 01/02, namely `is.na()`.
+
+You can think of `is.na()` as a question about whatever is in its brackets: "Is (this) `NA`?" If the value IS an `NA`, R will return `TRUE`; if it's anything else at all, R will return `FALSE`. So, to get an accurate count, we need to capture people who either answered something *other than* "Yes", or didn't answer at all.
+
+```{r}
+n_no_consent <- anx_data_proc |> 
+  dplyr::filter(consent != "Yes" | is.na(consent)) |> 
+  nrow()
+
+n_no_consent
+```
+
+Then, we remove all participants who did not actively consent and assign the resulting dataset to the same name, overwriting the previous version. As we saw before, the below would discard cases that answered "No" (along with any other value not exactly matching "Yes") *and* cases with `NA`s from people who didn't answer.
+
+```{r}
+anx_data_proc <- anx_data_proc |> 
+  dplyr::filter(consent == "Yes")
+```
+
+#### Age
+
+For low-risk ethics applications, you may want to exclude people who reported an age below the age of informed consent (typically 18). This may look like `age >= 18` or similar in your dataset. However, it's also important to check for errors or improbable ages, or to remove any participants that are too old if your study has an upper age limit. In this case, my hypothetical study didn't have an upper age limit, but I'll designate any ages as 100 or above as unlikely to be genuine responses.
+
+Since these are removed for two different reasons, I'll save them as two separate objects.
+
+```{r}
+## Store the number to be removed
+n_too_young <- anx_data_proc |> 
+  dplyr::filter(age < 18) |> 
+  nrow()
+n_too_young
+
+n_too_old <- anx_data_proc |> 
+  dplyr::filter(age >= 100) |> 
+  nrow()
+n_too_old
+
+## Remove them
+anx_data_proc <- anx_data_proc |> 
+  dplyr::filter(
+    dplyr::between(age, 18, 99)
+  )
+```
+
+#### Missing Values
+
+Finally (for now), just about any study will have to decide how to deal with missing values. The possibilities for your own work are too complex for me to have a guess at here, so for now we'll only look at how to identify and remove missing values.
+
+##### Single Variable
+
+Let's look at a single variable to begin with - for example, `sticsa_trait_3`. We can confirm that this variable has a/some `NA`s to consider by counting the unique values:
+
+```{r}
+anx_data |> 
+  dplyr::count(sticsa_trait_3)
+```
+
+The first thing you might think to try is to filter on `sticsa_trait_3 == NA`, but weirdly enough this doesn't work. Instead, we again need the increasingly versatile `is.na()`, which again, we can think of as a question about whatever is in its brackets: "Is (this) `NA`?" Let's see this in action:
+
+```{r}
+#| eval: false
+
+anx_data_proc |> #<1>
+  dplyr::filter( #<2>
+    is.na(sticsa_trait_3) #<3>
+  )
+```
+
+1.  Take the dataset `anx_data_proc`, *and then*
+2.  Filter it keeping only the cases where the following assertion is true:
+3.  The value in the `sticsa_trait_3` variable IS missing (is `NA`).
+
+These are the cases we want to *remove*, so we count how many there are and assign that number to a useful object name, as we did before.
+
+```{r}
+n_sticsa_t3_missing <- anx_data_proc |> #<1>
+  dplyr::filter( #<2>
+    is.na(sticsa_trait_3) #<3>
+  ) |> 
+  nrow()
+
+n_sticsa_t3_missing
+```
+
+Next, we need to actually exclude these cases. This time, we want to retain the inverse of the previous filtering requirement: that is, we only want to keep the cases that are NOT missing a value, the opposite of what we got from `is.na(sticsa_trait_3)`. You may recognise "the inverse" or "not-x" as something we've seen before with `!=`, "not-equals". For anything that returns `TRUE` and `FALSE`, you can get the inverse by putting an `!` before it. (Try running `!TRUE`, for example!)
+
+So, to create my clean `anx_data_final` dataset, I can use the assertion `!is.na(sticsa_trait_3)` to keep only the participants who answered this question - who do NOT have a missing value.
+
+Finally, I can store the actual number of usable cases, according to my cleaning requirements, in a final object to use when reporting.
+
+```{r}
+anx_data_final <- anx_data_proc |> #<1>
+  dplyr::filter( #<2>
+    !is.na(sticsa_trait_3) #<3>
+  )
+
+n_final <- nrow(anx_data_final)
+n_final
+```
+
+##### All Variables
+
+Removing `NA`s is a tricky process, but if you're sure that you want to drop *all* cases with missing values in your dataset, there are few helper functions to make this easy.
+
+For this, we're going to leave `filter()` for a moment at look at a different function, `tidyr::drop_na()`. This function takes a tibble as input, and returns the same tibble as output, but with any rows that had missing values removed.
+
+::: callout-warning
+This is a pretty major step and should be used with caution! If we didn't check our data carefully, we could easily end up dropping a bunch of cases we didn't want to get rid of.
+:::
+
+For example, if we apply it uncautiously here:
+
+```{r}
+anx_data_proc |> 
+  tidyr::drop_na()
+```
+
+Well, there goes all our data!
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+**CHALLENGE**: Why has every single row in the dataset been dropped? Using any method you like, investigate what's happened.
+
+::: {.callout-note collapse="true" title="Solution"}
+This is something we could work out without any R whatsoever, just using [the codebook](05_filter.qmd#codebook) and a bit of View mode to confirm. The Codebook tells us that participants were in one of two independent conditions: `"maths"` or `"stats"`. Because of the wide format of the data, there are `mcq_maths` questions that are always `NA` for people in the statistics-MCQ condition, and vice versa for the `mcq_stats` questions and people in the maths-MCQ condition. So, every single participant - even those who answered every question - has *at least some* missing values, and dropping NAs without checking just bins the whole dataset.
+
+If I wanted to check this with R, I'd be hard pressed to do it with only what we've covered so far. Using the some extra challenge functions from the next tutorial, though, I'd do this:
+
+```{r}
+anx_data |> 
+  dplyr::mutate(
+    ## Create a new variable containing the number of missing values in each row
+    number_nas = rowSums(is.na(pick(everything())))
+  ) |> 
+  ## Count how many missing values there are
+  dplyr::count(number_nas)
+```
+
+So, there's at least 5 `NA`s in every single row, and when we call `tidyr::drop_na()`, every single row is dropped.
+:::
+:::
+
+#### Reporting
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+**CHALLENGE**: Using the objects counting intial, final, and excluded cases and what we covered last time about inline code, write a brief journal-style description of your exclusion process.
+
+What is the benefit of taking the extra effort to store these counts in objects? Under what circumstances might this be (particularly) useful?
+
+::: {.callout-note collapse="true" title="Solution"}
+You can write whatever you like, but here's an example using inline code.
+
+> The initial sample consisted of `` `r knitr::inline_expr("n_initial")` `` cases. We removed `` `r knitr::inline_expr("n_no_consent")` `` cases that did not consent, `` `r knitr::inline_expr("n_too_young")` `` cases that reported an age below the ethical age of consent, and `` `r knitr::inline_expr("n_too_old")` `` cases that reported improbable ages (100 years old or older). Finally, we removed `` `r knitr::inline_expr("n_sticsa_t3_missing")` `` cases with who had not responded to the third trait item on the STICSA.This left us with a final sample of `` `r knitr::inline_expr("n_final")` `` cases.
+
+When you render your document, this should come out as:
+
+> The initial sample consisted of `r n_initial` cases. We removed `r n_no_consent` cases that did not consent, `r n_too_young` cases that reported an age below the ethical age of consent, and `r n_too_old` cases that reported improbable ages (100 years old or older). Finally, we removed `r n_sticsa_t3_missing` cases with who had not responded to the third trait item on the STICSA. This left us with a final sample of `r n_final` cases.
+
+There's a huge advantage of this, namely *ease of change*. Imagine you had [researchers from labs all over the world join the study](https://twitter.com/ProfAndyField/status/1326150839002664960) and add [a huge amount of new data to a massive collaborative dataset](https://openpsychologydata.metajnl.com/articles/10.5334/jopd.80). In order to update all your numbers, all you have to do is update your initial `anx_data` dataset with the new cases, and then re-run all your code as is. Because these objects count whatever is in the data, they will automatically contain and record the correct numbers for the data you put into them[^4].
+
+There are other advantages too - like confidence that you, a human person who may occasionally make errors (sorry, no offence meant!), won't misread, mistype, or otherwise mistake the numbers, because at no point do you actually type a particular number yourself.
+
+Nifty, eh?
+:::
+:::
+
+[^4]: I'm sure Jenny would tell you there's a *little* more to it than that, especially with 12,570 students from 100 universities in 35 countries, collected in 21 languages! But that's both the dream and the general idea.
+
+## Select
+
+The `select()` function is probably the most straightforward of the core {dplyr} functions. Its primary job is to easily and transparently **subset the columns** within a dataset - in particular, a `tibble`. Rows are not affected by `select()`, only columns.
+
+### General Format
+
+To subset a tibble, use the general format:
+
+```{r}
+#| eval: false
+
+dataset_name |> #<1>
+  dplyr::select( #<2>
+    variable_to_include, #<3> 
+    -variable_to_exclude,  #<4>
+    keep_this_one:through_this_one,  #<5>
+    new_name = variable_to_rename,  #<6>
+    variable_number #<7>
+  )
+
+```
+
+1.  Take the dataset `dataset_name`, *and then*
+2.  Select the following variables:
+3.  The name of a variable to be included in the output. Multiple variables can be selected separated by commas.
+4.  The name of a variable to be excluded from the output. Use either an exclamation mark (`!`) or a minus sign (`-`) in front of each variable to exclude. Multiple variables can be dropped, separated by commas with a `!` (or `-`) before each.
+5.  A range of variables to include in the output. All the variables between and including the two named will be selected (or dropped, with `!(drop_this_one:through_this_one)`).
+6.  Include `variable_to_rename` in the output, but call it `new_name`.
+7.  Include a variable in the output by where it appears in the dataset, numbered left to right. For example, "2" will select the second column in the original dataset.
+
+Columns will appear in the output in the order they are selected in `select()`, so this function can also be used to reorder columns.
+
+### Selecting Directly
+
+The best way to get the hang of this will be to give it a go, so let's [dive on in](https://media.giphy.com/media/2cehTmp8rASyunE10R/giphy.gif)!
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Create a subset of `anx_data` that contains the following variables:
+
+-   The participant's age
+-   The first variable in the original dataset
+-   All of the STARS variables
+
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+anx_data |> 
+  dplyr::select(
+    age, 1,
+    stars_test1:stars_help4
+  )
+```
+:::
+:::
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Create a subset of `anx_data` that contains the following variables:
+
+-   All of the original variables but NOT `distribution`
+-   `mcq` renamed `condition`
+
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+anx_data |> 
+  dplyr::select(
+    -distribution,
+    condition = mcq
+  )
+```
+:::
+:::
+
+That's really all there is to it!
+
+...*Or is it?*[^5]
+
+[^5]: Have you seen the size of this tutorial?? Of course it isn't!
+
+### Using {tidyselect}
+
+The real power in `select()`, and in many other {tidyverse} functions, is in a system of helper functions and notations collectively called `<tidyselect>`. The overall goal of "`<tidyselect>` semantics" (as you will see it referred to in help documentation) is to make selecting variables easy, efficient, and clear.
+
+::: {.callout-warning title="New to UGs"}
+At UG level at Sussex, students are not taught about `<tidyselect>` in core modules. However, `<tidyselect>` is desperately useful and makes complex data wrangling/cleaning a lot faster and more efficient, especially (for instance) for questionnaires with similarly-named subscales, so would make for a great collaborative activity with supervisors!
+:::
+
+These helper functions can be combined with the selection methods above in any combination. Some very convenient options include:
+
+-   `everything()` for all columns
+-   `starts_with()`, `ends_with()`, and `contains()` for selecting columns by shared name elements
+-   `where()` for [selecting with a function](05_filter.qmd#using-functions), described in the next section
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Open the help documentation by running `?dplyr::select` in the Console to see examples of how to use all of the `<tidyselect>` helper functions.
+:::
+
+Rather than list examples of all the helper functions here, it's best to just try them out for yourself!
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Select the variables in `anx_data` that have to do with state anxiety.
+
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+anx_data |> 
+  dplyr::select(
+    contains("state")
+  )
+```
+:::
+:::
+
+::: {.callout-note appearance="minimal" title="Exercises"}
+Select all the variables in `anx_data` that are NOT the R-MARS, R-MARS-S, or STICSA.
+
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+anx_data |> 
+  dplyr::select(
+    ## contains() also fine (in this case)
+    !starts_with(c("rmars", "sticsa"))
+  )
+```
+:::
+:::
+
+::: {.callout-note appearance="minimal" title="Exercises"}
+**CHALLENGE**: Select all the `stars` variables but NOT the `stars_m` variables.
+
+::: {.callout-note collapse="true" title="Solution"}
+This one's a bit tricky because both `starts_with()` and `contains()` will return both types of STARS variables, because of the way the variables are named. We'll have to provide [multiple assertions](05_filter.qmd#multiple-assertions), like we did earlier with `filter()`.
+
+```{r}
+#| eval: false
+
+anx_data |> 
+  dplyr::select(starts_with("stars") & !contains("_m_"))
+```
+:::
+:::
+
+ 
+
+#### Using Functions
+
+Let's say we want to generate a summary table of the variables in our dataset. Before we can [create our summary in the next tutorial](06_changes.qmd#summarise), we may first want to produce a subset of our dataset that only contains numeric variables.
+
+To do this, we can use the `<tidyselect>` helper function `where()`. This helper function lets us use *any* function that returns `TRUE` and `FALSE` to select columns. Essentially, we don't have to select columns using name or position - we can use any criteria we want, as long as we have (or can create...!) a function that expresses that criteria.
+
+Especially helpful here is the `is.*()` family of functions in base R. This group of functions all have the same format, where the `*` is a stand-in for any type of data or object, e.g. `is.logical()`, `is.numeric()`, `is.factor()` etc. (The very useful `is.na()` that we've seen with `filter()` above is also a member of this family.) These functions work like a question about whatever you put into them - for example, `is.numeric()` can be read as, "Is (whatever's in the brackets) numeric data?"
+
+::: callout-tip
+You can quickly find all of the functions in this family by typing `is.` in a code chunk and pressing Tab.
+:::
+
+Putting these two together, we could accomplish the task of selecting only numeric variables as follows:
+
+```{r}
+anx_data |> 
+  dplyr::select(
+    where(is.numeric)
+  )
+```
+
+This command evaluates each column and determines whether they contain numeric data (`TRUE`) or not (`FALSE`), and only returns the columns that return `TRUE`.
+
+#### Using Custom Functions
+
+::: {.callout-warning title="Here There Be Lambdas"}
+The material in this section isn't covered in the live workshops. It's included here for reference because it's extremely useful in real R analysis workflows, but it won't be essential for any of the workshop tasks.
+:::
+
+The function in `where()` that determines which columns to keep doesn't have to be an existing named function. Another option is to use a "purrr-style lambda" or formula (a phrase you may see in help documentation) to write our own criteria on the spot.
+
+For example, let's select all of the numeric variables that had a mean of 3 or higher:
+
+```{r}
+#| eval: false
+
+anx_data |>
+  dplyr::select(
+    where(~is.numeric(.x) & mean(.x, na.rm = TRUE) >= 3)
+  )
+```
+
+Instead of just the name of a function, as we had before, we now have a formula. This formula has a few key characteristics:
+
+-   The `~` (apparently [pronounced "twiddle"!](https://adv-r.hadley.nz/functionals.html#purrr-shortcuts)) at the beginning, which is a shortcut for the longer `function(x) ...` notation for creating functions.
+-   The `.x`, which is a placeholder for each of the variables that the function will be applied to.
+
+So, this command can be read: "Take the `anx_data` dataset and select all the columns where the following is true: the data type is numeric AND the mean value in that column is greater than or equal to 3 (ignoring missing values)."
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+**CHALLENGE:** Select the variables in `anx_data` that are character type, or that do NOT contain any missing values.
+
+*Hint*: You may need to use function(s) that we haven't covered in the tutorials so far to solve this.
+
+::: {.callout-note collapse="true" title="Solution"}
+This one is a doozy! Very well done if you worked it out, either using your own solution or one like this, or if you got partway there.
+
+```{r}
+anx_data |> 
+  dplyr::select(
+    where(~ is.character(.x) | all(!is.na(.x)))
+  )
+```
+
+Here's the process to understand/solve this using this particular solution.
+
+The first half of the formula in `where()` should be okay - you may have noticed the `<chr>` label in the tibble output and/or guessed that there might be an `is.*()` function for this purpose.
+
+The second half is a bit rough. You may have tried `!is.na(.x)` and got an error, namely: `Predicate must return TRUE or FALSE, not a logical vector.` In other words, this has to return a SINGLE logical value, and `is.na()` will return a vector containing logical values for each individual value in the variable.
+
+To solve this - at least the way I've done - you need the {base} function `all()`, which answers the question, "Are **all** of these values `TRUE`?" It also has a (non-identical) twin `any()`, which (as you might guess) answers the question, "Are **any** of these values `TRUE`?" So, `all()` does a similar job as AND, and `any()` a similar job as OR.
+
+To see what I mean, let's just try it out:
+
+```{r}
+all(TRUE, TRUE)
+all(TRUE, FALSE)
+all(FALSE, FALSE)
+
+any(TRUE, TRUE)
+any(TRUE, FALSE)
+any(FALSE, FALSE)
+```
+
+Like AND and OR, `all()` and `any()` only give different responses when there are a mix of `TRUE`s and `FALSE`s. For this task, we only wanted to retain variables where ALL of the values produced by `!is.na(x)` were `TRUE` - that is, it was true that ALL of the values in that variable do NOT contain `NA`s. So, we wanted `all()`. This returns a single `TRUE` or `FALSE` value for each variable that `dplyr::select()` can use.
+:::
+:::
+
+## Quick Test: *t*-test redux
+
+In the very first of these tutorials, we ran a t-test using some vectors of made-up data. We're going to do the same thing again, but look at how we can use real data in a dataset instead.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Bring up the help documentation for `t.test()` and use it to run a *t*-test comparing responses for the first item of the STICSA post-test state anxiety scale between people who saw the maths MCQs vs the stats MCQs.
+
+*Hint*: Try using the formula notation, just like we did in the previous tutorial for `lm()`.
+
+::: {.callout-note collapse="true" title="Solution"}
+Call up the help documentation **in the Console**:
+
+```{r}
+#| eval: false
+
+?t.test
+help(t.test)
+```
+
+Run the test:
+
+```{r}
+## Pipe method
+anx_data |> 
+  t.test(sticsa_post_state_1 ~ mcq, data = _)
+
+## Single command method
+t.test(sticsa_post_state_1 ~ mcq, data = anx_data)
+```
+:::
+:::
+
+There are a lot of options in the `t.test()` function, which can be used, through different arguments, to run almost any variety of *t*-test you can think of. Here, the "stats" and "maths" groups are independent groups, so we can mostly go with the defaults. Just as we saw in Tutorial 04 with the `lm()` function, the formula takes the form `outcome ~ predictor`, where the predictor is the grouping variable.
+
+Note that the output mentions "Welch Two Sample t-test", which is a version of the test that does **not** assume equal variances. This is the version that is taught to undergraduates, because we have not at this point introduced the process of assumption testing. If you definitely know that the variances *are* equal and you definitely want Student's *t*-test, you can instead change the default setting.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+**CHALLENGE**: Using the help documentation, re-run the *t*-test with equal variances assumed.
+
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+t.test(sticsa_post_state_1 ~ mcq, 
+       data = anx_data, 
+       var.equal = TRUE)
+```
+:::
+:::
+
+Finally, we would like to turn this ugly analysis output into a nicely formatted report of the results. You now have all the skills to do this programmatically - without directly typing any of the numbers yourself.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+**CHALLENGE**: Using what you known about `papaja`, inline code, and Quarto, report the results of this *t*-test in full without typing any of the numerical results into the text directly.
+
+Then, render your workbook to see the results!
+
+::: {.callout-note collapse="true" title="Solution"}
+To begin, save the *t*-test output in a new object to work with. Then, generate the report output using `papaja` and store that in another new object.
+
+```{r}
+sticsa_t <- t.test(sticsa_post_state_1 ~ mcq, data = anx_data)
+sticsa_t_out <- papaja::apa_print(sticsa_t)
+```
+
+Next, write the text, and fill in the statistical reporting with inline code where necessary. Here's an example:
+
+> We compared mean scores on the STICSA state anxiety item 1 between two groups, who either saw the mathematics MCQ questions (*M* = `` `r knitr::inline_expr("round(sticsa_t$estimate[1], 2)")` ``) or the statistics MCQ questions (*M* =`` `r knitr::inline_expr(" round(sticsa_t$estimate[2], 2)")` ``). A Welsh's robust *t*-test revealed no statistically significant difference in scores between groups (`` `r knitr::inline_expr(" sticsa_t_out$full_result")` ``).
+
+Which should render as:
+
+> We compared mean scores on the STICSA state anxiety item 1 between two groups, who either saw the mathematics MCQ questions (*M* = `r round(sticsa_t$estimate[1], 2)`) or the statistics MCQ questions (*M* =`r round(sticsa_t$estimate[2], 2)`). A Welsh's robust *t*-test revealed no statistically significant difference in scores between groups (`r sticsa_t_out$full_result`).
+:::
+:::
+
+ 
+
+Well done getting through all that! In the next tutorial, we will look at more {dplyr} powerhouses to round out your data wrangling toolkit.
