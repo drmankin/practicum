@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.550">
+<meta name="generator" content="quarto-1.4.553">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -146,6 +146,12 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Tutorials Overview</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./quick_ref.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Quick Reference</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
@@ -166,7 +172,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
- <span class="menu-text">Archive</span></a>
+ <span class="menu-text">Archive (Autumn 2023)</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -258,12 +264,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#challenges" id="toc-challenges" class="nav-link" data-scroll-target="#challenges">Challenges</a></li>
   </ul></li>
   </ul></li>
-  <li><a href="#content" id="toc-content" class="nav-link" data-scroll-target="#content">Content</a>
-  <ul>
-  <li><a href="#fundrmentals" id="toc-fundrmentals" class="nav-link" data-scroll-target="#fundrmentals">FundRmentals</a></li>
-  <li><a href="#essentials" id="toc-essentials" class="nav-link" data-scroll-target="#essentials">Essentials</a></li>
-  <li><a href="#improvrs" id="toc-improvrs" class="nav-link" data-scroll-target="#improvrs">ImprovRs</a></li>
-  </ul></li>
+  <li><a href="#content" id="toc-content" class="nav-link" data-scroll-target="#content">Content</a></li>
   </ul>
 </nav>
     </div>
@@ -345,13 +346,11 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Looking for a particular topic or function? Use the <a href="quick_ref.qmd">Quick Reference</a> to find what you need!</p>
+<p>Looking for a particular topic or function? Use the <a href="./quick_ref.html">Quick Reference</a> to find what you need!</p>
 </div>
 </div>
-<p>Tutorials are divided into three sections.</p>
-<section id="fundrmentals" class="level3">
-<h3 class="anchored" data-anchor-id="fundrmentals">FundRmentals</h3>
-<p>The three-part FundRmentals series covers essential basic skills in R, and is designed for absolute beginners who have never seen R before and who have little to no coding experience of any kind.</p>
+<p>Tutorials are divided into two rough sections.</p>
+<p>The <strong>first half</strong> of the course (Tutorials 1 - 6) covers essential basic skills in R, and is designed for absolute beginners who have never seen R before and who have little to no coding experience of any kind. It focuses on working with datasets using {tidyverse} as well as introducing a variety of common statistical tests. This portion of the course ends with some hands-on practice with reproducible analysis.</p>
 <p>By the end of this series, you will be able to:</p>
 <ul>
 <li>Navigate the RStudio IDE</li>
@@ -359,36 +358,24 @@ Tip
 <li>Work with objects and functions</li>
 <li>Perform calculations and logical tests on single values and vectors</li>
 <li>Read in data from a .csv file into a tibble</li>
-<li>View, summarise, and arrange the order of a tibble</li>
-<li>Create and render Quarto documents</li>
-<li>Perform and report <em>t</em>-test and linear model analyses</li>
-</ul>
-</section>
-<section id="essentials" class="level3">
-<h3 class="anchored" data-anchor-id="essentials">Essentials</h3>
-<p>The four-part Essentials series is designed for novices with some basic skills in R, and follows on from the FundRmentals series. It covers the core data wrangling and analysis skills that we teach throughout the first year of the undergraduate Psychology course at Sussex, along with extra tips and techniques for efficient and transparent analysis to support dissertation supervisors to help their students.</p>
-<p>By the end of this series, you will be able to:</p>
-<ul>
+<li>View and summarise the data in a tibble</li>
 <li>Filter cases and select variables, including efficient <code>&lt;tidyselect&gt;</code> semantics</li>
 <li>Create new variables in a dataset, or change/recode existing ones</li>
 <li>Create a variety of customised data visualisations</li>
 <li>Perform and efficiently report the results of <em>t</em>-tests, chi-squared tests, correlations, and simple and hierarchical linear models</li>
 </ul>
-</section>
-<section id="improvrs" class="level3">
-<h3 class="anchored" data-anchor-id="improvrs">ImprovRs</h3>
-<p>The three-part ImprovRs series is designed for those with a strong foundation in R who want to move to using R in part or entirely for their data management and analysis process, and follows on from the Essentials series. It covers specific skills in creating Qualtrics questionnaires, working with questionnaire data, and advanced data wrangling, with the aim of building a diverse toolbox of R skills.</p>
+<p>The <strong>second half</strong> of the course (Tutorials 7 - 10) is focused on broadening skills in R, and is designed for those with some proficiency in R (or who have completed the first half of the course!). It focuses on working with different types of datasets, creating beautiful tables and figures, and developing reproducible data analysis skills, with the aim of building a diverse toolbox of R skills. This portion of the course ends with a detailed, step-by-step walkthrough of reproducible data analysis.</p>
 <p>By the end of this series, you will be able to:</p>
 <ul>
+<li>Create custom data summaries and output nicely formatted summary tables</li>
+<li>Create powerful data visualisations</li>
+<li>Work with labelled data, especially from SPSS/Qualtrics, to generate data dictionaries</li>
+<li>Prepare large and complex datasets for data analysis</li>
 <li>Work with a new dataset from beginning (reading in, inspecting, cleaning) to end (wrangling, visualising, analysing, reporting)</li>
-<li>Design a Qualtrics questionnaire with efficient analysis in mind</li>
-<li>Work with labelled Qualtrics data and factors</li>
-<li>Create standardised subscale scores</li>
-<li>Generate automatic codebooks for Qualtrics datasets</li>
+<li>Analyse, report, and submit for checking a complete reproducible analysis</li>
 </ul>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -615,6 +602,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -649,7 +654,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');

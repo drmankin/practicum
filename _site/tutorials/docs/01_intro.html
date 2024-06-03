@@ -325,6 +325,7 @@ window.Quarto = {
   <ul>
   <li><a href="#orientation" id="toc-orientation" class="nav-link active" data-scroll-target="#orientation">Orientation</a>
   <ul>
+  <li><a href="#r-is-for-reproducibility" id="toc-r-is-for-reproducibility" class="nav-link" data-scroll-target="#r-is-for-reproducibility">R is for Reproducibility</a></li>
   <li><a href="#using-the-tutorials" id="toc-using-the-tutorials" class="nav-link" data-scroll-target="#using-the-tutorials">Using the Tutorials</a>
   <ul class="collapse">
   <li><a href="#on-the-cloud" id="toc-on-the-cloud" class="nav-link" data-scroll-target="#on-the-cloud">On the Cloud</a></li>
@@ -345,7 +346,7 @@ window.Quarto = {
   <li><a href="#vector-calculations" id="toc-vector-calculations" class="nav-link" data-scroll-target="#vector-calculations">Vector Calculations</a></li>
   </ul></li>
   <li><a href="#character-data" id="toc-character-data" class="nav-link" data-scroll-target="#character-data">Character Data</a></li>
-  <li><a href="#factors" id="toc-factors" class="nav-link" data-scroll-target="#factors">Factors</a></li>
+  <li><a href="#factor-data" id="toc-factor-data" class="nav-link" data-scroll-target="#factor-data">Factor Data</a></li>
   <li><a href="#logical-data" id="toc-logical-data" class="nav-link" data-scroll-target="#logical-data">Logical Data</a></li>
   </ul></li>
   <li><a href="#class-and-coercion" id="toc-class-and-coercion" class="nav-link" data-scroll-target="#class-and-coercion">Class and Coercion</a></li>
@@ -392,7 +393,38 @@ window.Quarto = {
 <p>Welcome to the first R Training tutorial!</p>
 <p>This tutorial is the first in a series covering fundamental skills in R. This first tutorial assumes <strong>no knowledge or previous experience</strong> of R or coding whatsoever, and is a great place to start if you’re totally brand new to R. Subsequent tutorials will build on the techniques and terminology introduced in each tutorial, so you’re strongly recommended to work through them in order.</p>
 <p>Overall, these tutorials are designed to support faculty supervising undergraduate student dissertations in R at the University of Sussex, UK. The tutorials present a condensed guide through the key functions and statistical analyses that are covered in the first two years of core methods teaching.</p>
+<section id="r-is-for-reproducibility" class="level3">
+<h3 class="anchored" data-anchor-id="r-is-for-reproducibility">R is for Reproducibility</h3>
+<p>In this series of tutorials we will learn the basics of R and how to write reproducible code. Computational reproducibility refers to the ability to get the same results each time you run the same analysis on the same dataset.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Studies have found that across research fields, only about a quarter to a third of published research papers are computationally reproducible (for examples see: Baker, 2016; Stodden et al., 2018; Crüwell et al., 2023).</p>
+<p>This is bad.</p>
+</div>
+</div>
+<p>Analyses using point-and-click software can be reproducible in theory, but (in our experience) that can take a long time to reproduce, the process is painful, and the opportunities for mistakes are everywhere. Completing your analyses in a code-based software like R is a step in the right direction, but it doesn’t automatically mean that a code-based analysis is reproducible. In this course, we will learn some of the common pitfalls that can make code not reproducible and help you pass Reny’s reproducibility certification with ease and flair.</p>
+<p>To help build your reproducible-coding skills, look out for “RepRoducibility” boxes like the one below.</p>
+<div class="repro">
+<div class="repro-header">
+<div class="repro-icon">
+
+</div>
+<p>RepRoducibility: Tips and Tricks</p>
+</div>
+<div class="repro-body">
+<p>This is a “RepRoducibility” box, which will highlight skills, techniques, or recommendations that will help make your code and analyses easier and smoother to reproduce.</p>
+</div>
+</div>
 <p>Before we get started in R, just a couple notes for those using these materials.</p>
+</section>
 <section id="using-the-tutorials" class="level3">
 <h3 class="anchored" data-anchor-id="using-the-tutorials">Using the Tutorials</h3>
 <p>This tutorial is designed to accompany a “Workbook” document. The workbook is a Quarto document with all of the headings and exercises from this tutorial, where you can take notes and try out the code in these tutorials.</p>
@@ -498,7 +530,7 @@ Code Chunk or Console?
 </ol>
 <p>So, I often use the Console to test my code, building it up bit by bit, until it does what I want it to do. Then, when I’ve puzzled out the solution, I add it into a code chunk.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Still Confused? How About a Convoluted Analogy?">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -507,7 +539,7 @@ Still Confused? How About a Convoluted Analogy?
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Imagine that working in R is like <a href="https://rc2e.com/">cooking</a>, and writing a sequence of commands to, for example, clean a new dataset is like developing a new recipe.</p>
 <p>If you’re developing a recipe, you likely wouldn’t just sit down and write down the final version if you’ve never tried the recipe before. Instead, you might experiment a bit with each step to see what works and what doesn’t.</p>
@@ -544,7 +576,7 @@ Exercise
 <p>You can run the all the code in a code chunk by clicking the green “play” arrow in the top right corner of the code chunk, or by pressing Ctrl/Cmd + Shift + Enter on your keyboard when your cursor is inside the code chunk.</p>
 <p>You can also run only a particular line of code, or something that you’ve highlighted, by pressing Ctrl/Cmd + Enter.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -553,7 +585,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Keysmash!</span></span>
@@ -638,7 +670,7 @@ Exercise
 <div class="callout-body-container callout-body">
 <p>Type any single number and run the code.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -647,7 +679,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pick any number at random</span></span>
@@ -689,7 +721,7 @@ Exercise
 <div class="callout-body-container callout-body">
 <p>How does R handle commas within a number (e.g.&nbsp;to separate the thousands place from the hundreds)? How about full stops for decimals? Try each on a separate line and find out.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -698,7 +730,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span>,<span class="dv">958</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -721,7 +753,7 @@ Solution
 </div>
 <p>So, commas within numbers throw an error. This is because commas have an important role to play in the syntax of R, so long numbers must be inputted into R without any punctuation. However, full stops to mark decimal places are just fine.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Grammar Check">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -730,7 +762,7 @@ Grammar Check
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Try for a moment switching to Source mode by clicking the <code>Source</code> button in the upper left hand of your Quarto document. You can see that RStudio helpfully marks out the part of the code that isn’t parsable (not in “grammatical” R) with a red ❌ next to the line number, and squiggly red underlining, likely familiar from word processing programmes, under the part of the code that’s causing the issue. It won’t do this for every error, but it’s very helpful for finding “grammatical” errors like extra or missing brackets or misplaced commas.</p>
 </div>
@@ -749,7 +781,7 @@ Exercise
 <div class="callout-body-container callout-body">
 <p>Add together your shoe size and the number of windows in the room you’re currently in.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -758,7 +790,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="dv">40</span> <span class="sc">+</span> <span class="dv">8</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -785,7 +817,7 @@ Exercise
 <div class="callout-body-container callout-body">
 <p>Try subtracting, dividing, and multiplying the same two numbers.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -794,7 +826,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div id="callout-17" class="callout-17-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="dv">40</span> <span class="sc">-</span> <span class="dv">8</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -831,7 +863,7 @@ Exercise
 <div class="callout-body-container callout-body">
 <p>Print out every whole number between 1 and 50.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -840,7 +872,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-18" class="callout-18-contents callout-collapse collapse">
+<div id="callout-19" class="callout-19-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">:</span><span class="dv">50</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -887,7 +919,7 @@ Exercise
 <p>As you can see from the indices, these are three separate commands, because the numbered indices start over from <code>[1]</code> each time. However, we want all those numbers <em>in a single command</em>. To do this, we’ll use a <strong>function</strong> called <code>c()</code>.</p>
 <p>This is our first contact with functions in R, and we’ll explore how they work more later on. To use this one, type it out, then inside the brackets, put the numbers you want to <strong>c</strong>ollect (or <strong>c</strong>oncatenate, or <strong>c</strong>ombine), with different groups separated by commas.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-22-contents" aria-controls="callout-22" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -896,7 +928,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-21" class="callout-21-contents callout-collapse collapse">
+<div id="callout-22" class="callout-22-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="dv">12</span><span class="sc">:</span><span class="dv">30</span>, <span class="dv">23</span><span class="sc">:</span><span class="dv">55</span>, <span class="dv">36</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -957,7 +989,7 @@ Exercise
 <div class="callout-body-container callout-body">
 <p>Create a vector of every whole number between 37 and 63, and subtract 7 from each element.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-24-contents" aria-controls="callout-24" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -966,7 +998,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-23" class="callout-23-contents callout-collapse collapse">
+<div id="callout-24" class="callout-24-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="dv">37</span><span class="sc">:</span><span class="dv">63</span>) <span class="sc">-</span> <span class="dv">7</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1055,7 +1087,7 @@ Exercise
 <div class="callout-body-container callout-body">
 <p>Create a vector containing the first five animals you think of, then print the 3rd one.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-26-contents" aria-controls="callout-26" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-27-contents" aria-controls="callout-27" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1064,7 +1096,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-26" class="callout-26-contents callout-collapse collapse">
+<div id="callout-27" class="callout-27-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="st">"bumblebee"</span>, <span class="st">"squid"</span>, <span class="st">"falcon"</span>, <span class="st">"flea"</span>, <span class="st">"seagull"</span>)[<span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1087,8 +1119,8 @@ Solution
 <p><code>NA</code> is a special value in R. It indicates that something is <strong>n</strong>ot <strong>a</strong>vailable, and it usually represents missing data.</p>
 <p>Here, we asked R for the third element in a vector that, as far as R can tell, only contained one. This is because there’s only one pair of quotes, so all five animals and the commas between them are considered to be one element. Since there isn’t a third element, R has informed us so accordingly - the answer to our query is <code>NA</code>, not available, because it doesn’t exist.</p>
 </section>
-<section id="factors" class="level3">
-<h3 class="anchored" data-anchor-id="factors">Factors</h3>
+<section id="factor-data" class="level3">
+<h3 class="anchored" data-anchor-id="factor-data">Factor Data</h3>
 <p>Factors are a special type of data in R that are used to capture categorial data. They consist of two elements: the <strong>levels</strong>, which are the unique values that appear in the actual data; and the <strong>labels</strong> for each level, which usually contain information about what those levels indicate. As an example, we’ll consider a very common situation: a categorical vector of participant genders.</p>
 <p>In data-gathering programmes such as Qualtrics, the <strong>levels</strong> are typically numeric, which correspond to particular gender categories. If we don’t supply any further information, we can use the <code>factor()</code> function to create a factor, and R will simply assign the levels as labels.</p>
 <div class="cell">
@@ -1155,7 +1187,7 @@ Exercise
 <li>420 equals 42</li>
 </ul>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-29-contents" aria-controls="callout-29" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-30-contents" aria-controls="callout-30" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1164,7 +1196,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-29" class="callout-29-contents callout-collapse collapse">
+<div id="callout-30" class="callout-30-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span> <span class="sc">&gt;</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1228,7 +1260,7 @@ Exercise
 <div class="callout-body-container callout-body">
 <p>Use a single command to ask R whether the numbers 2 through 10 are less than or equal to 6.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-32-contents" aria-controls="callout-32" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-33-contents" aria-controls="callout-33" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1237,7 +1269,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-32" class="callout-32-contents callout-collapse collapse">
+<div id="callout-33" class="callout-33-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="sc">:</span><span class="dv">10</span> <span class="sc">&lt;=</span> <span class="dv">6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1250,9 +1282,9 @@ Solution
 </div>
 </div>
 </div>
-<p>Here R prints out a vector of <code>TRUE</code>s or <code>FALSE</code>s, one for each element in the original vector. So, the first element in the output (<code>TRUE</code>) corresponds to the statement <code>2 &lt;= 6</code>, the second to <code>3 &lt;= 6</code>, and so on. This is a vectorised calculation again, as we saw with numeric data before. These vectorised assertions will be absolutely essential to <a href="..\02_essentials\05_filter.qmd">selecting and filtering data</a> that meet particular requirements, or checking our data to find problems.</p>
+<p>Here R prints out a vector of <code>TRUE</code>s or <code>FALSE</code>s, one for each element in the original vector. So, the first element in the output (<code>TRUE</code>) corresponds to the statement <code>2 &lt;= 6</code>, the second to <code>3 &lt;= 6</code>, and so on. This is a vectorised calculation again, as we saw with numeric data before. These vectorised assertions will be absolutely essential to <a href="05_filter.qmd">selecting and filtering data</a> that meet particular requirements, or checking our data to find problems.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="SPSS Data Types">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-34-contents" aria-controls="callout-34" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-35-contents" aria-controls="callout-35" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1261,7 +1293,7 @@ SPSS Data Types
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-34" class="callout-34-contents callout-collapse collapse">
+<div id="callout-35" class="callout-35-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>If you’re a regular SPSS user, you might recognise many of these data types from SPSS. See page 7 of <a href="https://public.dhe.ibm.com/software/analytics/spss/documentation/statistics/26.0/en/client/Manuals/IBM_SPSS_Statistics_Brief_Guide.pdf">this SPSS user guide</a> for a reminder of these types.</p>
 <p>So far, what we’ve called “numeric” in R is also (broadly) “scale/numeric” in SPSS. What we’ve called “character” in R is “string” in SPSS. Ordinal and Nominal data types in SPSS correspond (more or less) to factors in R. As far as I know, SPSS doesn’t have an equivalent of “logical”, but would probably be a “nominal/string” type.</p>
@@ -1287,7 +1319,7 @@ Exercise
 <div class="callout-body-container callout-body">
 <p>Use the <code>class()</code> function to get R to print the values <code>"numeric"</code>, <code>"logical"</code>, and <code>"character"</code>.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-35-contents" aria-controls="callout-35" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-36-contents" aria-controls="callout-36" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1296,7 +1328,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-35" class="callout-35-contents callout-collapse collapse">
+<div id="callout-36" class="callout-36-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Any numeric vector will do</span></span>
@@ -1345,7 +1377,7 @@ Exercise
 <div class="callout-body-container callout-body">
 <p>What data type does R give you if you combine numbers and characters in <code>c()</code>?</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-37-contents" aria-controls="callout-37" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-38-contents" aria-controls="callout-38" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1354,7 +1386,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-37" class="callout-37-contents callout-collapse collapse">
+<div id="callout-38" class="callout-38-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Again, anything will do</span></span>
@@ -1414,7 +1446,7 @@ Exercise
 <div class="callout-body-container callout-body">
 <p>Use an <code>as.*()</code> function to convert the following vector of participant ages into numeric data: <code>c(20, "42", "36 years old")</code>. What do you think will happen to each element?</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-40-contents" aria-controls="callout-40" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-41-contents" aria-controls="callout-41" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1423,7 +1455,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-40" class="callout-40-contents callout-collapse collapse">
+<div id="callout-41" class="callout-41-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.numeric</span>(<span class="fu">c</span>(<span class="dv">20</span>, <span class="st">"42"</span>, <span class="st">"36 years old"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1529,18 +1561,39 @@ Clear Your Environment
 <div class="repro-icon">
 
 </div>
-<p>RepRoducibility: Object Names</p>
+<p>RepRoducibility: Good Object Names</p>
 </div>
 <div class="repro-body">
-<p>You <em>can</em> name objects almost anything in R, but that doesn’t mean that you <em>should</em>. Instead, assume that someone else - a collaborator, a future PhD student, a reproducibility officer, or even your own future self - will be trying to puzzle out what you’ve done and how. Name objects clearly and sensibly will be a huge boost for this.</p>
-<!-- When deciding what to name your objects, keep the following guidelines in mind: -->
-<!-- 1. **Be consistent**. Use consistent separators (i.e. `_`, `.`, etc.) and naming conventions. For instance, all objects containing counts might end with `_n`, or all linear models end with `_lm`. Avoid situations like having the overall number in your sample in `overall_n`, the number in the experimental group in `num_exp`, and the number in the control group in `ctl_count`! -->
-<!-- 1. **Be transparent**. There's a tradeoff here with succinctness for sure,  -->
-<!-- 1. **Be succinct**.  -->
+<p>Reading code is difficult. Regardless of how clear and obvious everything seems right now, in a few days, you will not remember what your code means. So, you want to make it as easy as possible for your future self to read your code. If you plan to share your code with other people (like a reproducibility officer) they would know even less about what your code does. The more legible your code is, the easier it will be to read, and the happier you and other people trying to run the code will be. The first step to help you achieve this is to use object names that are:</p>
+<ol type="1">
+<li><strong>Meaningful</strong>: Convey information about what is stored in the object</li>
+<li><strong>Understandable</strong>: Use full words; abbreviations are hard to understand or remember</li>
+<li><strong>Concise</strong>: Keep names short enough to type quickly and accurately</li>
+<li><strong>Consistent</strong>: Use the same conventions - like order of elements and separators - for all similar objects.</li>
+</ol>
+<p>To illustrate what this means, let’s say you want to create two objects for quiz marks from students with practicals at 9am and students with practicals at 6pm. What would be some terrible names for these objects?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Completely random names (not meaningful)</span></span>
+<span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a>variable_1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">75</span>, <span class="dv">58</span>, <span class="dv">62</span>, <span class="dv">16</span>, <span class="dv">33</span>, <span class="dv">67</span>)</span>
+<span id="cb99-3"><a href="#cb99-3" aria-hidden="true" tabindex="-1"></a>variable_2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">45</span>, <span class="dv">90</span>, <span class="dv">27</span>, <span class="dv">65</span>, <span class="dv">39</span>, <span class="dv">77</span>)</span>
+<span id="cb99-4"><a href="#cb99-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb99-5"><a href="#cb99-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Names abbreviated beyond comprehension (not understandable)</span></span>
+<span id="cb99-6"><a href="#cb99-6" aria-hidden="true" tabindex="-1"></a>morn_qm <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">75</span>, <span class="dv">58</span>, <span class="dv">62</span>, <span class="dv">16</span>, <span class="dv">33</span>, <span class="dv">67</span>)</span>
+<span id="cb99-7"><a href="#cb99-7" aria-hidden="true" tabindex="-1"></a>after_qm <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">45</span>, <span class="dv">90</span>, <span class="dv">27</span>, <span class="dv">65</span>, <span class="dv">39</span>, <span class="dv">77</span>)</span>
+<span id="cb99-8"><a href="#cb99-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb99-9"><a href="#cb99-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Names too many words (not concise)</span></span>
+<span id="cb99-10"><a href="#cb99-10" aria-hidden="true" tabindex="-1"></a>quiz_marks_of_students_who_have_morning_practicals_9am_gmt <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">75</span>, <span class="dv">58</span>, <span class="dv">62</span>, <span class="dv">16</span>, <span class="dv">33</span>, <span class="dv">67</span>)</span>
+<span id="cb99-11"><a href="#cb99-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Names with no consistent formatting  </span></span>
+<span id="cb99-12"><a href="#cb99-12" aria-hidden="true" tabindex="-1"></a>quiz_marks_of_students_who_have_afternoon_practicals_6pm_gmt <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">45</span>, <span class="dv">90</span>, <span class="dv">27</span>, <span class="dv">65</span>, <span class="dv">39</span>, <span class="dv">77</span>)</span>
+<span id="cb99-13"><a href="#cb99-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb99-14"><a href="#cb99-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Names with varied formatting (not consistent)</span></span>
+<span id="cb99-15"><a href="#cb99-15" aria-hidden="true" tabindex="-1"></a>morning_workshop_marks <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">75</span>, <span class="dv">58</span>, <span class="dv">62</span>, <span class="dv">16</span>, <span class="dv">33</span>, <span class="dv">67</span>)</span>
+<span id="cb99-16"><a href="#cb99-16" aria-hidden="true" tabindex="-1"></a>quiz_marks_6PM_practical <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">45</span>, <span class="dv">90</span>, <span class="dv">27</span>, <span class="dv">65</span>, <span class="dv">39</span>, <span class="dv">77</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </div>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled" title="Nongrammatical Names">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-44-contents" aria-controls="callout-44" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-45-contents" aria-controls="callout-45" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1549,11 +1602,11 @@ Nongrammatical Names
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-44" class="callout-44-contents callout-collapse collapse">
+<div id="callout-45" class="callout-45-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>It is actually possible to use unallowable symbols, like spaces and punctuation, in some names, by using backticks. You must use the backticks when you create AND every time you use/call the object. It is generally a <strong>very bad idea</strong> to do this (just use underscores like a reasonable person), but it occasionally comes in handy for formatting tables or figures when the names don’t need to be machine-readable/good R code/easy to work with anymore.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a>nope this is bad <span class="ot">&lt;-</span> <span class="st">"a"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a>nope this is bad <span class="ot">&lt;-</span> <span class="st">"a"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: &lt;text&gt;:1:6: unexpected symbol
 1: nope this
@@ -1561,8 +1614,8 @@ Nongrammatical Names
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">but this one works!</span><span class="st">`</span> <span class="ot">&lt;-</span> <span class="st">"a"</span></span>
-<span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">but this one works!</span><span class="st">`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">but this one works!</span><span class="st">`</span> <span class="ot">&lt;-</span> <span class="st">"a"</span></span>
+<span id="cb102-2"><a href="#cb102-2" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">but this one works!</span><span class="st">`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "a"</code></pre>
 </div>
@@ -1592,7 +1645,7 @@ Exercise
 <p>Make a note of the scenario you chose. Then, create two new objects: one that contains a vector of six scores from the first of the two groups, and the second that has six different scores from the second group.</p>
 <p><em>Hint</em>: Just make up some numbers that sound plausible!</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-45-contents" aria-controls="callout-45" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-46-contents" aria-controls="callout-46" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1601,12 +1654,12 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-45" class="callout-45-contents callout-collapse collapse">
+<div id="callout-46" class="callout-46-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Choosing scenario 3, this vector contains some hypothetical quiz marks from each class.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a>quiz_9am <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">75</span>, <span class="dv">58</span>, <span class="dv">62</span>, <span class="dv">16</span>, <span class="dv">33</span>, <span class="dv">67</span>)</span>
-<span id="cb103-2"><a href="#cb103-2" aria-hidden="true" tabindex="-1"></a>quiz_6pm <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">45</span>, <span class="dv">90</span>, <span class="dv">27</span>, <span class="dv">65</span>, <span class="dv">39</span>, <span class="dv">77</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a>quiz_9am <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">75</span>, <span class="dv">58</span>, <span class="dv">62</span>, <span class="dv">16</span>, <span class="dv">33</span>, <span class="dv">67</span>)</span>
+<span id="cb104-2"><a href="#cb104-2" aria-hidden="true" tabindex="-1"></a>quiz_6pm <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">45</span>, <span class="dv">90</span>, <span class="dv">27</span>, <span class="dv">65</span>, <span class="dv">39</span>, <span class="dv">77</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s have a look at these two commands. On the left side I’ve written the name I want my new object to have, which I’ve called <code>quiz_9am</code><a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>. Next, the assignment operator <code>&lt;-</code> assigns whatever comes after it to the object label <code>quiz_9am</code>. Finally, I’ve written instructions for what I want this object to contain: in this case, a vector of numbers that I’ve made up, but that reasonably look like quiz scores. The second command is the same as the first, but with a <strong>different</strong> object name and different numbers.</p>
 <p>If you haven’t done this yet, do so now, even if you’ve looked at the solution rather than trying it for yourself first. Once you’ve typed the command, there’s a final step to actually create the object: you have to <strong>run</strong> the command in order for it to take effect. As a reminder, you can do this by clicking the green ▶️ button in the upper right corner of the code chunk, or by pressing Ctrl/Cmd + Enter when your cursor is blinking on the same line as the code you want to run.</p>
@@ -1633,7 +1686,7 @@ Exercise
 <div class="callout-body-container callout-body">
 <p>Call both of the objects you just created.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-47-contents" aria-controls="callout-47" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-48-contents" aria-controls="callout-48" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1642,15 +1695,15 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-47" class="callout-47-contents callout-collapse collapse">
+<div id="callout-48" class="callout-48-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Replace with the name of the object you created, if you did something different.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a>quiz_9am</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a>quiz_9am</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 75 58 62 16 33 67</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a>quiz_6pm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a>quiz_6pm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 45 90 27 65 39 77</code></pre>
 </div>
@@ -1683,7 +1736,7 @@ Creating vs Calling
 <p>Since objects are convenient reference labels for the information they contain, we can work with them as if they <em>were</em> the information they contain. In this case, our objects contain numbers, so we can use them for numerical calculations.</p>
 <p>For instance, we might want to know what the <strong>mean</strong> mark was for this sample of quiz marks. To do this, we could make use of a very handy function, <code>mean()</code>, as follows:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(quiz_9am)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb109"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(quiz_9am)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 51.83333</code></pre>
 </div>
@@ -1700,7 +1753,7 @@ Exercise
 <div class="callout-body-container callout-body">
 <p>Calculate the mean of each of the two sets of scores you created.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-50-contents" aria-controls="callout-50" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-51-contents" aria-controls="callout-51" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1709,15 +1762,15 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-50" class="callout-50-contents callout-collapse collapse">
+<div id="callout-51" class="callout-51-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Whether you save the output of the <code>mean()</code> command is up to you!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(quiz_9am)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb111"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(quiz_9am)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 51.83333</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(quiz_6pm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb113"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(quiz_6pm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 57.16667</code></pre>
 </div>
@@ -1739,7 +1792,7 @@ Exercise
 <div class="callout-body-container callout-body">
 <p>Calculate the <strong>difference</strong> in the mean of each of the two sets of scores, and save this difference in a new object called <code>quiz_diff</code>.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-52-contents" aria-controls="callout-52" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-53-contents" aria-controls="callout-53" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1748,23 +1801,23 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-52" class="callout-52-contents callout-collapse collapse">
+<div id="callout-53" class="callout-53-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Here are two options for accomplishing this.</p>
 <p>The first option is to save each mean value in a new intermediate object (if you didn’t do that already), then subtract one mean from the other. This is very easy to read, but a bit inefficient.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb114"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a>mean_9am <span class="ot">&lt;-</span> <span class="fu">mean</span>(quiz_9am)</span>
-<span id="cb114-2"><a href="#cb114-2" aria-hidden="true" tabindex="-1"></a>mean_6pm <span class="ot">&lt;-</span> <span class="fu">mean</span>(quiz_6pm)</span>
-<span id="cb114-3"><a href="#cb114-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb114-4"><a href="#cb114-4" aria-hidden="true" tabindex="-1"></a>quiz_diff <span class="ot">&lt;-</span> mean_9am <span class="sc">-</span> mean_6pm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb115"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a>mean_9am <span class="ot">&lt;-</span> <span class="fu">mean</span>(quiz_9am)</span>
+<span id="cb115-2"><a href="#cb115-2" aria-hidden="true" tabindex="-1"></a>mean_6pm <span class="ot">&lt;-</span> <span class="fu">mean</span>(quiz_6pm)</span>
+<span id="cb115-3"><a href="#cb115-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb115-4"><a href="#cb115-4" aria-hidden="true" tabindex="-1"></a>quiz_diff <span class="ot">&lt;-</span> mean_9am <span class="sc">-</span> mean_6pm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The second option is to do everything in one command, which takes a bit more effort to parse but is more succinct.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb115"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a>quiz_diff <span class="ot">&lt;-</span> <span class="fu">mean</span>(quiz_9am) <span class="sc">-</span> <span class="fu">mean</span>(quiz_6pm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb116"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a>quiz_diff <span class="ot">&lt;-</span> <span class="fu">mean</span>(quiz_9am) <span class="sc">-</span> <span class="fu">mean</span>(quiz_6pm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Either way, you will get the same result:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb116"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a>quiz_diff</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb117"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a>quiz_diff</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -5.333333</code></pre>
 </div>
@@ -1786,7 +1839,7 @@ Exercise
 <div class="callout-body-container callout-body">
 <p>What is the class of these objects?</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-54-contents" aria-controls="callout-54" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-55-contents" aria-controls="callout-55" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1795,11 +1848,11 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-54" class="callout-54-contents callout-collapse collapse">
+<div id="callout-55" class="callout-55-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Either one will do.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb118"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(quiz_9am)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb119"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(quiz_9am)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "numeric"</code></pre>
 </div>
@@ -1813,7 +1866,7 @@ Solution
 <p>You may have been surprised to see that the class of these objects is numeric, rather than character - even though the name of the object is a character string. To find out the class of the object, R looks at what that object contains, not at the name of the object itself. We already saw that <code>quiz_9am</code> (or whatever your object is called) contains only numbers; so, R tells us that it’s a numeric vector.</p>
 <p>One more example to emphasize this point, because it’s often a source of confusion when starting out with R. If we want to ask R the class of the <strong>string</strong> “quiz_9am”, we would need to put it in quotes, and we’d get a different answer:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb120"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb120-1"><a href="#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(<span class="st">"quiz_9am"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb121"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb121-1"><a href="#cb121-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(<span class="st">"quiz_9am"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "character"</code></pre>
 </div>
@@ -1835,7 +1888,7 @@ Exercise
 <div class="callout-body-container callout-body">
 <p>First, let’s imagine we get three new participants in each condition of our previous study. Update the same two objects you created previously with three new scores each.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-56-contents" aria-controls="callout-56" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-57-contents" aria-controls="callout-57" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1844,22 +1897,22 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-56" class="callout-56-contents callout-collapse collapse">
+<div id="callout-57" class="callout-57-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>One way - the longer way round - is to type in all the same numbers again from before, and then include three more.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb122"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb122-1"><a href="#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Example with just one</span></span>
-<span id="cb122-2"><a href="#cb122-2" aria-hidden="true" tabindex="-1"></a>quiz_9am <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">75</span>, <span class="dv">58</span>, <span class="dv">62</span>, <span class="dv">16</span>, <span class="dv">33</span>, <span class="dv">67</span>, <span class="dv">89</span>, <span class="dv">100</span>, <span class="dv">79</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb123"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb123-1"><a href="#cb123-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Example with just one</span></span>
+<span id="cb123-2"><a href="#cb123-2" aria-hidden="true" tabindex="-1"></a>quiz_9am <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">75</span>, <span class="dv">58</span>, <span class="dv">62</span>, <span class="dv">16</span>, <span class="dv">33</span>, <span class="dv">67</span>, <span class="dv">89</span>, <span class="dv">100</span>, <span class="dv">79</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>However, this is tedious, repetitive, and prone to error. Wherever possible, it’s better to rely on R to do calculations or repetitions for you. So, we could instead just embed the previous <code>quiz_9am</code> object - which already contains the first six numbers - into a <code>c()</code> along with the three new numbers.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb123"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb123-1"><a href="#cb123-1" aria-hidden="true" tabindex="-1"></a>quiz_9am <span class="ot">&lt;-</span> <span class="fu">c</span>(quiz_9am, <span class="dv">89</span>, <span class="dv">100</span>, <span class="dv">79</span>)</span>
-<span id="cb123-2"><a href="#cb123-2" aria-hidden="true" tabindex="-1"></a>quiz_9am</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb124"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb124-1"><a href="#cb124-1" aria-hidden="true" tabindex="-1"></a>quiz_9am <span class="ot">&lt;-</span> <span class="fu">c</span>(quiz_9am, <span class="dv">89</span>, <span class="dv">100</span>, <span class="dv">79</span>)</span>
+<span id="cb124-2"><a href="#cb124-2" aria-hidden="true" tabindex="-1"></a>quiz_9am</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1]  75  58  62  16  33  67  89 100  79</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb125"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb125-1"><a href="#cb125-1" aria-hidden="true" tabindex="-1"></a>quiz_6pm <span class="ot">&lt;-</span> <span class="fu">c</span>(quiz_6pm, <span class="dv">38</span>, <span class="dv">42</span>, <span class="dv">53</span>)</span>
-<span id="cb125-2"><a href="#cb125-2" aria-hidden="true" tabindex="-1"></a>quiz_6pm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb126"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb126-1"><a href="#cb126-1" aria-hidden="true" tabindex="-1"></a>quiz_6pm <span class="ot">&lt;-</span> <span class="fu">c</span>(quiz_6pm, <span class="dv">38</span>, <span class="dv">42</span>, <span class="dv">53</span>)</span>
+<span id="cb126-2"><a href="#cb126-2" aria-hidden="true" tabindex="-1"></a>quiz_6pm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 45 90 27 65 39 77 38 42 53</code></pre>
 </div>
@@ -1876,29 +1929,29 @@ Solution
 <p>This is why it is so important to keep track of all of the commands and changes you make to your data. If you accidentally replace your dataset with, say, a single word, or number with an error in your code, you can easily retrace your steps and avoid redoing work.</p>
 <p><strong>Overwriting objects can be done recursively.</strong> In the command we saw above, we took the current <code>quiz_9am</code> object, combined it with some new values, and then overwrote the <code>quiz_9am</code> object with the new values. If we were to run this exact same code again, this means that each time we would add three new values to <code>quiz_9am</code>, over and over and over:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb127"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb127-1"><a href="#cb127-1" aria-hidden="true" tabindex="-1"></a>quiz_9am <span class="ot">&lt;-</span> <span class="fu">c</span>(quiz_9am, <span class="dv">89</span>, <span class="dv">100</span>, <span class="dv">79</span>)</span>
-<span id="cb127-2"><a href="#cb127-2" aria-hidden="true" tabindex="-1"></a>quiz_9am</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb128"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb128-1"><a href="#cb128-1" aria-hidden="true" tabindex="-1"></a>quiz_9am <span class="ot">&lt;-</span> <span class="fu">c</span>(quiz_9am, <span class="dv">89</span>, <span class="dv">100</span>, <span class="dv">79</span>)</span>
+<span id="cb128-2"><a href="#cb128-2" aria-hidden="true" tabindex="-1"></a>quiz_9am</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1]  75  58  62  16  33  67  89 100  79  89 100  79</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb129"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb129-1"><a href="#cb129-1" aria-hidden="true" tabindex="-1"></a>quiz_9am <span class="ot">&lt;-</span> <span class="fu">c</span>(quiz_9am, <span class="dv">89</span>, <span class="dv">100</span>, <span class="dv">79</span>)</span>
-<span id="cb129-2"><a href="#cb129-2" aria-hidden="true" tabindex="-1"></a>quiz_9am</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb130"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb130-1"><a href="#cb130-1" aria-hidden="true" tabindex="-1"></a>quiz_9am <span class="ot">&lt;-</span> <span class="fu">c</span>(quiz_9am, <span class="dv">89</span>, <span class="dv">100</span>, <span class="dv">79</span>)</span>
+<span id="cb130-2"><a href="#cb130-2" aria-hidden="true" tabindex="-1"></a>quiz_9am</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1]  75  58  62  16  33  67  89 100  79  89 100  79  89 100  79</code></pre>
 </div>
 </div>
 <p>This is one reason why the decision to overwrite an existing object, vs creating a new one, can make a big difference to your code. This behaviour only happens because the input and output objects are the same. If we name the output object something different, we don’t get the same recursion - the new object <code>quiz_9am_full</code> is recreated from the same input in the same way every time, so it always contains the same thing.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb131"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb131-1"><a href="#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Recreating the original version of quiz_9am so things don't get out of hand!</span></span>
-<span id="cb131-2"><a href="#cb131-2" aria-hidden="true" tabindex="-1"></a>quiz_9am <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">75</span>, <span class="dv">58</span>, <span class="dv">62</span>, <span class="dv">16</span>, <span class="dv">33</span>, <span class="dv">67</span>)</span>
-<span id="cb131-3"><a href="#cb131-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb131-4"><a href="#cb131-4" aria-hidden="true" tabindex="-1"></a>quiz_9am_full <span class="ot">&lt;-</span> <span class="fu">c</span>(quiz_9am, <span class="dv">89</span>, <span class="dv">100</span>, <span class="dv">79</span>)</span>
-<span id="cb131-5"><a href="#cb131-5" aria-hidden="true" tabindex="-1"></a>quiz_9am_full</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb132"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb132-1"><a href="#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Recreating the original version of quiz_9am so things don't get out of hand!</span></span>
+<span id="cb132-2"><a href="#cb132-2" aria-hidden="true" tabindex="-1"></a>quiz_9am <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">75</span>, <span class="dv">58</span>, <span class="dv">62</span>, <span class="dv">16</span>, <span class="dv">33</span>, <span class="dv">67</span>)</span>
+<span id="cb132-3"><a href="#cb132-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb132-4"><a href="#cb132-4" aria-hidden="true" tabindex="-1"></a>quiz_9am_full <span class="ot">&lt;-</span> <span class="fu">c</span>(quiz_9am, <span class="dv">89</span>, <span class="dv">100</span>, <span class="dv">79</span>)</span>
+<span id="cb132-5"><a href="#cb132-5" aria-hidden="true" tabindex="-1"></a>quiz_9am_full</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1]  75  58  62  16  33  67  89 100  79</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb133"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb133-1"><a href="#cb133-1" aria-hidden="true" tabindex="-1"></a>quiz_9am_full <span class="ot">&lt;-</span> <span class="fu">c</span>(quiz_9am, <span class="dv">89</span>, <span class="dv">100</span>, <span class="dv">79</span>)</span>
-<span id="cb133-2"><a href="#cb133-2" aria-hidden="true" tabindex="-1"></a>quiz_9am_full</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb134"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb134-1"><a href="#cb134-1" aria-hidden="true" tabindex="-1"></a>quiz_9am_full <span class="ot">&lt;-</span> <span class="fu">c</span>(quiz_9am, <span class="dv">89</span>, <span class="dv">100</span>, <span class="dv">79</span>)</span>
+<span id="cb134-2"><a href="#cb134-2" aria-hidden="true" tabindex="-1"></a>quiz_9am_full</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1]  75  58  62  16  33  67  89 100  79</code></pre>
 </div>
@@ -1906,18 +1959,18 @@ Solution
 <p>There isn’t a right or wrong way to do this - sometimes this recursive property is exactly what you want. (It’s very useful, for example, in loops.) But it is important to be aware of.</p>
 <p>Finally, <strong>overwriting objects only changes the overwritten objects, and NOT any other objects created from them.</strong> To see this in action, recall that earlier we calculated the mean of the two <code>quiz</code> objects and saved it as <code>quiz_diff</code>. If we do the same calculation now with our updated objects, we can see that the difference in the means is no longer the same.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb135"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb135-1"><a href="#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Value calculated previously</span></span>
-<span id="cb135-2"><a href="#cb135-2" aria-hidden="true" tabindex="-1"></a>quiz_diff</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb136"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb136-1"><a href="#cb136-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Value calculated previously</span></span>
+<span id="cb136-2"><a href="#cb136-2" aria-hidden="true" tabindex="-1"></a>quiz_diff</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -5.333333</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb137"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb137-1"><a href="#cb137-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Value using the updated objects</span></span>
-<span id="cb137-2"><a href="#cb137-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(quiz_9am) <span class="sc">-</span> <span class="fu">mean</span>(quiz_6pm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb138"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb138-1"><a href="#cb138-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Value using the updated objects</span></span>
+<span id="cb138-2"><a href="#cb138-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(quiz_9am) <span class="sc">-</span> <span class="fu">mean</span>(quiz_6pm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 11.44444</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb139"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb139-1"><a href="#cb139-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Ask R if the two are the same</span></span>
-<span id="cb139-2"><a href="#cb139-2" aria-hidden="true" tabindex="-1"></a>quiz_diff <span class="sc">==</span> (<span class="fu">mean</span>(quiz_9am) <span class="sc">-</span> <span class="fu">mean</span>(quiz_6pm))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb140"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb140-1"><a href="#cb140-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Ask R if the two are the same</span></span>
+<span id="cb140-2"><a href="#cb140-2" aria-hidden="true" tabindex="-1"></a>quiz_diff <span class="sc">==</span> (<span class="fu">mean</span>(quiz_9am) <span class="sc">-</span> <span class="fu">mean</span>(quiz_6pm))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] FALSE</code></pre>
 </div>
@@ -1925,7 +1978,7 @@ Solution
 <p>This illustrates the importance of writing and running code <strong>sequentially</strong>, from beginning to end. If you go back and change values created earlier on in your code, the value you currently have in your Environment may not match the value that your code will produce when run.</p>
 <p>If you are interested in understanding this process of assigning and replacing the contents of objects better, the aside below explains it in more depth.</p>
 <div class="callout callout-style-default callout-important callout-titled" title="MoRe About: Changing Objects">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-58-contents" aria-controls="callout-58" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-59-contents" aria-controls="callout-59" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1934,35 +1987,35 @@ MoRe About: Changing Objects
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-58" class="callout-58-contents callout-collapse collapse">
+<div id="callout-59" class="callout-59-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><em>The majority of this aside was originally written by <a href="https://mival.netlify.app/">Milan Valášek</a></em></p>
 <p>Think of objects as boxes. The names of the objects are only <em>labels</em>, and you can store anything you like inside them. However, unlike in the physical world, objects in R cannot truly change. You can put stuff in and take stuff out, and that’s pretty much it. Unlike boxes, though, when you take stuff out of objects, you only take out a <strong>copy</strong> of its contents. The original contents of the box remain intact. Of course, you can do whatever you want (within limits) to the stuff once you’ve taken it out of the box, but you are only modifying the copy. The key thing to remember is that unless you put that modified stuff into a box, R will forget about it as soon as it’s done with it. In other words, if you want to “save” any changes you make, you must assign them to an object in order to keep them.</p>
 <p>Now, as you probably know, you can call your boxes (objects) whatever you want (again, within certain limits). This means that that you can call the new box the same as the old one, as we saw with <code>quiz_9am</code> above. When that happens, R basically takes the label off the old box, pastes it on the new one, and burns the old box. So even though some operations in R may look like they change objects, what’s actually happening is that R copies their content, modifies it, stores the result in a different object, puts the same label on it, and discards the original object. Understanding this mechanism will make things much easier!</p>
 <p>Putting the above into practice, this is how you “change” an R object:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb141"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb141-1"><a href="#cb141-1" aria-hidden="true" tabindex="-1"></a><span class="co"># put 1 into an object (box) called a</span></span>
-<span id="cb141-2"><a href="#cb141-2" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb141-3"><a href="#cb141-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb141-4"><a href="#cb141-4" aria-hidden="true" tabindex="-1"></a><span class="co"># copy the content of a, add 1 to it and store it in an object b</span></span>
-<span id="cb141-5"><a href="#cb141-5" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> a <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb141-6"><a href="#cb141-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb141-7"><a href="#cb141-7" aria-hidden="true" tabindex="-1"></a><span class="co"># copy what's inside b and put it in a new object called a</span></span>
-<span id="cb141-8"><a href="#cb141-8" aria-hidden="true" tabindex="-1"></a><span class="co"># discarding ("overwriting") the old object a</span></span>
-<span id="cb141-9"><a href="#cb141-9" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> b</span>
-<span id="cb141-10"><a href="#cb141-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb141-11"><a href="#cb141-11" aria-hidden="true" tabindex="-1"></a><span class="co"># now see what's inside of a</span></span>
-<span id="cb141-12"><a href="#cb141-12" aria-hidden="true" tabindex="-1"></a><span class="co"># (by copying its content and pasting it in the console)</span></span>
-<span id="cb141-13"><a href="#cb141-13" aria-hidden="true" tabindex="-1"></a>a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb142"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb142-1"><a href="#cb142-1" aria-hidden="true" tabindex="-1"></a><span class="co"># put 1 into an object (box) called a</span></span>
+<span id="cb142-2"><a href="#cb142-2" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb142-3"><a href="#cb142-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb142-4"><a href="#cb142-4" aria-hidden="true" tabindex="-1"></a><span class="co"># copy the content of a, add 1 to it and store it in an object b</span></span>
+<span id="cb142-5"><a href="#cb142-5" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> a <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb142-6"><a href="#cb142-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb142-7"><a href="#cb142-7" aria-hidden="true" tabindex="-1"></a><span class="co"># copy what's inside b and put it in a new object called a</span></span>
+<span id="cb142-8"><a href="#cb142-8" aria-hidden="true" tabindex="-1"></a><span class="co"># discarding ("overwriting") the old object a</span></span>
+<span id="cb142-9"><a href="#cb142-9" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> b</span>
+<span id="cb142-10"><a href="#cb142-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb142-11"><a href="#cb142-11" aria-hidden="true" tabindex="-1"></a><span class="co"># now see what's inside of a</span></span>
+<span id="cb142-12"><a href="#cb142-12" aria-hidden="true" tabindex="-1"></a><span class="co"># (by copying its content and pasting it in the console)</span></span>
+<span id="cb142-13"><a href="#cb142-13" aria-hidden="true" tabindex="-1"></a>a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2</code></pre>
 </div>
 </div>
 <p>Of course, you can just cut out the middleman (creating an object <code>b</code>). So to increment <code>a</code> by another 1, we can do:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb143"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb143-1"><a href="#cb143-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> a <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb143-2"><a href="#cb143-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb143-3"><a href="#cb143-3" aria-hidden="true" tabindex="-1"></a>a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb144"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb144-1"><a href="#cb144-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> a <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb144-2"><a href="#cb144-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb144-3"><a href="#cb144-3" aria-hidden="true" tabindex="-1"></a>a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3</code></pre>
 </div>
@@ -1989,7 +2042,7 @@ MoRe About: Changing Objects
 <p>We’ve created two objects that contain scores from two different groups - scores we made up, but we will get to real data soon. For now, one common statistical test we could run on data like this is a independent-samples <em>t</em>-test, which is a hypothesis test commonly used to test whether two sets of scores are likely to be sampled from the same underlying population or not.</p>
 <p>Helpfully, the function we want is called <code>t.test()</code>. For our purposes, we can run the <em>t</em>-test by adapting the following general format:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb145"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb145-1"><a href="#cb145-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(vector_of_scores, another_vector_of_scores)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb146"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb146-1"><a href="#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(vector_of_scores, another_vector_of_scores)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
 <div class="callout-header d-flex align-content-center">
@@ -2003,7 +2056,7 @@ Exercise
 <div class="callout-body-container callout-body">
 <p>Use the two objects containing scores to run a <em>t</em>-test.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-59-contents" aria-controls="callout-59" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-60-contents" aria-controls="callout-60" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -2012,11 +2065,11 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-59" class="callout-59-contents callout-collapse collapse">
+<div id="callout-60" class="callout-60-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Replace the object names with yours if you called them something different.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb146"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb146-1"><a href="#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(quiz_9am, quiz_6pm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb147"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb147-1"><a href="#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(quiz_9am, quiz_6pm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Welch Two Sample t-test
@@ -2037,25 +2090,117 @@ mean of x mean of y
 </div>
 </div>
 <p>Note that the output mentions “Welch Two Sample t-test”, which is a version of the test that does <strong>not</strong> assume equal variances. This is the version that is taught to undergraduates, because we have not at this point introduced the process of assumption testing. If you definitely know that the variances <em>are</em> equal and you definitely want Student’s <em>t</em>-test, you can instead change the default setting. Next time, we’ll look in more depth about how to work with functions and specify exactly how you want them to run.</p>
-<p>In future tutorials, we’ll also see how to turn this rather ugly R output automatically into beautifully formatted reporting like this:</p>
+<p>In future tutorials, we’ll also see how to turn this rather ugly R output automatically into more nicely formatted reporting like this:</p>
 <blockquote class="blockquote">
-<p>We compared mean scores between two groups, one who took the quiz in a 9am practical session (<em>M</em> = 64.33) and the other who took the quiz in a 6pm practical session (<em>M</em> =52.89, <em>M</em><sub>diff</sub> = 11.44). There was no statistically significant difference in scores between practical groups (<em>t</em>(16) = 1.03, <em>p</em> = 0.32, 95% CI [-12.19, 35.08]).</p>
+<p>Effect sizes were labelled following Cohen’s (1988) recommendations.</p>
 </blockquote>
+<p>The Two Sample t-test testing the difference between quiz_9am and quiz_6pm (mean of x = 64.33, mean of y = 52.89) suggests that the effect is positive, statistically not significant, and small (difference = 11.44, 95% CI [-12.19, 35.08], t(16) = 1.03, p = 0.320; Cohen’s d = 0.48, 95% CI [-0.46, 1.42]).</p>
+<!-- > We compared mean scores between two groups, one who took the quiz in a 9am practical session (*M* = 64.33) and the other who took the quiz in a 6pm practical session (*M* =52.89, *M*~diff~ = 11.44). There was no statistically significant difference in scores between practical groups (*t*(16) = 1.03, *p* = 0.32, 95% CI \[-12.19, 35.08\]). -->
 <p>&nbsp;</p>
-<p>&nbsp;</p>
-<div class="callout callout-style-simple callout-warning no-icon callout-titled" title="Well Done!">
+<div class="repro">
+<div class="repro-header">
+<div class="repro-icon">
+
+</div>
+<p>RepRoducibility: Reproducible Analysis</p>
+</div>
+<div class="repro-body">
+<p>We talked about overwriting objects earlier, but now that we have done some analysis, we should talk about it again. Overwriting objects can very easily break your code and introduce errors into your results.</p>
+<p>Let’s say we that the quiz marks we compared were from practicals running on Monday. We also have some data from practicals running on Tuesday, and we want to repeat the exact same analysis on this new data<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>. We will use the same variables names for the morning and afternoon practicals across the two days:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb149"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb149-1"><a href="#cb149-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Quiz marks from Monday practicals</span></span>
+<span id="cb149-2"><a href="#cb149-2" aria-hidden="true" tabindex="-1"></a>quiz_9am <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">75</span>, <span class="dv">58</span>, <span class="dv">62</span>, <span class="dv">16</span>, <span class="dv">33</span>, <span class="dv">67</span>, <span class="dv">89</span>, <span class="dv">100</span>, <span class="dv">79</span>)</span>
+<span id="cb149-3"><a href="#cb149-3" aria-hidden="true" tabindex="-1"></a>quiz_6pm <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">45</span>, <span class="dv">90</span>, <span class="dv">27</span>, <span class="dv">65</span>, <span class="dv">39</span>, <span class="dv">77</span>, <span class="dv">38</span>, <span class="dv">42</span>, <span class="dv">53</span>)</span>
+<span id="cb149-4"><a href="#cb149-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare the marks across the two sessions</span></span>
+<span id="cb149-5"><a href="#cb149-5" aria-hidden="true" tabindex="-1"></a>monday_quiz_t_test <span class="ot">&lt;-</span> <span class="fu">t.test</span>(quiz_9am, quiz_6pm, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb149-6"><a href="#cb149-6" aria-hidden="true" tabindex="-1"></a>monday_quiz_t_test</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Two Sample t-test
+
+data:  quiz_9am and quiz_6pm
+t = 1.0264, df = 16, p-value = 0.32
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -12.19206  35.08095
+sample estimates:
+mean of x mean of y 
+ 64.33333  52.88889 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb151"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb151-1"><a href="#cb151-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Quiz marks from Tuesday practicals</span></span>
+<span id="cb151-2"><a href="#cb151-2" aria-hidden="true" tabindex="-1"></a>quiz_9am <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">45</span>,<span class="dv">62</span>, <span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">85</span>, <span class="dv">52</span>, <span class="dv">79</span>, <span class="dv">100</span>, <span class="dv">69</span>)</span>
+<span id="cb151-3"><a href="#cb151-3" aria-hidden="true" tabindex="-1"></a>quiz_6pm <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">25</span>,<span class="dv">42</span>, <span class="dv">15</span>, <span class="dv">10</span>, <span class="dv">72</span>, <span class="dv">55</span>, <span class="dv">89</span>, <span class="dv">89</span>, <span class="dv">65</span>)</span>
+<span id="cb151-4"><a href="#cb151-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare the marks across the two sessions</span></span>
+<span id="cb151-5"><a href="#cb151-5" aria-hidden="true" tabindex="-1"></a>tuesday_quiz_t_test <span class="ot">&lt;-</span> <span class="fu">t.test</span>(quiz_9am, quiz_6pm, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb151-6"><a href="#cb151-6" aria-hidden="true" tabindex="-1"></a>tuesday_quiz_t_test</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Two Sample t-test
+
+data:  quiz_9am and quiz_6pm
+t = 0.2557, df = 16, p-value = 0.8014
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -28.35175  36.12953
+sample estimates:
+mean of x mean of y 
+ 55.22222  51.33333 </code></pre>
+</div>
+</div>
+<p>If you run each line sequentially, the contents of the object <code>monday_quiz_t_test</code> will be different from <code>tuesday_quiz_t_test</code> and the results you get for both will be correct. This is because the objects <code>quiz_9am</code> and <code>quiz_6pm</code> are overwritten with the Tuesday marks before the <em>t</em>-test for the Tuesday data is run.</p>
+<p>Now, say that after you ran the chunk of code above, you run the following line again:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb153"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb153-1"><a href="#cb153-1" aria-hidden="true" tabindex="-1"></a>monday_quiz_t_test <span class="ot">&lt;-</span> <span class="fu">t.test</span>(quiz_9am, quiz_6pm, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb153-2"><a href="#cb153-2" aria-hidden="true" tabindex="-1"></a>monday_quiz_t_test</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Two Sample t-test
+
+data:  quiz_9am and quiz_6pm
+t = 0.2557, df = 16, p-value = 0.8014
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -28.35175  36.12953
+sample estimates:
+mean of x mean of y 
+ 55.22222  51.33333 </code></pre>
+</div>
+</div>
+<p>Compare these results to above. The results in <code>monday_quiz_t_test</code> - now, the “Monday” object contains the results for the Tuesday data.</p>
+<p>If you always meticulously execute your code line by line from start to finish, you won’t run into this issue. But, as time goes on, you may notice that this is not the most user-friendly way to interact with a script, and you may find yourself running lines of code in non-sequential order.</p>
+<p>This is especially the case if you are running someone else’s code. When doing a reproducibility check, the first thing I (Reny) do is run the whole script to see if there are any errors, and only then do I go back and rerun different bits and pieces of the code to check the actual results.</p>
+<div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
+<i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Well Done!
+Important
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>That’s the end of the first tutorial. Very well done on all your hard work!</p>
+<p>A key aspect to writing reproducible code is that the code should be flexible and resilient – it should always provide the same output regardless of the unexpected ways a person might run the code.</p>
 </div>
 </div>
+<p>So, how can we make the code above less prone to errors?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb155"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb155-1"><a href="#cb155-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Quiz marks from Monday practicals</span></span>
+<span id="cb155-2"><a href="#cb155-2" aria-hidden="true" tabindex="-1"></a>quiz_monday_9am <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">75</span>, <span class="dv">58</span>, <span class="dv">62</span>, <span class="dv">16</span>, <span class="dv">33</span>, <span class="dv">67</span>, <span class="dv">89</span>, <span class="dv">100</span>, <span class="dv">79</span>)</span>
+<span id="cb155-3"><a href="#cb155-3" aria-hidden="true" tabindex="-1"></a>quiz_monday_6pm <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">45</span>, <span class="dv">90</span>, <span class="dv">27</span>, <span class="dv">65</span>, <span class="dv">39</span>, <span class="dv">77</span>, <span class="dv">38</span>, <span class="dv">42</span>, <span class="dv">53</span>)</span>
+<span id="cb155-4"><a href="#cb155-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare the marks across the two sessions</span></span>
+<span id="cb155-5"><a href="#cb155-5" aria-hidden="true" tabindex="-1"></a>monday_quiz_t_test <span class="ot">&lt;-</span> <span class="fu">t.test</span>(quiz_monday_9am, quiz_monday_6pm, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb155-6"><a href="#cb155-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb155-7"><a href="#cb155-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Quiz marks from Tuesday practicals</span></span>
+<span id="cb155-8"><a href="#cb155-8" aria-hidden="true" tabindex="-1"></a>quiz_tuesday_9am <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">45</span>,<span class="dv">62</span>, <span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">85</span>, <span class="dv">52</span>, <span class="dv">79</span>, <span class="dv">100</span>, <span class="dv">69</span>)</span>
+<span id="cb155-9"><a href="#cb155-9" aria-hidden="true" tabindex="-1"></a>quiz_tuesday_6pm <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">25</span>,<span class="dv">42</span>, <span class="dv">15</span>, <span class="dv">10</span>, <span class="dv">72</span>, <span class="dv">55</span>, <span class="dv">89</span>, <span class="dv">89</span>, <span class="dv">65</span>)</span>
+<span id="cb155-10"><a href="#cb155-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare the marks across the two sessions</span></span>
+<span id="cb155-11"><a href="#cb155-11" aria-hidden="true" tabindex="-1"></a>tuesday_quiz_t_test <span class="ot">&lt;-</span> <span class="fu">t.test</span>(quiz_tuesday_9am, quiz_tuesday_6pm, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Here, instead of overwriting the <code>quiz_9am</code> and <code>quiz_6pm</code> objects with new information, we’ve named all of the objects containing scores with unique names. Now we no longer have to wonder which score information we are using; rather, our <code>t.test()</code> functions only work with exactly the right data.</p>
+<p>In other cases, overwriting objects can have different effects such as causing errors that stop your code from running, but we will look into examples of these in future sessions.</p>
+</div>
+</div>
+<p>&nbsp;</p>
 
 
 </section>
@@ -2070,6 +2215,7 @@ Well Done!
 <li id="fn4"><p>As a linguist I have to note, one, <a href="https://amazingakita.tumblr.com/post/181685581034/people-who-dont-even-care-about-language-how-can">words don’t exist</a>, and two, the closest linguistic term for what an object is is probably “lexeme”. “Word” will get you in the right vicinity, though, conceptually. If you’d like to dive down this rabbit hole (rabbit-hole?) <a href="https://www.youtube.com/watch?v=93sK4jTGrss">this Crash Course video on morphology</a> is a good place to start.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5"><p>Again, I could have called this object anything, like <code>the_first_example_of_an_object_InThisSection.so.far</code> or <code>made_upQuizScores.fornineamclass</code> or anything else that follows R’s naming conventions. However, it’s a good idea to name your objects something brief and obvious, so you can remember what they contain and work with them easily. <!-- UPDATE - Reny to add something here? --><a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn6"><p>There is a way to do this - you can enclose the entire expression in round brackets, e.g.&nbsp;<code>(object &lt;- instructions)</code>, which will BOTH create the object AND print out what that object contains at the same time. I’m not using this method in these tutorials because I think it will be confusing, since it’s primarily for demonstration purposes and not necessary the sort of thing you’d want to use in your own analysis code.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>We will ignore whether this is an appropriate thing to do statistics wise!<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

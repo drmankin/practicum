@@ -16,26 +16,30 @@ Overall, these tutorials are designed to support faculty supervising undergradua
 
 ### R is for Reproducibility
 
-In this series of tutorials we will learn the basics of R and how to write reproducible code. Computational reproducibility refers to the ability to get the same results each time you run the same analysis on the same dataset. Studies have found that across research fields, only about a quarter to a third of published research papers are computationally reproducible (for examples see: Baker, 2016; Stodden et al., 2018; Crüwell et al., 2023). 
-
+In this series of tutorials we will learn the basics of R and how to write reproducible code. Computational reproducibility refers to the ability to get the same results each time you run the same analysis on the same dataset.
 
 ::: callout-important
+
+Studies have found that across research fields, only about a quarter to a third of published research papers are computationally reproducible (for examples see: Baker, 2016; Stodden et al., 2018; Crüwell et al., 2023). 
+
 This is bad. 
 :::
 
-Analyses using point-and-click software can be reproducible in theory but (in our experience) that can take a long time to reproduce, the process is painful, and the opportunities for mistakes are everywhere. Completing your analyses in a code-based software like R is a step in the right direction, but it doesn’t automatically mean that a code-based analysis is reproducible. In this course, we will learn some of the common pitfalls that can make code not reproducible and help you pass Reny’s reproducibility certification with ease and flair. 
+Analyses using point-and-click software can be reproducible in theory, but (in our experience) that can take a long time to reproduce, the process is painful, and the opportunities for mistakes are everywhere. Completing your analyses in a code-based software like R is a step in the right direction, but it doesn’t automatically mean that a code-based analysis is reproducible. In this course, we will learn some of the common pitfalls that can make code not reproducible and help you pass Reny’s reproducibility certification with ease and flair. 
 
 To help build your reproducible-coding skills, look out for "RepRoducibility" boxes like the one below.
 
 :::: {.repro}
 
-::: {.repro-heading}
+::: {.repro-header}
 ::: {.repro-icon}
 :::
 RepRoducibility: Tips and Tricks
 :::
 
+::: {.repro-body}
 This is a "RepRoducibility" box, which will highlight skills, techniques, or recommendations that will help make your code and analyses easier and smoother to reproduce. 
+:::
 
 ::::
 
@@ -428,7 +432,7 @@ c("bumblebee, squid, falcon, flea, seagull")[3]
 
 Here, we asked R for the third element in a vector that, as far as R can tell, only contained one. This is because there's only one pair of quotes, so all five animals and the commas between them are considered to be one element. Since there isn't a third element, R has informed us so accordingly - the answer to our query is `NA`, not available, because it doesn't exist.
 
-### Factors
+### Factor Data
 
 Factors are a special type of data in R that are used to capture categorial data. They consist of two elements: the **levels**, which are the unique values that appear in the actual data; and the **labels** for each level, which usually contain information about what those levels indicate. As an example, we'll consider a very common situation: a categorical vector of participant genders.
 
@@ -511,7 +515,7 @@ Use a single command to ask R whether the numbers 2 through 10 are less than or 
 :::
 :::
 
-Here R prints out a vector of `TRUE`s or `FALSE`s, one for each element in the original vector. So, the first element in the output (`TRUE`) corresponds to the statement `2 <= 6`, the second to `3 <= 6`, and so on. This is a vectorised calculation again, as we saw with numeric data before. These vectorised assertions will be absolutely essential to [selecting and filtering data](..\02_essentials\05_filter.qmd) that meet particular requirements, or checking our data to find problems.
+Here R prints out a vector of `TRUE`s or `FALSE`s, one for each element in the original vector. So, the first element in the output (`TRUE`) corresponds to the statement `2 <= 6`, the second to `3 <= 6`, and so on. This is a vectorised calculation again, as we saw with numeric data before. These vectorised assertions will be absolutely essential to [selecting and filtering data](05_filter.qmd) that meet particular requirements, or checking our data to find problems.
 
 ::: {.callout-tip title="SPSS Data Types" collapse="true"}
 If you're a regular SPSS user, you might recognise many of these data types from SPSS. See page 7 of [this SPSS user guide](https://public.dhe.ibm.com/software/analytics/spss/documentation/statistics/26.0/en/client/Manuals/IBM_SPSS_Statistics_Brief_Guide.pdf) for a reminder of these types.
@@ -681,40 +685,41 @@ In these tutorials, we will typically stick to so-called "snake case" - lowercas
 
 :::: {.repro}
 
-::: {.repro-heading}
+::: {.repro-header}
 ::: {.repro-icon}
 :::
 RepRoducibility: Good Object Names
 :::
 
+::: {.repro-body}
 Reading code is difficult. Regardless of how clear and obvious everything seems right now, in a few days, you will not remember what your code means. So, you want to make it as easy as possible for your future self to read your code. If you plan to share your code with other people (like a reproducibility officer) they would know even less about what your code does. The more legible your code is, the easier it will be to read, and the happier you and other people trying to run the code will be. The first step to help you achieve this is to use object names that are: 
 
-1. **Meaningful** – convey information about the information stored in the object
-2. **Understandable** - use full words; abbreviations are hard to understand or remember
-3. **Concise** - don't use too many words
-4. **Formatted** the same way
+1. **Meaningful**: Convey information about what is stored in the object
+2. **Understandable**: Use full words; abbreviations are hard to understand or remember
+3. **Concise**: Keep names short enough to type quickly and accurately
+4. **Consistent**: Use the same conventions - like order of elements and separators - for all similar objects.
 
 To illustrate what this means, let’s say you want to create two objects for quiz marks from students with practicals at 9am and students with practicals at 6pm. What would be some terrible names for these objects? 
 
 ```{r}
-# Completely random names:
+# Completely random names (not meaningful)
 variable_1 <- c(75, 58, 62, 16, 33, 67)
 variable_2 <- c(45, 90, 27, 65, 39, 77)
 
-# Names abbreviated beyond comprehension:
+# Names abbreviated beyond comprehension (not understandable)
 morn_qm <- c(75, 58, 62, 16, 33, 67)
 after_qm <- c(45, 90, 27, 65, 39, 77)
 
-# Names too many words
+# Names too many words (not concise)
 quiz_marks_of_students_who_have_morning_practicals_9am_gmt <- c(75, 58, 62, 16, 33, 67)
 # Names with no consistent formatting  
 quiz_marks_of_students_who_have_afternoon_practicals_6pm_gmt <- c(45, 90, 27, 65, 39, 77)
 
-# Names with no inconsistent formatting  
+# Names with varied formatting (not consistent)
 morning_workshop_marks <- c(75, 58, 62, 16, 33, 67)
 quiz_marks_6PM_practical <- c(45, 90, 27, 65, 39, 77)
 ```
-
+:::
 ::::
 
 ::: {.callout-warning title="Nongrammatical Names" collapse="true"}
@@ -1027,7 +1032,7 @@ t.test(quiz_9am, quiz_6pm)
 
 Note that the output mentions "Welch Two Sample t-test", which is a version of the test that does **not** assume equal variances. This is the version that is taught to undergraduates, because we have not at this point introduced the process of assumption testing. If you definitely know that the variances *are* equal and you definitely want Student's *t*-test, you can instead change the default setting. Next time, we'll look in more depth about how to work with functions and specify exactly how you want them to run.
 
-In future tutorials, we'll also see how to turn this rather ugly R output automatically into beautifully formatted reporting like this:
+In future tutorials, we'll also see how to turn this rather ugly R output automatically into more nicely formatted reporting like this:
 
 ```{r}
 #| echo: false
@@ -1035,18 +1040,21 @@ In future tutorials, we'll also see how to turn this rather ugly R output automa
 quiz_t <- t.test(quiz_9am, quiz_6pm, var.equal = TRUE)
 ```
 
-> We compared mean scores between two groups, one who took the quiz in a 9am practical session (*M* = `r round(quiz_t$estimate[1], 2)`) and the other who took the quiz in a 6pm practical session (*M* =`r round(quiz_t$estimate[2], 2)`, *M*~diff~ = `r round(quiz_t$estimate[1] - quiz_t$estimate[2], 2)`). There was no statistically significant difference in scores between practical groups (*t*(`r round(quiz_t$parameter, 2)`) = `r round(quiz_t$statistic, 2)`, *p* = `r round(quiz_t$p.value, 3)`, 95% CI \[`r round(quiz_t$conf.int[1], 2)`, `r round(quiz_t$conf.int[2], 2)`\]).
+> `r report::report(quiz_t)`.
+
+<!-- > We compared mean scores between two groups, one who took the quiz in a 9am practical session (*M* = `r round(quiz_t$estimate[1], 2)`) and the other who took the quiz in a 6pm practical session (*M* =`r round(quiz_t$estimate[2], 2)`, *M*~diff~ = `r round(quiz_t$estimate[1] - quiz_t$estimate[2], 2)`). There was no statistically significant difference in scores between practical groups (*t*(`r round(quiz_t$parameter, 2)`) = `r round(quiz_t$statistic, 2)`, *p* = `r round(quiz_t$p.value, 3)`, 95% CI \[`r round(quiz_t$conf.int[1], 2)`, `r round(quiz_t$conf.int[2], 2)`\]). -->
 
  
 
 :::: {.repro}
 
-::: {.repro-heading}
+::: {.repro-header}
 ::: {.repro-icon}
 :::
-RepRoducibility: 
+RepRoducibility: Reproducible Analysis
 :::
 
+::: {.repro-body}
 We talked about overwriting objects earlier, but now that we have done some analysis, we should talk about it again. Overwriting objects can very easily break your code and introduce errors into your results.
 
 Let’s say we that the quiz marks we compared were from practicals running on Monday. We also have some data from practicals running on Tuesday, and we want to repeat the exact same analysis on this new data[^stats]. We will use the same variables names for the morning and afternoon practicals across the two days:
@@ -1069,7 +1077,7 @@ tuesday_quiz_t_test <- t.test(quiz_9am, quiz_6pm, var.equal = TRUE)
 tuesday_quiz_t_test
 ```
 
-If you run each line sequentially, the object “monday_quiz_t_test” will be different from the object “tuesday_quiz_t_test” and the results you get for both will be correct. This is because the objects `quiz_9am` and `quiz_6pm` overwritten with the Tuesday marks before the *t*-test for the Tuesday data is run.
+If you run each line sequentially, the contents of the object `monday_quiz_t_test` will be different from `tuesday_quiz_t_test` and the results you get for both will be correct. This is because the objects `quiz_9am` and `quiz_6pm` are overwritten with the Tuesday marks before the *t*-test for the Tuesday data is run.
 
 Now, say that after you ran the chunk of code above, you run the following line again: 
 
@@ -1078,13 +1086,15 @@ monday_quiz_t_test <- t.test(quiz_9am, quiz_6pm, var.equal = TRUE)
 monday_quiz_t_test
 ```
 
-Compare these results to above. The results in “monday_quiz_t_test” changed and are no longer correct because we used the Tuesday set of data. 
+Compare these results to above. The results in `monday_quiz_t_test` - now, the "Monday" object contains the results for the Tuesday data.
 
 If you always meticulously execute your code line by line from start to finish, you won’t run into this issue. But, as time goes on, you may notice that this is not the most user-friendly way to interact with a script, and you may find yourself running lines of code in non-sequential order.
 
 This is especially the case if you are running someone else’s code. When doing a reproducibility check, the first thing I (Reny) do is run the whole script to see if there are any errors, and only then do I go back and rerun different bits and pieces of the code to check the actual results.  
 
+::: callout-important
 A key aspect to writing reproducible code is that the code should be flexible and resilient – it should always provide the same output regardless of the unexpected ways a person might run the code.
+:::
 
 So, how can we make the code above less prone to errors?
 
@@ -1105,11 +1115,7 @@ tuesday_quiz_t_test <- t.test(quiz_tuesday_9am, quiz_tuesday_6pm, var.equal = TR
 Here, instead of overwriting the `quiz_9am` and `quiz_6pm` objects with new information, we've named all of the objects containing scores with unique names. Now we no longer have to wonder which score information we are using; rather, our `t.test()` functions only work with exactly the right data.
 
 In other cases, overwriting objects can have different effects such as causing errors that stop your code from running, but we will look into examples of these in future sessions. 
-
+:::
 ::::
 
  
-
-## Well Done!
-
-That's the end of the first tutorial. Very well done on all your hard work!

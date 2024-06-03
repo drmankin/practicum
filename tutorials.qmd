@@ -42,11 +42,9 @@ Looking for a particular topic or function? Use the [Quick Reference](quick_ref.
 
 :::
 
-Tutorials are divided into three sections.
+Tutorials are divided into two rough sections.
 
-### FundRmentals
-
-The three-part FundRmentals series covers essential basic skills in R, and is designed for absolute beginners who have never seen R before and who have little to no coding experience of any kind.
+The **first half** of the course (Tutorials 1 - 6) covers essential basic skills in R, and is designed for absolute beginners who have never seen R before and who have little to no coding experience of any kind. It focuses on working with datasets using {tidyverse} as well as introducing a variety of common statistical tests. This portion of the course ends with some hands-on practice with reproducible analysis.
 
 By the end of this series, you will be able to:
 
@@ -55,29 +53,19 @@ By the end of this series, you will be able to:
 -   Work with objects and functions
 -   Perform calculations and logical tests on single values and vectors
 -   Read in data from a .csv file into a tibble
--   View, summarise, and arrange the order of a tibble
--   Create and render Quarto documents
--   Perform and report *t*-test and linear model analyses
-
-### Essentials
-
-The four-part Essentials series is designed for novices with some basic skills in R, and follows on from the FundRmentals series. It covers the core data wrangling and analysis skills that we teach throughout the first year of the undergraduate Psychology course at Sussex, along with extra tips and techniques for efficient and transparent analysis to support dissertation supervisors to help their students.
-
-By the end of this series, you will be able to:
-
+-   View and summarise the data in a tibble
 -   Filter cases and select variables, including efficient `<tidyselect>` semantics
 -   Create new variables in a dataset, or change/recode existing ones
 -   Create a variety of customised data visualisations
 -   Perform and efficiently report the results of *t*-tests, chi-squared tests, correlations, and simple and hierarchical linear models
 
-### ImprovRs
-
-The three-part ImprovRs series is designed for those with a strong foundation in R who want to move to using R in part or entirely for their data management and analysis process, and follows on from the Essentials series. It covers specific skills in creating Qualtrics questionnaires, working with questionnaire data, and advanced data wrangling, with the aim of building a diverse toolbox of R skills.
+The **second half** of the course (Tutorials 7 - 10) is focused on broadening skills in R, and is designed for those with some proficiency in R (or who have completed the first half of the course!). It focuses on working with different types of datasets, creating beautiful tables and figures, and developing reproducible data analysis skills, with the aim of building a diverse toolbox of R skills. This portion of the course ends with a detailed, step-by-step walkthrough of reproducible data analysis.
 
 By the end of this series, you will be able to:
 
+-   Create custom data summaries and output nicely formatted summary tables
+-   Create powerful data visualisations
+-   Work with labelled data, especially from SPSS/Qualtrics, to generate data dictionaries
+-   Prepare large and complex datasets for data analysis
 -   Work with a new dataset from beginning (reading in, inspecting, cleaning) to end (wrangling, visualising, analysing, reporting)
--   Design a Qualtrics questionnaire with efficient analysis in mind
--   Work with labelled Qualtrics data and factors
--   Create standardised subscale scores
--   Generate automatic codebooks for Qualtrics datasets
+-   Analyse, report, and submit for checking a complete reproducible analysis
