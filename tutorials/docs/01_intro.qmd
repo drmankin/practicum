@@ -14,6 +14,31 @@ This tutorial is the first in a series covering fundamental skills in R. This fi
 
 Overall, these tutorials are designed to support faculty supervising undergraduate student dissertations in R at the University of Sussex, UK. The tutorials present a condensed guide through the key functions and statistical analyses that are covered in the first two years of core methods teaching.
 
+### R is for Reproducibility
+
+In this series of tutorials we will learn the basics of R and how to write reproducible code. Computational reproducibility refers to the ability to get the same results each time you run the same analysis on the same dataset. Studies have found that across research fields, only about a quarter to a third of published research papers are computationally reproducible (for examples see: Baker, 2016; Stodden et al., 2018; Crüwell et al., 2023). 
+
+
+::: callout-important
+This is bad. 
+:::
+
+Analyses using point-and-click software can be reproducible in theory but (in our experience) that can take a long time to reproduce, the process is painful, and the opportunities for mistakes are everywhere. Completing your analyses in a code-based software like R is a step in the right direction, but it doesn’t automatically mean that a code-based analysis is reproducible. In this course, we will learn some of the common pitfalls that can make code not reproducible and help you pass Reny’s reproducibility certification with ease and flair. 
+
+To help build your reproducible-coding skills, look out for "RepRoducibility" boxes like the one below.
+
+:::: {.repro}
+
+::: {.repro-heading}
+::: {.repro-icon}
+:::
+RepRoducibility: Tips and Tricks
+:::
+
+This is a "RepRoducibility" box, which will highlight skills, techniques, or recommendations that will help make your code and analyses easier and smoother to reproduce. 
+
+::::
+
 Before we get started in R, just a couple notes for those using these materials.
 
 ### Using the Tutorials
@@ -654,26 +679,43 @@ thisis_TheFirstLETTER.of.the.alphabetWOW
 
 In these tutorials, we will typically stick to so-called "snake case" - lowercase names with underscores. This is generally the style of {tidyverse} as well. However, there's nothing to stop you from using different conventions such as camelCase, PascalCase, whatever.this.is, or mixing them all at random, except maybe for the fact that your future self, and anyone else who might want to read or use your code, will almost certainly despair.
 
-::: {.repro}
+:::: {.repro}
 
-:::: {.repro-header}
-::::: {.repro-icon}
-:::::
-RepRoducibility: Object Names
-::::
-
-:::: {.repro-body}
-You *can* name objects almost anything in R, but that doesn't mean that you *should*. Instead, assume that someone else - a collaborator, a future PhD student, a reproducibility officer, or even your own future self - will be trying to puzzle out what you've done and how. Name objects clearly and sensibly will be a huge boost for this.
-
-When deciding what to name your objects, keep the following guidelines in mind:
-
-1. **Be consistent**. Use consistent separators (i.e. `_`, `.`, etc.) and naming conventions. For instance, all objects containing counts might end with `_n`, or all linear models end with `_lm`. Avoid situations like having the overall number in your sample in `overall_n`, the number in the experimental group in `num_exp`, and the number in the control group in `ctl_count`!
-
-1. **Be transparent**. There's a tradeoff here with succinctness for sure,
-
-1. **Be succinct**.
-::::
+::: {.repro-heading}
+::: {.repro-icon}
 :::
+RepRoducibility: Good Object Names
+:::
+
+Reading code is difficult. Regardless of how clear and obvious everything seems right now, in a few days, you will not remember what your code means. So, you want to make it as easy as possible for your future self to read your code. If you plan to share your code with other people (like a reproducibility officer) they would know even less about what your code does. The more legible your code is, the easier it will be to read, and the happier you and other people trying to run the code will be. The first step to help you achieve this is to use object names that are: 
+
+1. **Meaningful** – convey information about the information stored in the object
+2. **Understandable** - use full words; abbreviations are hard to understand or remember
+3. **Concise** - don't use too many words
+4. **Formatted** the same way
+
+To illustrate what this means, let’s say you want to create two objects for quiz marks from students with practicals at 9am and students with practicals at 6pm. What would be some terrible names for these objects? 
+
+```{r}
+# Completely random names:
+variable_1 <- c(75, 58, 62, 16, 33, 67)
+variable_2 <- c(45, 90, 27, 65, 39, 77)
+
+# Names abbreviated beyond comprehension:
+morn_qm <- c(75, 58, 62, 16, 33, 67)
+after_qm <- c(45, 90, 27, 65, 39, 77)
+
+# Names too many words
+quiz_marks_of_students_who_have_morning_practicals_9am_gmt <- c(75, 58, 62, 16, 33, 67)
+# Names with no consistent formatting  
+quiz_marks_of_students_who_have_afternoon_practicals_6pm_gmt <- c(45, 90, 27, 65, 39, 77)
+
+# Names with no inconsistent formatting  
+morning_workshop_marks <- c(75, 58, 62, 16, 33, 67)
+quiz_marks_6PM_practical <- c(45, 90, 27, 65, 39, 77)
+```
+
+::::
 
 ::: {.callout-warning title="Nongrammatical Names" collapse="true"}
 It is actually possible to use unallowable symbols, like spaces and punctuation, in some names, by using backticks. You must use the backticks when you create AND every time you use/call the object. It is generally a **very bad idea** to do this (just use underscores like a reasonable person), but it occasionally comes in handy for formatting tables or figures when the names don't need to be machine-readable/good R code/easy to work with anymore.
@@ -997,8 +1039,77 @@ quiz_t <- t.test(quiz_9am, quiz_6pm, var.equal = TRUE)
 
  
 
+:::: {.repro}
+
+::: {.repro-heading}
+::: {.repro-icon}
+:::
+RepRoducibility: 
+:::
+
+We talked about overwriting objects earlier, but now that we have done some analysis, we should talk about it again. Overwriting objects can very easily break your code and introduce errors into your results.
+
+Let’s say we that the quiz marks we compared were from practicals running on Monday. We also have some data from practicals running on Tuesday, and we want to repeat the exact same analysis on this new data[^stats]. We will use the same variables names for the morning and afternoon practicals across the two days:
+
+[^stats]: We will ignore whether this is an appropriate thing to do statistics wise!
+
+```{r}
+# Quiz marks from Monday practicals
+quiz_9am <- c(75, 58, 62, 16, 33, 67, 89, 100, 79)
+quiz_6pm <- c(45, 90, 27, 65, 39, 77, 38, 42, 53)
+# Compare the marks across the two sessions
+monday_quiz_t_test <- t.test(quiz_9am, quiz_6pm, var.equal = TRUE)
+monday_quiz_t_test
+
+# Quiz marks from Tuesday practicals
+quiz_9am <- c(45,62, 5, 0, 85, 52, 79, 100, 69)
+quiz_6pm <- c(25,42, 15, 10, 72, 55, 89, 89, 65)
+# Compare the marks across the two sessions
+tuesday_quiz_t_test <- t.test(quiz_9am, quiz_6pm, var.equal = TRUE)
+tuesday_quiz_t_test
+```
+
+If you run each line sequentially, the object “monday_quiz_t_test” will be different from the object “tuesday_quiz_t_test” and the results you get for both will be correct. This is because the objects `quiz_9am` and `quiz_6pm` overwritten with the Tuesday marks before the *t*-test for the Tuesday data is run.
+
+Now, say that after you ran the chunk of code above, you run the following line again: 
+
+```{r}
+monday_quiz_t_test <- t.test(quiz_9am, quiz_6pm, var.equal = TRUE)
+monday_quiz_t_test
+```
+
+Compare these results to above. The results in “monday_quiz_t_test” changed and are no longer correct because we used the Tuesday set of data. 
+
+If you always meticulously execute your code line by line from start to finish, you won’t run into this issue. But, as time goes on, you may notice that this is not the most user-friendly way to interact with a script, and you may find yourself running lines of code in non-sequential order.
+
+This is especially the case if you are running someone else’s code. When doing a reproducibility check, the first thing I (Reny) do is run the whole script to see if there are any errors, and only then do I go back and rerun different bits and pieces of the code to check the actual results.  
+
+A key aspect to writing reproducible code is that the code should be flexible and resilient – it should always provide the same output regardless of the unexpected ways a person might run the code.
+
+So, how can we make the code above less prone to errors?
+
+```{r}
+# Quiz marks from Monday practicals
+quiz_monday_9am <- c(75, 58, 62, 16, 33, 67, 89, 100, 79)
+quiz_monday_6pm <- c(45, 90, 27, 65, 39, 77, 38, 42, 53)
+# Compare the marks across the two sessions
+monday_quiz_t_test <- t.test(quiz_monday_9am, quiz_monday_6pm, var.equal = TRUE)
+
+# Quiz marks from Tuesday practicals
+quiz_tuesday_9am <- c(45,62, 5, 0, 85, 52, 79, 100, 69)
+quiz_tuesday_6pm <- c(25,42, 15, 10, 72, 55, 89, 89, 65)
+# Compare the marks across the two sessions
+tuesday_quiz_t_test <- t.test(quiz_tuesday_9am, quiz_tuesday_6pm, var.equal = TRUE)
+```
+
+Here, instead of overwriting the `quiz_9am` and `quiz_6pm` objects with new information, we've named all of the objects containing scores with unique names. Now we no longer have to wonder which score information we are using; rather, our `t.test()` functions only work with exactly the right data.
+
+In other cases, overwriting objects can have different effects such as causing errors that stop your code from running, but we will look into examples of these in future sessions. 
+
+::::
+
  
 
-::: {.callout-warning appearance="minimal" title="Well Done!"}
+## Well Done!
+
 That's the end of the first tutorial. Very well done on all your hard work!
-:::
