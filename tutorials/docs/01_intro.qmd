@@ -64,9 +64,9 @@ A Quarto document has three main elements: the YAML header, body text, and code 
 
 ![](/images/quarto_anatomy.png){fig-alt="A screenshot of the default Quarto document, with the YAML, text, and code chunks each circled and labelled in a different colour." fig-align="center"}
 
-The YAML header controls the settings for rendering. The defaults are fine for our purposes, but see [this guide for get started with using Quarto](https://quarto.org/docs/get-started/hello/rstudio.html) for more details.
+The **YAML header** controls the settings for rendering. The defaults are fine for our purposes, but see [this guide for get started with using Quarto](https://quarto.org/docs/get-started/hello/rstudio.html) for more details.
 
-You can use the body text portion of a Quarto document more or less like you would a document in Word (or your word processor of choice). In the body of the document, you can write and format any text you want - notes, questions, thoughts, ideas, comments, etc. This workbook already contains all the headings from this tutorial to help you get organised, but please do delete or edit as you see fit.
+You can use the **text** of a Quarto document more or less like you would a document in Word (or your word processor of choice). In the body of the document, you can write and format any text you want - notes, questions, thoughts, ideas, comments, etc. This workbook already contains all the headings from this tutorial to help you get organised, but please do delete or edit as you see fit.
 
 The last element is the **code chunk**, which is where all R code should be written. Code chunks have a contrasting background colour, an `{r}` in the upper left corner, and two green buttons in the upper right. The one that looks like a green "play" button will run all the code in that chunk. Code chunks are like windows into R - little islands of code. Code chunks can only work with code, and will NOT handle any non-code text, unless it's a comment (i.e. preceded by one or more `#`s.)
 
@@ -91,7 +91,7 @@ If **yes**, write the code in a **code chunk**. By adding the code to a document
 
 If **no**, write the code in the **Console**. Code written directly in the Console isn't saved or documented anywhere[^1]. Some common uses of the Console are:
 
-<!-- 1.  [Installing/updating packages](UPDATE) -->
+1.  [Installing/updating packages](02_intro.qmd)
 1.  Opening help documentation
 1.  Drafting or testing code to go into a document.
 
@@ -177,14 +177,6 @@ Errors vary wildly in understandability and helpfulness, from highly technical j
 :::
 
 [^2]: Don't get me wrong - crashes do happen! But they often look like a "fatal error" popup message, the programme freezing, or other obvious breakdowns of the programme itself. "Errors" in code as we're seeing here are just a part of the normal functioning of R and don't usually mean anything particularly horrific is occurring.
-
-Let's take a look at how we might interpret the error we produced above.
-
-```{r}
-aslavb;lj aew aljvb
-```
-
-Here R doesn't need to tell us where the error is, because there's only one thing it's trying to run. We do have the text of the error, though: `object 'aslavb' not found`. We'll come to objects in just a bit, but in brief, R is looking for some information stored under the name `aslavb` and can't find it (because it's just a keysmash!). This is an example of an error that comes up *all the time* - often when you've made a typo, or forgotten to create or store information in an object properly. For me at this point, as someone who forgets or mistypes things on the reg, this error is a familiar friend!
 
  
 
@@ -296,7 +288,7 @@ You may have tried something like this:
 36
 ```
 
-As you can see from the indices, this is three separate commands, because the numbered indices start over from `[1]` each time. However, we want all those numbers *in a single command*. To do this, we'll use a **function** called `c()`.
+As you can see from the indices, these are three separate commands, because the numbered indices start over from `[1]` each time. However, we want all those numbers *in a single command*. To do this, we'll use a **function** called `c()`.
 
 This is our first contact with functions in R, and we'll explore how they work more later on. To use this one, type it out, then inside the brackets, put the numbers you want to **c**ollect (or **c**oncatenate, or **c**ombine), with different groups separated by commas.
 
@@ -411,6 +403,39 @@ c("bumblebee, squid, falcon, flea, seagull")[3]
 
 Here, we asked R for the third element in a vector that, as far as R can tell, only contained one. This is because there's only one pair of quotes, so all five animals and the commas between them are considered to be one element. Since there isn't a third element, R has informed us so accordingly - the answer to our query is `NA`, not available, because it doesn't exist.
 
+### Factors
+
+Factors are a special type of data in R that are used to capture categorial data. They consist of two elements: the **levels**, which are the unique values that appear in the actual data; and the **labels** for each level, which usually contain information about what those levels indicate. As an example, we'll consider a very common situation: a categorical vector of participant genders.
+
+In data-gathering programmes such as Qualtrics, the **levels** are typically numeric, which correspond to particular gender categories. If we don't supply any further information, we can use the `factor()` function to create a factor, and R will simply assign the levels as labels.
+
+```{r}
+factor(c(1, 2, 1, 1, 1))
+```
+
+However, this isn't particularly helpful for interpreting these groups. Let's say we know that in this case, `1` represents male and `2` represents female participants. We can then apply these **labels** to the levels. (Don't worry too much about the code creating this factor for the moment - we will come back to working with factors in datasets later.)
+
+```{r}
+factor(c(1, 2, 1, 1, 2),
+       labels = c("Male", "Female"))
+```
+
+The underlying values in the factor are numbers, here 1 and 2. The labels are applied to the values in ascending order of those values, so 1 becomes "Male", "2" becomes "Female", etc. Here, we don't need to specify the levels; if you don't elaborate otherwise, R will assume that they are the same as the unique values.
+
+You can also supply additional possible values, *even if they haven't been observed*, by explicitly providing the possible levels along with the labels.
+
+```{r}
+factor(c(1, 2, 1, 1, 1),
+       levels = c(1, 2, 3),
+       labels = c("Male", "Female", "Non-binary"))
+```
+
+Factors are an essential way to store and label categorical values in R. In a few weeks, we will have a look at how using factors or not can change the way your analyses run. For now, you only need to be aware that factors exist.
+
+::: callout-tip
+Factors are so common and useful in R that they have a whole {tidyverse} package to themselves! You already have {forcats} installed with {tidyverse}, but you can [check out the help documentation](https://forcats.tidyverse.org/) if you'd like to learn more about working with factors.
+:::
+
 ### Logical Data
 
 The final type of data that we'll look at for now is logical data. In addition to performing calculations and printing out words, R can also tell you whether a particular statement is `TRUE` or `FALSE.` To do this, we can use logical operators to form an **assertion**, and then R will tell us the result.
@@ -466,9 +491,9 @@ Here R prints out a vector of `TRUE`s or `FALSE`s, one for each element in the o
 ::: {.callout-tip title="SPSS Data Types" collapse="true"}
 If you're a regular SPSS user, you might recognise many of these data types from SPSS. See page 7 of [this SPSS user guide](https://public.dhe.ibm.com/software/analytics/spss/documentation/statistics/26.0/en/client/Manuals/IBM_SPSS_Statistics_Brief_Guide.pdf) for a reminder of these types.
 
-So far, what we've called "numeric" in R is also (broadly) "scale/numeric" in SPSS. What we've called "character" in R is "string" in SPSS. As far as I know, SPSS doesn't have an equivalent of "logical", but would probably be a "nominal/string" type.
-
-We haven't thus far talked about a few common data types that you might be used to using in SPSS. Ordinal and Nominal data types in SPSS correspond (more or less) to *factors* in R, which we will come to in a later tutorial. R also has date-time data, which is not covered in this series, but if you need to use it, [check out the {lubridate} package](https://lubridate.tidyverse.org/).
+So far, what we've called "numeric" in R is also (broadly) "scale/numeric" in SPSS. What we've called "character" in R is "string" in SPSS. Ordinal and Nominal data types in SPSS correspond (more or less) to factors in R. As far as I know, SPSS doesn't have an equivalent of "logical", but would probably be a "nominal/string" type.
+ 
+We haven't thus far talked about a few common data types that you might be used to using in SPSS. R also has date-time data, which is not covered in this series, but if you need to use it, [check out the {lubridate} package](https://lubridate.tidyverse.org/).
 :::
 
  
@@ -599,9 +624,9 @@ This is "pseudo-code", or a "general format" for a command in R. It isn't valid 
 -   `<-`: The assignment operator `<-` has single job: to assign output to names, or in other words, to create objects.
 -   `instructions`: Any amount of code that produces some output, which is what `object` will contain.
 
-#### Naming Objects
+### Naming Objects
 
-Generally, you can name objects pretty freely in R. Object names must be a single sequence of symbols, so can't include spaces or special operators (like `=`, `<-`, `,`, etc.). The best idea is to come up with naming conventions that work for you, so you can easily remember what objects contain, and then **be consistent** as much as possible. R will let you know if you try to name an object something that it doesn't like:
+Generally, you can name objects pretty freely in R (although see the boxes at the end for some advice). Object names must be a single sequence of symbols, so can't include spaces or special operators (like `=`, `<-`, `,`, etc.). The best idea is to come up with naming conventions that work for you, so you can easily remember what objects contain, and then **be consistent** as much as possible. R will let you know if you try to name an object something that it doesn't like:
 
 ```{r}
 #| error: true
@@ -629,6 +654,27 @@ thisis_TheFirstLETTER.of.the.alphabetWOW
 
 In these tutorials, we will typically stick to so-called "snake case" - lowercase names with underscores. This is generally the style of {tidyverse} as well. However, there's nothing to stop you from using different conventions such as camelCase, PascalCase, whatever.this.is, or mixing them all at random, except maybe for the fact that your future self, and anyone else who might want to read or use your code, will almost certainly despair.
 
+::: {.repro}
+
+:::: {.repro-header}
+::::: {.repro-icon}
+:::::
+RepRoducibility: Object Names
+::::
+
+:::: {.repro-body}
+You *can* name objects almost anything in R, but that doesn't mean that you *should*. Instead, assume that someone else - a collaborator, a future PhD student, a reproducibility officer, or even your own future self - will be trying to puzzle out what you've done and how. Name objects clearly and sensibly will be a huge boost for this.
+
+When deciding what to name your objects, keep the following guidelines in mind:
+
+1. **Be consistent**. Use consistent separators (i.e. `_`, `.`, etc.) and naming conventions. For instance, all objects containing counts might end with `_n`, or all linear models end with `_lm`. Avoid situations like having the overall number in your sample in `overall_n`, the number in the experimental group in `num_exp`, and the number in the control group in `ctl_count`!
+
+1. **Be transparent**. There's a tradeoff here with succinctness for sure,
+
+1. **Be succinct**.
+::::
+:::
+
 ::: {.callout-warning title="Nongrammatical Names" collapse="true"}
 It is actually possible to use unallowable symbols, like spaces and punctuation, in some names, by using backticks. You must use the backticks when you create AND every time you use/call the object. It is generally a **very bad idea** to do this (just use underscores like a reasonable person), but it occasionally comes in handy for formatting tables or figures when the names don't need to be machine-readable/good R code/easy to work with anymore.
 
@@ -643,6 +689,10 @@ nope this is bad <- "a"
 `but this one works!`
 ```
 :::
+
+#### Creating Some Data
+
+To get some practice with creating and working with objects, let's get some data to work with.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
 Think of a research scenario familiar to you with two independent groups. You're welcome to draw from your own research or expertise, but you should choose something with numerical scores. Some ideas include:

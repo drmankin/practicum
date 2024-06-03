@@ -18,6 +18,8 @@ In particular please add points where it makes sense to mention reproducibility 
     - Objects
     - Assignment
     - RepRoducibility: Naming Objects
+      - Informative names
+      - Not reusing 
 
 2. Introduction II
     - Quarto and Scripts
@@ -33,6 +35,7 @@ In particular please add points where it makes sense to mention reproducibility 
     - Viewing
     - Basic summaries
     - The pipe (?)
+      - Indents
     - Describing Datasets
     - Describing Variables
         - Subsetting
@@ -43,6 +46,9 @@ In particular please add points where it makes sense to mention reproducibility 
     - Model fit and diagnostics
     - Reporting
     - Creating a reproducible script (?)
+      - Factor variables (vs characters)
+      - not knowing defaults
+      - Hard-coding numbers
     
 5. Filter and Select
     - Filter
