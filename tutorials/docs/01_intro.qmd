@@ -14,6 +14,35 @@ This tutorial is the first in a series covering fundamental skills in R. This fi
 
 Overall, these tutorials are designed to support faculty supervising undergraduate student dissertations in R at the University of Sussex, UK. The tutorials present a condensed guide through the key functions and statistical analyses that are covered in the first two years of core methods teaching.
 
+### R is for Reproducibility
+
+In this series of tutorials we will learn the basics of R and how to write reproducible code. Computational reproducibility refers to the ability to get the same results each time you run the same analysis on the same dataset.
+
+::: callout-important
+
+Studies have found that across research fields, only about a quarter to a third of published research papers are computationally reproducible (for examples see: Baker, 2016; Stodden et al., 2018; Crüwell et al., 2023). 
+
+This is bad. 
+:::
+
+Analyses using point-and-click software can be reproducible in theory, but (in our experience) that can take a long time to reproduce, the process is painful, and the opportunities for mistakes are everywhere. Completing your analyses in a code-based software like R is a step in the right direction, but it doesn’t automatically mean that a code-based analysis is reproducible. In this course, we will learn some of the common pitfalls that can make code not reproducible and help you pass Reny’s reproducibility certification with ease and flair. 
+
+To help build your reproducible-coding skills, look out for "RepRoducibility" boxes like the one below.
+
+:::: {.repro}
+
+::: {.repro-header}
+::: {.repro-icon}
+:::
+RepRoducibility: Tips and Tricks
+:::
+
+::: {.repro-body}
+This is a "RepRoducibility" box, which will highlight skills, techniques, or recommendations that will help make your code and analyses easier and smoother to reproduce. 
+:::
+
+::::
+
 Before we get started in R, just a couple notes for those using these materials.
 
 ### Using the Tutorials
@@ -64,9 +93,9 @@ A Quarto document has three main elements: the YAML header, body text, and code 
 
 ![](/images/quarto_anatomy.png){fig-alt="A screenshot of the default Quarto document, with the YAML, text, and code chunks each circled and labelled in a different colour." fig-align="center"}
 
-The YAML header controls the settings for rendering. The defaults are fine for our purposes, but see [this guide for get started with using Quarto](https://quarto.org/docs/get-started/hello/rstudio.html) for more details.
+The **YAML header** controls the settings for rendering. The defaults are fine for our purposes, but see [this guide for get started with using Quarto](https://quarto.org/docs/get-started/hello/rstudio.html) for more details.
 
-You can use the body text portion of a Quarto document more or less like you would a document in Word (or your word processor of choice). In the body of the document, you can write and format any text you want - notes, questions, thoughts, ideas, comments, etc. This workbook already contains all the headings from this tutorial to help you get organised, but please do delete or edit as you see fit.
+You can use the **text** of a Quarto document more or less like you would a document in Word (or your word processor of choice). In the body of the document, you can write and format any text you want - notes, questions, thoughts, ideas, comments, etc. This workbook already contains all the headings from this tutorial to help you get organised, but please do delete or edit as you see fit.
 
 The last element is the **code chunk**, which is where all R code should be written. Code chunks have a contrasting background colour, an `{r}` in the upper left corner, and two green buttons in the upper right. The one that looks like a green "play" button will run all the code in that chunk. Code chunks are like windows into R - little islands of code. Code chunks can only work with code, and will NOT handle any non-code text, unless it's a comment (i.e. preceded by one or more `#`s.)
 
@@ -91,7 +120,7 @@ If **yes**, write the code in a **code chunk**. By adding the code to a document
 
 If **no**, write the code in the **Console**. Code written directly in the Console isn't saved or documented anywhere[^1]. Some common uses of the Console are:
 
-<!-- 1.  [Installing/updating packages](UPDATE) -->
+1.  [Installing/updating packages](02_intro.qmd)
 1.  Opening help documentation
 1.  Drafting or testing code to go into a document.
 
@@ -177,14 +206,6 @@ Errors vary wildly in understandability and helpfulness, from highly technical j
 :::
 
 [^2]: Don't get me wrong - crashes do happen! But they often look like a "fatal error" popup message, the programme freezing, or other obvious breakdowns of the programme itself. "Errors" in code as we're seeing here are just a part of the normal functioning of R and don't usually mean anything particularly horrific is occurring.
-
-Let's take a look at how we might interpret the error we produced above.
-
-```{r}
-aslavb;lj aew aljvb
-```
-
-Here R doesn't need to tell us where the error is, because there's only one thing it's trying to run. We do have the text of the error, though: `object 'aslavb' not found`. We'll come to objects in just a bit, but in brief, R is looking for some information stored under the name `aslavb` and can't find it (because it's just a keysmash!). This is an example of an error that comes up *all the time* - often when you've made a typo, or forgotten to create or store information in an object properly. For me at this point, as someone who forgets or mistypes things on the reg, this error is a familiar friend!
 
  
 
@@ -296,7 +317,7 @@ You may have tried something like this:
 36
 ```
 
-As you can see from the indices, this is three separate commands, because the numbered indices start over from `[1]` each time. However, we want all those numbers *in a single command*. To do this, we'll use a **function** called `c()`.
+As you can see from the indices, these are three separate commands, because the numbered indices start over from `[1]` each time. However, we want all those numbers *in a single command*. To do this, we'll use a **function** called `c()`.
 
 This is our first contact with functions in R, and we'll explore how they work more later on. To use this one, type it out, then inside the brackets, put the numbers you want to **c**ollect (or **c**oncatenate, or **c**ombine), with different groups separated by commas.
 
@@ -411,6 +432,39 @@ c("bumblebee, squid, falcon, flea, seagull")[3]
 
 Here, we asked R for the third element in a vector that, as far as R can tell, only contained one. This is because there's only one pair of quotes, so all five animals and the commas between them are considered to be one element. Since there isn't a third element, R has informed us so accordingly - the answer to our query is `NA`, not available, because it doesn't exist.
 
+### Factor Data
+
+Factors are a special type of data in R that are used to capture categorial data. They consist of two elements: the **levels**, which are the unique values that appear in the actual data; and the **labels** for each level, which usually contain information about what those levels indicate. As an example, we'll consider a very common situation: a categorical vector of participant genders.
+
+In data-gathering programmes such as Qualtrics, the **levels** are typically numeric, which correspond to particular gender categories. If we don't supply any further information, we can use the `factor()` function to create a factor, and R will simply assign the levels as labels.
+
+```{r}
+factor(c(1, 2, 1, 1, 1))
+```
+
+However, this isn't particularly helpful for interpreting these groups. Let's say we know that in this case, `1` represents male and `2` represents female participants. We can then apply these **labels** to the levels. (Don't worry too much about the code creating this factor for the moment - we will come back to working with factors in datasets later.)
+
+```{r}
+factor(c(1, 2, 1, 1, 2),
+       labels = c("Male", "Female"))
+```
+
+The underlying values in the factor are numbers, here 1 and 2. The labels are applied to the values in ascending order of those values, so 1 becomes "Male", "2" becomes "Female", etc. Here, we don't need to specify the levels; if you don't elaborate otherwise, R will assume that they are the same as the unique values.
+
+You can also supply additional possible values, *even if they haven't been observed*, by explicitly providing the possible levels along with the labels.
+
+```{r}
+factor(c(1, 2, 1, 1, 1),
+       levels = c(1, 2, 3),
+       labels = c("Male", "Female", "Non-binary"))
+```
+
+Factors are an essential way to store and label categorical values in R. In a few weeks, we will have a look at how using factors or not can change the way your analyses run. For now, you only need to be aware that factors exist.
+
+::: callout-tip
+Factors are so common and useful in R that they have a whole {tidyverse} package to themselves! You already have {forcats} installed with {tidyverse}, but you can [check out the help documentation](https://forcats.tidyverse.org/) if you'd like to learn more about working with factors.
+:::
+
 ### Logical Data
 
 The final type of data that we'll look at for now is logical data. In addition to performing calculations and printing out words, R can also tell you whether a particular statement is `TRUE` or `FALSE.` To do this, we can use logical operators to form an **assertion**, and then R will tell us the result.
@@ -461,14 +515,14 @@ Use a single command to ask R whether the numbers 2 through 10 are less than or 
 :::
 :::
 
-Here R prints out a vector of `TRUE`s or `FALSE`s, one for each element in the original vector. So, the first element in the output (`TRUE`) corresponds to the statement `2 <= 6`, the second to `3 <= 6`, and so on. This is a vectorised calculation again, as we saw with numeric data before. These vectorised assertions will be absolutely essential to [selecting and filtering data](..\02_essentials\05_filter.qmd) that meet particular requirements, or checking our data to find problems.
+Here R prints out a vector of `TRUE`s or `FALSE`s, one for each element in the original vector. So, the first element in the output (`TRUE`) corresponds to the statement `2 <= 6`, the second to `3 <= 6`, and so on. This is a vectorised calculation again, as we saw with numeric data before. These vectorised assertions will be absolutely essential to [selecting and filtering data](05_filter.qmd) that meet particular requirements, or checking our data to find problems.
 
 ::: {.callout-tip title="SPSS Data Types" collapse="true"}
 If you're a regular SPSS user, you might recognise many of these data types from SPSS. See page 7 of [this SPSS user guide](https://public.dhe.ibm.com/software/analytics/spss/documentation/statistics/26.0/en/client/Manuals/IBM_SPSS_Statistics_Brief_Guide.pdf) for a reminder of these types.
 
-So far, what we've called "numeric" in R is also (broadly) "scale/numeric" in SPSS. What we've called "character" in R is "string" in SPSS. As far as I know, SPSS doesn't have an equivalent of "logical", but would probably be a "nominal/string" type.
-
-We haven't thus far talked about a few common data types that you might be used to using in SPSS. Ordinal and Nominal data types in SPSS correspond (more or less) to *factors* in R, which we will come to in a later tutorial. R also has date-time data, which is not covered in this series, but if you need to use it, [check out the {lubridate} package](https://lubridate.tidyverse.org/).
+So far, what we've called "numeric" in R is also (broadly) "scale/numeric" in SPSS. What we've called "character" in R is "string" in SPSS. Ordinal and Nominal data types in SPSS correspond (more or less) to factors in R. As far as I know, SPSS doesn't have an equivalent of "logical", but would probably be a "nominal/string" type.
+ 
+We haven't thus far talked about a few common data types that you might be used to using in SPSS. R also has date-time data, which is not covered in this series, but if you need to use it, [check out the {lubridate} package](https://lubridate.tidyverse.org/).
 :::
 
  
@@ -599,9 +653,9 @@ This is "pseudo-code", or a "general format" for a command in R. It isn't valid 
 -   `<-`: The assignment operator `<-` has single job: to assign output to names, or in other words, to create objects.
 -   `instructions`: Any amount of code that produces some output, which is what `object` will contain.
 
-#### Naming Objects
+### Naming Objects
 
-Generally, you can name objects pretty freely in R. Object names must be a single sequence of symbols, so can't include spaces or special operators (like `=`, `<-`, `,`, etc.). The best idea is to come up with naming conventions that work for you, so you can easily remember what objects contain, and then **be consistent** as much as possible. R will let you know if you try to name an object something that it doesn't like:
+Generally, you can name objects pretty freely in R (although see the boxes at the end for some advice). Object names must be a single sequence of symbols, so can't include spaces or special operators (like `=`, `<-`, `,`, etc.). The best idea is to come up with naming conventions that work for you, so you can easily remember what objects contain, and then **be consistent** as much as possible. R will let you know if you try to name an object something that it doesn't like:
 
 ```{r}
 #| error: true
@@ -629,6 +683,45 @@ thisis_TheFirstLETTER.of.the.alphabetWOW
 
 In these tutorials, we will typically stick to so-called "snake case" - lowercase names with underscores. This is generally the style of {tidyverse} as well. However, there's nothing to stop you from using different conventions such as camelCase, PascalCase, whatever.this.is, or mixing them all at random, except maybe for the fact that your future self, and anyone else who might want to read or use your code, will almost certainly despair.
 
+:::: {.repro}
+
+::: {.repro-header}
+::: {.repro-icon}
+:::
+RepRoducibility: Good Object Names
+:::
+
+::: {.repro-body}
+Reading code is difficult. Regardless of how clear and obvious everything seems right now, in a few days, you will not remember what your code means. So, you want to make it as easy as possible for your future self to read your code. If you plan to share your code with other people (like a reproducibility officer) they would know even less about what your code does. The more legible your code is, the easier it will be to read, and the happier you and other people trying to run the code will be. The first step to help you achieve this is to use object names that are: 
+
+1. **Meaningful**: Convey information about what is stored in the object
+2. **Understandable**: Use full words; abbreviations are hard to understand or remember
+3. **Concise**: Keep names short enough to type quickly and accurately
+4. **Consistent**: Use the same conventions - like order of elements and separators - for all similar objects.
+
+To illustrate what this means, let’s say you want to create two objects for quiz marks from students with practicals at 9am and students with practicals at 6pm. What would be some terrible names for these objects? 
+
+```{r}
+# Completely random names (not meaningful)
+variable_1 <- c(75, 58, 62, 16, 33, 67)
+variable_2 <- c(45, 90, 27, 65, 39, 77)
+
+# Names abbreviated beyond comprehension (not understandable)
+morn_qm <- c(75, 58, 62, 16, 33, 67)
+after_qm <- c(45, 90, 27, 65, 39, 77)
+
+# Names too many words (not concise)
+quiz_marks_of_students_who_have_morning_practicals_9am_gmt <- c(75, 58, 62, 16, 33, 67)
+# Names with no consistent formatting  
+quiz_marks_of_students_who_have_afternoon_practicals_6pm_gmt <- c(45, 90, 27, 65, 39, 77)
+
+# Names with varied formatting (not consistent)
+morning_workshop_marks <- c(75, 58, 62, 16, 33, 67)
+quiz_marks_6PM_practical <- c(45, 90, 27, 65, 39, 77)
+```
+:::
+::::
+
 ::: {.callout-warning title="Nongrammatical Names" collapse="true"}
 It is actually possible to use unallowable symbols, like spaces and punctuation, in some names, by using backticks. You must use the backticks when you create AND every time you use/call the object. It is generally a **very bad idea** to do this (just use underscores like a reasonable person), but it occasionally comes in handy for formatting tables or figures when the names don't need to be machine-readable/good R code/easy to work with anymore.
 
@@ -643,6 +736,10 @@ nope this is bad <- "a"
 `but this one works!`
 ```
 :::
+
+#### Creating Some Data
+
+To get some practice with creating and working with objects, let's get some data to work with.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
 Think of a research scenario familiar to you with two independent groups. You're welcome to draw from your own research or expertise, but you should choose something with numerical scores. Some ideas include:
@@ -935,7 +1032,7 @@ t.test(quiz_9am, quiz_6pm)
 
 Note that the output mentions "Welch Two Sample t-test", which is a version of the test that does **not** assume equal variances. This is the version that is taught to undergraduates, because we have not at this point introduced the process of assumption testing. If you definitely know that the variances *are* equal and you definitely want Student's *t*-test, you can instead change the default setting. Next time, we'll look in more depth about how to work with functions and specify exactly how you want them to run.
 
-In future tutorials, we'll also see how to turn this rather ugly R output automatically into beautifully formatted reporting like this:
+In future tutorials, we'll also see how to turn this rather ugly R output automatically into more nicely formatted reporting like this:
 
 ```{r}
 #| echo: false
@@ -943,12 +1040,82 @@ In future tutorials, we'll also see how to turn this rather ugly R output automa
 quiz_t <- t.test(quiz_9am, quiz_6pm, var.equal = TRUE)
 ```
 
-> We compared mean scores between two groups, one who took the quiz in a 9am practical session (*M* = `r round(quiz_t$estimate[1], 2)`) and the other who took the quiz in a 6pm practical session (*M* =`r round(quiz_t$estimate[2], 2)`, *M*~diff~ = `r round(quiz_t$estimate[1] - quiz_t$estimate[2], 2)`). There was no statistically significant difference in scores between practical groups (*t*(`r round(quiz_t$parameter, 2)`) = `r round(quiz_t$statistic, 2)`, *p* = `r round(quiz_t$p.value, 3)`, 95% CI \[`r round(quiz_t$conf.int[1], 2)`, `r round(quiz_t$conf.int[2], 2)`\]).
+> `r report::report(quiz_t)`.
+
+<!-- > We compared mean scores between two groups, one who took the quiz in a 9am practical session (*M* = `r round(quiz_t$estimate[1], 2)`) and the other who took the quiz in a 6pm practical session (*M* =`r round(quiz_t$estimate[2], 2)`, *M*~diff~ = `r round(quiz_t$estimate[1] - quiz_t$estimate[2], 2)`). There was no statistically significant difference in scores between practical groups (*t*(`r round(quiz_t$parameter, 2)`) = `r round(quiz_t$statistic, 2)`, *p* = `r round(quiz_t$p.value, 3)`, 95% CI \[`r round(quiz_t$conf.int[1], 2)`, `r round(quiz_t$conf.int[2], 2)`\]). -->
 
  
 
- 
+:::: {.repro}
 
-::: {.callout-warning appearance="minimal" title="Well Done!"}
-That's the end of the first tutorial. Very well done on all your hard work!
+::: {.repro-header}
+::: {.repro-icon}
 :::
+RepRoducibility: Reproducible Analysis
+:::
+
+::: {.repro-body}
+We talked about overwriting objects earlier, but now that we have done some analysis, we should talk about it again. Overwriting objects can very easily break your code and introduce errors into your results.
+
+Let’s say we that the quiz marks we compared were from practicals running on Monday. We also have some data from practicals running on Tuesday, and we want to repeat the exact same analysis on this new data[^stats]. We will use the same variables names for the morning and afternoon practicals across the two days:
+
+[^stats]: We will ignore whether this is an appropriate thing to do statistics wise!
+
+```{r}
+# Quiz marks from Monday practicals
+quiz_9am <- c(75, 58, 62, 16, 33, 67, 89, 100, 79)
+quiz_6pm <- c(45, 90, 27, 65, 39, 77, 38, 42, 53)
+# Compare the marks across the two sessions
+monday_quiz_t_test <- t.test(quiz_9am, quiz_6pm, var.equal = TRUE)
+monday_quiz_t_test
+
+# Quiz marks from Tuesday practicals
+quiz_9am <- c(45,62, 5, 0, 85, 52, 79, 100, 69)
+quiz_6pm <- c(25,42, 15, 10, 72, 55, 89, 89, 65)
+# Compare the marks across the two sessions
+tuesday_quiz_t_test <- t.test(quiz_9am, quiz_6pm, var.equal = TRUE)
+tuesday_quiz_t_test
+```
+
+If you run each line sequentially, the contents of the object `monday_quiz_t_test` will be different from `tuesday_quiz_t_test` and the results you get for both will be correct. This is because the objects `quiz_9am` and `quiz_6pm` are overwritten with the Tuesday marks before the *t*-test for the Tuesday data is run.
+
+Now, say that after you ran the chunk of code above, you run the following line again: 
+
+```{r}
+monday_quiz_t_test <- t.test(quiz_9am, quiz_6pm, var.equal = TRUE)
+monday_quiz_t_test
+```
+
+Compare these results to above. The results in `monday_quiz_t_test` - now, the "Monday" object contains the results for the Tuesday data.
+
+If you always meticulously execute your code line by line from start to finish, you won’t run into this issue. But, as time goes on, you may notice that this is not the most user-friendly way to interact with a script, and you may find yourself running lines of code in non-sequential order.
+
+This is especially the case if you are running someone else’s code. When doing a reproducibility check, the first thing I (Reny) do is run the whole script to see if there are any errors, and only then do I go back and rerun different bits and pieces of the code to check the actual results.  
+
+::: callout-important
+A key aspect to writing reproducible code is that the code should be flexible and resilient – it should always provide the same output regardless of the unexpected ways a person might run the code.
+:::
+
+So, how can we make the code above less prone to errors?
+
+```{r}
+# Quiz marks from Monday practicals
+quiz_monday_9am <- c(75, 58, 62, 16, 33, 67, 89, 100, 79)
+quiz_monday_6pm <- c(45, 90, 27, 65, 39, 77, 38, 42, 53)
+# Compare the marks across the two sessions
+monday_quiz_t_test <- t.test(quiz_monday_9am, quiz_monday_6pm, var.equal = TRUE)
+
+# Quiz marks from Tuesday practicals
+quiz_tuesday_9am <- c(45,62, 5, 0, 85, 52, 79, 100, 69)
+quiz_tuesday_6pm <- c(25,42, 15, 10, 72, 55, 89, 89, 65)
+# Compare the marks across the two sessions
+tuesday_quiz_t_test <- t.test(quiz_tuesday_9am, quiz_tuesday_6pm, var.equal = TRUE)
+```
+
+Here, instead of overwriting the `quiz_9am` and `quiz_6pm` objects with new information, we've named all of the objects containing scores with unique names. Now we no longer have to wonder which score information we are using; rather, our `t.test()` functions only work with exactly the right data.
+
+In other cases, overwriting objects can have different effects such as causing errors that stop your code from running, but we will look into examples of these in future sessions. 
+:::
+::::
+
+ 

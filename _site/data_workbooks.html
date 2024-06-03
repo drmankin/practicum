@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.550">
+<meta name="generator" content="quarto-1.4.553">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -291,7 +291,7 @@ mil_data_wkshp.sav
 <a href="https://profiles.sussex.ac.uk/p323096-vlad-costin">Eldarwish et al., (in prep)</a>
 </td>
 <td style="text-align:left;">
-Version of mil_data.sav with additional simulated variables for workshop use, contributed by Dr Dan Evans
+Version of mil_data.sav with additional simulated variables for Qualtrics workshop use, contributed by Dr Dan Evans
 </td>
 <td style="text-align:left;">
 <a href="https://raw.githubusercontent.com/drmankin/practicum/master/data/mil_data_wkshp.sav">Download mil_data_wkshp.sav</a>
@@ -331,74 +331,10 @@ Download
 <tbody>
 <tr>
 <td style="text-align:left;">
-01/02: IntRoduction
+01: IntRoduction
 </td>
 <td style="text-align:left;">
-<a href="https://raw.githubusercontent.com/drmankin/practicum/master/workbooks/01_02_intro_workbook.qmd" download="01_02_intro_workbook.qmd">Download 01_02_intro_workbook.qmd</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-03: Datasets
-</td>
-<td style="text-align:left;">
-<a href="https://raw.githubusercontent.com/drmankin/practicum/master/workbooks/03_datasets_workbook.qmd" download="03_datasets_workbook.qmd">Download 03_datasets_workbook.qmd</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-04: Reporting Linear Models with Quarto
-</td>
-<td style="text-align:left;">
-<a href="https://raw.githubusercontent.com/drmankin/practicum/master/workbooks/04_lm_workbook.qmd" download="04_lm_workbook.qmd">Download 04_lm_workbook.qmd</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-05: Filter and Select
-</td>
-<td style="text-align:left;">
-<a href="https://raw.githubusercontent.com/drmankin/practicum/master/workbooks/05_filter_workbook.qmd" download="05_filter_workbook.qmd">Download 05_filter_workbook.qmd</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-06: Mutate and Summarise
-</td>
-<td style="text-align:left;">
-<a href="https://raw.githubusercontent.com/drmankin/practicum/master/workbooks/06_changes_workbook.qmd" download="06_changes_workbook.qmd">Download 06_changes_workbook.qmd</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-07: Visualisations
-</td>
-<td style="text-align:left;">
-<a href="https://raw.githubusercontent.com/drmankin/practicum/master/workbooks/07_dataviz_workbook.qmd" download="07_dataviz_workbook.qmd">Download 07_dataviz_workbook.qmd</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-08: Analysis
-</td>
-<td style="text-align:left;">
-<a href="https://raw.githubusercontent.com/drmankin/practicum/master/workbooks/08_analysis_workbook.qmd" download="08_analysis_workbook.qmd">Download 08_analysis_workbook.qmd</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-09: Test Flight
-</td>
-<td style="text-align:left;">
-<a href="https://raw.githubusercontent.com/drmankin/practicum/master/workbooks/09_testflight_workbook.qmd" download="09_testflight_workbook.qmd">Download 09_testflight_workbook.qmd</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-10: Qualtrics and Labelled Data
-</td>
-<td style="text-align:left;">
-<a href="https://raw.githubusercontent.com/drmankin/practicum/master/workbooks/10_qtrics_workbook.qmd" download="10_qtrics_workbook.qmd">Download 10_qtrics_workbook.qmd</a>
+<a href="https://raw.githubusercontent.com/drmankin/practicum/master/workbooks/01_intro_workbook.qmd" download="01_intro_workbook.qmd">Download 01_intro_workbook.qmd</a>
 </td>
 </tr>
 <tr>
@@ -639,6 +575,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -673,7 +627,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');

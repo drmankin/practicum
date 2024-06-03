@@ -45,8 +45,7 @@ data_tab <- data_info |>
 
 wkbk_path <- here::here("workbooks")
 
-list.files(path = here::here(), pattern = "workbook.qmd", 
-           recursive = TRUE, full.names = TRUE)
+list.files(path = wkbk_path, pattern = "workbook.qmd", full.names = TRUE)
 
 get_title <- function(file_path){
   text <- readLines(file_path)
@@ -57,8 +56,7 @@ wkbk_tab <- tibble::tibble(
   data_file = list.files(wkbk_path, pattern = "workbook.qmd"),
   link = paste0("<a href='https://raw.githubusercontent.com/drmankin/practicum/master/workbooks/", 
                 data_file, "' download='", data_file, "'>Download ", data_file, "</a>"),
-  full_path = list.files(path = here::here(), pattern = "workbook.qmd", 
-                                 recursive = TRUE, full.names = TRUE)
+  full_path = list.files(path = here::here("workbooks"), pattern = "workbook.qmd", full.names = TRUE)
   ) |> 
   dplyr::rowwise() |> 
   dplyr::mutate(
