@@ -48,7 +48,7 @@ Make sure that if you save the file, you keep the correct file suffix!
   <tr>
    <td style="text-align:left;"> mil_data_wkshp.sav </td>
    <td style="text-align:left;"> <a href="https://profiles.sussex.ac.uk/p323096-vlad-costin">Eldarwish et al., (in prep)</a> </td>
-   <td style="text-align:left;"> Version of mil_data.sav with additional simulated variables for workshop use, contributed by Dr Dan Evans </td>
+   <td style="text-align:left;"> Version of mil_data.sav with additional simulated variables for Qualtrics workshop use, contributed by Dr Dan Evans </td>
    <td style="text-align:left;"> <a href="https://raw.githubusercontent.com/drmankin/practicum/master/data/mil_data_wkshp.sav">Download mil_data_wkshp.sav</a> </td>
   </tr>
   <tr>
@@ -75,40 +75,8 @@ or click through to view the text and copy/paste into an empty .Qmd document.
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:left;"> 01/02: IntRoduction </td>
-   <td style="text-align:left;"> <a href="https://raw.githubusercontent.com/drmankin/practicum/master/workbooks/01_02_intro_workbook.qmd" download="01_02_intro_workbook.qmd">Download 01_02_intro_workbook.qmd</a> </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> 03: Datasets </td>
-   <td style="text-align:left;"> <a href="https://raw.githubusercontent.com/drmankin/practicum/master/workbooks/03_datasets_workbook.qmd" download="03_datasets_workbook.qmd">Download 03_datasets_workbook.qmd</a> </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> 04: Reporting Linear Models with Quarto </td>
-   <td style="text-align:left;"> <a href="https://raw.githubusercontent.com/drmankin/practicum/master/workbooks/04_lm_workbook.qmd" download="04_lm_workbook.qmd">Download 04_lm_workbook.qmd</a> </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> 05: Filter and Select </td>
-   <td style="text-align:left;"> <a href="https://raw.githubusercontent.com/drmankin/practicum/master/workbooks/05_filter_workbook.qmd" download="05_filter_workbook.qmd">Download 05_filter_workbook.qmd</a> </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> 06: Mutate and Summarise </td>
-   <td style="text-align:left;"> <a href="https://raw.githubusercontent.com/drmankin/practicum/master/workbooks/06_changes_workbook.qmd" download="06_changes_workbook.qmd">Download 06_changes_workbook.qmd</a> </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> 07: Visualisations </td>
-   <td style="text-align:left;"> <a href="https://raw.githubusercontent.com/drmankin/practicum/master/workbooks/07_dataviz_workbook.qmd" download="07_dataviz_workbook.qmd">Download 07_dataviz_workbook.qmd</a> </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> 08: Analysis </td>
-   <td style="text-align:left;"> <a href="https://raw.githubusercontent.com/drmankin/practicum/master/workbooks/08_analysis_workbook.qmd" download="08_analysis_workbook.qmd">Download 08_analysis_workbook.qmd</a> </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> 09: Test Flight </td>
-   <td style="text-align:left;"> <a href="https://raw.githubusercontent.com/drmankin/practicum/master/workbooks/09_testflight_workbook.qmd" download="09_testflight_workbook.qmd">Download 09_testflight_workbook.qmd</a> </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> 10: Qualtrics and Labelled Data </td>
-   <td style="text-align:left;"> <a href="https://raw.githubusercontent.com/drmankin/practicum/master/workbooks/10_qtrics_workbook.qmd" download="10_qtrics_workbook.qmd">Download 10_qtrics_workbook.qmd</a> </td>
+   <td style="text-align:left;"> 01: IntRoduction </td>
+   <td style="text-align:left;"> <a href="https://raw.githubusercontent.com/drmankin/practicum/master/workbooks/01_intro_workbook.qmd" download="01_intro_workbook.qmd">Download 01_intro_workbook.qmd</a> </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Working with Qualtrics Data </td>
