@@ -103,18 +103,27 @@ dataset_name |>
 
 `instructions_for_creating_the_variable` tells the function how to create `variable_name`. The instructions can refer to variables in the piped-in dataset, but should output a **single value**, rather than a vector of values (as we saw in `mutate()`).
 
+<!-- UPDATE: Choose a new variable (or update the dataset) -->
+
 Let's have a look at an example of this. Since we've previously created the overall trait anxiety variable `sticsa_trait_score`, we might want to get some info about this variable, such as the mean and standard deviation. To do this, we create a new variable for each descriptive value we want to create on the left side of the `=`, and instructions for creating that summary on the right.
 
 To help us out with our summaries, we'll also bundle in a second new function while we're at it. Unassuming little `dplyr::n()` has one job: counting the number of cases. Right now it's not telling us much that's new...but that will change in a bit!
 
+Putting that all together, here's an example of how that works:
+
 ```{r}
-anx_data |> 
-  dplyr::summarise(
-    n = dplyr::n(),
-    sticsa_trait_mean = mean(sticsa_trait_score, na.rm = TRUE),
-    sticsa_trait_sd = sd(sticsa_trait_score, na.rm = TRUE),
+anx_data |> # <1>
+  dplyr::summarise( # <1>
+    n = dplyr::n(), # <2>
+    sticsa_trait_mean = mean(sticsa_trait_score, na.rm = TRUE), # <3>
+    sticsa_trait_sd = sd(sticsa_trait_score, na.rm = TRUE), # <4>
   )
 ```
+
+1. Take the dataset `anx_data`, *and then* produce a summary as follows:
+2. Count the number of cases and store it in the variable `n`
+3. Calculate the mean of the `sticsa_trait_score` variable (ignoring any missing values) and store it in the variable `sticsa_trait_mean`
+4. Calculate the standard deviation of the `sticsa_trait_score` variable (ignoring any missing values) and store it in the variable `sticsa_trait_sd`
 
 ::: {.callout-note title="Exercise" appearance="minimal"}
 Add additional arguments to the `summarise()` code above to include the min and max in the output.
@@ -161,68 +170,68 @@ anx_data |>
   )
 ```
 
-Hurrah! Job done.
+<!-- Hurrah! Job done. -->
 
-Okay. Great. *BUT*. A whole different package? A function with a totally different name? I don't know about you but I *hate* that. If you don't, feel free to stop here, because this is really going to go off the deep end a bit.
+<!-- Okay. Great. *BUT*. A whole different package? A function with a totally different name? I don't know about you but I *hate* that. If you don't, feel free to stop here, because this is really going to go off the deep end a bit. -->
 
-So, I know that the standard error is the standard deviation divided by the square root of *N*[^5]. That's fine then - we've just created a variable that contains the *SD*, and we have the dataset and we know how to count the number of cases so, let's just do it by hand.
+<!-- So, I know that the standard error is the standard deviation divided by the square root of *N*[^5]. That's fine then - we've just created a variable that contains the *SD*, and we have the dataset and we know how to count the number of cases so, let's just do it by hand. -->
 
-```{r}
-anx_data |> 
-  dplyr::summarise(
-    sticsa_trait_sd = sd(sticsa_trait_score, na.rm = TRUE),
-    ## Calculate SE taking the SD we just created 
-    ## and divide by the square root of the number of cases in anx_data
-    sticsa_trait_se = sticsa_trait_sd/sqrt(nrow(anx_data))
-  )
-```
+<!-- ```{r} -->
+<!-- anx_data |>  -->
+<!--   dplyr::summarise( -->
+<!--     sticsa_trait_sd = sd(sticsa_trait_score, na.rm = TRUE), -->
+<!--     ## Calculate SE taking the SD we just created  -->
+<!--     ## and divide by the square root of the number of cases in anx_data -->
+<!--     sticsa_trait_se = sticsa_trait_sd/sqrt(nrow(anx_data)) -->
+<!--   ) -->
+<!-- ``` -->
 
-Snazzy. *BUT*. This code is a bit dangerous because if I decide to rename `anx_data`, or use this code again in the same document with a different dataset, I have remember to update it in *two* places, one of which (within the `sqrt(nrow())` command) is quite hard to spot. I'm piping in the data, can't I just.....use the dataset itself for this?
+<!-- Snazzy. *BUT*. This code is a bit dangerous because if I decide to rename `anx_data`, or use this code again in the same document with a different dataset, I have remember to update it in *two* places, one of which (within the `sqrt(nrow())` command) is quite hard to spot. I'm piping in the data, can't I just.....use the dataset itself for this? -->
 
-The reason I might think this is that with the {magrittr} pipe, this sort of thing was easy to do. Let's have a look:
+<!-- The reason I might think this is that with the {magrittr} pipe, this sort of thing was easy to do. Let's have a look: -->
 
-```{r}
-library(magrittr)
+<!-- ```{r} -->
+<!-- library(magrittr) -->
 
-## Notice the magrittr pipe %>% here instead of |>
-anx_data %>%
-  dplyr::summarise(
-    sticsa_trait_sd = sd(sticsa_trait_score, na.rm = TRUE),
-    sticsa_trait_se = sticsa_trait_sd/sqrt(nrow(.))
-  )
-```
+<!-- ## Notice the magrittr pipe %>% here instead of |> -->
+<!-- anx_data %>% -->
+<!--   dplyr::summarise( -->
+<!--     sticsa_trait_sd = sd(sticsa_trait_score, na.rm = TRUE), -->
+<!--     sticsa_trait_se = sticsa_trait_sd/sqrt(nrow(.)) -->
+<!--   ) -->
+<!-- ``` -->
 
-Nice, right? We just use the {magrittr} placeholder `.` to refer to the dataset within the `summarise()` command. Cool, so let's do the same, just changing out `%>%` for `|>` and `.` for `_`:
+<!-- Nice, right? We just use the {magrittr} placeholder `.` to refer to the dataset within the `summarise()` command. Cool, so let's do the same, just changing out `%>%` for `|>` and `.` for `_`: -->
 
-```{r}
-#| error: true
+<!-- ```{r} -->
+<!-- #| error: true -->
 
-anx_data |>
-  dplyr::summarise(
-    sticsa_trait_sd = sd(sticsa_trait_score, na.rm = TRUE),
-    sticsa_trait_se = sticsa_trait_sd/sqrt(nrow(_))
-  )
-```
+<!-- anx_data |> -->
+<!--   dplyr::summarise( -->
+<!--     sticsa_trait_sd = sd(sticsa_trait_score, na.rm = TRUE), -->
+<!--     sticsa_trait_se = sticsa_trait_sd/sqrt(nrow(_)) -->
+<!--   ) -->
+<!-- ``` -->
 
-Well...shit.
+<!-- Well...shit. -->
 
-This is one of those fringe cases where the {magrittr} pipe and the native pipe don't work quite the same way. It's very annoying especially if you're used to writing code with `%>%` that does this effortlessly. So, can we get something similar to work with the native pipe instead?
+<!-- This is one of those fringe cases where the {magrittr} pipe and the native pipe don't work quite the same way. It's very annoying especially if you're used to writing code with `%>%` that does this effortlessly. So, can we get something similar to work with the native pipe instead? -->
 
-The answer is yes, but not with `nrow()`. Instead we need our new friend `dplyr::n()` that does the same as `nrow()` - just counts the number of rows - but is pipe-friendly. We don't need a placeholder here, and in fact it doesn't work if you try to add one.
+<!-- The answer is yes, but not with `nrow()`. Instead we need our new friend `dplyr::n()` that does the same as `nrow()` - just counts the number of rows - but is pipe-friendly. We don't need a placeholder here, and in fact it doesn't work if you try to add one. -->
 
-```{r}
-anx_data |>
-  dplyr::summarise(
-    sticsa_trait_sd = sd(sticsa_trait_score, na.rm = TRUE),
-    sticsa_trait_se = sticsa_trait_sd/sqrt(dplyr::n())
-  )
-```
+<!-- ```{r} -->
+<!-- anx_data |> -->
+<!--   dplyr::summarise( -->
+<!--     sticsa_trait_sd = sd(sticsa_trait_score, na.rm = TRUE), -->
+<!--     sticsa_trait_se = sticsa_trait_sd/sqrt(dplyr::n()) -->
+<!--   ) -->
+<!-- ``` -->
 
-So a weird little detour, but at least I have accomplished my primary goal of having as few unusual details remember as possible (no {papaja} and no updating-dataset-names-at-multiple-points), and honestly there's more than enough weird details to remember already just using R normally so I don't need that kind of negativity in my life. This comes at the not-insubstantial cost of having to remember to use a different function for getting *N*, but we were already using `dplyr::n()` so that's alright - for me. You'll find as you go that you develop your own preferences for how to write code that makes the most sense to you and aligns with the kind of things you can remember, spot, or update easily.
+<!-- So a weird little detour, but at least I have accomplished my primary goal of having as few unusual details remember as possible (no {papaja} and no updating-dataset-names-at-multiple-points), and honestly there's more than enough weird details to remember already just using R normally so I don't need that kind of negativity in my life. This comes at the not-insubstantial cost of having to remember to use a different function for getting *N*, but we were already using `dplyr::n()` so that's alright - for me. You'll find as you go that you develop your own preferences for how to write code that makes the most sense to you and aligns with the kind of things you can remember, spot, or update easily. -->
 :::
 :::
 
-[^5]: I know this because I teach first year undergraduate statistics and therefore have to, not because it's, like, particularly obvious on the face of it.
+<!-- [^5]: I know this because I teach first year undergraduate statistics and therefore have to, not because it's, like, particularly obvious on the face of it. -->
 
 ### By Group
 
@@ -270,7 +279,7 @@ anx_data |>
 :::
 :::
 
-::: {.callout-tip title="Reshaping Summary Tables" collapse="\"true"}
+::: {.callout-tip title="Reshaping Summary Tables" collapse="true"}
 This second summary table, grouped by both MCQ and gender, would likely be easier to read with one variable on separate rows and the other in separate columns. We'll have a look at reshaping in the last section of this course, but if you want to get a head start, run `vignette("pivot")` in the Console.
 :::
 
@@ -345,7 +354,7 @@ anx_data |>   # <1>
   )
 ```
 
-If we wanted to also include, for instance, range and CIs, this code would quickly become unmanageably long and difficult to read, not to mention increasingly prone to errors.
+If we wanted to also include, for instance, range and CIs, this code would quickly become unmanageably long and difficult to read, not to mention increasingly prone to mistakes.
 
 Remember, if you have to copy/paste more than once, **use a function instead.**
 
@@ -522,7 +531,9 @@ Finally, render your workbook document to see your hard work in all its glory!
 
 ### Dynamic Formatting
 
-::: {.callout-note appearance="minimal" title="Exercise"} **CHALLENGE**: It will shock you to learn that I didn't like writing out the column names in the `kbl()` function one by one. Can you figure out how to generate column names dynamically, instead of writing them out, and then use the "Awesome Tables" vignette to create the table below?
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+**CHALLENGE**: It will shock you to learn that I didn't like writing out the column names in the `kbl()` function one by one. Can you figure out how to generate column names dynamically, instead of writing them out, and then use the "Awesome Tables" vignette to create the table below?
 
 *Note*: This is included just to demonstrate that it can be done, but is definitely not within the skills covered in these tutorials!
 
@@ -558,7 +569,9 @@ anx_mcq_sum |>
   kableExtra::kable_classic()
 ```
 
-::: {.callout-note collapse="true" title="Solution"} For the first bit - well, this is well beyond anything we've covered so far, including a good bit of base R and some jiggery-pokery to get only *N* and *SD* to be italicised. (Sorry.) This is the kind of puzzle that I find really useful for making myself learn things like regular expressions, but if this isn't your bag, don't worry!
+::: {.callout-note collapse="true" title="Solution"}
+
+For the first bit - well, this is well beyond anything we've covered so far, including a good bit of base R and some jiggery-pokery to get only *N* and *SD* to be italicised. (Sorry.) This is the kind of puzzle that I find really useful for making myself learn things like regular expressions, but if this isn't your bag, don't worry!
 
 The steps are annotated below, which together produce a vector of column names to pass to `kbl()`.
 
@@ -603,6 +616,8 @@ anx_mcq_sum |>
   kableExtra::add_header_above(c(" " = 2, "STICSA Trait Anxiety Score" = 4)) |> 
   kableExtra::kable_classic()
 ```
+:::
+:::
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
 **CHALLENGE**: The magic of this approach is that it can be expanded to apply to as many inputs as you give it. Take our iterated summary from the previous section. Turn the code editing the names into a function and then use that within `kbl()` to generate the column names.
@@ -664,8 +679,6 @@ anx_score_sum %>%
 You know what? I'm still not happy because I had to write out the header names in the `add_header_above()` function. If you've got this far and you're enjoying this kind of thing, see if you can work out how to automatically produce that as well! If you do, *please* email me and tell me.
 :::
 :::
-
- 
 
 ## Quick Test: Correlation
 
