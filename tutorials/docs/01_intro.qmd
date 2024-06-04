@@ -20,12 +20,12 @@ In this series of tutorials we will learn the basics of R and how to write repro
 
 ::: callout-important
 
-Studies have found that across research fields, only about a quarter to a third of published research papers are computationally reproducible (for examples see: Baker, 2016; Stodden et al., 2018; Crüwell et al., 2023). 
+Studies have found that across research fields, only about a quarter to a third of published research papers are computationally reproducible (for examples see: [Baker, 2016](https://www.nature.com/articles/533452a); [Stodden et al., 2018](https://doi.org/10.1073/pnas.1708290115); [Crüwell et al., 2023](https://doi.org/10.1177/09567976221140828)). 
 
 This is bad. 
 :::
 
-Analyses using point-and-click software can be reproducible in theory, but (in our experience) that can take a long time to reproduce, the process is painful, and the opportunities for mistakes are everywhere. Completing your analyses in a code-based software like R is a step in the right direction, but it doesn’t automatically mean that a code-based analysis is reproducible. In this course, we will learn some of the common pitfalls that can make code not reproducible and help you pass Reny’s reproducibility certification with ease and flair. 
+Analyses using point-and-click software can be reproducible in theory, but (in our experience) that can take a long time to reproduce, the process is painful, and the opportunities for mistakes are everywhere. Completing your analyses in a code-based software like R is a step in the right direction, but it doesn’t automatically mean that a code-based analysis is reproducible. In this course, we will learn some of the common pitfalls that can make code not reproducible and help you pass [Reny’s reproducibility certification](https://osf.io/dr35v/) with ease and flair. 
 
 To help build your reproducible-coding skills, look out for "RepRoducibility" boxes like the one below.
 
@@ -623,7 +623,7 @@ R is a programming language, but (being created by speakers of natural language)
 
 In a similar way that the basic unit of many languages is the word[^4], the basic unit of the R programming language is the **object**. This section will explore the basics of what an object is and some of their key features in R.
 
-[^4]: As a linguist I have to note, one, [words don't exist](https://amazingakita.tumblr.com/post/181685581034/people-who-dont-even-care-about-language-how-can), and two, the closest linguistic term for what an object is is probably "lexeme". "Word" will get you in the right vicinity, though, conceptually. If you'd like to dive down this rabbit hole (rabbit-hole?) [this Crash Course video on morphology](https://www.youtube.com/watch?v=93sK4jTGrss) is a good place to start.
+[^4]: As a linguist I (Jennifer) have to note, one, [words don't exist](https://amazingakita.tumblr.com/post/181685581034/people-who-dont-even-care-about-language-how-can), and two, the closest linguistic term for what an object is is probably "lexeme". "Word" will get you in the right vicinity, though, conceptually. If you'd like to dive down this rabbit hole (rabbit-hole?) [this Crash Course video on morphology](https://www.youtube.com/watch?v=93sK4jTGrss) is a good place to start.
 
 ::: {.callout-tip title="Definition: Objects"}
 Objects are the basic elements that R is built around - the equivalent of words. An "object" in R is any bit of information that is stored with a particular name. Objects can hold anything, from a single number or word to huge datasets with thousands of data points or complex graphs. These named objects are the main way you, the programmer, can store, retrieve, and interact with information in R.
@@ -710,9 +710,8 @@ variable_2 <- c(45, 90, 27, 65, 39, 77)
 morn_qm <- c(75, 58, 62, 16, 33, 67)
 after_qm <- c(45, 90, 27, 65, 39, 77)
 
-# Names too many words (not concise)
+# Names with too many words (not concise)
 quiz_marks_of_students_who_have_morning_practicals_9am_gmt <- c(75, 58, 62, 16, 33, 67)
-# Names with no consistent formatting  
 quiz_marks_of_students_who_have_afternoon_practicals_6pm_gmt <- c(45, 90, 27, 65, 39, 77)
 
 # Names with varied formatting (not consistent)
@@ -1037,10 +1036,14 @@ In future tutorials, we'll also see how to turn this rather ugly R output automa
 ```{r}
 #| echo: false
 
-quiz_t <- t.test(quiz_9am, quiz_6pm, var.equal = TRUE)
+quiz_t <- t.test(quiz_9am, quiz_6pm)
 ```
 
-> `r report::report(quiz_t)`.
+::: {.callout-tip title="Analysis Results"}
+
+`r report::report(quiz_t)`.
+
+:::
 
 <!-- > We compared mean scores between two groups, one who took the quiz in a 9am practical session (*M* = `r round(quiz_t$estimate[1], 2)`) and the other who took the quiz in a 6pm practical session (*M* =`r round(quiz_t$estimate[2], 2)`, *M*~diff~ = `r round(quiz_t$estimate[1] - quiz_t$estimate[2], 2)`). There was no statistically significant difference in scores between practical groups (*t*(`r round(quiz_t$parameter, 2)`) = `r round(quiz_t$statistic, 2)`, *p* = `r round(quiz_t$p.value, 3)`, 95% CI \[`r round(quiz_t$conf.int[1], 2)`, `r round(quiz_t$conf.int[2], 2)`\]). -->
 
@@ -1086,7 +1089,7 @@ monday_quiz_t_test <- t.test(quiz_9am, quiz_6pm, var.equal = TRUE)
 monday_quiz_t_test
 ```
 
-Compare these results to above. The results in `monday_quiz_t_test` - now, the "Monday" object contains the results for the Tuesday data.
+Compare these results to above. **The "Monday" object, `monday_quiz_t_test`, now contains the results for the Tuesday data.**
 
 If you always meticulously execute your code line by line from start to finish, you won’t run into this issue. But, as time goes on, you may notice that this is not the most user-friendly way to interact with a script, and you may find yourself running lines of code in non-sequential order.
 
@@ -1096,7 +1099,7 @@ This is especially the case if you are running someone else’s code. When doing
 A key aspect to writing reproducible code is that the code should be flexible and resilient – it should always provide the same output regardless of the unexpected ways a person might run the code.
 :::
 
-So, how can we make the code above less prone to errors?
+So, how can we make the code above less prone to these kinds of mixups?
 
 ```{r}
 # Quiz marks from Monday practicals

@@ -406,11 +406,11 @@ Important
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Studies have found that across research fields, only about a quarter to a third of published research papers are computationally reproducible (for examples see: Baker, 2016; Stodden et al., 2018; Crüwell et al., 2023).</p>
+<p>Studies have found that across research fields, only about a quarter to a third of published research papers are computationally reproducible (for examples see: <a href="https://www.nature.com/articles/533452a">Baker, 2016</a>; <a href="https://doi.org/10.1073/pnas.1708290115">Stodden et al., 2018</a>; <a href="https://doi.org/10.1177/09567976221140828">Crüwell et al., 2023</a>).</p>
 <p>This is bad.</p>
 </div>
 </div>
-<p>Analyses using point-and-click software can be reproducible in theory, but (in our experience) that can take a long time to reproduce, the process is painful, and the opportunities for mistakes are everywhere. Completing your analyses in a code-based software like R is a step in the right direction, but it doesn’t automatically mean that a code-based analysis is reproducible. In this course, we will learn some of the common pitfalls that can make code not reproducible and help you pass Reny’s reproducibility certification with ease and flair.</p>
+<p>Analyses using point-and-click software can be reproducible in theory, but (in our experience) that can take a long time to reproduce, the process is painful, and the opportunities for mistakes are everywhere. Completing your analyses in a code-based software like R is a step in the right direction, but it doesn’t automatically mean that a code-based analysis is reproducible. In this course, we will learn some of the common pitfalls that can make code not reproducible and help you pass <a href="https://osf.io/dr35v/">Reny’s reproducibility certification</a> with ease and flair.</p>
 <p>To help build your reproducible-coding skills, look out for “RepRoducibility” boxes like the one below.</p>
 <div class="repro">
 <div class="repro-header">
@@ -1581,14 +1581,13 @@ Clear Your Environment
 <span id="cb99-6"><a href="#cb99-6" aria-hidden="true" tabindex="-1"></a>morn_qm <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">75</span>, <span class="dv">58</span>, <span class="dv">62</span>, <span class="dv">16</span>, <span class="dv">33</span>, <span class="dv">67</span>)</span>
 <span id="cb99-7"><a href="#cb99-7" aria-hidden="true" tabindex="-1"></a>after_qm <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">45</span>, <span class="dv">90</span>, <span class="dv">27</span>, <span class="dv">65</span>, <span class="dv">39</span>, <span class="dv">77</span>)</span>
 <span id="cb99-8"><a href="#cb99-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb99-9"><a href="#cb99-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Names too many words (not concise)</span></span>
+<span id="cb99-9"><a href="#cb99-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Names with too many words (not concise)</span></span>
 <span id="cb99-10"><a href="#cb99-10" aria-hidden="true" tabindex="-1"></a>quiz_marks_of_students_who_have_morning_practicals_9am_gmt <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">75</span>, <span class="dv">58</span>, <span class="dv">62</span>, <span class="dv">16</span>, <span class="dv">33</span>, <span class="dv">67</span>)</span>
-<span id="cb99-11"><a href="#cb99-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Names with no consistent formatting  </span></span>
-<span id="cb99-12"><a href="#cb99-12" aria-hidden="true" tabindex="-1"></a>quiz_marks_of_students_who_have_afternoon_practicals_6pm_gmt <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">45</span>, <span class="dv">90</span>, <span class="dv">27</span>, <span class="dv">65</span>, <span class="dv">39</span>, <span class="dv">77</span>)</span>
-<span id="cb99-13"><a href="#cb99-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb99-14"><a href="#cb99-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Names with varied formatting (not consistent)</span></span>
-<span id="cb99-15"><a href="#cb99-15" aria-hidden="true" tabindex="-1"></a>morning_workshop_marks <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">75</span>, <span class="dv">58</span>, <span class="dv">62</span>, <span class="dv">16</span>, <span class="dv">33</span>, <span class="dv">67</span>)</span>
-<span id="cb99-16"><a href="#cb99-16" aria-hidden="true" tabindex="-1"></a>quiz_marks_6PM_practical <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">45</span>, <span class="dv">90</span>, <span class="dv">27</span>, <span class="dv">65</span>, <span class="dv">39</span>, <span class="dv">77</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb99-11"><a href="#cb99-11" aria-hidden="true" tabindex="-1"></a>quiz_marks_of_students_who_have_afternoon_practicals_6pm_gmt <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">45</span>, <span class="dv">90</span>, <span class="dv">27</span>, <span class="dv">65</span>, <span class="dv">39</span>, <span class="dv">77</span>)</span>
+<span id="cb99-12"><a href="#cb99-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb99-13"><a href="#cb99-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Names with varied formatting (not consistent)</span></span>
+<span id="cb99-14"><a href="#cb99-14" aria-hidden="true" tabindex="-1"></a>morning_workshop_marks <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">75</span>, <span class="dv">58</span>, <span class="dv">62</span>, <span class="dv">16</span>, <span class="dv">33</span>, <span class="dv">67</span>)</span>
+<span id="cb99-15"><a href="#cb99-15" aria-hidden="true" tabindex="-1"></a>quiz_marks_6PM_practical <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">45</span>, <span class="dv">90</span>, <span class="dv">27</span>, <span class="dv">65</span>, <span class="dv">39</span>, <span class="dv">77</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -2091,11 +2090,21 @@ mean of x mean of y
 </div>
 <p>Note that the output mentions “Welch Two Sample t-test”, which is a version of the test that does <strong>not</strong> assume equal variances. This is the version that is taught to undergraduates, because we have not at this point introduced the process of assumption testing. If you definitely know that the variances <em>are</em> equal and you definitely want Student’s <em>t</em>-test, you can instead change the default setting. Next time, we’ll look in more depth about how to work with functions and specify exactly how you want them to run.</p>
 <p>In future tutorials, we’ll also see how to turn this rather ugly R output automatically into more nicely formatted reporting like this:</p>
-<blockquote class="blockquote">
+<div class="callout callout-style-default callout-tip callout-titled" title="Analysis Results">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Analysis Results
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>Effect sizes were labelled following Cohen’s (1988) recommendations.</p>
-</blockquote>
-<p>The Two Sample t-test testing the difference between quiz_9am and quiz_6pm (mean of x = 64.33, mean of y = 52.89) suggests that the effect is positive, statistically not significant, and small (difference = 11.44, 95% CI [-12.19, 35.08], t(16) = 1.03, p = 0.320; Cohen’s d = 0.48, 95% CI [-0.46, 1.42]).</p>
-<!-- > We compared mean scores between two groups, one who took the quiz in a 9am practical session (*M* = 64.33) and the other who took the quiz in a 6pm practical session (*M* =52.89, *M*~diff~ = 11.44). There was no statistically significant difference in scores between practical groups (*t*(16) = 1.03, *p* = 0.32, 95% CI \[-12.19, 35.08\]). -->
+<p>The Welch Two Sample t-test testing the difference between quiz_9am and quiz_6pm (mean of x = 64.33, mean of y = 52.89) suggests that the effect is positive, statistically not significant, and small (difference = 11.44, 95% CI [-12.31, 35.20], t(15.08) = 1.03, p = 0.321; Cohen’s d = 0.48, 95% CI [-0.46, 1.42]).</p>
+</div>
+</div>
+<!-- > We compared mean scores between two groups, one who took the quiz in a 9am practical session (*M* = 64.33) and the other who took the quiz in a 6pm practical session (*M* =52.89, *M*~diff~ = 11.44). There was no statistically significant difference in scores between practical groups (*t*(15.08) = 1.03, *p* = 0.321, 95% CI \[-12.31, 35.2\]). -->
 <p>&nbsp;</p>
 <div class="repro">
 <div class="repro-header">
@@ -2166,7 +2175,7 @@ mean of x mean of y
  55.22222  51.33333 </code></pre>
 </div>
 </div>
-<p>Compare these results to above. The results in <code>monday_quiz_t_test</code> - now, the “Monday” object contains the results for the Tuesday data.</p>
+<p>Compare these results to above. <strong>The “Monday” object, <code>monday_quiz_t_test</code>, now contains the results for the Tuesday data.</strong></p>
 <p>If you always meticulously execute your code line by line from start to finish, you won’t run into this issue. But, as time goes on, you may notice that this is not the most user-friendly way to interact with a script, and you may find yourself running lines of code in non-sequential order.</p>
 <p>This is especially the case if you are running someone else’s code. When doing a reproducibility check, the first thing I (Reny) do is run the whole script to see if there are any errors, and only then do I go back and rerun different bits and pieces of the code to check the actual results.</p>
 <div class="callout callout-style-default callout-important callout-titled">
@@ -2182,7 +2191,7 @@ Important
 <p>A key aspect to writing reproducible code is that the code should be flexible and resilient – it should always provide the same output regardless of the unexpected ways a person might run the code.</p>
 </div>
 </div>
-<p>So, how can we make the code above less prone to errors?</p>
+<p>So, how can we make the code above less prone to these kinds of mixups?</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb155"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb155-1"><a href="#cb155-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Quiz marks from Monday practicals</span></span>
 <span id="cb155-2"><a href="#cb155-2" aria-hidden="true" tabindex="-1"></a>quiz_monday_9am <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">75</span>, <span class="dv">58</span>, <span class="dv">62</span>, <span class="dv">16</span>, <span class="dv">33</span>, <span class="dv">67</span>, <span class="dv">89</span>, <span class="dv">100</span>, <span class="dv">79</span>)</span>
@@ -2212,7 +2221,7 @@ Important
 <li id="fn1"><p>This isn’t <em>technically</em> true - have a look at the “History” tab in the Environment window. However, the commands stored here can’t be run or used - they have to be copied into the Console or Source windows in order to run. The History tab provides an exhaustive record of the things you’ve typed, not a cohesive or meaningful series of steps.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>Don’t get me wrong - crashes do happen! But they often look like a “fatal error” popup message, the programme freezing, or other obvious breakdowns of the programme itself. “Errors” in code as we’re seeing here are just a part of the normal functioning of R and don’t usually mean anything particularly horrific is occurring.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>Well, not in the single command we’re using here. We can certainly get out the age <code>36</code>, but it will take a bit more work - and maybe some <em>regular expressions</em>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>As a linguist I have to note, one, <a href="https://amazingakita.tumblr.com/post/181685581034/people-who-dont-even-care-about-language-how-can">words don’t exist</a>, and two, the closest linguistic term for what an object is is probably “lexeme”. “Word” will get you in the right vicinity, though, conceptually. If you’d like to dive down this rabbit hole (rabbit-hole?) <a href="https://www.youtube.com/watch?v=93sK4jTGrss">this Crash Course video on morphology</a> is a good place to start.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>As a linguist I (Jennifer) have to note, one, <a href="https://amazingakita.tumblr.com/post/181685581034/people-who-dont-even-care-about-language-how-can">words don’t exist</a>, and two, the closest linguistic term for what an object is is probably “lexeme”. “Word” will get you in the right vicinity, though, conceptually. If you’d like to dive down this rabbit hole (rabbit-hole?) <a href="https://www.youtube.com/watch?v=93sK4jTGrss">this Crash Course video on morphology</a> is a good place to start.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5"><p>Again, I could have called this object anything, like <code>the_first_example_of_an_object_InThisSection.so.far</code> or <code>made_upQuizScores.fornineamclass</code> or anything else that follows R’s naming conventions. However, it’s a good idea to name your objects something brief and obvious, so you can remember what they contain and work with them easily. <!-- UPDATE - Reny to add something here? --><a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn6"><p>There is a way to do this - you can enclose the entire expression in round brackets, e.g.&nbsp;<code>(object &lt;- instructions)</code>, which will BOTH create the object AND print out what that object contains at the same time. I’m not using this method in these tutorials because I think it will be confusing, since it’s primarily for demonstration purposes and not necessary the sort of thing you’d want to use in your own analysis code.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn7"><p>We will ignore whether this is an appropriate thing to do statistics wise!<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
