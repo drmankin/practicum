@@ -1039,7 +1039,7 @@ In future tutorials, we'll also see how to turn this rather ugly R output automa
 quiz_t <- t.test(quiz_9am, quiz_6pm, var.equal = TRUE)
 ```
 
-> `r cat(gsub("[\n]", " ", report::report(quiz_t)))`.
+> `r report::report(quiz_t)`.
 
 <!-- > We compared mean scores between two groups, one who took the quiz in a 9am practical session (*M* = `r round(quiz_t$estimate[1], 2)`) and the other who took the quiz in a 6pm practical session (*M* =`r round(quiz_t$estimate[2], 2)`, *M*~diff~ = `r round(quiz_t$estimate[1] - quiz_t$estimate[2], 2)`). There was no statistically significant difference in scores between practical groups (*t*(`r round(quiz_t$parameter, 2)`) = `r round(quiz_t$statistic, 2)`, *p* = `r round(quiz_t$p.value, 3)`, 95% CI \[`r round(quiz_t$conf.int[1], 2)`, `r round(quiz_t$conf.int[2], 2)`\]). -->
 
