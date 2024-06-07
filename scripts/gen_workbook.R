@@ -101,8 +101,8 @@ gen_workbook <- function(this_file, out){
   this_page <- sub(".qmd", "", this_file)
   
   viewer_text <- c("## Open the Tutorial\n\nUse the following code chunks to open the accompanying tutorial.",
-                   paste0("### Open in RStudio Viewer\n\n```{r}\nrstudioapi::viewer('https://r-training.netlify.app/", this_page, "')\n```", collapse = ""),
-                   paste0("### Open in a New Browser Tab\n\n```{r}\nutils::browseURL('https://r-training.netlify.app/", this_page, "')\n```", collapse = "")
+                   paste0("### Open in RStudio Viewer\n\n```{r}\n#| eval: false\nrstudioapi::viewer('https://r-training.netlify.app/", this_page, "')\n```", collapse = ""),
+                   paste0("### Open in a New Browser Tab\n\n```{r}\n#| eval: false\nutils::browseURL('https://r-training.netlify.app/", this_page, "')\n```", collapse = "")
   ) |> 
     paste0(collapse="\n\n")
   

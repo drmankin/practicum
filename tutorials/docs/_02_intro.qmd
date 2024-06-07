@@ -30,13 +30,19 @@ See [Posit's Using RStudio Projects](https://support.posit.co/hc/en-us/articles/
 
 ### Documents
 
-As we discussed [in the previous tutorial](01_02_intro.qmd), one of the key strengths of doing your work using R (or any other programming language) is reproducibility - in other words, every step of the process from raw file to output is documented and replicable. However, this is only the case if you do in fact write your code down somewhere! To do that, you'll need to create some kind of document to record your code. There are two main types of documents you might consider using: a script or a Quarto document.
+As we discussed [in the previous tutorial](01_intro.qmd), one of the key strengths of doing your work using R (or any other programming language) is reproducibility - in other words, every step of the process from raw file to output is documented and replicable. However, this is only the case if you do in fact write your code down somewhere! To do that, you'll need to create some kind of document to record your code. There are two main types of documents you might consider using: a script or a Quarto document.
 
 #### Quarto documents
 
 Quarto documents contain a combination of both non-code text and code. The main strength of these documents is that they can be **rendered** to some other output format, such as HTML, PDF, or Word, by executing all of the code and combining it with the text to create a nicely formatted document.
 
-We will investigate the options for Quarto documents in depth in [the next tutorial](04_lm.qmd#quarto). For now, use the Quarto document in your project on Posit Cloud for your work in this tutorial.
+If you're interested in using Quarto documents often, the [Quarto help documentation](https://quarto.org/docs/get-started/hello/rstudio.html) is excellent. For now, use the Quarto document in your project on Posit Cloud for your work in this tutorial.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Click the "Render" button at the top of your worksheet Quarto document to see what it produces.
+
+:::
 
 #### Scripts
 
@@ -48,9 +54,9 @@ When deciding what kind of document to create, think about what you want to do w
 -   Use **Quarto** if the document needs to contain any amount of text, or will be used to share the output of your code in a presentable way, such as notes for yourself, reports, articles, websites, etc.
   -   The page you're reading now is (or was!) a Quarto document.
 -   Use a **script** if the document only needs to contain code and has a solely functional purpose, such as cleaning a dataset, manipulating files, defining new functions, etc.
-  -   I use a script to process all of the tutorial documents and generate the [Quick Reference](../../../quick_ref.qmd) page.
+  -   I use a script to process all of the tutorial documents and generate the [Quick Reference](../../quick_ref.qmd) page.
 
-In this series, we will almost always use Quarto documents, but scripts are an essential part of the development side of R.
+In this series, we will almost always use Quarto documents, but scripts are an essential part of the development side of R, so you may encounter them in other contexts, for example working with collaborators, reviewing open-source data and code, or you may end up preferring them yourself.
 :::
 
 ## Packages
@@ -63,7 +69,7 @@ In order to utilise the functions in a package, you must do two things:
 2.  Load the package (every time you want to use it) using `library(package_name)` **at the beginning of each new document**
 
 ::: callout-important
-If you are working on these tutorials on the Posit Cloud workspace, **all of the packages you need have been installed already**. Please do not try to install any packages unless directed by the lead, as this could cause unexpected conflicts or errors.
+If you are working on these tutorials on the Posit Cloud workspace, **all of the packages you need have been installed already**. Please do not try to install any packages unless directed by the training lead, as this could cause unexpected conflicts or errors.
 :::
 
 ::: {.callout-tip title="MoRe About: Installing vs Loading Packages" collapse="true"}
@@ -77,7 +83,7 @@ Most likely, though, you'll want to use other apps that don't come with your new
 As you can see, these steps correspond almost exactly to the installing vs loading steps described above. In order to use a package that doesn't come pre-installed with R, you have to do both of these steps.
 :::
 
-### Loading tidyverse
+### Loading {tidyverse}
 
 One of the core packages we use for UG teaching is [{tidyverse}](https://www.tidyverse.org/). This isn't actually a single package, but rather a convenient shorthand to install and load a suite of interconnected packages all together. We will be using {tidyverse} packages throughout this training series, so loading {tidyverse} straightaway is a good habit to get into!
 
@@ -102,7 +108,7 @@ The usual {tidyverse} message contains two parts:
 
 - **`Conflicts`** tells you about any package conflicts as a result of loading the packages.
 
-What are conflicts? Consider that there are lots and *lots* of packages for R. At the time of this writing, CRAN (the repository for R packages) contains [just shy of 20,000](https://cran.r-project.org/web/packages/) R packages, with many, many more on Github and elsewhere. Although people generally try to avoid it, it is necessarily the case that sometimes, people give the same name to two different functions from two different packages. 
+What are conflicts? Consider that there are lots and *lots* of packages for R. At the time of this writing, CRAN (the repository for R packages) contains [just over 20,000](https://cran.r-project.org/web/packages/) R packages, with many, many more on Github and elsewhere. Although people generally try to avoid it, it is necessarily the case that sometimes, people give the same name to two different functions from two different packages. 
 
 So, if you have those packages both loaded, how does R know which one to use? This situation is called a *conflict*.
 
@@ -112,17 +118,19 @@ So, if you have those packages both loaded, how does R know which one to use? Th
 
 In the absence of any other information, R will use the function from the package that was loaded most recently. This is exactly what's happening in the {tidyverse} message above.
 
-There are two conflicts mentioned. one of which reads:
+There are two conflicts mentioned, one of which reads:
 
 ```
 x dplyr::filter() masks stats::filter()
 ```
 
-{stats}, you might remember, is a package that is always installed with R and is loaded by default. So, the {stats} package has a function called `filter()` that is already loaded to begin with. When we loaded {tidyverse}, one of the new packages, {dplyr}, also contains a function called `filter()`. Because {dplyr} has been loaded more recently, if you write a bit of code using `filter()`, the one you will get is `dplyr::filter()`[^pkgfx]. In other words, the more recently loaded `dplyr::filter()` covers over, steps in front of, or (in R terminology) "masks" `stats::filter()`.
+First, briefly note the `package::function()` notation. You can read this notation as, for instance, "the filter function from the dplyr package", or just "dplyr filter". This is sort of like using the function's "full name", where the name of the package it belongs to is written first, followed by two colons, then the name of the function.
 
-[^pkgfx]: You can read this notation as "the filter function from the dplyr package", or just "dplyr filter". As for how to pronounce "dplyr", the [official pronunciation](https://twitter.com/hadleywickham/status/925313165554012160?s=20) is "dee-ply-er", with "plier" like the tool [for which it's named](https://dplyr.tidyverse.org/). I have heard other people say "dipler". Since code is always a bit tricky to read aloud, just go with whatever sounds good to you.
+{stats}, you might remember, is a package that is always installed with R and is loaded by default. So, the {stats} package has a function called `filter()` that is already loaded to begin with whenever you start up R. When we loaded {tidyverse}, one of the new packages, {dplyr}, also contains a function called `filter()`. Because {dplyr} has been loaded more recently, if you write a bit of code using `filter()`, the one you will get is `dplyr::filter()`[^pkgfx]. In other words, the more recently loaded `dplyr::filter()` covers over, steps in front of, or (in R terminology) "masks" `stats::filter()`.
 
-Now, what if you actually want to use `filter()` from {stats} instead? Well, in that case you might want to use...
+[^pkgfx]: As for how to pronounce "dplyr", the [official pronunciation](https://twitter.com/hadleywickham/status/925313165554012160?s=20) is "dee-ply-er", with "plier" like the tool [for which it's named](https://dplyr.tidyverse.org/). I have heard other people say "dipler". Since code is always a bit tricky to read aloud, just go with whatever sounds good to you.
+
+Now, what if you actually want to use `filter()` from {stats} instead, when {tidyverse} is loaded? Well, in that case you might want to use...
 
 **Method 2: Explicit style**
 
@@ -148,13 +156,21 @@ In this section, we'll take a systematic look at the process of using a new func
 
 ### Basics and Help
 
-Let's look at an example of how this translation might work. For this example, I'd like to round the mean of four numbers 45.34, 23.001, 7.3, and 16.9820 to two decimal places - a common task for reporting results in APA style.
+Let's look at an example of how this translation might work. For this example, I'd like to round the mean of four numbers, 45.34, 23.001, 7.3, and 16.9820, to two decimal places - a common task for reporting results in APA style.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+As a warm-up, calculate the mean of the four numbers given above and store this number in a new object called `mean_to_round`.
+
+::: {.callout-note collapse="true" title="Solution"}
 
 ```{r}
 mean_to_round <- mean(c(45.34, 23.001, 7.3, 16.9820))
 mean_to_round
 ```
 
+:::
+:::
 If we want R to do this for us, we have to write a command that represents the operation we want R to perform. First, we need to know what R function corresponds to that operation. We're lucky in this case: the function in R is also called `round()`.
 
 We know that we're looking at a function in R because functions often have a name followed by brackets (and nothing else in R does). That is, they have the general form `function_name()`. Inside the brackets, we can add more information to the function to complete our command, although not all functions require any more information.
@@ -167,7 +183,7 @@ Try running the `round()` function.
 round()
 ```
 
-Unsurprisingly, R has given us an error. This is an **informative** error, though - that is, the error gives of some sort of intelligible clue about what's gone wrong. Namely, it tells us that `round()` can't just work without additional information (i.e. "required arguments").
+Unsurprisingly, R has given us an error. This is an **informative** error, though - that is, the error gives of some sort of intelligible clue about what's gone wrong. Namely, it tells us that `round()` can't just work without additional information (i.e. "arguments").
 :::
 :::
 
@@ -189,13 +205,11 @@ Let's scroll down to "Usage", which gives examples of what the function looks li
 
 The information inside a function's brackets, which gives it the information it needs to work, are called **arguments**. Each argument in a function is separated by a comma, so we can see from `round(x, digits = 0)` that the `round()` function can take two arguments. How many arguments a function has depends on the function; some (like `Sys.Date()`) don't need any arguments to run. One of the most useful parts of a function's help documentation is the "Arguments" section, which tells you what each of the function's arguments are and how to use them.
 
-When referring to arguments, you will hear the terms "named" and "unnamed" arguments. This can be a bit confusing, because all arguments have a name - they have to, otherwise we couldn't refer to them![^oops] The named vs unnamed distinction doesn't refer to the arguments themselves, but rather how the person using the function chooses to write them out. There are some conventions around which arguments are named or not, so let's have a look at that now.
+When referring to arguments, you will hear the terms "named" and "unnamed" arguments. This can be a bit confusing, because all arguments have a name - they have to, otherwise we couldn't refer to them! The named vs unnamed distinction doesn't refer to the arguments themselves, but rather how the person using the function chooses to write them out. There are some conventions around which arguments are named or not, so let's have a look at that now.
 
-[^oops]: In fact, a previous version of this tutorial very confidently gave the wrong definitions! Sorry...
+The **first argument** to `round()` is simply `x`. Just like in maths, `x` is a placeholder for some number or numbers (a "numeric vector", which should sound familiar now) that the function will work on. This is common notation in many functions: `x`, often the first argument in a function, typically denotes the placeholder for the information you want to use the function on. In our case, the numeric vector that we want to find the mean of is stored in an object called `mean_to_round`, so that's what we'll put into the `x` argument.
 
-The **first argument** to `round()` is simply `x`. Just like in maths, `x` is a placeholder for some number or numbers (a "numeric vector", which should sound familiar now) that the function will work on. This is common notation in many functions: `x`, often the first argument in a function, typically denotes the placeholder for the information you want to use the function on. In our case, we just have one number we want to round, so that's what we should replace with `x`.
-
-It's important to note here that this argument `x` has no **default value**. In other words, we must minimally provide some information `x` to this function or it won't be able to run. We know this because `x` appears on its own as an argument; arguments that *do* have a default value have an `=` sign followed y their default value (see the next paragraphs on `digits = 0`!). Because we always have to provide additional information, `x` and similar arguments containing the values or data to work on are frequently *unnamed* when we use them. That means that instead of `r paste0("round(x = ", mean_to_round,"...)")` we can just write `r paste0("round(", mean_to_round,"...)")`. They are also frequently the first argument in the function[^first]. So, when you see reference to the "first unnamed argument" - especially important in {tidyverse} functions designed to work with the pipe operator, which we'll meet next week - that simply means, "the first argument in the function for which the programmer hasn't specifed a name", which is often, but not always or necessarily, the "data" or "information to work on" argument.
+It's important to note here that this argument `x` has no **default value**. In other words, we must minimally provide some information `x` to this function or it won't be able to run. We know this because `x` appears on its own as an argument; arguments that *do* have a default value have an `=` sign followed by their default value (see the next paragraphs on `digits = 0`). Because we always have to provide additional information, `x` and similar arguments containing the values or data to work on are frequently *unnamed* when we use them. That means that instead of `r paste0("round(x = ", mean_to_round,"...)")` we can just write `r paste0("round(", mean_to_round,"...)")`. They are also frequently the first argument in the function[^first]. So, when you see reference to the "first unnamed argument" - especially important in {tidyverse} functions designed to work with the pipe operator, which we'll meet next week - that simply means, "the first argument in the function for which the programmer hasn't specified a name", which is often, but not always or necessarily, the "data" or "information to work on" argument.
 
 [^first]: Again, not necessarily - the base-R string-manipulation functions `grep()` and friends, for example, have `x` as their *third* argument. I know all the irregularities can be confusing, but remember that R is a massive collaborative project across decades and millions of users, so some quirks are inevitable!
 
@@ -212,17 +226,12 @@ Default values of arguments are really useful, because the default is often the 
 Now that we know what both of these arguments mean, we can change them to actually translate the sentence "Round the number `r mean_to_round` to two decimal places" into a command that R can work with. We'll explicitly write out the name of each argument so we know what they are doing.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-Use the `round()` function to round `r mean_to_round` to two decimal places.
 
-If you prefer, you can do this with one of the means you calculated for your own scores earlier.
+Use the `round()` function to round `r mean_to_round` (stored in `mean_to_round`) to two decimal places.
 
 ::: {.callout-note collapse="true" title="Solution"}
 ```{r}
-## Using the actual value from my earlier calculation
-round(x = 23.15575, digits = 2)
-
-## Using a nested function - that is, calculating the mean and then rounding it!
-round(x = mean(c(45.34, 23.001, 7.3, 16.9820)), digits = 2)
+round(x = mean_to_round, digits = 2)
 ```
 :::
 :::
@@ -262,9 +271,9 @@ round(2, 23.15575)
 Here, since we left all the arguments unnamed, R assumed that 2 was the number we wanted to round. This isn't what we wanted - but R has no way of knowing this. It always assumes that what we typed was precisely what we intended to ask R to do.
 :::
 
-#### Passing Multiple Values to Arguments
+### Passing Multiple Values to Arguments
 
-A last important aspect of using functions is that **each argument in a function can only take a single object or value as input**. For example, we saw above that we put the single value 23.15575 into the `x` argument of `round()`. But what if we wanted to round more than one number? We don't want to have to write a new `round()` command for every number, even though we could do this if we particularly enjoyed doing a lot of tedious and repetitive typing:
+A last important aspect of using functions is that **each argument in a function can only take a single object or value as input**. For example, we saw above that we put the single value `r mean_to_round` into the `x` argument of `round()`. But what if we wanted to round more than one number? We don't want to have to write a new `round()` command for every number, even though we could do this if we particularly enjoyed doing a lot of tedious and repetitive typing:
 
 ```{r}
 round(23.15575, digits = 2)
@@ -273,7 +282,7 @@ round(0.198, digits = 2)
 ```
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-Before you go on, have a go using a single `round()` command to round 23.15575, 59.5452, and 0.198 using a single `round()` command.
+Before you go on, have a go using **a single `round()` command** to round 23.15575, 59.5452, and 0.198.
 
 *Hint*: Refer to [Vectors](#vectors).
 :::
@@ -336,7 +345,7 @@ There are two main reasons this "could not find function" error usually appears:
 1. You've misspelt the function name. This isn't the case here (it's only two letters!).
 2. The package that the function belongs to isn't installed and/or loaded.
 
-So, this function does exist, but in order to use it, we need to install and then load it. 
+So, this function does exist, but in order to use it, we need to install and then load the package that contains it. 
 
 ### Installing Packages
 
@@ -384,7 +393,7 @@ Still no dice!
 We know that we have the right package installed - but as you may have guessed, we haven't also loaded the package. We can actually fix this error in one of two ways:
 
 1. Load the {weights} package using the `library()` function. We can then use the function as written above.
-1. Use verbose style, e.g. `weights::rd()`, when writing our command. In this case we don't need to load the package as long as we have it installed.
+1. Use explicit style, e.g. `weights::rd()`, when writing our command. In this case we don't need to load the package as long as we have it installed.
 
 Alright, third time lucky!
 
