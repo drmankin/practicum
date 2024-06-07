@@ -86,6 +86,9 @@ If the data is hosted somewhere online, you can give the hosting URL to R as a s
 Read the CSV file hosted at <https://raw.githubusercontent.com/drmankin/practicum/master/data/syn_data.csv> and save it to the object name `syn_data`.
 
 ::: {.callout-note collapse="true" title="Solution"}
+
+Note the double quotes around the URL to combine it into a single string.
+
 ```{r}
 syn_data <- readr::read_csv("https://raw.githubusercontent.com/drmankin/practicum/master/data/syn_data.csv")
 ```
@@ -129,6 +132,9 @@ Our first option is to call the object that contains our data. This is *almost* 
 Call the `syn_data` object to see what it contains.
 
 ::: {.callout-note collapse="true" title="Solution"}
+
+To "call" an object, we need only type out its name and run the code.
+
 ```{r}
 syn_data
 ```
@@ -173,6 +179,9 @@ We can have a look at the whole dataset more easily - and interact with it to so
 Open the `syn_data` dataset using the `View()` function **in the Console**.
 
 ::: {.callout-note collapse="true" title="Solution"}
+
+Don't put this command in a script/document or code chunk - it can cause crashes and/or weird errors on render.
+
 ```{r}
 #| eval: false
 
@@ -206,7 +215,7 @@ Using **only** View mode, figure out the following:
 
 These features are really useful to have a quick poke around the data or check that everything is in order. However, keep in mind an important point: **None of the changes made in View mode affect the data**. View mode is essentially read-only; there's no way to actually change the dataset or extract the values (like the range or max value) outside of copying them down by hand[^by_hand]. We'll have to use R to work with the data in order to do that.
 
-[^by_hand]: ![](https://media.giphy.com/media/12XMGIWtrHBl5e/giphy.gif, fig-alt='A gif of Michael from the Office (US) shouting "Oh God no! Please no! NOOOOO"')
+[^by_hand]: ![](https://media.giphy.com/media/12XMGIWtrHBl5e/giphy.gif){fig-alt='A gif of Michael from the Office (US) shouting "Oh God no! Please no! NOOOOO"'}
 
 ::: {.callout-important title="No Touching"}
 If you are used to programmes like SPSS or Excel, where you can directly edit or work with the data in the spreadsheet, switching to R can be quite a frustrating change. Even though View mode looks similar, it's like the dataset is behind glass - you can't affect it directly. As we start working with the data via objects and functions, it may feel a bit like you are trying to work blindfolded - you can't actually "see" what you are doing as you do it.
@@ -300,7 +309,7 @@ In most cases, including almost all of the code we will learn in these tutorials
 
 Conceptually, the pipe works taking the output of the code on the left and passing it, by default, into the **first unnamed argument** of whatever comes after it on the right[^unnamed]. Many functions - both from the {tidyverse} and not - are already set up so that the first argument is the data, and {tidyverse} functions are explicitly designed this way in order to work best with the pipe.
 
-[^unnamed]: Remember last week I mentioned that "first unnamed arguments" would be important? Here's why! Look back on [01/02 IntRoductions](01_02_intro.qmd#arguments) if you'd like a refresher. 
+[^unnamed]: Remember last week I mentioned that "first unnamed arguments" would be important? Here's why! Look back on [02 IntRoductions](02_intro.qmd#arguments) if you'd like a refresher. 
 
 For functions where this is not the case, you can determine where the piped-in information should go using a "placeholder". The most noticeable difference between the two pipes is that they have different placeholders. The native pipe (`|>`) uses underscore `_` as its placeholder, while the magrittr pipe (`%>%`) uses the dot/full stop `.` There's an example using placeholders below to help make this clearer.
 
@@ -337,7 +346,7 @@ Think of the placeholder like a bucket or landing pad, where the information com
 
 To make this fully explicit, this illustration shows the progress of information through the same pipe. The orange arrows show how the piped-in information is passed from one function to the next. The teal arrows show what is produced at each step of the pipe - which is what is passed on to the next function via the orange arrows/pipe.
 
-![](../../../images/pipe_arrows.jpg){fig-alt="A screenshot of the same code as above, with orange arrows starting at the end of each pipe and pointing into the placeholder in the following function, and teal arrows pointing to snippets of output for each step of the pipe."}
+![](../../images/pipe_arrows.jpg){fig-alt="A screenshot of the same code as above, with orange arrows starting at the end of each pipe and pointing into the placeholder in the following function, and teal arrows pointing to snippets of output for each step of the pipe."}
 
 ::: {.callout-tip title="A Sweet Pipe Example" collapse="true"}
 
@@ -389,13 +398,8 @@ To start, we'll work again with the whole dataset and look at some helpful funct
 
 If your dataset is structured like this one is - with a single participant per row - then `nrow()` is a common stand-in for counting participants.
 
-::: {.callout-note appearance="minimal" title="Exercise"}
+Using the native pipe, we can print out the number of columns and the names of those columns in the `syn_data` dataset:
 
-Using the native pipe, print out the number of columns and the names of those columns in the `syn_data` dataset.
-
-*Hint*: This will be two separate commands!
-
-::: {.callout-note collapse="true" title="Solution"}
 ```{r}
 syn_data |> 
   ncol()
@@ -405,8 +409,6 @@ syn_data |>
 ```
 
 The new line after the pipe isn't essential (it will run exactly the same way) but it is highly recommended. Although it doesn't make much of a difference here, we will shortly get to longer commands where the new line for each new function will make a big difference to legibility!
-:::
-:::
 
 ::: {.callout-tip title="What's Going On With the Pipe?" collapse="true"}
 If a command like `syn_data |> names()` looks a bit strange, let's take a closer look at it.
@@ -424,23 +426,6 @@ The underscore is the "placeholder" for the native pipe; in other words, it expl
 
 :::
 
-::: {.callout-note appearance="minimal" title="Exercise"}
-
-Using the native pipe, save the number of participants in the `syn_data` dataset in a new object of your choice.
-
-::: {.callout-note collapse="true" title="Solution"}
-```{r}
-px_initial <- syn_data |> 
-  nrow()
-```
-
-This format takes a bit of getting used to. The new object, which I've called `px_initial`[^px], is created at the first line of the command by the `<-`. However, this object *contains* whatever the final output of this pipe is at the end - in this case, the number of rows as a numeric value produced by `nrow()`.
-
-[^px]: You can call this object anything you like; I use "px" as shorthand for "participant."
-
-:::
-:::
-
 ## Describing Variables
 
 Once we've had a look at the whole dataset, it's time to drill down into individual variables. We may want to calculate quick descriptives or investigate what's going on with particular variables that seem to have issues.
@@ -449,7 +434,7 @@ To do this, we'll start working quite a bit with [the {dplyr} package](https://d
 
 ### Counting
 
-We'll start by having a look at character or categorical variables. Here we'll meet our first {dplyr} function: `dplyr::count()`. This function is a friendly way to obtain (as you might expect!) counts of the number of times each unique value appears in a variable. As with just about everything in {dplyr}, it takes a tibble as input and produces a new tibble as output.
+We'll start by having a look at character or categorical variables. Here we'll meet a new {dplyr} function: `dplyr::count()`. This function is a friendly way to obtain (as you might expect!) counts of the number of times each unique value appears in a variable. As with just about everything in {dplyr}, it takes a tibble as input and produces a new tibble as output.
 
 Using the pipe structure we've seen previously, the general form is:
 
@@ -459,27 +444,16 @@ dataset_name |>
 ```
 Minimally you need to provide a single variable to count the values in, but you can add more, separated by commas, to further subdivide the counts.
 
-::: {.callout-note appearance="minimal" title="Exercise"}
+For example, if we wanted to count the number of grapheme-colour synaesthetes in this dataset, we could use the `count()` function as follows:
 
-Using the `syn_data` dataset, produce a tibble of counts of how many participants had any kind of synaesthesia. Then, produce a second tibble, adding in gender as well.
-
-*Hint*: Use the [codebook](03_datasets.qmd#codebook) to find the variables to use.
-
-::: {.callout-note collapse="true" title="Solution"}
 ```{r}
 syn_data |> 
-  dplyr::count(syn)
-
-syn_data |> 
-  dplyr::count(syn, gender)
+  dplyr::count(syn_graph_col)
 ```
 
 As you can see, the output from this function is a new summary tibble containing only the unique values in each variable, and a count, in the new "`n`" variable, of how many times that value (or combination of values) appeared.
 
 Note that this **does not** change or add anything to your original dataset! Instead, this function creates a brand-new tibble with the requested information.
-
-:::
-:::
 
 ### Subsetting
 
@@ -499,39 +473,16 @@ dataset_name |>
   dplyr::pull(variable_to_subset)
 ```
 
-::: {.callout-note appearance="minimal" title="Exercise"}
-
-Subset `syn_data` using `$` to get out all the values stored in the `scsq_organise` variable.
-
-::: {.callout-note collapse="true" title="Solution"}
-
-To keep this tutorial legible, I've only printed out the first 10 values.
+For example, let's get out all of the values in the `scsq_global` variable using each method. (To keep this tutorial legible, I've only printed out the first 10 values.)
 
 ```{r R.options=list(max.print=10)}
-syn_data$scsq_organise
-```
-:::
-:::
+## Base-R $ subsetting
+syn_data$scsq_global
 
-::: {.callout-note appearance="minimal" title="Exercise"}
-
-Subset `syn_data` using `dplyr::pull()` to get out all the values stored in the `gc_score` variable. How would you read this code?
-
-::: {.callout-note collapse="true" title="Solution"}
-
-Again, I've only printed out the first 10 values.
-
-```{r R.options=list(max.print=10)}
+## dplyr::pull subsetting
 syn_data |> 
-  dplyr::pull(gc_score)
+  dplyr::pull(scsq_global)
 ```
-
-Your exact translation may vary, but one option is:
-
-> Take the `syn_data` dataset, *and then* pull out all the values in the `gc_score` variable.
-
-:::
-:::
 
 If you're wondering when to use `$` and when to use `dplyr::pull()`, the answer depends on what you want to do! We'll see some examples of both in just a moment.
 
@@ -546,19 +497,114 @@ Next up, we can start working with these values in the dataset. The base-R {stat
 
 A key feature of all of these functions is that, by default, they return `NA` if there are any `NA`s (missing values) present. (This is very sensible behaviour by default, but is frequently not the information we want when we use them.) So, they all have an argument, `na.rm =`, which determines whether `NA`s should be removed. By default this argument is set to `FALSE` (`NA`s should NOT be removed), but if you want to get the calculation ignoring any `NA`s, you can set this argument to `TRUE` instead.
 
+Let's look some more at the `scsq_global` variable. Now that we know how to subset it from the dataset - producing a vector of numbers - we can use the functions above to calculate some information. Let's get the mean and the standard deviation, using each subsetting method once.
+
+```{r}
+mean(syn_data$scsq_global, na.rm = TRUE)
+syn_data |> 
+  dplyr::pull(scsq_global) |> 
+  sd(na.rm = TRUE)
+```
+
+
+As a quick check to get an individual number, this method is quite useful. However, you may have noticed that if we wanted this information for lots of variables, this would be repetitive, laborious, and prone to error. We've already seen how to use [existing summary functions](#overall-summaries), but we will also look at creating custom summary tables in a future tutorial.
+
+### Visualisations
+
+The final piece we will look at today will be base-R data visualisations in the {graphics} package. These built-in graphics functions are particularly helpful for quick spot checks during data cleaning and manipulation. For high-quality, fully customisable, professional data visualisations, we will use the {ggplot2} package, covered in depth later on in this course.
+
+To get the idea, there are a few options for common plots:
+
+- `hist()` for histograms
+- `boxplot()` and `barplot()`
+- `plot()` for scatterplots
+
+As one example, let's look at the `hist()` function to create a histogram. The help documentation lists a large number of possible arguments to tweak the appearance of the histogram, but unless you're quite keen, I wouldn't worry about them too much. For now, we'll just look at three:
+
+- `main`, to give the plot a title
+- `xlab` and `ylab`, to label the x and y axes respectively.
+
+So, both with and without the labelling, we get:
+
+```{r}
+#| layout-ncol: 2
+
+hist(syn_data$scsq_global)
+
+hist(syn_data$scsq_global,
+     main = "Histogram of the Global Bias subscale of the SCSQ",
+     xlab = "SCSQ Global score")
+```
+
+For more help and examples with base R graphics, try [this quick guide](https://rstudio-pubs-static.s3.amazonaws.com/7953_4e3efd5b9415444ca065b1167862c349.html).
+
+## Exercises
+
+The following exercises will help you practice the new functions and techniques in the second half of this tutorial. Have a go at each, using the solutions if you get stuck. Good luck!
+
 ::: {.callout-note appearance="minimal" title="Exercise"}
 
-Calculate the mean, standard deviation, and median of the SCSQ global subscale, and the range of the grapheme-colour synaesthesia score.
+Using the native pipe, save the number of participants in the `syn_data` dataset in a new object of your choice.
+
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+px_initial <- syn_data |> 
+  nrow()
+```
+
+This format takes a bit of getting used to. The new object, which I've called `px_initial`[^px], is created at the first line of the command by the `<-`. However, this object *contains* whatever the final output of this pipe is at the end - in this case, the number of rows as a numeric value produced by `nrow()`.
+
+[^px]: You can call this object anything you like; I use "px" as shorthand for "participant."
+
+:::
+:::
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Using the `syn_data` dataset, produce a tibble of counts of how many participants had any kind of synaesthesia. Then, produce a second tibble, adding in gender as well.
+
+*Hint*: Use the [codebook](#codebook) to find the variables to use.
+
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+syn_data |> 
+  dplyr::count(syn)
+
+syn_data |> 
+  dplyr::count(syn, gender)
+```
+
+:::
+:::
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Get out all the values stored in the `scsq_organise` variable, using each subset method.
+
+::: {.callout-note collapse="true" title="Solution"}
+
+To keep this tutorial legible, I've only printed out the first 10 values.
+
+```{r R.options=list(max.print=10)}
+syn_data$scsq_organise
+syn_data |> 
+  dplyr::pull(organise)
+```
+:::
+:::
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Calculate the mean and median of the SCSQ global bias subscale, and the range of the `gc_score` variable.
 
 Try using each subsetting method at least once.
 
 ::: {.callout-note collapse="true" title="Solution"}
 
-We'll start by using `$` subsetting for the first bit, and `pull()` for the second. Not for any principled reason - feel free to try it either way.
+We'll start by using `$` subsetting for the first commands, and `pull()` for the last. Not for any principled reason - feel free to try it either way.
 
 ```{r}
 mean(syn_data$scsq_global)
-sd(syn_data$scsq_global)
 median(syn_data$scsq_global)
 ```
 
@@ -573,41 +619,13 @@ syn_data |>
 :::
 :::
 
-As a quick check to get an individual number, this method is quite useful. However, you may have noticed that if we wanted this information for lots of variables, this would be repetitive, laborious, and prone to error. We've already seen how to use [existing summary functions](03_datasets.qmd#overall-summaries), but we will also look at [creating custom summary tables](../02_essentials/06_changes.qmd) in a future tutorial.
-
-### Visualisations
-
-The final piece we will look at today will be base-R data visualisations in the {graphics} package. These built-in graphics functions are particularly helpful for quick spot checks during data cleaning and manipulation. For high-quality, fully customisable, professional data visualisations, we will use the {ggplot2} package, covered in depth in the next section of the course.
-
-To get the idea, there are a few options for common plots:
-
-- `hist()` for histograms
-- `boxplot()` and `barplot()`
-- `plot()` for scatterplots
-
-For more help and examples with base R graphics, try [this quick guide](https://rstudio-pubs-static.s3.amazonaws.com/7953_4e3efd5b9415444ca065b1167862c349.html).
-
 ::: {.callout-note appearance="minimal" title="Exercise"}
 
-Try making a histogram and a boxplot, using any of the variables in the `syn_data` dataset. Try using `$` and `pull()` once each.
+Try making a boxplot of the `gc_score` variable. Use either `$` or `pull()` as you like.
 
-*Optionally*, if you feel so inclined, use the help documentation to spruce up your plots a bit, such as changing the title and axis labels.
+*Optionally*, if you feel so inclined, use the help documentation to spruce up your plot a bit, such as changing the title label.
 
 ::: {.callout-note collapse="true" title="Solution"}
-
-Histogram:
-
-```{r}
-#| layout-ncol: 2
-
-hist(syn_data$scsq_language)
-
-hist(syn_data$scsq_language,
-     main = "Histogram of the Language subscale of the SCSQ",
-     xlab = "SCSQ Language score")
-```
-
-Boxplot:
 
 ```{r}
 #| layout-ncol: 2
@@ -643,7 +661,6 @@ Barplots require two sets of values: a categorical one on the horizontal *x* axi
 The help documentation is most helpful in the Examples section, where it shows actual examples of how the function works. There we can see an example of the formula method, `y ~ x`, which I've used below. Since we're piping in the data to an argument that is *not* the first, I've used the placeholder in the `data = _` argument to finish the command.
 
 ```{r}
-
 syn_data |> #<1> 
   dplyr::count(syn) |> #<2> 
   barplot( #<3> 
@@ -674,7 +691,3 @@ syn_data |>
 :::
 
 \ 
-
-::: {.callout-warning appearance="minimal" title="Well Done!"}
-That's the end of this tutorial. Very well done on all your hard work!
-:::

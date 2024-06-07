@@ -1036,10 +1036,14 @@ In future tutorials, we'll also see how to turn this rather ugly R output automa
 ```{r}
 #| echo: false
 
-quiz_t <- t.test(quiz_9am, quiz_6pm, var.equal = TRUE)
+quiz_t <- t.test(quiz_9am, quiz_6pm)
 ```
 
-> `r report::report(quiz_t)`.
+::: {.callout-tip title="Analysis Results"}
+
+`r report::report(quiz_t)`.
+
+:::
 
 <!-- > We compared mean scores between two groups, one who took the quiz in a 9am practical session (*M* = `r round(quiz_t$estimate[1], 2)`) and the other who took the quiz in a 6pm practical session (*M* =`r round(quiz_t$estimate[2], 2)`, *M*~diff~ = `r round(quiz_t$estimate[1] - quiz_t$estimate[2], 2)`). There was no statistically significant difference in scores between practical groups (*t*(`r round(quiz_t$parameter, 2)`) = `r round(quiz_t$statistic, 2)`, *p* = `r round(quiz_t$p.value, 3)`, 95% CI \[`r round(quiz_t$conf.int[1], 2)`, `r round(quiz_t$conf.int[2], 2)`\]). -->
 
@@ -1095,7 +1099,7 @@ This is especially the case if you are running someone else’s code. When doing
 A key aspect to writing reproducible code is that the code should be flexible and resilient – it should always provide the same output regardless of the unexpected ways a person might run the code.
 :::
 
-So, how can we make the code above less prone to errors?
+So, how can we make the code above less prone to these kinds of mixups?
 
 ```{r}
 # Quiz marks from Monday practicals

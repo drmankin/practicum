@@ -463,7 +463,7 @@ Think of the placeholder like a bucket or landing pad, where the information com
 
 To make this fully explicit, this illustration shows the progress of information through the same pipe. The orange arrows show how the piped-in information is passed from one function to the next. The teal arrows show what is produced at each step of the pipe - which is what is passed on to the next function via the orange arrows/pipe.
 
-![](../../../images/pipe_arrows.jpg){fig-alt="A screenshot of the same code as above, with orange arrows starting at the end of each pipe and pointing into the placeholder in the following function, and teal arrows pointing to snippets of output for each step of the pipe."}
+![](../../images/pipe_arrows.jpg){fig-alt="A screenshot of the same code as above, with orange arrows starting at the end of each pipe and pointing into the placeholder in the following function, and teal arrows pointing to snippets of output for each step of the pipe."}
 
 ::: {.callout-tip title="A Sweet Pipe Example" collapse="true"}
 
