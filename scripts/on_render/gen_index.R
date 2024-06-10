@@ -55,7 +55,7 @@ all_qmds <- all_qmds[!grepl("^_.*", all_qmds)]
 
 ### Put function index files in fx folder!
 
-path_fx_index <- file.path(getwd(), "tutorials/index")
+path_fx_index <- file.path(getwd(), "tutorials/index/fx")
 
 if(!dir.exists(path_fx_index)){
   dir.create(path_fx_index)
@@ -172,7 +172,7 @@ fxs_tab <- fxs_tib_wide |>
 
 # Create Topics Index -----------------------------------------------------
 
-path_topics_index <- file.path(getwd(), "tutorials/index")
+path_topics_index <- file.path(getwd(), "tutorials/index/topics")
 
 if(!dir.exists(path_topics_index)){
   dir.create(path_topics_index)
@@ -201,8 +201,7 @@ clean_topics <- function(this_file){
   # gsub("#' #{1,} (.*)", "\\1", this_code[grepl("#' #{2,3} ", this_code)])
 }
 
-titles_key <- list.files(path = all_qmds_path, pattern = ".qmd$", 
-                         recursive = TRUE, full.names = TRUE) |> 
+titles_key <- file.path(all_qmds_path, all_qmds) |> 
   purrr::set_names(nm = unlist(purrr::map(file.path(all_qmds_path, all_qmds), get_title)))
 
 topics <- list.files(path = path_topics_index, pattern = "_topics.R$", recursive = TRUE, full.names = TRUE) |> 
