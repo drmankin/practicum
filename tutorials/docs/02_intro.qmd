@@ -451,7 +451,7 @@ Putting these two things together, we arrive at why it's preferable to do even s
 
 [^4]: I'm playing the devil's advocate a bit here!
 
-## Packages, redux
+## Packages Revisited
 
 We just had an in-depth look at the `round()` function, but say we weren't happy with the way this function does rounding in particular situations. For instance, we might want to round a *p*-value to three decimal places with no leading 0 (as we teach UGs to report *p*), but that's not how `round()` rolls:
 

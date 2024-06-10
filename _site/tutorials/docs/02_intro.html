@@ -321,7 +321,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#using-functions" id="toc-using-functions" class="nav-link" data-scroll-target="#using-functions">Using Functions</a></li>
   <li><a href="#passing-multiple-values-to-arguments" id="toc-passing-multiple-values-to-arguments" class="nav-link" data-scroll-target="#passing-multiple-values-to-arguments">Passing Multiple Values to Arguments</a></li>
   </ul></li>
-  <li><a href="#packages-redux" id="toc-packages-redux" class="nav-link" data-scroll-target="#packages-redux">Packages, redux</a>
+  <li><a href="#packages-revisited" id="toc-packages-revisited" class="nav-link" data-scroll-target="#packages-revisited">Packages Revisited</a>
   <ul>
   <li><a href="#installing-packages" id="toc-installing-packages" class="nav-link" data-scroll-target="#installing-packages">Installing Packages</a></li>
   <li><a href="#loading-packages" id="toc-loading-packages" class="nav-link" data-scroll-target="#loading-packages">Loading Packages</a></li>
@@ -511,7 +511,7 @@ MoRe About: Installing vs Loading Packages
 <p>RepRoducibility: Package versions</p>
 </div>
 <div class="repro-body">
-<p>R packages get regular updates. Some updates are minor but others can change how functions work, and in some cases functions can even be removed. Because of this, it is a good idea to note the specific versions of the packages you are using. One way to do this is to load all the packages you need with <code>library()</code> and then call the function <code>sessionInfo()</code> to see the specific versions you are using. This functions can generate a lot of output. The most important information is the version of R you are using and the versions of the packages you loaded, which are listed under “other attached packages”.</p>
+<p>R packages get regular updates. Some updates are minor but others can change how functions work, and in some cases functions can even be removed. Because of this, it is a good idea to note the specific versions of the packages you are using. One way to do this is to load all the packages you need with <code>library()</code> and then call the function <code>sessionInfo()</code> to see the specific versions you are using. This function can generate a lot of output. The most important information is the version of R you are using and the versions of the packages you loaded, which are listed under “other attached packages”.</p>
 </div>
 </div>
 <section id="loading-tidyverse" class="level3">
@@ -854,13 +854,13 @@ MoRe About: Order and Naming of Arguments
     Two Sample t-test
 
 data:  vector_1 and vector_2
-t = -8.4993, df = 38, p-value = 1.276e-10
+t = -12.192, df = 38, p-value = 5.266e-15
 alternative hypothesis: true difference in means is less than 5
 78 percent confidence interval:
-      -Inf -7.450232
+      -Inf -9.995195
 sample estimates:
 mean of x mean of y 
- 17.04281  25.75175 </code></pre>
+ 14.52705  25.54769 </code></pre>
 </div>
 </div>
 <p>Looking at the information I have given to <code>t.test()</code> I can only tell what <code>vector_1</code> and <code>vector_2</code> correspond to. The rest is mystery and code shouldn’t be mysterious. Let’s compare that to using named arguments:</p>
@@ -877,13 +877,13 @@ mean of x mean of y
     Two Sample t-test
 
 data:  vector_1 and vector_2
-t = -8.4993, df = 38, p-value = 1.276e-10
+t = -12.192, df = 38, p-value = 5.266e-15
 alternative hypothesis: true difference in means is less than 5
 78 percent confidence interval:
-      -Inf -7.450232
+      -Inf -9.995195
 sample estimates:
 mean of x mean of y 
- 17.04281  25.75175 </code></pre>
+ 14.52705  25.54769 </code></pre>
 </div>
 </div>
 <p>This is a lot better! Some unresolved mystery still remains, so you may want to check the help menu of the <code>t.test()</code> function and add a comment written in plain English that describes what is happening in that line. More on comments later…</p>
@@ -999,8 +999,8 @@ Help Documentation, Revisited
 </div>
 </section>
 </section>
-<section id="packages-redux" class="level2">
-<h2 class="anchored" data-anchor-id="packages-redux">Packages, redux</h2>
+<section id="packages-revisited" class="level2">
+<h2 class="anchored" data-anchor-id="packages-revisited">Packages Revisited</h2>
 <p>We just had an in-depth look at the <code>round()</code> function, but say we weren’t happy with the way this function does rounding in particular situations. For instance, we might want to round a <em>p</em>-value to three decimal places with no leading 0 (as we teach UGs to report <em>p</em>), but that’s not how <code>round()</code> rolls:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(.<span class="dv">00793</span>, <span class="at">digits =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1337,13 +1337,13 @@ Solution
     Two Sample t-test
 
 data:  group_1 and group_2
-t = -28.304, df = 58, p-value &lt; 2.2e-16
+t = -36.528, df = 58, p-value &lt; 2.2e-16
 alternative hypothesis: true difference in means is not equal to 0
 95 percent confidence interval:
- -43.75113 -37.97154
+ -42.90059 -38.44304
 sample estimates:
 mean of x mean of y 
- 39.78080  80.64213 </code></pre>
+ 39.89450  80.56631 </code></pre>
 </div>
 </div>
 <p>… to this one:</p>
@@ -1361,13 +1361,13 @@ mean of x mean of y
     Two Sample t-test
 
 data:  group_2 and group_1
-t = 28.304, df = 58, p-value &lt; 2.2e-16
+t = 36.528, df = 58, p-value &lt; 2.2e-16
 alternative hypothesis: true difference in means is not equal to 0
 95 percent confidence interval:
- 37.97154 43.75113
+ 38.44304 42.90059
 sample estimates:
 mean of x mean of y 
- 80.64213  39.78080 </code></pre>
+ 80.56631  39.89450 </code></pre>
 </div>
 </div>
 <p>In addition to making code legible, comments specify your intentions and make it easier to verify that your code is doing exactly what you wanted it to do. For example, if you have computed a between-subjects t-test, but there is a comment saying that you intended to computed a paired-subjects t-test, the error will be easier to catch than in the absence of a descriptive comment.</p>
