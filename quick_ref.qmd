@@ -24,7 +24,7 @@ The table below is arranged alphabetically by function name, and the linked full
   <tr>
    <td style="text-align:left;"> c() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/base/c.html">c()</a> </td>
-   <td style="text-align:left;"> 01: IntRoduction </td>
+   <td style="text-align:left;"> 01: IntRoduction<br>02: IntRoduction II </td>
   </tr>
   <tr>
    <td style="text-align:left;"> class() </td>
@@ -37,14 +37,44 @@ The table below is arranged alphabetically by function name, and the linked full
    <td style="text-align:left;"> 01: IntRoduction </td>
   </tr>
   <tr>
+   <td style="text-align:left;"> library() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/library.html">library()</a> </td>
+   <td style="text-align:left;"> 02: IntRoduction II </td>
+  </tr>
+  <tr>
    <td style="text-align:left;"> mean() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/base/mean.html">mean()</a> </td>
-   <td style="text-align:left;"> 01: IntRoduction </td>
+   <td style="text-align:left;"> 01: IntRoduction<br>02: IntRoduction II </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> median() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/stats/median.html">median()</a> </td>
+   <td style="text-align:left;"> 02: IntRoduction II </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> range() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/range.html">range()</a> </td>
+   <td style="text-align:left;"> 02: IntRoduction II </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> rd() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/pkg/weights/man/rd.html">weights::rd()</a> </td>
+   <td style="text-align:left;"> 02: IntRoduction II </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> rnorm() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/stats/Normal.html">rnorm()</a> </td>
+   <td style="text-align:left;"> 02: IntRoduction II </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> round() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/Round.html">round()</a> </td>
+   <td style="text-align:left;"> 02: IntRoduction II </td>
   </tr>
   <tr>
    <td style="text-align:left;"> t.test() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/stats/t.test.html">t.test()</a> </td>
-   <td style="text-align:left;"> 01: IntRoduction </td>
+   <td style="text-align:left;"> 01: IntRoduction<br>02: IntRoduction II </td>
   </tr>
 </tbody>
 </table>
@@ -84,6 +114,27 @@ If you're looking for a particular section of a tutorial, use this handy summary
   </tr>
   <tr>
    <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Quick Test: *t*-test](tutorials/docs/01_intro.qmd#quick-test:-*t*-test) </td>
+   <td style="text-align:left;">  </td>
+  </tr>
+  <tr grouplength="5"><td colspan="2" style="border-bottom: 1px solid;"><strong>02: IntRoduction II</strong></td></tr>
+<tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Setup](tutorials/docs/02_intro.qmd#setup) </td>
+   <td style="text-align:left;"> [Projects {#projects}](tutorials/docs/02_intro.qmd#projects-{#projects}), [Documents](tutorials/docs/02_intro.qmd#documents) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Packages {#packages}](tutorials/docs/02_intro.qmd#packages-{#packages}) </td>
+   <td style="text-align:left;"> [Loading `tidyverse`](tutorials/docs/02_intro.qmd#loading-`tidyverse`) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Functions](tutorials/docs/02_intro.qmd#functions) </td>
+   <td style="text-align:left;"> [Basics and Help](tutorials/docs/02_intro.qmd#basics-and-help), [Arguments](tutorials/docs/02_intro.qmd#arguments), [Using Functions](tutorials/docs/02_intro.qmd#using-functions), [Passing Multiple Values to Arguments](tutorials/docs/02_intro.qmd#passing-multiple-values-to-arguments) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Packages Revisited](tutorials/docs/02_intro.qmd#packages-revisited) </td>
+   <td style="text-align:left;"> [Installing Packages](tutorials/docs/02_intro.qmd#installing-packages), [Loading Packages](tutorials/docs/02_intro.qmd#loading-packages) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Exercises](tutorials/docs/02_intro.qmd#exercises) </td>
    <td style="text-align:left;">  </td>
   </tr>
 </tbody>

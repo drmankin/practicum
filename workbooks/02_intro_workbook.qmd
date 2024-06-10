@@ -1,0 +1,155 @@
+---
+title: "02: IntRoduction II"
+execute:
+  error: true
+embed-resources: true
+editor: visual
+---
+
+## Open the Tutorial
+
+Use the following code chunks to open the accompanying tutorial.
+
+### Open in RStudio Viewer
+
+```{r}
+#| eval: false
+rstudioapi::viewer('https://r-training.netlify.app/tutorials/docs/02_intro')
+```
+
+### Open in a New Browser Tab
+
+```{r}
+#| eval: false
+utils::browseURL('https://r-training.netlify.app/tutorials/docs/02_intro')
+```
+
+## Overview
+
+## Setup
+
+### Projects {#projects}
+
+### Documents
+
+#### Quarto documents
+
+Click the "Render" button at the top of your worksheet Quarto document to see what it produces.
+
+```{r}
+
+```
+
+#### Scripts
+
+## Packages {#packages}
+
+### Loading `tidyverse`
+
+Load the {tidyverse} package in your workbook.
+
+*Note*: If you are on the Cloud workspace, {tidyverse} will already be installed. If not, you may need to install it first.
+
+```{r}
+
+```
+
+## Functions
+
+### Basics and Help
+
+As a warm-up, calculate the mean of the four numbers given above and store this number in a new object called `mean_to_round`.
+
+```{r}
+
+```
+
+Try running the `round()` function.
+
+```{r}
+
+```
+
+Open the help documentation for the `round()` function by running `?round()` or `help(round)` **in the Console**.
+
+```{r}
+
+```
+
+### Arguments
+
+### Using Functions
+
+Use the `round()` function to round 23.15575 (stored in `mean_to_round`) to two decimal places.
+
+```{r}
+
+```
+
+### Passing Multiple Values to Arguments
+
+Before you go on, have a go using **a single `round()` command** to round 23.15575, 59.5452, and 0.198.
+
+*Hint*: Refer to [Vectors](#vectors).
+
+```{r}
+
+```
+
+## Packages Revisited
+
+Round the number .00793 to three decimal places using the `rd()` function.
+
+```{r}
+
+```
+
+### Installing Packages
+
+Install the {weights} package. Replace `function_name` in the example command below and run this command **in the Console** only.
+
+*Note*: As mentioned above, please don't regularly install packages if you're on the Posit Cloud workspace - but in this specific case, it's good to get the practice!
+
+\[Use the Console for this task!\]
+
+Round the number .00793 to three decimal places using the `rd()` function.
+
+```{r}
+
+```
+
+### Loading Packages
+
+Round the number .00793 to three decimal places using the `rd()` function, using either method to access the function in the {weights} package.
+
+```{r}
+
+```
+
+## Exercises
+
+Run the following code in your workbook to generate the data you need for the following tasks.
+
+```{r}
+practice_data <- c(15, 784, 2, NA, 956, 9, 23, 8, 326, 1, 406)
+```
+
+Return the median and range of `practice_data`.
+
+*Hint*: If you are getting back a result that isn't particularly informative, use the help documentation to figure out how to deal with it.
+
+```{r}
+
+```
+
+Calculate a 10% trimmed mean for `practice_data`, but specify the trim first in the function.
+
+```{r}
+
+```
+
+Go back to the code you wrote for the exercises above and add some comments to your code in plain English.
+
+```{r}
+
+```
