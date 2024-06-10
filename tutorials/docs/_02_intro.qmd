@@ -171,7 +171,8 @@ mean_to_round
 
 :::
 :::
-If we want R to do this for us, we have to write a command that represents the operation we want R to perform. First, we need to know what R function corresponds to that operation. We're lucky in this case: the function in R is also called `round()`.
+
+As a result of the calculation above, we now have the mean of the numbers of interest, `r mean_to_round`, that we want to round to two decimal places. If we want R to do this for us, we have to write a command that represents the operation we want R to perform. First, we need to know what R function corresponds to that operation. We're lucky in this case: the function in R is also called `round()`.
 
 We know that we're looking at a function in R because functions often have a name followed by brackets (and nothing else in R does). That is, they have the general form `function_name()`. Inside the brackets, we can add more information to the function to complete our command, although not all functions require any more information.
 
@@ -317,6 +318,43 @@ Before we leave the `round()` function altogether, let's take a look at two more
 
 Finally, at the end of the documentation you can find the "Examples" section. If you are learning to use a new function, this section can give you a template for writing your own commands. You can also click the "Run examples" link, which will run the code in the Examples section for you so you can see what the function will do.
 :::
+
+:::: {.repro}
+
+::: {.repro-header}
+::: {.repro-icon}
+:::
+RepRoducibility: Why Code the Little Stuff?
+:::
+
+::: {.repro-body}
+
+You may be wondering what the point is of using functions like `round()`. After all, it isn't difficult to round `r mean_to_round` to `r round(mean_to_round, 2)` just by looking at it. So, why go to all the trouble to learn a new function, with new arguments and (potentially) its own little quirks, for each little task?[^devil]
+
+When writing code, there are two important principles that come up again and again. In brief, these are:
+
+**Avoid hard-coding**
+
+"Hard-coding" essentially means writing information, like numbers, directly into your code as opposed to using code to produce or replicate them. This should be avoided as much as possible in favour of producing values *programmatically*, i.e. by using code.
+
+To see why, take this tutorial as an example. We have been looking throughout this section at the number `r mean_to_round`. As I'm writing this tutorial, instead of typing out that number in the text each time, I have been using [inline code](https://quarto.org/docs/computations/inline-code.html) to produce this number in the text using the same `mean_to_round` object we created in that earlier exercise - that is, using code instead of hard-coding, which would be typing the actual numbers into the text each time. This has a couple key benefits:
+
+- Because code will always work the same way each time, the number `r mean_to_round` will always be replicated correctly - no risk of mistakes, mistyping, forgetting, etc.
+
+- If I decide to choose a different number for this example, all I need to do is go back to that first task and re-assign a new value to `mean_to_round` - and the number will be updated throughout the tutorial, wherever that object has been used. If I don't do this, I will have to manually find and replace every instance of it. Playing spot-the-difference is not only tedious, repetitive, and time-consuming (again, these are the type of tasks that computers are great at) but relies on the programmer not forgetting or missing even one instance of the wrong number. If that number is instead stored in an object, both the repetitive updating and the risk of mistakes are massively mitigated.
+
+**For any task that you need to do more than twice, use a function**
+
+This is a rule of thumb is adapted from [the R for Data Science chapter on function-writing](https://r4ds.had.co.nz/functions.html#when-should-you-write-a-function). While we're not going to worry about writing our own functions for now, it's still a good mental habit to get into: whenever you need to perform the same task three or more times, look for a function to do it instead.
+
+Why? Essentially, this goes back to "avoid hard-coding". If you only ever need to do a task a couple times, it's fine to just get it done manually (i.e. hard-code it) and move on. However, if you are going to need to do that task again and again, it will be more efficient in the long run - and safer in terms of mistakes - to do it with code instead, even if it takes a bit longer to find and learn a new function (or write one) than it would take to copy/paste. What you lose immediately in time, you gain in skill, replicability, and code resilience for future use.
+
+Putting these two things together, we arrive at why it's preferable to do even simple tasks like rounding with a function instead of "manually". Using code whenever possible to store, print, and work with data of all kinds - even single values and simple operations - is always the option that is more replicable, more transparent, more resilient to changes, and (at least in the long run) less time- and memory-intensive.
+
+:::
+:::
+
+[^devil]: I'm playing the devil's advocate a bit here!
 
 ## Packages, redux
 
