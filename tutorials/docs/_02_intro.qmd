@@ -104,7 +104,7 @@ As you can see, these steps correspond almost exactly to the installing vs loadi
 RepRoducibility: Package versions
 :::
 ::: {.repro-body}
-R packages get regularly updated. Some updates are minor but others can change how functions work, and in some cases functions can even be removed. Because of this, it is a good idea to note the specific versions of the packages you are using. One way to do this is to load all the packages you need with `library()` and then using the function `sessionInfo()`. This functions can generate a lot of output. The most important information is the version of R you are using and the versions of the packages you loaded, which are listed under "other attached packages".
+R packages get regular updates. Some updates are minor but others can change how functions work, and in some cases functions can even be removed. Because of this, it is a good idea to note the specific versions of the packages you are using. One way to do this is to load all the packages you need with `library()` and then call the function `sessionInfo()` to see the specific versions you are using. This functions can generate a lot of output. The most important information is the version of R you are using and the versions of the packages you loaded, which are listed under "other attached packages".
 :::
 ::::
 
@@ -248,17 +248,14 @@ Default values of arguments are really useful, because the default is often the 
 [^7]: By "safest" setting, I mean that the function makes the fewest assumptions about what you intended.
 
 :::: {.repro}
-
 ::: {.repro-header}
 ::: {.repro-icon}
 :::
 RepRoducibility: Default values
 :::
 ::: {.repro-body}
-When using a function, check what the default value for its different arguments are. **The defaults of a given argument may not be what you expect it to be, and that can affect your results.** For example, by default, SPSS computes a type III ANOVA, while the `aov()` function in R computes a type I ANOVA. <!-- I need to double check that this is correct.-->
- 
+When using a function, check what the default value for its different arguments are. **The default value of a given argument may not be what you expect it to be, and that can affect your results.** For example, by default, SPSS computes a type III ANOVA, while the `aov()` function in R computes a type I ANOVA.
 :::
-
 ::::
 
 
@@ -321,7 +318,7 @@ Here, since we left all the arguments unnamed, R assumed that 2 was the number w
 RepRoducibility: Unnamed arguments
 :::
 ::: {.repro-body}
-Using unnamed arguments can make code hard to read - it requires you to remember all the different inputs that a function can take and the exact order in which this information needs to be put inside the function. For an example of how pain inducing this can be, let's look at the `t.test()` function which can take **more than 11** input arguments. I will create two vectors of 20 numbers each, and then I will compare the two vectors using the `t.test()` function. 
+Using unnamed arguments for all inputs in a function can make code hard to read. It requires you to remember all the different inputs that a function can take and the exact order in which this information needs to be put inside the function. For an example of how pain-inducing this can be, let's look at the `t.test()` function which can take **more than 11** input arguments. I will create two vectors of 20 numbers each, and then I will compare the two vectors using the `t.test()` function. 
 ```{r}
 # sample 20 numbers from a normal distribution with the given mean and standard deviation
 vector_1 <- rnorm(20, mean=15, sd=5) 
@@ -340,7 +337,6 @@ Looking at the information I have given to `t.test()` I can only tell what `vect
 t.test(vector_1, vector_2, alternative = "less", mu = 5, paired = FALSE, var.equal = TRUE, conf.level = 0.78)
 ```
 This is a lot better! Some unresolved mystery still remains, so you may want to check the help menu of the `t.test()` function and add a comment written in plain English that describes what is happening in that line. More on comments later...
-
 :::
 ::::
 
@@ -525,7 +521,7 @@ RepRoducibility: Comments
 :::
 
 ::: {.repro-body}
-Now that we have written some code, it is a good time to introduce comments - one of the best ways to glam up a wall of intimidating code into readable text. A comment is a line or piece of text that R will ignore when running code, and R uses the '#' symbol to signify the beginning of a comment: 
+Now that we have written some code, it is a good time to introduce comments - one of the best ways to glam up a wall of intimidating code into readable text. A comment is a line or piece of text that R will ignore when running code. R uses the '#' symbol to signify the beginning of a comment: 
 
 ```{r}
 # anything after the "#" symbol will be treated as a comment, even numbers - 1, 2, 3
@@ -533,16 +529,34 @@ Now that we have written some code, it is a good time to introduce comments - on
 a <- 5 # comments can be added on the following executable code on the same line
 ```
 
-Comments which describe what code does makes the code it easier to read. Comments should be easy to understand and clear, but not overly long. Also, make sure you are consistent - use the same terminology and formatting throughout the whole script:
+Comments which describe what code does makes the code it easier to read. Comments should be easy to understand and clear, but not overly long. Also, make sure you are consistent - use the same terminology and formatting throughout the whole script. 
 
+To illustrate, compare this chunk of code...
 
-<!-- I will add some examples -->
 
 ```{r}
+# Data of the control group consisting of people who completed the control condition of the experiment
+group_1 <- rnorm(30, mean = 40, sd = 5)
 
+# Data of the experimental group consisting of people who completed the experimental condition of the experiment 
+group_2 <- rnorm(30, mean = 80, sd = 5) 
 
+# Compare the means of the active group and the fist group using a t-test assuming that they have equal variances 
+t.test(group_1, group_2, var.equal = TRUE)
 ```
 
+... to this one: 
+
+```{r}
+# Control group data
+control_group <- rnorm(30, mean = 40, sd = 5)
+
+# Experimental group data 
+experimental_group <- rnorm(30, mean = 80, sd = 5) 
+
+# Between subjects t-test comparing the control and experimental groups; assumes equal variances 
+t.test(group_2, group_1, var.equal = TRUE)
+```
 
 
 In addition to making code legible, comments specify your intentions and  make it easier to verify that your code is doing exactly what you wanted it to do. For example, if you have computed a between-subjects t-test, but there is a comment saying that you intended to computed a paired-subjects t-test, the error will be easier to catch than in the absence of a descriptive comment. 
