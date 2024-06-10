@@ -3,9 +3,10 @@ title: "02: IntRoduction II"
 execute:
   error: true
 ---
+
 ## Overview
 
-In this second tutorial, we'll continue working on foundational skills in R that we began in the [first tutorial](01_intro.qmd). We will cover how to organise your work in projects, and within those projects, some options for different types of documents to write your code. Jumping into the code side, we'll also talk about installing and loading the packages you need, then we'll focus on how to use the functions in those packages as well as their documentation. Finally, we'll get stuck in with some common statistics functions and look at how to transparently comment code. 
+In this second tutorial, we'll continue working on foundational skills in R that we began in the [first tutorial](01_intro.qmd). We will cover how to organise your work in projects, and within those projects, some options for different types of documents to write your code. Jumping into the code side, we'll also talk about installing and loading the packages you need, then we'll focus on how to use the functions in those packages as well as their documentation. Finally, we'll get stuck in with some common statistics functions and look at how to transparently comment code.
 
 ## Setup
 
@@ -17,7 +18,7 @@ In each session, we will always follow the same steps to set up. We'll walk thro
 3.  [Load the necessary packages](#packages)
 :::
 
-### Projects
+### Projects {#projects}
 
 Projects are the main way that RStudio organises related files and information. Projects are associated with a working directory; everything in that directory, including all the sub-folders, are part of the same project.
 
@@ -31,18 +32,24 @@ On a desktop installation, you can create a new directory as a project or associ
 See [Posit's Using RStudio Projects](https://support.posit.co/hc/en-us/articles/200526207-Using-RStudio-Projects) guide or Andy Field's [video guide to RStudio Desktop](https://www.youtube.com/watch?v=EA7JW2SfKSY) for more information.
 :::
 
-
-:::: {.repro}
-::: {.repro-header}
-::: {.repro-icon}
+::: repro
+::: repro-header
+::: repro-icon
 :::
+
 RepRoducibility: File organisation
 :::
-::: {.repro-body}
-When uploading analysis materials and data online, it is important to make sure that your code will run with minimal intervention when another person downloads it. To help with this, the relationship between the analysis materials and the data assumed in the script needs to be preserved when the materials are uploaded on OSF. Also, avoid ["hard-coding"](https://medium.com/@jordan.l.edmunds/please-stop-hard-coding-file-paths-609c769f9537) file paths - while my work computer has a directory called "D:/reny-work/teaching/r-training/", other people most likely don't have the same directory and asking R to open a non-existent file path will cause an error.
-:::
-::::
 
+::: repro-body
+When uploading analysis materials and data online, it is important to make sure that your code will run with minimal intervention when another person downloads it. To help with this, the relationship between the analysis materials and the data assumed in the script needs to be preserved when the materials are uploaded on OSF.
+
+Projects do this by setting a reference point, which is the project file; this is a `.Rproj` file with an icon like a little blue cube with an R in it. This project file turns the folder it's in into a project folder, and among other benefits, means that you can navigate to other files in the same folder or any sub-folders using the project folder as a starting point. When you want to share or upload your files, it's best to export **the whole project folder**, including the project file. This way, any relative file paths will continue to use the project folder as their starting point, and will still run successfully even on a different computer.
+
+To use a convoluted analogy, this turns the project folder and its sub-folders into a terrarium - a self-contained ecosystem that can be transported as a unit from one place to another without disrupting the connections inside.
+
+Also, avoid ["hard-coding" file paths](https://medium.com/@jordan.l.edmunds/please-stop-hard-coding-file-paths-609c769f9537) - while my work computer has a directory called "D:/reny-work/teaching/r-training/", other people most likely don't have the same directory and asking R to open a non-existent file path will cause an error.
+:::
+:::
 
 ### Documents
 
@@ -55,9 +62,7 @@ Quarto documents contain a combination of both non-code text and code. The main 
 If you're interested in using Quarto documents often, the [Quarto help documentation](https://quarto.org/docs/get-started/hello/rstudio.html) is excellent. For now, use the Quarto document in your project on Posit Cloud for your work in this tutorial.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
 Click the "Render" button at the top of your worksheet Quarto document to see what it produces.
-
 :::
 
 #### Scripts
@@ -68,14 +73,14 @@ Scripts are text files that RStudio knows to read as R code. They have a .R file
 When deciding what kind of document to create, think about what you want to do with the output of your work.
 
 -   Use **Quarto** if the document needs to contain any amount of text, or will be used to share the output of your code in a presentable way, such as notes for yourself, reports, articles, websites, etc.
-  -   The page you're reading now is (or was!) a Quarto document.
+-   The page you're reading now is (or was!) a Quarto document.
 -   Use a **script** if the document only needs to contain code and has a solely functional purpose, such as cleaning a dataset, manipulating files, defining new functions, etc.
-  -   I use a script to process all of the tutorial documents and generate the [Quick Reference](../../quick_ref.qmd) page.
+-   I use a script to process all of the tutorial documents and generate the [Quick Reference](../../quick_ref.qmd) page.
 
 In this series, we will almost always use Quarto documents, but scripts are an essential part of the development side of R, so you may encounter them in other contexts, for example working with collaborators, reviewing open-source data and code, or you may end up preferring them yourself.
 :::
 
-## Packages
+## Packages {#packages}
 
 In this tutorial, we'll see how the main way that R does anything is via functions. All functions belong to a **package**, which are extensions to the R language. Packages can contain functions, documentation for those functions, datasets, sample code, and more. Some packages, like the {base} and {stats} packages that contain the `mean()` and `t.test()` functions that we saw previously, are included by default with R. However, you will often want to use functions from packages that aren't included by default, so you must do this explicitly.
 
@@ -99,20 +104,20 @@ Most likely, though, you'll want to use other apps that don't come with your new
 As you can see, these steps correspond almost exactly to the installing vs loading steps described above. In order to use a package that doesn't come pre-installed with R, you have to do both of these steps.
 :::
 
-
-:::: {.repro}
-::: {.repro-header}
-::: {.repro-icon}
+::: repro
+::: repro-header
+::: repro-icon
 :::
+
 RepRoducibility: Package versions
 :::
-::: {.repro-body}
-R packages get regular updates. Some updates are minor but others can change how functions work, and in some cases functions can even be removed. Because of this, it is a good idea to note the specific versions of the packages you are using. One way to do this is to load all the packages you need with `library()` and then call the function `sessionInfo()` to see the specific versions you are using. This functions can generate a lot of output. The most important information is the version of R you are using and the versions of the packages you loaded, which are listed under "other attached packages".
+
+::: repro-body
+R packages get regular updates. Some updates are minor but others can change how functions work, and in some cases functions can even be removed. Because of this, it is a good idea to note the specific versions of the packages you are using. One way to do this is to load all the packages you need with `library()` and then call the function `sessionInfo()` to see the specific versions you are using. This function can generate a lot of output. The most important information is the version of R you are using and the versions of the packages you loaded, which are listed under "other attached packages".
 :::
-::::
+:::
 
-
-### Loading {tidyverse}
+### Loading `tidyverse`
 
 One of the core packages we use for UG teaching is [{tidyverse}](https://www.tidyverse.org/). This isn't actually a single package, but rather a convenient shorthand to install and load a suite of interconnected packages all together. We will be using {tidyverse} packages throughout this training series, so loading {tidyverse} straightaway is a good habit to get into!
 
@@ -133,31 +138,28 @@ When you load {tidyverse} for the first time, quite a lot of extra stuff gets pr
 
 The usual {tidyverse} message contains two parts:
 
-- **`Attaching core tidyverse packages`** tells you which packages have just been loaded. Essentially, `library(tidyverse)` is a shortcut for loading all of these packages individually. Somewhat confusingly, installing {tidyverse} *installs* more packages than are in this list (for example, {magrittr} and {rlang}), many of which other {tidyverse} packages rely on to function. If you want to load them, you can use `library()` to do this - but you don't need to unless you're using those packages explicitly. For our purposes now, just the default {tidyverse} packages are fine.
+-   **`Attaching core tidyverse packages`** tells you which packages have just been loaded. Essentially, `library(tidyverse)` is a shortcut for loading all of these packages individually. Somewhat confusingly, installing {tidyverse} *installs* more packages than are in this list (for example, {magrittr} and {rlang}), many of which other {tidyverse} packages rely on to function. If you want to load them, you can use `library()` to do this - but you don't need to unless you're using those packages explicitly. For our purposes now, just the default {tidyverse} packages are fine.
 
-- **`Conflicts`** tells you about any package conflicts as a result of loading the packages.
+-   **`Conflicts`** tells you about any package conflicts as a result of loading the packages.
 
-What are conflicts? Consider that there are lots and *lots* of packages for R. At the time of this writing, CRAN (the repository for R packages) contains [just over 20,000](https://cran.r-project.org/web/packages/) R packages, with many, many more on Github and elsewhere. Although people generally try to avoid it, it is necessarily the case that sometimes, people give the same name to two different functions from two different packages. 
+What are conflicts? Consider that there are lots and *lots* of packages for R. At the time of this writing, CRAN (the repository for R packages) contains [just over 20,000](https://cran.r-project.org/web/packages/) R packages, with many, many more on Github and elsewhere. Although people generally try to avoid it, it is necessarily the case that sometimes, people give the same name to two different functions from two different packages.
 
 So, if you have those packages both loaded, how does R know which one to use? This situation is called a *conflict*.
 
 ::: {.callout-important title="Resolving Conflicts"}
-
 **Method 1: Recency**
 
 In the absence of any other information, R will use the function from the package that was loaded most recently. This is exactly what's happening in the {tidyverse} message above.
 
 There are two conflicts mentioned, one of which reads:
 
-```
-x dplyr::filter() masks stats::filter()
+```         
+❌ dplyr::filter() masks stats::filter()
 ```
 
 First, briefly note the `package::function()` notation. You can read this notation as, for instance, "the filter function from the dplyr package", or just "dplyr filter". This is sort of like using the function's "full name", where the name of the package it belongs to is written first, followed by two colons, then the name of the function.
 
-{stats}, you might remember, is a package that is always installed with R and is loaded by default. So, the {stats} package has a function called `filter()` that is already loaded to begin with whenever you start up R. When we loaded {tidyverse}, one of the new packages, {dplyr}, also contains a function called `filter()`. Because {dplyr} has been loaded more recently, if you write a bit of code using `filter()`, the one you will get is `dplyr::filter()`[^pkgfx]. In other words, the more recently loaded `dplyr::filter()` covers over, steps in front of, or (in R terminology) "masks" `stats::filter()`.
-
-[^pkgfx]: As for how to pronounce "dplyr", the [official pronunciation](https://twitter.com/hadleywickham/status/925313165554012160?s=20) is "dee-ply-er", with "plier" like the tool [for which it's named](https://dplyr.tidyverse.org/). I have heard other people say "dipler". Since code is always a bit tricky to read aloud, just go with whatever sounds good to you.
+{stats}, you might remember, is a package that is always installed with R and is loaded by default. So, the {stats} package has a function called `filter()` that is already loaded to begin with whenever you start up R. When we loaded {tidyverse}, one of the new packages, {dplyr}, also contains a function called `filter()`. Because {dplyr} has been loaded more recently, if you write a bit of code using `filter()`, the one you will get is `dplyr::filter()`[^1]. In other words, the more recently loaded `dplyr::filter()` covers over, steps in front of, or (in R terminology) "masks" `stats::filter()`.
 
 Now, what if you actually want to use `filter()` from {stats} instead, when {tidyverse} is loaded? Well, in that case you might want to use...
 
@@ -168,14 +170,28 @@ Above we saw several examples of the `package::function()` notation, called "exp
 Another, secret benefit of explicit style is that as long as you have a package *installed*, you can use a function from that package without having to load it. Imagine I start a new project (so I have `stats::filter()` already loaded by default). If I only want to quickly use `dplyr::filter()`, I can use explicit style to use that function without having to run `library(tidyverse)`.
 :::
 
+[^1]: As for how to pronounce "dplyr", the [official pronunciation](https://twitter.com/hadleywickham/status/925313165554012160?s=20) is "dee-ply-er", with "plier" like the tool [for which it's named](https://dplyr.tidyverse.org/). I have heard other people say "dipler". Since code is always a bit tricky to read aloud, just go with whatever sounds good to you.
+
 The style you'll see in these tutorials is a pretty devotedly explicit style: that is, I'll always write `dplyr::filter()` instead of just `filter()`. I only leave out the package name in a few situations:
 
-1. When the function is from a default-loaded package, like {base} or {stats} (so I write `mean()` instead of `base::mean()`). This is mostly just convenience!
-1. When there are lots of functions from the same package in row, all of which have very distinctive names, that would make reading the code very difficult and writing the code very repetitive. This is the case, for example, with {ggplot2}, which we will encounter later on in the course. For cases like this, I make sure to load the relevant package and then leave off the package name.
+1.  When the function is from a default-loaded package, like {base} or {stats} (so I write `mean()` instead of `base::mean()`). This is mostly just convenience!
+2.  When there are lots of functions from the same package in row, all of which have very distinctive names, that would make reading the code very difficult and writing the code very repetitive. This is the case, for example, with {ggplot2}, which we will encounter later on in the course. For cases like this, I make sure to load the relevant package and then leave off the package name.
 
-I like explicit style because I never have to deal with package conflicts; I rarely have to load packages; and it helps me understand better how my code works. You don't have to use it, and most of the time it won't make *that* much difference, so do what makes sense to you. Just to be safe, though, we'll load {tidyverse} regularly.
+To ensure all is well, we'll load {tidyverse} regularly at the start of each tutorial; regardless, though, it's recommended to always explicit style anyway (see below).
 
-\ 
+::: repro
+::: repro-header
+::: repro-icon
+:::
+RepRoducibility: Explicit Style
+:::
+
+::: repro-body
+For reproducible code, explicit style is strongly preferred. When you are working on your code, you might know which package(s) you have loaded in which order or intended to use; but this won't necessarily be clear to anyone else. Explicit `package::function()` style removes the ambiguity and ensures your code always runs the same way, with the same functions you wanted.
+:::
+:::
+
+ 
 
 ## Functions
 
@@ -188,16 +204,13 @@ In this section, we'll take a systematic look at the process of using a new func
 Let's look at an example of how this translation might work. For this example, I'd like to round the mean of four numbers, 45.34, 23.001, 7.3, and 16.9820, to two decimal places - a common task for reporting results in APA style.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
 As a warm-up, calculate the mean of the four numbers given above and store this number in a new object called `mean_to_round`.
 
 ::: {.callout-note collapse="true" title="Solution"}
-
 ```{r}
 mean_to_round <- mean(c(45.34, 23.001, 7.3, 16.9820))
 mean_to_round
 ```
-
 :::
 :::
 
@@ -240,47 +253,50 @@ When referring to arguments, you will hear the terms "named" and "unnamed" argum
 
 The **first argument** to `round()` is simply `x`. Just like in maths, `x` is a placeholder for some number or numbers (a "numeric vector", which should sound familiar now) that the function will work on. This is common notation in many functions: `x`, often the first argument in a function, typically denotes the placeholder for the information you want to use the function on. In our case, the numeric vector that we want to find the mean of is stored in an object called `mean_to_round`, so that's what we'll put into the `x` argument.
 
-It's important to note here that this argument `x` has no **default value**. In other words, we must minimally provide some information `x` to this function or it won't be able to run. We know this because `x` appears on its own as an argument; arguments that *do* have a default value have an `=` sign followed by their default value (see the next paragraphs on `digits = 0`). Because we always have to provide additional information, `x` and similar arguments containing the values or data to work on are frequently *unnamed* when we use them. That means that instead of <code>`r paste0("round(x = ", mean_to_round,"...)")`</code> we can just write <code>`r paste0("round(", mean_to_round,"...)")`</code>. They are also frequently the first argument in the function[^first]. So, when you see reference to the "first unnamed argument" - especially important in {tidyverse} functions designed to work with the pipe operator, which we'll meet next week - that simply means, "the first argument in the function for which the programmer hasn't specified a name", which is often, but not always or necessarily, the "data" or "information to work on" argument.
+It's important to note here that this argument `x` has no **default value**. In other words, we must minimally provide some information `x` to this function or it won't be able to run. We know this because `x` appears on its own as an argument; arguments that *do* have a default value have an `=` sign followed by their default value (see the next paragraphs on `digits = 0`). Because we always have to provide additional information, `x` and similar arguments containing the values or data to work on are frequently *unnamed* when we use them. That means that instead of <code>`r paste0("round(x = ", mean_to_round,"...)")`</code> we can just write <code>`r paste0("round(", mean_to_round,"...)")`</code>. They are also frequently the first argument in the function[^2]. So, when you see reference to the "first unnamed argument" - especially important in {tidyverse} functions designed to work with the pipe operator, which we'll meet next week - that simply means, "the first argument in the function for which the programmer hasn't specified a name", which is often, but not always or necessarily, the "data" or "information to work on" argument.
 
-[^first]: Again, not necessarily - the base-R string-manipulation functions `grep()` and friends, for example, have `x` as their *third* argument. I know all the irregularities can be confusing, but remember that R is a massive collaborative project across decades and millions of users, so some quirks are inevitable!
+[^2]: Again, not necessarily - the base-R string-manipulation functions `grep()` and friends, for example, have `x` as their *third* argument. I know all the irregularities can be confusing, but remember that R is a massive collaborative project across decades and millions of users, so some quirks are inevitable!
 
 The **second argument** of `round()` is `digits`. You can think of arguments like this as settings that change the way a function works, often with only certain allowable values.
 
 The help documentation tells us that `digits` should be an "integer indicating the number of decimal places...to be used." We can also see in "Usage" that this argument has a default value, `digits = 0`. That means that if we don't explicitly include the argument `digits` when we use the function, by default the `round()` function will round the number you give it to 0 decimal places. Arguments frequently, but not always, have a default, and it's important to check so the function doesn't quietly do something unexpected.
 
-Default values of arguments are really useful, because the default is often the most frequently used or safest[^7] setting. It means you don't have to specify every single aspect of a function every time you use it, as long as you want the function to work according to its defaults. In our case, we actually wanted `round()` to round to two decimal places, not 0. So, in our command, we should change the `digits` setting from the default, `0`, to `2`.
+Default values of arguments are really useful, because the default is often the most frequently used or safest[^3] setting. It means you don't have to specify every single aspect of a function every time you use it, as long as you want the function to work according to its defaults. In our case, we actually wanted `round()` to round to two decimal places, not 0. So, in our command, we should change the `digits` setting from the default, `0`, to `2`.
 
-[^7]: By "safest" setting, I mean that the function makes the fewest assumptions about what you intended.
+[^3]: By "safest" setting, I mean that the function makes the fewest assumptions about what you intended.
 
-:::: {.repro}
-::: {.repro-header}
-::: {.repro-icon}
+::: repro
+::: repro-header
+::: repro-icon
 :::
+
 RepRoducibility: Default values
 :::
-::: {.repro-body}
+
+::: repro-body
 When using a function, check what the default value for its different arguments are. **The default value of a given argument may not be what you expect it to be, and that can affect your results.** For example, by default, SPSS computes a type III ANOVA, while the `aov()` function in R computes a type I ANOVA.
 :::
-::::
-
+:::
 
 ### Using Functions
 
 Now that we know what both of these arguments mean, we can change them to actually translate the sentence "Round the number `r mean_to_round` to two decimal places" into a command that R can work with. We'll explicitly write out the name of each argument so we know what they are doing.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
-Use the `round()` function to round `r mean_to_round` (stored in `mean_to_round`) to two decimal places.
+Use the `round()` function to round `r mean_to_round` to two decimal places.
 
 ::: {.callout-note collapse="true" title="Solution"}
 ```{r}
+round(x = 23.15575, digits = 2)
+
+## Alternatively, using the object
 round(x = mean_to_round, digits = 2)
 ```
 :::
 :::
 
 ::: {.callout-important title="MoRe About: Order and Naming of Arguments" collapse="true"}
-If you want to, you can achieve the same result by changing the order of the arguments, as long as you pay careful attention to which argument(s) you have named. 
+If you want to, you can achieve the same result by changing the order of the arguments, as long as you pay careful attention to which argument(s) you have named.
 
 If we have written the names of both arguments, R can still do what we want it to do with the order of arguments reversed:
 
@@ -314,16 +330,17 @@ round(2, 23.15575)
 Here, since we left all the arguments unnamed, R assumed that 2 was the number we wanted to round. This isn't what we wanted - but R has no way of knowing this. It always assumes that what we typed was precisely what we intended to ask R to do.
 :::
 
-
-
-:::: {.repro}
-::: {.repro-header}
-::: {.repro-icon}
+::: repro
+::: repro-header
+::: repro-icon
 :::
+
 RepRoducibility: Unnamed arguments
 :::
-::: {.repro-body}
-Using unnamed arguments for all inputs in a function can make code hard to read. It requires you to remember all the different inputs that a function can take and the exact order in which this information needs to be put inside the function. For an example of how pain-inducing this can be, let's look at the `t.test()` function which can take **more than 11** input arguments. I will create two vectors of 20 numbers each, and then I will compare the two vectors using the `t.test()` function. 
+
+::: repro-body
+Using unnamed arguments for all inputs in a function can make code hard to read. It requires you to remember all the different inputs that a function can take and the exact order in which this information needs to be put inside the function. For an example of how pain-inducing this can be, let's look at the `t.test()` function which can take **more than 11** input arguments. I will create two vectors of 20 numbers each, and then I will compare the two vectors using the `t.test()` function.
+
 ```{r}
 # sample 20 numbers from a normal distribution with the given mean and standard deviation
 vector_1 <- rnorm(20, mean=15, sd=5) 
@@ -339,12 +356,17 @@ Looking at the information I have given to `t.test()` I can only tell what `vect
 
 ```{r}
 # compare the two vectors with a t-test
-t.test(vector_1, vector_2, alternative = "less", mu = 5, paired = FALSE, var.equal = TRUE, conf.level = 0.78)
+t.test(vector_1, vector_2, 
+       alternative = "less", 
+       mu = 5, paired = FALSE, 
+       var.equal = TRUE, 
+       conf.level = 0.78
+)
 ```
+
 This is a lot better! Some unresolved mystery still remains, so you may want to check the help menu of the `t.test()` function and add a comment written in plain English that describes what is happening in that line. More on comments later...
 :::
-::::
-
+:::
 
 ### Passing Multiple Values to Arguments
 
@@ -394,17 +416,16 @@ Before we leave the `round()` function altogether, let's take a look at two more
 Finally, at the end of the documentation you can find the "Examples" section. If you are learning to use a new function, this section can give you a template for writing your own commands. You can also click the "Run examples" link, which will run the code in the Examples section for you so you can see what the function will do.
 :::
 
-:::: {.repro}
-
-::: {.repro-header}
-::: {.repro-icon}
+::: repro
+::: repro-header
+::: repro-icon
 :::
+
 RepRoducibility: Why Code the Little Stuff?
 :::
 
-::: {.repro-body}
-
-You may be wondering what the point is of using functions like `round()`. After all, it isn't difficult to round `r mean_to_round` to `r round(mean_to_round, 2)` just by looking at it. So, why go to all the trouble to learn a new function, with new arguments and (potentially) its own little quirks, for each little task?[^devil]
+::: repro-body
+You may be wondering what the point is of using functions like `round()`. After all, it isn't difficult to round `r mean_to_round` to `r round(mean_to_round, 2)` just by looking at it. So, why go to all the trouble to learn a new function, with new arguments and (potentially) its own little quirks, for each little task?[^4]
 
 When writing code, there are two important principles that come up again and again. In brief, these are:
 
@@ -414,9 +435,9 @@ When writing code, there are two important principles that come up again and aga
 
 To see why, take this tutorial as an example. We have been looking throughout this section at the number `r mean_to_round`. As I'm writing this tutorial, instead of typing out that number in the text each time, I have been using [inline code](https://quarto.org/docs/computations/inline-code.html) to produce this number in the text using the same `mean_to_round` object we created in that earlier exercise - that is, using code instead of hard-coding, which would be typing the actual numbers into the text each time. This has a couple key benefits:
 
-- Because code will always work the same way each time, the number `r mean_to_round` will always be replicated correctly - no risk of mistakes, mistyping, forgetting, etc.
+-   Because code will always work the same way each time, the number `r mean_to_round` will always be replicated correctly - no risk of mistakes, mistyping, forgetting, etc.
 
-- If I decide to choose a different number for this example, all I need to do is go back to that first task and re-assign a new value to `mean_to_round` - and the number will be updated throughout the tutorial, wherever that object has been used. If I don't do this, I will have to manually find and replace every instance of it. Playing spot-the-difference is not only tedious, repetitive, and time-consuming (again, these are the type of tasks that computers are great at) but relies on the programmer not forgetting or missing even one instance of the wrong number. If that number is instead stored in an object, both the repetitive updating and the risk of mistakes are massively mitigated.
+-   If I decide to choose a different number for this example, all I need to do is go back to that first task and re-assign a new value to `mean_to_round` - and the number will be updated throughout the tutorial, wherever that object has been used. If I don't do this, I will have to manually find and replace every instance of it. Playing spot-the-difference is not only tedious, repetitive, and time-consuming (again, these are the type of tasks that computers are great at) but relies on the programmer not forgetting or missing even one instance of the wrong number. If that number is instead stored in an object, both the repetitive updating and the risk of mistakes are massively mitigated.
 
 **For any task that you need to do more than twice, use a function**
 
@@ -425,11 +446,10 @@ This is a rule of thumb is adapted from [the R for Data Science chapter on funct
 Why? Essentially, this goes back to "avoid hard-coding". If you only ever need to do a task a couple times, it's fine to just get it done manually (i.e. hard-code it) and move on. However, if you are going to need to do that task again and again, it will be more efficient in the long run - and safer in terms of mistakes - to do it with code instead, even if it takes a bit longer to find and learn a new function (or write one) than it would take to copy/paste. What you lose immediately in time, you gain in skill, replicability, and code resilience for future use.
 
 Putting these two things together, we arrive at why it's preferable to do even simple tasks like rounding with a function instead of "manually". Using code whenever possible to store, print, and work with data of all kinds - even single values and simple operations - is always the option that is more replicable, more transparent, more resilient to changes, and (at least in the long run) less time- and memory-intensive.
-
 :::
 :::
 
-[^devil]: I'm playing the devil's advocate a bit here!
+[^4]: I'm playing the devil's advocate a bit here!
 
 ## Packages, redux
 
@@ -455,10 +475,10 @@ Well, that didn't go to plan!
 
 There are two main reasons this "could not find function" error usually appears:
 
-1. You've misspelt the function name. This isn't the case here (it's only two letters!).
-2. The package that the function belongs to isn't installed and/or loaded.
+1.  You've misspelt the function name. This isn't the case here (it's only two letters!).
+2.  The package that the function belongs to isn't installed and/or loaded.
 
-So, this function does exist, but in order to use it, we need to install and then load the package that contains it. 
+So, this function does exist, but in order to use it, we need to install and then load the package that contains it.
 
 ### Installing Packages
 
@@ -486,7 +506,7 @@ install.packages("weights")
 :::
 :::
 
-You should see a good bit of chat from R in (alarming) red text. Don't worry unless you see the actual word "ERROR". You should soon see the message `package ‘weights’ successfully unpacked and MD5 sums checked`, which means all is well. 
+You should see a good bit of chat from R in (alarming) red text. Don't worry unless you see the actual word "ERROR". You should soon see the message `package ‘weights’ successfully unpacked and MD5 sums checked`, which means all is well.
 
 Now that we know we have the package installed, let's give it another go.
 
@@ -506,8 +526,8 @@ Still no dice!
 
 We know that we have the right package installed - but as you may have guessed, we haven't also loaded the package. We can actually fix this error in one of two ways:
 
-1. Load the {weights} package using the `library()` function. We can then use the function as written above.
-1. Use explicit style, e.g. `weights::rd()`, when writing our command. In this case we don't need to load the package as long as we have it installed.
+1.  Load the {weights} package using the `library()` function. We can then use the function as written above.
+2.  Use explicit style, e.g. `weights::rd()`, when writing our command. In this case we don't need to load the package as long as we have it installed.
 
 Alright, third time lucky!
 
@@ -528,44 +548,94 @@ library(weights)
 
 rd(.00793, digits = 3)
 ```
-
 :::
 :::
-
-## Stats Functions
-
-Now let's do some coding. The base-R {stats} package contains a wide variety of very sensibly-named functions that calculate common descriptive statistics. These include: 
-
-- `mean()` and `median()` (there is a function `mode()`, but it doesn't do what we'd like it to here!)
-- `min()` for minimum value, `max()` for maximum value
-- `range()` for both minimum and maximum value in a single vector
-- `sd()` for standard deviation
-
-A key feature of all of these functions is that, by default, they return `NA` if there are any `NA`s (missing values) present. (This is very sensible behaviour by default, but is frequently not the information we want when we use them.) So, they all have an argument, `na.rm =`, which determines whether `NA`s should be removed. By default this argument is set to `FALSE` (`NA`s should NOT be removed), but if you want to get the calculation ignoring any `NA`s, you can set this argument to `TRUE` instead.
-
-
 
 ## Exercises
 
+Now let's do some coding. The base-R {stats} package contains a wide variety of very sensibly-named functions that calculate common descriptive statistics. These include:
+
+-   `mean()` and `median()` (there is a function `mode()`, but it doesn't do what we'd like it to here!)
+-   `min()` for minimum value, `max()` for maximum value
+-   `range()` for both minimum and maximum value in a single vector
+-   `sd()` for standard deviation
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Run the following code in your workbook to generate the data you need for the following tasks.
+
+```{r}
+practice_data <- c(15, 784, 2, NA, 956, 9, 23, 8, 326, 1, 406)
+```
+:::
+
 ::: {.callout-note appearance="minimal" title="Exercise"}
 
+Return the median and range of `practice_data`.
+
+*Hint*: If you are getting back a result that isn't particularly informative, use the help documentation to figure out how to deal with it.
+
+::: {.callout-note collapse="true" title="Solution"}
+A key feature of all of these stats functions is that, by default, they return `NA` if there are any `NA`s (missing values) present. (This is very sensible behaviour by default, but is frequently not the information we want when we use them.) So, they all have an argument, `na.rm`, which determines whether `NA`s should be removed. By default this argument is set to `FALSE` (`NA`s should NOT be removed), which you can see in the Usage section of the help documentation. If you want to get the calculation ignoring any `NA`s, you can set this argument to `TRUE` instead.
+
+Because `practice_data` includes a missing value, running any of these functions with the default settings will just return `NA`:
+
+```{r}
+median(practice_data)
+```
+
+To ignore any `NA`s and get output for the values that *are* there, change the default setting the `na.rm` argument for each function.
+
+```{r}
+median(practice_data, na.rm = TRUE)
+range(practice_data, na.rm = TRUE)
+```
+:::
+:::
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Calculate a 10% trimmed mean for `practice_data`, but specify the trim first in the function.
 
 ::: {.callout-note collapse="true" title="Solution"}
 
+This one takes a few steps.
+
+First, we'll need to call up the help documentation for `mean()`. This tells us that there is an argument, `trim`, that allows us to supply a fraction to be trimmed from each end before the mean is calculated.
+
+Second, we also can see that like the other stats functions, `mean()` also has an `na.rm` argument, which we'll need to provide if we want to get an answer other than `NA`.
+
+If we wanted to do this without naming arguments, we could write our command like this:
+
+```{r}
+mean(practice_data, .10, TRUE)
+```
+
+However, we've been asked to specify the trim first, and we can't just move it or things go wrong. Here R is trying to parse `practice_data` as the input to `trim` and doesn't know what to do with a bunch of different numbers.
+
+```{r}
+#| error: true
+mean(.10, practice_data, TRUE)
+```
+So, in order to make this function work and stick to our RepRoducibility best practice, let's instead name all our arguments:
+
+```{r}
+mean(trim = .10, x = practice_data, na.rm = TRUE)
+```
+
+Note that because the `na.rm` argument is in the right place, the function will run correctly without naming it - but it's better to get in the habit!
 
 :::
 :::
 
-:::: {.repro}
-
-::: {.repro-header}
-::: {.repro-icon}
+::: repro
+::: repro-header
+::: repro-icon
 :::
 RepRoducibility: Comments
 :::
 
-::: {.repro-body}
-Now that we have written some code, it is a good time to introduce comments - one of the best ways to glam up a wall of intimidating code into readable text. A comment is a line or piece of text that R will ignore when running code. R uses the '#' symbol to signify the beginning of a comment: 
+::: repro-body
+Now that we have written some code, it is a good time to introduce comments - one of the best ways to glam up a wall of intimidating code into readable text. A comment is a line or piece of text that R will ignore when running code. R uses the '\#' symbol to signify the beginning of a comment:
 
 ```{r}
 # anything after the "#" symbol will be treated as a comment, even numbers - 1, 2, 3
@@ -573,10 +643,9 @@ Now that we have written some code, it is a good time to introduce comments - on
 a <- 5 # comments can be added on the following executable code on the same line
 ```
 
-Comments which describe what code does makes the code it easier to read. Comments should be easy to understand and clear, but not overly long. Also, make sure you are consistent - use the same terminology and formatting throughout the whole script. 
+Comments which describe what code does makes the code it easier to read. Comments should be easy to understand and clear, but not overly long. Also, make sure you are consistent - use the same terminology and formatting throughout the whole script.
 
 To illustrate, compare this chunk of code...
-
 
 ```{r}
 # Data of the control group consisting of people who completed the control condition of the experiment
@@ -585,11 +654,11 @@ group_1 <- rnorm(30, mean = 40, sd = 5)
 # Data of the experimental group consisting of people who completed the experimental condition of the experiment 
 group_2 <- rnorm(30, mean = 80, sd = 5) 
 
-# Compare the means of the active group and the fist group using a t-test assuming that they have equal variances 
+# Compare the means of the active group and the first group using a t-test assuming that they have equal variances 
 t.test(group_1, group_2, var.equal = TRUE)
 ```
 
-... to this one: 
+... to this one:
 
 ```{r}
 # Control group data
@@ -602,11 +671,30 @@ experimental_group <- rnorm(30, mean = 80, sd = 5)
 t.test(group_2, group_1, var.equal = TRUE)
 ```
 
-
-In addition to making code legible, comments specify your intentions and  make it easier to verify that your code is doing exactly what you wanted it to do. For example, if you have computed a between-subjects t-test, but there is a comment saying that you intended to computed a paired-subjects t-test, the error will be easier to catch than in the absence of a descriptive comment. 
-
-
-Now, for the final exercise for today, go back to the code your wrote above and add some comments in plain English. 
+In addition to making code legible, comments specify your intentions and make it easier to verify that your code is doing exactly what you wanted it to do. For example, if you have computed a between-subjects t-test, but there is a comment saying that you intended to computed a paired-subjects t-test, the error will be easier to catch than in the absence of a descriptive comment.
+:::
 :::
 
-::::
+::: {.callout-note appearance="minimal" title="Exercise"}
+Go back to the code you wrote for the exercises above and add some comments to your code in plain English.
+
+::: {.callout-note collapse="true" title="Solution"}
+You can write your comments however you like. I (Jennifer) often use them in code that's just for me to remind myself of why particular steps were necessary; how code I'm not very familiar with works; or just to celebrate successes or progress. Here's some examples with the code we wrote above.
+
+```{r}
+#| output: false
+
+# Data
+practice_data <- c(15, 784, 2, NA, 956, 9, 23, 8, 326, 1, 406)
+
+# Calculate descriptives
+# Data contains NAs so need to set na.rm to true
+median(practice_data, na.rm = TRUE)
+range(practice_data, na.rm = TRUE)
+
+# Calculate 10% trimmed mean
+mean(trim = .10, x = practice_data, na.rm = TRUE)
+```
+:::
+:::
+
