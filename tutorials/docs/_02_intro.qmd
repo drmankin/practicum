@@ -1,8 +1,11 @@
 ---
 title: "02: IntRoduction II"
+execute:
+  error: true
 ---
+## Overview
 
-<!-- UPDATE: We need to do something fun and interactive in this session otherwise it's mostly talking. Maybe writing a very simple reproducible script? Does Reny have a checklist of good practice for reproducible code? -->
+In this second tutorial, we'll continue working on foundational skills in R that we began in the [first tutorial](01_intro.qmd). We will cover how to organise your work in projects, and within those projects, some options for different types of documents to write your code. Jumping into the code side, we'll also talk about installing and loading the packages you need, then we'll focus on how to use the functions in those packages as well as their documentation. Finally, we'll get stuck in with some common statistics functions and look at how to transparently comment code. 
 
 ## Setup
 
@@ -181,6 +184,7 @@ Try running the `round()` function.
 
 ::: {.callout-note collapse="true" title="Solution"}
 ```{r}
+#| error: true
 round()
 ```
 
@@ -210,7 +214,7 @@ When referring to arguments, you will hear the terms "named" and "unnamed" argum
 
 The **first argument** to `round()` is simply `x`. Just like in maths, `x` is a placeholder for some number or numbers (a "numeric vector", which should sound familiar now) that the function will work on. This is common notation in many functions: `x`, often the first argument in a function, typically denotes the placeholder for the information you want to use the function on. In our case, the numeric vector that we want to find the mean of is stored in an object called `mean_to_round`, so that's what we'll put into the `x` argument.
 
-It's important to note here that this argument `x` has no **default value**. In other words, we must minimally provide some information `x` to this function or it won't be able to run. We know this because `x` appears on its own as an argument; arguments that *do* have a default value have an `=` sign followed by their default value (see the next paragraphs on `digits = 0`). Because we always have to provide additional information, `x` and similar arguments containing the values or data to work on are frequently *unnamed* when we use them. That means that instead of `r paste0("round(x = ", mean_to_round,"...)")` we can just write `r paste0("round(", mean_to_round,"...)")`. They are also frequently the first argument in the function[^first]. So, when you see reference to the "first unnamed argument" - especially important in {tidyverse} functions designed to work with the pipe operator, which we'll meet next week - that simply means, "the first argument in the function for which the programmer hasn't specified a name", which is often, but not always or necessarily, the "data" or "information to work on" argument.
+It's important to note here that this argument `x` has no **default value**. In other words, we must minimally provide some information `x` to this function or it won't be able to run. We know this because `x` appears on its own as an argument; arguments that *do* have a default value have an `=` sign followed by their default value (see the next paragraphs on `digits = 0`). Because we always have to provide additional information, `x` and similar arguments containing the values or data to work on are frequently *unnamed* when we use them. That means that instead of <code>`r paste0("round(x = ", mean_to_round,"...)")`</code> we can just write <code>`r paste0("round(", mean_to_round,"...)")`</code>. They are also frequently the first argument in the function[^first]. So, when you see reference to the "first unnamed argument" - especially important in {tidyverse} functions designed to work with the pipe operator, which we'll meet next week - that simply means, "the first argument in the function for which the programmer hasn't specified a name", which is often, but not always or necessarily, the "data" or "information to work on" argument.
 
 [^first]: Again, not necessarily - the base-R string-manipulation functions `grep()` and friends, for example, have `x` as their *third* argument. I know all the irregularities can be confusing, but remember that R is a massive collaborative project across decades and millions of users, so some quirks are inevitable!
 
@@ -291,6 +295,7 @@ Before you go on, have a go using **a single `round()` command** to round 23.155
 So what happens if we try to put all of those numbers into `round()`? We might first try this:
 
 ```{r}
+#| error: true
 round(23.15575, 59.5452, 0.198, 2)
 ```
 
@@ -408,6 +413,7 @@ Remember to run this command **in the CONSOLE** and *not* in a code chunk!
 
 install.packages("weights")
 ```
+:::
 :::
 
 You should see a good bit of chat from R in (alarming) red text. Don't worry unless you see the actual word "ERROR". You should soon see the message `package ‘weights’ successfully unpacked and MD5 sums checked`, which means all is well. 

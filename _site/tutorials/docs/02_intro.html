@@ -1,0 +1,1689 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.553">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>R Training - 02: IntRoduction II</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link href="../../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+
+<script src="../../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">R Training</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../../tutorials.html" aria-current="page"> 
+<span class="menu-text">Tutorials</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../workshops.html"> 
+<span class="menu-text">Workshops</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../resources.html"> 
+<span class="menu-text">Resources</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://canvas.sussex.ac.uk/courses/29761"> 
+<span class="menu-text">Canvas</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../tutorials/docs/01_intro.html">Current</a></li><li class="breadcrumb-item"><a href="../../tutorials/docs/02_intro.html">02: IntRoduction II</a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../tutorials.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tutorials Overview</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../quick_ref.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Quick Reference</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Current</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../tutorials/docs/01_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">01: IntRoduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../tutorials/docs/02_intro.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">02: IntRoduction II</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Archive (Autumn 2023)</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../tutorials/archive_autumn_2023/00_quick_ref.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Quick Reference</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../tutorials/archive_autumn_2023/01_02_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">01/02: IntRoduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../tutorials/archive_autumn_2023/03_datasets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">03: Datasets</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../tutorials/archive_autumn_2023/04_lm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">04: Reporting Linear Models with Quarto</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../tutorials/archive_autumn_2023/05_filter.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">05: Filter and Select</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../tutorials/archive_autumn_2023/06_changes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">06: Mutate and Summarise</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../tutorials/archive_autumn_2023/07_dataviz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">07: Visualisations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../tutorials/archive_autumn_2023/08_analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">08: Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../tutorials/archive_autumn_2023/09_testflight.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">09: Test Flight</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../tutorials/archive_autumn_2023/10_qtrics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">10: Qualtrics and Labelled Data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../tutorials/archive_autumn_2023/11_qtrics2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">11: Qualtrics II</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup">Setup</a>
+  <ul>
+  <li><a href="#projects" id="toc-projects" class="nav-link" data-scroll-target="#projects">Projects</a></li>
+  <li><a href="#documents" id="toc-documents" class="nav-link" data-scroll-target="#documents">Documents</a>
+  <ul class="collapse">
+  <li><a href="#quarto-documents" id="toc-quarto-documents" class="nav-link" data-scroll-target="#quarto-documents">Quarto documents</a></li>
+  <li><a href="#scripts" id="toc-scripts" class="nav-link" data-scroll-target="#scripts">Scripts</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#packages" id="toc-packages" class="nav-link" data-scroll-target="#packages">Packages</a>
+  <ul>
+  <li><a href="#loading-tidyverse" id="toc-loading-tidyverse" class="nav-link" data-scroll-target="#loading-tidyverse">Loading {tidyverse}</a></li>
+  </ul></li>
+  <li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions">Functions</a>
+  <ul>
+  <li><a href="#basics-and-help" id="toc-basics-and-help" class="nav-link" data-scroll-target="#basics-and-help">Basics and Help</a></li>
+  <li><a href="#arguments" id="toc-arguments" class="nav-link" data-scroll-target="#arguments">Arguments</a></li>
+  <li><a href="#using-functions" id="toc-using-functions" class="nav-link" data-scroll-target="#using-functions">Using Functions</a></li>
+  <li><a href="#passing-multiple-values-to-arguments" id="toc-passing-multiple-values-to-arguments" class="nav-link" data-scroll-target="#passing-multiple-values-to-arguments">Passing Multiple Values to Arguments</a></li>
+  </ul></li>
+  <li><a href="#packages-redux" id="toc-packages-redux" class="nav-link" data-scroll-target="#packages-redux">Packages, redux</a>
+  <ul>
+  <li><a href="#installing-packages" id="toc-installing-packages" class="nav-link" data-scroll-target="#installing-packages">Installing Packages</a></li>
+  <li><a href="#loading-packages" id="toc-loading-packages" class="nav-link" data-scroll-target="#loading-packages">Loading Packages</a></li>
+  </ul></li>
+  <li><a href="#stats-functions" id="toc-stats-functions" class="nav-link" data-scroll-target="#stats-functions">Stats Functions</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../tutorials/docs/01_intro.html">Current</a></li><li class="breadcrumb-item"><a href="../../tutorials/docs/02_intro.html">02: IntRoduction II</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">02: IntRoduction II</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>In this second tutorial, we’ll continue working on foundational skills in R that we began in the <a href="../../tutorials/docs/01_intro.html">first tutorial</a>. We will cover how to organise your work in projects, and within those projects, some options for different types of documents to write your code. Jumping into the code side, we’ll also talk about installing and loading the packages you need, then we’ll focus on how to use the functions in those packages as well as their documentation. Finally, we’ll get stuck in with some common statistics functions and look at how to transparently comment code.</p>
+</section>
+<section id="setup" class="level2">
+<h2 class="anchored" data-anchor-id="setup">Setup</h2>
+<p>In each session, we will always follow the same steps to set up. We’ll walk through the key elements here in detail and then provide a brief summary in future tutorials.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Setup Steps">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Setup Steps
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Create or open a <a href="#projects">project in RStudio</a></li>
+<li>Create or open a <a href="#creating-documents">document to work in</a></li>
+<li><a href="#packages">Load the necessary packages</a></li>
+</ol>
+</div>
+</div>
+<section id="projects" class="level3">
+<h3 class="anchored" data-anchor-id="projects">Projects</h3>
+<p>Projects are the main way that RStudio organises related files and information. Projects are associated with a working directory; everything in that directory, including all the sub-folders, are part of the same project.</p>
+<p>It is <strong>highly recommended</strong> that you create a new project for each separate thing you want to work on in R. Among other advantages, it makes navigating folders much easier (see <a href="03_datasets.qmd#reading-in">Reading In</a>), allows you to easily pick up work from where you left off, and retain all the settings and options you have set each time you work on the same project.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Creating a Project">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Creating a Project
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>On Posit Cloud, you don’t really have a choice in the matter - you must create or open a project in the Cloud workspace in order to do anything.</p>
+<p>On a desktop installation, you can create a new directory as a project or associate a project file with an existing directory.</p>
+<p>See <a href="https://support.posit.co/hc/en-us/articles/200526207-Using-RStudio-Projects">Posit’s Using RStudio Projects</a> guide or Andy Field’s <a href="https://www.youtube.com/watch?v=EA7JW2SfKSY">video guide to RStudio Desktop</a> for more information.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="documents" class="level3">
+<h3 class="anchored" data-anchor-id="documents">Documents</h3>
+<p>As we discussed <a href="../../tutorials/docs/01_intro.html">in the previous tutorial</a>, one of the key strengths of doing your work using R (or any other programming language) is reproducibility - in other words, every step of the process from raw file to output is documented and replicable. However, this is only the case if you do in fact write your code down somewhere! To do that, you’ll need to create some kind of document to record your code. There are two main types of documents you might consider using: a script or a Quarto document.</p>
+<section id="quarto-documents" class="level4">
+<h4 class="anchored" data-anchor-id="quarto-documents">Quarto documents</h4>
+<p>Quarto documents contain a combination of both non-code text and code. The main strength of these documents is that they can be <strong>rendered</strong> to some other output format, such as HTML, PDF, or Word, by executing all of the code and combining it with the text to create a nicely formatted document.</p>
+<p>If you’re interested in using Quarto documents often, the <a href="https://quarto.org/docs/get-started/hello/rstudio.html">Quarto help documentation</a> is excellent. For now, use the Quarto document in your project on Posit Cloud for your work in this tutorial.</p>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Click the “Render” button at the top of your worksheet Quarto document to see what it produces.</p>
+</div>
+</div>
+</section>
+<section id="scripts" class="level4">
+<h4 class="anchored" data-anchor-id="scripts">Scripts</h4>
+<p>Scripts are text files that RStudio knows to read as R code. They have a .R file extension and can ONLY contain code. They are very useful for running code behind the scenes, so to speak, but not great for reviewing or presenting results.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Quarto or Script?">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Quarto or Script?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When deciding what kind of document to create, think about what you want to do with the output of your work.</p>
+<ul>
+<li>Use <strong>Quarto</strong> if the document needs to contain any amount of text, or will be used to share the output of your code in a presentable way, such as notes for yourself, reports, articles, websites, etc.</li>
+<li>The page you’re reading now is (or was!) a Quarto document.</li>
+<li>Use a <strong>script</strong> if the document only needs to contain code and has a solely functional purpose, such as cleaning a dataset, manipulating files, defining new functions, etc.</li>
+<li>I use a script to process all of the tutorial documents and generate the <a href="../../quick_ref.html">Quick Reference</a> page.</li>
+</ul>
+<p>In this series, we will almost always use Quarto documents, but scripts are an essential part of the development side of R, so you may encounter them in other contexts, for example working with collaborators, reviewing open-source data and code, or you may end up preferring them yourself.</p>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="packages" class="level2">
+<h2 class="anchored" data-anchor-id="packages">Packages</h2>
+<p>In this tutorial, we’ll see how the main way that R does anything is via functions. All functions belong to a <strong>package</strong>, which are extensions to the R language. Packages can contain functions, documentation for those functions, datasets, sample code, and more. Some packages, like the {base} and {stats} packages that contain the <code>mean()</code> and <code>t.test()</code> functions that we saw previously, are included by default with R. However, you will often want to use functions from packages that aren’t included by default, so you must do this explicitly.</p>
+<p>In order to utilise the functions in a package, you must do two things:</p>
+<ol type="1">
+<li>Install the package (only <strong>once</strong> per device, or to update the package) using <code>install.packages("package_name")</code> <strong>in the Console</strong></li>
+<li>Load the package (every time you want to use it) using <code>library(package_name)</code> <strong>at the beginning of each new document</strong></li>
+</ol>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you are working on these tutorials on the Posit Cloud workspace, <strong>all of the packages you need have been installed already</strong>. Please do not try to install any packages unless directed by the training lead, as this could cause unexpected conflicts or errors.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="MoRe About: Installing vs Loading Packages">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+MoRe About: Installing vs Loading Packages
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>When you install R and RStudio for the first time on a device, this is like buying a new mobile phone. When you get a new phone, it comes with some apps pre-installed, like a messaging app, a camera, a calculator, etc. If you only ever wanted to take pictures and do basic maths with your phone, you could probably leave it at that. In the same way, when you install R it already comes with some basic packages for doing some operations.</p>
+<p>Most likely, though, you’ll want to use other apps that don’t come with your new phone - like WhatsApp, or <del>Twitter</del> <del>X</del> Bluesky. Let’s say you’ve just got a new phone and you want to use WhatsApp. To do this, you’ll need to:</p>
+<ol type="1">
+<li>Go to your phone’s app store and download WhatsApp (only <strong>once</strong> per device, or to update the app)</li>
+<li>Open the app (every time you want to use it)</li>
+</ol>
+<p>As you can see, these steps correspond almost exactly to the installing vs loading steps described above. In order to use a package that doesn’t come pre-installed with R, you have to do both of these steps.</p>
+</div>
+</div>
+</div>
+<section id="loading-tidyverse" class="level3">
+<h3 class="anchored" data-anchor-id="loading-tidyverse">Loading {tidyverse}</h3>
+<p>One of the core packages we use for UG teaching is <a href="https://www.tidyverse.org/">{tidyverse}</a>. This isn’t actually a single package, but rather a convenient shorthand to install and load a suite of interconnected packages all together. We will be using {tidyverse} packages throughout this training series, so loading {tidyverse} straightaway is a good habit to get into!</p>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Load the {tidyverse} package in your workbook.</p>
+<p><em>Note</em>: If you are on the Cloud workspace, {tidyverse} will already be installed. If not, you may need to install it first.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.2     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.0
+✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>When you load {tidyverse} for the first time, quite a lot of extra stuff gets printed along with it. All this output looks alarming, but these aren’t errors or warnings - they’re just <em>messages</em>. Messages are like warnings, but neutral: they just contain information that you might find helpful.</p>
+<p>The usual {tidyverse} message contains two parts:</p>
+<ul>
+<li><p><strong><code>Attaching core tidyverse packages</code></strong> tells you which packages have just been loaded. Essentially, <code>library(tidyverse)</code> is a shortcut for loading all of these packages individually. Somewhat confusingly, installing {tidyverse} <em>installs</em> more packages than are in this list (for example, {magrittr} and {rlang}), many of which other {tidyverse} packages rely on to function. If you want to load them, you can use <code>library()</code> to do this - but you don’t need to unless you’re using those packages explicitly. For our purposes now, just the default {tidyverse} packages are fine.</p></li>
+<li><p><strong><code>Conflicts</code></strong> tells you about any package conflicts as a result of loading the packages.</p></li>
+</ul>
+<p>What are conflicts? Consider that there are lots and <em>lots</em> of packages for R. At the time of this writing, CRAN (the repository for R packages) contains <a href="https://cran.r-project.org/web/packages/">just over 20,000</a> R packages, with many, many more on Github and elsewhere. Although people generally try to avoid it, it is necessarily the case that sometimes, people give the same name to two different functions from two different packages.</p>
+<p>So, if you have those packages both loaded, how does R know which one to use? This situation is called a <em>conflict</em>.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Resolving Conflicts">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Resolving Conflicts
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Method 1: Recency</strong></p>
+<p>In the absence of any other information, R will use the function from the package that was loaded most recently. This is exactly what’s happening in the {tidyverse} message above.</p>
+<p>There are two conflicts mentioned, one of which reads:</p>
+<pre><code>x dplyr::filter() masks stats::filter()</code></pre>
+<p>First, briefly note the <code>package::function()</code> notation. You can read this notation as, for instance, “the filter function from the dplyr package”, or just “dplyr filter”. This is sort of like using the function’s “full name”, where the name of the package it belongs to is written first, followed by two colons, then the name of the function.</p>
+<p>{stats}, you might remember, is a package that is always installed with R and is loaded by default. So, the {stats} package has a function called <code>filter()</code> that is already loaded to begin with whenever you start up R. When we loaded {tidyverse}, one of the new packages, {dplyr}, also contains a function called <code>filter()</code>. Because {dplyr} has been loaded more recently, if you write a bit of code using <code>filter()</code>, the one you will get is <code>dplyr::filter()</code><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. In other words, the more recently loaded <code>dplyr::filter()</code> covers over, steps in front of, or (in R terminology) “masks” <code>stats::filter()</code>.</p>
+<p>Now, what if you actually want to use <code>filter()</code> from {stats} instead, when {tidyverse} is loaded? Well, in that case you might want to use…</p>
+<p><strong>Method 2: Explicit style</strong></p>
+<p>Above we saw several examples of the <code>package::function()</code> notation, called “explicit” or “verbose” coding style. With explicit style, there isn’t actually a conflict between <code>stats::filter()</code> and <code>dplyr::filter()</code> anymore, because their package calls are clearly stated so R doesn’t have to guess which <code>filter()</code> you want. So, if you had loaded {tidyverse}, you could write <code>stats::filter()</code> in your code, and you would still get the function from the {stats} package even with {dplyr} loaded.</p>
+<p>Another, secret benefit of explicit style is that as long as you have a package <em>installed</em>, you can use a function from that package without having to load it. Imagine I start a new project (so I have <code>stats::filter()</code> already loaded by default). If I only want to quickly use <code>dplyr::filter()</code>, I can use explicit style to use that function without having to run <code>library(tidyverse)</code>.</p>
+</div>
+</div>
+<p>The style you’ll see in these tutorials is a pretty devotedly explicit style: that is, I’ll always write <code>dplyr::filter()</code> instead of just <code>filter()</code>. I only leave out the package name in a few situations:</p>
+<ol type="1">
+<li>When the function is from a default-loaded package, like {base} or {stats} (so I write <code>mean()</code> instead of <code>base::mean()</code>). This is mostly just convenience!</li>
+<li>When there are lots of functions from the same package in row, all of which have very distinctive names, that would make reading the code very difficult and writing the code very repetitive. This is the case, for example, with {ggplot2}, which we will encounter later on in the course. For cases like this, I make sure to load the relevant package and then leave off the package name.</li>
+</ol>
+<p>I like explicit style because I never have to deal with package conflicts; I rarely have to load packages; and it helps me understand better how my code works. You don’t have to use it, and most of the time it won’t make <em>that</em> much difference, so do what makes sense to you. Just to be safe, though, we’ll load {tidyverse} regularly.</p>
+<p>&nbsp;</p>
+</section>
+</section>
+<section id="functions" class="level2">
+<h2 class="anchored" data-anchor-id="functions">Functions</h2>
+<p>Functions are like verbs in the R language. We’ve already started using a few functions: <code>c()</code>, <code>class()</code>, <code>mean()</code>, and <code>as.numeric()</code>. As we’ve seen, these functions perform some operation using the input inside their brackets, and produce the output of that operation. So, functions are the main way that R <em>does</em> anything.</p>
+<p>In this section, we’ll take a systematic look at the process of using a new function - in particular, functions that take multiple inputs, or <em>arguments</em>. As we go, we’ll look at how to “translate” the command you want to give R into a verb (function) it can understand.</p>
+<section id="basics-and-help" class="level3">
+<h3 class="anchored" data-anchor-id="basics-and-help">Basics and Help</h3>
+<p>Let’s look at an example of how this translation might work. For this example, I’d like to round the mean of four numbers, 45.34, 23.001, 7.3, and 16.9820, to two decimal places - a common task for reporting results in APA style.</p>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>As a warm-up, calculate the mean of the four numbers given above and store this number in a new object called <code>mean_to_round</code>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mean_to_round <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">c</span>(<span class="fl">45.34</span>, <span class="fl">23.001</span>, <span class="fl">7.3</span>, <span class="fl">16.9820</span>))</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>mean_to_round</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 23.15575</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>As a result of the calculation above, we now have the mean of the numbers of interest, 23.15575, that we want to round to two decimal places. If we want R to do this for us, we have to write a command that represents the operation we want R to perform. First, we need to know what R function corresponds to that operation. We’re lucky in this case: the function in R is also called <code>round()</code>.</p>
+<p>We know that we’re looking at a function in R because functions often have a name followed by brackets (and nothing else in R does). That is, they have the general form <code>function_name()</code>. Inside the brackets, we can add more information to the function to complete our command, although not all functions require any more information.</p>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Try running the <code>round()</code> function.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in eval(expr, envir, enclos): 0 arguments passed to 'round' which requires 1 or 2 arguments</code></pre>
+</div>
+</div>
+<p>Unsurprisingly, R has given us an error. This is an <strong>informative</strong> error, though - that is, the error gives of some sort of intelligible clue about what’s gone wrong. Namely, it tells us that <code>round()</code> can’t just work without additional information (i.e.&nbsp;“arguments”).</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>What we want to do, “Round the number 23.15575 to two decimal places”, has two more important pieces of information that we need to tell R: what number we want to round (23.15575) and how many decimal places we want to round it to (2). So, how do we say this in R? To find out, let’s look at the help documentation.</p>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Open the help documentation for the <code>round()</code> function by running <code>?round()</code> or <code>help(round)</code> <strong>in the Console</strong>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Definition: Help Documentation">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition: Help Documentation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Help documentation is information, like instruction manuals, built into R about how individual functions work. Function documentation varies wildly in helpfulness and completeness, but it’s a useful place to check first if you want to find out what a function does. You can access the help documentation in a few different ways: by running <code>?function_name</code> or <code>help(function_name)</code> in the Console, or by clicking on the “Help” tab in the Files section of RStudio and using the Find box to search for the function.</p>
+</div>
+</div>
+<p>The first section, “Description”, varies quite a bit in intelligibility, depending on how complex the function is. Here, if we ignore the information about the other function included in this document, we can see that we have a useful description of <code>round()</code> that tells us that it rounds numbers (that’s a good sign) to a certain number of decimal places. That’s exactly what we want, so how do we use it?</p>
+<p>Let’s scroll down to “Usage”, which gives examples of what the function looks like. You can see that the basic structure of this function is <code>round(x, digits = 0)</code>. It seems like we need to add some more information in the brackets of our function - but how do we interpret <code>x</code> and <code>digits = 0</code>?</p>
+</section>
+<section id="arguments" class="level3">
+<h3 class="anchored" data-anchor-id="arguments">Arguments</h3>
+<p>The information inside a function’s brackets, which gives it the information it needs to work, are called <strong>arguments</strong>. Each argument in a function is separated by a comma, so we can see from <code>round(x, digits = 0)</code> that the <code>round()</code> function can take two arguments. How many arguments a function has depends on the function; some (like <code>Sys.Date()</code>) don’t need any arguments to run. One of the most useful parts of a function’s help documentation is the “Arguments” section, which tells you what each of the function’s arguments are and how to use them.</p>
+<p>When referring to arguments, you will hear the terms “named” and “unnamed” arguments. This can be a bit confusing, because all arguments have a name - they have to, otherwise we couldn’t refer to them! The named vs unnamed distinction doesn’t refer to the arguments themselves, but rather how the person using the function chooses to write them out. There are some conventions around which arguments are named or not, so let’s have a look at that now.</p>
+<p>The <strong>first argument</strong> to <code>round()</code> is simply <code>x</code>. Just like in maths, <code>x</code> is a placeholder for some number or numbers (a “numeric vector”, which should sound familiar now) that the function will work on. This is common notation in many functions: <code>x</code>, often the first argument in a function, typically denotes the placeholder for the information you want to use the function on. In our case, the numeric vector that we want to find the mean of is stored in an object called <code>mean_to_round</code>, so that’s what we’ll put into the <code>x</code> argument.</p>
+<p>It’s important to note here that this argument <code>x</code> has no <strong>default value</strong>. In other words, we must minimally provide some information <code>x</code> to this function or it won’t be able to run. We know this because <code>x</code> appears on its own as an argument; arguments that <em>do</em> have a default value have an <code>=</code> sign followed by their default value (see the next paragraphs on <code>digits = 0</code>). Because we always have to provide additional information, <code>x</code> and similar arguments containing the values or data to work on are frequently <em>unnamed</em> when we use them. That means that instead of <code>round(x = 23.15575…)</code> we can just write round(23.15575…). They are also frequently the first argument in the function<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. So, when you see reference to the “first unnamed argument” - especially important in {tidyverse} functions designed to work with the pipe operator, which we’ll meet next week - that simply means, “the first argument in the function for which the programmer hasn’t specified a name”, which is often, but not always or necessarily, the “data” or “information to work on” argument.</p>
+<p>The <strong>second argument</strong> of <code>round()</code> is <code>digits</code>. You can think of arguments like this as settings that change the way a function works, often with only certain allowable values.</p>
+<p>The help documentation tells us that <code>digits</code> should be an “integer indicating the number of decimal places…to be used.” We can also see in “Usage” that this argument has a default value, <code>digits = 0</code>. That means that if we don’t explicitly include the argument <code>digits</code> when we use the function, by default the <code>round()</code> function will round the number you give it to 0 decimal places. Arguments frequently, but not always, have a default, and it’s important to check so the function doesn’t quietly do something unexpected.</p>
+<p>Default values of arguments are really useful, because the default is often the most frequently used or safest<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> setting. It means you don’t have to specify every single aspect of a function every time you use it, as long as you want the function to work according to its defaults. In our case, we actually wanted <code>round()</code> to round to two decimal places, not 0. So, in our command, we should change the <code>digits</code> setting from the default, <code>0</code>, to <code>2</code>.</p>
+</section>
+<section id="using-functions" class="level3">
+<h3 class="anchored" data-anchor-id="using-functions">Using Functions</h3>
+<p>Now that we know what both of these arguments mean, we can change them to actually translate the sentence “Round the number 23.15575 to two decimal places” into a command that R can work with. We’ll explicitly write out the name of each argument so we know what they are doing.</p>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use the <code>round()</code> function to round 23.15575 (stored in <code>mean_to_round</code>) to two decimal places.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="at">x =</span> mean_to_round, <span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 23.16</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="MoRe About: Order and Naming of Arguments">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+MoRe About: Order and Naming of Arguments
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-18" class="callout-18-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>If you want to, you can achieve the same result by changing the order of the arguments, as long as you pay careful attention to which argument(s) you have named.</p>
+<p>If we have written the names of both arguments, R can still do what we want it to do with the order of arguments reversed:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="at">digits =</span> <span class="dv">2</span>, <span class="at">x =</span> <span class="fl">23.15575</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 23.16</code></pre>
+</div>
+</div>
+<p>We can also, to some degree, drop the names of the arguments, as long as R can still understand what we’re trying to do. In this case, the “first unnamed argument” is still <code>x</code>! Even though it’s not the first argument we’ve written in the function, it’s the first one that doesn’t have an explicit name.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="at">digits =</span> <span class="dv">2</span>, <span class="fl">23.15575</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 23.16</code></pre>
+</div>
+</div>
+<p>Although I left out the <code>x =</code>, R can still understand this because <code>round()</code> only takes two arguments, and we explicitly told it what value belongs to <code>digits</code>, so it assumes the second number must be <code>x</code>.</p>
+<p>If more than one, or all, of the arguments are unnamed, then order becomes critical:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fl">23.15575</span>, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 23.16</code></pre>
+</div>
+</div>
+<p>This time I dropped both argument names. R can still understand this because when you don’t specify which input goes with which argument, R will assume they should go in the default order given in the help documentation. So, R has automatically assigned 23.15575 to <code>x</code> and 2 to <code>digits</code>.</p>
+<p>As I use R more and more, I find that I name arguments <em>more</em> consistently, even though I know how the function works and dropping them is more efficient (at least in terms of typing). That’s because when I come back from lunch, or the next day, or six months later to revisit the same code, it’s much easier to recall what it all means when it’s well-annotated. So, I strongly recommend getting in the habit of including argument names in your code as a favour to your future self, and to avoid situations like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="do">## uh oh!</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="dv">2</span>, <span class="fl">23.15575</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+</div>
+<p>Here, since we left all the arguments unnamed, R assumed that 2 was the number we wanted to round. This isn’t what we wanted - but R has no way of knowing this. It always assumes that what we typed was precisely what we intended to ask R to do.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="passing-multiple-values-to-arguments" class="level3">
+<h3 class="anchored" data-anchor-id="passing-multiple-values-to-arguments">Passing Multiple Values to Arguments</h3>
+<p>A last important aspect of using functions is that <strong>each argument in a function can only take a single object or value as input</strong>. For example, we saw above that we put the single value 23.15575 into the <code>x</code> argument of <code>round()</code>. But what if we wanted to round more than one number? We don’t want to have to write a new <code>round()</code> command for every number, even though we could do this if we particularly enjoyed doing a lot of tedious and repetitive typing:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fl">23.15575</span>, <span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 23.16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fl">59.5452</span>, <span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 59.55</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fl">0.198</span>, <span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.2</code></pre>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Before you go on, have a go using <strong>a single <code>round()</code> command</strong> to round 23.15575, 59.5452, and 0.198.</p>
+<p><em>Hint</em>: Refer to <a href="#vectors">Vectors</a>.</p>
+</div>
+</div>
+<p>So what happens if we try to put all of those numbers into <code>round()</code>? We might first try this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fl">23.15575</span>, <span class="fl">59.5452</span>, <span class="fl">0.198</span>, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in eval(expr, envir, enclos): 4 arguments passed to 'round' which requires 1 or 2 arguments</code></pre>
+</div>
+</div>
+<p>Once again, R tells us that this doesn’t work by throwing an error. R has tried to do what we wanted, but the <code>round()</code> function only allows a max of two arguments, and we’ve given it four. Behind the scenes, R has tried to run <code>round(x = 23.15575, digits = 59.5452...</code> and can’t proceed from there because it doesn’t know what to do with the last two numbers. So, what we need to do is find a way to put all three numbers that we want to round into the first <code>x</code> argument together. If only there was a way to <strong>c</strong>oncatenate them together…</p>
+<p>You may have guessed where this is going: one method we could use would be to put the three numbers we want to round into a vector, and then use that vector in <code>round()</code> as the <code>x</code> argument. We already saw that we can combine any number of things together into a single vector using the <code>c()</code> function.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-20-contents" aria-controls="callout-20" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-20" class="callout-20-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Create an intermediate object to contain the numbers</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>numbers <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">23.15575</span>, <span class="fl">59.5452</span>, <span class="fl">0.198</span>)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(numbers, <span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 23.16 59.55  0.20</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Put the vector of numbers into round() directly</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">c</span>(<span class="fl">23.15575</span>, <span class="fl">59.5452</span>, <span class="fl">0.198</span>), <span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 23.16 59.55  0.20</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>Here we can see a good example of a function inside another function. You can stack, or “nest”, functions inside each other like this as much as you like, although it can become difficult to read the code or keep track of what it’s doing. (There’s a great solution to this problem that we’ll encounter in the next tutorial: the pipe operator.)</p>
+<p>That’s looking like some proper R code! Very nicely done.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Help Documentation, Revisited">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Help Documentation, Revisited
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Before we leave the <code>round()</code> function altogether, let’s take a look at two more useful sections of the help documentation. Depending on what you are trying to do, the “Details” section can tell you more about how exactly the function works - how it behaves in certain situations, or how it handles unusual or difficult cases. If a function isn’t doing what you expect it to, this is a good place to look for an explanation.</p>
+<p>Finally, at the end of the documentation you can find the “Examples” section. If you are learning to use a new function, this section can give you a template for writing your own commands. You can also click the “Run examples” link, which will run the code in the Examples section for you so you can see what the function will do.</p>
+</div>
+</div>
+<div class="repro">
+<div class="repro-header">
+<div class="repro-icon">
+
+</div>
+<p>RepRoducibility: Why Code the Little Stuff?</p>
+</div>
+<div class="repro-body">
+<p>You may be wondering what the point is of using functions like <code>round()</code>. After all, it isn’t difficult to round 23.15575 to 23.16 just by looking at it. So, why go to all the trouble to learn a new function, with new arguments and (potentially) its own little quirks, for each little task?<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
+<p>When writing code, there are two important principles that come up again and again. In brief, these are:</p>
+<p><strong>Avoid hard-coding</strong></p>
+<p>“Hard-coding” essentially means writing information, like numbers, directly into your code as opposed to using code to produce or replicate them. This should be avoided as much as possible in favour of producing values <em>programmatically</em>, i.e.&nbsp;by using code.</p>
+<p>To see why, take this tutorial as an example. We have been looking throughout this section at the number 23.15575. As I’m writing this tutorial, instead of typing out that number in the text each time, I have been using <a href="https://quarto.org/docs/computations/inline-code.html">inline code</a> to produce this number in the text using the same <code>mean_to_round</code> object we created in that earlier exercise - that is, using code instead of hard-coding, which would be typing the actual numbers into the text each time. This has a couple key benefits:</p>
+<ul>
+<li><p>Because code will always work the same way each time, the number 23.15575 will always be replicated correctly - no risk of mistakes, mistyping, forgetting, etc.</p></li>
+<li><p>If I decide to choose a different number for this example, all I need to do is go back to that first task and re-assign a new value to <code>mean_to_round</code> - and the number will be updated throughout the tutorial, wherever that object has been used. If I don’t do this, I will have to manually find and replace every instance of it. Playing spot-the-difference is not only tedious, repetitive, and time-consuming (again, these are the type of tasks that computers are great at) but relies on the programmer not forgetting or missing even one instance of the wrong number. If that number is instead stored in an object, both the repetitive updating and the risk of mistakes are massively mitigated.</p></li>
+</ul>
+<p><strong>For any task that you need to do more than twice, use a function</strong></p>
+<p>This is a rule of thumb is adapted from <a href="https://r4ds.had.co.nz/functions.html#when-should-you-write-a-function">the R for Data Science chapter on function-writing</a>. While we’re not going to worry about writing our own functions for now, it’s still a good mental habit to get into: whenever you need to perform the same task three or more times, look for a function to do it instead.</p>
+<p>Why? Essentially, this goes back to “avoid hard-coding”. If you only ever need to do a task a couple times, it’s fine to just get it done manually (i.e.&nbsp;hard-code it) and move on. However, if you are going to need to do that task again and again, it will be more efficient in the long run - and safer in terms of mistakes - to do it with code instead, even if it takes a bit longer to find and learn a new function (or write one) than it would take to copy/paste. What you lose immediately in time, you gain in skill, replicability, and code resilience for future use.</p>
+<p>Putting these two things together, we arrive at why it’s preferable to do even simple tasks like rounding with a function instead of “manually”. Using code whenever possible to store, print, and work with data of all kinds - even single values and simple operations - is always the option that is more replicable, more transparent, more resilient to changes, and (at least in the long run) less time- and memory-intensive.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="packages-redux" class="level2">
+<h2 class="anchored" data-anchor-id="packages-redux">Packages, redux</h2>
+<p>We just had an in-depth look at the <code>round()</code> function, but say we weren’t happy with the way this function does rounding in particular situations. For instance, we might want to round a <em>p</em>-value to three decimal places with no leading 0 (as we teach UGs to report <em>p</em>), but that’s not how <code>round()</code> rolls:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(.<span class="dv">00793</span>, <span class="at">digits =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.008</code></pre>
+</div>
+</div>
+<p>So, instead, we might look for a different function that does the rounding as we want, with no leading 0, for example <a href="https://rdrr.io/cran/weights/man/rd.html">the <code>rd()</code> function linked here</a>. Looks great!</p>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Round the number .00793 to three decimal places using the <code>rd()</code> function.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-22-contents" aria-controls="callout-22" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-22" class="callout-22-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rd</span>(.<span class="dv">00793</span>, <span class="at">digits =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in rd(0.00793, digits = 3): could not find function "rd"</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>Well, that didn’t go to plan!</p>
+<p>There are two main reasons this “could not find function” error usually appears:</p>
+<ol type="1">
+<li>You’ve misspelt the function name. This isn’t the case here (it’s only two letters!).</li>
+<li>The package that the function belongs to isn’t installed and/or loaded.</li>
+</ol>
+<p>So, this function does exist, but in order to use it, we need to install and then load the package that contains it.</p>
+<section id="installing-packages" class="level3">
+<h3 class="anchored" data-anchor-id="installing-packages">Installing Packages</h3>
+<p>According to the documentation linked above, the package that this function belongs to is called {weights}, so let’s install it first.</p>
+<p>::: {.callout-note appearance=“minimal” title=“Exercise”} Install the {weights} package. Replace <code>function_name</code> in the example command below and run this command <strong>in the Console</strong> only.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"function_name"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><em>Note</em>: As mentioned above, please don’t regularly install packages if you’re on the Posit Cloud workspace - but in this specific case, it’s good to get the practice!</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-24-contents" aria-controls="callout-24" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-24" class="callout-24-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Remember to run this command <strong>in the CONSOLE</strong> and <em>not</em> in a code chunk!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"weights"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<p>You should see a good bit of chat from R in (alarming) red text. Don’t worry unless you see the actual word “ERROR”. You should soon see the message <code>package ‘weights’ successfully unpacked and MD5 sums checked</code>, which means all is well.</p>
+<p>Now that we know we have the package installed, let’s give it another go.</p>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Round the number .00793 to three decimal places using the <code>rd()</code> function.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-25-contents" aria-controls="callout-25" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-25" class="callout-25-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rd</span>(.<span class="dv">00793</span>, <span class="at">digits =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in rd(0.00793, digits = 3): could not find function "rd"</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>Still no dice!</p>
+</section>
+<section id="loading-packages" class="level3">
+<h3 class="anchored" data-anchor-id="loading-packages">Loading Packages</h3>
+<p>We know that we have the right package installed - but as you may have guessed, we haven’t also loaded the package. We can actually fix this error in one of two ways:</p>
+<ol type="1">
+<li>Load the {weights} package using the <code>library()</code> function. We can then use the function as written above.</li>
+<li>Use explicit style, e.g.&nbsp;<code>weights::rd()</code>, when writing our command. In this case we don’t need to load the package as long as we have it installed.</li>
+</ol>
+<p>Alright, third time lucky!</p>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Round the number .00793 to three decimal places using the <code>rd()</code> function, using either method to access the function in the {weights} package.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-27-contents" aria-controls="callout-27" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-27" class="callout-27-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Using verbose style, before loading the package:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>weights<span class="sc">::</span><span class="fu">rd</span>(.<span class="dv">00793</span>, <span class="at">digits =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] ".008"</code></pre>
+</div>
+</div>
+<p>First loading the package, then using the function without the package call:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(weights)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rd</span>(.<span class="dv">00793</span>, <span class="at">digits =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] ".008"</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="stats-functions" class="level2">
+<h2 class="anchored" data-anchor-id="stats-functions">Stats Functions</h2>
+<p>Now we can start working with these values in the dataset. The base-R {stats} package contains a wide variety of very sensibly-named functions that calculate common descriptive statistics. These include:</p>
+<ul>
+<li><code>mean()</code> and <code>median()</code> (there is a function <code>mode()</code>, but it doesn’t do what we’d like it to here!)</li>
+<li><code>min()</code> for minimum value, <code>max()</code> for maximum value</li>
+<li><code>range()</code> for both minimum and maximum value in a single vector</li>
+<li><code>sd()</code> for standard deviation</li>
+</ul>
+<p>A key feature of all of these functions is that, by default, they return <code>NA</code> if there are any <code>NA</code>s (missing values) present. (This is very sensible behaviour by default, but is frequently not the information we want when we use them.) So, they all have an argument, <code>na.rm =</code>, which determines whether <code>NA</code>s should be removed. By default this argument is set to <code>FALSE</code> (<code>NA</code>s should NOT be removed), but if you want to get the calculation ignoring any <code>NA</code>s, you can set this argument to <code>TRUE</code> instead.</p>
+</section>
+<section id="exercises" class="level2">
+<h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Exercise">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="callout callout-style-default callout-note callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-29-contents" aria-controls="callout-29" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-29" class="callout-29-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>As for how to pronounce “dplyr”, the <a href="https://twitter.com/hadleywickham/status/925313165554012160?s=20">official pronunciation</a> is “dee-ply-er”, with “plier” like the tool <a href="https://dplyr.tidyverse.org/">for which it’s named</a>. I have heard other people say “dipler”. Since code is always a bit tricky to read aloud, just go with whatever sounds good to you.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Again, not necessarily - the base-R string-manipulation functions <code>grep()</code> and friends, for example, have <code>x</code> as their <em>third</em> argument. I know all the irregularities can be confusing, but remember that R is a massive collaborative project across decades and millions of users, so some quirks are inevitable!<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>By “safest” setting, I mean that the function makes the fewest assumptions about what you intended.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>I’m playing the devil’s advocate a bit here!<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>© Jennifer Mankin 2024</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
