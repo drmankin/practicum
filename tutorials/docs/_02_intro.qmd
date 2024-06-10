@@ -28,6 +28,19 @@ On a desktop installation, you can create a new directory as a project or associ
 See [Posit's Using RStudio Projects](https://support.posit.co/hc/en-us/articles/200526207-Using-RStudio-Projects) guide or Andy Field's [video guide to RStudio Desktop](https://www.youtube.com/watch?v=EA7JW2SfKSY) for more information.
 :::
 
+
+:::: {.repro}
+::: {.repro-header}
+::: {.repro-icon}
+:::
+RepRoducibility: File organisation
+:::
+::: {.repro-body}
+When uploading analysis materials and data online, it is important to make sure that your code will run with minimal intervention when another person downloads it. To help with this, the relationship between the analysis materials and the data assumed in the script needs to be preserved when the materials are uploaded on OSF. Also, avoid ["hard-coding"](https://medium.com/@jordan.l.edmunds/please-stop-hard-coding-file-paths-609c769f9537) file paths - while my work computer has a directory called "D:/reny-work/teaching/r-training/", other people most likely don't have the same directory and asking R to open a non-existent file path will cause an error.
+:::
+::::
+
+
 ### Documents
 
 As we discussed [in the previous tutorial](01_intro.qmd), one of the key strengths of doing your work using R (or any other programming language) is reproducibility - in other words, every step of the process from raw file to output is documented and replicable. However, this is only the case if you do in fact write your code down somewhere! To do that, you'll need to create some kind of document to record your code. There are two main types of documents you might consider using: a script or a Quarto document.
@@ -82,6 +95,19 @@ Most likely, though, you'll want to use other apps that don't come with your new
 
 As you can see, these steps correspond almost exactly to the installing vs loading steps described above. In order to use a package that doesn't come pre-installed with R, you have to do both of these steps.
 :::
+
+
+:::: {.repro}
+::: {.repro-header}
+::: {.repro-icon}
+:::
+RepRoducibility: Package versions
+:::
+::: {.repro-body}
+R packages get regular updates. Some updates are minor but others can change how functions work, and in some cases functions can even be removed. Because of this, it is a good idea to note the specific versions of the packages you are using. One way to do this is to load all the packages you need with `library()` and then call the function `sessionInfo()` to see the specific versions you are using. This functions can generate a lot of output. The most important information is the version of R you are using and the versions of the packages you loaded, which are listed under "other attached packages".
+:::
+::::
+
 
 ### Loading {tidyverse}
 
@@ -222,6 +248,18 @@ Default values of arguments are really useful, because the default is often the 
 
 [^7]: By "safest" setting, I mean that the function makes the fewest assumptions about what you intended.
 
+:::: {.repro}
+::: {.repro-header}
+::: {.repro-icon}
+:::
+RepRoducibility: Default values
+:::
+::: {.repro-body}
+When using a function, check what the default value for its different arguments are. **The default value of a given argument may not be what you expect it to be, and that can affect your results.** For example, by default, SPSS computes a type III ANOVA, while the `aov()` function in R computes a type I ANOVA.
+:::
+::::
+
+
 ### Using Functions
 
 Now that we know what both of these arguments mean, we can change them to actually translate the sentence "Round the number `r mean_to_round` to two decimal places" into a command that R can work with. We'll explicitly write out the name of each argument so we know what they are doing.
@@ -271,6 +309,38 @@ round(2, 23.15575)
 
 Here, since we left all the arguments unnamed, R assumed that 2 was the number we wanted to round. This isn't what we wanted - but R has no way of knowing this. It always assumes that what we typed was precisely what we intended to ask R to do.
 :::
+
+
+
+:::: {.repro}
+::: {.repro-header}
+::: {.repro-icon}
+:::
+RepRoducibility: Unnamed arguments
+:::
+::: {.repro-body}
+Using unnamed arguments for all inputs in a function can make code hard to read. It requires you to remember all the different inputs that a function can take and the exact order in which this information needs to be put inside the function. For an example of how pain-inducing this can be, let's look at the `t.test()` function which can take **more than 11** input arguments. I will create two vectors of 20 numbers each, and then I will compare the two vectors using the `t.test()` function. 
+```{r}
+# sample 20 numbers from a normal distribution with the given mean and standard deviation
+vector_1 <- rnorm(20, mean=15, sd=5) 
+
+# sample 20 numbers from a different normal distribution 
+vector_2 <- rnorm(20, mean=25, sd=5)
+
+# compare the two vectors with a t-test
+t.test(vector_1, vector_2, "less", 5, FALSE, TRUE, 0.78)
+```
+
+Looking at the information I have given to `t.test()` I can only tell what `vector_1` and `vector_2` correspond to. The rest is mystery and code shouldn't be mysterious. Let's compare that to using named arguments:
+
+```{r}
+# compare the two vectors with a t-test
+t.test(vector_1, vector_2, alternative = "less", mu = 5, paired = FALSE, var.equal = TRUE, conf.level = 0.78)
+```
+This is a lot better! Some unresolved mystery still remains, so you may want to check the help menu of the `t.test()` function and add a comment written in plain English that describes what is happening in that line. More on comments later...
+:::
+::::
+
 
 ### Passing Multiple Values to Arguments
 
@@ -458,7 +528,7 @@ rd(.00793, digits = 3)
 
 ## Stats Functions
 
-Now we can start working with these values in the dataset. The base-R {stats} package contains a wide variety of very sensibly-named functions that calculate common descriptive statistics. These include: 
+Now let's do some coding. The base-R {stats} package contains a wide variety of very sensibly-named functions that calculate common descriptive statistics. These include: 
 
 - `mean()` and `median()` (there is a function `mode()`, but it doesn't do what we'd like it to here!)
 - `min()` for minimum value, `max()` for maximum value
@@ -466,6 +536,8 @@ Now we can start working with these values in the dataset. The base-R {stats} pa
 - `sd()` for standard deviation
 
 A key feature of all of these functions is that, by default, they return `NA` if there are any `NA`s (missing values) present. (This is very sensible behaviour by default, but is frequently not the information we want when we use them.) So, they all have an argument, `na.rm =`, which determines whether `NA`s should be removed. By default this argument is set to `FALSE` (`NA`s should NOT be removed), but if you want to get the calculation ignoring any `NA`s, you can set this argument to `TRUE` instead.
+
+
 
 ## Exercises
 
@@ -478,3 +550,57 @@ A key feature of all of these functions is that, by default, they return `NA` if
 :::
 :::
 
+:::: {.repro}
+
+::: {.repro-header}
+::: {.repro-icon}
+:::
+RepRoducibility: Comments
+:::
+
+::: {.repro-body}
+Now that we have written some code, it is a good time to introduce comments - one of the best ways to glam up a wall of intimidating code into readable text. A comment is a line or piece of text that R will ignore when running code. R uses the '#' symbol to signify the beginning of a comment: 
+
+```{r}
+# anything after the "#" symbol will be treated as a comment, even numbers - 1, 2, 3
+
+a <- 5 # comments can be added on the following executable code on the same line
+```
+
+Comments which describe what code does makes the code it easier to read. Comments should be easy to understand and clear, but not overly long. Also, make sure you are consistent - use the same terminology and formatting throughout the whole script. 
+
+To illustrate, compare this chunk of code...
+
+
+```{r}
+# Data of the control group consisting of people who completed the control condition of the experiment
+group_1 <- rnorm(30, mean = 40, sd = 5)
+
+# Data of the experimental group consisting of people who completed the experimental condition of the experiment 
+group_2 <- rnorm(30, mean = 80, sd = 5) 
+
+# Compare the means of the active group and the fist group using a t-test assuming that they have equal variances 
+t.test(group_1, group_2, var.equal = TRUE)
+```
+
+... to this one: 
+
+```{r}
+# Control group data
+control_group <- rnorm(30, mean = 40, sd = 5)
+
+# Experimental group data 
+experimental_group <- rnorm(30, mean = 80, sd = 5) 
+
+# Between subjects t-test comparing the control and experimental groups; assumes equal variances 
+t.test(group_2, group_1, var.equal = TRUE)
+```
+
+
+In addition to making code legible, comments specify your intentions and  make it easier to verify that your code is doing exactly what you wanted it to do. For example, if you have computed a between-subjects t-test, but there is a comment saying that you intended to computed a paired-subjects t-test, the error will be easier to catch than in the absence of a descriptive comment. 
+
+
+Now, for the final exercise for today, go back to the code your wrote above and add some comments in plain English. 
+:::
+
+::::
