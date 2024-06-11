@@ -648,6 +648,13 @@ Comments which describe what code does make the code easier to read. Comments sh
 To illustrate, compare this chunk of code...
 
 ```{r}
+#| include: false
+
+set.seed(110624)
+```
+
+
+```{r}
 # Data of the control group consisting of people who completed the control condition of the experiment
 group_1 <- rnorm(30, mean = 40, sd = 5)
 
