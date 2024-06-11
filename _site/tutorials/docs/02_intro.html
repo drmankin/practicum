@@ -737,7 +737,7 @@ Definition: Help Documentation
 <p>RepRoducibility: Default values</p>
 </div>
 <div class="repro-body">
-<p>When using a function, check what the default value for its different arguments are. <strong>The default value of a given argument may not be what you expect it to be, and that can affect your results.</strong> For example, by default, SPSS computes a type III ANOVA, while the <code>aov()</code> function in R computes a type I ANOVA.</p>
+<p>When using a function, check what the default values for its different arguments are. <strong>The default value of a given argument may not be what you expect it to be, and that can affect your results.</strong> For example, by default, SPSS computes a type III ANOVA, while the <code>aov()</code> function in R computes a type I ANOVA.</p>
 </div>
 </div>
 </section>
@@ -842,10 +842,10 @@ MoRe About: Order and Naming of Arguments
 <p>Using unnamed arguments for all inputs in a function can make code hard to read. It requires you to remember all the different inputs that a function can take and the exact order in which this information needs to be put inside the function. For an example of how pain-inducing this can be, let’s look at the <code>t.test()</code> function which can take <strong>more than 11</strong> input arguments. I will create two vectors of 20 numbers each, and then I will compare the two vectors using the <code>t.test()</code> function.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sample 20 numbers from a normal distribution with the given mean and standard deviation</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>vector_1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">20</span>, <span class="at">mean=</span><span class="dv">15</span>, <span class="at">sd=</span><span class="dv">5</span>) </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>vector_1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">20</span>, <span class="at">mean =</span> <span class="dv">15</span>, <span class="at">sd =</span> <span class="dv">5</span>) </span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># sample 20 numbers from a different normal distribution </span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>vector_2 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">20</span>, <span class="at">mean=</span><span class="dv">25</span>, <span class="at">sd=</span><span class="dv">5</span>)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>vector_2 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">20</span>, <span class="at">mean =</span> <span class="dv">25</span>, <span class="at">sd =</span> <span class="dv">5</span>)</span>
 <span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co"># compare the two vectors with a t-test</span></span>
 <span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(vector_1, vector_2, <span class="st">"less"</span>, <span class="dv">5</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>, <span class="fl">0.78</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -854,13 +854,13 @@ MoRe About: Order and Naming of Arguments
     Two Sample t-test
 
 data:  vector_1 and vector_2
-t = -12.192, df = 38, p-value = 5.266e-15
+t = -10.11, df = 38, p-value = 1.257e-12
 alternative hypothesis: true difference in means is less than 5
 78 percent confidence interval:
-      -Inf -9.995195
+      -Inf -7.952154
 sample estimates:
 mean of x mean of y 
- 14.52705  25.54769 </code></pre>
+  17.5057   26.5412 </code></pre>
 </div>
 </div>
 <p>Looking at the information I have given to <code>t.test()</code> I can only tell what <code>vector_1</code> and <code>vector_2</code> correspond to. The rest is mystery and code shouldn’t be mysterious. Let’s compare that to using named arguments:</p>
@@ -877,13 +877,13 @@ mean of x mean of y
     Two Sample t-test
 
 data:  vector_1 and vector_2
-t = -12.192, df = 38, p-value = 5.266e-15
+t = -10.11, df = 38, p-value = 1.257e-12
 alternative hypothesis: true difference in means is less than 5
 78 percent confidence interval:
-      -Inf -9.995195
+      -Inf -7.952154
 sample estimates:
 mean of x mean of y 
- 14.52705  25.54769 </code></pre>
+  17.5057   26.5412 </code></pre>
 </div>
 </div>
 <p>This is a lot better! Some unresolved mystery still remains, so you may want to check the help menu of the <code>t.test()</code> function and add a comment written in plain English that describes what is happening in that line. More on comments later…</p>
@@ -1319,9 +1319,9 @@ Solution
 <div class="cell">
 <div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="co"># anything after the "#" symbol will be treated as a comment, even numbers - 1, 2, 3</span></span>
 <span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">5</span> <span class="co"># comments can be added on the following executable code on the same line</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">5</span> <span class="co"># comments can be added on the same line after executable code</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Comments which describe what code does makes the code it easier to read. Comments should be easy to understand and clear, but not overly long. Also, make sure you are consistent - use the same terminology and formatting throughout the whole script.</p>
+<p>Comments which describe what code does make the code easier to read. Comments should be easy to understand and clear, but not overly long. Also, make sure you are consistent - use the same terminology and formatting throughout the whole script.</p>
 <p>To illustrate, compare this chunk of code…</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Data of the control group consisting of people who completed the control condition of the experiment</span></span>
@@ -1337,13 +1337,13 @@ Solution
     Two Sample t-test
 
 data:  group_1 and group_2
-t = -36.528, df = 58, p-value &lt; 2.2e-16
+t = -35.749, df = 58, p-value &lt; 2.2e-16
 alternative hypothesis: true difference in means is not equal to 0
 95 percent confidence interval:
- -42.90059 -38.44304
+ -42.35415 -37.86253
 sample estimates:
 mean of x mean of y 
- 39.89450  80.56631 </code></pre>
+ 40.51404  80.62238 </code></pre>
 </div>
 </div>
 <p>… to this one:</p>
@@ -1361,13 +1361,13 @@ mean of x mean of y
     Two Sample t-test
 
 data:  group_2 and group_1
-t = 36.528, df = 58, p-value &lt; 2.2e-16
+t = 35.749, df = 58, p-value &lt; 2.2e-16
 alternative hypothesis: true difference in means is not equal to 0
 95 percent confidence interval:
- 38.44304 42.90059
+ 37.86253 42.35415
 sample estimates:
 mean of x mean of y 
- 80.56631  39.89450 </code></pre>
+ 80.62238  40.51404 </code></pre>
 </div>
 </div>
 <p>In addition to making code legible, comments specify your intentions and make it easier to verify that your code is doing exactly what you wanted it to do. For example, if you have computed a between-subjects t-test, but there is a comment saying that you intended to computed a paired-subjects t-test, the error will be easier to catch than in the absence of a descriptive comment.</p>

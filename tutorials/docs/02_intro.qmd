@@ -274,7 +274,7 @@ RepRoducibility: Default values
 :::
 
 ::: repro-body
-When using a function, check what the default value for its different arguments are. **The default value of a given argument may not be what you expect it to be, and that can affect your results.** For example, by default, SPSS computes a type III ANOVA, while the `aov()` function in R computes a type I ANOVA.
+When using a function, check what the default values for its different arguments are. **The default value of a given argument may not be what you expect it to be, and that can affect your results.** For example, by default, SPSS computes a type III ANOVA, while the `aov()` function in R computes a type I ANOVA.
 :::
 :::
 
@@ -343,10 +343,10 @@ Using unnamed arguments for all inputs in a function can make code hard to read.
 
 ```{r}
 # sample 20 numbers from a normal distribution with the given mean and standard deviation
-vector_1 <- rnorm(20, mean=15, sd=5) 
+vector_1 <- rnorm(20, mean = 15, sd = 5) 
 
 # sample 20 numbers from a different normal distribution 
-vector_2 <- rnorm(20, mean=25, sd=5)
+vector_2 <- rnorm(20, mean = 25, sd = 5)
 
 # compare the two vectors with a t-test
 t.test(vector_1, vector_2, "less", 5, FALSE, TRUE, 0.78)
@@ -640,12 +640,19 @@ Now that we have written some code, it is a good time to introduce comments - on
 ```{r}
 # anything after the "#" symbol will be treated as a comment, even numbers - 1, 2, 3
 
-a <- 5 # comments can be added on the following executable code on the same line
+a <- 5 # comments can be added on the same line after executable code
 ```
 
-Comments which describe what code does makes the code it easier to read. Comments should be easy to understand and clear, but not overly long. Also, make sure you are consistent - use the same terminology and formatting throughout the whole script.
+Comments which describe what code does make the code easier to read. Comments should be easy to understand and clear, but not overly long. Also, make sure you are consistent - use the same terminology and formatting throughout the whole script.
 
 To illustrate, compare this chunk of code...
+
+```{r}
+#| include: false
+
+set.seed(110624)
+```
+
 
 ```{r}
 # Data of the control group consisting of people who completed the control condition of the experiment
