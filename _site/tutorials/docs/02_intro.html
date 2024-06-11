@@ -854,13 +854,13 @@ MoRe About: Order and Naming of Arguments
     Two Sample t-test
 
 data:  vector_1 and vector_2
-t = -12.192, df = 38, p-value = 5.266e-15
+t = -9.6646, df = 38, p-value = 4.368e-12
 alternative hypothesis: true difference in means is less than 5
 78 percent confidence interval:
-      -Inf -9.995195
+     -Inf -9.71911
 sample estimates:
 mean of x mean of y 
- 14.52705  25.54769 </code></pre>
+ 13.45848  24.47051 </code></pre>
 </div>
 </div>
 <p>Looking at the information I have given to <code>t.test()</code> I can only tell what <code>vector_1</code> and <code>vector_2</code> correspond to. The rest is mystery and code shouldn’t be mysterious. Let’s compare that to using named arguments:</p>
@@ -877,13 +877,13 @@ mean of x mean of y
     Two Sample t-test
 
 data:  vector_1 and vector_2
-t = -12.192, df = 38, p-value = 5.266e-15
+t = -9.6646, df = 38, p-value = 4.368e-12
 alternative hypothesis: true difference in means is less than 5
 78 percent confidence interval:
-      -Inf -9.995195
+     -Inf -9.71911
 sample estimates:
 mean of x mean of y 
- 14.52705  25.54769 </code></pre>
+ 13.45848  24.47051 </code></pre>
 </div>
 </div>
 <p>This is a lot better! Some unresolved mystery still remains, so you may want to check the help menu of the <code>t.test()</code> function and add a comment written in plain English that describes what is happening in that line. More on comments later…</p>
@@ -1337,13 +1337,13 @@ Solution
     Two Sample t-test
 
 data:  group_1 and group_2
-t = -36.528, df = 58, p-value &lt; 2.2e-16
+t = -32.162, df = 58, p-value &lt; 2.2e-16
 alternative hypothesis: true difference in means is not equal to 0
 95 percent confidence interval:
- -42.90059 -38.44304
+ -41.41609 -36.56280
 sample estimates:
 mean of x mean of y 
- 39.89450  80.56631 </code></pre>
+ 40.10155  79.09099 </code></pre>
 </div>
 </div>
 <p>… to this one:</p>
@@ -1361,13 +1361,13 @@ mean of x mean of y
     Two Sample t-test
 
 data:  group_2 and group_1
-t = 36.528, df = 58, p-value &lt; 2.2e-16
+t = 32.162, df = 58, p-value &lt; 2.2e-16
 alternative hypothesis: true difference in means is not equal to 0
 95 percent confidence interval:
- 38.44304 42.90059
+ 36.56280 41.41609
 sample estimates:
 mean of x mean of y 
- 80.56631  39.89450 </code></pre>
+ 79.09099  40.10155 </code></pre>
 </div>
 </div>
 <p>In addition to making code legible, comments specify your intentions and make it easier to verify that your code is doing exactly what you wanted it to do. For example, if you have computed a between-subjects t-test, but there is a comment saying that you intended to computed a paired-subjects t-test, the error will be easier to catch than in the absence of a descriptive comment.</p>

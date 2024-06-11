@@ -6,7 +6,7 @@ project:
     - "!tutorials/drafts/" #don't attempt to render the drafts folder
     - "!tutorials/staff/" #don't attempt to render the staff folder
     - "!workbooks/" # don't attempt to render the workbooks
-    - "!tutorials/archive_autumn_2023"
+    # - "!tutorials/archive_autumn_2023/"
 
 website:
   title: R Training
