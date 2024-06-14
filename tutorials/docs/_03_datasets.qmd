@@ -269,7 +269,7 @@ summary(syn_data)
 
 Here, for example, notice the `gender` variable. This is intended to be a categorical variable, but clearly something has gone pear-shaped, because it has read in as a numeric variable. We have a related, but different issue with the `syn_*` variables, which also should be categorical ("Yes" and "No"), but instead have been read as numeric. Our other variables, `gc_score` and the `scsq` variables, should contain numeric information and it appears they do; for them, we get some helpful information and measures of central tendency.
 
-We will ignore the categorical issue for now until we cover how to make changes to the dataset [in the next tutorial](6_changes.qmd).
+We will ignore the categorical issue for now until we cover how to make changes to the dataset in a future tutorial.
 
 `summary()` is quick, and because it's a base-R function, it doesn't need any package installations to work. However, it's also of limited use: its output is ugly, and it would be pretty difficult to get any of those values out of that output for reporting!
 
