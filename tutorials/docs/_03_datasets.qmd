@@ -74,6 +74,20 @@ What you should get is a string - a file path to the **project** you are current
 
 Why is this useful? Instead of having to write out long file paths ("C/Users/my_folder/What Was It called-again?/..."), or trying to figure out where your current file is relative to the data (or image, or whatever) that you are trying to find, `here::here()` uses the project file as a fixed point. So, all file paths can be written starting from the same point.
 
+:::: {.repro}
+
+::: {.repro-header}
+::: {.repro-icon}
+:::
+RepRoducibility: Reminder about paths 
+:::
+
+::: {.repro-body}
+We talked about the issues that hard-coding absolute paths can cause in [Tutorial 2](https://r-training.netlify.app/tutorials/docs/02_intro#projects). 
+:::
+
+::::
+
 ::: {.callout-note appearance="minimal" title="Exercise"}
 
 Use `here::here()` to generate a file path to the `syn_data.csv` data file.
@@ -120,7 +134,23 @@ syn_data <- readr::read_csv("https://raw.githubusercontent.com/drmankin/practicu
 
 ## Codebook
 
-As this dataset is likely unfamiliar, the codebook below explains what the variables in this dataset represent.
+:::: {.repro}
+
+::: {.repro-header}
+::: {.repro-icon}
+:::
+RepRoducibility: Codebooks Make Data Readable 
+:::
+
+::: {.repro-body}
+A codebook, also known as a data dictionary, is a document that describes the variables in a dataset. I strongly advise everyone to always share a codebook when uploading data online. Without a data dictionary, people who are not familiar with the data, won't be able to understand what data represents and how to use it. I have found that data dictionaries also help me when I want to use data that I've collected some months or years ago. Here is [an example](https://help.osf.io/article/217-how-to-make-a-data-dictionary) of what to include in a codebook.
+
+To illustrate the importance of codebooks, have a look at `syn_data` by clicking on the object name in the environment and try to determine what information is stored in each variable. <!-- Alternatively, because viewing data is being discussed further down, here we can just have a screenshot or ask them to open the csv outside of R? -->
+:::
+
+::::
+
+The codebook below explains what the variables in this dataset represent.
 
 ::: {.callout-tip title="More About Synaesthesia" collapse="true"}
 
@@ -144,7 +174,7 @@ readr::read_csv(here::here("data/syn_codebook.csv")) |>
 
 ## Viewing
 
-We've now got some data to work with! Before we jump into doing anything with it, though, we should take a look at it. This is always a good idea to check that our data has read in correctly without any parsing errors. But our data is tucked away in an object, so how can we take a look at it?
+We've now got some data to work with! Before we jump into doing anything with it, though, we should take a look at it. This is always a good idea to check that our data has read in correctly without any parsing errors. But in R our data is tucked away in an object, so how can we take a look at it?
 
 ### Call the Object
 
