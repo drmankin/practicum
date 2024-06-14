@@ -8,28 +8,51 @@ execute:
 
 This tutorial is focused on working with datasets. It covers key functions and tips for reading in, viewing, and summarising datasets. It also introduces the pipe operator and a variety of common descriptive functions for investigating both whole datasets and individual variables, and concludes with a brief look at data visualisations with base R.
 
+## Setup
+
+In the previous tutorial, we saw that there are three key steps to setting up to work in R:
+
+1.  Create or open a project in RStudio
+2.  Create or open a document to work in
+3.  Load the necessary packages
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Complete each of the steps above to get ready to work in R.
+
+For step 2, open the Quarto workbook that accompanies this tutorial.
+
+For step 3, load {tidyverse}.
+
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+library(tidyverse)
+```
+:::
+:::
+
 ## Reading In
 
 With a lot of the foundational skills of using R and RStudio in place, we're ready to get stuck in working with datasets. For the purposes of practicing, we're going to use some real, open-source data from a real paper by [Mealor et al. from their (2016) paper](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0155483) developing the Sussex Cognitive Styles Questionnaire (SCSQ). The SCSQ is a six-factor cognitive styles questionnaire validated by comparing responses from people with and without synaesthesia.
 
 We're going to start by importing, or "reading in", the data from a location outside of R. The first job is to work out how that data is stored: the file format that it's in, and the location we need to give to R to look for it.
 
-For the purposes of these tutorials, we'll primarily make use of .csv file types when reading in. CSV (Comma-Separated Values) is a common, programme-agnostic file type without any fancy formatting, just plain text. To practice this, we'll use the `read_csv()` function from the {readr} package (part of {tidyverse}).
+For the purposes of these tutorials, we'll primarily make use of .csv file types when reading in. CSV (Comma-Separated Values) is a common, program-agnostic file type without any fancy formatting, just plain text. To practice this, we'll use the `read_csv()` function from the {readr} package (part of {tidyverse}).
 
-One advantage of `readr::read_csv()` is that it will output a special kind of dataset, called a **tibble**. Tibbles are a fundamental component of {tidyverse}. They are a sort of embellished dataframe or table ("table" > "tbl" > "tibble") with some extra bells and whistles for convenience. We'll discover their features as we go, but you can get a [quick overview of tibbles here](https://cran.r-project.org/web/packages/tibble/vignettes/tibble.html).
+One advantage of `readr::read_csv()` (as opposed to, say, the almost identically named base R package `read.csv()`) is that it will output a special kind of dataset, called a **tibble**. Tibbles are a fundamental component of {tidyverse}. They are a sort of embellished dataframe or table ("table" > "tbl" > "tibble") with some extra bells and whistles for convenience. We'll discover their features as we go, but you can get a [quick overview of tibbles here](https://cran.r-project.org/web/packages/tibble/vignettes/tibble.html).
 
 ::: {.callout-tip title="Reading Other Filetypes" collapse="true"}
 If you have data stored in other types of files, you may need other functions from other packages to read them in. It will depend substantially on what's in the file and how the data are structured, so you will likely need to do some experimentation to find the best option.
 
 Here are some possibilities to get you started. All of them (except the last) output a tibble.
 
-- Excel (xlsx): `readxl::read_xlsx()`
+- Excel (.xlsx): `readxl::read_xlsx()`
 - SPSS (.sav): `haven::read_sav()`
 - SAS (.sas): `haven::read_sas()`
 - JSON: `rjson::fromJSON()`
 :::
 
-Our next job is to figure out where the data is stored. For the purposes of practice, we'll look at two possibilities. First, that the data is stored in a local file on your computer;  and second, that the data is hosted online somewhere, accessible via URL.
+Our next job is to figure out where the data is stored. For the purposes of practice, we'll look at two possibilities. First, that the data is stored in a local file on your computer; and second, that the data is hosted online somewhere, accessible via URL.
 
 ### Reading from File
 
@@ -38,7 +61,7 @@ The scenario you are most likely to encounter is that you have some data in a fo
 ```{r}
 #| echo: false
 
-syn_data <- readr::read_csv(here::here("data/syn_data.csv"))
+# syn_data <- readr::read_csv(here::here("data/syn_data.csv"))
 ```
 
 In order to use the `read_csv()` function, we need to give it the file path as a string (i.e. in `"quotes"`). Let's make this easier by using a helper function: `here::here()`.
@@ -47,13 +70,13 @@ In order to use the `read_csv()` function, we need to give it the file path as a
 Run the `here::here()` function to see what it does.
 :::
 
-What you should get is a string - a file path to the **project** you are currently in. On Posit Cloud, this will always be "/cloud/project" (unless you change it). In any case, it will always point to the location of the .Rproj file that denotes your current project.
+What you should get is a string - a file path to the **project** you are currently in. On Posit Cloud, this will always be "/cloud/project" (unless you change it, which - don't!). In any case, it will always point to the location of the .Rproj file that denotes your current project.
 
 Why is this useful? Instead of having to write out long file paths ("C/Users/my_folder/What Was It called-again?/..."), or trying to figure out where your current file is relative to the data (or image, or whatever) that you are trying to find, `here::here()` uses the project file as a fixed point. So, all file paths can be written starting from the same point.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
 
-Use `here::here()` to generate a file path to the `syn_data` data file.
+Use `here::here()` to generate a file path to the `syn_data.csv` data file.
 
 Then, use `readr::read_csv()` to read in the `syn_data.csv` file and store the result in an object called `syn_data`.
 
@@ -101,11 +124,11 @@ As this dataset is likely unfamiliar, the codebook below explains what the varia
 
 ::: {.callout-tip title="More About Synaesthesia" collapse="true"}
 
-This dataset focuses on cognitive styles, particularly in people with and without a neuropsychological condition called *synaesthesia*. Synaesthesia is colloquially referred to as a "blurring of the senses" that can manifest in many different ways. For example, some people with synaesthesia may percieve colours associated with letters or words, or see shapes when they hear music. These additional perceptions are typically automatic and consistent across time.
+This dataset focuses on cognitive styles, particularly in people with and without a neuropsychological condition called *synaesthesia*. Synaesthesia is colloquially referred to as a "blending of the senses" that can manifest in many different ways. For example, some people with synaesthesia may perceive colours associated with letters or words, or see shapes when they hear music. These additional perceptions are typically automatic and consistent across time.
 
 This particular study focused on two different types of synaesthesia: grapheme-colour and sequence-space. People with *grapheme-colour synaesthesia* experience colour associated with written language, i.e. graphemes. For instance, the letter "Q" may be purple, or the word "cactus" may be red (or a combination of colours).
 
-People with *sequence-space synaesthesia* associate sequences, such as numbers, days of the week, or months of the year, with particular locations in physical space. For instance, Monday may be located up and to the right, or July near the hip. Sequence-space synaesthetes can often precisely describe and point to the specific location of each element of the sequence.
+People with *sequence-space synaesthesia* associate sequences, such as numbers, days of the week, or months of the year, with particular locations in physical space. For instance, Monday may be located up and to the right, or July near the left hip. Sequence-space synaesthetes can often precisely describe and point to the specific location of each element of the sequence.
 
 There are also a variety of qualities associated with having synaesthesia of any type, so this dataset also includes a variable coding for having either (or both) types.
 :::
@@ -121,7 +144,7 @@ readr::read_csv(here::here("data/syn_codebook.csv")) |>
 
 ## Viewing
 
-We've now got some data to work with! Before we jump into doing anything with it, though, we should take a look at it. This is always a good idea to check that our data has read in correctly without any parsing errors. But our data is tucked away in an object! How can we take a look at it?
+We've now got some data to work with! Before we jump into doing anything with it, though, we should take a look at it. This is always a good idea to check that our data has read in correctly without any parsing errors. But our data is tucked away in an object, so how can we take a look at it?
 
 ### Call the Object
 
@@ -143,13 +166,13 @@ syn_data
 
 You may notice a few of those "bells and whistles" I mentioned earlier here.
 
-- By default, tibbles like this one only print out up to the first ten rows at a time, and as many columns as conveniently fit in your current window size. 
+- By default, tibbles like this one only print out up to the first ten rows at a time, and as many columns as conveniently fit in your current Source pane window size. 
 - You can scroll through this printout by clicking the numbers at the bottom (to move through rows) or the left and right arrows at the top (to scroll through columns).
 - Each column has a little tag underneath it to tell you what kind of data is currently stored in it, for example `<dbl>` for numeric/double and `<chr>` for character.
 - In the top left, the little box tells you what it is ("A tibble") and the size of the dataset ("`r nrow(syn_data)` x `r ncol(syn_data)`").
 
 ::: callout-warning
-There's a big caveat here: this works great with tibbles. For data stored in other formats, like matrices, there's no preset formatting like this. If you accidentally call the name of an object that contains thousands of rows, R will try to print them all, which can lead to crashes. So, avoid calling very large objects directly like this if they aren't tibbles.
+There's a big caveat here: calling an object to print it out works great with tibbles. For data stored in other formats, like matrices, there's no preset formatting like this. If you accidentally call the name of an object that contains thousands of rows, R will try to print them all, which can lead to crashes. So, avoid calling very large objects directly like this if they aren't tibbles.
 :::
 
 ### A Glimpse of the Data
@@ -180,7 +203,7 @@ Open the `syn_data` dataset using the `View()` function **in the Console**.
 
 ::: {.callout-note collapse="true" title="Solution"}
 
-Don't put this command in a script/document or code chunk - it can cause crashes and/or weird errors on render.
+Don't put this command in a script/document or code chunk - it can cause crashes and/or weird errors on render, because this function is designed to operate within the RStudio environment by opening a new viewing window.
 
 ```{r}
 #| eval: false
@@ -218,7 +241,7 @@ These features are really useful to have a quick poke around the data or check t
 [^by_hand]: ![](https://media.giphy.com/media/12XMGIWtrHBl5e/giphy.gif){fig-alt='A gif of Michael from the Office (US) shouting "Oh God no! Please no! NOOOOO"'}
 
 ::: {.callout-important title="No Touching"}
-If you are used to programmes like SPSS or Excel, where you can directly edit or work with the data in the spreadsheet, switching to R can be quite a frustrating change. Even though View mode looks similar, it's like the dataset is behind glass - you can't affect it directly. As we start working with the data via objects and functions, it may feel a bit like you are trying to work blindfolded - you can't actually "see" what you are doing as you do it.
+If you are used to programs like SPSS or Excel, where you can directly edit or work with the data in the spreadsheet, switching to R can be quite a frustrating change. Even though View mode looks similar, it's like the dataset is behind glass - you can't affect it directly. As we start working with the data via objects and functions, it may feel a bit like you are trying to work blindfolded - you can't actually "see" what you are doing as you do it.
 
 If you feel that way, be reassured that it's normal. Working with objects rather than with spreadsheets or data directly takes some getting used to, and it will get easier with practice. Use `View()` freely to check your work - I do!
 :::
@@ -235,6 +258,8 @@ The quickest and easiest check for a whole dataset is the base R function `summa
 
 Print out a summary of `syn_data` using the `summary()` function.
 
+Then, compare the information about each variable to the [Codebook](#codebook).Are there any issues?
+
 ::: {.callout-note collapse="true" title="Solution"}
 ```{r}
 summary(syn_data)
@@ -242,9 +267,9 @@ summary(syn_data)
 :::
 :::
 
-Here, for example, notice the `gender` variable. This is intended to be a categorical variable, but clearly something has gone pear-shaped, because it has read in as a numeric variable. We have a related, but different issue with the `syn_*` variables, which also should be categorical ("Yes" and "No"), but instead have been read as numeric. Our other variables, `gc_score` and the `scsq` variables, should contain numeric information and it appears they do; for them, we get some helpful information and measures of central tendancy.
+Here, for example, notice the `gender` variable. This is intended to be a categorical variable, but clearly something has gone pear-shaped, because it has read in as a numeric variable. We have a related, but different issue with the `syn_*` variables, which also should be categorical ("Yes" and "No"), but instead have been read as numeric. Our other variables, `gc_score` and the `scsq` variables, should contain numeric information and it appears they do; for them, we get some helpful information and measures of central tendency.
 
-We will ignore the categorical issue for now until we cover how to make changes to the dataset [in the next tutorial](..\02_essentials\06_changes.qmd#mutate).
+We will ignore the categorical issue for now until we cover how to make changes to the dataset [in the next tutorial](6_changes.qmd).
 
 `summary()` is quick, and because it's a base-R function, it doesn't need any package installations to work. However, it's also of limited use: its output is ugly, and it would be pretty difficult to get any of those values out of that output for reporting!
 
@@ -286,7 +311,7 @@ In this and the previous tutorial, we've seen some examples of "nested" code - f
 round(mean(quiz_9am), digits = 2)
 ```
 
-To read this code, you have to start at the innermost level of nesting and work outwards. So, first R gets the `quiz_9am` object; then calculates the mean using `mean()`; then the output of `mean()` is the input to `round()`. For one or two levels of nesting, this is still legible, but can quickly become very difficult to track.
+To read this code, you have to start at the innermost level of nesting and work outwards. So, first R gets the `quiz_9am` object; then calculates the mean using `mean()`; then the output of `mean()` is the input to `round()`. For one or two levels of nesting, this is still legible, but can quickly become very difficult for humans to track.
 
 One solution is to use the **pipe operator, \|\>**. The pipe "chains" commands one after the other by taking the output of the preceding command and "piping it into" the next command, allowing a much more natural and readable sequence of steps - sequentially, rather than nested. The pipe version of the above might look like this:
 
@@ -298,7 +323,10 @@ quiz_9am |>
 
 This style maps on a lot more naturally to how we would read or understand the steps in this command in natural language.
 
-::: {.callout-tip title="Definition: Pipe"}
+::: {.callout-tip title="Definition: The Pipe Operator"}
+
+The pipe operator, `|>`, takes the output of the code on its left-hand side (LHS) and passes it, by default, into the **first unnamed argument** of its right-hand side (RHS)[^unnamed]. Many functions - both from the {tidyverse} and not - are already set up so that the first argument is the data, and {tidyverse} functions are explicitly designed this way in order to work best with the pipe.
+
 The pipe operator may appear in two formats.
 
 -   **The native pipe, \|\>**. This is the pipe we will use throughout these tutorials. It is called the "native" pipe because it is inbuilt into R and doesn't require any specific package to use.
@@ -307,11 +335,9 @@ The pipe operator may appear in two formats.
 In most cases, including almost all of the code we will learn in these tutorials, the two pipes are interchangeable and will result in the same output.
 :::
 
-Conceptually, the pipe works taking the output of the code on the left and passing it, by default, into the **first unnamed argument** of whatever comes after it on the right[^unnamed]. Many functions - both from the {tidyverse} and not - are already set up so that the first argument is the data, and {tidyverse} functions are explicitly designed this way in order to work best with the pipe.
-
 [^unnamed]: Remember last week I mentioned that "first unnamed arguments" would be important? Here's why! Look back on [02 IntRoductions](02_intro.qmd#arguments) if you'd like a refresher. 
 
-For functions where this is not the case, you can determine where the piped-in information should go using a "placeholder". The most noticeable difference between the two pipes is that they have different placeholders. The native pipe (`|>`) uses underscore `_` as its placeholder, while the magrittr pipe (`%>%`) uses the dot/full stop `.` There's an example using placeholders below to help make this clearer.
+In cases where you would like the output of the pipe to go someplace other than the first unnamed argument, you can determine where the piped-in information should go using a "placeholder". The most noticeable difference between the native vs magrittr pipes is that they have different placeholders. The native pipe (`|>`) uses underscore `_` as its placeholder, while the magrittr pipe (`%>%`) uses the dot/full stop `.`. There's an example using placeholders below to help make this clearer.
 
 From this point forward, we'll start working with the native pipe. The following sections will have specific examples on using the pipe to practice. Working with the pipe is also a good chance to practice "translating" R code into English, which we'll do as we go. To give you an idea, here's an example of how we can read the following code. We'll typically read `|>` as "and then", taking the output of whatever the preceding line produces and passing it on to the next line.
 
@@ -328,7 +354,9 @@ some_numbers |> #<2>
 3. Calculate the mean of those numbers, *and then...*
 4. Round that mean to two decimal places, which outputs:
 
-It might seem strange that these functions appear to be "empty". Take the third step above, which just reads `mean()`. There's nothing in the brackets, so it appears that the `mean()` function is working on nothing! However, remember that the pipe passes whatever is on its left-hand side (abbreviated LHS) to the *first unnamed argument* of the function on its right-hand side (RHS). In this example, the object `some_numbers` is the input on the LHS, which is being "piped into" the first unnamed argument of the `mean()` function on the RHS, which is `x`, the data or values to work with. We don't have to explicitly specify this; it's just how the pipe works by default.
+It might seem strange that the `mean()` and `round()` functions appear to be "empty". Take the third step above, which just reads `mean()`. There's nothing in the brackets, so it appears that the `mean()` function is working on nothing! However, remember that the pipe passes its LHS to the *first unnamed argument* of its RHS^[hands]. In this example, the object `some_numbers` is the input on the LHS, which is being "piped into" the first unnamed argument of the `mean()` function on the RHS, which is `x`, the data or values to work with, as we saw last week. We don't have to explicitly specify this; it's just how the pipe works by default.
+
+^[hands]: I'm intentionally using this slightly obtuse terminology because it often appears in help documentation, so it's worth getting used to these acronyms.
 
 To illustrate this more clearly, here's the same code explicitly including the placeholders to indicate where the piped-in information goes:
 
@@ -344,11 +372,23 @@ some_numbers |>
 
 Think of the placeholder like a bucket or landing pad, where the information coming in from the pipe falls. In this example, the placeholders aren't necessary, because at each step, we already want the piped-in information to go into the first argument, which we have left unnamed, and which is conveniently, in both cases, `x`, the data or values to work with; but including the placeholders (and, necessarily if we want to use placeholders, the argument names) helps to see what's going on.
 
-To make this fully explicit, this illustration shows the progress of information through the same pipe. The orange arrows show how the piped-in information is passed from one function to the next. The teal arrows show what is produced at each step of the pipe - which is what is passed on to the next function via the orange arrows/pipe.
+A minor point here, but one that can cause issues especially if you want to adapt code using different pipes: If you want to use the `_` placeholder with the native pipe `|>`, you **must** name the argument. The `.` placeholder for the magrittr pipe `%>%` doesn't have this requirement:
+
+```{r}
+#| error: true
+
+some_numbers |> 
+  mean(_)
+
+some_numbers %>%
+  mean(.)
+```
+
+To make the pipe operation fully explicit, the image below shows the progress of information through the same pipe. The orange arrows show how the piped-in information is passed from one function to the next. The teal arrows show what is produced at each step of the pipe - which is what is passed on to the next function via the orange arrows/pipe.
 
 ![](../../images/pipe_arrows.jpg){fig-alt="A screenshot of the same code as above, with orange arrows starting at the end of each pipe and pointing into the placeholder in the following function, and teal arrows pointing to snippets of output for each step of the pipe."}
 
-::: {.callout-tip title="A Sweet Pipe Example" collapse="true"}
+::: {.callout-tip title="MoRe About: The Logic of Piping" collapse="true"}
 
 Imagine we wanted to bake a Victoria sponge cake using R. Translating the steps into R, we might get something like this:
 
@@ -408,7 +448,7 @@ syn_data |>
   names()
 ```
 
-The new line after the pipe isn't essential (it will run exactly the same way) but it is highly recommended. Although it doesn't make much of a difference here, we will shortly get to longer commands where the new line for each new function will make a big difference to legibility!
+The new line after the pipe isn't essential (it will run exactly the same way) but it is highly recommended. Although it doesn't make much of a difference here, we will shortly get to longer commands where the new line for each new function will make a big difference to legibility.
 
 ::: {.callout-tip title="What's Going On With the Pipe?" collapse="true"}
 If a command like `syn_data |> names()` looks a bit strange, let's take a closer look at it.
@@ -430,7 +470,7 @@ The underscore is the "placeholder" for the native pipe; in other words, it expl
 
 Once we've had a look at the whole dataset, it's time to drill down into individual variables. We may want to calculate quick descriptives or investigate what's going on with particular variables that seem to have issues.
 
-To do this, we'll start working quite a bit with [the {dplyr} package](https://dplyr.tidyverse.org/). {dplyr} is a core part of the {tidyverse}, and the package generally is focused on user-friendly and easily readable tools for data manipulation. The essential {dplyr} functions will form a core part of the Essentials part of the course, when we really get into to working with data.
+To do this, we'll start working quite a bit with [the {dplyr} package](https://dplyr.tidyverse.org/). {dplyr} is a core part of the {tidyverse}, and the package generally is focused on user-friendly and easily readable tools for data manipulation. The essential {dplyr} functions will form a core part of the next few weeks when we really get into to working with data.
 
 ### Counting
 
@@ -459,7 +499,7 @@ Note that this **does not** change or add anything to your original dataset! Ins
 
 To work with individual variables, we need to get them out of the dataset. Specifically, for many of the functions we're about to use, we will need the values stored in those variables as vectors. We can do this in two ways: `$` notation, or the function `dplyr::pull()`[^pull].
 
-[^pull]: This function always makes me think of one of those arcade [claw machines](https://www.youtube.com/watch?v=N-Esh4W3dfI) reaching into the dataset to grab the values you want!
+[^pull]: This function always makes me think of one of those arcade [claw machines](https://www.youtube.com/watch?v=N-Esh4W3dfI) reaching into the dataset to grab the values you want.
 
 Subsetting with `$` is the base-R method, and it takes the general form:
 
@@ -488,14 +528,14 @@ If you're wondering when to use `$` and when to use `dplyr::pull()`, the answer 
 
 ### Descriptives
 
-Next up, we can start working with these values in the dataset. The base-R {stats} package contains a wide variety of very sensibly-named functions that calculate common descriptive statistics. These include: 
+Next up, we can start working with these values in the dataset. The base-R {stats} package contains a wide variety of very sensibly-named functions that calculate common descriptive statistics, which we also briefly encountered in the previous tutorial. These include: 
 
 - `mean()` and `median()` (there is a function `mode()`, but it doesn't do what we'd like it to here!)
 - `min()` for minimum value, `max()` for maximum value
 - `range()` for both minimum and maximum value in a single vector
 - `sd()` for standard deviation
 
-A key feature of all of these functions is that, by default, they return `NA` if there are any `NA`s (missing values) present. (This is very sensible behaviour by default, but is frequently not the information we want when we use them.) So, they all have an argument, `na.rm =`, which determines whether `NA`s should be removed. By default this argument is set to `FALSE` (`NA`s should NOT be removed), but if you want to get the calculation ignoring any `NA`s, you can set this argument to `TRUE` instead.
+As a reminder, a key feature of all of these functions is that, by default, they return `NA` if there are any `NA`s (missing values) present. So, they all have an argument, `na.rm =`, which determines whether `NA`s should be removed. By default this argument is set to `FALSE` (`NA`s should NOT be removed), but if you want to get the calculation ignoring any `NA`s, you can set this argument to `TRUE` instead.
 
 Let's look some more at the `scsq_global` variable. Now that we know how to subset it from the dataset - producing a vector of numbers - we can use the functions above to calculate some information. Let's get the mean and the standard deviation, using each subsetting method once.
 
@@ -505,7 +545,6 @@ syn_data |>
   dplyr::pull(scsq_global) |> 
   sd(na.rm = TRUE)
 ```
-
 
 As a quick check to get an individual number, this method is quite useful. However, you may have noticed that if we wanted this information for lots of variables, this would be repetitive, laborious, and prone to error. We've already seen how to use [existing summary functions](#overall-summaries), but we will also look at creating custom summary tables in a future tutorial.
 
@@ -519,7 +558,7 @@ To get the idea, there are a few options for common plots:
 - `boxplot()` and `barplot()`
 - `plot()` for scatterplots
 
-As one example, let's look at the `hist()` function to create a histogram. The help documentation lists a large number of possible arguments to tweak the appearance of the histogram, but unless you're quite keen, I wouldn't worry about them too much. For now, we'll just look at three:
+As one example, let's look at the `hist()` function to create a histogram. The help documentation lists a large number of possible arguments to tweak the appearance of the histogram, but unless you're quite keen, I wouldn't worry about them too much, since we'll be building our own high-quality custom data visualisations in a few weeks. For now, we'll just look at three:
 
 - `main`, to give the plot a title
 - `xlab` and `ylab`, to label the x and y axes respectively.
@@ -579,23 +618,7 @@ syn_data |>
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
 
-Get out all the values stored in the `scsq_organise` variable, using each subset method.
-
-::: {.callout-note collapse="true" title="Solution"}
-
-To keep this tutorial legible, I've only printed out the first 10 values.
-
-```{r R.options=list(max.print=10)}
-syn_data$scsq_organise
-syn_data |> 
-  dplyr::pull(organise)
-```
-:::
-:::
-
-::: {.callout-note appearance="minimal" title="Exercise"}
-
-Calculate the mean and median of the SCSQ global bias subscale, and the range of the `gc_score` variable.
+Calculate the mean and median of the SCSQ organisation subscale, and the range of the `gc_score` variable.
 
 Try using each subsetting method at least once.
 
@@ -604,8 +627,8 @@ Try using each subsetting method at least once.
 We'll start by using `$` subsetting for the first commands, and `pull()` for the last. Not for any principled reason - feel free to try it either way.
 
 ```{r}
-mean(syn_data$scsq_global)
-median(syn_data$scsq_global)
+mean(syn_data$scsq_organise)
+median(syn_data$scsq_organise)
 ```
 
 The `gc_score` variable has a large number of `NA`s. If we use the `range()` function without any other changes, we'll just get `NA`s back as output. To remove `NA`s and work only with the non-missing values, we have to include the argument `na.rm = TRUE`.
