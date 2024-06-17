@@ -83,7 +83,7 @@ RepRoducibility: Reminder about paths
 :::
 
 ::: {.repro-body}
-We talked about the issues that hard-coding absolute paths can cause in [Tutorial 2](https://r-training.netlify.app/tutorials/docs/02_intro#projects). 
+We talked about the issues that hard-coding absolute paths can cause in [Tutorial 2](https://r-training.netlify.app/tutorials/docs/02_intro#projects).
 :::
 
 ::::
@@ -143,7 +143,7 @@ RepRoducibility: Codebooks Make Data Readable
 :::
 
 ::: {.repro-body}
-A codebook, also known as a data dictionary, is a document that describes the variables in a dataset. I strongly advise everyone to always share a codebook when uploading data online. Without a data dictionary, people who are not familiar with the data, won't be able to understand what data represents and how to use it. I have found that data dictionaries also help me when I want to use data that I've collected some months or years ago. Here is [an example](https://help.osf.io/article/217-how-to-make-a-data-dictionary) of what to include in a codebook.
+A codebook, also known as a data dictionary, is a document that describes the variables in a dataset. I strongly advise everyone to always share a codebook when uploading data online. Without a data dictionary, people who are not familiar with the data, won't be able to understand what data represents and how to use it. I have found that data dictionaries also help me when I want to use data that I collected some months or years ago. Here is [an example](https://help.osf.io/article/217-how-to-make-a-data-dictionary) of what to include in a codebook.
 
 To illustrate the importance of codebooks, have a look at `syn_data` by clicking on the object name in the environment and try to determine what information is stored in each variable. <!-- Alternatively, because viewing data is being discussed further down, here we can just have a screenshot or ask them to open the csv outside of R? -->
 :::
@@ -455,6 +455,20 @@ devour(
 ```
 
 This is, I am sure you will agree, as absolutely horrifying as a soggy bottom on a cake.
+
+:::: {.repro}
+
+::: {.repro-header}
+::: {.repro-icon}
+:::
+RepRoducibility: Base R or Packages?
+:::
+
+::: {.repro-body}
+To make code more reproducible, it is a good idea to use base R instead of an additional package whenever possible. In most cases `%>%` and `|>` will be able to achieve the same goal, so it is a good idea to use `|>` unless you need to make use of some specific functionality of `%>%`. 
+:::
+
+::::
 
 :::
 
