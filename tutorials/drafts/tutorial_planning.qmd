@@ -40,17 +40,8 @@ In particular please add points where it makes sense to mention reproducibility 
     - Describing Variables
         - Subsetting
         - If we've introduced e.g. `mean()`, `sd()` in Intro II then this can be revision!
-        
-4. The Reproducible Linear Model (?)
-    - Fitting the Model
-    - Model fit and diagnostics
-    - Reporting
-    - Creating a reproducible script (?)
-      - Factor variables (vs characters)
-      - not knowing defaults
-      - Hard-coding numbers
     
-5. Filter and Select
+4. Filter and Select
     - Filter
         - Assertions
         - Data Cleaning
@@ -58,12 +49,21 @@ In particular please add points where it makes sense to mention reproducibility 
         - Directly
         - (Optional) `tidyselect`
 
-6. Mutate
+5. Mutate
     - Adding and changing variables
     - Calculating composites
     - Conditionals with `case_when()`
     - (Optional) Iteration
     
+6. The Reproducible Linear Model (?)
+    - Fitting the Model
+    - Model fit and diagnostics
+    - Reporting
+    - Creating a reproducible script (?)
+      - Factor variables (vs characters)
+      - not knowing defaults
+      - Hard-coding numbers
+      
 7. Summarise
     - At once, by group
     - (Optional) Iteration

@@ -211,6 +211,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">02: IntRoduction II</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../tutorials/docs/03_datasets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">03: Datasets</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -379,7 +385,7 @@ Setup Steps
 <section id="projects" class="level3">
 <h3 class="anchored" data-anchor-id="projects">Projects</h3>
 <p>Projects are the main way that RStudio organises related files and information. Projects are associated with a working directory; everything in that directory, including all the sub-folders, are part of the same project.</p>
-<p>It is <strong>highly recommended</strong> that you create a new project for each separate thing you want to work on in R. Among other advantages, it makes navigating folders much easier (see <a href="03_datasets.qmd#reading-in">Reading In</a>), allows you to easily pick up work from where you left off, and retain all the settings and options you have set each time you work on the same project.</p>
+<p>It is <strong>highly recommended</strong> that you create a new project for each separate thing you want to work on in R. Among other advantages, it makes navigating folders much easier (see <a href="../../tutorials/docs/03_datasets.html#reading-in">Reading In</a>), allows you to easily pick up work from where you left off, and retain all the settings and options you have set each time you work on the same project.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Creating a Project">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -854,13 +860,13 @@ MoRe About: Order and Naming of Arguments
     Two Sample t-test
 
 data:  vector_1 and vector_2
-t = -10.11, df = 38, p-value = 1.257e-12
+t = -10.576, df = 38, p-value = 3.516e-13
 alternative hypothesis: true difference in means is less than 5
 78 percent confidence interval:
-      -Inf -7.952154
+      -Inf -10.51753
 sample estimates:
 mean of x mean of y 
-  17.5057   26.5412 </code></pre>
+ 14.74530  26.49903 </code></pre>
 </div>
 </div>
 <p>Looking at the information I have given to <code>t.test()</code> I can only tell what <code>vector_1</code> and <code>vector_2</code> correspond to. The rest is mystery and code shouldn’t be mysterious. Let’s compare that to using named arguments:</p>
@@ -877,13 +883,13 @@ mean of x mean of y
     Two Sample t-test
 
 data:  vector_1 and vector_2
-t = -10.11, df = 38, p-value = 1.257e-12
+t = -10.576, df = 38, p-value = 3.516e-13
 alternative hypothesis: true difference in means is less than 5
 78 percent confidence interval:
-      -Inf -7.952154
+      -Inf -10.51753
 sample estimates:
 mean of x mean of y 
-  17.5057   26.5412 </code></pre>
+ 14.74530  26.49903 </code></pre>
 </div>
 </div>
 <p>This is a lot better! Some unresolved mystery still remains, so you may want to check the help menu of the <code>t.test()</code> function and add a comment written in plain English that describes what is happening in that line. More on comments later…</p>
