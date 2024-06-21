@@ -40,7 +40,7 @@ Read in the dataset and save it in a new object, `anx_data`.
 
 On the Cloud, you can read in this dataset from the `data` folder using `here::here()`.
 
-Elsewhere, you can download the dataset, or copy the dataset URL, from the [Data and Workbooks page](../../../data_workbooks.qmd).
+Elsewhere, you can download the dataset, or copy the dataset URL, from the [Data and Workbooks page](../../data_workbooks.qmd).
 
 ::: {.callout-note collapse="true" title="Solution"}
 Read in from file:
@@ -100,7 +100,7 @@ With these three steps, you can ACE any task in R![^1]
 
 [^1]: Sorry 😅
 
-Especially if you are new to coding, I strongly recommend you practice these steps explicitly. For simpler examples or exercises, it might seem trivial. However, this iterative process is *absolutely essential* to accurate, safe[^safe], and efficient coding, and it will become second nature over time.
+Especially if you are new to coding, I strongly recommend you practice these steps explicitly. For simpler examples or exercises, it might seem trivial. However, this iterative process is *absolutely essential* to accurate, safe, and efficient coding, and it will become second nature over time.
 
 ::: {.callout-tip title="MoRe About: Safe Coding" collapse="true"}
 
@@ -191,6 +191,8 @@ anx_data |>
   # Return the max value of those ages
   max()
 ```
+
+Note that this works as a check for the `filter()` command because this is one continuous pipe. That is, the values in the `age` variable extracted by `pull()` are from the **filtered** dataset, because the input to `pull()` is the output from `filter()` in the preceding step.
 :::
 
 As an extension of this, instead of using a specific value (like 40), we can also use values that we calculate using the data itself. For instance, let's only retain participants as old as the median age of the sample, or younger. Here we can take advantage of the fact that we can use variable names as objects inside {dplyr} functions like `filter()`[^2]. Then we write a logical assertion just like we have done in previous tutorials.
@@ -238,7 +240,7 @@ anx_data |>
 
 At a glance it looks like this produces the same output as the solution above - `gender` now contains only male or female participants. As you might have gathered from the all-caps comments above - intended to prevent you from accidentally using this code in the future for tasks like this - this is NOT what this code does.
 
-To demonstrate what it *does* do, I need the `dplyr::mutate()` function [from the next tutorial](06_changes.qmd#mutate) to create some new variables. The first new variable, `double_equals`, contains `TRUE`s and `FALSE`s for each case using the assertion with `==`. The second is exactly the same, but reverses the order of the genders - something that should NOT make a difference to the matching! (We want either female OR male participants, regardless of which we happen to write first.) The third, `in_op`, contains the same again but this time with `%in%`. The final `arrange()` line sorts the dataset by gender to make the output easier to read.
+To demonstrate what it *does* do, I need the `dplyr::mutate()` function from the next tutorial to create some new variables. The first new variable, `double_equals`, contains `TRUE`s and `FALSE`s for each case using the assertion with `==`. The second is exactly the same, but reverses the order of the genders - something that should NOT make a difference to the matching! (We want either female OR male participants, regardless of which we happen to write first.) The third, `in_op`, contains the same again but this time with `%in%`. The final `arrange()` line sorts the dataset by gender to make the output easier to read.
 
 ```{r}
 anx_data |> 
@@ -259,7 +261,7 @@ What's happening is that because the vector `c("female", "male")` contains two e
 
 This is a good example of what I think of as "dangerous" code. I don't mean "reckless" or "irresponsible" - R is just doing exactly what I asked it to do, and it's not the job of the language or package creators to make sure *my* code is right. I mean dangerous because it runs as expected, produces (what looks like) the right output, and even with some brief checking, would appear to contain the right cases - but would quietly result in a large chunk of the data being wrongly discarded. If you didn't know about `%in%`, or how to carefully double-check your work, you could easily carry on from here and think no more about it.
 
-So, how can we avoid a problem like this? Remember the ACE process described at the start of this tutorial: Anticipate, Code, Evaluate. In this case, the Evaluate step is key to catch that although the code has run successfully, it has not done what we wanted. Especially for new operators or functions, it's worth spending a lot of time on evaluating the output and checking what the code has produced in several ways to be sure it's done what you wanted (and NOT done anything you didn't want).
+So, how can we avoid a problem like this? Remember the ACE process described at the start of this tutorial: Anticipate, Code, Evaluate. In this case, the Evaluate step is key to catch that although the `==` code runs successfully, it has not done what we wanted. Especially for new operators or functions, it's worth spending a lot of time on evaluating the output and checking what the code has produced in several ways to be sure it's done what you wanted (and NOT done anything you didn't want).
 
 There are lots of ways to evaluate the output of code you've written, and over time you'll develop your own checks that make the most sense to you. For now, one option is the code I created above, with new columns for the different assertion options - but this might be something you'd only think to do if you already knew about `%in%` or suspected there was a problem. A more routine check might stem from the Anticipate step, where I might lay out what I want the output of my code to look like:
 
@@ -284,7 +286,7 @@ anx_data_bd |>
 
 Only female and male participants! Tick ✅
 
-At this point, though, I might become suspicious. The original dataset contained `r nrow(anx_data)` cases - we've lost more than half! Can that be right?? Better check the numbers.
+At this point, though, I might become suspicious. The original dataset contained `r nrow(anx_data)` cases - we've lost more than half! Can that be right? Better check the numbers.
 
 ```{r}
 ## Get the numbers from the original dataset
@@ -458,22 +460,26 @@ anx_data |>
 
 Filtering is absolutely invaluable in the process of data cleaning. In order to practice this process, I've introduced some messy values into the data, so let's have a look at a method of cleaning up the dataset and documenting our changes as we go.
 
+Thus far in this tutorial, we've been practicing filtering without storing our changes anywhere, but here we want our changes to "stick". So, we are going to practice assigning the output of our piped commands to the same dataset name as we started with. This will overwrite the dataset with its updated version. Generally when you do data cleaning with this process, it's a good idea to first draft your code WITHOUT assigning the output, so you can check your code and output carefully. Once you are confident that your code does only and exactly what you wanted it to do, assign the output to the dataset name to "save" your changes.
+
 #### Pre-Exclusions
 
 For data collected on platforms like Qualtrics, you can frequently test out your study via a preview mode. Responses completed via preview are still recorded in Qualtrics, but labeled as such in a variable typically called "DistributionChannel" or similar. In this dataset, we have a similar variable, `distribution`, that labels whether the data was recorded in a preview (`"preview"`) or from real participants (`"anonymous"`).
 
-Your method may vary, but I wouldn't bother to document these cases as "exclusions" because they aren't real data. I would just drop them from the dataset - but of course make sure to record the code that does so!
+Your method may vary, but I wouldn't bother to document these cases as "exclusions" because they aren't real data. I would just drop them from the dataset - but of course make sure to record the code that does so. 
 
-::: {.callout-note appearance="minimal" title="Exercise"}
-Remove any preview runs from the dataset, keeping only real data.
-
-::: {.callout-note collapse="true" title="Solution"}
 ```{r}
-anx_data <- anx_data |> 
-  dplyr::filter(distribution == "anonymous")
+anx_data <- anx_data |> #<1>
+  dplyr::filter( #<2>
+    distribution == "anonymous" #<3>
+    ) 
 ```
-:::
-:::
+
+1.  Overwrite the dataset `anx_data` with the following output: Take the dataset `anx_data`, *and then*
+2.  Filter it keeping only the cases where the following assertion is true:
+3.  The value in the `distribution` variable is exactly and only equal to "anonymous".
+
+We've seen this exact code structure before; the only difference from the examples above is that the output at the end of the pipe, including only "anonymous" cases, is assigned back to the same dataset name. This structure can be confusing at first. In the bit of code `anx_data <- anx_data |> ...`, the start of the pipe is actually the *second* `anx_data`, and the final, updated object is the *first*.
 
 #### Recording Exclusions
 
@@ -488,7 +494,7 @@ For each check below, our recording process will have two steps:
 1.  Produce a dataset of the cases you will **exclude**, and count the number of rows (cases).
 2.  Remove the cases and overwrite the old dataset with the new one.
 
-In my process, I'm going to keep `anx_data` as the original, "raw" version of the dataset. So, I'll create a copy in a new dataset object to use while "*proc*essing" that I will update as I go.
+In my process, I'm going to keep `anx_data` as the original, "raw" version of the dataset. So, I'll create a copy in a new dataset object to use while "*proc*essing" that I will update as I go. This essentially functions as a save checkpoint; if I accidently overwrite `anx_dat_proc` while conducting my data cleaning, I can restart from this point rather from the very beginning of my code.
 
 ```{r}
 anx_data_proc <- anx_data
@@ -501,7 +507,7 @@ n_initial <- nrow(anx_data_proc)
 n_initial
 ```
 
-(Remember that we can use `nrow()` because there is only one participant per row. If we had long-form data with observations from the same participant across multiple rows, we would have to do something a bit different!)
+Remember that we can use `nrow()` because there is only one participant per row. If we had long-form data with observations from the same participant across multiple rows, we would have to do something a bit different!
 
 #### Consent
 
@@ -526,11 +532,17 @@ anx_data_proc <- anx_data_proc |>
   dplyr::filter(consent == "Yes")
 ```
 
+With a couple of examples of this process under our belts, it's time for you to give it a go!
+
 #### Age
 
 For low-risk ethics applications, you may want to exclude people who reported an age below the age of informed consent (typically 18). This may look like `age >= 18` or similar in your dataset. However, it's also important to check for errors or improbable ages, or to remove any participants that are too old if your study has an upper age limit. In this case, my hypothetical study didn't have an upper age limit, but I'll designate any ages as 100 or above as unlikely to be genuine responses.
 
-Since these are removed for two different reasons, I'll save them as two separate objects.
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Store the counts of participants who are **too young** or **too old** in separate objects. Then, filter them out of the dataset.
+
+::: {.callout-note collapse="true" title="Solution"}
 
 ```{r}
 ## Store the number to be removed
@@ -550,6 +562,8 @@ anx_data_proc <- anx_data_proc |>
     dplyr::between(age, 18, 99)
   )
 ```
+:::
+:::
 
 #### Missing Values
 
@@ -564,6 +578,16 @@ anx_data |>
   dplyr::count(sticsa_trait_3)
 ```
 
+Now that we know this variable *does* contain missing values, it's time to remove them.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Store the counts of participants missing a value for `sticsa_trait_3` in a new object.
+
+*Hint*: Look back on the [Consent](#consent) section for the function to get missing values.
+
+::: {.callout-note collapse="true" title="Solution"}
+
 The first thing you might think to try is to filter on `sticsa_trait_3 == NA`, but weirdly enough this doesn't work. Instead, we again need the increasingly versatile `is.na()`, which again, we can think of as a question about whatever is in its brackets: "Is (this) `NA`?" Let's see this in action:
 
 ```{r}
@@ -575,9 +599,7 @@ anx_data_proc |> #<1>
   )
 ```
 
-1.  Take the dataset `anx_data_proc`, *and then*
-2.  Filter it keeping only the cases where the following assertion is true:
-3.  The value in the `sticsa_trait_3` variable IS missing (is `NA`).
+The logical assertion `is.na(sticsa_trait_3)` will return `TRUE` for cases where value in the `sticsa_trait_3` variable IS missing (is `NA`).
 
 These are the cases we want to *remove*, so we count how many there are and assign that number to a useful object name, as we did before.
 
@@ -590,6 +612,8 @@ n_sticsa_t3_missing <- anx_data_proc |> #<1>
 
 n_sticsa_t3_missing
 ```
+
+:::
 
 Next, we need to actually exclude these cases. This time, we want to retain the inverse of the previous filtering requirement: that is, we only want to keep the cases that are NOT missing a value, the opposite of what we got from `is.na(sticsa_trait_3)`. You may recognise "the inverse" or "not-x" as something we've seen before with `!=`, "not-equals". For anything that returns `TRUE` and `FALSE`, you can get the inverse by putting an `!` before it. (Try running `!TRUE`, for example!)
 
@@ -607,17 +631,11 @@ n_final <- nrow(anx_data_final)
 n_final
 ```
 
-##### All Variables
+::: {.callout-warning title="Dropping all NAs from a dataset" collapse="true"}
 
-<!-- UPDATE: Remove? Change to cdallout? -->
-
-Removing `NA`s is a tricky process, but if you're sure that you want to drop *all* cases with missing values in your dataset, there are few helper functions to make this easy.
+Removing `NA`s is a tricky process, but if you're sure that you want to drop *all* cases with missing values in your dataset, there are few helper functions to make this easy. However, this is a pretty major step and should be used with caution! If we didn't check our data carefully, we could easily end up dropping a bunch of cases we didn't want to get rid of.
 
 For this, we're going to leave `filter()` for a moment at look at a different function, `tidyr::drop_na()`. This function takes a tibble as input, and returns the same tibble as output, but with any rows that had missing values removed.
-
-::: callout-warning
-This is a pretty major step and should be used with caution! If we didn't check our data carefully, we could easily end up dropping a bunch of cases we didn't want to get rid of.
-:::
 
 For example, if we apply it uncautiously here:
 
@@ -626,13 +644,9 @@ anx_data_proc |>
   tidyr::drop_na()
 ```
 
-Well, there goes all our data!
+Well, there goes all our data! Why has every single row in the dataset been dropped?
 
-::: {.callout-note appearance="minimal" title="Exercise"}
-**CHALLENGE**: Why has every single row in the dataset been dropped? Using any method you like, investigate what's happened.
-
-::: {.callout-note collapse="true" title="Solution"}
-This is something we could work out without any R whatsoever, just using [the codebook](05_filter.qmd#codebook) and a bit of View mode to confirm. The Codebook tells us that participants were in one of two independent conditions: `"maths"` or `"stats"`. Because of the wide format of the data, there are `mcq_maths` questions that are always `NA` for people in the statistics-MCQ condition, and vice versa for the `mcq_stats` questions and people in the maths-MCQ condition. So, every single participant - even those who answered every question - has *at least some* missing values, and dropping NAs without checking just bins the whole dataset.
+This is something we could work out without any R whatsoever, just using [the codebook](#codebook) and a bit of View mode to confirm. The Codebook tells us that participants were in one of two independent conditions: `"maths"` or `"stats"`. Because of the wide format of the data, there are `mcq_maths` questions that are always `NA` for people in the statistics-MCQ condition, and vice versa for the `mcq_stats` questions and people in the maths-MCQ condition. So, every single participant - even those who answered every question - has *at least some* missing values, and dropping NAs without checking just bins the whole dataset.
 
 If I wanted to check this with R, I'd be hard pressed to do it with only what we've covered so far. Using the some extra challenge functions from the next tutorial, though, I'd do this:
 
@@ -648,19 +662,18 @@ anx_data |>
 
 So, there's at least 5 `NA`s in every single row, and when we call `tidyr::drop_na()`, every single row is dropped.
 :::
-:::
 
 #### Reporting
 
-<!-- UPDATE: Does anyone really need inline code? -->
+::: {.callout-warning}
 
-::: {.callout-note appearance="minimal" title="Exercise"}
-**CHALLENGE**: Using the objects counting intial, final, and excluded cases and what we covered last time about inline code, write a brief journal-style description of your exclusion process.
+This section is **optional** and demonstrates how to use inline code. It will be most useful if you expect to frequently use Quarto documents for reporting results as well as performing analyses/writing code.
 
-What is the benefit of taking the extra effort to store these counts in objects? Under what circumstances might this be (particularly) useful?
+:::
 
-::: {.callout-note collapse="true" title="Solution"}
-You can write whatever you like, but here's an example using inline code.
+Inline code is a way of using short bits of R code in the text ("in-line") of a Quarto document. It takes the form `` `r knitr::inline_expr("some_r_code")` ``, and when rendered, the code in `some_r_code` will be evaluated and printed in that place in the text.
+
+As an example of how handy this can be, here's how it might look to write up a short paragraph in Quarto describing the exclusions we just performed in this section.
 
 > The initial sample consisted of `` `r knitr::inline_expr("n_initial")` `` cases. We removed `` `r knitr::inline_expr("n_no_consent")` `` cases that did not consent, `` `r knitr::inline_expr("n_too_young")` `` cases that reported an age below the ethical age of consent, and `` `r knitr::inline_expr("n_too_old")` `` cases that reported improbable ages (100 years old or older). Finally, we removed `` `r knitr::inline_expr("n_sticsa_t3_missing")` `` cases with who had not responded to the third trait item on the STICSA.This left us with a final sample of `` `r knitr::inline_expr("n_final")` `` cases.
 
@@ -673,8 +686,6 @@ There's a huge advantage of this, namely *ease of change*. Imagine you had [rese
 There are other advantages too - like confidence that you, a human person who may occasionally make errors (sorry, no offence meant!), won't misread, mistype, or otherwise mistake the numbers, because at no point do you actually type a particular number yourself.
 
 Nifty, eh?
-:::
-:::
 
 [^5]: I'm sure Jenny would tell you there's a *little* more to it than that, especially with 12,570 students from 100 universities in 35 countries, collected in 21 languages! But that's both the dream and the general idea.
 
@@ -804,7 +815,7 @@ anx_data |>
 **CHALLENGE**: Select all the `stars` variables but NOT the `stars_m` variables.
 
 ::: {.callout-note collapse="true" title="Solution"}
-This one's a bit tricky because both `starts_with()` and `contains()` will return both types of STARS variables, because of the way the variables are named. We'll have to provide [multiple assertions](#multiple-assertions), like we did earlier with `filter()`.
+This one's a bit tricky because both `starts_with()` and `contains()` will return both types of STARS variables, because of the way the variables are named. We'll have to provide [multiple statements combined with logical operators](#multiple-assertions), like we did earlier with `filter()`.
 
 ```{r}
 #| eval: false
@@ -825,7 +836,7 @@ The material in this section isn't covered in the live workshops. It's included 
 If you want to skip it, [jump down to the next section](#quick-test).
 :::
 
-Let's say we want to generate a summary table of the variables in our dataset. Before we can [create our summary in the next tutorial](06_changes.qmd#summarise), we may first want to produce a subset of our dataset that only contains numeric variables.
+Let's say we want to generate a summary table of the variables in our dataset. Before we can create our summary in the next tutorial, we may first want to produce a subset of our dataset that only contains numeric variables.
 
 To do this, we can use the `<tidyselect>` helper function `where()`. This helper function lets us use *any* function that returns `TRUE` and `FALSE` to select columns. Essentially, we don't have to select columns using name or position - we can use any criteria we want, as long as we have (or can create...!) a function that expresses that criteria.
 
@@ -861,7 +872,7 @@ anx_data |>
   )
 ```
 
-Instead of just the name of a function, as we had before, we now have a formula. This formula has a few key characteristics:
+Instead of just the name of a function, as we had before, we now have a formula inside `where()`. This formula has a few key characteristics:
 
 -   The `~` (apparently [pronounced "twiddle"!](https://adv-r.hadley.nz/functionals.html#purrr-shortcuts)) at the beginning, which is a shortcut for the longer `function(x) ...` notation for creating functions.
 -   The `.x`, which is a placeholder for each of the variables that the function will be applied to.
@@ -914,7 +925,7 @@ In the very first of these tutorials, we ran a *t*-test using some vectors of ma
 ::: {.callout-note appearance="minimal" title="Exercise"}
 Bring up the help documentation for `t.test()` and use it to run a *t*-test comparing responses for the first item of the STICSA post-test state anxiety scale between people who saw the maths MCQs vs the stats MCQs.
 
-*Hint*: Try using the formula notation, just like we did in the previous tutorial for `lm()`.
+*Hint*: Try using the formula notation - see `formula` under Arguments.
 
 ::: {.callout-note collapse="true" title="Solution"}
 Call up the help documentation **in the Console**:
@@ -939,7 +950,7 @@ t.test(sticsa_post_state_1 ~ mcq, data = anx_data)
 :::
 :::
 
-There are a lot of options in the `t.test()` function, which can be used, through different arguments, to run almost any variety of *t*-test you can think of. Here, the "stats" and "maths" groups are independent groups, so we can mostly go with the defaults. Just as we saw previously with the `lm()` function, the formula takes the form `outcome ~ predictor`, where the predictor is the grouping variable.
+There are a lot of options in the `t.test()` function, which can be used, through different arguments, to run almost any variety of *t*-test you can think of. Here, the "stats" and "maths" groups are independent groups, so we can mostly go with the defaults. The formula takes the form `outcome ~ predictor`, where the predictor is the grouping variable.
 
 Note that the output mentions "Welch Two Sample t-test", which is a version of the test that does **not** assume equal variances. This is the version that is taught to undergraduates, because we have not at this point introduced the process of assumption testing. If you definitely know that the variances *are* equal and you definitely want Student's *t*-test, you can instead change the default setting.
 
@@ -955,33 +966,45 @@ t.test(sticsa_post_state_1 ~ mcq,
 :::
 :::
 
-<!-- UPDATE: Replace with report()? -->
-
-Finally, we would like to turn this ugly analysis output into a nicely formatted report of the results. You now have all the skills to do this programmatically - without directly typing any of the numbers yourself.
-
-::: {.callout-note appearance="minimal" title="Exercise"}
-**CHALLENGE**: Using what you known about `papaja`, inline code, and Quarto, report the results of this *t*-test in full without typing any of the numerical results into the text directly.
-
-Then, render your workbook to see the results!
-
-::: {.callout-note collapse="true" title="Solution"}
-To begin, save the *t*-test output in a new object to work with. Then, generate the report output using `papaja` and store that in another new object.
+Finally, we may want to report this *t*-test result. We could do this manually with inline code, but as a cheeky shortcut we'll make use of the {report} package from {easystats}, which are a coherent and interconnected family of packages like {tidyverse}. It really is this easy:
 
 ```{r}
-sticsa_t <- t.test(sticsa_post_state_1 ~ mcq, data = anx_data)
-sticsa_t_out <- papaja::apa_print(sticsa_t)
+mcq_ttest <- t.test(sticsa_post_state_1 ~ mcq, 
+       data = anx_data, 
+       var.equal = TRUE)
+
+report::report(mcq_ttest)
 ```
 
-Next, write the text, and fill in the statistical reporting with inline code where necessary. Here's an example:
+You may not want to use this exact text as it is in your own papers, but it makes a nicely readable bit of output rather than a jumble of numbers.
 
-> We compared mean scores on the STICSA state anxiety item 1 between two groups, who either saw the mathematics MCQ questions (*M* = `` `r knitr::inline_expr("round(sticsa_t$estimate[1], 2)")` ``) or the statistics MCQ questions (*M* =`` `r knitr::inline_expr(" round(sticsa_t$estimate[2], 2)")` ``). A Welsh's robust *t*-test revealed no statistically significant difference in scores between groups (`` `r knitr::inline_expr(" sticsa_t_out$full_result")` ``).
+<!-- UPDATE: Replace with report()? -->
 
-Which should render as:
+<!-- Finally, we would like to turn this ugly analysis output into a nicely formatted report of the results. You now have all the skills to do this programmatically - without directly typing any of the numbers yourself. -->
 
-> We compared mean scores on the STICSA state anxiety item 1 between two groups, who either saw the mathematics MCQ questions (*M* = `r round(sticsa_t$estimate[1], 2)`) or the statistics MCQ questions (*M* =`r round(sticsa_t$estimate[2], 2)`). A Welsh's robust *t*-test revealed no statistically significant difference in scores between groups (`r sticsa_t_out$full_result`).
-:::
-:::
+<!-- ::: {.callout-note appearance="minimal" title="Exercise"} -->
+<!-- **CHALLENGE**: Using what you known about `papaja`, inline code, and Quarto, report the results of this *t*-test in full without typing any of the numerical results into the text directly. -->
+
+<!-- Then, render your workbook to see the results! -->
+
+<!-- ::: {.callout-note collapse="true" title="Solution"} -->
+<!-- To begin, save the *t*-test output in a new object to work with. Then, generate the report output using `papaja` and store that in another new object. -->
+
+<!-- ```{r} -->
+<!-- sticsa_t <- t.test(sticsa_post_state_1 ~ mcq, data = anx_data) -->
+<!-- sticsa_t_out <- papaja::apa_print(sticsa_t) -->
+<!-- ``` -->
+
+<!-- Next, write the text, and fill in the statistical reporting with inline code where necessary. Here's an example: -->
+
+<!-- > We compared mean scores on the STICSA state anxiety item 1 between two groups, who either saw the mathematics MCQ questions (*M* = `` `r knitr::inline_expr("round(sticsa_t$estimate[1], 2)")` ``) or the statistics MCQ questions (*M* =`` `r knitr::inline_expr(" round(sticsa_t$estimate[2], 2)")` ``). A Welsh's robust *t*-test revealed no statistically significant difference in scores between groups (`` `r knitr::inline_expr(" sticsa_t_out$full_result")` ``). -->
+
+<!-- Which should render as: -->
+
+<!-- > We compared mean scores on the STICSA state anxiety item 1 between two groups, who either saw the mathematics MCQ questions (*M* = `r round(sticsa_t$estimate[1], 2)`) or the statistics MCQ questions (*M* =`r round(sticsa_t$estimate[2], 2)`). A Welsh's robust *t*-test revealed no statistically significant difference in scores between groups (`r sticsa_t_out$full_result`). -->
+<!-- ::: -->
+<!-- ::: -->
 
  
 
-Well done getting through all that! In the next tutorial, we will look at more {dplyr} powerhouses to round out your data wrangling toolkit.
+Whew, that's it! Well done getting through all that. In the next tutorial, we will look at more {dplyr} powerhouses to round out your data wrangling toolkit.
