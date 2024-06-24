@@ -147,7 +147,28 @@ anx_data |> #<1>
 1.  Take the dataset `anx_data`, *and then* filter it keeping only the cases where the following assertion is true:
 2.  The value in the `mcq` variable is exactly and only equal to `"maths"`.
 
-Finally, let's **evaluate** the output from this command. We do indeed get all the same variables (columns) as before - but the number of rows is smaller than it was previously. Scroll along to the `mcq` variable, and you will see that each row contains the same value: `"maths"`. So, our output contains only the rows (cases) from the original tibble that have the value `"maths"` in the `mcq` variable, and NOT `"stats"` nor any `NA`s (because `NA` does not equal `"maths"`!) Success!
+Finally, let's **evaluate** the output from this command. We do indeed get all the same variables (columns) as before - but the number of rows is smaller than it was previously. Scroll along to the `mcq` variable, and you will see that each row contains the same value: `"maths"`. So, our output contains only the rows (cases) from the original tibble that have the value `"maths"` in the `mcq` variable, and NOT `"stats"` nor any `NA`s (because `NA` does not equal `"maths"`).
+
+::: {.callout-tip title="Evaluation Checks"}
+I happen to know that this `filter()` command is correct, so a quick glance through the data is enough of a check. However, what if you *weren't* sure this was okay, or if you didn't want to rely on visual checks? How might you **evaluate** the output of this command?
+
+Recall that in the **anticipate** stage, we said that the output should contain only the rows from participants who saw the maths MCQs. So, we should expect that if our filtering has been done correctly, the number of rows of the filtered dataset that we get as output should equal the number of people who saw the maths MCQs.
+
+```{r}
+## Count how many people saw each type of MCQ
+anx_data |> 
+  dplyr::count(mcq)
+
+## Same code as above, but passing the output on to nrow() to count the rows
+anx_data |> #<1>
+  dplyr::filter( #<1>
+    mcq == "maths" #<2>
+    ) |> 
+  nrow()
+```
+
+So, we can see visually that the dataset contains the value "maths" in the `mcq` variable, AND we have checked that the number of rows in the filtered dataset is the same as the number of people who saw maths MCQs. I would be quite confident at this stage that the filtering had been done correctly. Success!
+:::
 
 ::: {.callout-warning title="Error Watch: Detected a named input" collapse="true"}
 Remember that for exact matches like this, we must use double-equals `==` and not single-equals `=`. If you use single equals, you're not alone - this is such a common thing that the (incredibly friendly and helpful) error message tells you what to do to fix it!
@@ -195,7 +216,7 @@ anx_data |>
 Note that this works as a check for the `filter()` command because this is one continuous pipe. That is, the values in the `age` variable extracted by `pull()` are from the **filtered** dataset, because the input to `pull()` is the output from `filter()` in the preceding step.
 :::
 
-As an extension of this, instead of using a specific value (like 40), we can also use values that we calculate using the data itself. For instance, let's only retain participants as old as the median age of the sample, or younger. Here we can take advantage of the fact that we can use variable names as objects inside {dplyr} functions like `filter()`[^2]. Then we write a logical assertion just like we have done in previous tutorials.
+As an extension of this, instead of using a specific value (like 40), we can also use values that we calculate using the data itself. For instance, let's only retain participants as old as the median age of the sample, or younger. Here we can take advantage of the fact that we can use variable names as objects inside {dplyr} functions like `filter()`[^2].
 
 ```{r}
 anx_data |> 
@@ -205,6 +226,8 @@ anx_data |>
 ```
 
 [^2]: This incredibly useful property is called "data masking". If you want to know more, run `vignette("programming")` in the Console.
+
+\ 
 
 As a final example, let's consider a situation where we want to retain only participants that gave a gender identity of either "male" or "female".[^3]
 
@@ -222,9 +245,7 @@ anx_data |> #<1>
 1.  Take the dataset `anx_dat`, *and then* filter it keeping only the cases where the following assertion is true:
 2.  The value in the `gender` variable matches any of the values "female" or "male".
 
-{#dangerous-example}
-
-::: {.callout-tip title="Why not `==`?"}
+::: {#dangerous-example .callout-tip title="Why not `==`?"}
 What follows here is a rabbit hole that gets into some gritty detail. If you're happy to take my word for it that you absolutely, definitely needed `%in%` and not `==` in the previous exercise, you can skip the explanation below. If you're keen to understand all the nuance, click to expand and read on!
 
 ::: {.callout-warning title="The Danger of `==` vs `%in%`" collapse="true"}
@@ -339,8 +360,10 @@ anx_data |>
 
 Logical assertions can also be combined to specify exactly the cases you want to retain. The two most important operators are:
 
--   `&` (AND): Only cases that return `TRUE` for **all** assertions will be retained.
--   `|` (OR): Any cases that return `TRUE` for **at least one** assertion will be retained.
+-   `&` (AND): Returns `TRUE` only when **all** its constituent assertions return `TRUE`
+    -     In other words, only cases that return `TRUE` for **all** assertions will be retained.
+-   `|` (OR): Returns `TRUE` whenever **any** of its constituent assertions return `TRUE`
+    -     In other words, any cases that return `TRUE` for **at least one** assertion will be retained.
 
 ::: {.callout-tip title="More on AND and OR" collapse="true"}
 Let's look at a couple minimal examples to get the hang of these two symbols. For each of these, you can think of the single response R gives as the answer to the questions, "Are ALL of these assertions true?" for AND, and "Is AT LEAST ONE of these assertions true?" for OR.
@@ -413,6 +436,42 @@ anx_data |> #<1>
 
 To evaluate this output, have a look at the `mcq` and `stars_test1` variables. The `mcq` variable will still contain both `stats` and `maths`, but where it contains `maths`, the value in the `stars_test1` variable should be 3 or more.
 
+::: {.callout-tip title="MoRe About: Evaluation Checks" }
+This isn't particularly thorough as evaluation checks go. I could use `dplyr::count()` again (handy, isn't it?), but only because it happens to be the case that `stars_test1` is a Likert variable with only whole-number values. If this had been a true numeric variable, this wouldn't be nearly as helpful or readable.
+
+```{r}
+## Same filtering code as above
+anx_data |> #<1>
+  dplyr::filter( #<2>
+    mcq == "stats" | #<3>
+     stars_test1 >= 3 #<4>
+    ) |> 
+  ## Count by both mcq and stars_test1
+  dplyr::count(
+    mcq, stars_test1
+  )
+```
+
+In the output we can see that the rows with "stats" MCQs can have any `stars_test1` value 1-5, but the rows with "maths" MCQs only have a value 3 or above - just what we wanted.
+
+To actually check this command in a way that would work for any numeric variable, I'll need some functions that we won't come across for a few more weeks, which tells me that the minimum value for rows that have "maths" MCQs was 3.
+
+```{r}
+## Same filtering code as above
+anx_data |> #<1>
+  dplyr::filter( #<2>
+    mcq == "stats" | #<3>
+     stars_test1 >= 3 #<4>
+    ) |> 
+  ## Group output by mcq variable
+  dplyr::group_by(mcq) |> 
+  ## Produce a summary tibble containing the minimum value of STARS test 1
+  dplyr::summarise(
+    min_test = min(stars_test1)
+  )
+```
+:::
+
 ### Exercises
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
@@ -479,7 +538,7 @@ anx_data <- anx_data |> #<1>
 2.  Filter it keeping only the cases where the following assertion is true:
 3.  The value in the `distribution` variable is exactly and only equal to "anonymous".
 
-We've seen this exact code structure before; the only difference from the examples above is that the output at the end of the pipe, including only "anonymous" cases, is assigned back to the same dataset name. This structure can be confusing at first. In the bit of code `anx_data <- anx_data |> ...`, the start of the pipe is actually the *second* `anx_data`, and the final, updated object is the *first*.
+We've seen this exact code structure before; the only difference from the examples above is that the output at the end of the pipe, including only "anonymous" cases, is assigned back to the same dataset name. In the bit of code `anx_data <- anx_data |> ...`, the start of the pipe is actually the *second* `anx_data`, and the final, updated object is the *first*.
 
 #### Recording Exclusions
 
@@ -494,7 +553,7 @@ For each check below, our recording process will have two steps:
 1.  Produce a dataset of the cases you will **exclude**, and count the number of rows (cases).
 2.  Remove the cases and overwrite the old dataset with the new one.
 
-In my process, I'm going to keep `anx_data` as the original, "raw" version of the dataset. So, I'll create a copy in a new dataset object to use while "*proc*essing" that I will update as I go. This essentially functions as a save checkpoint; if I accidently overwrite `anx_dat_proc` while conducting my data cleaning, I can restart from this point rather from the very beginning of my code.
+In my process, I'm going to keep `anx_data` as the original, "raw" version of the dataset. So, I'll create a copy in a new dataset object to use while "*proc*essing" that I will update as I go. This essentially functions as a save checkpoint; if I make a mistake with `anx_dat_proc` while conducting my data cleaning, I can restart from this point rather from the very beginning of my code.
 
 ```{r}
 anx_data_proc <- anx_data
@@ -977,33 +1036,6 @@ report::report(mcq_ttest)
 ```
 
 You may not want to use this exact text as it is in your own papers, but it makes a nicely readable bit of output rather than a jumble of numbers.
-
-<!-- UPDATE: Replace with report()? -->
-
-<!-- Finally, we would like to turn this ugly analysis output into a nicely formatted report of the results. You now have all the skills to do this programmatically - without directly typing any of the numbers yourself. -->
-
-<!-- ::: {.callout-note appearance="minimal" title="Exercise"} -->
-<!-- **CHALLENGE**: Using what you known about `papaja`, inline code, and Quarto, report the results of this *t*-test in full without typing any of the numerical results into the text directly. -->
-
-<!-- Then, render your workbook to see the results! -->
-
-<!-- ::: {.callout-note collapse="true" title="Solution"} -->
-<!-- To begin, save the *t*-test output in a new object to work with. Then, generate the report output using `papaja` and store that in another new object. -->
-
-<!-- ```{r} -->
-<!-- sticsa_t <- t.test(sticsa_post_state_1 ~ mcq, data = anx_data) -->
-<!-- sticsa_t_out <- papaja::apa_print(sticsa_t) -->
-<!-- ``` -->
-
-<!-- Next, write the text, and fill in the statistical reporting with inline code where necessary. Here's an example: -->
-
-<!-- > We compared mean scores on the STICSA state anxiety item 1 between two groups, who either saw the mathematics MCQ questions (*M* = `` `r knitr::inline_expr("round(sticsa_t$estimate[1], 2)")` ``) or the statistics MCQ questions (*M* =`` `r knitr::inline_expr(" round(sticsa_t$estimate[2], 2)")` ``). A Welsh's robust *t*-test revealed no statistically significant difference in scores between groups (`` `r knitr::inline_expr(" sticsa_t_out$full_result")` ``). -->
-
-<!-- Which should render as: -->
-
-<!-- > We compared mean scores on the STICSA state anxiety item 1 between two groups, who either saw the mathematics MCQ questions (*M* = `r round(sticsa_t$estimate[1], 2)`) or the statistics MCQ questions (*M* =`r round(sticsa_t$estimate[2], 2)`). A Welsh's robust *t*-test revealed no statistically significant difference in scores between groups (`r sticsa_t_out$full_result`). -->
-<!-- ::: -->
-<!-- ::: -->
 
  
 
