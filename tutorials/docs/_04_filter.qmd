@@ -663,6 +663,20 @@ anx_data |>
 So, there's at least 5 `NA`s in every single row, and when we call `tidyr::drop_na()`, every single row is dropped.
 :::
 
+:::: {.repro}
+
+::: {.repro-header}
+::: {.repro-icon}
+:::
+RepRoducibility: Overwriting Data Frames 
+:::
+
+::: {.repro-body}
+It may be tempting to save all the changes we have done to the dataset in the object containing the original dataframe, and if you always run your code line by line from the top to the bottom, this will not cause any issues. But, if at any point you want to go back up and rerun some piece of code on data you have already filtered out, the code won't run or will give you incorrect output. I find it best to create a new dataframe when you make any changes, but I also don't want to end up with 58 slightly different dataframes in my environment. I have found that the best way to go about cleaning data is to make a copy of the dataframe with the raw data into a new object, and apply all of the changes you want to do at once. That way, all code that uses the the original, unprocessed data will continue to work even after I have completed all the tyding. 
+:::
+
+::::
+
 #### Reporting
 
 ::: {.callout-warning}
@@ -827,6 +841,23 @@ anx_data |>
 :::
 
  
+
+:::
+
+:::: {.repro}
+
+::: {.repro-header}
+::: {.repro-icon}
+:::
+RepRoducibility: Overwriting Data Files 
+:::
+
+::: {.repro-body}
+After you have completed all your data cleaning, you may want to save the cleaned dataset so you don't have to repeat the same steps everytime you want to rerun your analysis. It is important to make sure you save the pre-processed data in a new file and not overwrite the raw data file so that you don't accidentally lose data you might need later on. 
+:::
+
+::::
+
 
 ### Using Functions
 
