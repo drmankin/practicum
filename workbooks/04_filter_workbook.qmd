@@ -1,0 +1,188 @@
+---
+title: "04: Filter and Select"
+embed-resources: true
+editor: visual
+---
+
+## Open the Tutorial
+
+Use the following code chunks to open the accompanying tutorial.
+
+### Open in RStudio Viewer
+
+```{r}
+#| eval: false
+rstudioapi::viewer('https://r-training.netlify.app/tutorials/docs/04_filter')
+```
+
+### Open in a New Browser Tab
+
+```{r}
+#| eval: false
+utils::browseURL('https://r-training.netlify.app/tutorials/docs/04_filter')
+```
+
+## Overview
+
+## Setup
+
+### Packages
+
+Load the necessary packages.
+
+```{r}
+
+```
+
+### Data
+
+Read in the dataset and save it in a new object, `anx_data`.
+
+On the Cloud, you can read in this dataset from the `data` folder using `here::here()`.
+
+Elsewhere, you can download the dataset, or copy the dataset URL, from the [Data and Workbooks page](../../data_workbooks.qmd).
+
+```{r}
+
+```
+
+#### Codebook
+
+## Thinking Like a Coder
+
+## Filter
+
+### General Format
+
+### Single Assertions
+
+### Multiple Assertions
+
+### Exercises
+
+Produce a subset of `anx_data` that doesn't contain any male participants.
+
+```{r}
+
+```
+
+Filter `anx_data` to keep only cases where the value of `rmars_s_test2` is between 2 and 4.
+
+*Hint*: You can use two separate assertions to do this, or check out `dplyr::between()`.
+
+```{r}
+
+```
+
+### Data Cleaning
+
+#### Pre-Exclusions
+
+#### Recording Exclusions
+
+Follow along with the following data cleaning steps, trying them out in a code chunk for yourself as you go. You'll need them at the end!
+
+```{r}
+
+```
+
+#### Consent {#consent}
+
+#### Age
+
+Store the counts of participants who are **too young** or **too old** in separate objects. Then, filter them out of the dataset.
+
+```{r}
+
+```
+
+#### Missing Values
+
+##### Single Variable
+
+Store the counts of participants missing a value for `sticsa_trait_3` in a new object.
+
+*Hint*: Look back on the [Consent](#consent) section for the function to get missing values.
+
+```{r}
+
+```
+
+##### All Cases
+
+#### Reporting
+
+## Select
+
+### General Format
+
+### Selecting Directly
+
+Create a subset of `anx_data` that contains the following variables:
+
+-   The participant's age
+-   The first variable in the original dataset
+-   All of the STARS variables
+
+```{r}
+
+```
+
+Create a subset of `anx_data` that contains the following variables:
+
+-   All of the original variables but NOT `distribution`
+-   `mcq` renamed `condition`
+
+```{r}
+
+```
+
+### Using tidyselect
+
+Select the variables in `anx_data` that have to do with state anxiety.
+
+```{r}
+
+```
+
+Select all the variables in `anx_data` that are NOT the R-MARS, R-MARS-S, or STICSA.
+
+```{r}
+
+```
+
+**CHALLENGE**: Select all the `stars` variables but NOT the `stars_m` variables.
+
+```{r}
+
+```
+
+### Using Functions
+
+#### Using Custom Functions
+
+**CHALLENGE:** Select the variables in `anx_data` that are character type, or that do NOT contain any missing values.
+
+*Hint*: You may need to use function(s) that we haven't covered in the tutorials so far to solve this.
+
+```{r}
+
+```
+
+## Exporting
+
+## Quick Test
+
+Bring up the help documentation for `t.test()` and use it to run a *t*-test comparing responses for the first item of the STICSA post-test state anxiety scale between people who saw the maths MCQs vs the stats MCQs.
+
+*Hint*: Try using the formula notation - see `formula` under Arguments.
+
+```{r}
+
+```
+
+**CHALLENGE**: Using the help documentation, re-run the *t*-test with equal variances assumed.
+
+```{r}
+
+```
