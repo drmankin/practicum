@@ -1,0 +1,181 @@
+---
+title: "03: Datasets"
+execute:
+  error: true
+embed-resources: true
+editor: visual
+---
+
+## Open the Tutorial
+
+Use the following code chunks to open the accompanying tutorial.
+
+### Open in RStudio Viewer
+
+```{r}
+#| eval: false
+rstudioapi::viewer('https://r-training.netlify.app/tutorials/docs/03_datasets')
+```
+
+### Open in a New Browser Tab
+
+```{r}
+#| eval: false
+utils::browseURL('https://r-training.netlify.app/tutorials/docs/03_datasets')
+```
+
+## Overview
+
+## Setup
+
+## Reading In
+
+### File Types
+
+### From File
+
+Run the `here::here()` function to see what it does.
+
+```{r}
+
+```
+
+Use `here::here()` to generate a file path to the `syn_data.csv` data file.
+
+Then, use `readr::read_csv()` to read in the `syn_data.csv` file and store the result in an object called `syn_data`.
+
+```{r}
+
+```
+
+### From URL
+
+Read the CSV file hosted at <https://raw.githubusercontent.com/drmankin/practicum/master/data/syn_data.csv> and save it to the object name `syn_data`.
+
+```{r}
+
+```
+
+## Codebook {#codebook}
+
+## Viewing
+
+### Call the Object
+
+Call the `syn_data` object to see what it contains.
+
+```{r}
+
+```
+
+### A Glimpse of the Data
+
+Use `dplyr::glimpse()` to get a glimpse of your dataset.
+
+```{r}
+
+```
+
+### View Mode
+
+Open the `syn_data` dataset using the `View()` function **in the Console**.
+
+```{r}
+
+```
+
+Using **only** View mode, figure out the following:
+
+1.  What is the range of the variable `gc_score`?
+2.  How can you arrange the dataset by score in `scsq_imagery`?
+3.  How many participants had "Yes" in the variable `syn_graph_col`?
+4.  Which `gender` category had more participants?
+5.  Of the participants who said "Yes" to `syn_seq_space`, what was the highest SCSQ technical-spatial score?
+
+```{r}
+
+```
+
+## Overall Summaries
+
+### Basic Summary
+
+Print out a summary of `syn_data` using the `summary()` function.
+
+Then, compare the information about each variable to the [Codebook](#codebook). Are there any issues?
+
+```{r}
+
+```
+
+### Other Summaries
+
+Print out a summary of `syn_data` using the `datawizard::describe_distribution()` function.
+
+```{r}
+
+```
+
+**CHALLENGE**: There are some variables missing from this output. What are they? Why aren't they included?
+
+```{r}
+
+```
+
+## The Pipe
+
+## Describing Datasets
+
+## Describing Variables
+
+### Counting
+
+### Subsetting
+
+### Descriptives
+
+### Visualisations
+
+## Exercises
+
+Using the native pipe, save the number of participants in the `syn_data` dataset in a new object of your choice.
+
+```{r}
+
+```
+
+Using the `syn_data` dataset, produce a tibble of counts of how many participants had any kind of synaesthesia. Then, produce a second tibble, adding in gender as well.
+
+*Hint*: Use the [codebook](#codebook) to find the variables to use.
+
+```{r}
+
+```
+
+Calculate the mean and median of the SCSQ organisation subscale, and the range of the `gc_score` variable.
+
+Try using each subsetting method at least once.
+
+```{r}
+
+```
+
+Try making a boxplot of the `gc_score` variable. Use either `$` or `pull()` as you like.
+
+*Optionally*, if you feel so inclined, use the help documentation to spruce up your plot a bit, such as changing the title label.
+
+```{r}
+
+```
+
+**CHALLENGE**: Try making a barplot and a scatterplot.
+
+For the barplot, make a visualisation of how many people are synaesthetes or not (regardless of synaesthesia type).
+
+For the scatterplot, choose any two SCSQ measures.
+
+Both of these require some creative problem-solving using the help documentation and the skills and functions covered in this tutorial.
+
+```{r}
+
+```
