@@ -672,7 +672,7 @@ RepRoducibility: Overwriting Data Frames
 :::
 
 ::: {.repro-body}
-It may be tempting to save all the changes we have done to the dataset in the object containing the original dataframe, and if you always run your code line by line from the top to the bottom, this will not cause any issues. But, if at any point you want to go back up and rerun some piece of code on data you have already filtered out, the code won't run. I find it best to create a new dataframe when you make any changes, but I also don't want to end up with 58 slightly different dataframes in my environment. The best way to go about cleaning data is to make a copy of the dataframe with the raw data into a new object, and apply all of the changes I want to do at once. That way, all code that uses the the original, unprocessed data will continue to work even after I have completed all the tyding. 
+It may be tempting to save all the changes we have done to the dataset in the object containing the original dataframe, and if you always run your code line by line from the top to the bottom, this will not cause any issues. But, if at any point you want to go back up and rerun some piece of code on data you have already filtered out, the code won't run. I find it best to create a new dataframe when you make any changes, but I also don't want to end up with 58 slightly different dataframes in my environment. I have found that the best way to go about cleaning data is to make a copy of the dataframe with the raw data into a new object, and apply all of the changes you want to do at once. That way, all code that uses the the original, unprocessed data will continue to work even after I have completed all the tyding. 
 :::
 
 ::::
