@@ -37,7 +37,7 @@ remotes::install_github("profandyfield/discovr")
 Note that there's no need to call `library(discovr)` at the start of your document, since the tutorials don't work *in* the document, but rather in RStudio itself.
 :::
 
-::: {.callout-tip title="Using the {discovr} tutorials" collapse="true"}
+::: {.callout-tip title="Using the {discovr} tutorials"}
 Prof Andy Field's {discovr} tutorials provide detailed walkthroughs of both the R code and the statistical concepts of a variety of statistical analyses. They are a good place to look first to understand what your UG supervisees or advisees have been taught on a particular topic.
 
 The tutorials are built in {learnr}, an interactive platform for learning and running R code. So, unlike the tutorial you're currently reading, they must be run inside an R session.
@@ -49,12 +49,17 @@ Because {discovr} tutorials run within R, you don't need to use any external doc
 
 ### Data and Codebook
 
-Today's data is the `TeachingRatings` dataset from the {AER} package. This dataset is built into the package, so you don't need to read it in from anywhere. Instead, use the code below to get the data and rename it `teach_tib` (not necessary, just easier to type!).
+Today's data is the `TeachingRatings` dataset from the {AER} package. This dataset is built into the package, so you don't need to read it in from anywhere. 
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Use the code below to get the data and rename it `teach_tib` (not necessary, just easier to type!).
 
 ```{r}
 data("TeachingRatings", package = "AER")
 teach_tib <- TeachingRatings
 ```
+:::
 
 ::: {.callout-tip title="Installing {AER}" collapse="true"}
 As usual, no need to install anything on the Cloud, but elsewhere install {AER} first in the Console:
@@ -167,7 +172,7 @@ The `anova()` function will only work for model comparison for particular models
 
 2.  **All models must be fit to the same dataset.** If, for example, your first predictor has no missing values, but your second predictor had one, the model with using the second predictor would have been fit to a dataset of a different size than the model using only the first, and the `anova()` function will throw an error to this effect.
 
-If you encounter this issue, you may need to [inspect and clean your dataset](..\02_essentials\05_filter.qmd) before you proceed with analysis!
+If you encounter this issue, you may need to [inspect and clean your dataset](04_filter.qmd) before you proceed with analysis!
 :::
 
 To compare the two models, we put both model objects into the `anova()` function to find out which model to retain.
@@ -203,6 +208,8 @@ Remember, there are more examples and longer explanations in the `discovr_08` tu
 To begin, we can generate nicely formatted, customisable residual plots, using the function `ggplot2::autoplot()`. However, it is **essential** to load the {ggfortify} package in order for this to work.
 
 ```{r}
+#| warning: false
+
 library(ggfortify)
 
 ggplot2::autoplot(eval_full_lm, 
@@ -210,27 +217,27 @@ ggplot2::autoplot(eval_full_lm,
                   which = c(1, 3, 2, 4))
 ```
 
-If you're wondering what's up with `which`, the `plot()` function that `autoplot()` is based on has a total of six plots available. Here I've chosen the two residual plots, the normal Q-Q and the Cook's distance plot. Plots 5 and 6 have to do with leverage, which we don't teach at UG level. To see them, simply add them to the `which =` argument.
+If you're wondering what's up with `which`, the `plot()` function that `autoplot()` is based on has a total of six plots available. Here I've chosen the two residual plots, the normal Q-Q and the Cook's distance plot. Plots 5 and 6 have to do with leverage, which we don't teach at UG level. To see them, simply add them to the `which =` argument inside `c()`.
 
-If you want to customise the theme or look of these plots further, they are built with {ggplot2} so you can add or change anything about them using that package. We will come round later to [a detailed exploration of data visualisations with {ggplot2}](..\02_essentials\07_dataviz.qmd).
+If you want to customise the theme or look of these plots further, they are built with {ggplot2} so you can add or change anything about them using that package. We will come round later to a detailed exploration of data visualisations with {ggplot2} in a future tutorial.
 
 #### Distribution of Standardised Residuals
 
 In the UG core statistics modules at Sussex, we teach that normality is the least important of the assumptions of the linear model - the most important being additivity and linearity - so we do not generally worry too much about normally distributed standardised residuals, especially in large sample sizes. However, we do teach them how to evaluate the proportion of standardised residuals with values above ±1.96 (approximately 5%), ±2.56 (approximately 1%), and above ±3 (likely an outlier). For details on how to use `broom::augment()` to obtain standardised residuals and other model diagnostic measures like Cook's distance, see the `discovr_08` tutorial.
 
-#### Robust Models
+### Robust Models
 
 At UG level, we teach robust models for two purposes:
 
 1.  **As sensitivity tests** to check assumptions. If a robust technique that adjusts for a particular issue, such as heteroscedasticity, results in a model that is substantially different from the unadjusted model, we might conclude that the unadjusted model did in fact have that particular issue.
 2.  **As robust alternatives** to the unadjusted model.
 
-##### Robust Parameter Estimates
+#### Robust Parameter Estimates
 
 Our first robust model re-estimates the parameter estimates using robust techniques with the `robust::lmRob()` function. We can then compare the robust parameter estimates to the unadjusted ones obtained with `lm()` to find out if our estimates were biased, and report the robust parameter estimates if they were.
 
 ```{r}
-## Fit the same module using the lmRob function
+## Fit the same model using the lmRob function
 eval_lm_rob <- robust::lmRob(eval ~ beauty + gender, data = teach_tib)
 
 ## Print out the model parameteres
@@ -242,7 +249,7 @@ broom::tidy(eval_full_lm, conf.int = TRUE)
 
 Comparing the values of the two versions of the model, we can see that the parameter estimates have changed very little, so we might conclude that the unadjusted model was fine.
 
-##### Robust CIs and *p*-values
+#### Robust CIs and *p*-values
 
 To test and adjust for heteroscedastic residuals, we can re-estimate the standard error using a robust method. To do this, we'll use the `parameters::model_parameters()` function with the argument `vcov = "HC4"` as recommended in the {discovr} tutorial, using the unadjusted model object `eval_full_lm` as the first argument.
 
@@ -256,7 +263,7 @@ broom::tidy(eval_full_lm, conf.int = TRUE)
 
 The parameter estimates will not change, but the *SE*s, CIs, and *p*-values may. Here, the values are nearly identical and there are no major changes - that is, no predictors have become non-significant that were previously significant - so we might again conclude that the unadjusted model was not unduly biased.
 
-##### Bootstrapping
+#### Bootstrapping
 
 If we had a small sample size, a final option would be to bootstrap the confidence intervals. To do this, we will again use `parameters::model_parameters()`, but this time with `bootstrap = TRUE`.
 ```{r}
@@ -273,13 +280,15 @@ We could once again note that there are no major changes, as previously, so the 
 
 That was quite a whirlwind tour of the basics of linear models in R. The following exercises walk you through the same process again with different predictors, so that you have both practice with writing and using the code and a copy of that code in your workbook for future reference.
 
+For these exercises, we'll use the `syn_data` dataset, which we encountered in tutorial 03, to do some analysis.
+
 ::: {.callout-note appearance="minimal" title="Exercise"}
 
-Fit a single-predictor linear model, with ??? as the outcome and ??? as the predictor. Obtain model parameters and fit statistics for this model.
+Read in the `syn_data` dataset in the `data` folder and save it in the object `syn_data`.
 
 ::: {.callout-note collapse="true" title="Solution"}
 ```{r}
-## Use syn_data instead?
+syn_data <- readr::read_csv(here::here("data/syn_data.csv"))
 ```
 
 :::
@@ -287,20 +296,76 @@ Fit a single-predictor linear model, with ??? as the outcome and ??? as the pred
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
 
-Fit a three-predictor linear model and obtain model parameters, fit statistics, and standardised *b*s.
-
-Then, decide which model is better, the first or second model.
+Fit a single-predictor linear model, with `scsq_imagery` as the outcome and `scsq_techspace` as the predictor. Obtain model parameters and fit statistics for this model.
 
 ::: {.callout-note collapse="true" title="Solution"}
+```{r}
+syn_lm <- lm(scsq_imagery ~ scsq_techspace, data = syn_data)
+
+## Simple summary
+summary(syn_lm)
+
+## Tidy summaries
+broom::glance(syn_lm)
+broom::tidy(syn_lm, conf.int = TRUE)
+```
 
 :::
 :::
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
 
-Conduct assumptions checks for the final model, including diagnostic plots and sensitivity tests.
+Add `syn` and `scsq_language` to create a new model with three predictors. Obtain model parameters, fit statistics, and standardised *b*s.
+
+Then, decide which model is better, the first or second model.
 
 ::: {.callout-note collapse="true" title="Solution"}
+```{r}
+syn_full_lm <- lm(scsq_imagery ~ scsq_techspace + syn + scsq_language, data = syn_data)
+
+## Simple summary
+summary(syn_full_lm)
+
+## Tidy summaries
+broom::glance(syn_full_lm)
+broom::tidy(syn_full_lm, conf.int = TRUE)
+
+## Standardised Bs
+parameters::model_parameters(syn_full_lm, standardize = "refit")
+
+## Compare models
+anova(syn_lm, syn_full_lm)
+```
+
+:::
+:::
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Conduct assumptions checks for the final model, including diagnostic plots and sensitivity tests. Decide on a final model to report.
+
+::: {.callout-note collapse="true" title="Solution"}
+
+```{r}
+## Residuals
+ggplot2::autoplot(syn_full_lm, which = c(1, 3, 2, 4))
+
+## Original model for comparison
+broom::tidy(syn_full_lm, conf.int = TRUE)
+
+## Robust parameter estimates
+## Fit the same module using the lmRob function
+syn_lm_rob <- robust::lmRob(scsq_imagery ~ scsq_techspace + syn + scsq_language, data = syn_data)
+
+## Print out the model parameters
+broom::tidy(syn_lm_rob, conf.int = TRUE)
+
+## Re-estimate CIs and p-values with robust SE estimation
+parameters::model_parameters(syn_lm_rob, vcov = "HC4")
+
+## Generate bootstrapped CIs
+parameters::model_parameters(syn_full_lm, bootstrap = TRUE)
+```
 
 :::
 :::
