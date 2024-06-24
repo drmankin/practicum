@@ -79,6 +79,18 @@ or click through to view the text and copy/paste into an empty .Qmd document.
    <td style="text-align:left;"> <a href="https://raw.githubusercontent.com/drmankin/practicum/master/workbooks/01_intro_workbook.qmd" download="01_intro_workbook.qmd">Download 01_intro_workbook.qmd</a> </td>
   </tr>
   <tr>
+   <td style="text-align:left;"> 02: IntRoduction II </td>
+   <td style="text-align:left;"> <a href="https://raw.githubusercontent.com/drmankin/practicum/master/workbooks/02_intro_workbook.qmd" download="02_intro_workbook.qmd">Download 02_intro_workbook.qmd</a> </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 03: Datasets </td>
+   <td style="text-align:left;"> <a href="https://raw.githubusercontent.com/drmankin/practicum/master/workbooks/03_datasets_workbook.qmd" download="03_datasets_workbook.qmd">Download 03_datasets_workbook.qmd</a> </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 04: Filter and Select </td>
+   <td style="text-align:left;"> <a href="https://raw.githubusercontent.com/drmankin/practicum/master/workbooks/04_filter_workbook.qmd" download="04_filter_workbook.qmd">Download 04_filter_workbook.qmd</a> </td>
+  </tr>
+  <tr>
    <td style="text-align:left;"> Working with Qualtrics Data </td>
    <td style="text-align:left;"> <a href="https://raw.githubusercontent.com/drmankin/practicum/master/workbooks/qualtrics_workshop_workbook.qmd" download="qualtrics_workshop_workbook.qmd">Download qualtrics_workshop_workbook.qmd</a> </td>
   </tr>
