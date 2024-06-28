@@ -1,5 +1,5 @@
 ---
-title: "06: Mutate and Summarise"
+title: "05: Mutate"
 ---
 
 ## Overview
@@ -14,8 +14,6 @@ Hardworking, versatile, and indispensable, `mutate()` makes changes within a giv
 
 We will again be focusing on {dplyr} today, which you can load by loading {tidyverse}.
 
-We'll also need {kableExtra} for table formatting later on.
-
 ::: {.callout-note appearance="minimal" title="Exercise"}
 Load the necessary packages.
 
@@ -24,8 +22,6 @@ Load the necessary packages.
 library(dplyr)
 ## OR
 library(tidyverse)
-
-library(kableExtra)
 ```
 :::
 :::
@@ -97,7 +93,7 @@ dataset_name |>
   )
 ```
 
-`variable_name` is the name of the variable that will be changed by `mutate()`. This can be any name that follows R's object naming rules. There are two main options for this name:
+`variable_name` is the name of the variable that will be created by `mutate()`. This can be any name that follows R's object naming rules. There are two main options for this name:
 
 1.  If the dataset does **not** already contain a variable called `variable_name`, a new variable will be added to the dataset.
 2.  If the dataset **does** already contain a variable called `variable_name`, the new variable will silently replace (i.e. overwrite) the existing variable with the same name.
@@ -159,17 +155,6 @@ In this case I might need `rep()` (for creating vectors of repeating values), `s
 Next, let's look at changing existing variables. For example, I know that `gender` and `mcq` are meant to be **factors** (also called "categorical data" in SPSS and elsewhere). So, let's convert each of these two variables into factor data type.
 
 ```{r}
-#| echo: false
-#| 
-anx_data |> # <1>
-  dplyr::mutate( # <1>
-    gender = factor(gender), # <2>
-    mcq = factor(mcq), # <2>
-    .keep = "used" # <3>
-  )
-```
-
-```{r}
 #| output: false
 
 anx_data |> # <1>
@@ -183,9 +168,20 @@ anx_data |> # <1>
 2.  Convert the existing `gender` variable into a factor and overwrite the existing `gender` variable with the new version.
 3.  Convert the existing `mcq` variable into a factor and overwrite the existing `mcq` variable with the new version.
 
+```{r}
+#| echo: false
+#| 
+anx_data |> # <1>
+  dplyr::mutate( # <1>
+    gender = factor(gender), # <2>
+    mcq = factor(mcq), # <2>
+    .keep = "used" # <3>
+  )
+```
+
 Let's look a little closer at the expression `gender = factor(gender)`. The left side of the equals sign `=` is the name of the variable to be created in the dataset, `gender`. The right side, `factor(gender)`, gives the instructions for how to create the information that the `gender` variable will contain. Since there is already a variable in the dataset called `gender`, the expression `factor(gender)` works on the existing version of the variable, then overwrites it into a variable with the same name. Here, the equals sign is working like the assignment operator `<-` for overwriting objects.
 
-So far, we've written the code to create the `lab` variable and change the `gender` and `mcq` datasets, but neither of these changes have been assigned to the dataset, so the version of `anx_data` in the Environment is still unchanged. As we've seen before, we've checked the code works by examining the output, we then assign the output of these commands to the dataset to make those changes.
+So far, we've written the code to create the `lab` variable and change the `gender` and `mcq` datasets, but neither of these changes have been assigned to the dataset, so the version of `anx_data` in the Environment is still unchanged. As we've seen before, once we've checked the code works by examining the output, we then assign the output of these commands to the dataset to make those changes.
 
 ```{r}
 #| include: false
@@ -218,13 +214,13 @@ A very common `mutate()` task is to create a composite score from multiple varia
 
 [^2]: Note that [averaging Likert data is controversial](https://www.frontiersin.org/articles/10.3389/feduc.2020.589965/full) (h/t Dr Vlad Costin!), but widespread in the literature. We're going to press boldly onward anyway to not get too deep in the statistical weeds, but if you're using Likert scales in your own research, it's something you might want to consider.
 
-To do this, we need two new functions.
+To do this, we need two new operations.
 
 1.  The first new function, `dplyr::c_across()`, provides an efficient way to select multiple variables to contribute to the calculation - namely, by using `<tidyselect>` semantics.
 
 2.  The second new function is actually a pair of functions, `dplyr::rowwise()` and `dplyr::ungroup()`. These two respectively impose and remove an internal structure to the dataset, such that each row is treated like its own group, and any operations are done within those row-wise groups.
 
-Let's see the combination of these two in action.
+Let's see the combination of these functions in action.
 
 ::: callout-important
 The code below assumes a dataset structured so there is information from each participant on only and exactly one row in the dataset.
@@ -250,15 +246,15 @@ anx_data <- anx_data |> # <1>
 4.  Remove the by-row grouping that was created by `rowwise()` to output an ungrouped dataset.
 
 ::: callout-tip
-For lots more details and examples on `rowwise()` and rowwise operations with {dplyr} - including which other scenarios in which a row-wise dataset would be useful - run `vignette("rowwise")` in the Console.
+For lots more details and examples on `rowwise()` and row-wise operations with {dplyr} - including which other scenarios in which a row-wise dataset would be useful - run `vignette("rowwise")` in the Console.
 :::
 
-## Exercises
+## Exercises {#first-ex}
 
 Try out the following exercises in the accompanying workbook.
 
 ::: {.callout-note title="Exercise" appearance="minimal"}
-Imagine that item 17 on the STICSA State subscale is reversed-scored and needs to be reverse-coded. Using the [Codebook](06_changes.qmd#codebook), replace the existing variables with the reversed versions.
+Imagine that item 17 on the STICSA State subscale is reversed-scored and needs to be reverse-coded. Using the [Codebook](0#codebook), replace the existing variables with the reversed versions.
 
 ::: {.callout-tip title="What is reverse-coding?" collapse="true"}
 In many multi-item measures, some items are reversed in the way that they capture a particular construct. In this particular example, items on the STICSA are worded so that a higher numerical response (closer to the "very much so" end of the scale) indicates *more* anxiety, such as item 4: "I think that others won't approve of me".
@@ -269,7 +265,7 @@ If the response scale is a numerical integer sequence, as this one is, then the 
 :::
 
 ::: {.callout-note title="Solution" collapse="true"}
-Don't forget there are pre and post versions of this variable, so BOTH must be reversed!
+Don't forget there are pre and post versions of this variable, so BOTH must be reversed.
 ```{r}
 anx_data <- anx_data |> 
   dplyr::mutate(
@@ -358,10 +354,10 @@ This code still runs successfully, but the result isn't what we wanted. Have a l
 ::: {.callout-note appearance="minimal" title="Exercise"}
 **CHALLENGE:** The `rowwise() |> c_across() |> ungroup()` code is definitely not the only way to obtain the same output. Try producing the the same `sticsa_trait_score` variable with the following methods. What are the benefits and drawbacks of each method?
 
-*Hint:* Use `vignette("rowwise")` to help if you get stuck.
-
 1.  Using a dedicated by-row function, `rowMeans()`
 2.  Using the basic structure of `mutate()` only
+
+*Hint:* Use `vignette("rowwise")` to help if you get stuck.
 
 ::: {.callout-note title="Solution" collapse="true"}
 If we wanted to avoid, or didn't remember, the `rowwise()...ungroup()` sequence, there are other options to produce the same result, but neither are easier to read or implement. (They aren't necessarily harder, either! This really is down to preference.)
@@ -439,7 +435,7 @@ anx_data |>
 
 This method, although very transparent, has some critical downsides.
 
--   **It's clunky and prone to mistakes.** This style works best for 2-3 variables contributing to the composite. For more variables, we end up with a lot of repetitive typing of variable names (remember our rule about copy/pasting), which also means increased likelihood of typos, accidental omissions, or other errors - especially with a large number of variables, as we have here.
+-   **It's clunky and prone to mistakes.** This style works best for 2-3 variables contributing to the composite. For more variables, we end up with a lot of repetitive typing of variable names (remember our rule about copy/pasting), which also means increased likelihood of typos, accidental omissions, or other mistakes - especially with a large number of variables, as we have here.
 -   **It's not robust.** Imagine that, on review of the STICSA Trait scale, we find that `sticsa_trait_9` is a badly worded/unreliable item and decide to drop it from our analysis. We then either have to (remember to) manually update our code both to remove `sticsa_trait_9` *and* to change the denominator from 21 to 20 (not a good time), or debug the resulting error if we don't remember.
 
 We **do teach this method to UGs** specifically to reduce the number of functions they have to learn, but for real-life usage, in most cases, the `rowwise()` solution is your best bet for both readability and resilience.
@@ -454,7 +450,7 @@ anx_data <- anx_data_scores
 
 ## Conditionals
 
-There are many functions out there for recoding variables (let's wave cheerfully at `dplyr::recode()` as we fly by it without stopping), but the following method, using `dplyr::case_when()`, is recommended because it is so versatile. It can be used to recode the values from one variable into new one, but it can also combine information across variables and handle multiple conditionals. It essentially allows a series of if-else statements without having to actually have lots of if-else statements.
+There are many functions out there for recoding variables (let's wave cheerfully at `dplyr::recode()` as we cruise by it without stopping), but the following method, using `dplyr::case_when()`, is recommended because it is so versatile. It can be used to recode the values from one variable into new one, but it can also combine information across variables and handle multiple conditionals. It essentially allows a series of if-else statements without having to actually have lots of if-else statements.
 
 The generic format of `dplyr::case_when()` can be stated as follows:
 
@@ -548,15 +544,168 @@ Note that for this variable, each assertion is designed to identify the cases th
 
 \ 
 
-## Quick Test: $\chi^2$
+## Iteration
 
-While we're here looking at grouped barplots for categorical data, we can also have a quick $\chi^2$ test of association as a treat. Just like we did *t*-tests with `t.test()` and correlation tests with `cor.test()`, for $\chi^2$ we have `chisq.test()`.
+::: callout-warning
+This material will not be covered in live workshops, unless there is sufficient time and interest. The techniques in this section are **not** taught in core Methods modules for UG students, so they are not essential for dissertation supervisors. This section is included for anyone who wants to develop the efficiency and versatility of their coding beyond basic tasks.
+
+If you want to skip this section, you can jump down to [the next section](#quick-test).
+:::
+
+The `mutate()` function is an amazing tool for working with your dataset, but applying the same change to multiple variables quickly becomes tedious. Imagine we wanted to change all of the character variables in this dataset to factors. We could do something like this:
+
+```{r}
+#| eval: false
+
+anx_data |> 
+  dplyr::mutate(
+    id = factor(id),
+    distribution = factor(distribution),
+    consent = factor(consent),
+    gender = factor(gender),
+    mcq = factor(gender),
+    remove = factor(remove)
+  )
+```
+
+If there are only a few of these variables to change, then this may be fine - but even just a few are prone to mistakes or mistyping. Did you spot the mistake in the code above? The `mcq` variable was overwritten by the `gender` variable in a copy/paste mistake. This kind of mistake is both easy to make and very difficult to detect, since the code runs without issue.
+
+To avoid this, the general rule of thumb is: if you have to copy/paste the same code more than once, use (or write!) a function instead. To use code more efficiently, the key is to identify where the code repeats, then use a function for that repetition instead of duplicated code.
+
+Luckily we don't have to figure out how to do this iteration [from scratch](https://purrr.tidyverse.org/)[^4], because {dplyr} already has a built-in method for doing exactly this task, called `dplyr::across()`. It works like this:
+
+[^4]: {purrr}, cats, scratch, get it?? I'm hilarious.
+
+``` r
+dataset_name |> 
+  dplyr::mutate(
+    dplyr::across(<tidyselect>, function_to_apply)
+  )
+```
+
+In the first argument, we use `<tidyselect>` syntax to choose which variables we want to change.
+
+In the second argument, the function or expression in `function_to_apply` is applied to each of the variables we've chosen. By default, the variables are overwritten.
+
+The task we wanted to do above was to convert all character variables to factors. So our repetitive, copy/paste command above becomes:
+
+```{r}
+#| eval: false
+anx_data |> 
+  dplyr::mutate(
+    dplyr::across(c(id, distribution, consent, gender, mcq, remove),
+                  factor)
+  )
+```
+
+### Exercises
+
+::: {.callout-note title="Exercise" appearance="minimal"}
+**CHALLENGE**: In the [previous exercises](#first-ex), we saw some code to reverse-score a pair of items. This was fine with one or two items to reverse, but would get tedious and repetitive quickly.
+
+Use `dplyr::across()` to reverse score the STICSA state items 3, 10, 17, 18, and 21.
+
+(Note that the STICSA doesn't have any reverse-scoring; this is just for practice.)
+
+::: {.callout-note title="Solution" collapse="true"}
+As we saw in the ["Using Custom Functions" section of the last tutorial](04_filter.qmd#using-custom-functions), we can write an ad-hoc formula instead of using an existing function with the following components:
+
+-   The `~` at the beginning, which is a shortcut for the longer `function(x) ...` notation for creating functions.
+-   The `.x`, which is a placeholder for each of the variables that the function will be applied to.
+
+So, "subtract each item from 5" becomes `~ 5 - .x`.
+
+The next trick is to figure out how to tidyselect the correct variables. We have 5 item numbers to reverse, but because there was both a pre- and post-test, there are 10 items total. Again, you *could* write them out one by one...but don't!
+
+My solution would be to use `paste0()` to generate the strings I want to pass to `contains()`. `paste0()` pastes together its elements, and like many R functions, it's vectorised, so I can give a vector of item numbers along with a single shared string to produce the variable name element to match to.
+
+A second possibility is to use the <tidyselect> function `num_range()`, which is demonstrated below. However, this function can only take one prefix or suffix at a time, so we'd need two separate commands to specify two separate prefixes - so I'd strongly prefer the first option.
+
+```{r}
+#| eval: false
+
+## Using paste0()
+anx_data |> 
+  dplyr::mutate(
+    dplyr::across(contains(paste0("state_", c(3, 10, 17, 18, 21))),
+                  ~ 5 - .x)
+  )
+
+## Using num_range()
+anx_data |> 
+  dplyr::mutate(
+    dplyr::across(num_range("sticsa_pre_state_", c(3, 10, 17, 18, 21)),
+                  ~ 5 - .x),
+    dplyr::across(num_range("sticsa_post_state_", c(3, 10, 17, 18, 21)),
+                  ~ 5 - .x)
+  )
+```
+:::
+:::
+
+::: {.callout-note title="Exercise" appearance="minimal"}
+**CHALLENGE**: You might notice that `across()` by default overwrites variables, rather than creating new ones. Generally, with reverse-coding, this is what we want to do so we don't include the unreversed item in further analysis.
+
+However, in some cases we might want to instead create new variables with `across()` instead of overwriting them, and the help documentation for `across()` includes an argument for creating new variables names. Do the same task as above - reverse-coding the same five STICSA state items - but add `_rev` to the end of the new variable names.
+
+::: {.callout-note title="Solution" collapse="true"}
+Under "Arguments", the help documentation describes the `.names` argument, which allows us to easily create new variable names. This uses a "glue specification" (see [the {glue} package](https://glue.tidyverse.org/) for more) but we don't need much more than what's in the help documentation for this.
+
+So, let's add the `.names` argument. Here we're using `{.col}` as a stand-in for each existing variable name, so all of the new variables that have been reversed will have the same name as the original, but with `_rev` at the end.
+
+```{r}
+#| eval: false
+anx_data |> 
+  dplyr::mutate(
+    across(contains(paste0("state_", c(3, 10, 17, 18, 21))),
+                  ~ 5 - .x,
+           .names = "{.col}_rev")
+  )
+```
+:::
+:::
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+**CHALLENGE:** In the example code for this section, we wanted to change all of the character variables in this dataset to factors. We technically did that, but the example code still manually listed the variables to change. Adapt the example code to instead apply the `factor` function to any character variable in the dataset, without using the names of those variables.
+
+*Hint*: You will need to have completed, or to review, the section of the previous tutorial on [selecting with functions](04_filter.qmd#using-functions); or run `?where` in the Console.
+
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+#| eval: false
+
+anx_data |> 
+  dplyr::mutate(
+    dplyr::across(where(is.character),
+                  factor)
+  )
+```
+:::
+:::
+
+## Quick Test: $\chi^2$ {#quick-test}
+
+Since we've created some handy dichotomous variables today, we can also have a quick $\chi^2$ test of association as a treat. Just like we did *t*-tests with `t.test()`, for $\chi^2$ we have `chisq.test()`.
 
 First, you can bring up the help documentation by running `?chisq.test` in the Console.
 
-You might notice right away that this function has no `data =` argument, and neither does it have an option to specify a formula like we've used previously. Instead, we just need to provide two vectors (or a matrix; see the Challenge task).
+You might notice right away that this function has no `data =` argument, and neither does it have an option to specify a formula like we've used previously. Instead, we just need to provide two vectors, which we can get out of our dataset using `$` subsetting.
 
-<!-- UPDATE case_when() practice and then chisq test -->
+So, for example, to compare whether there is an association between MCQ type and trait anxiety (which we would rather NOT be the case, since participants were allocated randomly to MCQ condition), we can simply run:
+
+```{r}
+chisq.test(anx_data$mcq, anx_data$sticsa_trait_cat)
+```
+
+If we store this model output in an object, we can then subset it to easily get counts of expected and observed frequencies.
+
+```{r}
+anx_chisq <- chisq.test(anx_data$mcq, anx_data$sticsa_trait_cat)
+
+anx_chisq$observed
+anx_chisq$expected
+```
 
 ## Exercises
 
@@ -594,6 +743,7 @@ From here, you can easily use this variable to summarise exclusions, and to filt
 
 exclusion_summary <- anx_data |> # <1>
   dplyr::count(remove) # <1>
+
 exclusion_summary #<2>
 
 anx_data_final <- anx_data |> # <3>
@@ -601,193 +751,98 @@ anx_data_final <- anx_data |> # <3>
 ```
 
 1.  Take `anx_data` and count the number of times each unique value occurs in the `remove` variable, storing the output in a new object, `exclusions_summary`.
-2.  Print out the `exclusions_summary` object (see below!).
+2.  Print out the `exclusions_summary` object to view it.
 3.  Create a new object, `anx_data_final`, by taking `anx_data` *and then* retaining only the cases for which the `remove` variable has only and exactly the value `"keep"` - effectively dropping all other cases.
-:::
 
-::: {.callout-note title="Exercise" appearance="minimal"}
-**CHALLENGE**: Use `exclusion_summary` to write a report of all the exclusions from this dataset.
-
-::: {.callout-note title="Solution" collapse="true"}
-In the previous tutorial, we did this task with individual objects each recording the exclusions for particular reasons. This time round, we instead have a little tibble that contains all these numbers at once. No problem - we know how to work with tibbles!
-
-Instead of using individual objects in our inline code, we can instead use whole bits of code, including pipes. So, we could use a three-step process: Take the `exclusion_summary` object, filter it for the specific exclusion criteria we want for that particular sentence, and then pull out the value in the `n` variable with the counts for that exclusion.
-
-> To begin, `` `r knitr::inline_expr("exclusion_summary |> dplyr::filter(remove == 'no_consent') |> dplyr::pull(n)")` `` cases were removed who did not consent. Next, `` `r knitr::inline_expr("r exclusion_summary |> dplyr::filter(remove == 'age_young') |> dplyr::pull(n)")` `` cases were removed who were younger than 18, which...
-
-This will work! It will work *great*. You will get a lovely clean report of exclusions doing this. However, it does involve, again, multiple copy/pastes, so see the box below for the next step in complexity.
+This method has a few major advantages over the stepwise method we saw last week. Here, the `remove` variable serves the dual purpose of both counting the cases for exclusion AND allowing easy filtering to retain only the "keep" cases. The exclusions are also all processed in a single step, so there's no danger of running these steps out of order. When counting the exclusions, correct counts are automatically generated for all exclusions along with the reason for exclusion, and each case will only be counted once.
 :::
 :::
 
 ::: {.callout-warning title="MoRe About: Reporting with Functions" collapse="true"}
 
-<!-- UPDATE -->
-
-could write a wrapper function to do this for me - a bespoke function that I write only for my particular use, that wraps up some bit of code into a convenient function name to make it easier (and less potentially errorful) to use multiple times.
+If, like me, you hate repetitive typing, you can really let R do the work for you. The example below shows the construction of a function that takes a dataset, `x`, with a `remove` variable in it as described above, and then automatically produces a paragraph detailing the exclusions and participant numbers.
 
 ```{r}
-rep_excl <- function(summary, value){ # <1>
-  summary |> # <2>
-    dplyr::filter(remove == value) |> # <2>
-    dplyr::pull(n) # <2>
-} # <2>
 
-rep_excl(exclusion_summary, "no_consent") # <3>
+report_exclusions <- function(x){
+  
+  ## Generate a tibble with counts of exclusions
+  ## And add in a plain-language description of what each means
+  excl_sum <- x |>
+    dplyr::count(remove) |> 
+    dplyr::mutate(
+      desc = dplyr::case_when(
+        remove == "age_bad" ~ "indicated an age above 100 or otherwise impossible,",
+        remove == "age_young" ~ "indicated an age below 18,",
+        remove == "no_consent" ~ "did not consent,",
+        .default = remove
+      )
+    )
+  
+  ## Extract initial number (minus previews)
+  n_initial <- excl_sum |> 
+    dplyr::filter(remove != "preview") |> 
+    dplyr::pull(n) |> 
+    sum()
+  
+  ## Extract final number
+  n_final <- excl_sum |> 
+    dplyr::filter(remove == "keep") |> 
+    dplyr::pull(n)
+  
+  ## Drop previews and keeps so the following code only itemises exclusions
+  excl_sum <- excl_sum |> 
+    dplyr::filter(!(remove %in% c("preview", "keep")))
+  
+  ## Paste the text together
+  paste("To begin,", n_initial, "cases were recorded.", "Subsequently,", 
+        ## Generate the sentences with paste() and then sub the last comma with a comma followed by "and"
+        gsub("(.*), (.*)", "\\1, and \\2", paste(excl_sum$n, "cases", excl_sum$desc, collapse = " ")), 
+        "so they were excluded. This left a final sample of", n_final, "participants.")
+}
 ```
 
-1.  Create a new function, `rep_excl`, with the arguments `summary` and `value` that does the following:
-2.  Take the object `summary` *and then* filter it keeping only the cases where the value in the `remove` variable is only and exactly equal to the `value` argument, *and then* pull out the value in the `n` variable.
-3.  Use the new `rep_excl` with the `exclusion_summary` object as the `summary` argument, and the string `"no_consent"` as the `value` argument.
+The important thing here is that the `remove` variable must be created the same way in the original dataset every time in order for this function to work correctly. If you wanted to add in more reasons for exclusions, you would also need to update the `case_when()` command at the beginning of the function to add a description for the new excluions.
 
-Shiny right? Now my report might look like this:
+Having created this custom function in my document somewhere, I could then simply write the following inline code in my Quarto text:
 
-> To begin, `` `r knitr::inline_expr("rep_excl(exclusion_summary, 'no_consent')")` `` cases were removed who did not consent. Next, `` `r knitr::inline_expr("rep_excl(exclusion_summary, 'age_young')")` `` cases were removed who were younger than 18, which...
+`` `r knitr::inline_expr("report_exclusions(anx_data)")` ``
 
-Surely we're done now! Much easier to read, much easier to update. The only downside is that we have to create the `rep_excl()` function further up in this document, in a sourced script, or in our own package.
+Which would render as follows:
 
-We're done, *right*?
+> `r report_exclusions(anx_data)`
 
-...
-
-Look at that report again. Look at all that repeated *text*. I bet we could figure out how to write a function that would generate the entire **paragraph** programmatically, so our report would look like this:
-
-> `` `r knitr::inline_expr("report_all_exclusions(exclusion_summary)")` ``
-
-We may come back to this later...
-:::
-
-::: {.callout-note appearance="minimal" title="Exercise"}
-Using the `chisq.test()` help documentation, perform a $\chi^2$ test of association for the `stars_help_cat` and `gender` variables.
-
-::: {.callout-note collapse="true" title="Solution"}
-
-
-```{r}
-anx_scores_data_chisq <- anx_scores_data |> 
-  dplyr::filter(gender %in% c("male","female"))
-```
-
-Next, we need to get each of the variables out of the dataset using `$` subsetting. This is *exactly* the same method we used in the very first tutorial to run a *t*-test! Remember to use the new, filtered dataset rather than the original.
-
-```{r}
-chisq.test(anx_scores_data_chisq$gender, anx_scores_data_chisq$stars_help_cat)
-```
-:::
-:::
-
-## ExtRa: Iteration
-
-::: callout-warning
-This material will not be covered in live workshops. The techniques in this section are **not** taught in core Methods modules for UG students, so they are not essential for dissertation supervisors.
-:::
-
-The `mutate()` function is an amazing tool for working with your dataset, but applying the same change to multiple variables quickly becomes tedious. Imagine we wanted to change all of the character variables in this dataset to factors. We could do something like this:
-
-```{r}
-#| eval: false
-
-anx_data |> 
-  dplyr::mutate(
-    id = factor(id),
-    distribution = factor(distribution),
-    consent = factor(consent),
-    gender = factor(gender),
-    mcq = factor(gender),
-    remove = factor(remove)
-  )
-```
-
-If there are only a few of these variables to change, then this may be fine - but even just a few are prone to mistakes or mistyping . Did you spot the mistake in the code above? The `mcq` variable was overwritten by the `gender` variable in a copy/paste mistake. This kind of mistake is both easy to make and very difficult to detect, since the code runs without issue.
-
-To avoid this, the general rule of thumb is: if you have to copy/paste the same code more than once, use (or write!) a function instead. To use code more efficiently, the key is to identify where the code repeats, then use a function for that repetition instead of duplicated code.
-
-Luckily we don't have to figure out how to do this iteration [from scratch](https://purrr.tidyverse.org/)[^4], because {dplyr} already has a built-in method for doing exactly this task, called `dplyr::across()`. It works like this:
-
-[^4]: {purrr}, cats, scratch, get it?? I'm hilarious.
-
-``` r
-dataset_name |> 
-  dplyr::mutate(
-    dplyr::across(<tidyselect>, function_to_apply)
-  )
-```
-
-In the first argument, we use `<tidyselect>` syntax to choose which variables we want to change.
-
-In the second argument, the function or expression in `function_to_apply` is applied to each of the variables we've chosen. By default, the variables are overwritten.
-
-The task we wanted to do above was to convert all character variables to factors. So our repetitive, copy/paste command above becomes:
-
-```{r}
-anx_data |> 
-  dplyr::mutate(
-    dplyr::across(c(id, distribution, consent, gender, mcq, remove),
-                  factor)
-  )
-```
-
-::: {.callout-note title="Exercise" appearance="minimal"}
-**CHALLENGE**: Use `dplyr::across()` to choose all the items on the statistics version of the MARS, and add 10 to all the scores.
-
-(This probably isn't something you really want to do to your own data, but it's good for practice.)
-
-::: {.callout-note title="Solution" collapse="true"}
-As we saw in the "Using Custom Functions" section of the last tutorial, we can write an ad-hoc formula instead of using an existing function with the following components:
-
--   The `~` at the beginning, which is a shortcut for the longer `function(x) ...` notation for creating functions.
--   The `.x`, which is a placeholder for each of the variables that the function will be applied to.
-
-So, "add 10" becomes `~ .x + 10`, and the full command looks like:
-
-```{r}
-#| eval: false
-
-anx_data |> 
-  dplyr::mutate(
-    dplyr::across(contains("_s_"),
-                  ~.x + 10)
-  )
-```
-:::
-:::
-
-::: {.callout-note title="Exercise" appearance="minimal"}
-**CHALLENGE**: You might notice that `across()` by default overwrites variables, rather than creating new ones. However, the help documentation for `across()` includes an argument for creating new variables names. Do the same task as above - adding 10 to the RMARS-S variables - but add `_plusten` to the end of the new variable names.
-
-::: {.callout-note title="Solution" collapse="true"}
-Under "Arguments", the help documentation describes the `.names` argument, which allows us to easily create new variable names. This uses a "glue specification" (see [the {glue} package](https://glue.tidyverse.org/) for more) but we don't need much more than what's in the help documentation for this.
-
-So, let's add the `.names` argument. Here we're using `{.col}` as a stand-in for each variable name, so all of the new variables with 10 added will have the same name as the original, but with `_plusten` at the end.
-
-```{r}
-#| eval: false
-anx_data |> 
-  dplyr::mutate(
-    across(contains("_s_"),
-           ~ .x + 10,
-           .names = "{.col}_plusten")
-  )
-```
-:::
 :::
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
 
-**CHALLENGE:** In the example code for this section, we wanted to change all of the character variables in this dataset to factors. We technically did that, but the example code still manually listed the variables to change. Adapt the example code to instead apply the `factor` function to any character variable in the dataset, without using the names of those variables.
+Create a new variable in the `anx_data` dataset called `stars_help_cat`. This variable should contain the value "high" for participants who scored equal to or above the mean on the `stars_help_score` variable, and "low" for those who scored below the mean.
 
-*Hint*: You will need to have completed, or to review, the section of the previous tutorial on [selecting with functions](05_filter.qmd#using-functions); or run `?where` in the Console.
+Then, using the `chisq.test()` help documentation, perform a $\chi^2$ test of association for the `stars_help_cat` and `sticsa_trait_cat` variables.
 
 ::: {.callout-note collapse="true" title="Solution"}
-```{r}
-#| eval: false
 
-anx_data |> 
+First, we'll need to create the new variable. We could store the mean of `stars_help_score` in an object like we did in the example, but since it's calculated from the dataset and not an outside value, it's better here to do the calculation inside `case_when()` instead.
+
+```{r}
+anx_data <- anx_data |> 
   dplyr::mutate(
-    dplyr::across(where(is.character),
-                  factor)
+    stars_help_cat = dplyr::case_when(
+      stars_help_score >= mean(stars_help_score, na.rm = TRUE) ~ "high",
+      stars_help_score < mean(stars_help_score, na.rm = TRUE) ~ "low",
+      .default = NA
+    )
   )
+```
+
+Next, we need to get each of the variables out of the dataset using `$` subsetting to use in the `chisq.test()` function. This is *exactly* the same method we used in the very first tutorial to run a *t*-test.
+
+```{r}
+chisq.test(anx_data$sticsa_trait_cat, anx_data$stars_help_cat)
 ```
 :::
 :::
+
+
 
  
