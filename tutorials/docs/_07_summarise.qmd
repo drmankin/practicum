@@ -37,7 +37,7 @@ library(kableExtra)
 Today we're continuing to work with the same dataset as last week. Courtesy of fantastic Sussex colleague [Jenny Terry](https://www.jennyterry.co.uk/), this dataset contains real data about statistics and maths anxiety.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-Read in the dataset and save it in a new object, `anx_data`.
+Read in the dataset and save it in a new object, `anx_scores`.
 
 On the Cloud, you can read in this dataset from the `data` folder using `here::here()`.
 
@@ -47,7 +47,7 @@ Elsewhere, you can download the dataset, or copy the dataset URL, from the [Data
 Read in from file:
 
 ```{r}
-anx_data <- readr::read_csv(here::here("data/anx_data.csv"))
+anx_scores <- readr::read_csv(here::here("data/anx_scores_data.csv"))
 ```
 
 Read in from URL:
@@ -55,30 +55,30 @@ Read in from URL:
 ```{r}
 #| eval: false
 
-anx_data <- readr::read_csv("https://raw.githubusercontent.com/drmankin/practicum/master/data/anx_data.csv")
+anx_scores <- readr::read_csv("https://raw.githubusercontent.com/drmankin/practicum/master/data/anx_scores_data.csv")
 ```
 :::
 :::
 
 #### Codebook
 
-There's quite a bit in this dataset, so you will need to refer to the codebook below for a description of all the variables.
+This dataset is an updated version of the `anx_data` dataset we were working with previously. Since we covered recoding scores and calculating composites in the tutorial on `mutate()`, this dataset contains subscale scores for the various questionnaires, rather than individual item scores.
 
 ::: {.callout-tip title="Dataset Info Recap" collapse="true"}
 This study explored the difference between maths and statistics anxiety, widely assumed to be different constructs. Participants completed the Statistics Anxiety Rating Scale ([STARS](https://explore.bps.org.uk/content/bpsptr/24/2/101)) and Maths Anxiety Rating Scale - Revised ([R-MARS](https://journals.sagepub.com/doi/10.1177/001316448204200218)), as well as modified versions, the STARS-M and R-MARS-S. In the modified versions of the scales, references to statistics and maths were swapped; for example, the STARS item "Studying for an examination in a statistics course" became the STARS-M item "Studying for an examination in a maths course"; and the R-MARS item "Walking into a maths class" because the R-MARS-S item "Walking into a statistics class".
 
 Participants also completed the State-Trait Inventory for Cognitive and Somatic Anxiety ([STICSA](https://www.cambridge.org/core/journals/behavioural-and-cognitive-psychotherapy/article/abs/distinguishing-cognitive-and-somatic-dimensions-of-state-and-trait-anxiety-development-and-validation-of-the-statetrait-inventory-for-cognitive-and-somatic-anxiety-sticsa/78FDDC5BCDE9D4164434AC10E83DCEF3?utm_campaign=shareaholic&utm_medium=copy_link&utm_source=bookmark)). They completed the state anxiety items twice: once before, and once after, answering a set of five MCQ questions. These MCQ questions were either about maths, or about statistics; each participant only saw one of the two MCQ conditions.
-:::
 
 ::: callout-important
 For learning purposes, I've randomly generated some additional variables to add to the dataset containing info on distribution channel, consent, gender, and age. Especially for the consent variable, don't worry: all the participants in this dataset did consent to the original study. I've simulated and added this variable in later to practice removing participants.
+:::
 :::
 
 ::: {.callout-note appearance="minimal" collapse="true" title="View the Codebook"}
 ```{r}
 #| echo: false
 
-readr::read_csv(here::here("data/anx_codebook.csv")) %>%
+readr::read_csv(here::here("data/anx_scores_codebook.csv")) %>%
   kableExtra::kbl(
     col.names = stringr::str_to_title(names(.)),
     format = "html",
@@ -103,16 +103,16 @@ dataset_name |>
 
 `instructions_for_creating_the_variable` tells the function how to create `variable_name`. The instructions can refer to variables in the piped-in dataset, but should output a **single value**, rather than a vector of values (as we saw in `mutate()`).
 
-<!-- UPDATE: Choose a new variable (or update the dataset) -->
+### Overall
 
-Let's have a look at an example of this. Since we've previously created the overall trait anxiety variable `sticsa_trait_score`, we might want to get some info about this variable, such as the mean and standard deviation. To do this, we create a new variable for each descriptive value we want to create on the left side of the `=`, and instructions for creating that summary on the right.
+Let's have a look at an example of this. We looked previously at `sticsa_trait_score`, so we might want to get some summary info about this variable, such as the mean and standard deviation. To do this, we create a new variable for each descriptive value we want to create on the left side of the `=`, and instructions for creating that summary on the right.
 
 To help us out with our summaries, we'll also bundle in a second new function while we're at it. Unassuming little `dplyr::n()` has one job: counting the number of cases. Right now it's not telling us much that's new...but that will change in a bit!
 
 Putting that all together, here's an example of how that works:
 
 ```{r}
-anx_data |> # <1>
+anx_scores |> # <1>
   dplyr::summarise( # <1>
     n = dplyr::n(), # <2>
     sticsa_trait_mean = mean(sticsa_trait_score, na.rm = TRUE), # <3>
@@ -120,118 +120,26 @@ anx_data |> # <1>
   )
 ```
 
-1. Take the dataset `anx_data`, *and then* produce a summary as follows:
-2. Count the number of cases and store it in the variable `n`
-3. Calculate the mean of the `sticsa_trait_score` variable (ignoring any missing values) and store it in the variable `sticsa_trait_mean`
-4. Calculate the standard deviation of the `sticsa_trait_score` variable (ignoring any missing values) and store it in the variable `sticsa_trait_sd`
+1.  Take the dataset `anx_scores`, *and then* produce a summary as follows:
+2.  Count the number of cases and store it in the variable `n`
+3.  Calculate the mean of the `sticsa_trait_score` variable (ignoring any missing values) and store it in the variable `sticsa_trait_mean`
+4.  Calculate the standard deviation of the `sticsa_trait_score` variable (ignoring any missing values) and store it in the variable `sticsa_trait_sd`
 
-::: {.callout-note title="Exercise" appearance="minimal"}
-Add additional arguments to the `summarise()` code above to include the min and max in the output.
+A very useful feature of these functions - both `mutate()` and `summarise()` is that once you create a variable within the function, you can use it in subsequent arguments to that function.
 
-::: {.callout-note title="Solution" collapse="true"}
-We've seen all of these before!
+For instance, let's say we want to include standard error in our summary as well. Unfortunately there's no base `se()` function (along the lines of `sd()`). There are functions in other packages, such as `papaja::se()`, that you could find by searching for "standard error" in the Help tab (in the Files pane); but it might not always be a good idea to use single functions from other packages, since you will have to (remember to) install/update those packages. This would be worth it if that function did an operation that would otherwise be difficult or labor-intensive to replicate, but in this case, standard error is a straightforward mathematical operation: namely, the standard deviation divided by the square root of *N*. We've already created a variable that contains the *SD*, and we have the dataset and we know how to count the number of cases so, let's just do it by hand.
 
 ```{r}
-anx_data |> 
+anx_scores |>
   dplyr::summarise(
-    dplyr::n(),
-    sticsa_trait_mean = mean(sticsa_trait_score, na.rm = TRUE),
+    n = dplyr::n(), # <2>
+    sticsa_trait_mean = mean(sticsa_trait_score, na.rm = TRUE), # <3>
     sticsa_trait_sd = sd(sticsa_trait_score, na.rm = TRUE),
-    sticsa_trait_min = min(sticsa_trait_score, na.rm = TRUE),    
-    sticsa_trait_max = max(sticsa_trait_score, na.rm = TRUE)
-    )
-```
-:::
-:::
-
-::: {.callout-note title="Exercise" appearance="minimal"}
-**CHALLENGE**: Add one more argument to the `summarise()` code above to include the standard error in the output.
-
-::: {.callout-note title="Solution" collapse="true"}
-Just for convenience's sake, I'm going to drop the other elements for the moment and just try to get the *SE*.
-
-First, if there's an `sd()` function, we might hope there's a corresponding `se()` function. No dice.
-
-```{r}
-#| error: true
-
-anx_data |> 
-  dplyr::summarise(
-    sticsa_trait_se = se(sticsa_trait_score, na.rm = TRUE)
+    sticsa_trait_se = sticsa_trait_sd/sqrt(n)
   )
 ```
 
-Next, we can try the help documentation. Besides searching for a particular function in the Console, we can actually search the help documentation generally for a word or phrase. If I go to the "Help" tab and type "standard error", I'll get a list of vignettes and functions that might be relevant. The one that looks the most promising (and straightforward) is `papaja::se()`, which looks to work just like the other {stats} functions. Let's try it:
-
-```{r}
-anx_data |> 
-  dplyr::summarise(
-    sticsa_trait_se = papaja::se(sticsa_trait_score, na.rm = TRUE)
-  )
-```
-
-<!-- Hurrah! Job done. -->
-
-<!-- Okay. Great. *BUT*. A whole different package? A function with a totally different name? I don't know about you but I *hate* that. If you don't, feel free to stop here, because this is really going to go off the deep end a bit. -->
-
-<!-- So, I know that the standard error is the standard deviation divided by the square root of *N*[^5]. That's fine then - we've just created a variable that contains the *SD*, and we have the dataset and we know how to count the number of cases so, let's just do it by hand. -->
-
-<!-- ```{r} -->
-<!-- anx_data |>  -->
-<!--   dplyr::summarise( -->
-<!--     sticsa_trait_sd = sd(sticsa_trait_score, na.rm = TRUE), -->
-<!--     ## Calculate SE taking the SD we just created  -->
-<!--     ## and divide by the square root of the number of cases in anx_data -->
-<!--     sticsa_trait_se = sticsa_trait_sd/sqrt(nrow(anx_data)) -->
-<!--   ) -->
-<!-- ``` -->
-
-<!-- Snazzy. *BUT*. This code is a bit dangerous because if I decide to rename `anx_data`, or use this code again in the same document with a different dataset, I have remember to update it in *two* places, one of which (within the `sqrt(nrow())` command) is quite hard to spot. I'm piping in the data, can't I just.....use the dataset itself for this? -->
-
-<!-- The reason I might think this is that with the {magrittr} pipe, this sort of thing was easy to do. Let's have a look: -->
-
-<!-- ```{r} -->
-<!-- library(magrittr) -->
-
-<!-- ## Notice the magrittr pipe %>% here instead of |> -->
-<!-- anx_data %>% -->
-<!--   dplyr::summarise( -->
-<!--     sticsa_trait_sd = sd(sticsa_trait_score, na.rm = TRUE), -->
-<!--     sticsa_trait_se = sticsa_trait_sd/sqrt(nrow(.)) -->
-<!--   ) -->
-<!-- ``` -->
-
-<!-- Nice, right? We just use the {magrittr} placeholder `.` to refer to the dataset within the `summarise()` command. Cool, so let's do the same, just changing out `%>%` for `|>` and `.` for `_`: -->
-
-<!-- ```{r} -->
-<!-- #| error: true -->
-
-<!-- anx_data |> -->
-<!--   dplyr::summarise( -->
-<!--     sticsa_trait_sd = sd(sticsa_trait_score, na.rm = TRUE), -->
-<!--     sticsa_trait_se = sticsa_trait_sd/sqrt(nrow(_)) -->
-<!--   ) -->
-<!-- ``` -->
-
-<!-- Well...shit. -->
-
-<!-- This is one of those fringe cases where the {magrittr} pipe and the native pipe don't work quite the same way. It's very annoying especially if you're used to writing code with `%>%` that does this effortlessly. So, can we get something similar to work with the native pipe instead? -->
-
-<!-- The answer is yes, but not with `nrow()`. Instead we need our new friend `dplyr::n()` that does the same as `nrow()` - just counts the number of rows - but is pipe-friendly. We don't need a placeholder here, and in fact it doesn't work if you try to add one. -->
-
-<!-- ```{r} -->
-<!-- anx_data |> -->
-<!--   dplyr::summarise( -->
-<!--     sticsa_trait_sd = sd(sticsa_trait_score, na.rm = TRUE), -->
-<!--     sticsa_trait_se = sticsa_trait_sd/sqrt(dplyr::n()) -->
-<!--   ) -->
-<!-- ``` -->
-
-<!-- So a weird little detour, but at least I have accomplished my primary goal of having as few unusual details remember as possible (no {papaja} and no updating-dataset-names-at-multiple-points), and honestly there's more than enough weird details to remember already just using R normally so I don't need that kind of negativity in my life. This comes at the not-insubstantial cost of having to remember to use a different function for getting *N*, but we were already using `dplyr::n()` so that's alright - for me. You'll find as you go that you develop your own preferences for how to write code that makes the most sense to you and aligns with the kind of things you can remember, spot, or update easily. -->
-:::
-:::
-
-<!-- [^5]: I know this because I teach first year undergraduate statistics and therefore have to, not because it's, like, particularly obvious on the face of it. -->
+In the last line creating `sticsa_trait_se`, both `sticsa_trait_sd` and `n` are variables created previously in the same `summarise()` command.
 
 ### By Group
 
@@ -241,98 +149,28 @@ Similar to [what we saw with `rowwise()`](06_changes.qmd#composite-scores), `gro
 
 ```{r}
 
-anx_data |>   # <1>
+anx_scores |>   # <1>
   dplyr::group_by(mcq) |>   # <2>
   dplyr::summarise(  # <3>
     n = dplyr::n(), #<4>
     sticsa_trait_mean = mean(sticsa_trait_score, na.rm = TRUE),   # <4>
     sticsa_trait_sd = sd(sticsa_trait_score, na.rm = TRUE),  # <4>
-    sticsa_trait_min = min(sticsa_trait_score, na.rm = TRUE),    # <4>  
-    sticsa_trait_max = max(sticsa_trait_score, na.rm = TRUE)  # <4>
+    sticsa_trait_se = sticsa_trait_sd/sqrt(n) # <4>
   )
 ```
 
 1.  Take the dataset, *and then*
 2.  Group by the values in the `mcq` variable, *and then*
 3.  Produce a summary table with the following variables:
-4.  Number of cases, and mean, *SD*, minimum, and maximum values of the `sticsa_trait_score` variable.
+4.  Number of cases, mean, *SD*, and *SE* of the `sticsa_trait_score` variable.
 
-Compare this to the ungrouped summary in the previous section - it's the same columns, but a new row for each group. We also see here that little `dplyr::n()` is a bit more useful now - giving us counts within each group alongside the other summary information.
-
-::: {.callout-note title="Exercise" appearance="minimal"}
-Add to the already-grouped `summarise()` code to further split up the output by gender as well as MCQ group.
-
-::: {.callout-note title="Solution" collapse="true"}
-All we have to do is add more grouping variables into `group_by()`, separated by commas.
-
-```{r}
-anx_data |>
-  dplyr::group_by(mcq, gender) |>
-  dplyr::summarise(
-    n = dplyr::n(),
-    sticsa_trait_mean = mean(sticsa_trait_score, na.rm = TRUE),
-    sticsa_trait_sd = sd(sticsa_trait_score, na.rm = TRUE),
-    sticsa_trait_min = min(sticsa_trait_score, na.rm = TRUE), 
-    sticsa_trait_max = max(sticsa_trait_score, na.rm = TRUE)
-  )
-```
-:::
-:::
+Compare this to the ungrouped summary in the previous section - it's the same columns, but a new row for each group. We also see here that little `dplyr::n()` is a bit more useful now - giving us counts within each group alongside the other summary information, which also means that the standard error can be calculated for each group separately as well.
 
 ::: {.callout-tip title="Reshaping Summary Tables" collapse="true"}
-This second summary table, grouped by both MCQ and gender, would likely be easier to read with one variable on separate rows and the other in separate columns. We'll have a look at reshaping in the last section of this course, but if you want to get a head start, run `vignette("pivot")` in the Console.
+This second summary table, grouped by both MCQ and gender, would likely be easier to read with one variable on separate rows and the other in separate columns. If you're interested in this, run `vignette("pivot")` in the Console.
 :::
 
-::: {.callout-note title="Exercise" appearance="minimal"}
-**CHALLENGE**: Split up this `summarise()` output by whether each case scored higher, or lower than/equal to, the median value of the STARS test anxiety score.
-
-::: {.callout-note title="Solution" collapse="true"}
-You could have solved this in (at least) two ways. The first is to have an intermediate `mutate()` command to create the grouping variable, which doesn't yet exist in the dataset.
-
-```{r}
-
-anx_data |> 
-  dplyr::mutate(
-    stars_test_cat = dplyr::case_when(
-      stars_test_score > median(stars_test_score, na.rm = TRUE) ~ "high",
-      stars_test_score <= median(stars_test_score, na.rm = TRUE) ~ "low",
-      .default = NA
-    )
-  )|> 
-  dplyr::group_by(stars_test_cat) |> 
-  dplyr::summarise( 
-    n = dplyr::n(),
-    sticsa_trait_mean = mean(sticsa_trait_score, na.rm = TRUE), 
-    sticsa_trait_sd = sd(sticsa_trait_score, na.rm = TRUE),
-    sticsa_trait_min = min(sticsa_trait_score, na.rm = TRUE),  
-    sticsa_trait_max = max(sticsa_trait_score, na.rm = TRUE)
-  )
-```
-
-The second is to create that grouping variable ad-hoc within `group_by()`. That is, the variable you want to group by doesn't have to already exist - you can create it on the fly within `group_by()`!
-
-```{r}
-
-anx_data |>   # <1>
-  dplyr::group_by(stars_test_cat = (stars_test_score <= median(stars_test_score, na.rm = TRUE))) |>   # <2>
-  dplyr::summarise(  # <3>
-    n = dplyr::n(), #<4>
-    sticsa_trait_mean = mean(sticsa_trait_score, na.rm = TRUE),   # <4>
-    sticsa_trait_sd = sd(sticsa_trait_score, na.rm = TRUE),  # <4>
-    sticsa_trait_min = min(sticsa_trait_score, na.rm = TRUE),    # <4>  
-    sticsa_trait_max = max(sticsa_trait_score, na.rm = TRUE)  # <4>
-  )
-```
-
-Here I've gone with a simplified version of `stars_test_cat` - just TRUE or FALSE - but if I wanted to I could use the entire `dplyr::case_when()` bit from the first `mutate()` command to get exactly the same result.
-:::
-:::
-
-### Iteration
-
-::: callout-warning
-This material may not be covered in the live workshops, depending on time. It's included here for reference because it's extremely useful in real R analysis workflows, but it won't be essential for any of the workshop tasks.
-:::
+### Multiple Variables
 
 Despite the versatility of `summarise()`, you may have already noticed that the code covered so far is very typing-intensive if you want information about more than one variable. This is neither efficient nor particularly enjoyable:
 
@@ -340,21 +178,26 @@ Despite the versatility of `summarise()`, you may have already noticed that the 
 #| eval: false
 
 ## Down with this sort of thing!
-anx_data |>   # <1>
+anx_scores |>   # <1>
   dplyr::group_by(mcq) |>   # <2>
   dplyr::summarise(  # <3>
+    ## Summary info about stica_trait_score
     sticsa_trait_mean = mean(sticsa_trait_score, na.rm = TRUE),   # <4>
     sticsa_trait_sd = sd(sticsa_trait_score, na.rm = TRUE),  # <4>
+    sticsa_trait_se = sticsa_trait_sd/sqrt(n),
     sticsa_trait_min = min(sticsa_trait_score, na.rm = TRUE),    # <4>  
     sticsa_trait_max = max(sticsa_trait_score, na.rm = TRUE),  # <4>
+    ## Summary info about stars_test_score
     stars_test_mean = mean(stars_test_score, na.rm = TRUE),   # <4>
     stars_test_sd = sd(stars_test_score, na.rm = TRUE),  # <4>
+    stars_test_se = sticsa_trait_sd/sqrt(n),
     stars_test_min = min(stars_test_score, na.rm = TRUE),    # <4>  
     stars_test_max = max(stars_test_score, na.rm = TRUE) 
+    ## And so on...
   )
 ```
 
-If we wanted to also include, for instance, range and CIs, this code would quickly become unmanageably long and difficult to read, not to mention increasingly prone to mistakes.
+If we wanted to also include, for instance, range and CIs, this code would quickly become unmanageably long and difficult to read, not to mention increasingly prone to copy/paste and find/replace mistakes. (I've actually made one above - can you spot it?)
 
 Remember, if you have to copy/paste more than once, **use a function instead.**
 
@@ -367,20 +210,26 @@ There are two main solutions to this issue, and which you choose depends on what
 -   You don't mind reading up in the help documentation to get the right combination of arguments, and/or trying out a few different functions/packages to find the one that works for you.
 :::
 
-As we saw in [Tutorial 03: Datasets](..\01_fundRmentals\03_datasets.qmd#overall-summaries), there are existing functions that output pre-made summaries across multiple variables. If you revisit `datawizard::describe_distribution()`, you will find in the help documentation that it can utilise `<tidyselect>` syntax to select the variables you want, and the output can even be forced into a tibble for further wrangling.
+As we saw in [Tutorial 03](03_datasets.qmd#overall-summaries), there are existing functions that output pre-made summaries across multiple variables. If you revisit `datawizard::describe_distribution()`, you will find in the help documentation that it can utilise `<tidyselect>` syntax to select the variables you want, and the output can even be forced into a tibble for further wrangling.
 
-#### Function List + `across()`
+#### Iteration
 
 ::: {.callout-important title="Choose this option if:"}
 -   You want custom or complex summary information
 -   You want grouped summaries
--   Like me, you just want to do everything yourself so you know it's exactly right.
+-   You just want to do everything yourself so you know it's exactly right.
+:::
+
+::: callout-warning
+This material may not be covered in the live workshops, depending on time. It's included here for reference because it's extremely useful in real R analysis workflows, but it won't be essential for any of the workshop tasks.
 :::
 
 The big, inefficient multi-variable `summarise()` command above has two main issues to resolve.
 
-1.  We had to type the same functions over and over (i.e. `mean()` and `sd()` are repeated for each variable). Instead, we'll **create a list of functions** to use, so we only have to type out each function once.
-2.  We had to manually type in each variable name we want to use. Instead, we're going to utilise `dplyr::across()` to **apply the list of functions** from the first step to variables selected with `<tidyselect>`.
+1.  We had to type the same functions over and over (i.e. `mean()` and `sd()` are repeated for each variable).
+2.  We had to manually type in each variable name we want to use (i.e. `sticsa_trait_mean = ..., sticsa_trait_sd = ...`)
+
+To solve the first issue, we'll **create a list of functions** to use, so we only have to type out each function once. To solve the second, we're going to utilise `dplyr::across()` to **apply that list of functions** to variables selected with `<tidyselect>`.
 
 ::: callout-tip
 For more explanation about `dplyr::across()`, see the [section on iteration with `mutate()`](06_changes.qmd#iteration) earlier on. For a much more in-depth explanation, run `vignette("colwise")` in the Console.
@@ -396,34 +245,154 @@ fxs <- list( # <1>
   max = ~ max(.x, na.rm = TRUE) # <2>
 )
 
-anx_data |> 
-  dplyr::group_by(mcq) |> 
-  dplyr::summarise(
-    across(contains("score"), fxs)  # <3>
+anx_scores |>   # <3>
+  dplyr::group_by(mcq) |>   # <3>
+  dplyr::summarise(   # <3>
+    across(  # <4>
+      contains("stars"),   # <4>
+      fxs  # <5>
+      )
   )
 ```
 
-1.  To begin, create a new object containing a list. I've called mine `fxs`, short for "functions".
-2.  Add named elements to the list, with the name on the left and the formula to the right of the `=`.
-3.  Instead of using the familiar `name = instructions` format, we're instead use `dplyr::across()` with the list of functions instead of a single function.
+1.  Create an object (here `fxs` short for "functions") that contains a list with the following elements:
+2.  Each element is named on the LHS and contains a formula on the RHS. Here the formulae are named the same as their functions, but this doesn't have to be the case.
+3.  Take the `anx_scores` data, *and then* group by MCQ type, *and then* summarise it as follows:
+4.  Across all of the variables in the `anx_score` dataset whose names contain the string "stars",
+5.  Apply the list of functions stored in the `fxs` object.
 
 As described briefly above, the elements in the `fxs` list have a special format. The first bit, e.g. `mean =`, gives each element a name. This name will be appended to the relevant column in the `summarise()` output, so choose something informative and brief. The second bit, e.g. `~ mean(.x, na.rm = TRUE)`, is the function we want to apply to each variable. The two things to note are the "twiddle" `~`, which denotes "this is a function to apply", and `.x`, which is a placeholder for each of the variables that the function will be applied to.
 
-Within `across()`, we are building on what we've seen before with this function. The first argument selects which variables to use using `<tidyselect>`. In this case, I've selected all of the variables that contain "score", which will be our subscale composites for the STICSA and the STARS. The second argument provides a list of function(s) to apply to all of the selected variables. So, I've put in the list I made in the previous step that contains all the functions I want to use.
+Within `across()`, we are building on what we've seen before with this function. The first argument selects which variables to use using `<tidyselect>`. In this case, I've selected all of the variables that contain "score". The second argument provides a list of function(s) to apply to all of the selected variables, which here is the `fxs` object.
 
 This function list + `dplyr::across()` method is extremely versatile. If you are using a lesser-known statistical technique, or even functions of your own making, you can easily add them to your list of functions and apply them with `across()`.
 
-## Formatting with `{kableExtra}`
+As a final note here, the creation of the `fxs` object containing a list of functions isn't technically necessary - you can just provide the list in `across` directly.
 
-<!-- UPDATE: Exporting tables for use elsewhere -->
+```{r}
 
-Once we have these lovely summary tables, it would be great to include them in a report or paper, but they definitely need some formatting first. We'll look at `kable` here, which is what we teach UGs. We'll be using a wrapper for the `knitr::kable()` function, `kableExtra::kbl()`, because {kableExtra} has a bunch of useful tools for customising the output. However, you may also want to check out [the {gt} package for powerful table formatting options](https://gt.rstudio.com/), and of course [{papaja} for some APA-like defaults](https://frederikaust.com/papaja_man/reporting.html#tables).
+anx_scores |>   # <3>
+  dplyr::group_by(mcq) |>   # <3>
+  dplyr::summarise(   # <3>
+    across(  # <4>
+      contains("stars"),   # <4>
+      list(
+        mean = ~ mean(.x, na.rm = TRUE))  # <5>
+      )
+  )
+```
+
+Personally, I would prefer to make a separate object for three reasons:
+
+1.  I could reuse the same list of functions later on in my code without having to copy/paste.
+2.  I can update that single list of functions to update any summaries created with it.
+3.  The code is cleaner and easier to read, especially the `across()` command.
+
+### Exercises
+
+::: {.callout-note title="Exercise" appearance="minimal"}
+Starting with the example code from previously:
+
+```{r}
+anx_scores |>   # <1>
+  dplyr::group_by(mcq) |>   # <2>
+  dplyr::summarise(  # <3>
+    n = dplyr::n(), #<4>
+    sticsa_trait_mean = mean(sticsa_trait_score, na.rm = TRUE),   # <4>
+    sticsa_trait_sd = sd(sticsa_trait_score, na.rm = TRUE),
+    sticsa_trait_se = sticsa_trait_sd/sqrt(n)  # <4>
+  )
+```
+
+Make the following changes:
+
+-   Add the min and max of `sticsa_trait_score` to the summary.
+-   Split up the summary by gender as well as MCQ group.
+
+::: {.callout-note title="Solution" collapse="true"}
+For the first, add new lines within `summarise()` using the `min()` and `max()` functions we've encountered previously.
+
+For the second, add the `gender` variable to `group_by()` to subdivide the summary output.
+
+```{r}
+anx_scores |>
+  dplyr::group_by(mcq, gender) |>
+  dplyr::summarise(
+    n = dplyr::n(),
+    sticsa_trait_mean = mean(sticsa_trait_score, na.rm = TRUE),
+    sticsa_trait_sd = sd(sticsa_trait_score, na.rm = TRUE),
+    sticsa_trait_se = sticsa_trait_sd/sqrt(n),
+    sticsa_trait_min = min(sticsa_trait_score, na.rm = TRUE), 
+    sticsa_trait_max = max(sticsa_trait_score, na.rm = TRUE)
+  )
+```
+:::
+:::
+
+::: {.callout-note title="Exercise" appearance="minimal"}
+**CHALLENGE**: Instead of MCQ and gender, split up the summary information of `sticsa_trait_score` by whether each case scored higher, or lower than/equal to, the median value of the STARS test anxiety score.
+
+::: {.callout-note title="Solution" collapse="true"}
+You could have solved this in (at least) two ways. The first is to have an intermediate `mutate()` command to create the grouping variable, which doesn't yet exist in the dataset.
+
+```{r}
+
+anx_scores |> 
+  ## Create the new stars_test_cat
+  dplyr::mutate(
+    stars_test_cat = dplyr::case_when(
+      stars_test_score > median(stars_test_score, na.rm = TRUE) ~ "high",
+      stars_test_score <= median(stars_test_score, na.rm = TRUE) ~ "low",
+      .default = NA
+    )
+  ) |> 
+  ## Group by the new grouping variable
+  dplyr::group_by(stars_test_cat) |> 
+  dplyr::summarise( 
+    n = dplyr::n(),
+    sticsa_trait_mean = mean(sticsa_trait_score, na.rm = TRUE), 
+    sticsa_trait_sd = sd(sticsa_trait_score, na.rm = TRUE),
+    sticsa_trait_se = sticsa_trait_sd/sqrt(n),
+    sticsa_trait_min = min(sticsa_trait_score, na.rm = TRUE),  
+    sticsa_trait_max = max(sticsa_trait_score, na.rm = TRUE)
+  )
+```
+
+The second is to create that grouping variable ad-hoc within `group_by()`. That is, the variable you want to group by doesn't have to already exist - you can create it on the fly within `group_by()`!
+
+```{r}
+
+anx_scores |>   # <1>
+  ## Create stars_test_cat within group_by in a single step
+  dplyr::group_by(stars_test_cat = (stars_test_score <= median(stars_test_score, na.rm = TRUE))) |>   # <2>
+  dplyr::summarise(  # <3>
+    n = dplyr::n(), #<4>
+    sticsa_trait_mean = mean(sticsa_trait_score, na.rm = TRUE),   # <4>
+    sticsa_trait_sd = sd(sticsa_trait_score, na.rm = TRUE),  # <4>
+    sticsa_trait_min = min(sticsa_trait_score, na.rm = TRUE),    # <4>  
+    sticsa_trait_max = max(sticsa_trait_score, na.rm = TRUE)  # <4>
+  )
+```
+
+Here I've gone with a simplified version of `stars_test_cat` - just TRUE or FALSE - but if I wanted to, I could use the entire `dplyr::case_when()` bit from the first `mutate()` command to get exactly the same result.
+:::
+:::
+
+ 
+
+## Formatting Tables
+
+Once we have these lovely summary tables, it would be great to include them in a report or paper, but they definitely need some formatting first. How to proceed depends on whether you are expecting to use Quarto itself for your formal reporting - and then further, what output format you will render to - or another programme (for instance, Microsoft Word).
+
+### Quarto to HTML/PDF
+
+For UG teaching at Sussex, we have students render their assignments in Quarto to HTML, which is the default rendering output. The following techniques will also work for rendering to PDF, although this can get Complicated^TM^. Even if you plan to write up your final work in a different programme, it's a good idea to render your analysis document anyway (to check for errors and review the results), and at least some basic formatting will make that output much more readable.
+
+For this purpose we'll be working primarily with the {kableExtra} package, which builds on [the {knitr} package for report generation](https://yihui.org/knitr/). We'll be using a wrapper for the `knitr::kable()` function, `kableExtra::kbl()`, because {kableExtra} has a bunch of useful tools for customising the output. However, you may also want to check out [the {gt} package for powerful table formatting options](https://gt.rstudio.com/), and [{papaja} for some APA-like defaults](https://frederikaust.com/papaja_man/reporting.html#tables).
 
 ::: callout-tip
 For all things kable, the [Create Awesome HTML Table vignette](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html) is my go-to for options and examples!
 :::
-
-### Essential Formatting
 
 ::: {.callout-note title="Exercise" appearance="minimal"}
 Follow along with the instructions to create your own beautiful table.
@@ -432,7 +401,7 @@ Follow along with the instructions to create your own beautiful table.
 To begin, let's take the `summarise()` code grouped by `mcq` and save it in a new object. Then, pipe that new summary dataset object into the `kableExtra::kbl()` function, and then on again into the `kableExtra::kable_classic()` function. This one-two combo first creates a basic table out of the dataset (`kbl()`), then apply some APA-ish HTML formatting (`kable_classic()`).
 
 ```{r}
-anx_mcq_sum <- anx_data |>
+anx_mcq_sum <- anx_scores |>
   dplyr::group_by(mcq) |>
   dplyr::summarise(
     n = dplyr::n(),
@@ -449,63 +418,24 @@ anx_mcq_sum |>
 
 So, already we have some basic formatting. There are a few things to do to make this table Look Nice:
 
--   Capitalise the values "maths" and "stats" in the first column
 -   Format the column names
 -   Round the values to two decimal places.
 -   Align the columns in the center.
 -   Add a caption (optional).
+-   Capitalise the values "maths" and "stats" in the first column (optional)
 
-For the first task, this is a matter of changing the values in the dataset - so we can do this with `mutate()` before we pass the dataset on to the table.
+For all but the last task, we can adjust these things in `kbl()`, which has `col.names`, `digits`, `align`, and `caption` arguments. 
 
-::: {.callout-note appearance="minimal" title="Exercise"}
-Capitalise the values "maths" and "stats" in the first column of this summary dataset.
-
-*Hint*: Check out the {stringr} package for working with character strings.
-
-::: {.callout-note collapse="true" title="Solution"}
-The {stringr} package has a few handy functions for converting strings into particular capitalisation patterns. Here `str_to_sentence()` (for sentence case, with the first letter of the string capitalised) or `str_to_title()` (for title case, with the first letter of each word in the string capitalised) will do the same job.
-
-```{r}
-anx_mcq_sum <- anx_mcq_sum |> 
-  dplyr::mutate(
-    mcq = stringr::str_to_title(mcq)
-  )
-
-anx_mcq_sum
-```
-
-::: {.callout-warning title="Using regex" collapse="true"}
-I'm a pretty dedicated regex fan, but for quick things like case changes, I find {stringr} easiest. If you happen to want to do this with base R regex instead, here's an option:
-
-```{r}
-anx_mcq_sum |> 
-  dplyr::mutate(
-    ## Substitute the first character in the string with uppercase
-    mcq = gsub("^(.)", "\\U\\1", mcq, perl = TRUE)
-  )
-```
-:::
-:::
-:::
-
-For the other changes, we can adjust these things in `kbl()`, which has `col.names`, `digits`, `align`, and `caption` arguments. For the caption, keep in mind if this table will be in a longer Quarto report, you might want to instead use [cross-referencing and table captions via Quarto code chunk options](../01_fundRmentals/04_lm.qmd/cross-referencing) instead of within `kbl()`.
-
-::: {.callout-note appearance="minimal" title="Exercise"}
-Using the help documentation, update the `kbl()` function to have nicely formatted column names, digits rounded to two decimal places, centre-aligned columns, and a caption.
-
-::: {.callout-note collapse="true" title="Solution"}
 ```{r}
 anx_mcq_sum |> 
   kableExtra::kbl(
     col.names = c("MCQ Type", "N", "M", "SD", "Min", "Max"),
     digits = 2,
+    align = "c", # or l for left or r for right, or provide a vector of alignments for each column
     caption = "Descriptives for STICSA Trait Anxiety Score by MCQ Type",
-    align = "c"
   ) |> 
   kableExtra::kable_classic()
 ```
-:::
-:::
 
 ::: {.callout-warning title: "Error Watch: dimnames not equal to array extent" collapse="true"}
 
@@ -525,53 +455,108 @@ anx_mcq_sum |>
   kableExtra::kable_classic()
 ```
 
-To fix it, just double-check the columns in the dataset and make sure that the `col.names` names contain a one-to-one match for each. :::
+To fix it, just double-check the columns in the dataset and make sure that the `col.names` names contain a one-to-one match for each.
+:::
 
-Finally, render your workbook document to see your hard work in all its glory!
+::: callout-tip
 
-### Dynamic Formatting
+For the caption, keep in mind if this table will be in a longer Quarto report, you might want to instead use [cross-referencing and table captions via Quarto code chunk options](https://quarto.org/docs/authoring/cross-references.html#tables) instead of within `kbl()`.
 
-::: {.callout-note appearance="minimal" title="Exercise"}
+:::
 
-**CHALLENGE**: It will shock you to learn that I didn't like writing out the column names in the `kbl()` function one by one. Can you figure out how to generate column names dynamically, instead of writing them out, and then use the "Awesome Tables" vignette to create the table below?
+For the last task, capitalising the values in the MCQ column, we'll have a first, brief brush with text string manipulation. Working with strings is well outside the scope of this tutorial[^regex], but for simple operations, this is a good opportunity to meet the {stringr} package.
 
-*Note*: This is included just to demonstrate that it can be done, but is definitely not within the skills covered in these tutorials!
+{stringr} is a tidyverse package designed to make string manipulation simple and easy. Among (many!) other functions, it has some very handy functions for converting strings into particular capitalisation patterns. Here `str_to_sentence()` (for sentence case, with the first letter of the string capitalised) or `str_to_title()` (for title case, with the first letter of each word in the string capitalised) will do the same job.
 
-```{r}
-#| echo: false
-
-anx_mcq_names <- gsub("sticsa_trait_", "", names(anx_mcq_sum)) |> 
-  ## Convert to title case
-  stringr::str_to_title() |> 
-  ## substitute all instances of either "Mcq" or "Sd" to uppercase
-  gsub(pattern = "(Mcq|Sd)", replacement = "\\U\\1", perl = TRUE)
-
-## Replace the values in anx_mcq_names that match either N or SD
-anx_mcq_names[which(anx_mcq_names %in% c("N", "SD"))] <-
-  ## with HTML italics formatting
-  paste(kableExtra::text_spec(
-         c("N", "SD"), italic = TRUE
-       ), sep = "")
-```
+Since our summary tibble `anx_mcq_sum` is just a dataset, we can make a change to the values in the `mcq` column just as we have seen before with `mutate()`, before passing it on to `kbl()`.
 
 ```{r}
-#| echo: false
-
 anx_mcq_sum |> 
-  kableExtra::kbl(
-    col.names = anx_mcq_names,
-    digits = 2,
-    caption = "Descriptives for STICSA Trait Anxiety Score by MCQ Type",
-    align = "c",
-    escape = FALSE
+  dplyr::mutate(
+    mcq = stringr::str_to_sentence(mcq)
   ) |> 
-  kableExtra::add_header_above(c(" " = 2, "STICSA Trait Anxiety Score" = 4)) |> 
+  kableExtra::kbl(
+    col.names = c("MCQ Type", "N", "M", "SD", "Min", "Max"),
+    digits = 2,
+    align = "c", # or l for left or r for right, or provide a vector of alignments for each column
+    caption = "Descriptives for STICSA Trait Anxiety Score by MCQ Type",
+  ) |> 
   kableExtra::kable_classic()
 ```
 
-::: {.callout-note collapse="true" title="Solution"}
+At this point we have quite a clean, nicely formatted, and professional-looking table. Finally, render your workbook document to see your hard work in all its glory!
 
-For the first bit - well, this is well beyond anything we've covered so far, including a good bit of base R and some jiggery-pokery to get only *N* and *SD* to be italicised. (Sorry.) This is the kind of puzzle that I find really useful for making myself learn things like regular expressions, but if this isn't your bag, don't worry!
+::: {.callout-caution title="Regex: Capitalisation" collapse="true"}
+I (JM) really love regular expressions ("regex"). If you're not familiar with regex, it's essentially its only mini-language for identifying patterns in character strings. Regex is slow, frustrating, and headache-inducing to learn (at least it was/is for me!), but it's also the closest I've got with R to actual wizardry.
+
+Since I love regex so much and this is my tutorial and no one can stop me, I'll include these **absolutely optional** little regex boxes in case you'd like to learn a bit about working with regular expressions and how they can help your code. Most typically, I prefer base-R functions instead of {stringr} for working with strings, but for quick things like case changes, I find {stringr} easiest. However, the same thing can be accomplished with regular expressions instead.
+
+We already saw how to convert strings to sentence case in the example above. However, all we've *actually* done is replaced the first letter of the string with the capitalised versio of the same letter. If you happen to want to do this with base R regex instead, here's an option:
+
+```{r}
+anx_mcq_sum |> 
+  dplyr::mutate(
+    ## Substitute the first character in the string with uppercase
+    mcq = gsub(pattern = "^(.)", 
+               replacement = "\\U\\1", 
+               x = mcq, 
+               perl = TRUE)
+  )
+```
+
+The `gsub()` function is a regex workhorse. It **g**enerally **sub**stitutes every match to a particular pattern with a given replacement. (It has a twin, `sub()`, that only substitutes the first match rather than all of them.)
+
+The three main arguments of `gsub()` are as follows.
+
+1. `pattern`: the regex pattern to search for.
+2. `replacement`: the replacement to substitute for any matches.
+3. `x`: the string (or vector of strings) to operate in.
+
+This example also includes the argument `perl = TRUE` for Reasons^TM^ (it's to make the `"\\U"` portion work).
+
+Right, so what the hell is going on here? It's a bit backwards in terms of the order of arguments, but let's look at `x` first. The `x` argument essentially provides the data to work with. Here, since we're inside `mutate()`, `x = mcq` means that the data to work with is the vector of all of the values in the `mcq` column. As a reminder, these values are:
+
+```{r}
+anx_mcq_sum |> 
+  dplyr::pull(mcq)
+```
+
+Next, let's turn to `pattern = "^(.)"`. This might look like a keysmash, but it has two elements:
+
+  - `^` is the symbol to indicate the start of a string.
+  - `(.)` is a capturing group (indicated by round brackets) with a single wildcard in it (indicated by `.`) The wildcard `.` can be *any* character.
+  
+Together, the expression `"^(.)"` can be read as, "The first character in the string." This is the pattern to match, so using this expression we've identified (in this case) the "m" in "maths" and the "s" in "stats".
+
+Finally, let's look at `replacement = "\\U\\1`. Another keysmash! Remember that this argument gives the replacement for the matches to `pattern`. The `\\1` is regex for "whatever's in the first capturing group" (here, the "m" and "s"), and `\\U` means "convert to uppercase".
+
+Together, this regex can be read as, "Find the first character in each string, then replace that character with the uppercase version of the same character." 
+
+Why do this instead of `stringr::str_to_sentence()`? In this specific case I'd use {stringr} myself, but the regex way has a couple of advantages:
+
+1. `gsub()` and regex are base R, so there's no need to install or load additional packages to use them.
+2. This command can be generalised to substitute *any* match for *any* replacement, whereas the {stringr} function only does the one thing.
+
+As a final example of 2, I could change this command to change the first character of each string with any other character I'd like:
+
+```{r}
+anx_mcq_sum |> 
+  dplyr::mutate(
+    mcq = gsub(pattern = "^(.)", 
+               replacement = "REGEX IS FUN \\1", 
+               x = mcq)
+  )
+```
+
+:::
+
+::: {.callout-tip title="MoRe About: Dynaming Formatting" collapse="true"}
+
+This lengthy and complicated optional aside is included for demonstration purposes only, and is well beyond what we have or will covered in this tutorials.
+
+As I (JM) use R more, I become increasingly allergic to hard-coding *anything*. In the table we've produced so far, we had to type in a vector of column names to apply. I would strongly disprefer this, since I would have to check and update these names each time - and it would be easy, if copy/pasting, to mistakenly mislabel a column. Instead, I'd prefer to have column names generated from the data, which are already systematically named.
+
+The first bit below includes a good bit of base R and some jiggery-pokery to get only *N* and *SD* to be italicised. (Sorry.) This is the kind of puzzle that I find really useful for making myself learn things like regular expressions, but if this isn't your bag, don't worry!
 
 The steps are annotated below, which together produce a vector of column names to pass to `kbl()`.
 
@@ -603,8 +588,6 @@ We can then replace the vector of names with the new vector we've just produced,
 Using the "Grouped Columns/Rows" section of the Awesome Tables vignette, we can also find the function `add_header_above()`, which requires us to specify which header we want above which columns using numbers. So, I have six total columns in the `anx_mcq_sum` summary dataset; I don't want any header above the first two ("MCQ" and "N"), but I do want a header above the last four.
 
 ```{r}
-#| output: false
- 
 anx_mcq_sum |> 
   kableExtra::kbl(
     col.names = anx_mcq_names,
@@ -616,49 +599,67 @@ anx_mcq_sum |>
   kableExtra::add_header_above(c(" " = 2, "STICSA Trait Anxiety Score" = 4)) |> 
   kableExtra::kable_classic()
 ```
-:::
-:::
 
-::: {.callout-note appearance="minimal" title="Exercise"}
-**CHALLENGE**: The magic of this approach is that it can be expanded to apply to as many inputs as you give it. Take our iterated summary from the previous section. Turn the code editing the names into a function and then use that within `kbl()` to generate the column names.
+The magic of this approach is that it can be expanded to apply to as many inputs as you give it. Let's take our iterated summary from the previous section and turn the code editing the names into a function, and then use that within `kbl()` to generate the column names.
 
-*Note*: This is quite a tough challenge that requires function writing, regular expressions/{stringr}, and conditionally manipulating string vectors. This is included just to demonstrate that it can be done, but is definitely not within the skills covered in these tutorials.
+I already said this above, but this involves custom function writing, regular expressions/{stringr}, and conditionally manipulating string vectors. This is included just to demonstrate that it can be done, but is definitely not within the skills covered in these tutorials.
 
-::: {.callout-note collapse="true" title="Solution"}
 ```{r}
 ## Save the summary dataset as a new object 
-anx_score_sum <- anx_data |> 
+anx_stars_sum <- anx_scores |> 
   dplyr::group_by(mcq) |> 
   dplyr::summarise(
-    across(contains("score"), fxs)  # <3>
+    across(contains("stars"), fxs)  # <3>
   )
 
 ## Write a custom function to automatically format column names
 
 format_kbl_colnames <- function(summary_data, all_caps = NULL, italics = c("N", "SD")){
   
-## Get initial vector of column names
-kbl_colnames <- gsub(".*_(.*)", "\\1", names(summary_data)) |> 
-  stringr::str_to_title() |> 
-  gsub(pattern = "(Sd)", replacement = "\\U\\1", perl = TRUE) 
-
-## Identify which elements to convert to uppercase (if any) and do so
-## Could probably do this with stringr but honestly I just CBA
-capitalise_these <- kbl_colnames[which(tolower(kbl_colnames) %in% all_caps)]
-
-kbl_colnames[which(kbl_colnames %in% capitalise_these)] <- toupper(capitalise_these)
-
-## Identify which elements to convert to italics (if any) and do so
-
-italicise_these <- kbl_colnames[which(kbl_colnames %in% italics)]
-
-kbl_colnames[which(kbl_colnames %in% italics)] <-
-  paste(kableExtra::text_spec(
-         italicise_these, italic = TRUE
-       ), sep = "")
-
-return(kbl_colnames)
+  ## Get initial vector of column names
+  kbl_colnames <- gsub(".*_(.*)", "\\1", names(summary_data)) |> 
+    stringr::str_to_title() |> 
+    gsub(pattern = "(Sd)", replacement = "\\U\\1", perl = TRUE) 
+  
+  ## Identify which elements to convert to uppercase (if any) and do so
+  ## Could probably do this with stringr but honestly I just CBA
+  capitalise_these <- kbl_colnames[which(tolower(kbl_colnames) %in% all_caps)]
+  
+  kbl_colnames[which(kbl_colnames %in% capitalise_these)] <- toupper(capitalise_these)
+  
+  ## Identify which elements to convert to italics (if any) and do so
+  
+  italicise_these <- kbl_colnames[which(kbl_colnames %in% italics)]
+  
+  kbl_colnames[which(kbl_colnames %in% italics)] <-
+    paste(kableExtra::text_spec(
+      italicise_these, italic = TRUE
+    ), sep = "")
+  
+  return(kbl_colnames)
 }
+
+## Create a named vector of formatted column names and counts for the header
+header_vals <- tibble::tibble(
+    var = names(anx_stars_sum) 
+  ) |> 
+    dplyr::mutate(
+      ## This is a whole lot of string manipulation
+      ## to turn variable names into human-readable ones
+      var =  gsub("(.*_)(.*)(_score.*)", "\\U\\1\\E\\2", var, perl = TRUE) |> 
+        gsub("_M", "-M", x = _) |> 
+        gsub("_", " ", x = _) |> 
+        gsub("(.*) (.)(.*)", "\\1 \\U\\2\\E\\3", x = _, perl = TRUE),
+      var = gsub("mcq", "MCQ", var)
+    ) |> 
+    ## Have to use summarise(n()) here because count() reorders the levels
+    ## Which would mean summary columns would be mislabeled!
+    dplyr::summarise(
+      n = dplyr::n(),
+      .by = var
+    ) |> 
+    ## Turn the tibble into a vector
+    tibble::deframe()
 ```
 
 As if all that weren't bad enough, this is one of those situations where the native pipe just doesn't cut it. Using the {magrittr} pipe, we can easily use our new custom function inside our `kbl()` code.
@@ -672,11 +673,12 @@ anx_score_sum %>%
     align = "c",
     escape = FALSE
   ) |> 
-  kableExtra::add_header_above(c(" " = 1, "STICSA Trait Anxiety" = 4, "STARS Asking for Help" = 4, "STARS Test Anxiety" = 4, "STARS Interpretation Anxiety" = 4)) |> 
+  ## Use the vector to create headers
+  kableExtra::add_header_above(header_vals) |> 
   kableExtra::kable_classic()
 ```
 
-You know what? I'm still not happy because I had to write out the header names in the `add_header_above()` function. If you've got this far and you're enjoying this kind of thing, see if you can work out how to automatically produce that as well! If you do, *please* email me and tell me.
+So there you have it: a (mostly) fully automated and nicely formatted table requiring no hard-coding of specific names or variables, at the bargain price of a few precious hours of my life and a not-insubstantial chunk of my sanity. You're welcome!
 :::
 :::
 
@@ -690,6 +692,13 @@ This bit is meant to be quick, so we'll only look briefly at what we teach in UG
 
 In first year, we teach the function `GGally::ggscatmat()`, which is a quick way to generate a complex plot with lots of useful info, relatively painlessly. However, `ggscatmat()` (if you're wondering, that's G-G-scat-mat, like "scatterplot matrix") will only work on numeric variables, so we'll need to `select()` the ones we want first.
 
+```{r}
+anx_scores |> 
+  ## starts_with() also fine in this case
+  dplyr::select(contains("sticsa")) |> 
+  GGally::ggscatmat()
+```
+
 ::: callout-tip
 Functions like `ggscatmat()` output a special kind of plot created with {ggplot2}, another core {tidyverse} package. The lovely thing about ggplot-creating functions like this is that they do a lot of the heavy lifting of plot creation for you - getting a bunch of the complicated structure and setup out of the way - and then you can customise the plot further using {ggplot2}.
 
@@ -701,50 +710,79 @@ If you haven't used {ggplot2} before, we'll work through it systematically in an
 -   This [list of {ggplot2} resources](https://sites.northwestern.edu/researchcomputing/2020/04/13/online-learning-resources-r-ggplot2/)
 :::
 
-::: {.callout-note appearance="minimal" title="Exercise"}
-Select the four "score" variables and pipe into `ggscatmat()`.
-
-::: {.callout-note collapse="true" title="Solution"}
-```{r}
-anx_data |> 
-  dplyr::select(contains("score")) |> 
-  GGally::ggscatmat()
-```
-:::
-:::
-
 So, this single function gets us a pretty complex plot: a matrix containing all of our variables along the top and side, with density plots on the diagonal, scatterplots on one pairwise intersection, and correlation coefficients on the other.
 
 This is the only {GGally} function we teach in UG at Sussex, but to go a bit further, there's another example that might be useful in the future.
 
+### Testing Correlation
+
+In both first and second year, UGs are introduced to the tonguetwister function [`correlation::correlation()` from the {easystats} family](https://github.com/easystats/correlation).
+
+For any number of pairs of variables, including one, you can get easy pairwise correlations with this function. It also has a major upside of applying Holm *p*-value adjustments for multiple comparisons by default. It's also delightfully easy to use (it is from the {easystats} family after all) - just `select()` the variables you want to correlate, for example the STICSA scales again, and then pipe them on into the function.
+
+```{r}
+anx_scores |> 
+  dplyr::select(contains("sticsa")) |> 
+  correlation::correlation()
+```
+
+### Exercises
+
 ::: {.callout-note appearance="minimal" title="Exercise"}
-**CHALLENGE**: Use `GGally::ggpairs()` on the same numeric variables, but split up all the plots by `gender` as well.
+Perform pairwise correlations on all the STARS subscales in this dataset.
+
+Then, pick a single pair, generate the correlation output, and `report()` the result.
+
+::: {.callout-note collapse="true" title="Solution"}
+
+To start, let's do the same as above, just replacing the string in `contains()`:
+
+```{r}
+anx_scores |> 
+  dplyr::select(contains("stars")) |> 
+  correlation::correlation()
+```
+
+Yikes, that's a lot of pairwise comparisons - and they're all significant, hooray. I'm going to pick one of the
+
+```{r}
+anx_scores |> 
+  dplyr::select(contains("test") & contains("stars")) |> 
+  correlation::correlation() |> 
+  report::report()
+```
+
+:::
+:::
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+**CHALLENGE**: Use `GGally::ggpairs()` on the same numeric variables, but split up all the plots by `mcq` as well. Here we're getting at a key question of the original study: are maths and stats anxiety actually different?
 
 *Hint*: There's an example of this code in [the introduction documentation for the lovely `palmerpenguins::penguins` dataset](https://allisonhorst.github.io/palmerpenguins/articles/intro.html)!
 
 ::: {.callout-note collapse="true" title="Solution"}
 The ["Exploring Correlations" section](https://allisonhorst.github.io/palmerpenguins/articles/intro.html#exploring-correlations) of the `palmerpenguins` document gives an example of this code.
 
-To adapt it, first, remember to select both the grouping variable `sticsa_trait_cat` AND the numeric outcome variables.
+To adapt it, first, remember to select both the grouping variable `mcq` AND the numeric outcome variables.
 
-Second, use the `aes()` function in `ggpairs()` to assign different colours to the different categories in `sticsa_trait_cat`. We'll look at `aes()` a lot more next week when we get to {ggplot2}.
+Second, use the `aes()` function in `ggpairs()` to assign different colours to the different categories in `mcq`. We'll look at `aes()` a lot more when we get to {ggplot2}.
 
 ```{r}
 #| eval: false
 
-anx_data |> 
-  dplyr::select(sticsa_trait_cat, contains("score")) |> 
-  GGally::ggpairs(aes(color = sticsa_trait_cat))
+anx_scores |> 
+  dplyr::select(mcq, contains("stars")) |> 
+  GGally::ggpairs(aes(color = mcq))
 ```
 
 ```{r}
 #| warning: false
 #| echo: false
 
-cool_plot <- anx_data |> 
-  dplyr::select(sticsa_trait_cat, contains("score")) |> 
+cool_plot <- anx_scores |> 
+  dplyr::select(mcq, contains("sticsa")) |> 
   tidyr::drop_na() |> 
-  GGally::ggpairs(aes(color = sticsa_trait_cat))
+  GGally::ggpairs(aes(color = mcq))
 
 print(cool_plot, progress = FALSE)
 ```
@@ -753,70 +791,8 @@ The example of this in the {palmerpenguins} intro document also changes the defa
 :::
 :::
 
-### Testing Correlation
-
-#### Single Pairwise
-
-If we wanted to perform and report a detailed correlation analysis on a single pair of variables, the easiest function to use is `cor.test()`. Like `t.test()` (which we encountered in Tutorial 01/02), this is a {stats} package that works in a very similar way. This is what we teach UGs in first year.
-
-::: {.callout-note appearance="minimal" title="Exercise"}
-Using the help documentation for `cor.test()`, perform a correlation analysis between any two "score" variables of your choice in the `anx_data` dataset. The solution will use the formula option, but if you get it to run, you're doing good!
-
-::: {.callout-note collapse="true" title="Solution"}
-Run `?cor.test` in the Console.
-
-I chose STARS test and interpretation anxiety, but whatever you chose is fine!
-
-```{r}
-cor.test(~ stars_test_score + stars_int_score, data = anx_data)
-```
-:::
-:::
-
-::: {.callout-note appearance="minimal" title="Exercise"}
-**CHALLENGE**: Using what we learned in the last tutorial, report the results of this analysis without typing any of the results out by hand.
-
-::: {.callout-note collapse="true" title="Solution"}
-```{r}
-stars_cor <- cor.test(~ stars_test_score + stars_int_score, data = anx_data)
-
-stars_cor_out <- papaja::apa_print(stars_cor)
-```
-
-> A Pearson's pairwise correlation between bill length and flipper length indicated a very strong, significant positive correlation between the two measurements (`` `r knitr::inline_expr("stars_cor_out$full_result")` ``).
-
-Which will render as:
-
-> A Pearson's pairwise correlation between bill length and flipper length indicated a very strong, significant positive correlation between the two measurements (`r stars_cor_out$full_result`).
-:::
-:::
-
-#### Multiple Pairwise Adjusted
-
-In second year, UGs are also introduced to the (more {tidyverse}-friendly) function `correlation::correlation()`.
-
-Why would you use this one vs `cor.test()`? On the good side, this function scales up to pairwise tests between as many variables as you give it. This means if you want, for instance, multiple pairwise correlations within a dataset, this is the way to go, since it will apply a familywise error rate correction by default (Holm, to be precise).
-
-On the other hand, it's a right pain to type and doesn't play ball with {papaja}. The family of packages that {correlation} belongs to, [collectively called {easystats}](https://easystats.github.io/easystats/), has its own reporting package, appropriately called {report} - so pick your poison I guess 🤷[^6]
-
-[^6]: Look, I like my basic {stats} functions. They all look the same and work the same way, don't require extra installations or loading, and can be reported nicely with {papaja} or custom functions. I love an `htest` object, me! **BUT**, you gotta find the functions that do what you need them to do. You won't always use one or the other - just use the one that makes sense to you and works for the task at hand.
-
-::: {.callout-note appearance="minimal" title="Exercise"}
-Select all the "score" variables and get pairwise correlations between all of them with `correlation::correlation()`.
-
-::: {.callout-note collapse="true" title="Solution"}
-```{r}
-anx_data |> 
-  dplyr::select(contains("score")) |> 
-  correlation::correlation()
-```
-:::
-:::
-
  
 
 Unbelievably, we're actually at the end of this monstrosity. How are you doing? Having fun yet? I hope so (I am!).
 
-We're now halfway through the Essentials section. In the second half, we'll be expanding outward from data manipulation to learn {ggplot2} properly, and to speedrun some key analyses for undergraduate dissertations.
 
-See you soon!
