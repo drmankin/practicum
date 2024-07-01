@@ -42,10 +42,10 @@ If you're looking for a particular section of a tutorial, use this handy summary
   <tr grouplength="5"><td colspan="2" style="border-bottom: 1px solid;"><strong>02: IntRoduction II</strong></td></tr>
 <tr>
    <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Setup](tutorials/docs/02_intro.qmd#setup) </td>
-   <td style="text-align:left;"> [Projects {#projects}](tutorials/docs/02_intro.qmd#projects-{#projects}), [Documents](tutorials/docs/02_intro.qmd#documents) </td>
+   <td style="text-align:left;"> [Projects](tutorials/docs/02_intro.qmd#projects), [Documents](tutorials/docs/02_intro.qmd#documents) </td>
   </tr>
   <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Packages {#packages}](tutorials/docs/02_intro.qmd#packages-{#packages}) </td>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Packages](tutorials/docs/02_intro.qmd#packages) </td>
    <td style="text-align:left;"> [Loading `tidyverse`](tutorials/docs/02_intro.qmd#loading-`tidyverse`) </td>
   </tr>
   <tr>
@@ -122,6 +122,47 @@ If you're looking for a particular section of a tutorial, use this handy summary
    <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Quick Test](tutorials/docs/04_filter.qmd#quick-test) </td>
    <td style="text-align:left;">  </td>
   </tr>
+  <tr grouplength="10"><td colspan="2" style="border-bottom: 1px solid;"><strong>05: Mutate</strong></td></tr>
+<tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Setup](tutorials/docs/05_mutate.qmd#setup) </td>
+   <td style="text-align:left;"> [Packages](tutorials/docs/05_mutate.qmd#packages), [Data](tutorials/docs/05_mutate.qmd#data) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [General Format](tutorials/docs/05_mutate.qmd#general-format) </td>
+   <td style="text-align:left;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Adding New Variables](tutorials/docs/05_mutate.qmd#adding-new-variables) </td>
+   <td style="text-align:left;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Changing Existing Variables](tutorials/docs/05_mutate.qmd#changing-existing-variables) </td>
+   <td style="text-align:left;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Composite Scores](tutorials/docs/05_mutate.qmd#composite-scores) </td>
+   <td style="text-align:left;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Exercises](tutorials/docs/05_mutate.qmd#exercises) </td>
+   <td style="text-align:left;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Conditionals](tutorials/docs/05_mutate.qmd#conditionals) </td>
+   <td style="text-align:left;"> [One-Variable Input](tutorials/docs/05_mutate.qmd#one-variable-input), [Multi-Variable Input](tutorials/docs/05_mutate.qmd#multi-variable-input) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Iteration](tutorials/docs/05_mutate.qmd#iteration) </td>
+   <td style="text-align:left;"> [Exercises](tutorials/docs/05_mutate.qmd#exercises) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Quick Test: $\chi^2$](tutorials/docs/05_mutate.qmd#quick-test:-$\chi^2$) </td>
+   <td style="text-align:left;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Exercises](tutorials/docs/05_mutate.qmd#exercises) </td>
+   <td style="text-align:left;">  </td>
+  </tr>
 </tbody>
 </table>
 
@@ -172,7 +213,17 @@ The table below is arranged alphabetically by function name, and the linked full
   <tr>
    <td style="text-align:left;"> c() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/base/c.html">c()</a> </td>
-   <td style="text-align:left;"> 01: IntRoduction<br>02: IntRoduction II<br>03: Datasets<br>04: Filter and Select </td>
+   <td style="text-align:left;"> 01: IntRoduction<br>02: IntRoduction II<br>03: Datasets<br>04: Filter and Select<br>05: Mutate </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> c_across() </td>
+   <td style="text-align:left;"> <a href="https://dplyr.tidyverse.org/reference/c_across.html">dplyr::c_across()</a> </td>
+   <td style="text-align:left;"> 05: Mutate </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> chisq.test() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test()</a> </td>
+   <td style="text-align:left;"> 05: Mutate </td>
   </tr>
   <tr>
    <td style="text-align:left;"> class() </td>
@@ -187,7 +238,7 @@ The table below is arranged alphabetically by function name, and the linked full
   <tr>
    <td style="text-align:left;"> count() </td>
    <td style="text-align:left;"> <a href="https://dplyr.tidyverse.org/reference/count.html">dplyr::count()</a> </td>
-   <td style="text-align:left;"> 03: Datasets<br>04: Filter and Select </td>
+   <td style="text-align:left;"> 03: Datasets<br>04: Filter and Select<br>05: Mutate </td>
   </tr>
   <tr>
    <td style="text-align:left;"> describe_distribution() </td>
@@ -207,12 +258,12 @@ The table below is arranged alphabetically by function name, and the linked full
   <tr>
    <td style="text-align:left;"> factor() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/base/factor.html">factor()</a> </td>
-   <td style="text-align:left;"> 01: IntRoduction </td>
+   <td style="text-align:left;"> 01: IntRoduction<br>05: Mutate </td>
   </tr>
   <tr>
    <td style="text-align:left;"> filter() </td>
    <td style="text-align:left;"> <a href="https://dplyr.tidyverse.org/reference/filter.html">dplyr::filter()</a> </td>
-   <td style="text-align:left;"> 04: Filter and Select </td>
+   <td style="text-align:left;"> 04: Filter and Select<br>05: Mutate </td>
   </tr>
   <tr>
    <td style="text-align:left;"> glimpse() </td>
@@ -222,7 +273,7 @@ The table below is arranged alphabetically by function name, and the linked full
   <tr>
    <td style="text-align:left;"> here() </td>
    <td style="text-align:left;"> <a href="https://here.r-lib.org//reference/here.html">here::here()</a> </td>
-   <td style="text-align:left;"> 04: Filter and Select </td>
+   <td style="text-align:left;"> 04: Filter and Select<br>05: Mutate </td>
   </tr>
   <tr>
    <td style="text-align:left;"> hist() </td>
@@ -242,12 +293,12 @@ The table below is arranged alphabetically by function name, and the linked full
   <tr>
    <td style="text-align:left;"> kable_styling() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kableExtra::kable_styling()</a> </td>
-   <td style="text-align:left;"> 03: Datasets<br>04: Filter and Select </td>
+   <td style="text-align:left;"> 03: Datasets<br>04: Filter and Select<br>05: Mutate </td>
   </tr>
   <tr>
    <td style="text-align:left;"> library() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/base/library.html">library()</a> </td>
-   <td style="text-align:left;"> 02: IntRoduction II<br>03: Datasets<br>04: Filter and Select </td>
+   <td style="text-align:left;"> 02: IntRoduction II<br>03: Datasets<br>04: Filter and Select<br>05: Mutate </td>
   </tr>
   <tr>
    <td style="text-align:left;"> max() </td>
@@ -297,7 +348,7 @@ The table below is arranged alphabetically by function name, and the linked full
   <tr>
    <td style="text-align:left;"> pull() </td>
    <td style="text-align:left;"> <a href="https://dplyr.tidyverse.org/reference/pull.html">dplyr::pull()</a> </td>
-   <td style="text-align:left;"> 03: Datasets </td>
+   <td style="text-align:left;"> 03: Datasets<br>05: Mutate </td>
   </tr>
   <tr>
    <td style="text-align:left;"> range() </td>
@@ -312,7 +363,7 @@ The table below is arranged alphabetically by function name, and the linked full
   <tr>
    <td style="text-align:left;"> read_csv() </td>
    <td style="text-align:left;"> <a href="https://readr.tidyverse.org/reference/read_delim.html">readr::read_csv()</a> </td>
-   <td style="text-align:left;"> 03: Datasets<br>04: Filter and Select </td>
+   <td style="text-align:left;"> 03: Datasets<br>04: Filter and Select<br>05: Mutate </td>
   </tr>
   <tr>
    <td style="text-align:left;"> report() </td>
@@ -330,6 +381,11 @@ The table below is arranged alphabetically by function name, and the linked full
    <td style="text-align:left;"> 02: IntRoduction II<br>03: Datasets </td>
   </tr>
   <tr>
+   <td style="text-align:left;"> rowMeans() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/colSums.html">rowMeans()</a> </td>
+   <td style="text-align:left;"> 05: Mutate </td>
+  </tr>
+  <tr>
    <td style="text-align:left;"> rowSums() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/base/colSums.html">rowSums()</a> </td>
    <td style="text-align:left;"> 04: Filter and Select </td>
@@ -340,6 +396,11 @@ The table below is arranged alphabetically by function name, and the linked full
    <td style="text-align:left;"> 03: Datasets </td>
   </tr>
   <tr>
+   <td style="text-align:left;"> select() </td>
+   <td style="text-align:left;"> <a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select()</a> </td>
+   <td style="text-align:left;"> 05: Mutate </td>
+  </tr>
+  <tr>
    <td style="text-align:left;"> set.seed() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/base/Random.html">set.seed()</a> </td>
    <td style="text-align:left;"> 02: IntRoduction II </td>
@@ -347,12 +408,12 @@ The table below is arranged alphabetically by function name, and the linked full
   <tr>
    <td style="text-align:left;"> starts_with() </td>
    <td style="text-align:left;"> <a href="https://tidyselect.r-lib.org/reference/starts_with.html">dplyr::starts_with()</a> </td>
-   <td style="text-align:left;"> 04: Filter and Select </td>
+   <td style="text-align:left;"> 04: Filter and Select<br>05: Mutate </td>
   </tr>
   <tr>
    <td style="text-align:left;"> sum() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/base/sum.html">sum()</a> </td>
-   <td style="text-align:left;"> 04: Filter and Select </td>
+   <td style="text-align:left;"> 04: Filter and Select<br>05: Mutate </td>
   </tr>
   <tr>
    <td style="text-align:left;"> summary() </td>
@@ -363,6 +424,11 @@ The table below is arranged alphabetically by function name, and the linked full
    <td style="text-align:left;"> t.test() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/stats/t.test.html">t.test()</a> </td>
    <td style="text-align:left;"> 01: IntRoduction<br>02: IntRoduction II<br>04: Filter and Select </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ungroup() </td>
+   <td style="text-align:left;"> <a href="https://dplyr.tidyverse.org/reference/group_by.html">dplyr::ungroup()</a> </td>
+   <td style="text-align:left;"> 05: Mutate </td>
   </tr>
   <tr>
    <td style="text-align:left;"> where() </td>

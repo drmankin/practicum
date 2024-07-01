@@ -211,7 +211,11 @@ topics <- list.files(path = path_topics_index, pattern = "_topics.R$", recursive
     .f = clean_topics
   ) |> 
   tibble::enframe() |> 
-  tidyr::unnest(cols = value)
+  tidyr::unnest(cols = value) |> 
+  ## Remove custom heading link anchors
+  dplyr::mutate(
+    heading_text = gsub("(.*) \\{.*\\}", "\\1", heading_text)
+  )
 
 ## DELETES all the .R files (otherwise if the file names change the whole thing breaks)
 unlink(list.files(path = path_topics_index, pattern = ".R$",
