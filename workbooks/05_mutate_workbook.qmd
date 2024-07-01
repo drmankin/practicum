@@ -1,0 +1,153 @@
+---
+title: "05: Mutate"
+embed-resources: true
+editor: visual
+---
+
+## Open the Tutorial
+
+Use the following code chunks to open the accompanying tutorial.
+
+### Open in RStudio Viewer
+
+```{r}
+#| eval: false
+rstudioapi::viewer('https://r-training.netlify.app/tutorials/docs/05_mutate')
+```
+
+### Open in a New Browser Tab
+
+```{r}
+#| eval: false
+utils::browseURL('https://r-training.netlify.app/tutorials/docs/05_mutate')
+```
+
+## Overview
+
+## Setup
+
+### Packages
+
+Load the necessary packages.
+
+```{r}
+
+```
+
+### Data
+
+Read in the dataset and save it in a new object, `anx_data`.
+
+On the Cloud, you can read in this dataset from the `data` folder using `here::here()`.
+
+Elsewhere, you can download the dataset, or copy the dataset URL, from the [Data and Workbooks page](../../../data_workbooks.qmd).
+
+```{r}
+
+```
+
+#### Codebook {#codebook}
+
+## General Format
+
+## Adding New Variables
+
+## Changing Existing Variables
+
+Make the above changes to the `anx_data` dataset and save the output to `anx_data`.
+
+```{r}
+
+```
+
+## Composite Scores
+
+## Exercises {#first-ex}
+
+Imagine that item 17 on the STICSA State subscale needs to be reverse-coded. Using the [Codebook](#codebook), replace the existing variables with the reversed versions.
+
+```{r}
+
+```
+
+Create mean subscale scores for each of the three STARS subscales and save these changes to the dataset. If you didn't do it already, make sure you create `sticsa_trait_score` as above also.
+
+```{r}
+
+```
+
+**CHALLENGE**: What would the code creating `sticsa_trait_score` produce without the `rowwise()...ungroup()` steps (i.e. with only the `mutate()` command)? Make a prediction, then try it.
+
+```{r}
+
+```
+
+**CHALLENGE:** The `rowwise() |> c_across() |> ungroup()` code is definitely not the only way to obtain the same output. Try producing the the same `sticsa_trait_score` variable with the following methods. What are the benefits and drawbacks of each method?
+
+1.  Using a dedicated by-row function, `rowMeans()`
+2.  Using the basic structure of `mutate()` only
+
+*Hint:* Use `vignette("rowwise")` to help if you get stuck.
+
+```{r}
+
+```
+
+## Conditionals
+
+### One-Variable Input
+
+### Multi-Variable Input {#multi-variable-input}
+
+## Iteration
+
+### Exercises
+
+**CHALLENGE**: In the [previous exercises](#first-ex), we saw some code to reverse-score a pair of items. This was fine with one or two items to reverse, but would get tedious and repetitive quickly.
+
+Use `dplyr::across()` to reverse score the STICSA state items 3, 10, 17, 18, and 21.
+
+(Note that the STICSA doesn't have any reverse-scoring; this is just for practice.)
+
+```{r}
+
+```
+
+**CHALLENGE**: You might notice that `across()` by default overwrites variables, rather than creating new ones. Generally, with reverse-coding, this is what we want to do so we don't include the unreversed item in further analysis.
+
+However, in some cases we might want to instead create new variables with `across()` instead of overwriting them, and the help documentation for `across()` includes an argument for creating new variables names. Do the same task as above - reverse-coding the same five STICSA state items - but add `_rev` to the end of the new variable names.
+
+```{r}
+
+```
+
+**CHALLENGE:** In the example code for this section, we wanted to change all of the character variables in this dataset to factors. We technically did that, but the example code still manually listed the variables to change. Adapt the example code to instead apply the `factor` function to any character variable in the dataset, without using the names of those variables.
+
+*Hint*: You will need to have completed, or to review, the section of the previous tutorial on [selecting with functions](04_filter.qmd#using-functions); or run `?where` in the Console.
+
+```{r}
+
+```
+
+## Quick Test: $\chi^2$ {#quick-test}
+
+## Exercises
+
+Adapt [the code above](#multi-variable-input) to finish creating a `remove` variable that includes the possible reasons for exclusion that we covered in the last tutorial:
+
+-   Below ethical age of consent
+-   Age missing or improbably high (e.g. 100 or above)
+
+Assign this change to your dataset, then count how many participants will be excluded for which reason and create a final version of the dataset, `anx_data_final`, that only includes participants who should be kept.
+
+```{r}
+
+```
+
+Create a new variable in the `anx_data` dataset called `stars_help_cat`. This variable should contain the value "high" for participants who scored equal to or above the mean on the `stars_help_score` variable, and "low" for those who scored below the mean.
+
+Then, using the `chisq.test()` help documentation, perform a $\chi^2$ test of association for the `stars_help_cat` and `sticsa_trait_cat` variables.
+
+```{r}
+
+```
