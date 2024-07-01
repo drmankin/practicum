@@ -309,13 +309,17 @@ Make the following changes:
 -   Add the min and max of `sticsa_trait_score` to the summary.
 -   Split up the summary by gender as well as MCQ group.
 
+Save your final summary table as `anx_scores_sum`.
+
 ::: {.callout-note title="Solution" collapse="true"}
 For the first, add new lines within `summarise()` using the `min()` and `max()` functions we've encountered previously.
 
 For the second, add the `gender` variable to `group_by()` to subdivide the summary output.
 
+Finally, add the new object name and assignment operator to the beginning of the code.
+
 ```{r}
-anx_scores |>
+anx_scores_sum <- anx_scores |>
   dplyr::group_by(mcq, gender) |>
   dplyr::summarise(
     n = dplyr::n(),
@@ -325,6 +329,8 @@ anx_scores |>
     sticsa_trait_min = min(sticsa_trait_score, na.rm = TRUE), 
     sticsa_trait_max = max(sticsa_trait_score, na.rm = TRUE)
   )
+
+anx_scores_sum
 ```
 :::
 :::
@@ -491,7 +497,7 @@ I (JM) really love regular expressions ("regex"). If you're not familiar with re
 
 Since I love regex so much and this is my tutorial and no one can stop me, I'll include these **absolutely optional** little regex boxes in case you'd like to learn a bit about working with regular expressions and how they can help your code. Most typically, I prefer base-R functions instead of {stringr} for working with strings, but for quick things like case changes, I find {stringr} easiest. However, the same thing can be accomplished with regular expressions instead.
 
-We already saw how to convert strings to sentence case in the example above. However, all we've *actually* done is replaced the first letter of the string with the capitalised versio of the same letter. If you happen to want to do this with base R regex instead, here's an option:
+We already saw how to convert strings to sentence case in the example above. However, all we've *actually* done is replaced the first letter of the string with the capitalised version of the same letter. If you happen to want to do this with base R regex instead, here's an option:
 
 ```{r}
 anx_mcq_sum |> 
@@ -681,6 +687,80 @@ anx_score_sum %>%
 So there you have it: a (mostly) fully automated and nicely formatted table requiring no hard-coding of specific names or variables, at the bargain price of a few precious hours of my life and a not-insubstantial chunk of my sanity. You're welcome!
 :::
 :::
+
+### Exporting and Linking
+
+If you are writing your work exterior to Quarto/your code, you will instead need export your summary and then import it into the new document. However, it's essential to keep a close eye on changes or updates, so that tables don't get out of date if the source data is updated.
+
+#### Creating a Folder
+
+To save our plot, we'll first need to create a folder to save our summary tables in. You can (and likely will!) do this manually, by clicking. Both Posit Cloud and RStudio Desktop have a + Folder button (the first one in the Files tab), which will create a new folder in whatever folder you are currently looking at. Make sure you are in the project folder, then enter the folder name and click OK.
+
+![](../../images/new_folder.jpg){fig-alt="Screenshot of the Files pane with arrows showing the steps to create a new folder"}
+
+If you want your entire workflow to be entirely reproducible - even creating folders! - see the box below.
+
+::: {.callout-tip title="MoRe About: Managing Folders with R" collapse="true"}
+
+The "problem" (such as it is) with creating folders by clicking is that there's no record of that action in your code. If you pass on the code - but not the entire project folder - to someone else, and they try to run it, they'll get an error because if the target folder doesn't happen to exist in their files. We could resolve this by using R to interact with the folders on your computer (or in your Cloud project) so that the folder is created by the code itself.
+
+Let's write some generalisable code to create a folder. To begin, we'll store the path to the new folder in an object:
+
+```{r}
+#| eval: false
+new_folder_path <- here::here("summaries")
+```
+
+The next step *could* be to simply create the folder with `dir.create()`:
+
+```{r}
+#| eval: false
+dir.create(new_folder_path)
+```
+
+But this operation will fail and throw a warning if the folder already exists. (This is great, as otherwise you could easily overwrite existing folders!) So, let's instead write an **if statement** to only run this code if the specified folder doesn't exist already.
+
+`if` and other conditionals in R look a bit different than normal commands. The function `if()` needs a statement that evaluates to a single `TRUE` or `FALSE`. It's then followed by additional code in curly braces `{}`. If the condition(s) in `if()` evaluate to `TRUE`, then the code in the curly braces is executed; if `FALSE`, they are not. (You can also supply an `else`, but we don't need it here.)
+
+So, to avoid alarming warnings or any accidental overwriting, we can write:
+
+```{r}
+#| eval: false
+if(!dir.exists(new_folder_path)){
+  dir.create(new_folder_path)
+}
+```
+
+The function `dir.exists()`, as you might expect, looks for a folder at the supplied location (in this case, at the path we stored in `new_folder_path`), and returns `TRUE` if the directory exists or `FALSE` if it doesn't. By adding an exclamation mark, we invert those results: now the expression `!dir.exists(new_folder_path)` returns `TRUE` if the folder **doesn't** exist. That's what we want because if the folder we want to create doesn't already exist, then the next bit of code, `dir.create(new_folder_path)`, is executed to create the folder. Otherwise, if the folder **does** already exist, nothing happens.
+
+If you already created the `summaries` folder with the GUI interface, you will find that this code doesn't do anything because the folder already exists!
+
+In any case it's important to think carefully about including any code that makes changes to the user's computer system and files. I usually comment out these elements of my code unless I'm sure I need to use them.
+:::
+
+First, you will need to export the summary tibble as a .csv file. This is a reminder of what we covered previously about exporting datasets.
+
+```{r}
+#| eval: false
+
+readr::write_csv(anx_scores_sum,
+                 file = here::here)
+```
+
+#### Exporting
+
+The summary data is just a dataset, so we can export it just as we did previously with whole datasets with `write_csv()`. We need to provide the name of the data to write and a file path that includes the name and file extension of the file we want to create.
+
+```{r}
+#| eval: false
+
+readr::write_csv(anx_scores_sum,
+                 file = here::here("summaries/anx_scores_sum.csv"))
+```
+
+#### Linking
+
+<!-- I'm not sure you can actually do this??? -->
 
 ## Quick Test: Correlation
 

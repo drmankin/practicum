@@ -303,6 +303,26 @@ anx_scores |>
 
 There you have it! That's looking pretty nice, I think.
 
+Now that you have a final plot, make sure to save the plot into an object, so that you can refer easily to it later. I'm going to call mine `anx_viz_hist`.
+
+```{r}
+#| output: false
+
+anx_viz_hist <- anx_scores |> 
+  ggplot(aes(x = mcq_score)) +
+  geom_histogram(binwidth = 1, 
+                 colour = "#003b49", 
+                 fill = "#007a78") +
+  scale_x_continuous(name = "Total MCQ Score (out of 5)",
+                     breaks = c(0:5)) +
+  scale_y_continuous(name = "Frequency",
+                     breaks = seq(from = 0, 
+                                  to = 120, 
+                                  by = 20),
+                     limits = c(0, 120)) +
+  papaja::theme_apa(box = TRUE)
+```
+
 To lock it in, let's get some practice using these functions with a minimally different example.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
@@ -311,6 +331,8 @@ Create a density plot of the `rmars_s_test_score` variable (or another continuou
 -   Choose colours for your plot.
 -   Adjust the labels, breaks, and limits as necessary.
 -   Add a theme.
+
+When you're done, make sure to save your plot to an object.
 
 ::: {.callout-note collapse="true" title="Solution"}
 We can start the same way we did above, just switching out our previous variable in `aes()` for the new one and changing `geom_histogram()` to `geom_density()`. We can drop the `binwidth` argument since it isn't relevant anymore. I've left the colours in because they work the same way (and look nice!).
@@ -325,7 +347,7 @@ anx_scores |>
 From here we might want to do a bit more tweaking to get the axes right, using the same functions as we did for the histogram.
 
 ```{r}
-anx_scores |> 
+anx_viz_dens <- anx_scores |> 
   ggplot(aes(x = rmars_s_test_score)) +
   geom_density(colour = "#003b49", fill = "#007a78") +
   scale_x_continuous(name = "Mean Score on the R-MARS-S Test Subscale",
@@ -333,6 +355,8 @@ anx_scores |>
   scale_y_continuous(name = "Probability Density",
                      limits = c(0, .5)) +
   papaja::theme_apa(box = TRUE)
+
+anx_viz_dens
 ```
 :::
 :::
@@ -423,6 +447,8 @@ anx_scores |>
                     guide = "none") +
   papaja::theme_apa(box = TRUE)
 ```
+
+Again, once I'm happy with this, I should save it into an object for later use.
 
 ::: {.callout-tip title="Checking In"}
 How are you doing? This is a bunch of new information, so don't worry if you feel a bit overwhelmed. Honestly when I am constructing plots, a good portion of the time I spend to make them is either 1) digging back through my own previous documents to lift code I've already written or 2) searching online for help posts to figure out how to do things! I didn't know how to do basically any of the formatting for the facet-wrapped plot above, and it took me about an hour of testing and searching to figure it out. I hope having these templates saves you a bit of time in the future.
@@ -553,9 +579,11 @@ Finish up your plot by adjusting the following elements:
 
 *Hint*: You'll have three axes to adjust. Use the help documentation for each if you get stuck.
 
+Once you're done, save the finished plot in the object `anx_viz_bar`.
+
 ::: {.callout-note collapse="true" title="Solution"}
 ```{r}
-anx_scores |> # <1> 
+anx_viz_bar <- anx_scores |> # <1> 
   dplyr::filter(gender %in% c("male","female")) |> # <2> 
   ggplot(aes(x = stars_help_cat, fill = gender)) + # <3> 
   geom_bar(position = "dodge") + # <4> 
@@ -569,9 +597,11 @@ anx_scores |> # <1>
                       labels = c("Female", "Male"), # <7> 
                       type = c("#1b365d", "#f2c75c")) + # <7> 
   papaja::theme_apa(box = TRUE) # <8> 
+
+anx_viz_bar
 ```
 
-1.  Take the dataset, *and then*
+1.  Create `anx_viz_bar` as follows: take the dataset `anx_scores`, *and then*
 2.  Filter the dataset to only retain cases where the value in the `gender` variable is any of "male" or "female", *and then*
 3.  Set up a plot, mapping `stars_help_score` to the *x*-axis and `gender` as the fill, *plus*
 4.  Draw a barplot, with the bars side by side, *plus*
@@ -667,14 +697,18 @@ To add means and CIs to our plot, we'll need to calculate them. However, there's
 
 In this case, we can use `stat_summary()` to produce some summary statistics. To really make it quick, we're going to quote the function `mean_cl_boot`, which calculates means and bootstrapped CIs. That's it - just that one line does all the maths and adds the result to the plot. However, the new element will show up as black by default, so let's also add in a colour to make sure we can actually see it. (I've chosen something obnoxious to make it easy to find!)
 
+Once again, I'm going to save the plot in an object for later use, here `anx_viz_rain`.
+
 ```{r}
-anx_scores |> # <1>
+anx_viz_rain <- anx_scores |> # <1>
   ggplot(aes(x = mcq, y = stars_test_score)) + # <2>
   geom_rain() + # <3>
   scale_x_discrete(name = "MCQ Condition", labels = c("Maths", "Stats")) + # <4>
   scale_y_continuous(name = "Mean STARS Test Score") + # <5>
   stat_summary(fun.data = mean_cl_normal, colour = "red") + # <6>
   papaja::theme_apa(box = TRUE) # <7>
+
+anx_viz_rain
 ```
 
 1.  Take the dataset `anx_scores`, *and then*
@@ -692,13 +726,15 @@ In second year, students are also introduced to violin plots. Adapt the code we'
 This is literally only a case of changing `geom_rain()` to `geom_violin()` - everything else works as is. This helps illustrate the use of the `geom_*()` functions for determining the *kind* of plot you have.
 
 ```{r}
-anx_scores |>
+anx_viz_violin <- anx_scores |>
   ggplot(aes(x = mcq, y = stars_test_score)) +
   geom_violin() + # Only this line is different!
   scale_x_discrete(name = "MCQ Condition", labels = c("Maths", "Stats")) +
   scale_y_continuous(name = "Mean STARS Test Score") +
   stat_summary(fun.data = mean_cl_normal, colour = "red") +
   papaja::theme_apa(box = TRUE)
+
+anx_viz_violin
 ```
 :::
 :::
@@ -842,7 +878,7 @@ To use the palettes, we start out by dropping the `colour` and `fill` arguments 
 
 ```{r}
 anx_scores |>
-  ggplot(aes(x = sticsa_trait_score, y = sticsa_post_state_score,  # <1>
+  ggplot(aes(x = sticsa_pre_state_score, y = sticsa_post_state_score,  # <1>
              colour = gender, fill = gender)) + # <1>
   geom_point(alpha = 0.4, position = "jitter") +  # <3>
   geom_smooth(method = "lm") + # <4>
@@ -865,9 +901,11 @@ Just as we had `scale_x...` and `scale_y...` functions for specifying the `x` an
 -   `discrete`: tells {viridis} whether the variable to be coloured/filled is discrete or not. Here it is (it's `gender`, a categorical variable), so we set this to `TRUE`.
 -   `labels`: applies labels to the levels of the variables.
 
+As always, with a finished plot, save into a new object, here `anx_viz_scatter`.
+
 ```{r}
-anx_scores |> 
-  ggplot(aes(x = sticsa_trait_score, y = sticsa_post_state_score,  # <2>
+anx_viz_scatter <- anx_scores |> 
+  ggplot(aes(x = sticsa_pre_state_score, y = sticsa_post_state_score,  # <2>
              colour = gender, fill = gender)) + # <2>
   geom_point(alpha = 0.4, position = "jitter") +  # <3>
   geom_smooth(method = "lm") + # <4>
@@ -882,6 +920,8 @@ anx_scores |>
                        discrete = TRUE,  # <1>
                        labels = c("Female", "Male", "Non-Binary", "Other/Prefer Not To Say")) + # <1>
   papaja::theme_apa(box = TRUE) # <9>
+
+anx_viz_scatter
 ```
 
 1.  Adjust the fill and colour by applying the viridis colour palette, giving each a name, using discrete values, and relabelling the categories.
@@ -978,27 +1018,10 @@ As ever, I strongly recommend referring to [the Quarto Guide](https://quarto.org
 
 In a previous section, we created a lovely scatterplot for a (hypothetical) linear model. Let's see now how we could adjust the way that figure would appear in a Quarto document.
 
-To begin, I've stored the final output for the LM plot we created above in a new object, `mcq_lm_plot`, to make the subsequent sections easier to read.
-
-```{r}
-mcq_lm_plot <- anx_scores |> # <1>
-  ggplot(aes(x = sticsa_trait_score, y = sticsa_post_state_score,  # <2>
-             colour = mcq, fill = mcq)) + # <2>
-  geom_point(alpha = 0.4, position = "jitter") +  # <3>
-  geom_smooth(method = "lm") + # <4>
-  scale_x_continuous(name = "STICSA Pre-MCQ State Anxiety Score", # <5>
-                    limits = c(1, 4)) + # <5>
-  scale_y_continuous(name = "STICSA Post-MCQ State Anxiety Score", # <6>
-                    limits = c(1, 4)) + # <6>
-  scale_colour_viridis(name = "MCQ Type", discrete = TRUE, labels = c("Maths", "Stats")) + # <7>
-  scale_fill_viridis(name = "MCQ Type", discrete = TRUE, labels = c("Maths", "Stats")) + # <7>
-  papaja::theme_apa(box = TRUE) # <9>
-```
-
-Then, we're just going to put our plot object in a new code chunk, in the document where we want it to appear. Equally, this could be the code that produces the plot; it doesn't matter either way.
+To begin, we've already stored the final output for the LM plot we created above in a new object, `anx_viz_scatter`. We're just going to put our plot object in a new code chunk, in the document where we want it to appear. Equally, this could be the code that produces the plot; it doesn't matter either way.
 
 ```{{r}}
-mcq_lm_plot
+anx_viz_scatter
 ```
 
 To change or add settings for a specific plot, we will use *code chunk options*, which we previously encountered in Tutorial 04. These options let us determine the way the code chunk behaves. Here, we'll also see how we can use those code chunk options to style and format our plot.
@@ -1008,16 +1031,16 @@ To change or add settings for a specific plot, we will use *code chunk options*,
 First, we might add a **caption** to the plot, using the `fig-cap` option. You may have noticed that we didn't give our plot a caption/title previously, and this is why. You can of course write whatever you like, but here's an example.
 
 ```{{r}}
-#| fig-cap: "Scatterplot of mean pre- and post-MCQ state anxiety scores"
+#| fig-cap: "Scatterplot and regression lines of mean pre- and post-MCQ state anxiety scores by gender identity"
 
-mcq_lm_plot
+anx_viz_scatter
 ```
 
 ```{r}
 #| echo: false
-#| fig-cap: "Scatterplot of mean pre- and post-MCQ state anxiety scores"
+#| fig-cap: "Scatterplot and regression lines of mean pre- and post-MCQ state anxiety scores by gender identity"
 
-mcq_lm_plot
+anx_viz_scatter
 ```
 
 You should also add alt text to your figures to make them readable by screenreaders and other assistive technology. It is important to describe the insights from the visualisations clearly, such as the key patterns, connections, or findings, to ensure they are accessible. This [Medium article on scientific alt text](https://medium.com/nightingale/writing-alt-text-for-data-visualization-2a218ef43f81) gives some clear guidelines for keeping alt text informative, brief, and useful.
@@ -1025,10 +1048,10 @@ You should also add alt text to your figures to make them readable by screenread
 We can add alt text to our figure using the `fig-alt` option:
 
 ```{{r}}
-#| fig-cap: "Scatterplot of mean pre- and post-MCQ state anxiety scores"
-#| fig-alt: "Scatterplot of mean pre- and post-MCQ state anxiety scores showing a positive relationship, with separate linear regression lines for the two MCQ types both also showing a very similar positive relationship in both conditions"
+#| fig-cap: "Scatterplot and regression lines of mean pre- and post-MCQ state anxiety scores by gender identity"
+#| fig-alt: "Scatterplot and regression lines of mean pre- and post-MCQ state anxiety scores by gender identity, with lines for female, male, and people who responded other or prefer not to say showing a very similar positive relationship, while the line for non-binary people is essentially flat."
 
-mcq_lm_plot
+anx_viz_scatter
 ```
 
 #### Cross-Referencing
@@ -1038,15 +1061,15 @@ As with tables, we can also include automatic cross-referencing for figures in o
 To do this, let's first give our figure a **label**. Labels are essentially names for this particular figure that will allow us to refer to it in the text. In order to be recognised for cross-referencing, **the label must start with the `fig-` prefix**.
 
 ```{{r}}
-#| label: fig-mcq-lm
-#| fig-cap: "Scatterplot of mean pre- and post-MCQ state anxiety scores"
+#| label: fig-anx-scatter
+#| fig-cap: "Scatterplot and regression lines of mean pre- and post-MCQ state anxiety scores by gender identity"
 
-mcq_lm_plot
+anx_viz_scatter
 ```
 
 Then, use this label with an `@` symbol in the text of the document to generate the cross-reference. For instance, I could write:
 
-> The result of this analysis is visualised in `@fig-mcq-lm`.
+> The result of this analysis is visualised in `@fig-anx-scatter`.
 
 Which would appear when rendered as below - notice the caption now has "Figure 1" added to it to correspond to the in-text numbering.
 
@@ -1054,15 +1077,71 @@ Which would appear when rendered as below - notice the caption now has "Figure 1
 
 ```{r}
 #| echo: false
-#| label: fig-mcq-lm
-#| fig-cap: "Scatterplot of mean pre- and post-MCQ state anxiety scores"
+#| label: fig-anx-scatter
+#| fig-cap: "Scatterplot and regression lines of mean pre- and post-MCQ state anxiety scores by gender identity"
 
-mcq_lm_plot
+anx_viz_scatter
 ```
 
-### Elsewhere
+### Exporting and Linking
 
-<!-- UPDATE -->
+If you want to export and display your data visualisations outside the document containing the code that creates them, you will first need to save them as images, then upload or insert them in the relevant document. Conveniently, {ggplot2} contains an inbuilt function for saving plots. Not-conveniently, it works with file paths slightly differently than other functions we've seen (like the {readr}) functions.
+
+First we need a folder to store our images in.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+Using any method (code or point-and-click), create a new folder called `images` in your project folder.
+
+:::
+
+#### Saving Plots
+
+Besides being able to quickly print out out plots, saving them in objects also makes it easy to save them with `ggsave()`. By default, this function will save the most recent plot, which for us was the scatterplot `anx_viz_scatter`. However, I'd strongly recommend always specifying the plot to save, to avoid accidental overwriting.
+
+```{r}
+#| eval: false
+ggsave(
+  ## Name for the image file, including extension
+  filename = "anx_viz_scatter.jpg",
+  ## Object containing the plot
+  plot = anx_viz_scatter,
+  ## Path to the folder to save in
+  path = here::here("images")
+)
+```
+
+The default formatting of this plot, however, isn't my favourite - it's come out quite square. Instead, I'd like to adjust the size of the saved plot image, which of course I can do with `height` and `width` arguments:
+
+```{r}
+#| eval: false
+ggsave(
+  ## Name for the image file, including extension
+  filename = "anx_viz_scatter.jpg",
+  ## Object containing the plot
+  plot = anx_viz_scatter,
+  ## Path to the folder to save in
+  path = here::here("images"),
+  ## Adjust width
+  width = 10
+)
+```
+
+Finally, `ggsave()` has a `create.dir` argument to create a directory simultaneous with saving. Personally I'd rather create my folders separately, but if you prefer to it this way you could.
+
+#### Insert and Link
+
+Now that we have an image file, we could insert it into a document as we could with any other image. However, there's an issue here. What if, for example, you update your dataset - a participant withdraws, or you gather more data, etc. Now the image you've saved is no longer correct.
+
+An option is to link to images, rather than insert them directly. In Microsoft Word, for instance, you can use the "Insert and Link" option rather than straightforward "Insert".
+
+![](../../images/insert_link.jpg){fig-alt="Screenshot of the picture insertion popup for Microsoft Word showing the image to insert and the Insert dropdown"}
+
+This method has the following advantages:
+
+- The image is **linked**, which means that if you re-run your code and re-save the new image, the linked image in the document will update automatically. This is quite similar to what we saw previously with linked tables for summaries.
+- The image is also **inserted** which means that if you send this document to someone else, upload it to Drive etc., there will still be a copy of the image in the document, whatever was most recent when it was sent.
+
 
  
 
