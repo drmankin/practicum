@@ -181,6 +181,20 @@ anx_data |> # <1>
 
 Let's look a little closer at the expression `gender = factor(gender)`. The left side of the equals sign `=` is the name of the variable to be created in the dataset, `gender`. The right side, `factor(gender)`, gives the instructions for how to create the information that the `gender` variable will contain. Since there is already a variable in the dataset called `gender`, the expression `factor(gender)` works on the existing version of the variable, then overwrites it into a variable with the same name. Here, the equals sign is working like the assignment operator `<-` for overwriting objects.
 
+:::: {.repro}
+
+::: {.repro-header}
+::: {.repro-icon}
+:::
+RepRoducibility: Overwriting variables
+:::
+
+::: {.repro-body}
+In most cases, you have to be wary of the implications of overwriting variables as accidentally rerunning the code out of order will lead to undetectable errors. Changing the data type of a variable is one instance in which overwriting is not going to be problematic - asking R to transform a factor variable into a factor variable will not lead to errors. 
+:::
+
+::::
+
 So far, we've written the code to create the `lab` variable and change the `gender` and `mcq` datasets, but neither of these changes have been assigned to the dataset, so the version of `anx_data` in the Environment is still unchanged. As we've seen before, once we've checked the code works by examining the output, we then assign the output of these commands to the dataset to make those changes.
 
 ```{r}
@@ -249,6 +263,20 @@ anx_data <- anx_data |> # <1>
 For lots more details and examples on `rowwise()` and row-wise operations with {dplyr} - including which other scenarios in which a row-wise dataset would be useful - run `vignette("rowwise")` in the Console.
 :::
 
+:::: {.repro}
+
+::: {.repro-header}
+::: {.repro-icon}
+:::
+RepRoducibility: Invisible structures
+:::
+
+::: {.repro-body}
+Always ungroup a dataset at the end of a command. R will not say anything if you don't ungroup a dataset and will retain the invisible structure. All the code after the grouping is implemented will run, but the structure imposed on the dataset will lead to errors in the results. 
+:::
+
+::::
+
 ## Exercises {#first-ex}
 
 Try out the following exercises in the accompanying workbook.
@@ -262,6 +290,8 @@ In many multi-item measures, some items are reversed in the way that they captur
 However, reverse-coded items are intended to capture the same ideas, but in reverse. A reversed version of item 17 might read, "I can concentrate easily with no intrusive thoughts." In this case, a higher numerical response (closer to the "very much so" end of the scale) would indicate *less* anxiety. In order for these reversed items to be aligned with the other items on the scale, so that together they form a cohesive score, the coding of the response scale must be flipped: high becomes low, and low becomes high.
 
 If the response scale is a numerical integer sequence, as this one is, then the simplest way to reverse-code the responses is to subtract every response from the maximum possible response plus one. Here, the STICSA response scale is from 1 to 4; the maximum possible response is 4, plus one is 5. So, to reverse-code the responses, we need to subtract each rating on this item from 5. A high score (4) will be become a low score (5 - 4 = 1), and vice versa for a low score (5 - 1 = 4).
+
+
 :::
 
 ::: {.callout-note title="Solution" collapse="true"}
@@ -275,6 +305,20 @@ anx_data <- anx_data |>
 ```
 :::
 :::
+
+:::: {.repro}
+
+::: {.repro-header}
+::: {.repro-icon}
+:::
+RepRoducibility: Overwriting variables
+:::
+
+::: {.repro-body}
+If you were to rerun the code above a second time, you'd un-reverse the variables which can lead to errors with the analysis. Towards the end of the tutorial, we will look at different ways to make your code more resilient to human error. 
+:::
+
+::::
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
 Create mean subscale scores for each of the three STARS subscales and save these changes to the dataset. If you didn't do it already, make sure you create `sticsa_trait_score` as above also.
@@ -706,6 +750,54 @@ anx_chisq <- chisq.test(anx_data$mcq, anx_data$sticsa_trait_cat)
 anx_chisq$observed
 anx_chisq$expected
 ```
+
+
+:::: {.repro}
+
+::: {.repro-header}
+::: {.repro-icon}
+:::
+RepRoducibility: Managing datasets during pre-processing 
+:::
+
+::: {.repro-body}
+Some of the code we have been using so far relies on people diligently running the entire script from top to bottom. As an example, if we rerun this code chunk a second time, we will redo the reverse-scoring of the variables:
+```{r}
+anx_data <- anx_data |> 
+  dplyr::mutate(
+    sticsa_pre_state_17 = 5 - sticsa_pre_state_17,
+    sticsa_post_state_17 = 5 - sticsa_post_state_17
+  )
+```
+
+To build some resilience into the code, we could create new variables instead of overwriting the original variables:
+```{r}
+anx_data <- anx_data |> 
+  dplyr::mutate(
+    sticsa_pre_state_17_reverse = 5 - sticsa_pre_state_17,
+    sticsa_post_state_17_reverse = 5 - sticsa_post_state_17
+  )
+```
+
+Now, regardless how many time we rerun the chunk above, the values of `sticsa_pre_state_17_reverse` and `sticsa_post_state_17_reverse` will not change. However, if you choose to create a new variable, you need to consider how this would affect your interactions with the dataset (e.g. when you want to use `tidyselect`).
+
+The other solution is to create a new object to house the pre-processed data instead of overwritting the object containing the original data: 
+```{r}
+anx_data_reverse <- anx_data |> 
+  dplyr::mutate(
+    sticsa_pre_state_17 = 5 - sticsa_pre_state_17,
+    sticsa_post_state_17 = 5 - sticsa_post_state_17
+  )
+```
+
+Now, regardless of how many times we rerun the chunk above, the values of sticsa_pre_state_17` and `sticsa_post_state_17` in `anx_data_reverse` will remain the same. The problem with this approach is that if you create a new object for every step of your pre-processing, your environment will become cluttered with very similar looking objects and it can become difficult to keep track of all versions of your dataset. 
+
+There are not concrete rules for deciding when to save a new version of a dataset as an object. One good starting point is to apply all pre-processing in the same command, and have only one "pre-processed" data object. If I want to do some analysis on an interim step of the pre-processing that will not be accessible once all pre-processing steps are completed, I would create a new object at that interim step as well. We didn't use this approach in the examples above because we wanted to demonstrate the different use-cases of `mutate()` once at a time. 
+
+The only concrete rule to keep in mind is that you want your code to always return the same output every time you run it. 
+:::
+
+::::
 
 ## Exercises
 
