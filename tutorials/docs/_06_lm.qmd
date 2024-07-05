@@ -293,7 +293,8 @@ Read in the `syn_data` dataset in the `data` folder and save it in the object `s
 
 ::: {.callout-note collapse="true" title="Solution"}
 ```{r}
-syn_data <- readr::read_csv(here::here("data/syn_data.csv"))
+#syn_data <- readr::read_csv(here::here("data/syn_data.csv"))
+syn_data <- readr::read_csv("https://raw.githubusercontent.com/drmankin/practicum/master/data/syn_data.csv")
 ```
 :::
 :::
@@ -324,7 +325,7 @@ Then, decide which model is better, the first or second model.
 <!--Note from Reny: When loading the data from the URL I had to chagne syn_sequence_space to syn_seq_space--->
 ```{r}
 syn_full_lm <- lm(scsq_imagery ~ scsq_techspace + syn + scsq_language, data = syn_data)
-syn_inter_lm <- lm(scsq_imagery ~ syn_graph_col*syn_sequence_space, data = syn_data)
+syn_inter_lm <- lm(scsq_imagery ~ syn_graph_col*syn_seq_space, data = syn_data)
 
 summary(syn_full_lm)
 ## Tidy summaries
@@ -663,33 +664,28 @@ How to format body text depends on the mode you are in.
     -   Using the formatting toolbar at the top of the document.
 -   In Source mode, by using [Markdown formatting](https://quarto.org/docs/authoring/markdown-basics.html).
 
-::: {.callout-note appearance="minimal" title="Exercise"}
-Under the first heading (which I have called "Model Comparison"), write a brief, journal-style description of the two models. Don't fill in any statistics, but leave placeholders where the statistical reporting will go.
-
-::: {.callout-note collapse="true" title="Solution"}
-If you aren't inclined to write your own, here's a brief sample text to use.
+Under the first heading (which I have called "Model Comparison"), we will report the results related to the two models we fit earlier as well as the results from the model comparison we did earlier.  Without filling in any statistics, the paragraph we write might look something like this:
 
 > Two linear models were constructed to investigate the influences on teaching evaluation ratings. The first model contained only instructor beauty ratings as a predictor, and teaching evaluation ratings as the outcome (R^2^ = ???, *F*(???, ???) = ???, *p* = ???). The second model added instructor gender as a second predictor with no interaction, both again predicting teaching evaluation ratings (R^2^ = ???, *F*(???, ???) = ???, *p* = ???). An ANOVA comparing the models indicated a \[[significant/non-significant\]]{.underline} improvement in model fit for the second model compared to the first (*F*(???, ???) = ???, *p* = ???).
 
-:::
-:::
+:::: {.repro}
 
-::: repro
-::: repro-header
-::: repro-icon
+::: {.repro-header}
+::: {.repro-icon}
 :::
-
 RepRoducibility: Code-Results Match
 :::
 
-::: repro-body
+::: {.repro-body}
 It is not enough that your code always produces the same results - your code should always produce the results reported in your paper, exactly as they appear in the paper.
 
-The paragraph from the previous exercise was very clearly missing the actual statistical results of the linear model analysis. We *could* produce all the necessary output, read it ourselves with our very own eyes/ears, and then type out the results by hand... but that is definitely *not* what we are going to do! **We want to limit potential sources of errors such as manually typing numbers.**
-:::
+The paragraph above is very clearly missing the actual statistical results of the linear model analysis. We *could* produce all the necessary output, read it ourselves with our very own eyes/ears, and then type out the results by hand... but that is definitely *not* what we are going to do! **We want to limit potential sources of errors such as manually typing numbers.**
+
+Instead, we'll look at a couple options for reporting the results dynamically.
 :::
 
-Instead, we'll look at a couple options for reporting the results dynamically. (We'll come back to the R^2^s and *F*s for each model in a moment.).
+::::
+
 
 ### Reporting
 
@@ -700,17 +696,88 @@ Instead, we'll look at a couple options for reporting the results dynamically. (
 2. inline with papaja
 3. fully custom with inline code and subsetting
 
+### Reporting
+
+##### Automatic reporting with {Report}
+
+Our first option for reporting results without manually typing them up is to use the [{`report`} package](https://easystats.github.io/report/) which is part of [`easystats`](https://easystats.github.io/easystats/). The {report} package includes many useful functions for... reporting results, such as the `report()` function which outputs a written summary of the object that is given to the function as an input. As an example, we can use `report()` to output the results of the models we fitted to the data, for example:
+
+```{r}
+report::report(eval_lm)
+```
+
+This is a very easy and fast way to get APA-formatted results that you can just put into your paper. AND the output contains the inferential conclusions that can be drawn from the results, based on the popular decision cut-off of p < .05 (more on this later!). The results also look much nicer than the output provided by `summary()` which can make it tempting to fit your model and go straight to reporting the results with `report()`. However, `R`, `RStudio` and all the packages in existence get frequent updates which may or may not lead to changes in how a particular function works. Base `R` is always the safest way to interact with and examine your data, so even if you are planning to use `report()` or any other function to beautify your results section, it is best to check that the results match the results produced by `summary()`. Using different methods to do the same thing has helped me catch errors I would have otherwise missed numerous times. 
+
+::: {.callout-tip title="MoRe About: report()" collapse="true"}
+Above, we used the `report()` to summarise the results of our linear models but this is not all that it does! `report()` is very versatile and it will give you a different output depending on the type of object that you give it is input. For example, we can also use this function to output overall descriptive of a given variable: 
+
+```{r}
+report::report(teach_tib$eval)
+```
+:::
+
+Great! We can use `report()` to automatically write our paper! Unfortunately, as of now, we can't use the `report()` function to get the results from the model comparison we did earlier, so we will need to find a different approach:
+
+```{r}
+#report::report(anova(eval_lm, eval_full_lm)
+```
+
+Also, in case you actually like writing papers and just want to get the  APA-formatted results without the automatically generated text, the {report} package has a function which will do just this - `report_statistics()`. We won't cover this function here, but you can try it out to see what it does. Instead, we will have a look at {papaja} which is another useful package for automatic reporting.
+ 
+##### Inline reporting with {Papaja}
+
+Papayas are rich in potassium. {papaja} is an `R` package for **P**reparing **APA** **J**ournal **A**rticles. With this confusing matter sorted, we can use {papaja} with inline coding to report our results in a "semi-automatic" manner (note: this is not an official term). 
+
+<!-- INTRO TO INLINE CODING HERE -->
+
+*Inline code* is a small bit of R code written in the body text ("inline") that will, when the document is rendered, automatically insert the right output. We briefly encountered inline code already [Tutorial 04](04_filter.qmd#reporting). Inline code is written as follows, in the text: `` `r knitr::inline_expr("some_r_code")` ``. Note the backticks; these are NOT apostrophes, and are typically located on the top left of a UK keyboard to the lefter of the 1/! key. We will look into inline code in more detail later.
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Use [the {papaja} documentation](https://frederikaust.com/papaja_man/reporting.html#statistical-models-and-tests) to fill in the statistical reporting for each of the linear models (i.e., R^2^, *F*, and *p*) using only **one piece** of inline code for each.
+
+When you're done, render your document to see the results!
+
+::: {.callout-note collapse="true" title="Solution"}
+The {papaja} documentation illustrates the process using `t.test()`, which works the same way as `lm()`. The key here is to use the original objects containing the models you want to report.
+
+Let's have a look at the first of the two models and see what the `papaja::apa_print()` function gives us.
+
+```{r}
+papaja::apa_print(eval_lm)
+```
+
+We've got a huge number of options here, but for this exercise we wanted R^2^, *F*, and *p*. All three are given under `$full_result$modelfit$r2`. We will need to save the output from `apa_print()` into an object, then we can subset it using inline code:
+
+```{r}
+eval_lm_out <- papaja::apa_print(eval_lm)
+eval_full_lm_out <- papaja::apa_print(eval_full_lm)
+```
+
+> Two linear models were constructed to investigate the influences on teaching evaluation ratings. The first model contained only instructor beauty ratings as a predictor, and teaching evaluation ratings as the outcome (`` `r knitr::inline_expr("eval_lm_out$full_result$modelfit$r2")` ``). The second model added instructor gender as a second predictor with no interaction, both again predicting teaching evaluation ratings (`` `r knitr::inline_expr("eval_full_lm_out$full_result$modelfit$r2")` ``). 
 
 
+Which will render as:
 
-#### Inline Code
+> Two linear models were constructed to investigate the influences on teaching evaluation ratings. The first model contained only instructor beauty ratings as a predictor, and teaching evaluation ratings as the outcome (`r eval_lm_out$full_result$modelfit$r2`). The second model added instructor gender as a second predictor with no interaction, both again predicting teaching evaluation ratings (`r eval_full_lm_out$full_result$modelfit$r2`).
+
+:::
+:::
+
+While this has been great so far, `apa_print()` is also not happy to report the results of our model comparison: 
+```{r}
+#papaja::apa_print(anova(eval_lm, eval_full_lm))
+```
+
+Therefore, to complete the summary of our results, we will look into inline code. 
+
+##### Fully custom reporting
 
 <!-- UPDATE: Takes too long - use report() as main example and just talk through inline code and exercises for people to do later if they want (so rearrange this section) -->
 
-Our first option is to use inline code to report the numbers. In order to do this, we first need to know what information we have available in the test output, so we can make use of it.
+Our final option for reporting results is to use fully custom inline code to report each of our numerical results independently. This is the most flexible option for reporting results because it allows you to put a single result anywhere you like. But first, to be able to refer to a specific result in our output, we need to know what information we have available.
 
 ::: callout-tip
-This section will make extensive use of `$` subsetting, which was covered in [Tutorial 03](03_datasets.qmd), and `[]` subsetting, which was covered in [Tutorial 01](01_intro.qmd).
+This section will make extensive use of `$` subsetting, which was covered in [Tutorial 03](03_datasets.qmd), and `[]` subsetting, which was covered in [Tutorial 01](01_intro.qmd). Getting comfortable with subsetting is valuable not only for reporting results but also for conducting additional analyses on the results of some computation. Even though we are focusing on inline code today, this is just and example and subsetting is useful in coding more generally. 
 :::
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
@@ -763,8 +830,6 @@ We now have a bit of R code that produces a **single** number that we want to re
 
 [^2]: Generally, inline code should only ever produce a single value, otherwise the formatting can get *interesting*. This value, however, could be longer than a single number, if you want to get creative with your dynamic reporting!
 
-The solution is *inline code*, a small bit of R code written in the body text ("inline") that will, when the document is rendered, automatically insert the right number. We briefly encountered inline code already [Tutorial 04](04_filter.qmd#reporting). Inline code is written as follows, in the text: `` `r knitr::inline_expr("some_r_code")` ``. Note the backticks; these are NOT apostrophes, and are typically located on the top left of a UK keyboard to the lefter of the 1/! key.
-
 For our reporting, we will need to insert the inline code in exactly the spot where we would like the output of the code to appear. This particular bit of code produces the *F*-statistic, so we can replace the "???"s in our reporting where the value of the *F*-statistic should go:
 
 > An ANOVA comparing the models indicated a \[[significant/non-significant\]]{.underline} improvement in model fit for the second model compared to the first (*F*(???, ???) = `` `r knitr::inline_expr("round(tidy_f$statistic[2], 2)")` ``, *p* = ???).
@@ -798,19 +863,29 @@ This will render as:
 
 Now let's look into adding the final missing elements in our report - the inferential conclusions of our tests.
 
-### Inferential conclusions should be computed in the code
 
 <!-- Update: Change to repro box -->
 
-Inferential conclusions are arguably the most important results in a paper, and should also be computationally reproducible just like the numerical results they are based on. Decisions related to whether you should reject or accept a given hypothesis should be based on a quantifiable rule that a computer is able to evaluate (see [Lakens & DeBruine, 2021](https://journals.sagepub.com/doi/full/10.1177/2515245920970949)). One familiar example for people using null hypothesis statistical testing is to reject the null hypothesis if the p-value is smaller than some pre-specified cut-off, such as .05.
+:::: {.repro}
 
-So, let's evaluate if the result we computed above is significant or not. If significant, the last sentence in our results paragraph should say:
+::: {.repro-header}
+::: {.repro-icon}
+:::
+RepRoducibility: Inferential conclusions should be computed in the code
+:::
+
+::: {.repro-body}
+Inferential conclusions are arguably the most important results in a paper, and should also be computationally reproducible just like the numerical results they are based on. Decisions related to whether you should reject or accept a given hypothesis should be based on a quantifiable rule that a computer is able to evaluate (see [Lakens & DeBruine, 2021](https://journals.sagepub.com/doi/full/10.1177/2515245920970949)). One familiar example for people using null hypothesis statistical testing is to reject the null hypothesis if the p-value is smaller than some pre-specified cut-off, such as .05, and we saw that the `report()` function applies this rule automatically. In some cases, however, you may need more flexibility in defining whether or not a given hypothesis has been supported. So, let's evaluate if the result we computed above is significant or not. If significant, the last sentence in our results paragraph should say:
 
 > An ANOVA comparing the models indicated a **significant** improvement in model fit for the second model compared to the first...
 
 And if the results is not significant, the last sentence in our results paragraph should say:
 
 > An ANOVA comparing the models indicated a **non-significant** improvement in model fit for the second model compared to the first...
+
+:::
+
+::::
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
 **CHALLENGE**: Create a bit of inline code that will either report a significant or non-significant result depending on the value of *p*.
@@ -840,93 +915,41 @@ Now we don't have to worry about getting this right: our document, when rendered
 :::
 :::
 
-#### Automatic Reporting
+<!--
+Automatic Reporting
 
 As helpful as inline code is (and I would recommend reporting all values dynamically/automatically wherever possible, so it is *very* useful!), you may have noticed that there was a lot of repetitive typing that also made the text itself quite difficult to read, as well lots of opportunities make typos or mistakes. Surely there's a simpler way to do this sort of thing![^3]
 
 [^3]: Here we're going to briefly encounter a principle that will come up again and again, namely: If you have to copy and paste more than once, [use a function instead](https://r4ds.had.co.nz/functions.html#when-should-you-write-a-function).
 
 There are, in fact, many simpler ways to do common tasks like this, which take advantage of the fact that an object created by a particular function will *always* have the same structure. One option is to make further use of the {papaja} package, which is designed for just this purpose.
-
-::: {.callout-note appearance="minimal" title="Exercise"}
-Use [the {papaja} documentation](https://frederikaust.com/papaja_man/reporting.html#statistical-models-and-tests) to fill in the statistical reporting for each of the linear models (i.e., R^2^, *F*, and *p*) using only **one piece** of inline code for each.
-
-When you're done, render your document to see the results!
-
-::: {.callout-note collapse="true" title="Solution"}
-The {papaja} documentation illustrates the process using `t.test()`, which works the same way as `lm()`. The key here is to use the original objects containing the models you want to report.
-
-Let's have a look at the first of the two models and see what the `papaja::apa_print()` function gives us.
-
-```{r}
-papaja::apa_print(eval_lm)
-```
-
-We've got a huge number of options here, but for this exercise we wanted R^2^, *F*, and *p*. All three are given under `$full_result$modelfit$r2`. We will need to save the output from `apa_print()` into an object, then we can subset it using inline code:
-
-```{r}
-eval_lm_out <- papaja::apa_print(eval_lm)
-eval_full_lm_out <- papaja::apa_print(eval_full_lm)
-```
-
-> Two linear models were constructed to investigate the influences on teaching evaluation ratings. The first model contained only instructor beauty ratings as a predictor, and teaching evaluation ratings as the outcome (`` `r knitr::inline_expr("eval_lm_out$full_result$modelfit$r2")` ``). The second model added instructor gender as a second predictor with no interaction, both again predicting teaching evaluation ratings (`` `r knitr::inline_expr("eval_full_lm_out$full_result$modelfit$r2")` ``).
-
-Which will render as:
-
-> Two linear models were constructed to investigate the influences on teaching evaluation ratings. The first model contained only instructor beauty ratings as a predictor, and teaching evaluation ratings as the outcome (`r eval_lm_out$full_result$modelfit$r2`). The second model added instructor gender as a second predictor with no interaction, both again predicting teaching evaluation ratings (`r eval_full_lm_out$full_result$modelfit$r2`).
-
-:::
-:::
-
-<!-- UPDATE: Move to start -->
-::: {.callout-note appearance="minimal" title="Exercise"}
-Another potential option for automatic reporting is the `report()`function from the {`report`} packages (itself part of `easystats`). Check out what `report` does, and use it to report the results of `eval_lm` model. 
-
-::: {.callout-note collapse="true" title="Solution"}
-```{r}
-report::report(eval_lm)
-```
-:::
-:::
+--> 
 
 #### Table Formatting
 
-Next, we will jump to the "Final Model" heading and have a look at how to turn our final model output into a nicely formatted table. It may be tempting to manually create a table in the word processor of your choice and type in the numbers yourself. But we will of course avoid doing this because typos are way, way too easy to make.  
+Now that we have reported the results from our model comparison, we will jump to the "Final Model" heading and have a look at how to turn our final model output into a nicely formatted table. It may be tempting to manually create a table in the word processor of your choice and type in the numbers yourself. But we will of course avoid doing this because typos are way, way too easy to make.  
 
 
-Once again, {papaja} provides a quick and beautiful solution for reporting, so let's use it again.
-
-
-::: {.callout-note appearance="minimal" title="Exercise"}
-Using [the {papaja} help documentation](https://frederikaust.com/papaja_man/reporting.html#reporting-models-and-tests-in-a-table), produce a nicely formatted table of the final model, presenting the parameter estimates, *p*-values etc. for each predictor under the third ("Final Model") heading.
-
-::: {.callout-note collapse="true" title="Solution"}
-We already have the necessary object, `eval_full_lm_out`, from the previous task. We just need to subset it as described in the help documentation.
-
-This command should go in a new code chunk, wherever you want the table to appear in your document.
+Luckily, {papaja} provides a quick and beautiful solution for reporting tables - [the `apa_table()` function](https://frederikaust.com/papaja_man/reporting.html#reporting-models-and-tests-in-a-table). So, let's use it to produce a nicely formatted table of the final model, presenting the parameter estimates, *p*-values etc. for each predictor in `eval_full_lm_out`.
 
 ```{r}
 papaja::apa_table(eval_full_lm_out$table)
 ```
-:::
-:::
+The command above should go in a new code chunk, wherever you want the table to appear in your document.
 
-::: {.callout-note appearance="minimal" title="Exercise"}
-**CHALLENGE**: {papaja} isn't the only package to provide easy formatting for commonly reported tests. Have a go creating this table again using the `nice_table()` function from the {rempsyc} package.
 
-::: {.callout-note collapse="true" title="Solution"}
-The `nice_table()` function can be for tables generally, but it can apply specialised formatting for model tables created with `broom`, if we use the `broom =` argument to tell the function what formatting template to apply.
+{Papaja} isn't the only package to provide easy formatting for commonly reported tests. We can create a similar looking table using the `nice_table()` function from the {rempsyc} package.
+
+The `nice_table()` function can be used for tables generally, but it can apply specialised formatting for model tables created with `broom`, if we use the `broom =` argument to tell the function what formatting template to apply.
 
 ```{r}
 rempsyc::nice_table(broom::tidy(eval_full_lm, conf.int = TRUE), 
                     broom = "lm")
 
 ```
-:::
-:::
 
-::: {.callout-note collapse="true" title="Solution"}
-**CHALLENGE**: Finally, add a note along with the table explaining what the symbols could be presented next to the p-value and what they mean. 
+::: {.callout-note appearance="minimal" title="Exercise"}
+**CHALLENGE**: Add a note along with the table explaining what symbols could be presented next to the p-value and what they mean - this will help make the inferential conclusions drawn on the basis of the analysis reproducible.  
 
 ::: {.callout-note collapse="true" title="Solution"}
 ```{r}
@@ -954,8 +977,9 @@ The good news is that Quarto can take care of figure and table numbering **autom
 -   Include a label in the relevant code chunk, using the prefix `fig-` for figures and `tbl-` for tables.
 -   Refer to the figure or table in the text using `@`.
 
-::: {.callout-note appearance="minimal" title="Exercises"}
-Using [the Quarto help documentation](https://quarto.org/docs/authoring/cross-references.html#tables), write a short introductory sentence under the "Final Model" heading and refer to the final model table with a cross-reference.
+::: {.callout-note title="Exercise" collapse="true"}
+
+Write a short introductory sentence under the "Final Model" heading and refer to the final model table with a cross-reference.
 
 ::: {.callout-note collapse="true" title="Solution"}
 First, add a label and caption to the code chunk from the previous task that produces the model table.
@@ -987,7 +1011,7 @@ papaja::apa_table(eval_full_lm_out$table)
 :::
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-**CHALLENGE**: Complete the final "Assumptions Checks" section summarising the checks and using figure cross-referencing to insert and refer to the diagnostic plots.
+**CHALLENGE**: Complete the final "Assumptions Checks" section summarising the checks and using figure cross-referencing to insert and refer to the diagnostic plots. Refer to [the Quarto help documentation](https://quarto.org/docs/authoring/cross-references.html#tables), for help with the cross-referecing. 
 
 *Hint*: To report the exact maximum value of Cook's distance, you will also need to refer to `discovr_08` for how to use `broom::augment()`.
 
@@ -1094,7 +1118,8 @@ As per, the [Quarto guide on output formats](https://quarto.org/docs/output-form
 :::
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-Render your linear model report to a Word document.
+We have done quite a lot and your Quarto document may be a bit messy. Go through your document and make it look... nicer - add comments to the code ..... <!-- EXPAND HERE -->
+Finally, render your linear model report to a Word document.
 
 ::: {.callout-note collapse="true" title="Solution"}
 Simply update the `format: html` YAML option to `format: docx` and render your document. Note that the `format` options are usually named after the file extension rather than the name of the programme necessarily (e.g. `docx` rather than `word`.)
