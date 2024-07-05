@@ -3,7 +3,7 @@
 out <- here::here("workbooks")
 
 ## Which week(s)?
-get_this <- "04"
+get_this <- "05"
 
 ## Create new folder
 if(!dir.exists(out)){
@@ -75,7 +75,7 @@ gen_workbook <- function(this_file, out){
     dplyr::group_by(ex_start_index) |> 
     dplyr::mutate(
       ex_index = dplyr::case_when(co_end_index == min(co_end_index) ~ ex_start_index, .default = as.integer(0)),
-      is_ex = dplyr::if_else(ex_index > 0 & !sol_index, TRUE, FALSE),
+      is_ex = dplyr::if_else(ex_index > 0 & (is.na(sol_index) | sol_index == 0), TRUE, FALSE),
       is_ex_text = dplyr::if_else(is_ex & !(startsWith(lines, ":::")), TRUE, FALSE)
     ) |> 
     dplyr::ungroup()

@@ -182,6 +182,12 @@ anova(eval_lm, eval_full_lm)
 
 The *F*-test is significant, indicating that the more complex two-predictor model is a significant improvement over the one-predictor model, so we will proceed with the two-predictor model.
 
+```{r}
+anova(eval_lm, eval_full_lm)
+
+```
+
+
 #### Standardised *B*s
 
 You may have noticed that the output we've seen so for only contains *un*standardised model parameter estimates. If we want standardised *B*s expressing the relationship between predictor(s) and outcome in standard deviation units, we can make use of the `model_parameters()` function from the {parameters} package to standardise our *b*s. To obtain standardised *b*s, we can use the `standarize = "refit"` argument in the `parameters::model_parameters()` function,
@@ -361,8 +367,7 @@ parameters::model_parameters(syn_full_lm, bootstrap = TRUE)
 :::
 :::
 
-
-<!-- RENY - This bit onwards is all about using dynamic reporting in Quarto. Feel free to delete wholesale unless you want to use any of it! -->
+\ 
 
 ## Reproducible Analysis
 
@@ -374,7 +379,7 @@ As we are doing this, there are several things to keep in mind:
 
 2.  The code should correspond to the intended analysis.
 
-3.  The results from the code should exactly match the results in the paper.
+3.  The results from the code should exactly match the results in the corresponding paper.
 
 4.  Inferential conclusions should be computed in the code.
 
@@ -382,7 +387,7 @@ As we are doing this, there are several things to keep in mind:
 
 Before you get to have fun with coding and writing comments, let's look into points 1 and 2 in a bit more detail.
 
-### Each time we run the code, we should get the same results
+### Same Results
 
 One source of non-reproducible results is the use of random numbers in analyses. Bootstrapping is one procedure which uses randomly sampling, so each time you bootstrap, you will get slightly different results.
 
@@ -396,7 +401,7 @@ rnorm(2, mean = 5, sd = 2)
 rnorm(2, mean = 5, sd = 2)
 ```
 
-Thankfully, these numbers are not truly random, but just "pseudorandom" - they just look random but really aren't. This means that we can get R to give us the exact same set of "random" numbers every time we run the command. R uses an algorithm called a random number generator to... generate seemingly random numbers. If you specify the "seed" of the random number generator, R will always produce the same sequence of random numbers. In the absence of a user-specified seed, R uses the current computer time. You probably didn't need to know this particular detail, but now you do. To set the seed, we will use the \`set.seed()\` function:
+Thankfully, these numbers are not truly random, but just "pseudorandom" - they just look random but really aren't. This means that we can get R to give us the exact same set of "random" numbers every time we run the command. R uses an algorithm called a random number generator to... generate seemingly random numbers. If you specify the "seed" of the random number generator, R will always produce the same sequence of random numbers. In the absence of a user-specified seed, R uses the current computer time. You probably didn't need to know this particular detail, but now you do. To set the seed, we will use the `set.seed()` function:
 
 ```{r}
 # Generate 2 random numbers from a normal distribution with mean = 5, and sd = 2
@@ -433,13 +438,13 @@ You may notice that the results we get with and without setting the seed are ver
 There are different kinds of random number generators and you will get different results if you change the random number generator. You can set the specific random number generator to use using the `RNGkind()` function. Currently, the default in R is the "Mersenne-Twister" generator. The current version of the reproducibility certification template doesn't ask whether the kind of random number generator is specified, but it is something I should add.
 :::
 
-### The code should correspond to the intended analysis
+### Correct Analysis
 
 This point is tricky because each function in R will have it's own quirks or properties you need to be aware of. Just as an example, since we are doing linear models today, we will look into how data types can affect the results produced by the `lm()` function.
 
-In some datasets, categorical variables are sometimes coded with numerical values. For example, in an experiment where you have a control group and an experimental group, the you may code the control group as a 0, and the experimental group as a 1. Before you do any analyses, you need to first make sure that these variables are of a factor type rather than a numeric type. If the variable has only 2 levels, nothing bad will happen, but if it has more than 2 levels, the results from your analysis won't be meaningful.
+In some datasets, categorical variables are sometimes coded with numerical values. For example, in an experiment where you have a control group and an experimental group, you may code the control group as a 0, and the experimental group as a 1. Before you do any analyses, you need to first make sure that these variables are factor type rather than numeric type. If the variable has only 2 levels, nothing bad will happen, but if it has more than 2 levels, the results from your analysis won't be meaningful.
 
-To illustrate, let's add a new variable to the \`teach_tib\` data frame which will state what time of day the lecturer's classes take place. The variable will have 3 levels: 1 -- evening, 2 -- morning, 3 -- lunch time, and R will automatically assume that \`class_time\` contains numeric data:
+To illustrate, let's add a new variable to the `teach_tib` data frame which will state what time of day the lecturer's classes take place. The variable will have 3 levels: 1 -- evening, 2 -- morning, 3 -- lunch time, and R will automatically assume that `class_time` contains numeric data:
 
 ```{r}
 # Set the seed of the random number generator 
@@ -449,7 +454,9 @@ set.seed(1)
 # The values in the class time variable are randomly generated and consist of:
 # 1 – evening, 2 – morning, 3 – lunch time
 teach_tib <-  teach_tib |> 
-  dplyr::mutate(class_time = sample(c(1, 2, 3), size = nrow(teach_tib), replace = TRUE))
+  dplyr::mutate(class_time = sample(c(1, 2, 3), 
+                                    size = dplyr::n(), 
+                                    replace = TRUE))
 
 # Check the data type of class_time 
 class(teach_tib$class_time)
@@ -465,7 +472,7 @@ class_time_lm <- lm(eval ~ class_time, data = teach_tib)
 summary(class_time_lm)
 ```
 
-The interpretation of these results is that as class time increases by 1 unit, evaluations changes by `r round(summary(class_time_lm)$coefficients[2, 1], 2)` points. Class time is however not a continuous numeric variable, so this doesn't make sense. Instead, we have to change class time to a categorical variable:
+The interpretation of these results is that as class time increases by 1 unit, evaluations change by `r round(summary(class_time_lm)$coefficients[2, 1], 2)` points. Class time is however not a continuous numeric variable, so this doesn't make sense. Instead, we have to change class time to a categorical variable:
 
 ```{r}
 # Create a factor class time variable
@@ -482,7 +489,7 @@ class_time_cat_lm <- lm(eval ~ class_time_cat, data = teach_tib)
 summary(class_time_cat_lm)
 ```
 
-By default, R will use the first level of the categorical variable as the value for the intercept. Then, it creates two coefficients -- one showing the difference between levels 1 and 2, and the other showing the different between levels 1 and 3. You can explicitly define the contrasts you want to compute, but we won't be looking into this here.
+By default, R will use the first level of the categorical variable as the value for the intercept. Then, it creates two coefficients -- one showing the difference between levels 1 and 2, and the other showing the difference between levels 1 and 3. You can explicitly define the contrasts you want to compute, but we won't be looking into this here.
 
 The main point of this exercise was to see that R was perfectly happy executing the analysis assuming that class time is a continuous variable - it doesn't know it is in fact a categorical variable and you have to communicate this information. The take home message here is that even though a chunk of code runs, it doesn't mean it accomplishes the analysis you are aiming to do, and you need to examine all the assumptions that R has made in the process.
 
@@ -491,6 +498,20 @@ And with all that out of the way, we are ready to get started with Quarto.
 ## Reproducible Reporting
 
 We will now redo the analyses we conducted on the teaching evaluation data in a new Quarto document. Your analysis can be reproducible even if you are not using Quarto, but it makes things a lot easier and it is highly recommended.
+
+:::{callout-important title="What For?"}
+
+There are two key ways you might want to write and render a Quarto document for your analysis.
+
+**Option 1: Record of Output**. In this case, the rendered document will serve a as record of all of the analyses and results that you can refer to when writing your report elsewhere. This is a similar purpose as, for example, the output file in SPSS, so does not need to include much inline code or formatting of in-text results.
+
+**Option 2: Formal Report**. In this case, the rendered document will serve as the final, formal report of your results, for submission to journals etc. This should include complete and formatted results including text.
+
+We will talk about both uses of Quarto today. Option 1 is a good intermediate step if you're learning R and Quarto but feel more comfortable writing, editing, or collaborating on your work in a more familiar program. Option 2 is the most resilient to copy mistakes, since the same document that produces the results is also the one that reports them; but this might be more difficult to work on collaboratively, and you may need to tinker extensively to get a particular formatting or output, or to resolve rendering errors.
+
+However, even if you are shooting for Option 1, it's still a very good idea to document your inferential conclusions using code.
+
+:::
 
 Quarto documents are a mix of text and code, the next generation of R Markdown documents. For our purposes, we will be using R within Quarto, but Quarto documents support the integration of many different coding languages, including Python, Julia, and Observable. If you've previously used Rmd (RMarkdown), Quarto is backwards-compatible and will able to render most documents with no issues.
 
@@ -507,7 +528,7 @@ Prof Andy Field has also recorded a [series of video guides to using Quarto](htt
 To get some hands-on practice working with Quarto, we will create a new Quarto document from scratch. We will use the analysis code we've already written to create a nicely formatted report.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-Create a new Quarto document via File \> New File \> Quarto Document.
+Create a new Quarto document via File > New File > Quarto Document.
 
 If you like, you can give it a title; you will be able to change this later.
 
@@ -516,14 +537,14 @@ Then, click "Create".
 
 By default, your new Quarto document will already have some settings and content to demonstrate how it works. Most importantly, you can see that there are three main types of information in this document:
 
-1.  The [**YAML header**](04_lm.qmd#global-options) at the top, delineated by `---`s, which contains information about how the document will be *rendered*
-2.  The [**body text**](04_lm.qmd#body-text), which contains regular (i.e. non-code) text
-3.  The [**code chunks**](04_lm.qmd#code-chunks), which contain code - in this case, specifically, R.
+1.  The [**YAML header**](#global-options) at the top, delineated by `---`s, which contains information about how the document will be *rendered*
+2.  The [**body text**](#body-text), which contains regular (i.e. non-code) text
+3.  The [**code chunks**](#code-chunks), which contain code - in this case, specifically, R.
 
-![](/images/quarto_anatomy.png){fig-alt="A screenshot of the default Quarto document, with the YAML, text, and code chunks each circled and labelled in a different colour." fig-align="center"}
+![](../../images/quarto_anatomy.png){fig-alt="A screenshot of the default Quarto document, with the YAML, text, and code chunks each circled and labelled in a different colour." fig-align="center"}
 
 ::: callout-warning
-Before you proceed, make sure you have completed and saved your fist worksheet with all of your code!
+Before you proceed, make sure you have completed and saved your first worksheet with all of your code!
 :::
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
@@ -531,7 +552,7 @@ To complete our setup, take the following steps:
 
 -   Delete everything in the new Quarto document except for the YAML header (i.e. all the text and code chunks).
 -   Clear your Environment by clicking the broom icon in the Environment tab.
--   Restart your R session (via Session \> Restart R).
+-   Restart your R session (via Session > Restart R).
 :::
 
 ::: {.callout-tip title="Visual vs Source Mode" collapse="true"}
@@ -541,14 +562,14 @@ Visual mode also has an "insert anything" shortcut, `/`, that allows you to quic
 
 Alternatively, you can toggle to **Source mode** by clicking the "Source" button at the very top left of the document pane. In Source mode you can edit the document using Markdown formatting. This allows more fine-tuned control of elements, but automatic formatting and the `/` shortcut don't work in this mode.
 
-Which you use is entirely personal preference - I toggle regularly between them depending on what I'm trying to do, so pick whichever works for you.
+Which you use is entirely personal preference - I (JM) toggle regularly between them depending on what I'm trying to do, so pick whichever works for you.
 :::
 
 ### Creating a Code Chunk
 
 To prepare for our analysis, we will need a place to load packages and read in the data. Any executable code - that is, code that you want to run and do something - must be written in a code chunk and NOT in the body text[^1].
 
-[^1]: Mostly true, except for [inline code](04_lm.qmd#inline-code)!
+[^1]: Mostly true, except for [inline code](#inline-code)!
 
 There are several ways to insert a new code chunk.
 
@@ -562,8 +583,8 @@ There are several ways to insert a new code chunk.
 Create a new code chunk and code that does the following:
 
 -   Load all the packages we used in the previous Linear Model section
--   [Read in the dataset](04_lm.qmd#data-and-codebook)
--   Create the two objects containing the linear models with [one predictor](04_lm.qmd#one-predictor) and with [two predictors](04_lm.qmd#hierarchical-models).
+-   [Read in the dataset](#data-and-codebook)
+-   Create the two objects containing the linear models with [one predictor](#one-predictor) and with [two predictors](#hierarchical-models).
 
 Then, run the code chunk.
 
@@ -623,12 +644,12 @@ To begin, we'll use headings to map out our document. There are several ways to 
 Properly formatted headings are strongly recommended for any documents you write, for a variety of reasons:
 
 -   They automatically create the outline (to the right) and navigation menu (to the bottom) of your document for easy navigation
--   They can be automatically converted into a [table of contents](04_lm.qmd#rendering)
+-   They can be automatically converted into a [table of contents](#rendering)
 -   They are a crucial accessibility feature for navigating the document via keyboard/screenreader, as well as providing clear visual structure.
 :::
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-Create 2-3 level 2 headings in your document for the brief report of the linear model. You can choose anything you like, but the three I will refer to will be called "Model Comparison" (constructing and comparing the two models), "Assumptions Checks", and "The Final Model" (reporting the final model in full).
+Create 2-3 level 2 headings in your document for the brief report of the linear model. You can choose anything you like, but in this tutorial we'll be using "Model Comparison" (constructing and comparing the two models), "Assumptions Checks", and "The Final Model" (reporting the final model in full).
 :::
 
 #### Text
@@ -649,23 +670,47 @@ Under the first heading (which I have called "Model Comparison"), write a brief,
 If you aren't inclined to write your own, here's a brief sample text to use.
 
 > Two linear models were constructed to investigate the influences on teaching evaluation ratings. The first model contained only instructor beauty ratings as a predictor, and teaching evaluation ratings as the outcome (R^2^ = ???, *F*(???, ???) = ???, *p* = ???). The second model added instructor gender as a second predictor with no interaction, both again predicting teaching evaluation ratings (R^2^ = ???, *F*(???, ???) = ???, *p* = ???). An ANOVA comparing the models indicated a \[[significant/non-significant\]]{.underline} improvement in model fit for the second model compared to the first (*F*(???, ???) = ???, *p* = ???).
+
 :::
 :::
 
-### The results from the code should exactly match the results in the paper
+::: repro
+::: repro-header
+::: repro-icon
+:::
 
+RepRoducibility: Code-Results Match
+:::
+
+::: repro-body
 It is not enough that your code always produces the same results - your code should always produce the results reported in your paper, exactly as they appear in the paper.
 
 The paragraph from the previous exercise was very clearly missing the actual statistical results of the linear model analysis. We *could* produce all the necessary output, read it ourselves with our very own eyes/ears, and then type out the results by hand... but that is definitely *not* what we are going to do! **We want to limit potential sources of errors such as manually typing numbers.**
+:::
+:::
 
 Instead, we'll look at a couple options for reporting the results dynamically. (We'll come back to the R^2^s and *F*s for each model in a moment.).
 
+### Reporting
+
+1. automatic with `report()`
+     - Don't blindly use it without checking!!
+     - Look at output with summary() and use report() to SUPPLEMENT
+     - Compare to make sure it's correct
+2. inline with papaja
+3. fully custom with inline code and subsetting
+
+
+
+
 #### Inline Code
+
+<!-- UPDATE: Takes too long - use report() as main example and just talk through inline code and exercises for people to do later if they want (so rearrange this section) -->
 
 Our first option is to use inline code to report the numbers. In order to do this, we first need to know what information we have available in the test output, so we can make use of it.
 
 ::: callout-tip
-This section will make extensive use of `$` subsetting, which was covered in [Tutorial 03](03_datasets.qmd), and `[]` subsetting, which was covered in [Tutorial 01/02](01_02_intro.qmd).
+This section will make extensive use of `$` subsetting, which was covered in [Tutorial 03](03_datasets.qmd), and `[]` subsetting, which was covered in [Tutorial 01](01_intro.qmd).
 :::
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
@@ -686,7 +731,7 @@ tidy_f
 :::
 :::
 
-The tibble we get here is quite different from [the "Analysis of Variance Table" text output](04_lm.qmd#comparing-models) that we saw earlier when we printed out the results of the `anova()` function on its own. We now have all the values we need to report these results in a conveniently subsettable tibble with nice R-friendly names.
+The tibble we get here is quite different from [the "Analysis of Variance Table" text output](#comparing-models) that we saw earlier when we printed out the results of the `anova()` function on its own. We now have all the values we need to report these results in a conveniently subsettable tibble with nice R-friendly names.
 
 So, let's have a go getting at some of those values.
 
@@ -718,7 +763,7 @@ We now have a bit of R code that produces a **single** number that we want to re
 
 [^2]: Generally, inline code should only ever produce a single value, otherwise the formatting can get *interesting*. This value, however, could be longer than a single number, if you want to get creative with your dynamic reporting!
 
-The solution is *inline code*, a small bit of R code written in the body text ("inline") that will, when the document is rendered, automatically insert the right number. Inline code is written as follows, in the text: `` `r knitr::inline_expr("some_r_code")` ``. Note the backticks; these are NOT apostrophes, and are typically located on the top left of a UK keyboard to the lefter of the 1/! key.
+The solution is *inline code*, a small bit of R code written in the body text ("inline") that will, when the document is rendered, automatically insert the right number. We briefly encountered inline code already [Tutorial 04](04_filter.qmd#reporting). Inline code is written as follows, in the text: `` `r knitr::inline_expr("some_r_code")` ``. Note the backticks; these are NOT apostrophes, and are typically located on the top left of a UK keyboard to the lefter of the 1/! key.
 
 For our reporting, we will need to insert the inline code in exactly the spot where we would like the output of the code to appear. This particular bit of code produces the *F*-statistic, so we can replace the "???"s in our reporting where the value of the *F*-statistic should go:
 
@@ -754,6 +799,8 @@ This will render as:
 Now let's look into adding the final missing elements in our report - the inferential conclusions of our tests.
 
 ### Inferential conclusions should be computed in the code
+
+<!-- Update: Change to repro box -->
 
 Inferential conclusions are arguably the most important results in a paper, and should also be computationally reproducible just like the numerical results they are based on. Decisions related to whether you should reject or accept a given hypothesis should be based on a quantifiable rule that a computer is able to evaluate (see [Lakens & DeBruine, 2021](https://journals.sagepub.com/doi/full/10.1177/2515245920970949)). One familiar example for people using null hypothesis statistical testing is to reject the null hypothesis if the p-value is smaller than some pre-specified cut-off, such as .05.
 
@@ -831,6 +878,7 @@ Which will render as:
 :::
 :::
 
+<!-- UPDATE: Move to start -->
 ::: {.callout-note appearance="minimal" title="Exercise"}
 Another potential option for automatic reporting is the `report()`function from the {`report`} packages (itself part of `easystats`). Check out what `report` does, and use it to report the results of `eval_lm` model. 
 
@@ -843,7 +891,7 @@ report::report(eval_lm)
 
 #### Table Formatting
 
-Next, we will jump to the "Final Model" heading and have a look at how to turn our final model output into a nicely formatted table. It may be tempting to manually create a table in the word processor of your choice and type in the numbers yourself. But we will of couse avoid doing this because typos are way, way too easy to make.  
+Next, we will jump to the "Final Model" heading and have a look at how to turn our final model output into a nicely formatted table. It may be tempting to manually create a table in the word processor of your choice and type in the numbers yourself. But we will of course avoid doing this because typos are way, way too easy to make.  
 
 
 Once again, {papaja} provides a quick and beautiful solution for reporting, so let's use it again.
@@ -870,14 +918,15 @@ papaja::apa_table(eval_full_lm_out$table)
 The `nice_table()` function can be for tables generally, but it can apply specialised formatting for model tables created with `broom`, if we use the `broom =` argument to tell the function what formatting template to apply.
 
 ```{r}
-rempsyc::nice_table(broom::tidy(eval_full_lm, conf.int = TRUE), broom = "lm")
+rempsyc::nice_table(broom::tidy(eval_full_lm, conf.int = TRUE), 
+                    broom = "lm")
 
 ```
 :::
 :::
 
 ::: {.callout-note collapse="true" title="Solution"}
-Finally, add a note along with the table explaining what the symbols could be presented next to the p-value and what they mean. 
+**CHALLENGE**: Finally, add a note along with the table explaining what the symbols could be presented next to the p-value and what they mean. 
 
 ::: {.callout-note collapse="true" title="Solution"}
 ```{r}
@@ -890,6 +939,13 @@ rempsyc::nice_table(broom::tidy(eval_full_lm, conf.int = TRUE), broom = "lm",
 :::
 
 #### Cross-Referencing
+
+::: {.callout-warning}
+
+This material will not be covered in live workshops, unless there is sufficient time and interest. This section is included for anyone interested in producing final reports in Quarto, rather than using it as an intermediate step to create a report in another programme.
+
+If you want to skip this section, you can jump down to [the next section](#rendering).
+:::
 
 As anyone who has had to create a long document with lots of tables and figures knows, keeping track of the numbering is a huge pain, especially when, for instance, a reviewer asks you to add something partway through and then everything has to be renumbered.
 
@@ -996,12 +1052,12 @@ execute: # <3>
 
 1.  Automatically produce a table of contents (ToC) from the document headings.
 2.  Combine all the files, images, stylesheets etc. into a single output document. Necessary if you want to send an HTML file to someone else and have it look as it should!
-3.  Set default behaviour for all code chunks as follows
+3.  Set default behaviour for all code chunks as follows:
 4.  Run code and show output, but do not show the code itself.
 5.  Do not show any warnings produced by code.
 6.  Do not show any messages produced by code.
 
-The requirements for each document will change depending on its purpose.
+The requirements for each document will change depending on its purpose, but particulary the `execute` settings above are a good starting point for a clean and readable rendered document.
 
 ::: callout-tip
 The [Quarto help documentation](https://quarto.org/docs/computations/execution-options.html), as usual, has a complete list of YAML options, including how to set default behaviour for figures and other settings.
@@ -1009,7 +1065,7 @@ The [Quarto help documentation](https://quarto.org/docs/computations/execution-o
 
 #### Code Chunk Options
 
-Global options apply to the entire document, but you may want to change these settings for individual code chunks to override the default settings in the YAML.
+Global options apply to the entire document. The options you specify in the YAML are automatically applied to all code chunks, but you may want to change these settings for individual code chunks to get the effect you want.
 
 For example, you may have a code chunk containing some processing code that you used to view and clean your data. If your global execution option is set to `echo: false`, the code output would still appear, although the code itself would be hidden. If, for this particular code chunk, you don't want the output to appear either, you can override the global option with a local option for that chunk only.
 
@@ -1027,7 +1083,7 @@ some_code_doing_cleaning_and_processing
 
 #### Output Formats
 
-For these tutorials, we will generally stick to HTML, as it's the most painless of the rendering options. However, you will likely find yourself wanting to produce some other type of document, which you can easily[^6] do from the same Quarto document.
+For these tutorials, we will generally stick to HTML rendering, as it's the most painless of the rendering options. However, you will likely find yourself wanting to produce some other type of document, which you can easily[^6] do from the same Quarto document.
 
 [^6]: Depends crucially on what you consider to be "easy", especially when dealing with PDFs!
 
@@ -1045,6 +1101,4 @@ Simply update the `format: html` YAML option to `format: docx` and render your d
 :::
 :::
 
-And there we have it! You now have a complete example of a linear model report, rendered into both HTML and Word, to refer to. It's amazing how much you're able to do after just a few weeks!
-
-This is the end of the FundRmentals section of the course. If you're so inclined, we'll see you in the Essentials section, which will cover data wrangling and cleaning, and running and reporting many more statistical analyses.
+And there we have it! You now have a complete example of a linear model report, rendered into both HTML and Word, to refer to. Well done!
