@@ -49,10 +49,9 @@ Because {discovr} tutorials run within R, you don't need to use any external doc
 
 ### Data and Codebook
 
-Today's data is the `TeachingRatings` dataset from the {AER} package. This dataset is built into the package, so you don't need to read it in from anywhere. 
+Today's data is the `TeachingRatings` dataset from the {AER} package. This dataset is built into the package, so you don't need to read it in from anywhere.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
 Use the code below to get the data and rename it `teach_tib` (not necessary, just easier to type!).
 
 ```{r}
@@ -266,6 +265,7 @@ The parameter estimates will not change, but the *SE*s, CIs, and *p*-values may.
 #### Bootstrapping
 
 If we had a small sample size, a final option would be to bootstrap the confidence intervals. To do this, we will again use `parameters::model_parameters()`, but this time with `bootstrap = TRUE`.
+
 ```{r}
 ## Generate bootstrapped CIs
 parameters::model_parameters(eval_full_lm, bootstrap = TRUE)
@@ -283,19 +283,16 @@ That was quite a whirlwind tour of the basics of linear models in R. The followi
 For these exercises, we'll use the `syn_data` dataset, which we encountered in tutorial 03, to do some analysis.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
 Read in the `syn_data` dataset in the `data` folder and save it in the object `syn_data`.
 
 ::: {.callout-note collapse="true" title="Solution"}
 ```{r}
 syn_data <- readr::read_csv(here::here("data/syn_data.csv"))
 ```
-
 :::
 :::
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
 Fit a single-predictor linear model, with `scsq_imagery` as the outcome and `scsq_techspace` as the predictor. Obtain model parameters and fit statistics for this model.
 
 ::: {.callout-note collapse="true" title="Solution"}
@@ -309,23 +306,21 @@ summary(syn_lm)
 broom::glance(syn_lm)
 broom::tidy(syn_lm, conf.int = TRUE)
 ```
-
 :::
 :::
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
 Add `syn` and `scsq_language` to create a new model with three predictors. Obtain model parameters, fit statistics, and standardised *b*s.
 
 Then, decide which model is better, the first or second model.
 
 ::: {.callout-note collapse="true" title="Solution"}
+<!--Note from Reny: When loading the data from the URL I had to chagne syn_sequence_space to syn_seq_space--->
 ```{r}
 syn_full_lm <- lm(scsq_imagery ~ scsq_techspace + syn + scsq_language, data = syn_data)
+syn_inter_lm <- lm(scsq_imagery ~ syn_graph_col*syn_sequence_space, data = syn_data)
 
-## Simple summary
 summary(syn_full_lm)
-
 ## Tidy summaries
 broom::glance(syn_full_lm)
 broom::tidy(syn_full_lm, conf.int = TRUE)
@@ -336,16 +331,13 @@ parameters::model_parameters(syn_full_lm, standardize = "refit")
 ## Compare models
 anova(syn_lm, syn_full_lm)
 ```
-
 :::
 :::
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-
 Conduct assumptions checks for the final model, including diagnostic plots and sensitivity tests. Decide on a final model to report.
 
 ::: {.callout-note collapse="true" title="Solution"}
-
 ```{r}
 ## Residuals
 ggplot2::autoplot(syn_full_lm, which = c(1, 3, 2, 4))
@@ -366,13 +358,139 @@ parameters::model_parameters(syn_lm_rob, vcov = "HC4")
 ## Generate bootstrapped CIs
 parameters::model_parameters(syn_full_lm, bootstrap = TRUE)
 ```
+:::
+:::
 
-:::
-:::
 
 <!-- RENY - This bit onwards is all about using dynamic reporting in Quarto. Feel free to delete wholesale unless you want to use any of it! -->
 
-## Quarto
+## Reproducible Analysis
+
+We will now put together everything we did in the previous exercises into a reproducible script.
+
+As we are doing this, there are several things to keep in mind:
+
+1.  Each time we run the code, we should get the same results.
+
+2.  The code should correspond to the intended analysis.
+
+3.  The results from the code should exactly match the results in the paper.
+
+4.  Inferential conclusions should be computed in the code.
+
+5.  Code should be organised and commented so that it's understandable and easy to follow.
+
+Before you get to have fun with coding and writing comments, let's look into points 1 and 2 in a bit more detail.
+
+### Each time we run the code, we should get the same results
+
+One source of non-reproducible results is the use of random numbers in analyses. Bootstrapping is one procedure which uses randomly sampling, so each time you bootstrap, you will get slightly different results.
+
+To illustrate, each time you ask R to generate a random number, it will return a different output:
+
+```{r}
+# Get 2 random numbers from a normal distribution with mean = 5, and sd = 2
+rnorm(2, mean = 5, sd = 2)
+
+# Do it again 
+rnorm(2, mean = 5, sd = 2)
+```
+
+Thankfully, these numbers are not truly random, but just "pseudorandom" - they just look random but really aren't. This means that we can get R to give us the exact same set of "random" numbers every time we run the command. R uses an algorithm called a random number generator to... generate seemingly random numbers. If you specify the "seed" of the random number generator, R will always produce the same sequence of random numbers. In the absence of a user-specified seed, R uses the current computer time. You probably didn't need to know this particular detail, but now you do. To set the seed, we will use the \`set.seed()\` function:
+
+```{r}
+# Generate 2 random numbers from a normal distribution with mean = 5, and sd = 2
+set.seed(10)
+rnorm(2, mean = 5, sd = 2)
+
+# Do it again 
+set.seed(10)
+rnorm(2, mean = 5, sd = 2)
+```
+
+Note that I had to set the seed before each of the commands to generate random numbers. If I specify it just in front of the first command, the second command will return different results:
+
+```{r}
+# Generate 2 random numbers from a normal distribution with mean = 5, and sd = 2
+set.seed(10)
+rnorm(2, mean = 5, sd = 2)
+
+# Do it again 
+rnorm(2, mean = 5, sd = 2)
+```
+
+So, to make the results of our bootstrapping reproducible, we have to set the seed of the random number generator:
+
+```{r}
+## Generate bootstrapped CIs
+set.seed(10)
+parameters::model_parameters(eval_full_lm, bootstrap = TRUE)
+```
+
+You may notice that the results we get with and without setting the seed are very, very similar. However, this will not always be the case, and we are striving to have a script that produces **exactly the same** results every time we run it. The seed of the random number generator is one source of non-reproducibility that we can control, and we should make use of R's generosity.
+
+::: {.callout-tip title="MoRe About: Random Number Generators" collapse="true"}
+There are different kinds of random number generators and you will get different results if you change the random number generator. You can set the specific random number generator to use using the `RNGkind()` function. Currently, the default in R is the "Mersenne-Twister" generator. The current version of the reproducibility certification template doesn't ask whether the kind of random number generator is specified, but it is something I should add.
+:::
+
+### The code should correspond to the intended analysis
+
+This point is tricky because each function in R will have it's own quirks or properties you need to be aware of. Just as an example, since we are doing linear models today, we will look into how data types can affect the results produced by the `lm()` function.
+
+In some datasets, categorical variables are sometimes coded with numerical values. For example, in an experiment where you have a control group and an experimental group, the you may code the control group as a 0, and the experimental group as a 1. Before you do any analyses, you need to first make sure that these variables are of a factor type rather than a numeric type. If the variable has only 2 levels, nothing bad will happen, but if it has more than 2 levels, the results from your analysis won't be meaningful.
+
+To illustrate, let's add a new variable to the \`teach_tib\` data frame which will state what time of day the lecturer's classes take place. The variable will have 3 levels: 1 -- evening, 2 -- morning, 3 -- lunch time, and R will automatically assume that \`class_time\` contains numeric data:
+
+```{r}
+# Set the seed of the random number generator 
+set.seed(1)
+
+# Add a class time variable
+# The values in the class time variable are randomly generated and consist of:
+# 1 – evening, 2 – morning, 3 – lunch time
+teach_tib <-  teach_tib |> 
+  dplyr::mutate(class_time = sample(c(1, 2, 3), size = nrow(teach_tib), replace = TRUE))
+
+# Check the data type of class_time 
+class(teach_tib$class_time)
+```
+
+Now let's run a linear model in which we test whether class time predicts evaluations:
+
+```{r}
+# Fit model predicting evaluations from class time
+class_time_lm <- lm(eval ~ class_time, data = teach_tib)
+
+# Summary of model output
+summary(class_time_lm)
+```
+
+The interpretation of these results is that as class time increases by 1 unit, evaluations changes by `r round(summary(class_time_lm)$coefficients[2, 1], 2)` points. Class time is however not a continuous numeric variable, so this doesn't make sense. Instead, we have to change class time to a categorical variable:
+
+```{r}
+# Create a factor class time variable
+teach_tib <-  teach_tib |> 
+  dplyr::mutate(class_time_cat = as.factor(class_time))
+
+# Check the data type of the new variable
+class(teach_tib$class_time_cat)
+
+# Fit model predicting evaluations from the factor class time variable
+class_time_cat_lm <- lm(eval ~ class_time_cat, data = teach_tib)
+
+# Summary of model output
+summary(class_time_cat_lm)
+```
+
+By default, R will use the first level of the categorical variable as the value for the intercept. Then, it creates two coefficients -- one showing the difference between levels 1 and 2, and the other showing the different between levels 1 and 3. You can explicitly define the contrasts you want to compute, but we won't be looking into this here.
+
+The main point of this exercise was to see that R was perfectly happy executing the analysis assuming that class time is a continuous variable - it doesn't know it is in fact a categorical variable and you have to communicate this information. The take home message here is that even though a chunk of code runs, it doesn't mean it accomplishes the analysis you are aiming to do, and you need to examine all the assumptions that R has made in the process.
+
+And with all that out of the way, we are ready to get started with Quarto.
+
+## Reproducible Reporting
+
+We will now redo the analyses we conducted on the teaching evaluation data in a new Quarto document. Your analysis can be reproducible even if you are not using Quarto, but it makes things a lot easier and it is highly recommended.
 
 Quarto documents are a mix of text and code, the next generation of R Markdown documents. For our purposes, we will be using R within Quarto, but Quarto documents support the integration of many different coding languages, including Python, Julia, and Observable. If you've previously used Rmd (RMarkdown), Quarto is backwards-compatible and will able to render most documents with no issues.
 
@@ -384,7 +502,7 @@ This [quick-reference to Markdown formatting](https://quarto.org/docs/authoring/
 Prof Andy Field has also recorded a [series of video guides to using Quarto](https://www.youtube.com/watch?v=4rKWIJXe3mA&list=PLEzw67WWDg80-fT1hq2IZf7D62tRmKy8f) that are used in UG teaching.
 :::
 
-### Getting Started
+### Creating a Quarto Document
 
 To get some hands-on practice working with Quarto, we will create a new Quarto document from scratch. We will use the analysis code we've already written to create a nicely formatted report.
 
@@ -404,16 +522,16 @@ By default, your new Quarto document will already have some settings and content
 
 ![](/images/quarto_anatomy.png){fig-alt="A screenshot of the default Quarto document, with the YAML, text, and code chunks each circled and labelled in a different colour." fig-align="center"}
 
+::: callout-warning
+Before you proceed, make sure you have completed and saved your fist worksheet with all of your code!
+:::
+
 ::: {.callout-note appearance="minimal" title="Exercise"}
 To complete our setup, take the following steps:
 
 -   Delete everything in the new Quarto document except for the YAML header (i.e. all the text and code chunks).
 -   Clear your Environment by clicking the broom icon in the Environment tab.
 -   Restart your R session (via Session \> Restart R).
-
-::: callout-warning
-Make sure you have completed and saved your worksheet with all of your code before you do this!
-:::
 :::
 
 ::: {.callout-tip title="Visual vs Source Mode" collapse="true"}
@@ -428,9 +546,9 @@ Which you use is entirely personal preference - I toggle regularly between them 
 
 ### Creating a Code Chunk
 
-To prepare for our analysis, we will need a place to load packages and read in the data. Any executable code - that is, code that you want to run and do something - must be written in a code chunk and NOT in the body text[^2].
+To prepare for our analysis, we will need a place to load packages and read in the data. Any executable code - that is, code that you want to run and do something - must be written in a code chunk and NOT in the body text[^1].
 
-[^2]: Mostly true, except for [inline code](04_lm.qmd#inline-code)!
+[^1]: Mostly true, except for [inline code](04_lm.qmd#inline-code)!
 
 There are several ways to insert a new code chunk.
 
@@ -467,17 +585,20 @@ Use the code from the [Data and Codebook](04_lm.qmd#data-and-codebook) section o
 
 Copy and paste the code from your workbook document, or from the previous sections of this tutorial. You can also find all of the commands you have run your History tab (next to Environment).
 
-Altogether, your new code chunk should look like this:
+Altogether, your new code chunk should look something like this:
 
-```{{r}}
+```{r}
+# Load required packages
 library(tidyverse)
 library(ggfortify)
 library(parameters)
 library(robust)
 
+# Load data
 data("TeachingRatings", package = "AER")
 teach_tib <- TeachingRatings
 
+# Fit models prediction teaching evaluation
 eval_lm <- lm(eval ~ beauty, data = teach_tib)
 eval_full_lm <- lm(eval ~ beauty + gender, data = teach_tib)
 ```
@@ -527,13 +648,17 @@ Under the first heading (which I have called "Model Comparison"), write a brief,
 ::: {.callout-note collapse="true" title="Solution"}
 If you aren't inclined to write your own, here's a brief sample text to use.
 
-> Two linear models were constructed to investigate the influences on teaching evaluation ratings. The first model contained only instructor beauty ratings as a predictor, and teaching evaluation ratings as the outcome (R^2^ = ???, *F*(???, ???) = ???, *p* = ???). The second model added instructor gender as a second predictor with no interaction, both again predicting teaching evaluation ratings (R^2^ = ???, *F*(???, ???) = ???, *p* = ???). An ANOVA comparing the models indicated a significant improvement in model fit for the second model compared to the first (*F*(???, ???) = ???, *p* = ???).
+> Two linear models were constructed to investigate the influences on teaching evaluation ratings. The first model contained only instructor beauty ratings as a predictor, and teaching evaluation ratings as the outcome (R^2^ = ???, *F*(???, ???) = ???, *p* = ???). The second model added instructor gender as a second predictor with no interaction, both again predicting teaching evaluation ratings (R^2^ = ???, *F*(???, ???) = ???, *p* = ???). An ANOVA comparing the models indicated a \[[significant/non-significant\]]{.underline} improvement in model fit for the second model compared to the first (*F*(???, ???) = ???, *p* = ???).
 :::
 :::
 
-### Dynamic Reporting
+### The results from the code should exactly match the results in the paper
 
-The paragraph from the previous exercise was very clearly missing some key information: the actual statistical results of the linear model analysis. To start with, the last sentence should report which of the two models was better, based on the result of our *F*-test, rather than question marks. We *could* produce the output of this test, read it ourselves with our very own eyes/ears, and then type out the results by hand...but that is definitely *not* what we are going to do! Instead, we'll look at a couple options for reporting the results dynamically. (We'll come back to the R^2^s and *F*s for each model in a moment.)
+It is not enough that your code always produces the same results - your code should always produce the results reported in your paper, exactly as they appear in the paper.
+
+The paragraph from the previous exercise was very clearly missing the actual statistical results of the linear model analysis. We *could* produce all the necessary output, read it ourselves with our very own eyes/ears, and then type out the results by hand... but that is definitely *not* what we are going to do! **We want to limit potential sources of errors such as manually typing numbers.**
+
+Instead, we'll look at a couple options for reporting the results dynamically. (We'll come back to the R^2^s and *F*s for each model in a moment.).
 
 #### Inline Code
 
@@ -581,7 +706,7 @@ This returns a vector of two values, `NA` and `r tidy_f$statistic[2]`. To index 
 tidy_f$statistic[2]
 ```
 
-Finally, we can [use the `round()` function](01_02_intro.qmd#using-functions) to round to two decimal places.
+Finally, for the purposes of reporting results in a paper, we should round this number to make it more readable. As we want **the code to produce the results exactly as they appear in the paper**, we will [use the `round()` function](01_02_intro.qmd#using-functions) to round to two decimal places.
 
 ```{r}
 round(tidy_f$statistic[2], 2)
@@ -589,15 +714,15 @@ round(tidy_f$statistic[2], 2)
 :::
 :::
 
-We now have a bit of R code that produces a **single** number that we want to report in the text[^3]. The issue is that code chunks contain code, and body text contains text, but we would like the code that we've written to print out its value in the text!
+We now have a bit of R code that produces a **single** number that we want to report in the text[^2]. The issue is that code chunks contain code, and body text contains text, but we would like the code that we've written to print out its value in the text!
 
-[^3]: Generally, inline code should only ever produce a single value, otherwise the formatting can get *interesting*. This value, however, could longer than a single number, if you want to get creative with your dynamic reporting!
+[^2]: Generally, inline code should only ever produce a single value, otherwise the formatting can get *interesting*. This value, however, could be longer than a single number, if you want to get creative with your dynamic reporting!
 
 The solution is *inline code*, a small bit of R code written in the body text ("inline") that will, when the document is rendered, automatically insert the right number. Inline code is written as follows, in the text: `` `r knitr::inline_expr("some_r_code")` ``. Note the backticks; these are NOT apostrophes, and are typically located on the top left of a UK keyboard to the lefter of the 1/! key.
 
 For our reporting, we will need to insert the inline code in exactly the spot where we would like the output of the code to appear. This particular bit of code produces the *F*-statistic, so we can replace the "???"s in our reporting where the value of the *F*-statistic should go:
 
-> An ANOVA comparing the models indicated a significant improvement in model fit for the second model compared to the first (*F*(???, ???) = `` `r knitr::inline_expr("round(tidy_f$statistic[2], 2)")` ``, *p* = ???).
+> An ANOVA comparing the models indicated a \[[significant/non-significant\]]{.underline} improvement in model fit for the second model compared to the first (*F*(???, ???) = `` `r knitr::inline_expr("round(tidy_f$statistic[2], 2)")` ``, *p* = ???).
 
 You can check whether this has worked in two ways:
 
@@ -614,17 +739,31 @@ All of the other numbers should be straightforward, except for the *p*-value. Ro
 
 {papaja} has the `printp()` function, which will do this exactly was we like (as well as containing a lot of other useful functions for rounding and printing in APA style!)
 
-Your final text may look like this:
+Your text may look like this:
 
-> An ANOVA comparing the models indicated a significant improvement in model fit for the second model compared to the first (*F*(`` `r knitr::inline_expr("tidy_f$df[2]")` ``, `` `r knitr::inline_expr("tidy_f$df.residual[2]")` ``) = `` `r knitr::inline_expr("round(tidy_f$statistic[2], 2)")` ``, *p* `` `r knitr::inline_expr("papaja::printp(tidy_f$p.value[2]")` ``).
+> An ANOVA comparing the models indicated a \[[significant/non-significant\]]{.underline} improvement in model fit for the second model compared to the first (*F*(`` `r knitr::inline_expr("tidy_f$df[2]")` ``, `` `r knitr::inline_expr("tidy_f$df.residual[2]")` ``) = `` `r knitr::inline_expr("round(tidy_f$statistic[2], 2)")` ``, *p* `` `r knitr::inline_expr("papaja::printp(tidy_f$p.value[2]")` ``).
 
 Note that there's no need for a "\<" symbol because `papaja::printp()` includes it automatically.
 
 This will render as:
 
-> An ANOVA comparing the models indicated a significant improvement in model fit for the second model compared to the first (*F*(`r tidy_f$df[2]`, `r tidy_f$df.residual[2]`) = `r round(tidy_f$statistic[2], 2)`, *p* `r papaja::printp(tidy_f$p.value[2])`).
+> An ANOVA comparing the models indicated a \[[significant/non-significant\]]{.underline} improvement in model fit for the second model compared to the first (*F*(`r tidy_f$df[2]`, `r tidy_f$df.residual[2]`) = `r round(tidy_f$statistic[2], 2)`, *p* `r papaja::printp(tidy_f$p.value[2])`).
 :::
 :::
+
+Now let's look into adding the final missing elements in our report - the inferential conclusions of our tests.
+
+### Inferential conclusions should be computed in the code
+
+Inferential conclusions are arguably the most important results in a paper, and should also be computationally reproducible just like the numerical results they are based on. Decisions related to whether you should reject or accept a given hypothesis should be based on a quantifiable rule that a computer is able to evaluate (see [Lakens & DeBruine, 2021](https://journals.sagepub.com/doi/full/10.1177/2515245920970949)). One familiar example for people using null hypothesis statistical testing is to reject the null hypothesis if the p-value is smaller than some pre-specified cut-off, such as .05.
+
+So, let's evaluate if the result we computed above is significant or not. If significant, the last sentence in our results paragraph should say:
+
+> An ANOVA comparing the models indicated a **significant** improvement in model fit for the second model compared to the first...
+
+And if the results is not significant, the last sentence in our results paragraph should say:
+
+> An ANOVA comparing the models indicated a **non-significant** improvement in model fit for the second model compared to the first...
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
 **CHALLENGE**: Create a bit of inline code that will either report a significant or non-significant result depending on the value of *p*.
@@ -632,12 +771,6 @@ This will render as:
 *Hint*: You may need to check out the `ifelse()` function.
 
 ::: {.callout-note collapse="true" title="Solution"}
-If we really want our reporting to be resilient, we want to remove or replace all the places where we have to manually remember to update the code if our results change. In this case, our reporting reads:
-
-> An ANOVA comparing the models indicated a significant improvement in model fit...
-
-But if we wanted to reuse this code for another report, we would have to remember to update this depending on the actual value of *p*. OR, we can have R do it for us.
-
 First, we need to write a bit of R code that will evaluate whether the value of *p* is above or below a particular threshold, and then output the correct text. We could do this with `ifelse()`, a handy little base R function with three arguments. The first is a test returning a logical value (either `TRUE` or `FALSE`). If the test returns `TRUE`, the second argument is executed; if the test returns `FALSE`, the final argument is executed.
 
 ```{r}
@@ -662,9 +795,9 @@ Now we don't have to worry about getting this right: our document, when rendered
 
 #### Automatic Reporting
 
-As helpful as inline code is (and I would recommend reporting all values dynamically/automatically wherever possible, so it is *very* useful!), you may have noticed that there was a lot of repetitive typing that also made the text itself quite difficult to read, as well lots of opportunities make typos or mistakes. Surely there's a simpler way to do this sort of thing![^4]
+As helpful as inline code is (and I would recommend reporting all values dynamically/automatically wherever possible, so it is *very* useful!), you may have noticed that there was a lot of repetitive typing that also made the text itself quite difficult to read, as well lots of opportunities make typos or mistakes. Surely there's a simpler way to do this sort of thing![^3]
 
-[^4]: Here we're going to briefly encounter a principle that will come up again and again, namely: If you have to copy and paste more than once, [use a function instead](https://r4ds.had.co.nz/functions.html#when-should-you-write-a-function).
+[^3]: Here we're going to briefly encounter a principle that will come up again and again, namely: If you have to copy and paste more than once, [use a function instead](https://r4ds.had.co.nz/functions.html#when-should-you-write-a-function).
 
 There are, in fact, many simpler ways to do common tasks like this, which take advantage of the fact that an object created by a particular function will *always* have the same structure. One option is to make further use of the {papaja} package, which is designed for just this purpose.
 
@@ -694,12 +827,27 @@ eval_full_lm_out <- papaja::apa_print(eval_full_lm)
 Which will render as:
 
 > Two linear models were constructed to investigate the influences on teaching evaluation ratings. The first model contained only instructor beauty ratings as a predictor, and teaching evaluation ratings as the outcome (`r eval_lm_out$full_result$modelfit$r2`). The second model added instructor gender as a second predictor with no interaction, both again predicting teaching evaluation ratings (`r eval_full_lm_out$full_result$modelfit$r2`).
+
+:::
+:::
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+Another potential option for automatic reporting is the `report()`function from the {`report`} packages (itself part of `easystats`). Check out what `report` does, and use it to report the results of `eval_lm` model. 
+
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+report::report(eval_lm)
+```
 :::
 :::
 
 #### Table Formatting
 
-Next, we will jump to the "Final Model" heading and have a look at how to turn our final model output into a nicely formatted table. Once again, {papaja} provides a quick and beautiful solution for reporting, so let's use it again.
+Next, we will jump to the "Final Model" heading and have a look at how to turn our final model output into a nicely formatted table. It may be tempting to manually create a table in the word processor of your choice and type in the numbers yourself. But we will of couse avoid doing this because typos are way, way too easy to make.  
+
+
+Once again, {papaja} provides a quick and beautiful solution for reporting, so let's use it again.
+
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
 Using [the {papaja} help documentation](https://frederikaust.com/papaja_man/reporting.html#reporting-models-and-tests-in-a-table), produce a nicely formatted table of the final model, presenting the parameter estimates, *p*-values etc. for each predictor under the third ("Final Model") heading.
@@ -723,6 +871,20 @@ The `nice_table()` function can be for tables generally, but it can apply specia
 
 ```{r}
 rempsyc::nice_table(broom::tidy(eval_full_lm, conf.int = TRUE), broom = "lm")
+
+```
+:::
+:::
+
+::: {.callout-note collapse="true" title="Solution"}
+Finally, add a note along with the table explaining what the symbols could be presented next to the p-value and what they mean. 
+
+::: {.callout-note collapse="true" title="Solution"}
+```{r}
+rempsyc::nice_table(broom::tidy(eval_full_lm, conf.int = TRUE), broom = "lm", 
+                    note = c("Significant results are designated by:
+                             * p < .05, ** p < .01, *** p < .001"))
+
 ```
 :::
 :::
@@ -742,7 +904,7 @@ Using [the Quarto help documentation](https://quarto.org/docs/authoring/cross-re
 ::: {.callout-note collapse="true" title="Solution"}
 First, add a label and caption to the code chunk from the previous task that produces the model table.
 
-```{{r}}
+```{r}
 #| label: tbl-final-model
 #| tbl-cap: "The final model predicting teaching evaluation ratings from instructor beauty and gender."
 
@@ -760,7 +922,7 @@ Altogether, it should render as follows:
 > The final model with two predictors is presented in full in @tbl-final-model.
 
 ```{r}
-#| label: tbl-final-model
+#| label: tbl-final-model1
 #| tbl-cap: "The final model predicting teaching evaluation ratings from instructor beauty and gender."
 
 papaja::apa_table(eval_full_lm_out$table)
@@ -794,10 +956,10 @@ ggplot2::autoplot(eval_full_lm, which = c(1, 3, 2, 4))
 After all this work to analyse, interpret, and report, it's finally time to produce the final document. The process of turning a Quarto document into some output format - including running all the code and applying all the formatting - is called *rendering* (previously *knitting* with RMarkdown).
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-Render your report document using the "Render" button at the top of the document, or by using the keyboard shortcut Ctrl/Cmd + Shift + K[^5].
+Render your report document using the "Render" button at the top of the document, or by using the keyboard shortcut Ctrl/Cmd + Shift + K[^4].
 :::
 
-[^5]: It seems obvious that this should be R instead of K, but remember this made perfect sense when it was called "knitting"!
+[^4]: It seems obvious that this should be R instead of K, but remember this made perfect sense when it was called "knitting"!
 
 #### Global Options
 
@@ -853,9 +1015,9 @@ For example, you may have a code chunk containing some processing code that you 
 
 Local code chunk options appear as "hashpipe" (`#|`) comments, as we have seen earlier with labels. They use the same syntax as YAML, but the settings only apply to individual code chunks. Any settings that aren't explicitly changed within the chunk are inherited from the YAML settings.
 
-For this example, we could set a local code chunk option `include: false` which will prevent the output from appearing in the document.[^6]
+For this example, we could set a local code chunk option `include: false` which will prevent the output from appearing in the document.[^5]
 
-[^6]: For writing tutorials, I make extensive use of `eval: false`, which includes the code in the output but does not attempt to run the code. This allows me to write all kinds of nonsense code without R getting stroppy and throwing errors all over the place!
+[^5]: For writing tutorials, I make extensive use of `eval: false`, which includes the code in the output but does not attempt to run the code. This allows me to write all kinds of nonsense code without R getting stroppy and throwing errors all over the place!
 
 ```{{r}}
 #| include: false
@@ -865,9 +1027,9 @@ some_code_doing_cleaning_and_processing
 
 #### Output Formats
 
-For these tutorials, we will generally stick to HTML, as it's the most painless of the rendering options. However, you will likely find yourself wanting to produce some other type of document, which you can easily[^7] do from the same Quarto document.
+For these tutorials, we will generally stick to HTML, as it's the most painless of the rendering options. However, you will likely find yourself wanting to produce some other type of document, which you can easily[^6] do from the same Quarto document.
 
-[^7]: Depends crucially on what you consider to be "easy", especially when dealing with PDFs!
+[^6]: Depends crucially on what you consider to be "easy", especially when dealing with PDFs!
 
 To render to a different format, change the YAML `format:` setting to a different output.
 
@@ -882,8 +1044,6 @@ Render your linear model report to a Word document.
 Simply update the `format: html` YAML option to `format: docx` and render your document. Note that the `format` options are usually named after the file extension rather than the name of the programme necessarily (e.g. `docx` rather than `word`.)
 :::
 :::
-
- 
 
 And there we have it! You now have a complete example of a linear model report, rendered into both HTML and Word, to refer to. It's amazing how much you're able to do after just a few weeks!
 
