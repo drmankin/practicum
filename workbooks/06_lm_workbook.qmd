@@ -1,0 +1,219 @@
+---
+title: "06: Reproducible Linear Models"
+embed-resources: true
+editor: visual
+---
+
+## Open the Tutorial
+
+Use the following code chunks to open the accompanying tutorial.
+
+### Open in RStudio Viewer
+
+```{r}
+#| eval: false
+rstudioapi::viewer('https://r-training.netlify.app/tutorials/docs/06_lm')
+```
+
+### Open in a New Browser Tab
+
+```{r}
+#| eval: false
+utils::browseURL('https://r-training.netlify.app/tutorials/docs/06_lm')
+```
+
+## Overview
+
+## The Linear Model
+
+### Data and Codebook {#data-and-codebook}
+
+Use the code below to get the data and rename it `teach_tib` (not necessary, just easier to type!).
+
+```{r}
+
+```
+
+### One Predictor {#one-predictor}
+
+#### General Format
+
+#### Model Fit
+
+#### Model Parameters
+
+### Hierarchial Models
+
+#### Comparing Models
+
+#### Standardised *B*s
+
+### Assumptions Checks
+
+#### Residual Plots
+
+#### Distribution of Standardised Residuals
+
+### Robust Models
+
+## Exercises
+
+Read in the `syn_data` dataset in the `data` folder and save it in the object `syn_data`.
+
+```{r}
+
+```
+
+Fit a single-predictor linear model, with `scsq_imagery` as the outcome and `scsq_techspace` as the predictor. Obtain model parameters and fit statistics for this model.
+
+```{r}
+
+```
+
+Add `syn` and `scsq_language` to create a new model with three predictors. Obtain model parameters, fit statistics, and standardised *b*s.
+
+Then, decide which model is better, the first or second model.
+
+```{r}
+
+```
+
+Conduct assumptions checks for the final model, including diagnostic plots and sensitivity tests. Decide on a final model to report.
+
+```{r}
+
+```
+
+## Reproducible Analysis
+
+### Same Results
+
+### Correct Analysis
+
+## Reproducible Reporting
+
+### Creating a Quarto Document
+
+Create a new Quarto document via File \> New File \> Quarto Document.
+
+If you like, you can give it a title; you will be able to change this later.
+
+Then, click "Create".
+
+```{r}
+
+```
+
+To complete our setup, take the following steps:
+
+-   Delete everything in the new Quarto document except for the YAML header (i.e. all the text and code chunks).
+-   Clear your Environment by clicking the broom icon in the Environment tab.
+-   Restart your R session (via Session \> Restart R).
+
+```{r}
+
+```
+
+### Creating a Code Chunk
+
+Create a new code chunk and code that does the following:
+
+-   Load all the packages we used in the previous Linear Model section
+-   [Read in the dataset](#data-and-codebook)
+-   Create the two objects containing the linear models with [one predictor](#one-predictor) and with [two predictors](#hierarchical-models).
+
+Then, run the code chunk.
+
+```{r}
+
+```
+
+### Body Text
+
+#### Headings
+
+Create 2-3 level 2 headings in your document for the brief report of the linear model. You can choose anything you like, but in this tutorial we'll be using "Model Comparison" (constructing and comparing the two models), "Assumptions Checks", and "The Final Model" (reporting the final model in full).
+
+```{r}
+
+```
+
+#### Text
+
+### Reporting
+
+#### Automatic Reporting with {report}
+
+#### Inline Reporting with {papaja}
+
+Complete the reporting below with the correct inline code reporting R^2^, *F*, and *p* for each of the linear models, using only **one piece** of inline code for each.
+
+> Two linear models were constructed to investigate the influences on teaching evaluation ratings. The first model contained only instructor gender as a predictor, and teaching evaluation ratings as the outcome (`` `r knitr::inline_expr("???")` ``). The second model added instructor beauty ratings as a second predictor with no interaction, both again predicting teaching evaluation ratings (`` `r knitr::inline_expr("???")` ``).
+
+*Hint*: Use [the {papaja} documentation](https://frederikaust.com/papaja_man/reporting.html#statistical-models-and-tests) if you're stuck.
+
+When you're done, render your document to see the results!
+
+```{r}
+
+```
+
+#### Fully Custom Reporting
+
+Follow along with the following steps in your report Quarto document!
+
+```{r}
+
+```
+
+**CHALLENGE:** Use inline code to replace all of the ???s in the *F*-test reporting to produce a final report in APA style.
+
+*Hint*: Rounding *p*-values is a bit tricky. [Check out the {papaja} package](https://frederikaust.com/papaja_man/reporting.html) to see if you can find a function besides `round()` that will produce the *p*-value with the correct formatting.
+
+```{r}
+
+```
+
+**CHALLENGE**: Create a bit of inline code that will either report a significant or non-significant result depending on the value of *p*.
+
+*Hint*: You may need to check out the `ifelse()` function.
+
+```{r}
+
+```
+
+#### Table Formatting
+
+**CHALLENGE**: Add a note along with the table explaining what symbols could be presented next to the p-value and what they mean - this will help make the inferential conclusions drawn on the basis of the analysis reproducible.
+
+```{r}
+
+```
+
+#### Cross-Referencing
+
+Write a short introductory sentence under the "Final Model" heading and refer to the final model table with a cross-reference.
+
+```{r}
+
+```
+
+**CHALLENGE**: Complete the final "Assumptions Checks" section summarising the checks and using figure cross-referencing to insert and refer to the diagnostic plots. Refer to [the Quarto help documentation](https://quarto.org/docs/authoring/cross-references.html#tables), for help with the cross-referecing.
+
+*Hint*: To report the exact maximum value of Cook's distance, you will also need to refer to `discovr_08` for how to use `broom::augment()`.
+
+```{r}
+
+```
+
+### Rendering
+
+Render your report document using the "Render" button at the top of the document, or by using the keyboard shortcut Ctrl/Cmd + Shift + K\[\^4\].
+
+#### Global Options
+
+#### Code Chunk Options
+
+#### Output Formats
+
+Render your linear model report to a Word document.

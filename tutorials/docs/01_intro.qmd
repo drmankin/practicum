@@ -515,7 +515,7 @@ Use a single command to ask R whether the numbers 2 through 10 are less than or 
 :::
 :::
 
-Here R prints out a vector of `TRUE`s or `FALSE`s, one for each element in the original vector. So, the first element in the output (`TRUE`) corresponds to the statement `2 <= 6`, the second to `3 <= 6`, and so on. This is a vectorised calculation again, as we saw with numeric data before. These vectorised assertions will be absolutely essential to [selecting and filtering data](05_filter.qmd) that meet particular requirements, or checking our data to find problems.
+Here R prints out a vector of `TRUE`s or `FALSE`s, one for each element in the original vector. So, the first element in the output (`TRUE`) corresponds to the statement `2 <= 6`, the second to `3 <= 6`, and so on. This is a vectorised calculation again, as we saw with numeric data before. These vectorised assertions will be absolutely essential to [selecting and filtering data](04_filter.qmd) that meet particular requirements, or checking our data to find problems.
 
 ::: {.callout-tip title="SPSS Data Types" collapse="true"}
 If you're a regular SPSS user, you might recognise many of these data types from SPSS. See page 7 of [this SPSS user guide](https://public.dhe.ibm.com/software/analytics/spss/documentation/statistics/26.0/en/client/Manuals/IBM_SPSS_Statistics_Brief_Guide.pdf) for a reminder of these types.

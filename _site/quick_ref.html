@@ -220,6 +220,12 @@ window.Quarto = {
  <span class="menu-text">05: Mutate</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tutorials/docs/06_lm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">06: Reproducible Linear Models</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -646,6 +652,42 @@ Sub-Topic
 <td style="text-align:left;">
 </td>
 </tr>
+<tr grouplength="4">
+<td colspan="2" style="border-bottom: 1px solid;">
+<strong>06: Reproducible Linear Models</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+<a href="./tutorials/docs/06_lm.html#the-linear-model">The Linear Model</a>
+</td>
+<td style="text-align:left;">
+<a href="./tutorials/docs/06_lm.html#data-and-codebook">Data and Codebook</a>, <a href="./tutorials/docs/06_lm.html#one-predictor">One Predictor</a>, <a href="./tutorials/docs/06_lm.html#hierarchial-models">Hierarchial Models</a>, <a href="./tutorials/docs/06_lm.html#assumptions-checks">Assumptions Checks</a>, <a href="./tutorials/docs/06_lm.html#robust-models">Robust Models</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+<a href="./tutorials/docs/06_lm.html#exercises">Exercises</a>
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+<a href="./tutorials/docs/06_lm.html#reproducible-analysis">Reproducible Analysis</a>
+</td>
+<td style="text-align:left;">
+<a href="./tutorials/docs/06_lm.html#same-results">Same Results</a>, <a href="./tutorials/docs/06_lm.html#correct-analysis">Correct Analysis</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+<a href="./tutorials/docs/06_lm.html#reproducible-reporting">Reproducible Reporting</a>
+</td>
+<td style="text-align:left;">
+<a href="./tutorials/docs/06_lm.html#creating-a-quarto-document">Creating a Quarto Document</a>, <a href="./tutorials/docs/06_lm.html#creating-a-code-chunk">Creating a Code Chunk</a>, <a href="./tutorials/docs/06_lm.html#body-text">Body Text</a>, <a href="./tutorials/docs/06_lm.html#reporting">Reporting</a>, <a href="./tutorials/docs/06_lm.html#rendering">Rendering</a>
+</td>
+</tr>
 </tbody>
 </table>
 </section>
@@ -680,6 +722,17 @@ all()
 </tr>
 <tr>
 <td style="text-align:left;">
+anova()
+</td>
+<td style="text-align:left;">
+<a href="https://rdrr.io/r/stats/anova.html">anova()</a>
+</td>
+<td style="text-align:left;">
+06: Reproducible Linear Models
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 any()
 </td>
 <td style="text-align:left;">
@@ -687,6 +740,28 @@ any()
 </td>
 <td style="text-align:left;">
 04: Filter and Select
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+apa_print()
+</td>
+<td style="text-align:left;">
+<a href="https://rdrr.io/pkg/papaja/man/apa_print.html">papaja::apa_print()</a>
+</td>
+<td style="text-align:left;">
+06: Reproducible Linear Models
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+apa_table()
+</td>
+<td style="text-align:left;">
+<a href="https://rdrr.io/pkg/papaja/man/apa_table.html">papaja::apa_table()</a>
+</td>
+<td style="text-align:left;">
+06: Reproducible Linear Models
 </td>
 </tr>
 <tr>
@@ -702,6 +777,28 @@ arrange()
 </tr>
 <tr>
 <td style="text-align:left;">
+as.character()
+</td>
+<td style="text-align:left;">
+<a href="https://rdrr.io/r/base/character.html">as.character()</a>
+</td>
+<td style="text-align:left;">
+06: Reproducible Linear Models
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+as.factor()
+</td>
+<td style="text-align:left;">
+<a href="https://rdrr.io/r/base/factor.html">as.factor()</a>
+</td>
+<td style="text-align:left;">
+06: Reproducible Linear Models
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 as.numeric()
 </td>
 <td style="text-align:left;">
@@ -709,6 +806,17 @@ as.numeric()
 </td>
 <td style="text-align:left;">
 01: IntRoduction
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+autoplot()
+</td>
+<td style="text-align:left;">
+<a href="https://ggplot2.tidyverse.org/reference/autoplot.html">ggplot2::autoplot()</a>
+</td>
+<td style="text-align:left;">
+06: Reproducible Linear Models
 </td>
 </tr>
 <tr>
@@ -741,7 +849,7 @@ c()
 <a href="https://rdrr.io/r/base/c.html">c()</a>
 </td>
 <td style="text-align:left;">
-01: IntRoduction<br>02: IntRoduction II<br>03: Datasets<br>04: Filter and Select<br>05: Mutate
+01: IntRoduction<br>02: IntRoduction II<br>03: Datasets<br>04: Filter and Select<br>05: Mutate<br>06: Reproducible Linear Models
 </td>
 </tr>
 <tr>
@@ -753,6 +861,17 @@ c_across()
 </td>
 <td style="text-align:left;">
 05: Mutate
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+cat()
+</td>
+<td style="text-align:left;">
+<a href="https://rdrr.io/r/base/cat.html">cat()</a>
+</td>
+<td style="text-align:left;">
+06: Reproducible Linear Models
 </td>
 </tr>
 <tr>
@@ -774,7 +893,7 @@ class()
 <a href="https://rdrr.io/r/base/class.html">class()</a>
 </td>
 <td style="text-align:left;">
-01: IntRoduction
+01: IntRoduction<br>06: Reproducible Linear Models
 </td>
 </tr>
 <tr>
@@ -797,6 +916,17 @@ count()
 </td>
 <td style="text-align:left;">
 03: Datasets<br>04: Filter and Select<br>05: Mutate
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+data()
+</td>
+<td style="text-align:left;">
+<a href="https://rdrr.io/r/utils/data.html">data()</a>
+</td>
+<td style="text-align:left;">
+06: Reproducible Linear Models
 </td>
 </tr>
 <tr>
@@ -856,6 +986,17 @@ filter()
 </tr>
 <tr>
 <td style="text-align:left;">
+glance()
+</td>
+<td style="text-align:left;">
+<a href="https://generics.r-lib.org/reference/glance.html">broom::glance()</a>
+</td>
+<td style="text-align:left;">
+06: Reproducible Linear Models
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 glimpse()
 </td>
 <td style="text-align:left;">
@@ -873,7 +1014,7 @@ here()
 <a href="https://here.r-lib.org//reference/here.html">here::here()</a>
 </td>
 <td style="text-align:left;">
-04: Filter and Select<br>05: Mutate
+04: Filter and Select<br>05: Mutate<br>06: Reproducible Linear Models
 </td>
 </tr>
 <tr>
@@ -922,13 +1063,46 @@ kable_styling()
 </tr>
 <tr>
 <td style="text-align:left;">
+levels()
+</td>
+<td style="text-align:left;">
+<a href="https://rdrr.io/r/base/levels.html">levels()</a>
+</td>
+<td style="text-align:left;">
+06: Reproducible Linear Models
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 library()
 </td>
 <td style="text-align:left;">
 <a href="https://rdrr.io/r/base/library.html">library()</a>
 </td>
 <td style="text-align:left;">
-02: IntRoduction II<br>03: Datasets<br>04: Filter and Select<br>05: Mutate
+02: IntRoduction II<br>03: Datasets<br>04: Filter and Select<br>05: Mutate<br>06: Reproducible Linear Models
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+lm()
+</td>
+<td style="text-align:left;">
+<a href="https://rdrr.io/r/stats/lm.html">lm()</a>
+</td>
+<td style="text-align:left;">
+06: Reproducible Linear Models
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+lmRob()
+</td>
+<td style="text-align:left;">
+<a href="https://rdrr.io/pkg/robust/man/lmRob.html">robust::lmRob()</a>
+</td>
+<td style="text-align:left;">
+06: Reproducible Linear Models
 </td>
 </tr>
 <tr>
@@ -973,6 +1147,28 @@ min()
 </td>
 <td style="text-align:left;">
 04: Filter and Select
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+model_parameters()
+</td>
+<td style="text-align:left;">
+<a href="https://easystats.github.io/parameters/reference/model_parameters.html">parameters::model_parameters()</a>
+</td>
+<td style="text-align:left;">
+06: Reproducible Linear Models
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+mutate()
+</td>
+<td style="text-align:left;">
+<a href="https://dplyr.tidyverse.org/reference/mutate.html">dplyr::mutate()</a>
+</td>
+<td style="text-align:left;">
+06: Reproducible Linear Models
 </td>
 </tr>
 <tr>
@@ -1071,7 +1267,7 @@ read_csv()
 <a href="https://readr.tidyverse.org/reference/read_delim.html">readr::read_csv()</a>
 </td>
 <td style="text-align:left;">
-03: Datasets<br>04: Filter and Select<br>05: Mutate
+03: Datasets<br>04: Filter and Select<br>05: Mutate<br>06: Reproducible Linear Models
 </td>
 </tr>
 <tr>
@@ -1082,7 +1278,7 @@ report()
 <a href="https://easystats.github.io/report/reference/report.html">report::report()</a>
 </td>
 <td style="text-align:left;">
-04: Filter and Select
+04: Filter and Select<br>06: Reproducible Linear Models
 </td>
 </tr>
 <tr>
@@ -1093,7 +1289,7 @@ rnorm()
 <a href="https://rdrr.io/r/stats/Normal.html">rnorm()</a>
 </td>
 <td style="text-align:left;">
-02: IntRoduction II
+02: IntRoduction II<br>06: Reproducible Linear Models
 </td>
 </tr>
 <tr>
@@ -1104,7 +1300,7 @@ round()
 <a href="https://rdrr.io/r/base/Round.html">round()</a>
 </td>
 <td style="text-align:left;">
-02: IntRoduction II<br>03: Datasets
+02: IntRoduction II<br>03: Datasets<br>06: Reproducible Linear Models
 </td>
 </tr>
 <tr>
@@ -1159,7 +1355,7 @@ set.seed()
 <a href="https://rdrr.io/r/base/Random.html">set.seed()</a>
 </td>
 <td style="text-align:left;">
-02: IntRoduction II
+02: IntRoduction II<br>06: Reproducible Linear Models
 </td>
 </tr>
 <tr>
@@ -1192,7 +1388,7 @@ summary()
 <a href="https://rdrr.io/r/base/summary.html">summary()</a>
 </td>
 <td style="text-align:left;">
-03: Datasets
+03: Datasets<br>06: Reproducible Linear Models
 </td>
 </tr>
 <tr>
@@ -1204,6 +1400,17 @@ t.test()
 </td>
 <td style="text-align:left;">
 01: IntRoduction<br>02: IntRoduction II<br>04: Filter and Select
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tidy()
+</td>
+<td style="text-align:left;">
+<a href="https://generics.r-lib.org/reference/tidy.html">broom::tidy()</a>
+</td>
+<td style="text-align:left;">
+06: Reproducible Linear Models
 </td>
 </tr>
 <tr>

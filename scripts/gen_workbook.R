@@ -3,7 +3,7 @@
 out <- here::here("workbooks")
 
 ## Which week(s)?
-get_this <- "05"
+get_this <- "06"
 
 ## Create new folder
 if(!dir.exists(out)){
