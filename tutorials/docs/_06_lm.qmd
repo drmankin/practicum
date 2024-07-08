@@ -293,8 +293,7 @@ Read in the `syn_data` dataset in the `data` folder and save it in the object `s
 
 ::: {.callout-note collapse="true" title="Solution"}
 ```{r}
-#syn_data <- readr::read_csv(here::here("data/syn_data.csv"))
-syn_data <- readr::read_csv("https://raw.githubusercontent.com/drmankin/practicum/master/data/syn_data.csv")
+syn_data <- readr::read_csv(here::here("data/syn_data.csv"))
 ```
 :::
 :::
@@ -325,7 +324,7 @@ Then, decide which model is better, the first or second model.
 <!--Note from Reny: When loading the data from the URL I had to chagne syn_sequence_space to syn_seq_space--->
 ```{r}
 syn_full_lm <- lm(scsq_imagery ~ scsq_techspace + syn + scsq_language, data = syn_data)
-syn_inter_lm <- lm(scsq_imagery ~ syn_graph_col*syn_seq_space, data = syn_data)
+syn_inter_lm <- lm(scsq_imagery ~ syn_graph_col*syn_sequence_space, data = syn_data)
 
 summary(syn_full_lm)
 ## Tidy summaries
@@ -689,16 +688,16 @@ Instead, we'll look at a couple options for reporting the results dynamically.
 
 ### Reporting
 
-1. automatic with `report()`
+<!-- 1. automatic with `report()`
      - Don't blindly use it without checking!!
      - Look at output with summary() and use report() to SUPPLEMENT
      - Compare to make sure it's correct
 2. inline with papaja
 3. fully custom with inline code and subsetting
+--> 
 
-### Reporting
 
-##### Automatic reporting with {Report}
+##### Automatic reporting with `report()`
 
 Our first option for reporting results without manually typing them up is to use the [{`report`} package](https://easystats.github.io/report/) which is part of [`easystats`](https://easystats.github.io/easystats/). The {report} package includes many useful functions for... reporting results, such as the `report()` function which outputs a written summary of the object that is given to the function as an input. As an example, we can use `report()` to output the results of the models we fitted to the data, for example:
 
@@ -746,7 +745,7 @@ Let's have a look at the first of the two models and see what the `papaja::apa_p
 papaja::apa_print(eval_lm)
 ```
 
-We've got a huge number of options here, but for this exercise we wanted R^2^, *F*, and *p*. All three are given under `$full_result$modelfit$r2`. We will need to save the output from `apa_print()` into an object, then we can subset it using inline code:
+We've got a huge number of options here, but for this exercise we wanted R^2^, *F*, and *p*. All three are given under `$full_result$modelfit$r2` and we can access these results with [subsetting](03_datasets.qmd). We will need to save the output from `apa_print()` into an object, then we can subset it using inline code:
 
 ```{r}
 eval_lm_out <- papaja::apa_print(eval_lm)
@@ -1118,11 +1117,10 @@ As per, the [Quarto guide on output formats](https://quarto.org/docs/output-form
 :::
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-We have done quite a lot and your Quarto document may be a bit messy. Go through your document and make it look... nicer - add comments to the code ..... <!-- EXPAND HERE -->
-Finally, render your linear model report to a Word document.
+Render your linear model report to a Word document.
 
 ::: {.callout-note collapse="true" title="Solution"}
-Simply update the `format: html` YAML option to `format: docx` and render your document. Note that the `format` options are usually named after the file extension rather than the name of the programme necessarily (e.g. `docx` rather than `word`.)
+Simply update the `format: html` YAML option to `format: docx` and render your document. Note that the `format` options are usually named after the file extension rather than the name of the programme necessarily (e.g. `docx` rather than `word`). We did quite a lot so your Quarto document and the Word output file may be a bit messy. If that is the case, go through your Quarto document and make it more human-friendly - add comments to the code to remind yourself what it does, fix any overwritting that you think could cause problems, change any object names that you think are not meaningful enough.  
 :::
 :::
 
