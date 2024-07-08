@@ -865,7 +865,7 @@ These helper functions can be combined with the selection methods above in any c
 
 -   `everything()` for all columns
 -   `starts_with()`, `ends_with()`, and `contains()` for selecting columns by shared name elements
--   `where()` for [selecting with a function](05_filter.qmd#using-functions), described in the next (optional) section
+-   `where()` for [selecting with a function](#using-functions), described in the next (optional) section
 
 Open the help documentation by running `?dplyr::select` in the Console to see examples of how to use all of the `<tidyselect>` helper functions.
 
