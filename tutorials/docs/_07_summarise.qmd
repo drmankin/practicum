@@ -125,7 +125,7 @@ anx_scores |> # <1>
 3.  Calculate the mean of the `sticsa_trait_score` variable (ignoring any missing values) and store it in the variable `sticsa_trait_mean`
 4.  Calculate the standard deviation of the `sticsa_trait_score` variable (ignoring any missing values) and store it in the variable `sticsa_trait_sd`
 
-A very useful feature of these functions - both `mutate()` and `summarise()` is that once you create a variable within the function, you can use it in subsequent arguments to that function.
+A very useful feature of these functions - both `mutate()` and `summarise()` - is that once you create a variable within the function, you can use it in subsequent arguments to that function.
 
 For instance, let's say we want to include standard error in our summary as well. Unfortunately there's no base `se()` function (along the lines of `sd()`). There are functions in other packages, such as `papaja::se()`, that you could find by searching for "standard error" in the Help tab (in the Files pane); but it might not always be a good idea to use single functions from other packages, since you will have to (remember to) install/update those packages. This would be worth it if that function did an operation that would otherwise be difficult or labor-intensive to replicate, but in this case, standard error is a straightforward mathematical operation: namely, the standard deviation divided by the square root of *N*. We've already created a variable that contains the *SD*, and we have the dataset and we know how to count the number of cases so, let's just do it by hand.
 
@@ -145,7 +145,7 @@ In the last line creating `sticsa_trait_se`, both `sticsa_trait_sd` and `n` are 
 
 Next, let's combine `dplyr::summarise()` with the helper function `dplyr::group_by()` to split up the summary calculations by the values of a grouping variable.
 
-Similar to [what we saw with `rowwise()`](06_changes.qmd#composite-scores), `group_by()` creates internal structure in the dataset - a new group for each unique value in the grouping variable. Any subsequent calculations done with the dataset are done within those groups.
+Similar to [what we saw with `rowwise()`](05_mutate.qmd#composite-scores), `group_by()` creates internal structure in the dataset - a new group for each unique value in the grouping variable. Any subsequent calculations done with the dataset are done within those groups.
 
 ```{r}
 
@@ -166,9 +166,9 @@ anx_scores |>   # <1>
 
 Compare this to the ungrouped summary in the previous section - it's the same columns, but a new row for each group. We also see here that little `dplyr::n()` is a bit more useful now - giving us counts within each group alongside the other summary information, which also means that the standard error can be calculated for each group separately as well.
 
-::: {.callout-tip title="Reshaping Summary Tables" collapse="true"}
-This second summary table, grouped by both MCQ and gender, would likely be easier to read with one variable on separate rows and the other in separate columns. If you're interested in this, run `vignette("pivot")` in the Console.
-:::
+<!-- ::: {.callout-tip title="Reshaping Summary Tables" collapse="true"} -->
+<!-- This second summary table, grouped by both MCQ and gender, would likely be easier to read with one variable on separate rows and the other in separate columns. If you're interested in this, run `vignette("pivot")` in the Console. -->
+<!-- ::: -->
 
 ### Multiple Variables
 
@@ -206,7 +206,7 @@ There are two main solutions to this issue, and which you choose depends on what
 #### Use an Existing Function
 
 ::: {.callout-important title="Choose this option if:"}
--   You just want the basic descriptives and don't need grouped summaries
+-   You just want standard descriptives
 -   You don't mind reading up in the help documentation to get the right combination of arguments, and/or trying out a few different functions/packages to find the one that works for you.
 :::
 
@@ -232,7 +232,7 @@ The big, inefficient multi-variable `summarise()` command above has two main iss
 To solve the first issue, we'll **create a list of functions** to use, so we only have to type out each function once. To solve the second, we're going to utilise `dplyr::across()` to **apply that list of functions** to variables selected with `<tidyselect>`.
 
 ::: callout-tip
-For more explanation about `dplyr::across()`, see the [section on iteration with `mutate()`](06_changes.qmd#iteration) earlier on. For a much more in-depth explanation, run `vignette("colwise")` in the Console.
+For more explanation about `dplyr::across()`, see the [section on iteration with `mutate()`](05_mutate.qmd#iteration) earlier on. For a much more in-depth explanation, run `vignette("colwise")` in the Console.
 :::
 
 ```{r}
@@ -261,11 +261,13 @@ anx_scores |>   # <3>
 4.  Across all of the variables in the `anx_score` dataset whose names contain the string "stars",
 5.  Apply the list of functions stored in the `fxs` object.
 
-As described briefly above, the elements in the `fxs` list have a special format. The first bit, e.g. `mean =`, gives each element a name. This name will be appended to the relevant column in the `summarise()` output, so choose something informative and brief. The second bit, e.g. `~ mean(.x, na.rm = TRUE)`, is the function we want to apply to each variable. The two things to note are the "twiddle" `~`, which denotes "this is a function to apply", and `.x`, which is a placeholder for each of the variables that the function will be applied to.
+To recap briefly, the elements in the `fxs` list have a special format. The first bit, e.g. `mean =`, gives each element a name. This name will be appended to the relevant column in the `summarise()` output, so choose something informative and brief. The second bit, e.g. `~ mean(.x, na.rm = TRUE)`, is the function we want to apply to each variable. The two things to note are the "twiddle" `~`, which denotes "this is a function to apply", and `.x`, which is a placeholder for each of the variables that the function will be applied to.
 
-Within `across()`, we are building on what we've seen before with this function. The first argument selects which variables to use using `<tidyselect>`. In this case, I've selected all of the variables that contain "score". The second argument provides a list of function(s) to apply to all of the selected variables, which here is the `fxs` object.
+Within `across()`, we are building on what we've seen before with this function. The first argument selects which variables to use using `<tidyselect>`. In this case, I've selected all of the variables that contain "stars". The second argument provides a list of function(s) to apply to all of the selected variables, which here is the `fxs` object.
 
 This function list + `dplyr::across()` method is extremely versatile. If you are using a lesser-known statistical technique, or even functions of your own making, you can easily add them to your list of functions and apply them with `across()`.
+
+::: {.callout-tip title="MoRe About: Function Lists" collapse="true"}
 
 As a final note here, the creation of the `fxs` object containing a list of functions isn't technically necessary - you can just provide the list in `across` directly.
 
@@ -287,6 +289,7 @@ Personally, I would prefer to make a separate object for three reasons:
 1.  I could reuse the same list of functions later on in my code without having to copy/paste.
 2.  I can update that single list of functions to update any summaries created with it.
 3.  The code is cleaner and easier to read, especially the `across()` command.
+:::
 
 ### Exercises
 
@@ -329,8 +332,6 @@ anx_scores_sum <- anx_scores |>
     sticsa_trait_min = min(sticsa_trait_score, na.rm = TRUE), 
     sticsa_trait_max = max(sticsa_trait_score, na.rm = TRUE)
   )
-
-anx_scores_sum
 ```
 :::
 :::
@@ -373,10 +374,11 @@ anx_scores |>   # <1>
   dplyr::group_by(stars_test_cat = (stars_test_score <= median(stars_test_score, na.rm = TRUE))) |>   # <2>
   dplyr::summarise(  # <3>
     n = dplyr::n(), #<4>
-    sticsa_trait_mean = mean(sticsa_trait_score, na.rm = TRUE),   # <4>
-    sticsa_trait_sd = sd(sticsa_trait_score, na.rm = TRUE),  # <4>
-    sticsa_trait_min = min(sticsa_trait_score, na.rm = TRUE),    # <4>  
-    sticsa_trait_max = max(sticsa_trait_score, na.rm = TRUE)  # <4>
+    sticsa_trait_mean = mean(sticsa_trait_score, na.rm = TRUE),
+    sticsa_trait_sd = sd(sticsa_trait_score, na.rm = TRUE),
+    sticsa_trait_se = sticsa_trait_sd/sqrt(n),
+    sticsa_trait_min = min(sticsa_trait_score, na.rm = TRUE), 
+    sticsa_trait_max = max(sticsa_trait_score, na.rm = TRUE)
   )
 ```
 
@@ -397,14 +399,14 @@ For UG teaching at Sussex, we have students render their assignments in Quarto t
 For this purpose we'll be working primarily with the {kableExtra} package, which builds on [the {knitr} package for report generation](https://yihui.org/knitr/). We'll be using a wrapper for the `knitr::kable()` function, `kableExtra::kbl()`, because {kableExtra} has a bunch of useful tools for customising the output. However, you may also want to check out [the {gt} package for powerful table formatting options](https://gt.rstudio.com/), and [{papaja} for some APA-like defaults](https://frederikaust.com/papaja_man/reporting.html#tables).
 
 ::: callout-tip
-For all things kable, the [Create Awesome HTML Table vignette](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html) is my go-to for options and examples!
+For all things kable, the [Create Awesome HTML Table vignette](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html) is my go-to for options and examples.
 :::
 
 ::: {.callout-note title="Exercise" appearance="minimal"}
 Follow along with the instructions to create your own beautiful table.
 :::
 
-To begin, let's take the `summarise()` code grouped by `mcq` and save it in a new object. Then, pipe that new summary dataset object into the `kableExtra::kbl()` function, and then on again into the `kableExtra::kable_classic()` function. This one-two combo first creates a basic table out of the dataset (`kbl()`), then apply some APA-ish HTML formatting (`kable_classic()`).
+To begin, let's take the `summarise()` code we were working with above, grouped by `mcq` only, and save it in a new object. Then, pipe that new summary dataset object into the `kableExtra::kbl()` function, and then on again into the `kableExtra::kable_classic()` function. This one-two combo first creates a basic table out of the dataset (`kbl()`), then apply some APA-ish HTML formatting (`kable_classic()`).
 
 ```{r}
 anx_mcq_sum <- anx_scores |>
@@ -413,6 +415,7 @@ anx_mcq_sum <- anx_scores |>
     n = dplyr::n(),
     sticsa_trait_mean = mean(sticsa_trait_score, na.rm = TRUE),
     sticsa_trait_sd = sd(sticsa_trait_score, na.rm = TRUE),
+    sticsa_trait_se = sticsa_trait_sd/sqrt(n),
     sticsa_trait_min = min(sticsa_trait_score, na.rm = TRUE), 
     sticsa_trait_max = max(sticsa_trait_score, na.rm = TRUE)
   )
@@ -435,7 +438,7 @@ For all but the last task, we can adjust these things in `kbl()`, which has `col
 ```{r}
 anx_mcq_sum |> 
   kableExtra::kbl(
-    col.names = c("MCQ Type", "N", "M", "SD", "Min", "Max"),
+    col.names = c("MCQ Type", "N", "M", "SD", "SE", "Min", "Max"),
     digits = 2,
     align = "c", # or l for left or r for right, or provide a vector of alignments for each column
     caption = "Descriptives for STICSA Trait Anxiety Score by MCQ Type",
@@ -453,7 +456,7 @@ This error is unfortunately both very easy to generate and totally opaque. All i
 anx_mcq_sum |> 
   kableExtra::kbl(
     ## if I forget to include a column name for the MCQ grouping variable
-    col.names = c("N", "M", "SD", "Min", "Max"),
+    col.names = c("N", "M", "SD", "SE", "Min", "Max"),
     digits = 2,
     caption = "Descriptives for STICSA Trait Anxiety Score by MCQ Type",
     align = "c"
@@ -470,7 +473,7 @@ For the caption, keep in mind if this table will be in a longer Quarto report, y
 
 :::
 
-For the last task, capitalising the values in the MCQ column, we'll have a first, brief brush with text string manipulation. Working with strings is well outside the scope of this tutorial[^regex], but for simple operations, this is a good opportunity to meet the {stringr} package.
+For the last task, capitalising the values in the MCQ column, we'll have a first, brief brush with text string manipulation. Working with strings is well outside the scope of this tutorial, but for simple operations, this is a good opportunity to meet the {stringr} package.
 
 {stringr} is a tidyverse package designed to make string manipulation simple and easy. Among (many!) other functions, it has some very handy functions for converting strings into particular capitalisation patterns. Here `str_to_sentence()` (for sentence case, with the first letter of the string capitalised) or `str_to_title()` (for title case, with the first letter of each word in the string capitalised) will do the same job.
 
@@ -482,7 +485,7 @@ anx_mcq_sum |>
     mcq = stringr::str_to_sentence(mcq)
   ) |> 
   kableExtra::kbl(
-    col.names = c("MCQ Type", "N", "M", "SD", "Min", "Max"),
+    col.names = c("MCQ Type", "N", "M", "SD", "SE", "Min", "Max"),
     digits = 2,
     align = "c", # or l for left or r for right, or provide a vector of alignments for each column
     caption = "Descriptives for STICSA Trait Anxiety Score by MCQ Type",
@@ -493,7 +496,7 @@ anx_mcq_sum |>
 At this point we have quite a clean, nicely formatted, and professional-looking table. Finally, render your workbook document to see your hard work in all its glory!
 
 ::: {.callout-caution title="Regex: Capitalisation" collapse="true"}
-I (JM) really love regular expressions ("regex"). If you're not familiar with regex, it's essentially its only mini-language for identifying patterns in character strings. Regex is slow, frustrating, and headache-inducing to learn (at least it was/is for me!), but it's also the closest I've got with R to actual wizardry.
+I (JM) really love regular expressions ("regex"). If you're not familiar with regex, it's essentially its own mini-language for identifying patterns in character strings. Regex is slow, frustrating, and headache-inducing to learn (at least it was/is for me!), but it's also the closest I've got with R to actual wizardry.
 
 Since I love regex so much and this is my tutorial and no one can stop me, I'll include these **absolutely optional** little regex boxes in case you'd like to learn a bit about working with regular expressions and how they can help your code. Most typically, I prefer base-R functions instead of {stringr} for working with strings, but for quick things like case changes, I find {stringr} easiest. However, the same thing can be accomplished with regular expressions instead.
 
@@ -527,9 +530,9 @@ anx_mcq_sum |>
   dplyr::pull(mcq)
 ```
 
-Next, let's turn to `pattern = "^(.)"`. This might look like a keysmash, but it has two elements:
+Next, let's turn to `pattern = "^(.)"`. The sequence in quotes is a regular expression to match with. Remember that regex is its own language - these symbols don't have the same meaning as they do in regular R. This might look like a keysmash, but it has two elements:
 
-  - `^` is the symbol to indicate the start of a string.
+  - `^` is the regex symbol to indicate the start of a string.
   - `(.)` is a capturing group (indicated by round brackets) with a single wildcard in it (indicated by `.`) The wildcard `.` can be *any* character.
   
 Together, the expression `"^(.)"` can be read as, "The first character in the string." This is the pattern to match, so using this expression we've identified (in this case) the "m" in "maths" and the "s" in "stats".
@@ -543,7 +546,7 @@ Why do this instead of `stringr::str_to_sentence()`? In this specific case I'd u
 1. `gsub()` and regex are base R, so there's no need to install or load additional packages to use them.
 2. This command can be generalised to substitute *any* match for *any* replacement, whereas the {stringr} function only does the one thing.
 
-As a final example of 2, I could change this command to change the first character of each string with any other character I'd like:
+As a final example of 2, I could change this command to put anything I'd like at the start of the string:
 
 ```{r}
 anx_mcq_sum |> 
@@ -684,7 +687,7 @@ anx_score_sum %>%
   kableExtra::kable_classic()
 ```
 
-So there you have it: a (mostly) fully automated and nicely formatted table requiring no hard-coding of specific names or variables, at the bargain price of a few precious hours of my life and a not-insubstantial chunk of my sanity. You're welcome!
+So there you have it: a (mostly) fully automated and nicely formatted table requiring no hard-coding of specific names or variables, at the bargain price of a few precious hours of my life and a not-insubstantial chunk of my sanity.
 :::
 :::
 
@@ -694,7 +697,8 @@ If you are writing your work exterior to Quarto/your code, you will instead need
 
 #### Creating a Folder
 
-To save our plot, we'll first need to create a folder to save our summary tables in. You can (and likely will!) do this manually, by clicking. Both Posit Cloud and RStudio Desktop have a + Folder button (the first one in the Files tab), which will create a new folder in whatever folder you are currently looking at. Make sure you are in the project folder, then enter the folder name and click OK.
+W
+e'll first need to create a folder to save our summary tables in. You can (and likely will!) do this manually, by clicking. Both Posit Cloud and RStudio Desktop have a + Folder button (the first one in the Files tab), which will create a new folder in whatever folder you are currently looking at. Make sure you are in the project folder, then enter the folder name and click OK.
 
 ![](../../images/new_folder.jpg){fig-alt="Screenshot of the Files pane with arrows showing the steps to create a new folder"}
 
@@ -738,15 +742,6 @@ If you already created the `summaries` folder with the GUI interface, you will f
 In any case it's important to think carefully about including any code that makes changes to the user's computer system and files. I usually comment out these elements of my code unless I'm sure I need to use them.
 :::
 
-First, you will need to export the summary tibble as a .csv file. This is a reminder of what we covered previously about exporting datasets.
-
-```{r}
-#| eval: false
-
-readr::write_csv(anx_scores_sum,
-                 file = here::here)
-```
-
 #### Exporting
 
 The summary data is just a dataset, so we can export it just as we did previously with whole datasets with `write_csv()`. We need to provide the name of the data to write and a file path that includes the name and file extension of the file we want to create.
@@ -754,8 +749,12 @@ The summary data is just a dataset, so we can export it just as we did previousl
 ```{r}
 #| eval: false
 
-readr::write_csv(anx_scores_sum,
-                 file = here::here("summaries/anx_scores_sum.csv"))
+readr::write_csv(
+  # Name of the object containing data to write
+  anx_scores_sum,
+  # File path where the file should be saved
+  # Including the name and file extension of the file itself
+  file = here::here("summaries/anx_scores_sum.csv"))
 ```
 
 #### Linking
@@ -811,8 +810,6 @@ anx_scores |>
 ::: {.callout-note appearance="minimal" title="Exercise"}
 Perform pairwise correlations on all the STARS subscales in this dataset.
 
-Then, pick a single pair, generate the correlation output, and `report()` the result.
-
 ::: {.callout-note collapse="true" title="Solution"}
 
 To start, let's do the same as above, just replacing the string in `contains()`:
@@ -823,15 +820,45 @@ anx_scores |>
   correlation::correlation()
 ```
 
-Yikes, that's a lot of pairwise comparisons - and they're all significant, hooray. I'm going to pick one of the
+Yikes, that's a lot of pairwise comparisons - and they're all significant, hooray. 
+
+:::
+:::
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+
+**CHALLENGE**: Pick a single pair from the pairwise correlations, generate the correlation output, and report the result.
+
+::: {.callout-note collapse="true" title="Solution"}
+
+I'm going to pick one of the pairs first and get the correlation output for just that pair, then pipe on to `report()` - easy right?
 
 ```{r}
+#| error: true
+
 anx_scores |> 
   dplyr::select(contains("test") & contains("stars")) |> 
   correlation::correlation() |> 
   report::report()
 ```
+Oops! What a weird error. If you were wondering why this seemingly simple task is a challenge, this is why.
 
+Looking at the `report()` documentation, we don't see any evidence that this function works with the output from `correlation()` - and indeed, it doesn't (yet!). But it *can* report correlations for `htest` objects.
+
+`htest` is short for *hypothesis test*, and is a class of object produced by base-R {stats} functions, like `t.test()` - or `cor.test()`, the function for pairwise correlation testing. So, to easily `report()` this test, we'll have to rerun our correlation with the `cor.test()` function.
+
+Looking at the `cor.test()` help documentation, there are a couple of ways to provide the variables to use. I (JM) personally prefer the formula option, so we can run the same pairwise correlation as follows:
+
+```{r}
+cor.test(~ stars_test_score + stars_m_test_score, data = anx_scores)
+```
+
+The text output gives us a summary of our results, but more importantly, outputs an `htest` object containing those results that we can pass on to `report()`.
+
+```{r}
+cor.test(~ stars_test_score + stars_m_test_score, data = anx_scores) |> 
+  report::report()
+```
 :::
 :::
 
@@ -872,7 +899,3 @@ The example of this in the {palmerpenguins} intro document also changes the defa
 :::
 
  
-
-Unbelievably, we're actually at the end of this monstrosity. How are you doing? Having fun yet? I hope so (I am!).
-
-
