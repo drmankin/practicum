@@ -145,7 +145,7 @@ In the last line creating `sticsa_trait_se`, both `sticsa_trait_sd` and `n` are 
 
 Next, let's combine `dplyr::summarise()` with the helper function `dplyr::group_by()` to split up the summary calculations by the values of a grouping variable.
 
-Similar to [what we saw with `rowwise()`](05_mutate.qmd#composite-scores), `group_by()` creates internal structure in the dataset - a new group for each unique value in the grouping variable. Any subsequent calculations done with the dataset are done within those groups.
+Similar to [what we saw with `rowwise()`](05_mutate.qmd#composite-scores), `group_by()` creates an internal structure in the dataset - a new group for each unique value in the grouping variable. Any subsequent calculations done with the dataset are done within those groups.
 
 ```{r}
 
@@ -561,7 +561,7 @@ anx_mcq_sum |>
 
 ::: {.callout-tip title="MoRe About: Dynaming Formatting" collapse="true"}
 
-This lengthy and complicated optional aside is included for demonstration purposes only, and is well beyond what we have or will covered in this tutorials.
+This lengthy and complicated optional aside is included for demonstration purposes only, and is well beyond what we have or will have covered in this tutorial.
 
 As I (JM) use R more, I become increasingly allergic to hard-coding *anything*. In the table we've produced so far, we had to type in a vector of column names to apply. I would strongly disprefer this, since I would have to check and update these names each time - and it would be easy, if copy/pasting, to mistakenly mislabel a column. Instead, I'd prefer to have column names generated from the data, which are already systematically named.
 
@@ -691,14 +691,13 @@ So there you have it: a (mostly) fully automated and nicely formatted table requ
 :::
 :::
 
-### Exporting and Linking
+### Exporting
 
-If you are writing your work exterior to Quarto/your code, you will instead need export your summary and then import it into the new document. However, it's essential to keep a close eye on changes or updates, so that tables don't get out of date if the source data is updated.
+If you are writing your work exterior to Quarto/your code, you will instead need to export your summary and then import it into the new document. However, it's essential to keep a close eye on changes or updates, so that tables don't get out of date if the source data is updated.
 
 #### Creating a Folder
 
-W
-e'll first need to create a folder to save our summary tables in. You can (and likely will!) do this manually, by clicking. Both Posit Cloud and RStudio Desktop have a + Folder button (the first one in the Files tab), which will create a new folder in whatever folder you are currently looking at. Make sure you are in the project folder, then enter the folder name and click OK.
+We'll first need to create a folder to save our summary tables in. You can (and likely will!) do this manually, by clicking. Both Posit Cloud and RStudio Desktop have a + Folder button (the first one in the Files tab), which will create a new folder in whatever folder you are currently looking at. Make sure you are in the project folder, then enter the folder name and click OK.
 
 ![](../../images/new_folder.jpg){fig-alt="Screenshot of the Files pane with arrows showing the steps to create a new folder"}
 
@@ -706,7 +705,7 @@ If you want your entire workflow to be entirely reproducible - even creating fol
 
 ::: {.callout-tip title="MoRe About: Managing Folders with R" collapse="true"}
 
-The "problem" (such as it is) with creating folders by clicking is that there's no record of that action in your code. If you pass on the code - but not the entire project folder - to someone else, and they try to run it, they'll get an error because if the target folder doesn't happen to exist in their files. We could resolve this by using R to interact with the folders on your computer (or in your Cloud project) so that the folder is created by the code itself.
+The "problem" (such as it is) with creating folders by clicking is that there's no record of that action in your code. If you pass on the code - but not the entire project folder - to someone else, and they try to run it, they'll get an error because the target folder doesn't happen to exist in their files. We could resolve this by using R to interact with the folders on your computer (or in your Cloud project) so that the folder is created by the code itself.
 
 Let's write some generalisable code to create a folder. To begin, we'll store the path to the new folder in an object:
 
@@ -757,13 +756,11 @@ readr::write_csv(
   file = here::here("summaries/anx_scores_sum.csv"))
 ```
 
-#### Linking
-
-<!-- I'm not sure you can actually do this??? -->
+<!-- Linking I'm not sure you can actually do this??? -->
 
 ## Quick Test: Correlation
 
-Whew! Well done so far; let's cool down with a some snazzy plots and a nice gentle correlation analysis.
+Whew! Well done so far; let's cool down with some snazzy plots and a nice gentle correlation analysis.
 
 This bit is meant to be quick, so we'll only look briefly at what we teach in UG at Sussex. If you want more correlation fun, check out `discovr` tutorials 07 and 18.
 
