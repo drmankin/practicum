@@ -166,7 +166,7 @@ If you're looking for a particular section of a tutorial, use this handy summary
   <tr grouplength="4"><td colspan="2" style="border-bottom: 1px solid;"><strong>06: Reproducible Linear Models</strong></td></tr>
 <tr>
    <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [The Linear Model](tutorials/docs/06_lm.qmd#the-linear-model) </td>
-   <td style="text-align:left;"> [Data and Codebook](tutorials/docs/06_lm.qmd#data-and-codebook), [One Predictor](tutorials/docs/06_lm.qmd#one-predictor), [Hierarchial Models](tutorials/docs/06_lm.qmd#hierarchial-models), [Assumptions Checks](tutorials/docs/06_lm.qmd#assumptions-checks), [Robust Models](tutorials/docs/06_lm.qmd#robust-models) </td>
+   <td style="text-align:left;"> [Data and Codebook](tutorials/docs/06_lm.qmd#data-and-codebook), [One Predictor](tutorials/docs/06_lm.qmd#one-predictor), [Hierarchical Models](tutorials/docs/06_lm.qmd#hierarchical-models), [Assumptions Checks](tutorials/docs/06_lm.qmd#assumptions-checks), [Robust Models](tutorials/docs/06_lm.qmd#robust-models) </td>
   </tr>
   <tr>
    <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Exercises](tutorials/docs/06_lm.qmd#exercises) </td>
@@ -179,6 +179,31 @@ If you're looking for a particular section of a tutorial, use this handy summary
   <tr>
    <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Reproducible Reporting](tutorials/docs/06_lm.qmd#reproducible-reporting) </td>
    <td style="text-align:left;"> [Creating a Quarto Document](tutorials/docs/06_lm.qmd#creating-a-quarto-document), [Creating a Code Chunk](tutorials/docs/06_lm.qmd#creating-a-code-chunk), [Body Text](tutorials/docs/06_lm.qmd#body-text), [Reporting](tutorials/docs/06_lm.qmd#reporting), [Rendering](tutorials/docs/06_lm.qmd#rendering) </td>
+  </tr>
+  <tr grouplength="6"><td colspan="2" style="border-bottom: 1px solid;"><strong>07: Summarise</strong></td></tr>
+<tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Setup](tutorials/docs/07_summarise.qmd#setup) </td>
+   <td style="text-align:left;"> [Packages](tutorials/docs/07_summarise.qmd#packages), [Data](tutorials/docs/07_summarise.qmd#data) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Summarising](tutorials/docs/07_summarise.qmd#summarising) </td>
+   <td style="text-align:left;"> [Overall](tutorials/docs/07_summarise.qmd#overall), [By Group](tutorials/docs/07_summarise.qmd#by-group), [Multiple Variables](tutorials/docs/07_summarise.qmd#multiple-variables) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Exercises](tutorials/docs/07_summarise.qmd#exercises) </td>
+   <td style="text-align:left;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Formatting Tables](tutorials/docs/07_summarise.qmd#formatting-tables) </td>
+   <td style="text-align:left;"> [Quarto to HTML/PDF](tutorials/docs/07_summarise.qmd#quarto-to-html/pdf), [Exporting](tutorials/docs/07_summarise.qmd#exporting) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Quick Test: Correlation](tutorials/docs/07_summarise.qmd#quick-test:-correlation) </td>
+   <td style="text-align:left;"> [Visualisation](tutorials/docs/07_summarise.qmd#visualisation), [Testing Correlation](tutorials/docs/07_summarise.qmd#testing-correlation) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Exercises](tutorials/docs/07_summarise.qmd#exercises) </td>
+   <td style="text-align:left;">  </td>
   </tr>
 </tbody>
 </table>
@@ -197,6 +222,11 @@ The table below is arranged alphabetically by function name, and the linked full
   </tr>
  </thead>
 <tbody>
+  <tr>
+   <td style="text-align:left;"> across() </td>
+   <td style="text-align:left;"> <a href="https://dplyr.tidyverse.org/reference/across.html">dplyr::across()</a> </td>
+   <td style="text-align:left;"> 07: Summarise </td>
+  </tr>
   <tr>
    <td style="text-align:left;"> all() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/base/all.html">all()</a> </td>
@@ -260,7 +290,7 @@ The table below is arranged alphabetically by function name, and the linked full
   <tr>
    <td style="text-align:left;"> c() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/base/c.html">c()</a> </td>
-   <td style="text-align:left;"> 01: IntRoduction<br>02: IntRoduction II<br>03: Datasets<br>04: Filter and Select<br>05: Mutate<br>06: Reproducible Linear Models </td>
+   <td style="text-align:left;"> 01: IntRoduction<br>02: IntRoduction II<br>03: Datasets<br>04: Filter and Select<br>05: Mutate<br>06: Reproducible Linear Models<br>07: Summarise </td>
   </tr>
   <tr>
    <td style="text-align:left;"> c_across() </td>
@@ -285,7 +315,17 @@ The table below is arranged alphabetically by function name, and the linked full
   <tr>
    <td style="text-align:left;"> contains() </td>
    <td style="text-align:left;"> <a href="https://tidyselect.r-lib.org/reference/starts_with.html">dplyr::contains()</a> </td>
-   <td style="text-align:left;"> 04: Filter and Select </td>
+   <td style="text-align:left;"> 04: Filter and Select<br>07: Summarise </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> cor.test() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/stats/cor.test.html">cor.test()</a> </td>
+   <td style="text-align:left;"> 07: Summarise </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> correlation() </td>
+   <td style="text-align:left;"> <a href="https://easystats.github.io/correlation/reference/correlation.html">correlation::correlation()</a> </td>
+   <td style="text-align:left;"> 07: Summarise </td>
   </tr>
   <tr>
    <td style="text-align:left;"> count() </td>
@@ -296,6 +336,11 @@ The table below is arranged alphabetically by function name, and the linked full
    <td style="text-align:left;"> data() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/utils/data.html">data()</a> </td>
    <td style="text-align:left;"> 06: Reproducible Linear Models </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> deframe() </td>
+   <td style="text-align:left;"> <a href="https://tibble.tidyverse.org/reference/enframe.html">tibble::deframe()</a> </td>
+   <td style="text-align:left;"> 07: Summarise </td>
   </tr>
   <tr>
    <td style="text-align:left;"> describe_distribution() </td>
@@ -323,6 +368,16 @@ The table below is arranged alphabetically by function name, and the linked full
    <td style="text-align:left;"> 04: Filter and Select<br>05: Mutate </td>
   </tr>
   <tr>
+   <td style="text-align:left;"> ggpairs() </td>
+   <td style="text-align:left;"> <a href="https://ggobi.github.io/ggally/reference/ggpairs.html">GGally::ggpairs()</a> </td>
+   <td style="text-align:left;"> 07: Summarise </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ggscatmat() </td>
+   <td style="text-align:left;"> <a href="https://ggobi.github.io/ggally/reference/ggscatmat.html">GGally::ggscatmat()</a> </td>
+   <td style="text-align:left;"> 07: Summarise </td>
+  </tr>
+  <tr>
    <td style="text-align:left;"> glance() </td>
    <td style="text-align:left;"> <a href="https://generics.r-lib.org/reference/glance.html">broom::glance()</a> </td>
    <td style="text-align:left;"> 06: Reproducible Linear Models </td>
@@ -333,9 +388,14 @@ The table below is arranged alphabetically by function name, and the linked full
    <td style="text-align:left;"> 03: Datasets </td>
   </tr>
   <tr>
+   <td style="text-align:left;"> gsub() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/grep.html">gsub()</a> </td>
+   <td style="text-align:left;"> 07: Summarise </td>
+  </tr>
+  <tr>
    <td style="text-align:left;"> here() </td>
    <td style="text-align:left;"> <a href="https://here.r-lib.org//reference/here.html">here::here()</a> </td>
-   <td style="text-align:left;"> 04: Filter and Select<br>05: Mutate<br>06: Reproducible Linear Models </td>
+   <td style="text-align:left;"> 04: Filter and Select<br>05: Mutate<br>06: Reproducible Linear Models<br>07: Summarise </td>
   </tr>
   <tr>
    <td style="text-align:left;"> hist() </td>
@@ -353,9 +413,14 @@ The table below is arranged alphabetically by function name, and the linked full
    <td style="text-align:left;"> 04: Filter and Select </td>
   </tr>
   <tr>
+   <td style="text-align:left;"> kable_classic() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/pkg/kableExtra/man/kable_classic.html">kableExtra::kable_classic()</a> </td>
+   <td style="text-align:left;"> 07: Summarise </td>
+  </tr>
+  <tr>
    <td style="text-align:left;"> kable_styling() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kableExtra::kable_styling()</a> </td>
-   <td style="text-align:left;"> 03: Datasets<br>04: Filter and Select<br>05: Mutate </td>
+   <td style="text-align:left;"> 03: Datasets<br>04: Filter and Select<br>05: Mutate<br>07: Summarise </td>
   </tr>
   <tr>
    <td style="text-align:left;"> levels() </td>
@@ -365,7 +430,7 @@ The table below is arranged alphabetically by function name, and the linked full
   <tr>
    <td style="text-align:left;"> library() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/base/library.html">library()</a> </td>
-   <td style="text-align:left;"> 02: IntRoduction II<br>03: Datasets<br>04: Filter and Select<br>05: Mutate<br>06: Reproducible Linear Models </td>
+   <td style="text-align:left;"> 02: IntRoduction II<br>03: Datasets<br>04: Filter and Select<br>05: Mutate<br>06: Reproducible Linear Models<br>07: Summarise </td>
   </tr>
   <tr>
    <td style="text-align:left;"> lm() </td>
@@ -380,7 +445,7 @@ The table below is arranged alphabetically by function name, and the linked full
   <tr>
    <td style="text-align:left;"> max() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/base/Extremes.html">max()</a> </td>
-   <td style="text-align:left;"> 04: Filter and Select </td>
+   <td style="text-align:left;"> 04: Filter and Select<br>07: Summarise </td>
   </tr>
   <tr>
    <td style="text-align:left;"> mean() </td>
@@ -410,7 +475,7 @@ The table below is arranged alphabetically by function name, and the linked full
   <tr>
    <td style="text-align:left;"> names() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/base/names.html">names()</a> </td>
-   <td style="text-align:left;"> 03: Datasets </td>
+   <td style="text-align:left;"> 03: Datasets<br>07: Summarise </td>
   </tr>
   <tr>
    <td style="text-align:left;"> ncol() </td>
@@ -433,9 +498,14 @@ The table below is arranged alphabetically by function name, and the linked full
    <td style="text-align:left;"> 03: Datasets </td>
   </tr>
   <tr>
+   <td style="text-align:left;"> print() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/print.html">print()</a> </td>
+   <td style="text-align:left;"> 07: Summarise </td>
+  </tr>
+  <tr>
    <td style="text-align:left;"> pull() </td>
    <td style="text-align:left;"> <a href="https://dplyr.tidyverse.org/reference/pull.html">dplyr::pull()</a> </td>
-   <td style="text-align:left;"> 03: Datasets<br>05: Mutate </td>
+   <td style="text-align:left;"> 03: Datasets<br>05: Mutate<br>07: Summarise </td>
   </tr>
   <tr>
    <td style="text-align:left;"> range() </td>
@@ -450,12 +520,17 @@ The table below is arranged alphabetically by function name, and the linked full
   <tr>
    <td style="text-align:left;"> read_csv() </td>
    <td style="text-align:left;"> <a href="https://readr.tidyverse.org/reference/read_delim.html">readr::read_csv()</a> </td>
-   <td style="text-align:left;"> 03: Datasets<br>04: Filter and Select<br>05: Mutate<br>06: Reproducible Linear Models </td>
+   <td style="text-align:left;"> 03: Datasets<br>04: Filter and Select<br>05: Mutate<br>06: Reproducible Linear Models<br>07: Summarise </td>
   </tr>
   <tr>
    <td style="text-align:left;"> report() </td>
    <td style="text-align:left;"> <a href="https://easystats.github.io/report/reference/report.html">report::report()</a> </td>
-   <td style="text-align:left;"> 04: Filter and Select<br>06: Reproducible Linear Models </td>
+   <td style="text-align:left;"> 04: Filter and Select<br>06: Reproducible Linear Models<br>07: Summarise </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> return() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/function.html">return()</a> </td>
+   <td style="text-align:left;"> 07: Summarise </td>
   </tr>
   <tr>
    <td style="text-align:left;"> rnorm() </td>
@@ -480,7 +555,7 @@ The table below is arranged alphabetically by function name, and the linked full
   <tr>
    <td style="text-align:left;"> sd() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/stats/sd.html">sd()</a> </td>
-   <td style="text-align:left;"> 03: Datasets </td>
+   <td style="text-align:left;"> 03: Datasets<br>07: Summarise </td>
   </tr>
   <tr>
    <td style="text-align:left;"> select() </td>
@@ -493,9 +568,24 @@ The table below is arranged alphabetically by function name, and the linked full
    <td style="text-align:left;"> 02: IntRoduction II<br>06: Reproducible Linear Models </td>
   </tr>
   <tr>
+   <td style="text-align:left;"> sqrt() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/MathFun.html">sqrt()</a> </td>
+   <td style="text-align:left;"> 07: Summarise </td>
+  </tr>
+  <tr>
    <td style="text-align:left;"> starts_with() </td>
    <td style="text-align:left;"> <a href="https://tidyselect.r-lib.org/reference/starts_with.html">dplyr::starts_with()</a> </td>
    <td style="text-align:left;"> 04: Filter and Select<br>05: Mutate </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> str_to_sentence() </td>
+   <td style="text-align:left;"> <a href="https://stringr.tidyverse.org/reference/case.html">stringr::str_to_sentence()</a> </td>
+   <td style="text-align:left;"> 07: Summarise </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> str_to_title() </td>
+   <td style="text-align:left;"> <a href="https://stringr.tidyverse.org/reference/case.html">stringr::str_to_title()</a> </td>
+   <td style="text-align:left;"> 07: Summarise </td>
   </tr>
   <tr>
    <td style="text-align:left;"> sum() </td>
@@ -518,6 +608,16 @@ The table below is arranged alphabetically by function name, and the linked full
    <td style="text-align:left;"> 06: Reproducible Linear Models </td>
   </tr>
   <tr>
+   <td style="text-align:left;"> tolower() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/chartr.html">tolower()</a> </td>
+   <td style="text-align:left;"> 07: Summarise </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> toupper() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/chartr.html">toupper()</a> </td>
+   <td style="text-align:left;"> 07: Summarise </td>
+  </tr>
+  <tr>
    <td style="text-align:left;"> ungroup() </td>
    <td style="text-align:left;"> <a href="https://dplyr.tidyverse.org/reference/group_by.html">dplyr::ungroup()</a> </td>
    <td style="text-align:left;"> 05: Mutate </td>
@@ -526,6 +626,11 @@ The table below is arranged alphabetically by function name, and the linked full
    <td style="text-align:left;"> where() </td>
    <td style="text-align:left;"> <a href="https://tidyselect.r-lib.org/reference/where.html">dplyr::where()</a> </td>
    <td style="text-align:left;"> 04: Filter and Select </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> which() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/which.html">which()</a> </td>
+   <td style="text-align:left;"> 07: Summarise </td>
   </tr>
 </tbody>
 </table>

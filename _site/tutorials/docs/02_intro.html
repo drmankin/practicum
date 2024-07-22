@@ -235,6 +235,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">06: Reproducible Linear Models</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../tutorials/docs/07_summarise.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">07: Summarise</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -878,13 +884,13 @@ MoRe About: Order and Naming of Arguments
     Two Sample t-test
 
 data:  vector_1 and vector_2
-t = -9.2418, df = 38, p-value = 1.457e-11
+t = -7.7049, df = 38, p-value = 1.397e-09
 alternative hypothesis: true difference in means is less than 5
 78 percent confidence interval:
-      -Inf -7.431311
+      -Inf -7.587225
 sample estimates:
 mean of x mean of y 
- 15.97858  24.55641 </code></pre>
+ 15.17272  24.17850 </code></pre>
 </div>
 </div>
 <p>Looking at the information I have given to <code>t.test()</code> I can only tell what <code>vector_1</code> and <code>vector_2</code> correspond to. The rest is mystery and code shouldn’t be mysterious. Let’s compare that to using named arguments:</p>
@@ -901,13 +907,13 @@ mean of x mean of y
     Two Sample t-test
 
 data:  vector_1 and vector_2
-t = -9.2418, df = 38, p-value = 1.457e-11
+t = -7.7049, df = 38, p-value = 1.397e-09
 alternative hypothesis: true difference in means is less than 5
 78 percent confidence interval:
-      -Inf -7.431311
+      -Inf -7.587225
 sample estimates:
 mean of x mean of y 
- 15.97858  24.55641 </code></pre>
+ 15.17272  24.17850 </code></pre>
 </div>
 </div>
 <p>This is a lot better! Some unresolved mystery still remains, so you may want to check the help menu of the <code>t.test()</code> function and add a comment written in plain English that describes what is happening in that line. More on comments later…</p>

@@ -1,0 +1,139 @@
+---
+title: "07: Summarise"
+embed-resources: true
+editor: visual
+---
+
+## Open the Tutorial
+
+Use the following code chunks to open the accompanying tutorial.
+
+### Open in RStudio Viewer
+
+```{r}
+#| eval: false
+rstudioapi::viewer('https://r-training.netlify.app/tutorials/docs/07_summarise')
+```
+
+### Open in a New Browser Tab
+
+```{r}
+#| eval: false
+utils::browseURL('https://r-training.netlify.app/tutorials/docs/07_summarise')
+```
+
+## Overview
+
+## Setup
+
+### Packages
+
+Load the necessary packages.
+
+```{r}
+
+```
+
+### Data
+
+Read in the dataset and save it in a new object, `anx_scores`.
+
+On the Cloud, you can read in this dataset from the `data` folder using `here::here()`.
+
+Elsewhere, you can download the dataset, or copy the dataset URL, from the [Data and Workbooks page](../../../data_workbooks.qmd).
+
+```{r}
+
+```
+
+#### Codebook
+
+## Summarising
+
+### Overall
+
+#### Internal Calculations
+
+### By Group
+
+### Multiple Variables
+
+#### Use an Existing Function
+
+#### Iteration
+
+## Exercises
+
+Starting with the example code from previously:
+
+```{r}
+anx_scores |>   # <1>
+  dplyr::group_by(mcq) |>   # <2>
+  dplyr::summarise(  # <3>
+    n = dplyr::n(), #<4>
+    sticsa_trait_mean = mean(sticsa_trait_score, na.rm = TRUE),   # <4>
+    sticsa_trait_sd = sd(sticsa_trait_score, na.rm = TRUE),
+    sticsa_trait_se = sticsa_trait_sd/sqrt(n)  # <4>
+  )
+```
+
+Make the following changes:
+
+-   Add the min and max of `sticsa_trait_score` to the summary.
+-   Split up the summary by gender as well as MCQ group.
+
+Save your final summary table as `anx_scores_sum`.
+
+```{r}
+
+```
+
+**CHALLENGE**: Instead of MCQ and gender, split up the summary information of `sticsa_trait_score` by whether each case scored higher, or lower than/equal to, the median value of the STARS test anxiety score.
+
+```{r}
+
+```
+
+## Formatting Tables
+
+### Quarto to HTML/PDF
+
+Follow along with the instructions to create your own beautiful table.
+
+```{r}
+
+```
+
+### Exporting
+
+#### Creating a Folder
+
+#### Exporting
+
+## Quick Test: Correlation
+
+### Visualisation
+
+### Testing Correlation
+
+## Exercises
+
+Perform pairwise correlations on all the STARS subscales in this dataset.
+
+```{r}
+
+```
+
+**CHALLENGE**: Pick a single pair from the pairwise correlations, generate the correlation output, and report the result.
+
+```{r}
+
+```
+
+**CHALLENGE**: Use `GGally::ggpairs()` on the same numeric variables, but split up all the plots by `mcq` as well. Here we're getting at a key question of the original study: are maths and stats anxiety actually different?
+
+*Hint*: There's an example of this code in [the introduction documentation for the lovely `palmerpenguins::penguins` dataset](https://allisonhorst.github.io/palmerpenguins/articles/intro.html)!
+
+```{r}
+
+```
