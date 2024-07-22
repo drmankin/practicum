@@ -47,7 +47,7 @@ To start a tutorial, open any project and click on the Tutorial tab in the Envir
 Because {discovr} tutorials run within R, you don't need to use any external documents; you can write and run R code within the tutorial itself. However, I *strongly* recommend that whenever you work with these tutorials, you write and run your code in a separate document, otherwise you will have no record of the code and output.
 :::
 
-### Data and Codebook {#data-and-codebook}
+### Data and Codebook
 
 Today's data is the `TeachingRatings` dataset from the {AER} package. This dataset is built into the package, so you don't need to read it in from anywhere.
 
@@ -74,7 +74,7 @@ You can load the codebook in the Help viewer by running the following in the Con
 ?AER::TeachingRatings
 ```
 
-### One Predictor {#one-predictor}
+### One Predictor
 
 Now that we have some data, we can fit our first model with a single predictor. We will do this with the very hardworking `lm()` function in R, standing for "**l**inear **m** odel".
 
@@ -108,7 +108,7 @@ broom::glance(eval_lm)
 
 Helpfully, `broom::glance()` (and many other {tidyverse} functions) output tibbles, which means we can work with them as we already know how to do.
 
-#### Model Parameters {#model-parameters}
+#### Model Parameters
 
 The most common technique for getting a look at the details of the model is to use a function we've met before: `summary()`. The output isn't great, but it does let us get a whole bunch of useful information quickly and directly.
 
@@ -164,15 +164,15 @@ We can see that the levels are ordered "male" first and "female" second. This me
 
 So, what is up with the `genderfemale` term in the output? The *b* in our linear model output quantifies the mean change in the outcome between categories. So, specifically here, mean teaching evaluations change by `r broom::tidy(eval_lm) |> dplyr::filter(term == "genderfemale") |> dplyr::pull(estimate) |> round(2)` when we change from looking at male teachers to female teachers. The name of the term is concatenated from the name of the predictor (`gender`) and the category we are changing *to* (`female`) from the baseline. Unfortunately, the baseline category is not explicitly stated in the output!
 
-::: repro
-::: repro-header
-::: repro-icon
+::: {.repro}
+::: {.repro-header}
+::: {.repro-icon}
 :::
 
 RepRoducibility: Order of Categories
 :::
 
-::: repro-body
+::: {.repro-body}
 Above we said that it was a "good thing" that the categorical `gender` variable is a factor variable. This is because factors are the "correct" data type for categorical data in R - "correct" as in best practice. To see why, let's look at a situation where we instead have `gender` as a character variable type.
 
 First, let's create a new character version of the `gender` variable, which will remove all the information about factor levels leaving only the strings behind.
@@ -226,13 +226,13 @@ The models we're describing here contain only additions, not interactions. So, y
 Otherwise, we will get there in this course eventually!
 :::
 
-#### Comparing Models {#comparing-models}
+#### Comparing Models
 
 Now we have two models, one simpler with only a single predictor, and the other with two predictors. We might next want to test whether the more complex, two-predictor model is a significant improvement over the simpler model, in order to decide which model to retain. We can do this with the `anova()` function[^1] to compare the two models.
 
 [^1]: Somewhat confusingly, this is *not* the function we teach UGs to perform ANOVAs! See `discovr` tutorials 11, 12, 15, and 16 for a detailed guide through the `afex` package for running linear models with categorical predictors.
 
-::: callout-warning
+::: {.callout-warning}
 The `anova()` function will only work for model comparison for particular models.
 
 1.  **The models must be hierarchical.** That is, the more complex model(s) must contain all of the predictor(s) present in the less complex model(s).
@@ -258,7 +258,7 @@ You may have noticed that the output we've seen so for only contains *un*standar
 parameters::model_parameters(eval_full_lm, standardize = "refit")
 ```
 
-::: callout-warning
+::: {.callout-warning}
 Note the spelling of `standardize` with a "z"! Spelling it with an "s" will **not** rescale the parameter estimates.
 :::
 
@@ -266,7 +266,7 @@ Note the spelling of `standardize` with a "z"! Spelling it with an "s" will **no
 
 At Sussex, we teach a range of model diagnostics and robust model sensitivity tests in order to test model assumptions. We will look briefly at each of these in turn.
 
-::: callout-tip
+::: {.callout-tip}
 Remember, there are more examples and longer explanations in the `discovr_08` tutorial!
 :::
 
@@ -415,7 +415,7 @@ parameters::model_parameters(syn_full_lm, bootstrap = TRUE)
 
  
 
-## Reproducible Analysis {#reproducible-analysis}
+## Reproducible Analysis
 
 We will now put together everything we did in the previous exercises into a reproducible script.
 
@@ -572,7 +572,7 @@ Prof Andy Field has also recorded a [series of video guides to using Quarto](htt
 To get some hands-on practice working with Quarto, we will create a new Quarto document from scratch. We will use the analysis code we've already written to create a nicely formatted report.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-Create a new Quarto document via File \> New File \> Quarto Document.
+Create a new Quarto document via File > New File > Quarto Document.
 
 If you like, you can give it a title; you will be able to change this later.
 
@@ -587,7 +587,7 @@ By default, your new Quarto document will already have some settings and content
 
 ![](../../images/quarto_anatomy.png){fig-alt="A screenshot of the default Quarto document, with the YAML, text, and code chunks each circled and labelled in a different colour." fig-align="center"}
 
-::: callout-warning
+::: {.callout-warning}
 Before you proceed, make sure you have completed and saved your first worksheet with all of your code!
 :::
 
@@ -596,7 +596,7 @@ To complete our setup, take the following steps:
 
 -   Delete everything in the new Quarto document except for the YAML header (i.e. all the text and code chunks).
 -   Clear your Environment by clicking the broom icon in the Environment tab.
--   Restart your R session (via Session \> Restart R).
+-   Restart your R session (via Session > Restart R).
 :::
 
 ::: {.callout-tip title="Visual vs Source Mode" collapse="true"}
@@ -672,7 +672,7 @@ Run the code chunk by clicking the green "play" arrow, or by pressing Ctrl/Cmd +
 :::
 :::
 
-### Body Text {#body-text}
+### Body Text
 
 #### Headings
 
@@ -711,15 +711,15 @@ Under the first heading (which I have called "Model Comparison"), we will report
 
 > Two linear models were constructed to investigate the influences on teaching evaluation ratings. The first model contained only instructor beauty ratings as a predictor, and teaching evaluation ratings as the outcome (R^2^ = ???, *F*(???, ???) = ???, *p* = ???). The second model added instructor gender as a second predictor with no interaction, both again predicting teaching evaluation ratings (R^2^ = ???, *F*(???, ???) = ???, *p* = ???). An ANOVA comparing the models indicated a \[[significant/non-significant\]]{.underline} improvement in model fit for the second model compared to the first (*F*(???, ???) = ???, *p* = ???).
 
-::: repro
-::: repro-header
-::: repro-icon
+::: {.repro}
+::: {.repro-header}
+::: {.repro-icon}
 :::
 
 RepRoducibility: Code-Results Match
 :::
 
-::: repro-body
+::: {.repro-body}
 It is not enough that your code always produces the same results - your code should always produce the results reported in your paper, exactly as they appear in the paper.
 
 The paragraph above is very clearly missing the actual statistical results of the linear model analysis. We *could* produce all the necessary output, read it ourselves with our very own eyes/ears, and then type out the results by hand... but that is definitely *not* what we are going to do! **We want to limit potential sources of errors such as manually typing numbers.**
@@ -835,7 +835,7 @@ To complete our model reporting, we'll use the following example paragraph. As b
 
 Since neither {report} nor {papaja} gave us a quick way to do this automatically, our final option for reporting results is to use fully custom inline code to report each of our numerical results independently. This is the most flexible option for reporting results because it allows you to put a single result anywhere you like. But first, to be able to refer to a specific result in our output, we need to know what information we have available.
 
-::: callout-tip
+::: {.callout-tip}
 This section will make extensive use of `$` subsetting, which was covered in [Tutorial 03](03_datasets.qmd), and `[]` subsetting, which was covered in [Tutorial 01](01_intro.qmd). Getting comfortable with subsetting is valuable not only for reporting results but also for conducting additional analyses on the results of some computation. Even though we are focusing on inline code today, this is just an example and subsetting is useful in coding more generally.
 :::
 
@@ -916,15 +916,15 @@ Now let's look into adding the final missing elements in our report - the infere
 
 <!-- Update: Change to repro box -->
 
-::: repro
-::: repro-header
-::: repro-icon
+::: {.repro}
+::: {.repro-header}
+::: {.repro-icon}
 :::
 
 RepRoducibility: Inferential conclusions should be computed in the code
 :::
 
-::: repro-body
+::: {.repro-body}
 Inferential conclusions are arguably the most important results in a paper, and should also be computationally reproducible just like the numerical results they are based on. Decisions related to whether you should reject or accept a given hypothesis should be based on a quantifiable rule that a computer is able to evaluate (see [Lakens & DeBruine, 2021](https://journals.sagepub.com/doi/full/10.1177/2515245920970949)). One familiar example for people using null hypothesis statistical testing is to reject the null hypothesis if the p-value is smaller than some pre-specified cut-off, such as .05, and we saw that the `report()` function applies this rule automatically. In some cases, however, you may need more flexibility in defining whether or not a given hypothesis has been supported. So, let's evaluate if the result we computed above is significant or not. If significant, the last sentence in our results paragraph should say:
 
 > An ANOVA comparing the models indicated a **significant** improvement in model fit for the second model compared to the first...
@@ -1011,7 +1011,7 @@ rempsyc::nice_table(broom::tidy(eval_full_lm, conf.int = TRUE), broom = "lm",
 
 #### Cross-Referencing
 
-::: callout-warning
+::: {.callout-warning}
 This material will not be covered in live workshops, unless there is sufficient time and interest. This section is included for anyone interested in producing final reports in Quarto, rather than using it as an intermediate step to create a report in another programme.
 
 If you want to skip this section, you can jump down to [the next section](#rendering).
@@ -1087,7 +1087,7 @@ Render your report document using the "Render" button at the top of the document
 
 [^4]: It seems obvious that this should be R instead of K, but remember this made perfect sense when it was called "knitting"!
 
-#### Global Options {#global-options}
+#### Global Options 
 
 At the moment, your report may not be as clean as we'd like it to be: there are likely messages from R floating around and code all over the place, whereas for a formal report, we of course only want to show the final output. This is where the YAML header comes in.
 
@@ -1129,7 +1129,7 @@ execute: # <3>
 
 The requirements for each document will change depending on its purpose, but particulary the `execute` settings above are a good starting point for a clean and readable rendered document.
 
-::: callout-tip
+::: {.callout-tip}
 The [Quarto help documentation](https://quarto.org/docs/computations/execution-options.html), as usual, has a complete list of YAML options, including how to set default behaviour for figures and other settings.
 :::
 
@@ -1159,7 +1159,7 @@ For these tutorials, we will generally stick to HTML rendering, as it's the most
 
 To render to a different format, change the YAML `format:` setting to a different output.
 
-::: callout-tip
+::: {.callout-tip}
 As per, the [Quarto guide on output formats](https://quarto.org/docs/output-formats/all-formats.html) has all the information you need!
 :::
 
