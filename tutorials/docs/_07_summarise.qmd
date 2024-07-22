@@ -756,8 +756,6 @@ readr::write_csv(
   file = here::here("summaries/anx_scores_sum.csv"))
 ```
 
-<!-- Linking I'm not sure you can actually do this??? -->
-
 ## Quick Test: Correlation
 
 Whew! Well done so far; let's cool down with some snazzy plots and a nice gentle correlation analysis.
