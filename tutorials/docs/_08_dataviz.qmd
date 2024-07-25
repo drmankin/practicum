@@ -958,6 +958,39 @@ If I wanted to do this with another variable, and I wanted to have the legend ti
 :::
 :::
 
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+**CHALLENGE**: If you run the code to generate the scatterplot multiple times, you may notice that the individual points shift their exact position. To have a fully reproducible scatterplot, the plot should look exactly the same way each time we run the code to generate it. Can you figure out what causes the change in the position of the points and how to fix that?
+
+*Hint*: The solution is in [Tutorial 6](https://r-training.netlify.app/tutorials/docs/06_lm).
+
+::: {.callout-note collapse="true" title="Solution"}
+The `jitter` argument introduces a small **random** variation in the position of each point in the scatterplot. As we know, randomness in R (and other programming languages) is controlled through a pseudorandom number generator, and if we fix the seed of the generator, we will get the same random numbers each time we run the code:
+
+```{r}
+
+# set the seed of the random number generator so that the jitter of each point in the scatterplot is always the same
+set.seed(10)
+
+anx_scores |>
+  dplyr::mutate(
+    Gender = stringr::str_to_title(gender)
+  ) |> 
+  ggplot(aes(x = sticsa_trait_score, y = sticsa_post_state_score,
+             colour = Gender, fill = Gender)) +
+  geom_point(alpha = 0.4, position = "jitter") +
+  geom_smooth(method = "lm") +
+  scale_x_continuous(name = "STICSA Pre-MCQ State Anxiety Score",
+                    limits = c(1, 4)) +
+  scale_y_continuous(name = "STICSA Post-MCQ State Anxiety Score",
+                    limits = c(1, 4)) +
+  scale_colour_viridis(discrete = TRUE) +
+  scale_fill_viridis(discrete = TRUE) + 
+  papaja::theme_apa(box = TRUE)
+```
+:::
+:::
+
 ### 3D Plots
 
 ::: callout-warning
