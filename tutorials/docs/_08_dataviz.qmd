@@ -15,6 +15,20 @@ Check out the following indispensible resources for building beautiful visualisa
 -   [Data visualisation using R, for researchers who don't use R](https://psyteachr.github.io/introdataviz/), a fantastic how-to from the brilliant team at PsychTeachR at Glasgow, that provides a very friendly, start-to-finish walkthrough of the whole process of data reading, manipulation, and plot-building.
 :::
 
+:::: {.repro}
+
+::: {.repro-header}
+::: {.repro-icon}
+:::
+RepRoducible Figures
+:::
+
+::: {.repro-body}
+Figures are visual representations of a study's results, and it is therefore key to ensure they are as reproducible as the numerical results and inferential conclusions reported in the paper. In some fields like biology where images are the data themselves, researchers have found that Photoshop is sometimes used to enhance images ([Rossner & Yamada, 2004](https://rupress.org/jcb/article/166/1/11/34064/What-s-in-a-picture-The-temptation-of-image)). This scenario is very different from the use of scatter plots of violin plots to visualise data, but we should be weary of the possibility of manipulating digital images. To ensure that a manuscript is as trustworthy as possible, all plots representing data should be produced alongside the other statistical results reported in the paper, and the plots produced in our analysis script should look exactly the same as the plots in the manuscript. 
+:::
+
+::::
+
 ### What do UGs know?
 
 Data visualisation with {ggplot2} is explicitly introduced near the end of the first term of Year 1 at Sussex, and practiced throughout the second term. In Year 2, there is less focus on constructing plots from scratch, and instead students are taught how to get a basic plot pre-made and then modify it using their {ggplot2} skills.
@@ -128,7 +142,7 @@ dataset |>
   apply_a_theme
 ```
 
-These are guidelines, but the general =\> specific flow is for a good reason: **layers are evaluated from top to bottom**. So, it's best to get the big pieces in place first, then fine-tune, than to have those fiddly bits overwritten by a major change at the end of the code.
+These are guidelines, but the general =\> specific flow is for a good reason: **layers are evaluated from top to bottom**. So, it's best to get the big pieces in place first, then fine-tune, than to have those fiddly bits overwritten by a major change at the end of the code. This structure also makes the code easier to read which is key for reproducibility.
 
 Notice as well that **layers are added to a plot object with `+` and NOT with `|>`**. This is specific to {ggplot2} (AFAIK!) and is easy to forget, but don't worry - it's such a common thing that {ggplot2} has a very friendly error message for fixing it.
 
