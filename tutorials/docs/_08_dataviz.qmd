@@ -15,6 +15,20 @@ Check out the following indispensible resources for building beautiful visualisa
 -   [Data visualisation using R, for researchers who don't use R](https://psyteachr.github.io/introdataviz/), a fantastic how-to from the brilliant team at PsychTeachR at Glasgow, that provides a very friendly, start-to-finish walkthrough of the whole process of data reading, manipulation, and plot-building.
 :::
 
+:::: {.repro}
+
+::: {.repro-header}
+::: {.repro-icon}
+:::
+RepRoducible Figures
+:::
+
+::: {.repro-body}
+Figures are visual representations of a study's results, and it is therefore key to ensure they are as reproducible as the numerical results and inferential conclusions reported in the paper. In some fields like biology where images are the data themselves, researchers have found that Photoshop is sometimes used to enhance images ([Rossner & Yamada, 2004](https://rupress.org/jcb/article/166/1/11/34064/What-s-in-a-picture-The-temptation-of-image)). This scenario is very different from the use of scatter plots of violin plots to visualise data, but we should be weary of the possibility of manipulating digital images. To ensure that a manuscript is as trustworthy as possible, all plots representing data should be produced alongside the other statistical results reported in the paper, and the plots produced in our analysis script should look exactly the same as the plots in the manuscript. 
+:::
+
+::::
+
 ### What do UGs know?
 
 Data visualisation with {ggplot2} is explicitly introduced near the end of the first term of Year 1 at Sussex, and practiced throughout the second term. In Year 2, there is less focus on constructing plots from scratch, and instead students are taught how to get a basic plot pre-made and then modify it using their {ggplot2} skills.
@@ -128,7 +142,7 @@ dataset |>
   apply_a_theme
 ```
 
-These are guidelines, but the general =\> specific flow is for a good reason: **layers are evaluated from top to bottom**. So, it's best to get the big pieces in place first, then fine-tune, than to have those fiddly bits overwritten by a major change at the end of the code.
+These are guidelines, but the general =\> specific flow is for a good reason: **layers are evaluated from top to bottom**. So, it's best to get the big pieces in place first, then fine-tune, than to have those fiddly bits overwritten by a major change at the end of the code. This structure also makes the code easier to read which is key for reproducibility.
 
 Notice as well that **layers are added to a plot object with `+` and NOT with `|>`**. This is specific to {ggplot2} (AFAIK!) and is easy to forget, but don't worry - it's such a common thing that {ggplot2} has a very friendly error message for fixing it.
 
@@ -955,6 +969,39 @@ anx_scores |>
 ```
 
 If I wanted to do this with another variable, and I wanted to have the legend title have a space in it - for example, "MCQ Type" for the `mcq` groups - I could do this by creating a variable with an "illegal" name using backticks. This is something you should ONLY do for formatting/plotting as a final step!
+:::
+:::
+
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+**CHALLENGE**: If you run the code to generate the scatterplot multiple times, you may notice that the individual points shift their exact position. To have a fully reproducible scatterplot, the plot should look exactly the same way each time we run the code to generate it. Can you figure out what causes the change in the position of the points and how to fix that?
+
+*Hint*: The solution is in [Tutorial 6](https://r-training.netlify.app/tutorials/docs/06_lm).
+
+::: {.callout-note collapse="true" title="Solution"}
+The `jitter` argument introduces a small **random** variation in the position of each point in the scatterplot. As we know, randomness in R (and other programming languages) is controlled through a pseudorandom number generator, and if we fix the seed of the generator, we will get the same random numbers each time we run the code:
+
+```{r}
+
+# set the seed of the random number generator so that the jitter of each point in the scatterplot is always the same
+set.seed(10)
+
+anx_scores |>
+  dplyr::mutate(
+    Gender = stringr::str_to_title(gender)
+  ) |> 
+  ggplot(aes(x = sticsa_trait_score, y = sticsa_post_state_score,
+             colour = Gender, fill = Gender)) +
+  geom_point(alpha = 0.4, position = "jitter") +
+  geom_smooth(method = "lm") +
+  scale_x_continuous(name = "STICSA Pre-MCQ State Anxiety Score",
+                    limits = c(1, 4)) +
+  scale_y_continuous(name = "STICSA Post-MCQ State Anxiety Score",
+                    limits = c(1, 4)) +
+  scale_colour_viridis(discrete = TRUE) +
+  scale_fill_viridis(discrete = TRUE) + 
+  papaja::theme_apa(box = TRUE)
+```
 :::
 :::
 
