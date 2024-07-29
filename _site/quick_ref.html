@@ -232,6 +232,12 @@ window.Quarto = {
  <span class="menu-text">07: Summarise</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tutorials/docs/08_dataviz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">08: Visualisations</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -745,6 +751,75 @@ Sub-Topic
 <td style="text-align:left;">
 </td>
 </tr>
+<tr grouplength="8">
+<td colspan="2" style="border-bottom: 1px solid;">
+<strong>08: Visualisations</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+NA
+</td>
+<td style="text-align:left;">
+<a href="./tutorials/docs/08_dataviz.html#data-visualisation-resources">Data Visualisation Resources</a>, <a href="./tutorials/docs/08_dataviz.html#what-do-ugs-know?">What do UGs know?</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+<a href="./tutorials/docs/08_dataviz.html#setup">Setup</a>
+</td>
+<td style="text-align:left;">
+<a href="./tutorials/docs/08_dataviz.html#packages">Packages</a>, <a href="./tutorials/docs/08_dataviz.html#data">Data</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+<a href="./tutorials/docs/08_dataviz.html#grammar-of-graphics">Grammar of Graphics</a>
+</td>
+<td style="text-align:left;">
+<a href="./tutorials/docs/08_dataviz.html#layers">Layers</a>, <a href="./tutorials/docs/08_dataviz.html#mapping">Mapping</a>, <a href="./tutorials/docs/08_dataviz.html#geoms,-etc.">Geoms, etc.</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+<a href="./tutorials/docs/08_dataviz.html#histograms-and-density-plots">Histograms and Density Plots</a>
+</td>
+<td style="text-align:left;">
+<a href="./tutorials/docs/08_dataviz.html#adjusting-binwidth">Adjusting Binwidth</a>, <a href="./tutorials/docs/08_dataviz.html#colour-and-fill-manual">Colour and Fill Manual</a>, <a href="./tutorials/docs/08_dataviz.html#adjusting-axes-with-`scale_*()`">Adjusting Axes with <code>scale_*()</code></a>, <a href="./tutorials/docs/08_dataviz.html#adding-a-theme">Adding a Theme</a>, <a href="./tutorials/docs/08_dataviz.html#splitting-by-group">Splitting by Group</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+<a href="./tutorials/docs/08_dataviz.html#barplots">Barplots</a>
+</td>
+<td style="text-align:left;">
+<a href="./tutorials/docs/08_dataviz.html#position-dodge">Position Dodge</a>, <a href="./tutorials/docs/08_dataviz.html#reordering-categories">Reordering Categories</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+<a href="./tutorials/docs/08_dataviz.html#raincloud-and-violin-plots">Raincloud and Violin Plots</a>
+</td>
+<td style="text-align:left;">
+<a href="./tutorials/docs/08_dataviz.html#calculating-stats">Calculating Stats</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+<a href="./tutorials/docs/08_dataviz.html#scatterplots">Scatterplots</a>
+</td>
+<td style="text-align:left;">
+<a href="./tutorials/docs/08_dataviz.html#line-of-best-fit">Line of Best Fit</a>, <a href="./tutorials/docs/08_dataviz.html#colour-and-fill-palette">Colour and Fill Palette</a>, <a href="./tutorials/docs/08_dataviz.html#3d-plots">3D Plots</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+<a href="./tutorials/docs/08_dataviz.html#reporting">Reporting</a>
+</td>
+<td style="text-align:left;">
+<a href="./tutorials/docs/08_dataviz.html#with-quarto">With Quarto</a>, <a href="./tutorials/docs/08_dataviz.html#exporting-and-linking">Exporting and Linking</a>
+</td>
+</tr>
 </tbody>
 </table>
 </section>
@@ -1087,6 +1162,17 @@ filter()
 </tr>
 <tr>
 <td style="text-align:left;">
+geom_histogram()
+</td>
+<td style="text-align:left;">
+<a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">ggplot2::geom_histogram()</a>
+</td>
+<td style="text-align:left;">
+08: Visualisations
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 ggpairs()
 </td>
 <td style="text-align:left;">
@@ -1148,7 +1234,7 @@ here()
 <a href="https://here.r-lib.org//reference/here.html">here::here()</a>
 </td>
 <td style="text-align:left;">
-04: Filter and Select<br>05: Mutate<br>06: Reproducible Linear Models<br>07: Summarise
+04: Filter and Select<br>05: Mutate<br>06: Reproducible Linear Models<br>07: Summarise<br>08: Visualisations
 </td>
 </tr>
 <tr>
@@ -1160,6 +1246,17 @@ hist()
 </td>
 <td style="text-align:left;">
 03: Datasets
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ifelse()
+</td>
+<td style="text-align:left;">
+<a href="https://rdrr.io/r/base/ifelse.html">ifelse()</a>
+</td>
+<td style="text-align:left;">
+08: Visualisations
 </td>
 </tr>
 <tr>
@@ -1203,7 +1300,7 @@ kable_styling()
 <a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kableExtra::kable_styling()</a>
 </td>
 <td style="text-align:left;">
-03: Datasets<br>04: Filter and Select<br>05: Mutate<br>07: Summarise
+03: Datasets<br>04: Filter and Select<br>05: Mutate<br>07: Summarise<br>08: Visualisations
 </td>
 </tr>
 <tr>
@@ -1225,7 +1322,7 @@ library()
 <a href="https://rdrr.io/r/base/library.html">library()</a>
 </td>
 <td style="text-align:left;">
-02: IntRoduction II<br>03: Datasets<br>04: Filter and Select<br>05: Mutate<br>06: Reproducible Linear Models<br>07: Summarise
+02: IntRoduction II<br>03: Datasets<br>04: Filter and Select<br>05: Mutate<br>06: Reproducible Linear Models<br>07: Summarise<br>08: Visualisations
 </td>
 </tr>
 <tr>
@@ -1351,6 +1448,17 @@ nrow()
 </tr>
 <tr>
 <td style="text-align:left;">
+options()
+</td>
+<td style="text-align:left;">
+<a href="https://rdrr.io/r/base/options.html">options()</a>
+</td>
+<td style="text-align:left;">
+08: Visualisations
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 pick()
 </td>
 <td style="text-align:left;">
@@ -1423,7 +1531,7 @@ read_csv()
 <a href="https://readr.tidyverse.org/reference/read_delim.html">readr::read_csv()</a>
 </td>
 <td style="text-align:left;">
-03: Datasets<br>04: Filter and Select<br>05: Mutate<br>06: Reproducible Linear Models<br>07: Summarise
+03: Datasets<br>04: Filter and Select<br>05: Mutate<br>06: Reproducible Linear Models<br>07: Summarise<br>08: Visualisations
 </td>
 </tr>
 <tr>
@@ -1446,6 +1554,17 @@ return()
 </td>
 <td style="text-align:left;">
 07: Summarise
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+rglwidget()
+</td>
+<td style="text-align:left;">
+<a href="https://dmurdoch.github.io/rgl/dev/reference/rglwidget.html">rgl::rglwidget()</a>
+</td>
+<td style="text-align:left;">
+08: Visualisations
 </td>
 </tr>
 <tr>
@@ -1522,7 +1641,7 @@ set.seed()
 <a href="https://rdrr.io/r/base/Random.html">set.seed()</a>
 </td>
 <td style="text-align:left;">
-02: IntRoduction II<br>06: Reproducible Linear Models
+02: IntRoduction II<br>06: Reproducible Linear Models<br>08: Visualisations
 </td>
 </tr>
 <tr>
@@ -1566,7 +1685,7 @@ str_to_title()
 <a href="https://stringr.tidyverse.org/reference/case.html">stringr::str_to_title()</a>
 </td>
 <td style="text-align:left;">
-07: Summarise
+07: Summarise<br>08: Visualisations
 </td>
 </tr>
 <tr>
@@ -1600,6 +1719,17 @@ t.test()
 </td>
 <td style="text-align:left;">
 01: IntRoduction<br>02: IntRoduction II<br>04: Filter and Select
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+theme_apa()
+</td>
+<td style="text-align:left;">
+<a href="https://rdrr.io/pkg/papaja/man/theme_apa.html">papaja::theme_apa()</a>
+</td>
+<td style="text-align:left;">
+08: Visualisations
 </td>
 </tr>
 <tr>
