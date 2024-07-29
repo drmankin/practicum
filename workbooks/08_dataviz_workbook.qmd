@@ -1,0 +1,198 @@
+---
+title: "08: Visualisations"
+embed-resources: true
+editor: visual
+---
+
+## Open the Tutorial
+
+Use the following code chunks to open the accompanying tutorial.
+
+### Open in RStudio Viewer
+
+```{r}
+#| eval: false
+rstudioapi::viewer('https://r-training.netlify.app/tutorials/docs/08_dataviz')
+```
+
+### Open in a New Browser Tab
+
+```{r}
+#| eval: false
+utils::browseURL('https://r-training.netlify.app/tutorials/docs/08_dataviz')
+```
+
+## Overview
+
+### Data Visualisation Resources
+
+### What do UGs know?
+
+## Setup
+
+### Packages
+
+Load the packages.
+
+```{r}
+
+```
+
+### Data
+
+Read in the dataset and save it in a new object, `anx_scores`.
+
+On the Cloud, you can read in this dataset from the `data` folder using `here::here()`.
+
+Elsewhere, you can download the dataset, or copy the dataset URL, from the [Data and Workbooks page](../../../data_workbooks.qmd).
+
+```{r}
+
+```
+
+#### Codebook
+
+## Grammar of Graphics
+
+### Layers
+
+### Mapping
+
+### Geoms, etc.
+
+## Histograms and Density Plots
+
+Follow along with the instructions below to build your own plot as we go. Feel free to tweak details like colour and labels as you like.
+
+```{r}
+
+```
+
+### Adjusting Binwidth
+
+### Colour and Fill Manual
+
+### Adjusting Axes with `scale_*()`
+
+### Adding a Theme
+
+Create a **density plot** of the `rmars_s_test_score` variable (or another continuous variable in the dataset of your choosing). For a finished plot, make sure you:
+
+-   Choose colours for your plot.
+-   Adjust the labels, breaks, and limits as necessary.
+-   Add a theme.
+
+When you're done, make sure to save your plot to an object.
+
+```{r}
+
+```
+
+### Splitting by Group
+
+#### Overlay
+
+#### Facet Wrap
+
+## Barplots
+
+Create a new variable in the dataset, `stars_help_cat`, that contains either "low" for people who scored below 3 on the STARS Asking for Help subscale, or "high" for people who scored 3 or above. Make sure to save your changes back to the dataset.
+
+```{r}
+
+```
+
+Follow along with the instructions to build your own plot as we go. Feel free to tweak details like colour and labels as you like.
+
+```{r}
+
+```
+
+### Position Dodge
+
+### Reordering Categories
+
+#### Option 1: Scale Labels
+
+#### Option 2: Factor Levels
+
+Finish up your plot by adjusting the following elements:
+
+-   Give a name to each axis
+-   Relabel discrete categories where appropriate
+-   Adjust continuous limits and breaks where appropriate
+-   Choose new colours!
+
+*Hint*: You'll have **three** axes to adjust. Use the help documentation for each if you get stuck.
+
+Once you're done, save the finished plot in the object `anx_viz_bar`.
+
+```{r}
+
+```
+
+## Raincloud and Violin Plots
+
+Follow along with the instructions below to build your own plot as we go. Feel free to tweak details like colour and labels as you like.
+
+```{r}
+
+```
+
+### Calculating Stats
+
+In second year, students are also introduced to violin plots. Adapt the code we've already written for raincloud plots to create a violin plot with means and CIs instead.
+
+```{r}
+
+```
+
+**CHALLENGE**: The raincloud plot we produced above was serviceable but not very *aesthetic*. See if you can adapt that code to reproduce the plot below.
+
+*Hints*: Run `vignette("ggrain")` in the Console for a friendly tour of the options for raincloud plots. The colours are all from the Sussex colour palette.
+
+```{r}
+
+```
+
+## Scatterplots
+
+Follow along with the instructions below to build your own plot as we go. Feel free to tweak details like colour and labels as you like.
+
+```{r}
+
+```
+
+### Line of Best Fit
+
+### Colour and Fill Palette
+
+**CHALLENGE**: In the code above, I had to repeat a lot of elements for both `fill` and `colour`. See if you can figure out how to remove the need to change the name and labels within the plotting code by making a change to the dataset beforehand.
+
+```{r}
+
+```
+
+**CHALLENGE**: If you run the code to generate the scatterplot multiple times, you may notice that the individual points shift their exact position. To have a fully reproducible scatterplot, the plot should look exactly the same way each time we run the code to generate it. Can you figure out what causes the change in the position of the points and how to fix that?
+
+*Hint*: The solution is in [Tutorial 6](#06_lm.qmd).
+
+```{r}
+
+```
+
+### 3D Plots
+
+## Reporting
+
+### With Quarto
+
+#### Captions and Alt Text
+
+#### Cross-Referencing
+
+### Exporting and Linking
+
+Using any method (code or point-and-click), create a new folder called `images` in your project folder.
+
+#### Saving Plots

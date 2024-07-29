@@ -4,22 +4,38 @@ title: "08: Visualisations"
 
 ## Overview
 
-This tutorial focuses on creating data visualisations using the {ggplot2} package. It covers the conceptual grammar of {ggplot} and a variety of examples of common plots. It also covers how to customise key elements of the plots, such as colour, axis labeling, and adding statistical summaries, and finishes with some tips on using the figures you produce, both in Quarto and exporting for use elsewhere.
+This tutorial focuses on creating data visualisations using the {ggplot2} package. It covers the conceptual grammar of {ggplot2} and a variety of examples of common plots. It also covers how to customise key elements of the plots, such as colour, axis labeling, and adding statistical summaries, and finishes with some tips on using the figures you produce, both in Quarto and exporting for use elsewhere.
 
-::: {.callout-tip title="{ggplot2} and Data Visualisation Resources"}
-Check out the following indispensible resources for building beautiful visualisations:
+### Data Visualisation Resources
+
+This tutorial will only touch on basics to get you started. Check out the following indispensible resources for building more beautiful visualisations:
 
 -   [From Data to Viz](https://www.data-to-viz.com/), a beautifully designed helper site to help you explore the options for visualising your data, with thorough links to...
 -   [R Graph Gallery](https://r-graph-gallery.com/index.html), an archive of plots in R all with reproducible code and tutorials to build them yourself.
 -   [Tidy Tuesdays](https://www.tidytuesday.com/), which releases a new dataset each week, and people build and share beautiful visualisations, along with the code and frequently their process.
 -   [Data visualisation using R, for researchers who don't use R](https://psyteachr.github.io/introdataviz/), a fantastic how-to from the brilliant team at PsychTeachR at Glasgow, that provides a very friendly, start-to-finish walkthrough of the whole process of data reading, manipulation, and plot-building.
-:::
 
 ### What do UGs know?
 
 Data visualisation with {ggplot2} is explicitly introduced near the end of the first term of Year 1 at Sussex, and practiced throughout the second term. In Year 2, there is less focus on constructing plots from scratch, and instead students are taught how to get a basic plot pre-made and then modify it using their {ggplot2} skills.
 
 This tutorial includes essentially everything students are taught in Year 1, with a variety of extRas sprinkled in. When we look at specific analyses (e.g. ANOVA, mediation, and moderation), we will also see how to generate plots accompany those analyses.
+
+:::: {.repro}
+
+::: {.repro-header}
+::: {.repro-icon}
+:::
+RepRoducible Figures
+:::
+
+::: {.repro-body}
+Figures are visual representations of a study's results, and it is therefore key to ensure they are as reproducible as the numerical results and inferential conclusions reported in the paper. In some fields like biology where images are the data themselves, researchers have found that Photoshop is sometimes used to enhance images ([Rossner & Yamada, 2004](https://rupress.org/jcb/article/166/1/11/34064/What-s-in-a-picture-The-temptation-of-image)). This scenario is very different from the use of scatter plots or violin plots to visualise data, but we should be wary of the possibility of manipulating digital images. To ensure that a manuscript is as trustworthy as possible, all plots representing data should be produced alongside the other statistical results reported in the paper, and the plots produced in our analysis script should look exactly the same as the plots in the manuscript. 
+:::
+
+::::
+
+\ 
 
 ## Setup
 
@@ -60,7 +76,7 @@ Elsewhere, you can download the dataset, or copy the dataset URL, from the [Data
 Read in from file:
 
 ```{r}
-anx_scores <- readr::read_csv(here::here("data/anx_scores.csv"))
+anx_scores <- readr::read_csv(here::here("data/anx_scores_data.csv"))
 ```
 
 Read in from URL:
@@ -68,7 +84,7 @@ Read in from URL:
 ```{r}
 #| eval: false
 
-anx_scores <- readr::read_csv("https://raw.githubusercontent.com/drmankin/practicum/master/data/anx_scores.csv")
+anx_scores <- readr::read_csv("https://raw.githubusercontent.com/drmankin/practicum/master/data/anx_scores_data.csv")
 ```
 :::
 :::
@@ -101,7 +117,7 @@ readr::read_csv(here::here("data/anx_scores_codebook.csv")) %>%
 ```
 :::
 
-If you have some experience with R, you are welcome to instead use another dataset that you are familiar with or are keen to explore. However, remember that anything you upload to the training Posit Cloud workspace is visible to all workspace admins, so keep GDPR in mind.
+If you have some experience with R, you are welcome to instead use another dataset that you are familiar with or are keen to explore. However, remember that anything you upload to the training Posit Cloud workspace is visible to all workspace admins, so keep ethical and GDPR considerations in mind.
 
  
 
@@ -113,11 +129,11 @@ What we'll cover in this tutorial is the core structure of building data visuali
 
 ### Layers
 
-Plots in {ggplot2} are built in layers. Each layer adds to or changes something about the plot; these can be big elements, like determining the type of plot to create, to small details like editing axis labels or changing colours. In {ggplot2}, each layer is a function.
+Plots in {ggplot2} are built in layers. Each layer adds to or changes something about the plot; these can be big elements, like determining the type of plot to create, to small details like editing axis labels or changing colours. In {ggplot2}, each layer is created or edited by a dedicated function.
 
 If it helps, you can think of layers like [different colours in a linocut print](https://www.instagram.com/reel/CpTb7oCJ5da/?utm_source=ig_web_button_share_sheet). Each additional layer of colour adds a bit more to the overall picture, building up from big blocks of colour to small details.
 
-To build a visualisation in {ggplot2}, it's a good idea to build your plot in the same way, from big picture to small detail. As we'll see, I usually build plot layers like this:
+To build a visualisation in {ggplot2}, it's a good idea to build your plot in the same way, from big picture to small detail. We will use the following general structure:
 
 ``` r
 dataset |> 
@@ -128,7 +144,7 @@ dataset |>
   apply_a_theme
 ```
 
-These are guidelines, but the general =\> specific flow is for a good reason: **layers are evaluated from top to bottom**. So, it's best to get the big pieces in place first, then fine-tune, than to have those fiddly bits overwritten by a major change at the end of the code.
+These are guidelines, but the general =\> specific flow is for a good reason: like all code **layers are evaluated sequentially from top to bottom**. So, it's best to get the big pieces in place first, then fine-tune, than to have those fiddly bits overwritten by a major change at the end of the code. This structure also makes the code easier to read which is key for reproducibility.
 
 Notice as well that **layers are added to a plot object with `+` and NOT with `|>`**. This is specific to {ggplot2} (AFAIK!) and is easy to forget, but don't worry - it's such a common thing that {ggplot2} has a very friendly error message for fixing it.
 
@@ -139,7 +155,7 @@ The actual error that pops up when you use a pipe instead of `+` isn't super tra
 #| error: true
 
 anx_scores |> 
-  ggplot(aes(x = mcq_sum)) |> 
+  ggplot(aes(x = mcq_sum)) |> ## Using |> to add a layer
   geom_histogram()
 ```
 :::
@@ -181,17 +197,20 @@ Let's start with a histogram, a very common type of visualisation that represent
 Follow along with the instructions below to build your own plot as we go. Feel free to tweak details like colour and labels as you like.
 :::
 
-For a basic histogram, we need three elements. First, pipe in the data; then, set the aesthetics; then, use `geom_histogram()` to draw the plot.
+For a basic histogram, we need three elements. First, pipe in the data; then, set the aesthetics; then, use a geom function to draw the plot.
 
 ```{r}
 #| message: true
 
+## Pipe in the data
 anx_scores |> 
+  ## Set the aesthetics
   ggplot(aes(x = mcq_score)) +
+  ## Draw the plot with a geom
   geom_histogram()
 ```
 
-Hooray! The downside is... that's pretty ugly. For a quick glance this isn't really any better than `hist()`. So - let's make it better by doing the following:
+Hooray! The downside is... that's pretty ugly. For a quick glance this isn't really any better than `hist()`. Let's make it better by doing the following:
 
 1.  Adjusting the binwidth to present the values more sensibly
 2.  Adding colour and fill
@@ -234,7 +253,9 @@ anx_scores |>
                  fill = "lightgray")
 ```
 
-This would be fine for formal reporting, but we're going to be all about the aesthetics today and those colours are downright dreary. Let's instead borrow from the [Sussex official colour palette](https://www.sussex.ac.uk/brand/designers/colour) to set custom colours. I'm choosing "Sussex Flint"[^1] for the outline colour and "Deep Aquamarine" for the fill, but feel free to choose whatever you like. You could also use [an online colour picker like this one](https://www.google.com/search?q=colour+picker) to choose any hex code for any colour you can dream of to use!
+This would be fine for formal reporting, but we're going to be all about the aesthetics today and those colours are downright dreary. Let's instead borrow from the [Sussex official colour palette](https://www.sussex.ac.uk/brand/designers/colour) to set custom colours. Feel free to choose whatever you like. I'm choosing "Sussex Flint"[^1] for the outline colour and "Deep Aquamarine" for the fill for the example below. Of course, R won't recognise those specific colour names, so instead we need to provide the "hex code" for this specific colour, in quotes and preceded by a hash (`#`).
+
+You could also use [an online colour picker like this one](https://www.google.com/search?q=colour+picker) to choose any hex code for any colour you can dream of to use!
 
 [^1]: You may notice a certain commonality to the colour theme of this website!
 
@@ -252,9 +273,9 @@ With that sorted, let's move onto the axis and ticks.
 
 ### Adjusting Axes with `scale_*()`
 
-You can use the `labs()` shortcut to adjust labels easily, but personally I prefer to go the long way round (surprise lol) and use the `scale_*()` family instead. These functions have specific names depending on which axis scale you want to adjust, and the way that data is measured. In this case I want to adjust the *x*-axis and the data is continuous[^2], so the function I need is `scale_x_continuous()`.
+You can use the `labs()` shortcut to adjust labels easily, but personally I (JM) prefer to go the long way round and use the `scale_*()` family instead. These functions have specific names depending on which axis scale you want to adjust, and the way that data is measured. In this case I want to adjust the *x*-axis and the data is continuous[^2], so the function I need is `scale_x_continuous()`.
 
-[^2]: Yes, this is not *technically* true because the values can only be whole numbers between 0 and 5, but what matters here is that *R* thinks this is continuous data.
+[^2]: Yes, this is not *technically* true because the values can only be whole numbers between 0 and 5, but what matters here is that *R* thinks this is continuous data because it is numeric.
 
 The advantage of going through the extra trouble to use the `scale_*()` functions is that they allow you to adjust everything about that scale at once. So, I can use the arguments for `scale_x_continuous()` to change the axis label with `name =`, the breaks with `breaks =`, the limits with `limits =` ...well, I'm sure you get the idea!
 
@@ -277,7 +298,7 @@ anx_scores |>
 
 If you have a look at the arguments `breaks` and `limits`, you can see why we took some time early on learning about numeric vectors. `breaks` requires a vector of values indicating where the breaks should be, and `limits` requires a vector of two values, one for the minimum limit and the other for the maximum limit.
 
-I've also used a new function, `seq()`, to create the *y*-axis breaks. This handy little base-R function generates a *seq*uence of values, given the first and last values in the sequence and how much you want to increment by. I've asked it to start at 0, end at 120, and increment by 20 each time, instead of typing `c(0, 20, 40, ...)` myself.
+I've also thrown in an optional new function, `seq()`, to create the *y*-axis breaks. This handy little base-R function generates a *seq*uence of values, given the first and last values in the sequence and how much you want to increment by. I've asked it to start at 0, end at 120, and increment by 20 each time, instead of typing `c(0, 20, 40, ...)` myself, to generate the numbers for labeled breaks on the *y*-axis.
 
 ### Adding a Theme
 
@@ -326,7 +347,7 @@ anx_viz_hist <- anx_scores |>
 To lock it in, let's get some practice using these functions with a minimally different example.
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
-Create a density plot of the `rmars_s_test_score` variable (or another continuous variable in the dataset of your choosing). For a finished plot, make sure you:
+Create a **density plot** of the `rmars_s_test_score` variable (or another continuous variable in the dataset of your choosing). For a finished plot, make sure you:
 
 -   Choose colours for your plot.
 -   Adjust the labels, breaks, and limits as necessary.
@@ -460,13 +481,13 @@ How are you doing? This is a bunch of new information, so don't worry if you fee
 
 With some key ideas for building plots under our belts, let's have a look at creating visualisations of categorical data.
 
-To start with, we'll need some (preferably interesting) categorical data to work with. Let's begin by creating a categorical variable out of one of our continuous variables to practice what we covered in the previous tutorial. (This kind of operation is often not recommended for real analysis, but we're learning so, y'know, it's fine.)
+To start with, we'll need some (preferably interesting) categorical data to work with. Let's begin by creating a categorical variable out of one of our continuous variables to practice what we covered a the previous tutorial. (This kind of operation is often not recommended for real analysis, but we're learning so, y'know, it's fine.)
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
 Create a new variable in the dataset, `stars_help_cat`, that contains either "low" for people who scored below 3 on the STARS Asking for Help subscale, or "high" for people who scored 3 or above. Make sure to save your changes back to the dataset.
 
 ::: {.callout-note collapse="true" title="Solution"}
-First, let's use `case_when()` to create our variable, and check whether everything looks good using the `.keep = "used"` argument in `mutate()`.
+First, let's use `case_when()` to create our variable, and check whether everything looks good using the `.keep = "used"` argument in `mutate()` to evaluate our work.
 
 ```{r}
 anx_scores |> 
@@ -550,22 +571,24 @@ anx_scores |>
 
 #### Option 2: Factor Levels
 
-We haven't covered factors much in this course so far; for our purposes, most of the time, R treats character data more or less the same way it would treat factors so it hasn't been a problem (yet...). However, converting our `stars_help_cat` variable to a factor would let us specify an order of factor levels.
+Especially if we were planning to use this variable in multiple plots or analysis, it would be better to convert our `stars_help_cat` variable to a factor would let us specify an order of factor levels. We would only have to do this once, then the order would be the same for all subsequent operations.
 
 Let's see how that would work. Here I'm using `mutate()` to do the factor conversion before I pipe the data on into `ggplot()`. We've seen the `factor()` function before, just adding the `levels =` argument to reorder the levels in the order we wanted. The resulting plot then has the levels in the right order.
 
 ```{r}
+## Convert stars_help_cat to factor in the dataset
+anx_scores <- anx_scores |> 
+    dplyr::mutate(stars_help_cat = factor(stars_help_cat, 
+                                        levels = c("low", "high"))
+                ) 
+
+## Rerun the plot code
 anx_scores |> 
   dplyr::filter(gender %in% c("male","female")) |> 
-  dplyr::mutate(stars_help_cat = factor(stars_help_cat, 
-                                        levels = c("low", "high"))
-                ) |> 
   ggplot(aes(x = stars_help_cat, fill = gender)) +
   geom_bar(position = "dodge") +
   papaja::theme_apa(box = TRUE)
 ```
-
-Which to prefer? If you are going to change your categorical variables into factors anyway, it might be a good idea to set any factor ordering at that point, so you don't need to bother with this later. Otherwise, it doesn't matter as long as your plot looks the way you want it at the end!
 
 Right, now that all the structural stuff is out of the way, let's finish up.
 
@@ -577,7 +600,7 @@ Finish up your plot by adjusting the following elements:
 -   Adjust continuous limits and breaks where appropriate
 -   Choose new colours!
 
-*Hint*: You'll have three axes to adjust. Use the help documentation for each if you get stuck.
+*Hint*: You'll have **three** axes to adjust. Use the help documentation for each if you get stuck.
 
 Once you're done, save the finished plot in the object `anx_viz_bar`.
 
@@ -613,7 +636,7 @@ anx_viz_bar
 :::
 
 ::: {.callout-warning title="Check Order of Labels!" collapse="true"}
-Keep in mind that `ggplot()` is just applying the labels as strings on top of your plot. This means that if you, for instance, reorder your categories on the *x*-axis but then forget to update the order of axis labels in your code, your plot will be wrong. It's always important to double-check that the labels you add do in fact correspond correctly to the order of the categories in the plot to avoid mislabeling.
+Keep in mind that `ggplot()` is just applying the labels as strings on top of your plot. This means that if you, for instance, reorder your categories on the *x*-axis but then forget to update the order of axis labels in your code, **your plot will be wrong**. It's always important to double-check that the labels you add do in fact correspond correctly to the order of the categories in the plot to avoid mislabeling.
 
 As an example, the code below is identical to the solution above, except I've commented out the `limits` argument in `scale_x_discrete()` that reorders the categories on the *x*-axis. However, I've left in the `labels` argument that whacks on the axis labels in the reordered order. Comparing to the plot above, we can see by the sizes of the bars that the actual categories are in high-low order, despite what the nicely formatted labels say.
 
@@ -958,10 +981,43 @@ If I wanted to do this with another variable, and I wanted to have the legend ti
 :::
 :::
 
+
+::: {.callout-note appearance="minimal" title="Exercise"}
+**CHALLENGE**: If you run the code to generate the scatterplot multiple times, you may notice that the individual points shift their exact position. To have a fully reproducible scatterplot, the plot should look exactly the same way each time we run the code to generate it. Can you figure out what causes the change in the position of the points and how to fix that?
+
+*Hint*: The solution is in [Tutorial 6](#06_lm.qmd).
+
+::: {.callout-note collapse="true" title="Solution"}
+The `jitter` argument introduces a small **random** variation in the position of each point in the scatterplot. As we know, randomness in R (and other programming languages) is controlled through a pseudorandom number generator, and if we fix the seed of the generator, we will get the same random numbers each time we run the code:
+
+```{r}
+
+# set the seed of the random number generator so that the jitter of each point in the scatterplot is always the same
+set.seed(10)
+
+anx_scores |>
+  dplyr::mutate(
+    Gender = stringr::str_to_title(gender)
+  ) |> 
+  ggplot(aes(x = sticsa_trait_score, y = sticsa_post_state_score,
+             colour = Gender, fill = Gender)) +
+  geom_point(alpha = 0.4, position = "jitter") +
+  geom_smooth(method = "lm") +
+  scale_x_continuous(name = "STICSA Pre-MCQ State Anxiety Score",
+                    limits = c(1, 4)) +
+  scale_y_continuous(name = "STICSA Post-MCQ State Anxiety Score",
+                    limits = c(1, 4)) +
+  scale_colour_viridis(discrete = TRUE) +
+  scale_fill_viridis(discrete = TRUE) + 
+  papaja::theme_apa(box = TRUE)
+```
+:::
+:::
+
 ### 3D Plots
 
 ::: callout-warning
-*Note*: 3D plots really should be used with caution, and this bit is just for fun - feel free to skip if you're not inclined. If you're keen to have a go, the code below gets you an interactive, useable 3D scatterplot in no time at all, but think carefully about whether this is really the best way to represent your data.
+*Note*: 3D plots really should be used with caution, and this bit is just for fun - feel free to [skip down to the reporting section](#reporting) if you're not inclined. If you're keen to have a go, the code below gets you an interactive, useable 3D scatterplot in no time at all, but think carefully about whether this is really the best way to represent your data.
 :::
 
 In something of a departure for us, we're going to use a package *that isn't {ggplot2}* for this next bit. (Shock! Horror!) Instead, we'll use the `plot3d()` function from the {rgl} package to get a snazzy interactive 3D-plot that does rotation and zoom right out of the box. The syntax might look slightly unfamiliar, but it's got the same underlying idea as what we've seen so far.
@@ -1018,7 +1074,7 @@ As ever, I strongly recommend referring to [the Quarto Guide](https://quarto.org
 
 In a previous section, we created a lovely scatterplot for a (hypothetical) linear model. Let's see now how we could adjust the way that figure would appear in a Quarto document.
 
-To begin, we've already stored the final output for the LM plot we created above in a new object, `anx_viz_scatter`. We're just going to put our plot object in a new code chunk, in the document where we want it to appear. Equally, this could be the code that produces the plot; it doesn't matter either way.
+To begin, we've already stored the final output for the LM plot we created above in a new object, `anx_viz_scatter`. We're just going to put our plot object in a new code chunk, in the document where we want it to appear. Equally, this could be the code that produces the plot; it doesn't matter either way for the plot itself, but I would prefer the object-name method to avoid cluttering up the writeup with lots of code.
 
 ```{{r}}
 anx_viz_scatter
@@ -1073,7 +1129,7 @@ Then, use this label with an `@` symbol in the text of the document to generate 
 
 Which would appear when rendered as below - notice the caption now has "Figure 1" added to it to correspond to the in-text numbering.
 
-> The result of this analysis is visualised in @fig-mcq-lm.
+> The result of this analysis is visualised in @fig-anx-scatter.
 
 ```{r}
 #| echo: false
@@ -1139,7 +1195,7 @@ An option is to link to images, rather than insert them directly. In Microsoft W
 
 This method has the following advantages:
 
-- The image is **linked**, which means that if you re-run your code and re-save the new image, the linked image in the document will update automatically. This is quite similar to what we saw previously with linked tables for summaries.
+- The image is **linked**, which means that if you re-run your code and re-save the new image, the linked image in the document will update automatically.
 - The image is also **inserted** which means that if you send this document to someone else, upload it to Drive etc., there will still be a copy of the image in the document, whatever was most recent when it was sent.
 
 
