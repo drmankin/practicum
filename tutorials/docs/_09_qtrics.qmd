@@ -44,7 +44,7 @@ If you already have data in `.sav` format to work with, either your own or the e
 
 ### Setting Up Qualtrics
 
-In this section we'll have a quick look at how to set up Qualtrics to work as smoothly as possible with R. This has also previously been covered in a [QQM Skills Lab](https://drdanielleevans.netlify.app/posts/qqm_22/skills_lab_05-1).
+In this section we'll have a quick look at how to set up Qualtrics to work as smoothly as possible with R. This is also covered in a [QQM Skills Lab](https://drdanielleevans.netlify.app/posts/qqm_22/skills_lab_05-1).
 
 #### Blocks
 
@@ -75,7 +75,7 @@ As you can see here, the way that you set up your questions translates directly 
 - **Choices**: For questions with a specific set of choices, like multiple-choice questions and rating scales, the choices you list here are the response options that your participants see. These choices will appear as the **value labels** in your exported dataset.
 
 ::: callout-tip
-It is **strongly recommended** that you rename each question something informative when you create it. We will cover [renaming in the dataset in depth below](#renaming) but it's much better to avoid having to do this in the first place by naming your variables something sensible to begin with.
+It is **strongly recommended** that you rename each question something informative when you create it. We will cover [renaming in the dataset in depth below](#renaming) but it's much better to avoid having to do this in the first place by naming your variables something sensible to begin with. The less you have to fiddle with your data, the better. 
 
 I (JM) follow the following conventions:
 
@@ -269,9 +269,11 @@ As tempting as it may be, it is very strongly advised **not** to manually change
 
 #### Option 1: Rename in Qualtrics
 
-This option requires that you have have access to, and are willing to edit, the original Qualtrics questionnaire. Rather than being a coding option, this entails going back to the Qualtrics questionnaire and changing the question labels *before* you export the dataset.
+This option requires that you have have access to, and are willing to edit, the original Qualtrics questionnaire. Rather than being a coding option, this entails going back to the Qualtrics questionnaire and changing the question labels *before* you export the dataset. 
 
 For more on this, see [Setting Up Qualtrics](#setting-up-qualtrics).
+
+This option still involves some hidden, manual operations that can introduce errors, so let's look at an alternative. 
 
 #### Option 2: `rename()`
 
@@ -507,7 +509,7 @@ labelled::var_label(mil_data$demo_gender)
 
 #### Creating/Updating Labels
 
-If you'd like to edit labels, you can do it "manually" - that is, just writing a whole new label from scratch.
+If you'd like to edit labels, you can do it "manually" - that is, just writing a whole new label from scratch in R.
 
 The structure of the following code might look a little unfamiliar. For the most part, we've seen code that contains longer and more complex instructions on the right-hand side of the `<-`, and a single object being created or updated on the left-hand side. In the structure below, the left-hand side contains longer and more complex code that identifies the value(s) to be updated or created, and the right-hand side contains the value(s) to create or update. It's the same logic, just with a different structure.
 
@@ -577,11 +579,26 @@ labelled::var_label(mil_data$gender) |>
 
 So, altogether, we can read this `gsub()` command as: "Capture everything up to an including the question mark, and replace the entire string with that capturing group."
 
-Now. Why, you might wonder, is all this faff *better*?
 
-Well, it might not be. You might find it more frustrating or effortful to generate the right regex pattern than to replace the label "manually", and in that case, there's nothing wrong with just writing out the label you want. 
+:::: {.repro}
+
+::: {.repro-header}
+::: {.repro-icon}
+:::
+RepRoducibility: Regex Relabelling 
+:::
+
+::: {.repro-body}
+Now. Why, you might wonder, is all the faff with regex *better*?
+
+Well, it might not be. You might find it more frustrating or effortful to generate the right regex pattern than to replace the label "manually", and in that case, there's nothing wrong with just writing out the label you want as long as you do in R and there is a record of it.  
 
 On the other hand, the regex command will always drop everything after the question mark, no matter what that text is. If there is no match, it won't replace anything. So, unlike the "manual" option, there's much less danger of accidentally mixing up labels or overwriting the wrong thing; and this regex statement can be generalised to *any* label that contains a question mark, rather than having to type out each label one by one.
+:::
+
+::::
+
+
 
 ```{r}
 #| echo: false
@@ -806,7 +823,7 @@ There's two key reasons to produce a data dictionary for your dataset.
 
 First, data dictionaries (or "codebooks") are very useful for understanding datasets, even your own. You may find yourself referring to it frequently when writing your methods and results, to remind yourself what different questions contain, what the text of the question was, etc.
 
-Second, data dictionaries are hugely useful for other people. This would be a massive help to, for example, your supervisor who may need to assist you with your data analysis, or to include in your dissertation submission for your markers. If you want to share your data publicly, including a dictionary/codebook is not only a kindness to other users but also helps prevent misuse or misunderstandings.
+Second, data dictionaries are hugely useful for other people. This would be a massive help to, for example, a colleague who may be assisting you with your data analysis, or checking [the reproducibility of your analysis](https://osf.io/d26jv). If you want to share your data publicly, including a dictionary/codebook is not only a kindness to other users but also helps prevent misuse or misunderstandings.
 :::
 
 If you primarily need a quick reference as you're working with your dataset, the delightful `sjPlot::view_df()` function makes this particularly easy.
