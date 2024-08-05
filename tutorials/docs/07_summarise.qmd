@@ -88,7 +88,7 @@ readr::read_csv(here::here("data/anx_scores_codebook.csv")) %>%
 ```
 :::
 
-## General Format
+## Summarising
 
 The `summarise()` function looks almost exactly like `mutate()`, which was covered in the previous tutorial. The difference is that `mutate()` creates or replaces variables within the **same** dataset, while `summarise()` creates a **new** summary dataset without changing the original.
 
@@ -107,7 +107,7 @@ dataset_name |>
 
 Let's have a look at an example of this. We looked previously at `sticsa_trait_score`, so we might want to get some summary info about this variable, such as the mean and standard deviation. To do this, we create a new variable for each descriptive value we want to create on the left side of the `=`, and instructions for creating that summary on the right.
 
-To help us out with our summaries, we'll also bundle in a second new function while we're at it. Unassuming little `dplyr::n()` has one job: counting the number of cases. Right now it's not telling us much that's new...but that will change in a bit!
+To help us out with our summaries, we'll also bundle in a bonus new function while we're at it. Unassuming little `dplyr::n()` has one job: counting the number of cases. Right now it's not telling us much that's new...but that will change in a bit!
 
 Putting that all together, here's an example of how that works:
 
@@ -125,6 +125,8 @@ anx_scores |> # <1>
 3.  Calculate the mean of the `sticsa_trait_score` variable (ignoring any missing values) and store it in the variable `sticsa_trait_mean`
 4.  Calculate the standard deviation of the `sticsa_trait_score` variable (ignoring any missing values) and store it in the variable `sticsa_trait_sd`
 
+#### Internal Calculations
+
 A very useful feature of these functions - both `mutate()` and `summarise()` - is that once you create a variable within the function, you can use it in subsequent arguments to that function.
 
 For instance, let's say we want to include standard error in our summary as well. Unfortunately there's no base `se()` function (along the lines of `sd()`). There are functions in other packages, such as `papaja::se()`, that you could find by searching for "standard error" in the Help tab (in the Files pane); but it might not always be a good idea to use single functions from other packages, since you will have to (remember to) install/update those packages. This would be worth it if that function did an operation that would otherwise be difficult or labor-intensive to replicate, but in this case, standard error is a straightforward mathematical operation: namely, the standard deviation divided by the square root of *N*. We've already created a variable that contains the *SD*, and we have the dataset and we know how to count the number of cases so, let's just do it by hand.
@@ -139,13 +141,33 @@ anx_scores |>
   )
 ```
 
-In the last line creating `sticsa_trait_se`, both `sticsa_trait_sd` and `n` are variables created previously in the same `summarise()` command.
+In the last line creating `sticsa_trait_se`, both `sticsa_trait_sd` and `n` are variables created previously in the same `summarise()` command. So, the new variables in `summarise()` are immediately available on subsequent lines to use in further calculations.
+
+::: {.callout-tip title="MoRe About: Code Order" collapse="true"}
+
+It's important to note from the above that the new variables created are immediately available in *subsequent* lines. As always, it's essential to remember that code is ordered sequentially. The same lines within `summarise()` will not evaluate correctly if they are out of order:
+
+```{r}
+#| error: true
+anx_scores |>
+  dplyr::summarise(
+    n = dplyr::n(), # <2>
+    sticsa_trait_mean = mean(sticsa_trait_score, na.rm = TRUE), # <3>
+    ## SE line moved up before SD line
+    ## So attempting to use sticsa_trait_sd` before it is created
+    sticsa_trait_se = sticsa_trait_sd/sqrt(n),
+    sticsa_trait_sd = sd(sticsa_trait_score, na.rm = TRUE)
+    
+  )
+```
+
+:::
 
 ### By Group
 
 Next, let's combine `dplyr::summarise()` with the helper function `dplyr::group_by()` to split up the summary calculations by the values of a grouping variable.
 
-Similar to [what we saw with `rowwise()`](05_mutate.qmd#composite-scores), `group_by()` creates an internal structure in the dataset - a new group for each unique value in the grouping variable. Any subsequent calculations done with the dataset are done within those groups.
+Similar to [what we saw with `rowwise()`](05_mutate.qmd#composite-scores), `group_by()` creates an internal structure in the dataset: a new group for each unique value in the grouping variable. Any subsequent calculations done with the dataset are done within those groups.
 
 ```{r}
 
@@ -166,13 +188,9 @@ anx_scores |>   # <1>
 
 Compare this to the ungrouped summary in the previous section - it's the same columns, but a new row for each group. We also see here that little `dplyr::n()` is a bit more useful now - giving us counts within each group alongside the other summary information, which also means that the standard error can be calculated for each group separately as well.
 
-<!-- ::: {.callout-tip title="Reshaping Summary Tables" collapse="true"} -->
-<!-- This second summary table, grouped by both MCQ and gender, would likely be easier to read with one variable on separate rows and the other in separate columns. If you're interested in this, run `vignette("pivot")` in the Console. -->
-<!-- ::: -->
-
 ### Multiple Variables
 
-Despite the versatility of `summarise()`, you may have already noticed that the code covered so far is very typing-intensive if you want information about more than one variable. This is neither efficient nor particularly enjoyable:
+Despite the versatility of `summarise()`, you may have already noticed that the code covered so far is very typing-intensive if you want information about more than one variable. This is neither efficient nor particularly enjoyable to write, read, or use:
 
 ```{r}
 #| eval: false
@@ -238,9 +256,11 @@ For more explanation about `dplyr::across()`, see the [section on iteration with
 ```{r}
 #| echo: true 
  
-fxs <- list( # <1>
+fns <- list( # <1>
+  n = ~ dplyr::n(), # <2>
   mean = ~ mean(.x, na.rm = TRUE), # <2>
   sd = ~ sd(.x, na.rm = TRUE), # <2>
+  se = ~ sd(.x, na.rm=TRUE)/dplyr::n(), # <2>
   min = ~ min(.x, na.rm = TRUE), # <2>
   max = ~ max(.x, na.rm = TRUE) # <2>
 )
@@ -249,27 +269,27 @@ anx_scores |>   # <3>
   dplyr::group_by(mcq) |>   # <3>
   dplyr::summarise(   # <3>
     across(  # <4>
-      contains("stars"),   # <4>
-      fxs  # <5>
+      .cols = contains("stars"),   # <4>
+      .fns = fns  # <5>
       )
   )
 ```
 
-1.  Create an object (here `fxs` short for "functions") that contains a list with the following elements:
-2.  Each element is named on the LHS and contains a formula on the RHS. Here the formulae are named the same as their functions, but this doesn't have to be the case.
+1.  Create an object (here `fns` short for "functions") that contains a list of...
+2.  Named elements, each of which contains a function written as a `purrr`-style lambda.
 3.  Take the `anx_scores` data, *and then* group by MCQ type, *and then* summarise it as follows:
 4.  Across all of the variables in the `anx_score` dataset whose names contain the string "stars",
-5.  Apply the list of functions stored in the `fxs` object.
+5.  Apply the list of functions stored in the `fns` object.
 
-To recap briefly, the elements in the `fxs` list have a special format. The first bit, e.g. `mean =`, gives each element a name. This name will be appended to the relevant column in the `summarise()` output, so choose something informative and brief. The second bit, e.g. `~ mean(.x, na.rm = TRUE)`, is the function we want to apply to each variable. The two things to note are the "twiddle" `~`, which denotes "this is a function to apply", and `.x`, which is a placeholder for each of the variables that the function will be applied to.
+To recap briefly, the elements in the `fns` list have a special format. The first bit, e.g. `mean =`, gives each element a name. This name will be appended to the relevant column in the `summarise()` output, so choose something informative and brief. (Here the formulae are named the same as their functions, but this doesn't have to be the case.) The second bit, e.g. `~ mean(.x, na.rm = TRUE)`, is the function we want to apply to each variable. The two things to note are the "twiddle" `~`, which denotes "this is a function to apply", and `.x`, which is a placeholder for each of the variables that the function will be applied to.
 
-Within `across()`, we are building on what we've seen before with this function. The first argument selects which variables to use using `<tidyselect>`. In this case, I've selected all of the variables that contain "stars". The second argument provides a list of function(s) to apply to all of the selected variables, which here is the `fxs` object.
+Within `across()`, we are building on what we've seen before with this function. The first argument, `.cols`, selects which variables (columns) to use, using `<tidyselect>` or any other `select()` syntax. In this case, I've selected all of the variables that contain the string "stars". The second argument provides a list of function(s) to apply to all of the selected variables, which here is the `fns` object.
 
 This function list + `dplyr::across()` method is extremely versatile. If you are using a lesser-known statistical technique, or even functions of your own making, you can easily add them to your list of functions and apply them with `across()`.
 
 ::: {.callout-tip title="MoRe About: Function Lists" collapse="true"}
 
-As a final note here, the creation of the `fxs` object containing a list of functions isn't technically necessary - you can just provide the list in `across` directly.
+As a final note here, the creation of the `fns` object containing a list of functions isn't technically necessary - you can just provide the list in `across` directly.
 
 ```{r}
 
@@ -291,7 +311,7 @@ Personally, I would prefer to make a separate object for three reasons:
 3.  The code is cleaner and easier to read, especially the `across()` command.
 :::
 
-### Exercises
+## Exercises
 
 ::: {.callout-note title="Exercise" appearance="minimal"}
 Starting with the example code from previously:
@@ -406,7 +426,7 @@ For all things kable, the [Create Awesome HTML Table vignette](https://cran.r-pr
 Follow along with the instructions to create your own beautiful table.
 :::
 
-To begin, let's take the `summarise()` code we were working with above, grouped by `mcq` only, and save it in a new object. Then, pipe that new summary dataset object into the `kableExtra::kbl()` function, and then on again into the `kableExtra::kable_classic()` function. This one-two combo first creates a basic table out of the dataset (`kbl()`), then apply some APA-ish HTML formatting (`kable_classic()`).
+To begin, let's take the `summarise()` code we were working with above, grouped by `mcq` only, and save it in a new object. Then, pipe that new summary dataset object into the `kableExtra::kbl()` function, and then on again into the `kableExtra::kable_classic()` function. This one-two combo first creates a basic table out of the dataset (`kbl()`), then applies some APA-ish HTML formatting (`kable_classic()`).
 
 ```{r}
 anx_mcq_sum <- anx_scores |>
@@ -446,7 +466,7 @@ anx_mcq_sum |>
   kableExtra::kable_classic()
 ```
 
-::: {.callout-warning title: "Error Watch: dimnames not equal to array extent" collapse="true"}
+::: {.callout-warning title="Error Watch: dimnames not equal to array extent" collapse="true"}
 
 This error is unfortunately both very easy to generate and totally opaque. All it usually means is that the number of names ("dimnames") you have given `col.names` isn't the same as the number of columns in the dataset you're formatting (the "array extent").
 
@@ -537,7 +557,7 @@ Next, let's turn to `pattern = "^(.)"`. The sequence in quotes is a regular expr
   
 Together, the expression `"^(.)"` can be read as, "The first character in the string." This is the pattern to match, so using this expression we've identified (in this case) the "m" in "maths" and the "s" in "stats".
 
-Finally, let's look at `replacement = "\\U\\1`. Another keysmash! Remember that this argument gives the replacement for the matches to `pattern`. The `\\1` is regex for "whatever's in the first capturing group" (here, the "m" and "s"), and `\\U` means "convert to uppercase".
+Finally, let's look at `replacement = "\\U\\1"`. Another keysmash! Remember that this argument gives the replacement for the matches to `pattern`. The `\\1` is regex for "whatever's in the first capturing group" (here, the "m" and "s"), and `\\U` means "convert to uppercase".
 
 Together, this regex can be read as, "Find the first character in each string, then replace that character with the uppercase version of the same character." 
 
@@ -572,20 +592,27 @@ The steps are annotated below, which together produce a vector of column names t
 ```{r}
 ## sub all instances of "sticsa_trait_" with an empty string
 ## Which just effectively deletes them
-anx_mcq_names <- gsub("sticsa_trait_", "", names(anx_mcq_sum)) |> 
+anx_mcq_names <- gsub(
+    pattern = "sticsa_trait_", 
+    replacement = "", 
+    x = names(anx_mcq_sum)) |> 
   ## Then convert to title case
   stringr::str_to_title() |> 
-  ## substitute all instances of either "Mcq" or "Sd" to uppercase
-  gsub(pattern = "(Mcq|Sd)", replacement = "\\U\\1", perl = TRUE)
+  ## substitute all instances of either "Mcq", "Sd", "Se" to uppercase
+  ## no x argument here because it's the first unnamed argument
+  ## so piped in from above
+  gsub(pattern = "(Mcq|Sd|Se)", 
+       replacement = "\\U\\1", 
+       perl = TRUE)
 
 ## Check where we're at so far
 anx_mcq_names
 
-## Replace the values in anx_mcq_names that match either N or SD
-anx_mcq_names[which(anx_mcq_names %in% c("N", "SD"))] <-
+## Replace the values in anx_mcq_names that match N, SD, or SE
+anx_mcq_names[which(anx_mcq_names %in% c("N", "SD", "SE"))] <-
   ## with HTML italics formatting
   paste(kableExtra::text_spec(
-         c("N", "SD"), italic = TRUE
+         c("N", "SD", "SE"), italic = TRUE
        ), sep = "")
 
 ## View the final vector of column names
@@ -594,7 +621,7 @@ anx_mcq_names
 
 We can then replace the vector of names with the new vector we've just produced, adding `escape = FALSE` into the `kbl()` function so that the HTML formatting appears correctly.
 
-Using the "Grouped Columns/Rows" section of the Awesome Tables vignette, we can also find the function `add_header_above()`, which requires us to specify which header we want above which columns using numbers. So, I have six total columns in the `anx_mcq_sum` summary dataset; I don't want any header above the first two ("MCQ" and "N"), but I do want a header above the last four.
+Using the "Grouped Columns/Rows" section of the Awesome Tables vignette, we can also find the function `add_header_above()`, which requires us to specify which header we want above which columns using numbers. So, I have six total columns in the `anx_mcq_sum` summary dataset; I don't want any header above the first two ("MCQ" and "N"), but I do want a header above the last five.
 
 ```{r}
 anx_mcq_sum |> 
@@ -605,7 +632,7 @@ anx_mcq_sum |>
     align = "c",
     escape = FALSE
   ) |> 
-  kableExtra::add_header_above(c(" " = 2, "STICSA Trait Anxiety Score" = 4)) |> 
+  kableExtra::add_header_above(c(" " = 2, "STICSA Trait Anxiety Score" = 5)) |> 
   kableExtra::kable_classic()
 ```
 
@@ -615,32 +642,34 @@ I already said this above, but this involves custom function writing, regular ex
 
 ```{r}
 ## Save the summary dataset as a new object 
+## Using the fxs list of functions from before
 anx_stars_sum <- anx_scores |> 
   dplyr::group_by(mcq) |> 
   dplyr::summarise(
-    across(contains("stars"), fxs)  # <3>
+    across(contains("stars"), fns)  # <3>
   )
 
 ## Write a custom function to automatically format column names
 
-format_kbl_colnames <- function(summary_data, all_caps = NULL, italics = c("N", "SD")){
+format_kbl_colnames <- function(summary_data, all_caps = NULL, italics = NULL){
+  
+  ## Set column names to always capitalise and italicise
+  default_caps <- c("sd", "se", "n")
+  default_italics <- c("sd", "se", "n")
   
   ## Get initial vector of column names
   kbl_colnames <- gsub(".*_(.*)", "\\1", names(summary_data)) |> 
-    stringr::str_to_title() |> 
-    gsub(pattern = "(Sd)", replacement = "\\U\\1", perl = TRUE) 
+    stringr::str_to_title()
   
-  ## Identify which elements to convert to uppercase (if any) and do so
-  ## Could probably do this with stringr but honestly I just CBA
-  capitalise_these <- kbl_colnames[which(tolower(kbl_colnames) %in% all_caps)]
+  ## Identify which elements to convert to uppercase (in addition to defaults) and do so
+  capitalise_these <- kbl_colnames[which(tolower(kbl_colnames) %in% tolower(all_caps) | tolower(kbl_colnames) %in% default_caps)]
   
   kbl_colnames[which(kbl_colnames %in% capitalise_these)] <- toupper(capitalise_these)
   
-  ## Identify which elements to convert to italics (if any) and do so
+  ## Identify which elements to convert to italics (in addition to defaults) and do so
+  italicise_these <- kbl_colnames[which(tolower(kbl_colnames) %in% tolower(italics) | tolower(kbl_colnames) %in% default_italics)]
   
-  italicise_these <- kbl_colnames[which(kbl_colnames %in% italics)]
-  
-  kbl_colnames[which(kbl_colnames %in% italics)] <-
+  kbl_colnames[which(kbl_colnames %in% italicise_these)] <-
     paste(kableExtra::text_spec(
       italicise_these, italic = TRUE
     ), sep = "")
@@ -674,11 +703,11 @@ header_vals <- tibble::tibble(
 As if all that weren't bad enough, this is one of those situations where the native pipe just doesn't cut it. Using the {magrittr} pipe, we can easily use our new custom function inside our `kbl()` code.
 
 ```{r}
-anx_score_sum %>%
+anx_stars_sum %>%
   kableExtra::kbl(
     col.names = format_kbl_colnames(., all_caps = "mcq"),
     digits = 2,
-    caption = "Descriptives for STICSA Trait Anxiety Score by MCQ Type",
+    caption = "Descriptives for STARS subscales by MCQ Type",
     align = "c",
     escape = FALSE
   ) |> 
@@ -689,7 +718,7 @@ anx_score_sum %>%
 
 So there you have it: a (mostly) fully automated and nicely formatted table requiring no hard-coding of specific names or variables, at the bargain price of a few precious hours of my life and a not-insubstantial chunk of my sanity.
 :::
-:::
+
 
 ### Exporting
 
@@ -756,6 +785,22 @@ readr::write_csv(
   file = here::here("summaries/anx_scores_sum.csv"))
 ```
 
+:::: {.repro}
+
+::: {.repro-header}
+::: {.repro-icon}
+:::
+RepRoducibility: Copying tables
+:::
+
+::: {.repro-body}
+At this point you will have a summary dataset, in the form of a CSV file, that you can then import or copy/paste into another document. This is an undocumented step - that is, a step that is not recorded anywhere in your code, just *done* manually. Naturally, you will need to be quite careful to cross-check the numbers and labeling produced by your summarising code vs the summaries in your final document, and remember to update or recreate any tables in separate documents if your data or analyses change.
+
+Ideally, we would be able to link datasets like this to tables in other documents, so they would update automatically, as we will see is possible with images later on. Unfortunately this doesn't currently appear to be easily accomplished, so vigilance and careful checking are needed!
+:::
+
+::::
+
 ## Quick Test: Correlation
 
 Whew! Well done so far; let's cool down with some snazzy plots and a nice gentle correlation analysis.
@@ -764,7 +809,7 @@ This bit is meant to be quick, so we'll only look briefly at what we teach in UG
 
 ### Visualisation
 
-In first year, we teach the function `GGally::ggscatmat()`, which is a quick way to generate a complex plot with lots of useful info, relatively painlessly. However, `ggscatmat()` (if you're wondering, that's G-G-scat-mat, like "scatterplot matrix") will only work on numeric variables, so we'll need to `select()` the ones we want first.
+In first year, we teach the function `GGally::ggscatmat()`, which is a quick way to generate a complex plot with lots of useful info, relatively painlessly. However, `ggscatmat()` (if you're wondering, that's G-G-scat-mat, like "scatterplot matrix") will only work on numeric variables, so we'll need to `select()` the ones we want first. Let's return for this example to our familiar STICSA scores.
 
 ```{r}
 anx_scores |> 
@@ -786,7 +831,7 @@ If you haven't used {ggplot2} before, we'll work through it systematically in an
 
 So, this single function gets us a pretty complex plot: a matrix containing all of our variables along the top and side, with density plots on the diagonal, scatterplots on one pairwise intersection, and correlation coefficients on the other.
 
-This is the only {GGally} function we teach in UG at Sussex, but to go a bit further, there's another example that might be useful in the future.
+This is the only {GGally} function we teach in UG at Sussex, but to go a bit further, there's another example below as a challenge exercise that might be useful in the future.
 
 ### Testing Correlation
 
@@ -800,14 +845,14 @@ anx_scores |>
   correlation::correlation()
 ```
 
-### Exercises
+## Exercises
 
 ::: {.callout-note appearance="minimal" title="Exercise"}
 Perform pairwise correlations on all the STARS subscales in this dataset.
 
 ::: {.callout-note collapse="true" title="Solution"}
 
-To start, let's do the same as above, just replacing the string in `contains()`:
+Let's do the same as above, just replacing the string in `contains()`:
 
 ```{r}
 anx_scores |> 
