@@ -1,0 +1,224 @@
+---
+title: "09: Labelled Data and Qualtrics"
+embed-resources: true
+editor: visual
+---
+
+## Open the Tutorial
+
+Use the following code chunks to open the accompanying tutorial.
+
+### Open in RStudio Viewer
+
+```{r}
+#| eval: false
+rstudioapi::viewer('https://r-training.netlify.app/tutorials/docs/09_qtrics')
+```
+
+### Open in a New Browser Tab
+
+```{r}
+#| eval: false
+utils::browseURL('https://r-training.netlify.app/tutorials/docs/09_qtrics')
+```
+
+
+
+## Overview
+
+
+### Acknowledgements
+
+
+## Qualtrics
+
+
+### SAV Data
+
+
+### Setting Up Qualtrics
+
+
+#### Blocks
+
+
+#### Questions
+
+
+##### Questions in R
+
+
+##### Matrix Questions
+
+
+### Library
+
+
+### Exporting Data
+
+
+## Setup
+
+
+### Packages
+
+Load the packages.
+
+```{r}
+
+```
+
+
+
+### Data
+
+Read in the `mil_data.sav` object from folder, or alternatively from Github via URL, as you prefer.
+
+On the Cloud, you can read in this dataset from the `data` folder using `here::here()`.
+
+Elsewhere, you can download the dataset, or copy the dataset URL, from the [Data and Workbooks page](../../data_workbooks.qmd).
+
+```{r}
+
+```
+
+
+
+### Codebook
+
+
+## Variable Names
+
+
+### Default Variable Names
+
+
+### Renaming 
+
+
+#### Option 1: Rename in Qualtrics
+
+
+#### Option 2: `rename()`
+
+
+#### Option 3: `rename_with()`
+
+
+## Exercises: Names
+
+
+Clean up your dataset by doing the following. You can do the steps in whatever order works for you.
+
+- Keep all the date variables, demographic questions, and items measuring Global Meaning, Mattering, and Belonging.
+- Rename any default-named Qualtrics variables (starting with "Q") to a sensible name.
+
+Refer to the [Codebook](#codebook) to figure out which variables are which.
+
+```{r}
+
+```
+
+
+
+## Labelled Data
+
+
+### Working with Labels
+
+
+### Variable Labels
+
+
+#### Getting Labels
+
+
+#### Creating/Updating Labels
+
+
+#### Searching Labels
+
+
+### Value Labels
+
+
+#### Getting Labels
+
+
+#### Creating/Updating Labels
+
+
+### Missing Values
+
+
+## Exercises: Labels
+
+
+Identify the item that mentions 'job'. Then, change the variable label of this item so that it just says 'Occupational Status'
+
+```{r}
+
+```
+
+
+
+For the `income` variable, change the value label 'I prefer not to disclose information about my annual income as part of this research study.' to 'Prefer not to say'
+
+```{r}
+
+```
+
+
+
+**CHALLENGE**: Above we converted the value label for the value 3 in the `demo_gender` variable to "Other" by assigning a new label wholesale. How can you do this with a regular expression instead?
+
+If you did already update the value label using the code above, reset it to its original state by running the code below first.
+
+
+```{r}
+
+```
+
+
+
+## Data Dictionaries
+
+
+## Converting Variables
+
+
+### Factors
+
+
+#### Revision of Factors
+
+
+#### Converting to Factors
+
+
+### Numeric
+
+
+### Efficient Conversion
+
+
+## Exercise: Conversion and Wrangling
+
+
+Prepare the `mil_data` dataset for analysis.
+
+1. Produce a final data dictionary and save it.
+2. Convert all categorical variables to factor, and all scale rating variables to numeric.
+3. Reverse-code `global_meaning_2`.
+4. Create composite scores for all of the subscale variables.
+
+As a reminder, we covered reverse-coding and composite scores in the tutorial on `mutate()`.
+
+```{r}
+
+```
+
+
+
+## Well done!
+

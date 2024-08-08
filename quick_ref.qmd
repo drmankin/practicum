@@ -238,6 +238,51 @@ If you're looking for a particular section of a tutorial, use this handy summary
    <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Reporting](tutorials/docs/08_dataviz.qmd#reporting) </td>
    <td style="text-align:left;"> [With Quarto](tutorials/docs/08_dataviz.qmd#with-quarto), [Exporting and Linking](tutorials/docs/08_dataviz.qmd#exporting-and-linking) </td>
   </tr>
+  <tr grouplength="11"><td colspan="2" style="border-bottom: 1px solid;"><strong>09: Labelled Data and Qualtrics</strong></td></tr>
+<tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> NA </td>
+   <td style="text-align:left;"> [Acknowledgements](tutorials/docs/09_qtrics.qmd#acknowledgements) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Qualtrics](tutorials/docs/09_qtrics.qmd#qualtrics) </td>
+   <td style="text-align:left;"> [SAV Data](tutorials/docs/09_qtrics.qmd#sav-data), [Setting Up Qualtrics](tutorials/docs/09_qtrics.qmd#setting-up-qualtrics), [Library](tutorials/docs/09_qtrics.qmd#library), [Exporting Data](tutorials/docs/09_qtrics.qmd#exporting-data) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Setup](tutorials/docs/09_qtrics.qmd#setup) </td>
+   <td style="text-align:left;"> [Packages](tutorials/docs/09_qtrics.qmd#packages), [Data](tutorials/docs/09_qtrics.qmd#data), [Codebook](tutorials/docs/09_qtrics.qmd#codebook) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Variable Names](tutorials/docs/09_qtrics.qmd#variable-names) </td>
+   <td style="text-align:left;"> [Default Variable Names](tutorials/docs/09_qtrics.qmd#default-variable-names), [Renaming ](tutorials/docs/09_qtrics.qmd#renaming-) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Exercises: Names](tutorials/docs/09_qtrics.qmd#exercises:-names) </td>
+   <td style="text-align:left;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Labelled Data](tutorials/docs/09_qtrics.qmd#labelled-data) </td>
+   <td style="text-align:left;"> [Working with Labels](tutorials/docs/09_qtrics.qmd#working-with-labels), [Variable Labels](tutorials/docs/09_qtrics.qmd#variable-labels), [Value Labels](tutorials/docs/09_qtrics.qmd#value-labels), [Missing Values](tutorials/docs/09_qtrics.qmd#missing-values) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Exercises: Labels](tutorials/docs/09_qtrics.qmd#exercises:-labels) </td>
+   <td style="text-align:left;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Data Dictionaries](tutorials/docs/09_qtrics.qmd#data-dictionaries) </td>
+   <td style="text-align:left;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Converting Variables](tutorials/docs/09_qtrics.qmd#converting-variables) </td>
+   <td style="text-align:left;"> [Factors](tutorials/docs/09_qtrics.qmd#factors), [Numeric](tutorials/docs/09_qtrics.qmd#numeric), [Efficient Conversion](tutorials/docs/09_qtrics.qmd#efficient-conversion) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Exercise: Conversion and Wrangling](tutorials/docs/09_qtrics.qmd#exercise:-conversion-and-wrangling) </td>
+   <td style="text-align:left;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> [Well done!](tutorials/docs/09_qtrics.qmd#well-done!) </td>
+   <td style="text-align:left;">  </td>
+  </tr>
 </tbody>
 </table>
 
@@ -306,6 +351,11 @@ The table below is arranged alphabetically by function name, and the linked full
    <td style="text-align:left;"> 01: IntRoduction </td>
   </tr>
   <tr>
+   <td style="text-align:left;"> as_tibble() </td>
+   <td style="text-align:left;"> <a href="https://tibble.tidyverse.org/reference/as_tibble.html">tibble::as_tibble()</a> </td>
+   <td style="text-align:left;"> 09: Labelled Data and Qualtrics </td>
+  </tr>
+  <tr>
    <td style="text-align:left;"> autoplot() </td>
    <td style="text-align:left;"> <a href="https://ggplot2.tidyverse.org/reference/autoplot.html">ggplot2::autoplot()</a> </td>
    <td style="text-align:left;"> 06: Reproducible Linear Models </td>
@@ -323,7 +373,7 @@ The table below is arranged alphabetically by function name, and the linked full
   <tr>
    <td style="text-align:left;"> c() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/base/c.html">c()</a> </td>
-   <td style="text-align:left;"> 01: IntRoduction<br>02: IntRoduction II<br>03: Datasets<br>04: Filter and Select<br>05: Mutate<br>06: Reproducible Linear Models<br>07: Summarise </td>
+   <td style="text-align:left;"> 01: IntRoduction<br>02: IntRoduction II<br>03: Datasets<br>04: Filter and Select<br>05: Mutate<br>06: Reproducible Linear Models<br>07: Summarise<br>09: Labelled Data and Qualtrics </td>
   </tr>
   <tr>
    <td style="text-align:left;"> c_across() </td>
@@ -348,7 +398,7 @@ The table below is arranged alphabetically by function name, and the linked full
   <tr>
    <td style="text-align:left;"> contains() </td>
    <td style="text-align:left;"> <a href="https://tidyselect.r-lib.org/reference/starts_with.html">dplyr::contains()</a> </td>
-   <td style="text-align:left;"> 04: Filter and Select<br>07: Summarise </td>
+   <td style="text-align:left;"> 04: Filter and Select<br>07: Summarise<br>09: Labelled Data and Qualtrics </td>
   </tr>
   <tr>
    <td style="text-align:left;"> cor.test() </td>
@@ -428,12 +478,12 @@ The table below is arranged alphabetically by function name, and the linked full
   <tr>
    <td style="text-align:left;"> gsub() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/base/grep.html">gsub()</a> </td>
-   <td style="text-align:left;"> 07: Summarise </td>
+   <td style="text-align:left;"> 07: Summarise<br>09: Labelled Data and Qualtrics </td>
   </tr>
   <tr>
    <td style="text-align:left;"> here() </td>
    <td style="text-align:left;"> <a href="https://here.r-lib.org//reference/here.html">here::here()</a> </td>
-   <td style="text-align:left;"> 04: Filter and Select<br>05: Mutate<br>06: Reproducible Linear Models<br>07: Summarise<br>08: Visualisations </td>
+   <td style="text-align:left;"> 04: Filter and Select<br>05: Mutate<br>06: Reproducible Linear Models<br>07: Summarise<br>08: Visualisations<br>09: Labelled Data and Qualtrics </td>
   </tr>
   <tr>
    <td style="text-align:left;"> hist() </td>
@@ -453,7 +503,12 @@ The table below is arranged alphabetically by function name, and the linked full
   <tr>
    <td style="text-align:left;"> is.na() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/base/NA.html">is.na()</a> </td>
-   <td style="text-align:left;"> 04: Filter and Select </td>
+   <td style="text-align:left;"> 04: Filter and Select<br>09: Labelled Data and Qualtrics </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> is.null() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/NULL.html">is.null()</a> </td>
+   <td style="text-align:left;"> 09: Labelled Data and Qualtrics </td>
   </tr>
   <tr>
    <td style="text-align:left;"> kable_classic() </td>
@@ -473,7 +528,7 @@ The table below is arranged alphabetically by function name, and the linked full
   <tr>
    <td style="text-align:left;"> library() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/base/library.html">library()</a> </td>
-   <td style="text-align:left;"> 02: IntRoduction II<br>03: Datasets<br>04: Filter and Select<br>05: Mutate<br>06: Reproducible Linear Models<br>07: Summarise<br>08: Visualisations </td>
+   <td style="text-align:left;"> 02: IntRoduction II<br>03: Datasets<br>04: Filter and Select<br>05: Mutate<br>06: Reproducible Linear Models<br>07: Summarise<br>08: Visualisations<br>09: Labelled Data and Qualtrics </td>
   </tr>
   <tr>
    <td style="text-align:left;"> lm() </td>
@@ -516,9 +571,14 @@ The table below is arranged alphabetically by function name, and the linked full
    <td style="text-align:left;"> 06: Reproducible Linear Models </td>
   </tr>
   <tr>
+   <td style="text-align:left;"> na_values() </td>
+   <td style="text-align:left;"> <a href="https://larmarange.github.io/labelled/reference/na_values.html">labelled::na_values()</a> </td>
+   <td style="text-align:left;"> 09: Labelled Data and Qualtrics </td>
+  </tr>
+  <tr>
    <td style="text-align:left;"> names() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/base/names.html">names()</a> </td>
-   <td style="text-align:left;"> 03: Datasets<br>07: Summarise </td>
+   <td style="text-align:left;"> 03: Datasets<br>07: Summarise<br>09: Labelled Data and Qualtrics </td>
   </tr>
   <tr>
    <td style="text-align:left;"> ncol() </td>
@@ -534,6 +594,11 @@ The table below is arranged alphabetically by function name, and the linked full
    <td style="text-align:left;"> options() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/base/options.html">options()</a> </td>
    <td style="text-align:left;"> 08: Visualisations </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> paste0() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/paste.html">paste0()</a> </td>
+   <td style="text-align:left;"> 09: Labelled Data and Qualtrics </td>
   </tr>
   <tr>
    <td style="text-align:left;"> pick() </td>
@@ -571,6 +636,11 @@ The table below is arranged alphabetically by function name, and the linked full
    <td style="text-align:left;"> 03: Datasets<br>04: Filter and Select<br>05: Mutate<br>06: Reproducible Linear Models<br>07: Summarise<br>08: Visualisations </td>
   </tr>
   <tr>
+   <td style="text-align:left;"> read_sav() </td>
+   <td style="text-align:left;"> <a href="https://haven.tidyverse.org/reference/read_spss.html">haven::read_sav()</a> </td>
+   <td style="text-align:left;"> 09: Labelled Data and Qualtrics </td>
+  </tr>
+  <tr>
    <td style="text-align:left;"> report() </td>
    <td style="text-align:left;"> <a href="https://easystats.github.io/report/reference/report.html">report::report()</a> </td>
    <td style="text-align:left;"> 04: Filter and Select<br>06: Reproducible Linear Models<br>07: Summarise </td>
@@ -606,6 +676,11 @@ The table below is arranged alphabetically by function name, and the linked full
    <td style="text-align:left;"> 04: Filter and Select </td>
   </tr>
   <tr>
+   <td style="text-align:left;"> scroll_box() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/pkg/kableExtra/man/scroll_box.html">kableExtra::scroll_box()</a> </td>
+   <td style="text-align:left;"> 09: Labelled Data and Qualtrics </td>
+  </tr>
+  <tr>
    <td style="text-align:left;"> sd() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/stats/sd.html">sd()</a> </td>
    <td style="text-align:left;"> 03: Datasets<br>07: Summarise </td>
@@ -628,7 +703,7 @@ The table below is arranged alphabetically by function name, and the linked full
   <tr>
    <td style="text-align:left;"> starts_with() </td>
    <td style="text-align:left;"> <a href="https://tidyselect.r-lib.org/reference/starts_with.html">dplyr::starts_with()</a> </td>
-   <td style="text-align:left;"> 04: Filter and Select<br>05: Mutate </td>
+   <td style="text-align:left;"> 04: Filter and Select<br>05: Mutate<br>09: Labelled Data and Qualtrics </td>
   </tr>
   <tr>
    <td style="text-align:left;"> str_to_sentence() </td>
@@ -666,6 +741,11 @@ The table below is arranged alphabetically by function name, and the linked full
    <td style="text-align:left;"> 06: Reproducible Linear Models </td>
   </tr>
   <tr>
+   <td style="text-align:left;"> to_factor() </td>
+   <td style="text-align:left;"> <a href="https://larmarange.github.io/labelled/reference/to_factor.html">labelled::to_factor()</a> </td>
+   <td style="text-align:left;"> 09: Labelled Data and Qualtrics </td>
+  </tr>
+  <tr>
    <td style="text-align:left;"> tolower() </td>
    <td style="text-align:left;"> <a href="https://rdrr.io/r/base/chartr.html">tolower()</a> </td>
    <td style="text-align:left;"> 07: Summarise </td>
@@ -676,9 +756,39 @@ The table below is arranged alphabetically by function name, and the linked full
    <td style="text-align:left;"> 07: Summarise </td>
   </tr>
   <tr>
+   <td style="text-align:left;"> unclass() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/class.html">unclass()</a> </td>
+   <td style="text-align:left;"> 09: Labelled Data and Qualtrics </td>
+  </tr>
+  <tr>
    <td style="text-align:left;"> ungroup() </td>
    <td style="text-align:left;"> <a href="https://dplyr.tidyverse.org/reference/group_by.html">dplyr::ungroup()</a> </td>
-   <td style="text-align:left;"> 05: Mutate </td>
+   <td style="text-align:left;"> 05: Mutate<br>09: Labelled Data and Qualtrics </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> unlist() </td>
+   <td style="text-align:left;"> <a href="https://rdrr.io/r/base/unlist.html">unlist()</a> </td>
+   <td style="text-align:left;"> 09: Labelled Data and Qualtrics </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> user_na_to_na() </td>
+   <td style="text-align:left;"> <a href="https://larmarange.github.io/labelled/reference/na_values.html">labelled::user_na_to_na()</a> </td>
+   <td style="text-align:left;"> 09: Labelled Data and Qualtrics </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> val_label() </td>
+   <td style="text-align:left;"> <a href="https://larmarange.github.io/labelled/reference/val_labels.html">labelled::val_label()</a> </td>
+   <td style="text-align:left;"> 09: Labelled Data and Qualtrics </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> val_labels() </td>
+   <td style="text-align:left;"> <a href="https://larmarange.github.io/labelled/reference/val_labels.html">labelled::val_labels()</a> </td>
+   <td style="text-align:left;"> 09: Labelled Data and Qualtrics </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> var_label() </td>
+   <td style="text-align:left;"> <a href="https://larmarange.github.io/labelled/reference/var_label.html">labelled::var_label()</a> </td>
+   <td style="text-align:left;"> 09: Labelled Data and Qualtrics </td>
   </tr>
   <tr>
    <td style="text-align:left;"> where() </td>

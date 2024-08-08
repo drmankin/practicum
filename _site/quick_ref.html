@@ -238,6 +238,12 @@ window.Quarto = {
  <span class="menu-text">08: Visualisations</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tutorials/docs/09_qtrics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">09: Labelled Data and Qualtrics</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -820,6 +826,94 @@ NA
 <a href="./tutorials/docs/08_dataviz.html#with-quarto">With Quarto</a>, <a href="./tutorials/docs/08_dataviz.html#exporting-and-linking">Exporting and Linking</a>
 </td>
 </tr>
+<tr grouplength="11">
+<td colspan="2" style="border-bottom: 1px solid;">
+<strong>09: Labelled Data and Qualtrics</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+NA
+</td>
+<td style="text-align:left;">
+<a href="./tutorials/docs/09_qtrics.html#acknowledgements">Acknowledgements</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+<a href="./tutorials/docs/09_qtrics.html#qualtrics">Qualtrics</a>
+</td>
+<td style="text-align:left;">
+<a href="./tutorials/docs/09_qtrics.html#sav-data">SAV Data</a>, <a href="./tutorials/docs/09_qtrics.html#setting-up-qualtrics">Setting Up Qualtrics</a>, <a href="./tutorials/docs/09_qtrics.html#library">Library</a>, <a href="./tutorials/docs/09_qtrics.html#exporting-data">Exporting Data</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+<a href="./tutorials/docs/09_qtrics.html#setup">Setup</a>
+</td>
+<td style="text-align:left;">
+<a href="./tutorials/docs/09_qtrics.html#packages">Packages</a>, <a href="./tutorials/docs/09_qtrics.html#data">Data</a>, <a href="./tutorials/docs/09_qtrics.html#codebook">Codebook</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+<a href="./tutorials/docs/09_qtrics.html#variable-names">Variable Names</a>
+</td>
+<td style="text-align:left;">
+<a href="./tutorials/docs/09_qtrics.html#default-variable-names">Default Variable Names</a>, <a href="./tutorials/docs/09_qtrics.html#renaming-">Renaming</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+<a href="./tutorials/docs/09_qtrics.html#exercises:-names">Exercises: Names</a>
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+<a href="./tutorials/docs/09_qtrics.html#labelled-data">Labelled Data</a>
+</td>
+<td style="text-align:left;">
+<a href="./tutorials/docs/09_qtrics.html#working-with-labels">Working with Labels</a>, <a href="./tutorials/docs/09_qtrics.html#variable-labels">Variable Labels</a>, <a href="./tutorials/docs/09_qtrics.html#value-labels">Value Labels</a>, <a href="./tutorials/docs/09_qtrics.html#missing-values">Missing Values</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+<a href="./tutorials/docs/09_qtrics.html#exercises:-labels">Exercises: Labels</a>
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+<a href="./tutorials/docs/09_qtrics.html#data-dictionaries">Data Dictionaries</a>
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+<a href="./tutorials/docs/09_qtrics.html#converting-variables">Converting Variables</a>
+</td>
+<td style="text-align:left;">
+<a href="./tutorials/docs/09_qtrics.html#factors">Factors</a>, <a href="./tutorials/docs/09_qtrics.html#numeric">Numeric</a>, <a href="./tutorials/docs/09_qtrics.html#efficient-conversion">Efficient Conversion</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+<a href="./tutorials/docs/09_qtrics.html#exercise:-conversion-and-wrangling">Exercise: Conversion and Wrangling</a>
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+<a href="./tutorials/docs/09_qtrics.html#well-done!">Well done!</a>
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
 </tbody>
 </table>
 </section>
@@ -953,6 +1047,17 @@ as.numeric()
 </tr>
 <tr>
 <td style="text-align:left;">
+as_tibble()
+</td>
+<td style="text-align:left;">
+<a href="https://tibble.tidyverse.org/reference/as_tibble.html">tibble::as_tibble()</a>
+</td>
+<td style="text-align:left;">
+09: Labelled Data and Qualtrics
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 autoplot()
 </td>
 <td style="text-align:left;">
@@ -992,7 +1097,7 @@ c()
 <a href="https://rdrr.io/r/base/c.html">c()</a>
 </td>
 <td style="text-align:left;">
-01: IntRoduction<br>02: IntRoduction II<br>03: Datasets<br>04: Filter and Select<br>05: Mutate<br>06: Reproducible Linear Models<br>07: Summarise
+01: IntRoduction<br>02: IntRoduction II<br>03: Datasets<br>04: Filter and Select<br>05: Mutate<br>06: Reproducible Linear Models<br>07: Summarise<br>09: Labelled Data and Qualtrics
 </td>
 </tr>
 <tr>
@@ -1047,7 +1152,7 @@ contains()
 <a href="https://tidyselect.r-lib.org/reference/starts_with.html">dplyr::contains()</a>
 </td>
 <td style="text-align:left;">
-04: Filter and Select<br>07: Summarise
+04: Filter and Select<br>07: Summarise<br>09: Labelled Data and Qualtrics
 </td>
 </tr>
 <tr>
@@ -1223,7 +1328,7 @@ gsub()
 <a href="https://rdrr.io/r/base/grep.html">gsub()</a>
 </td>
 <td style="text-align:left;">
-07: Summarise
+07: Summarise<br>09: Labelled Data and Qualtrics
 </td>
 </tr>
 <tr>
@@ -1234,7 +1339,7 @@ here()
 <a href="https://here.r-lib.org//reference/here.html">here::here()</a>
 </td>
 <td style="text-align:left;">
-04: Filter and Select<br>05: Mutate<br>06: Reproducible Linear Models<br>07: Summarise<br>08: Visualisations
+04: Filter and Select<br>05: Mutate<br>06: Reproducible Linear Models<br>07: Summarise<br>08: Visualisations<br>09: Labelled Data and Qualtrics
 </td>
 </tr>
 <tr>
@@ -1278,7 +1383,18 @@ is.na()
 <a href="https://rdrr.io/r/base/NA.html">is.na()</a>
 </td>
 <td style="text-align:left;">
-04: Filter and Select
+04: Filter and Select<br>09: Labelled Data and Qualtrics
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+is.null()
+</td>
+<td style="text-align:left;">
+<a href="https://rdrr.io/r/base/NULL.html">is.null()</a>
+</td>
+<td style="text-align:left;">
+09: Labelled Data and Qualtrics
 </td>
 </tr>
 <tr>
@@ -1322,7 +1438,7 @@ library()
 <a href="https://rdrr.io/r/base/library.html">library()</a>
 </td>
 <td style="text-align:left;">
-02: IntRoduction II<br>03: Datasets<br>04: Filter and Select<br>05: Mutate<br>06: Reproducible Linear Models<br>07: Summarise<br>08: Visualisations
+02: IntRoduction II<br>03: Datasets<br>04: Filter and Select<br>05: Mutate<br>06: Reproducible Linear Models<br>07: Summarise<br>08: Visualisations<br>09: Labelled Data and Qualtrics
 </td>
 </tr>
 <tr>
@@ -1415,13 +1531,24 @@ mutate()
 </tr>
 <tr>
 <td style="text-align:left;">
+na_values()
+</td>
+<td style="text-align:left;">
+<a href="https://larmarange.github.io/labelled/reference/na_values.html">labelled::na_values()</a>
+</td>
+<td style="text-align:left;">
+09: Labelled Data and Qualtrics
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 names()
 </td>
 <td style="text-align:left;">
 <a href="https://rdrr.io/r/base/names.html">names()</a>
 </td>
 <td style="text-align:left;">
-03: Datasets<br>07: Summarise
+03: Datasets<br>07: Summarise<br>09: Labelled Data and Qualtrics
 </td>
 </tr>
 <tr>
@@ -1455,6 +1582,17 @@ options()
 </td>
 <td style="text-align:left;">
 08: Visualisations
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+paste0()
+</td>
+<td style="text-align:left;">
+<a href="https://rdrr.io/r/base/paste.html">paste0()</a>
+</td>
+<td style="text-align:left;">
+09: Labelled Data and Qualtrics
 </td>
 </tr>
 <tr>
@@ -1536,6 +1674,17 @@ read_csv()
 </tr>
 <tr>
 <td style="text-align:left;">
+read_sav()
+</td>
+<td style="text-align:left;">
+<a href="https://haven.tidyverse.org/reference/read_spss.html">haven::read_sav()</a>
+</td>
+<td style="text-align:left;">
+09: Labelled Data and Qualtrics
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 report()
 </td>
 <td style="text-align:left;">
@@ -1613,6 +1762,17 @@ rowSums()
 </tr>
 <tr>
 <td style="text-align:left;">
+scroll_box()
+</td>
+<td style="text-align:left;">
+<a href="https://rdrr.io/pkg/kableExtra/man/scroll_box.html">kableExtra::scroll_box()</a>
+</td>
+<td style="text-align:left;">
+09: Labelled Data and Qualtrics
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 sd()
 </td>
 <td style="text-align:left;">
@@ -1663,7 +1823,7 @@ starts_with()
 <a href="https://tidyselect.r-lib.org/reference/starts_with.html">dplyr::starts_with()</a>
 </td>
 <td style="text-align:left;">
-04: Filter and Select<br>05: Mutate
+04: Filter and Select<br>05: Mutate<br>09: Labelled Data and Qualtrics
 </td>
 </tr>
 <tr>
@@ -1745,6 +1905,17 @@ tidy()
 </tr>
 <tr>
 <td style="text-align:left;">
+to_factor()
+</td>
+<td style="text-align:left;">
+<a href="https://larmarange.github.io/labelled/reference/to_factor.html">labelled::to_factor()</a>
+</td>
+<td style="text-align:left;">
+09: Labelled Data and Qualtrics
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 tolower()
 </td>
 <td style="text-align:left;">
@@ -1767,13 +1938,79 @@ toupper()
 </tr>
 <tr>
 <td style="text-align:left;">
+unclass()
+</td>
+<td style="text-align:left;">
+<a href="https://rdrr.io/r/base/class.html">unclass()</a>
+</td>
+<td style="text-align:left;">
+09: Labelled Data and Qualtrics
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 ungroup()
 </td>
 <td style="text-align:left;">
 <a href="https://dplyr.tidyverse.org/reference/group_by.html">dplyr::ungroup()</a>
 </td>
 <td style="text-align:left;">
-05: Mutate
+05: Mutate<br>09: Labelled Data and Qualtrics
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+unlist()
+</td>
+<td style="text-align:left;">
+<a href="https://rdrr.io/r/base/unlist.html">unlist()</a>
+</td>
+<td style="text-align:left;">
+09: Labelled Data and Qualtrics
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+user_na_to_na()
+</td>
+<td style="text-align:left;">
+<a href="https://larmarange.github.io/labelled/reference/na_values.html">labelled::user_na_to_na()</a>
+</td>
+<td style="text-align:left;">
+09: Labelled Data and Qualtrics
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+val_label()
+</td>
+<td style="text-align:left;">
+<a href="https://larmarange.github.io/labelled/reference/val_labels.html">labelled::val_label()</a>
+</td>
+<td style="text-align:left;">
+09: Labelled Data and Qualtrics
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+val_labels()
+</td>
+<td style="text-align:left;">
+<a href="https://larmarange.github.io/labelled/reference/val_labels.html">labelled::val_labels()</a>
+</td>
+<td style="text-align:left;">
+09: Labelled Data and Qualtrics
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+var_label()
+</td>
+<td style="text-align:left;">
+<a href="https://larmarange.github.io/labelled/reference/var_label.html">labelled::var_label()</a>
+</td>
+<td style="text-align:left;">
+09: Labelled Data and Qualtrics
 </td>
 </tr>
 <tr>
