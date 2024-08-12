@@ -1,0 +1,230 @@
+---
+title: "10: Putting it all together"
+embed-resources: true
+editor: visual
+---
+
+## Open the Tutorial
+
+Use the following code chunks to open the accompanying tutorial.
+
+### Open in RStudio Viewer
+
+```{r}
+#| eval: false
+rstudioapi::viewer('https://r-training.netlify.app/tutorials/docs/10_reproducibility')
+```
+
+### Open in a New Browser Tab
+
+```{r}
+#| eval: false
+utils::browseURL('https://r-training.netlify.app/tutorials/docs/10_reproducibility')
+```
+
+## Overview
+
+### Reproducibility Certification
+
+## Setup
+
+### Packages
+
+Load the packages.
+
+```{r}
+
+```
+
+### Data
+
+Read in the dataset and save it in a new object, `anx_data`.
+
+On the Cloud, you can read in this dataset from the `data` folder using `here::here()`.
+
+Elsewhere, you can download the dataset, or copy the dataset URL, from the [Data and Workbooks page](../../../data_workbooks.qmd).
+
+```{r}
+
+```
+
+#### Codebook
+
+## Reproducibility Report: Part One
+
+### Section 1: Reproducibility of Data Processing
+
+#### Question 1
+
+#### Question 5
+
+### Section 2: Reproducibility of Analysis Environment
+
+#### Questions 5 & 6
+
+Do you remember the {report} package? Check out what `report::report(sessionInfo())` does.
+
+```{r}
+
+```
+
+### Section 3: Reproducibility of Analysis Pipeline
+
+#### Question 3
+
+#### Question 4
+
+#### Question 5
+
+## ANOVA Speedrun
+
+### One-Way ANOVA
+
+#### Plot
+
+**Optionally**, spruce up this plot with labels and a theme, and some colour contrast for the means and CIs.
+
+```{r}
+
+```
+
+#### Fit the Model
+
+Follow the steps below to fit and examine the model.
+
+```{r}
+
+```
+
+First, change the character `gender` variable into a factor. You can do this just for this variable, or **optionally** use some of the challenge functions from the previous tutorials to change all of the character variables into factors together.
+
+Then, use `contr.sum()` to set the contrasts for the `gender` variable.
+
+```{r}
+
+```
+
+Fit the model again and get the same parameters table as before.
+
+```{r}
+
+```
+
+**CHALLENGE:** Complete the following steps to update the output.
+
+1.  Change out the "/" in `other/pnts` for an underscore, so the value reads `other_pnts`. Do this for all the values in the dataset.
+    -   *Hint*: You can try `stringr::str_replace_all()` for a {tidyverse} solution, or if you're basic like me, have a look at `gsub()`.
+2.  Convert the new `gender` variable back into a factor (as the string manipulation above will have forced it to become character).
+3.  Fit the model again and run `estimate_contrasts()` to get the post-hoc results.
+
+```{r}
+
+```
+
+### Factorial Designs
+
+#### Fit the Model
+
+Recode the existing `sticsa_trait_score` variable into a categorical variable, with "high" values of 2.5 or greater, and "low" values below 2.5. Don't forget to save this change to your dataset!
+
+```{r}
+
+```
+
+Follow along with the code below to fit and interpret the model.
+
+```{r}
+
+```
+
+**CHALLENGE**: Imagine you were working with a dataset that *didn't* already have ID codes. How could you generate a new `id_code` variable to use in the {afex} formula, that has a unique value for each row?
+
+```{r}
+
+```
+
+#### Interaction Plot
+
+Generate the plot.
+
+**CHALLENGE**: Use the `afex_plot()` help documentation and last week's tutorial on {ggplot2} to clean up this plot and make it presentable.
+
+```{r}
+
+```
+
+#### EMMs and Simple Effects
+
+Generate the table of estimated marginal means.
+
+**CHALLENGE**: Turn this estimated marginal means table into a nicely formatted table using `kbl()` (and, if you feel up for it, `pivot_wider()`).
+
+```{r}
+
+```
+
+Produce the same output but the other way round, i.e. for the trait anxiety predictor.
+
+```{r}
+
+```
+
+### Mixed Designs
+
+#### Reshaping with `pivot_*()`
+
+Reshape the dataset as above and assign to a **new dataset name**, `anx_data_long`, lest we overwrite all our data with this much smaller and reshaped dataset!
+
+*Hint*: It's fine to copy the code above, especially if you're short on time, but you'll learn and understand the code much better if you type it out instead of copying it.
+
+```{r}
+
+```
+
+**CHALLENGE**: How can you read the regular expression `.*?_(.*?)_.*`? If you're not sure, try putting into [regex101.com](https://regex101.com/) for some help (without the quotes).
+
+```{r}
+
+```
+
+#### Fit the Model
+
+Follow along with the code below to fit and interpret the model.
+
+```{r}
+
+```
+
+#### Main Effects
+
+Following the example above, get EMMs and a plot for the main effect of `sticsa_time`.
+
+```{r}
+
+```
+
+#### Two-Way Interactions
+
+Generate the plot with `papaja::apa_beeplot()`.
+
+**CHALLENGE**: [Zhoosh up](https://www.nytimes.com/2022/01/31/style/jeuje-zhoosh-zhuzh.html) this plot to get it at least within spitting distance of nicely formatted.
+
+*Hint*: Use the [{papaja} help documentation](https://frederikaust.com/papaja_man/reporting.html#figures)!
+
+```{r}
+
+```
+
+## Reproducibility Report: Part Two
+
+## Exercises
+
+### Option 1: Continue working
+
+### Option 2: Work on one of your own projects
+
+### Option 3: Conduct a reproducibility check on a published study
+
+## Submitting Your Work
+
+## Final Thoughts
